@@ -14,13 +14,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.ElasticPools
     public interface IElasticPools 
     {
         /// <summary>
-        /// Gets a particular elastic pool.
-        /// </summary>
-        /// <param name="elasticPoolName">Name of the elastic pool to get.</param>
-        /// <return>Returns the elastic pool with in the SQL Server.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool Get(string elasticPoolName);
-
-        /// <summary>
         /// Creates a new elastic pool in SQL Server.
         /// </summary>
         /// <param name="elasticPoolName">Name of the elastic pool to be created.</param>
@@ -28,22 +21,29 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.ElasticPools
         Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IBlank Define(string elasticPoolName);
 
         /// <summary>
-        /// Delete specified elastic pool in the server.
+        /// Gets a particular elastic pool.
         /// </summary>
-        /// <param name="elasticPoolName">Name of the elastic pool to delete.</param>
-        /// <return>Observable for the delete operation.</return>
-        Task DeleteAsync(string elasticPoolName, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Returns all the elastic pools for the server.
-        /// </summary>
-        /// <return>List of elastic pools for the server.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> List();
+        /// <param name="elasticPoolName">Name of the elastic pool to get.</param>
+        /// <return>Returns the elastic pool with in the SQL Server.</return>
+        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool Get(string elasticPoolName);
 
         /// <summary>
         /// Delete specified elastic pool in the server.
         /// </summary>
         /// <param name="elasticPoolName">Name of the elastic pool to delete.</param>
         void Delete(string elasticPoolName);
+
+        /// <summary>
+        /// Returns all the elastic pools for the server.
+        /// </summary>
+        /// <return>List of elastic pools for the server.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> List();
+
+        /// <summary>
+        /// Delete specified elastic pool in the server.
+        /// </summary>
+        /// <param name="elasticPoolName">Name of the elastic pool to delete.</param>
+        /// <return>Observable for the delete operation.</return>
+        Task DeleteAsync(string elasticPoolName, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

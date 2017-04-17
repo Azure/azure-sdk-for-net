@@ -16,15 +16,15 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateCombined
     /// The entirety of a record sets update as a part of parent DNS zone update.
     /// </summary>
     public interface IUpdateCombined  :
-        IUpdateARecordSet,
-        IUpdateAaaaRecordSet,
-        IUpdatePtrRecordSet,
-        IUpdateMXRecordSet,
-        IUpdateNSRecordSet,
-        IUpdateSrvRecordSet,
-        IUpdateTxtRecordSet,
-        IUpdateSoaRecord,
-        IUpdate
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet.IUpdateMXRecordSet,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateNSRecordSet.IUpdateNSRecordSet,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update.IUpdate
     {
     }
 }

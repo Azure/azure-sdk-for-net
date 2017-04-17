@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRules.SqlFirewallRule
     /// Entry point to SQL FirewallRule management API, which already have the SQLServer specified.
     /// </summary>
     public interface ISqlFirewallRulesCreatable  :
-        ISqlFirewallRules
+        Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRules
     {
         Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Definition.IBlank DefinedWithSqlServer(string resourceGroupName, string sqlServerName, string firewallRuleName);
     }

@@ -14,19 +14,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface IApplicationGatewayBackendHttpConfiguration  :
-        IHasInner<Models.ApplicationGatewayBackendHttpSettingsInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        IHasProtocol<Models.ApplicationGatewayProtocol>,
-        IHasPort
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayBackendHttpSettingsInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.Network.Fluent.IHasProtocol<Models.ApplicationGatewayProtocol>,
+        Microsoft.Azure.Management.Network.Fluent.IHasPort
     {
-        /// <summary>
-        /// Gets true if cookie based affinity (sticky sessions) is enabled, else false.
-        /// </summary>
-        bool CookieBasedAffinity { get; }
-
         /// <summary>
         /// Gets HTTP request timeout in seconds. Requests will fail if no response is received within the specified time.
         /// </summary>
         int RequestTimeout { get; }
+
+        /// <summary>
+        /// Gets true if cookie based affinity (sticky sessions) is enabled, else false.
+        /// </summary>
+        bool CookieBasedAffinity { get; }
     }
 }

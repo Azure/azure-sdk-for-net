@@ -588,6 +588,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return await this.Parent.ValidateEndpointCustomDomainAsync(this.Name(), hostName, cancellationToken);
         }
 
+        public IEnumerable<ResourceUsage> ListResourceUsage()
+        {
+            return Parent.Manager.Inner.Endpoints.ListResourceUsage(
+                                            Parent.ResourceGroupName,
+                                            Parent.Name,
+                                            Name())
+                     .AsContinuousCollection(link => Parent.Manager.Inner.Endpoints.ListResourceUsageNext(link))
+                     .Select(inner => new ResourceUsage(inner));
+        }
+
         IUpdate ISettable<IUpdate>.Parent()
         {
             return this.Parent;

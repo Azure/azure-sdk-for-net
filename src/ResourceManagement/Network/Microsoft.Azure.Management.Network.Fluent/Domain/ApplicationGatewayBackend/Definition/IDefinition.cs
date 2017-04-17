@@ -11,20 +11,20 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.De
     public interface IWithAddress<ParentT> 
     {
         /// <summary>
-        /// Adds the specified existing IP address to the backend.
-        /// This call can be made in a sequence to add multiple IP addresses.
-        /// </summary>
-        /// <param name="ipAddress">An IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition.IWithAttach<ParentT> WithIPAddress(string ipAddress);
-
-        /// <summary>
         /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
         /// This call can be made in a sequence to add multiple FQDNs.
         /// </summary>
         /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition.IWithAttach<ParentT> WithFqdn(string fqdn);
+
+        /// <summary>
+        /// Adds the specified existing IP address to the backend.
+        /// This call can be made in a sequence to add multiple IP addresses.
+        /// </summary>
+        /// <param name="ipAddress">An IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition.IWithAttach<ParentT> WithIPAddress(string ipAddress);
     }
 
     /// <summary>
@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.De
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>,
-        IWithAddress<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition.IWithAddress<ParentT>
     {
     }
 
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.De
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition.IWithAttach<ParentT>
     {
     }
 
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.De
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Definition.IWithAttach<ParentT>
     {
     }
 }

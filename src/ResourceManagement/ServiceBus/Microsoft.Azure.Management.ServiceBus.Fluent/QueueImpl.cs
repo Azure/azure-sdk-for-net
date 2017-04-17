@@ -8,11 +8,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using Queue.Update;
     using System.Collections.Generic;
     using System;
-    using Management.Fluent.ServiceBus.Models;
+    using Management.ServiceBus.Fluent.Models;
     using ServiceBus.Fluent;
     using ResourceManager.Fluent.Core;
     using ResourceManager.Fluent.Core.ResourceActions;
-    using Management.Fluent.ServiceBus;
+    using Management.ServiceBus.Fluent;
     using System.Linq;
 
     /// <summary>

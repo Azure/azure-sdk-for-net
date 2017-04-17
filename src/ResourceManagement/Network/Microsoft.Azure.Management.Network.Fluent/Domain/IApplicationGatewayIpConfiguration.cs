@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface IApplicationGatewayIPConfiguration  :
-        IHasInner<Models.ApplicationGatewayIPConfigurationInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayIPConfigurationInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>
     {
         /// <return>
         /// The subnet the application gateway is in

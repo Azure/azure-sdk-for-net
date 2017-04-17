@@ -78,7 +78,7 @@ namespace Fluent.Tests.Compute
                         .Attach()
                         .Create();
 
-                IList<string> publicIPAddressIds = virtualMachineScaleSet.PrimaryPublicIPAddressIds;
+                IReadOnlyList<string> publicIPAddressIds = virtualMachineScaleSet.PrimaryPublicIPAddressIds;
                 IPublicIPAddress publicIPAddress = azure.PublicIPAddresses
                         .GetById(publicIPAddressIds[0]);
 
@@ -324,7 +324,7 @@ namespace Fluent.Tests.Compute
             foreach (var vm in virtualMachines)
             {
                 Assert.NotNull(vm.Size);
-                Assert.Equal(vm.OsType, OperatingSystemTypes.Linux);
+                Assert.Equal(vm.OSType, OperatingSystemTypes.Linux);
                 Assert.NotNull(vm.ComputerName.StartsWith(vmScaleSet.ComputerNamePrefix));
                 Assert.True(vm.IsLinuxPasswordAuthenticationEnabled);
                 Assert.True(vm.IsOSBasedOnPlatformImage);

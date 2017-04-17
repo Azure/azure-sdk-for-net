@@ -1269,7 +1269,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return (FluentImplT) this;
         }
 
-        public abstract Task<IDictionary<string, IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken));
+        public abstract Task<IReadOnlyDictionary<string, IHostNameBinding>> GetHostNameBindingsAsync(CancellationToken cancellationToken = default(CancellationToken));
         public abstract Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
         public abstract Task ApplySlotConfigurationsAsync(string slotName, CancellationToken cancellationToken = default(CancellationToken));
         public abstract Task StopAsync(CancellationToken cancellationToken = default(CancellationToken));

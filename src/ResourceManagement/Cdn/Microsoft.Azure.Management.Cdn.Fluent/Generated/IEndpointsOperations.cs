@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceUsage>>> ListResourceUsageWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ResourceUsageInner>>> ListResourceUsageWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new CDN endpoint with the specified endpoint name under
         /// the specified subscription, resource group and profile.
@@ -597,6 +597,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ResourceUsage>>> ListResourceUsageNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ResourceUsageInner>>> ListResourceUsageNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -427,25 +427,25 @@ namespace Microsoft.Azure.Management.Samples.Common
             .Append("\n\tCreated from virtual machine: ").Append(image.SourceVirtualMachineId);
 
             builder.Append("\n\tOS disk image: ")
-                    .Append("\n\t\tOperating system: ").Append(image.OsDiskImage.OsType)
-                    .Append("\n\t\tOperating system state: ").Append(image.OsDiskImage.OsState)
-                    .Append("\n\t\tCaching: ").Append(image.OsDiskImage.Caching)
-                    .Append("\n\t\tSize (GB): ").Append(image.OsDiskImage.DiskSizeGB);
+                    .Append("\n\t\tOperating system: ").Append(image.OSDiskImage.OsType)
+                    .Append("\n\t\tOperating system state: ").Append(image.OSDiskImage.OsState)
+                    .Append("\n\t\tCaching: ").Append(image.OSDiskImage.Caching)
+                    .Append("\n\t\tSize (GB): ").Append(image.OSDiskImage.DiskSizeGB);
             if (image.IsCreatedFromVirtualMachine)
             {
                 builder.Append("\n\t\tSource virtual machine: ").Append(image.SourceVirtualMachineId);
             }
-            if (image.OsDiskImage.ManagedDisk != null)
+            if (image.OSDiskImage.ManagedDisk != null)
             {
-                builder.Append("\n\t\tSource managed disk: ").Append(image.OsDiskImage.ManagedDisk.Id);
+                builder.Append("\n\t\tSource managed disk: ").Append(image.OSDiskImage.ManagedDisk.Id);
             }
-            if (image.OsDiskImage.Snapshot != null)
+            if (image.OSDiskImage.Snapshot != null)
             {
-                builder.Append("\n\t\tSource snapshot: ").Append(image.OsDiskImage.Snapshot.Id);
+                builder.Append("\n\t\tSource snapshot: ").Append(image.OSDiskImage.Snapshot.Id);
             }
-            if (image.OsDiskImage.BlobUri != null)
+            if (image.OSDiskImage.BlobUri != null)
             {
-                builder.Append("\n\t\tSource un-managed vhd: ").Append(image.OsDiskImage.BlobUri);
+                builder.Append("\n\t\tSource un-managed vhd: ").Append(image.OSDiskImage.BlobUri);
             }
             if (image.DataDiskImages != null)
             {
@@ -552,26 +552,26 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
             StringBuilder osProfile;
-            if (virtualMachine.OsProfile != null)
+            if (virtualMachine.OSProfile != null)
             {
                 osProfile = new StringBuilder().Append("\n\tOSProfile: ");
 
-                osProfile.Append("\n\t\tComputerName:").Append(virtualMachine.OsProfile.ComputerName);
-                if (virtualMachine.OsProfile.WindowsConfiguration != null)
+                osProfile.Append("\n\t\tComputerName:").Append(virtualMachine.OSProfile.ComputerName);
+                if (virtualMachine.OSProfile.WindowsConfiguration != null)
                 {
                     osProfile.Append("\n\t\t\tWindowsConfiguration: ");
                     osProfile.Append("\n\t\t\t\tProvisionVMAgent: ")
-                            .Append(virtualMachine.OsProfile.WindowsConfiguration.ProvisionVMAgent);
+                            .Append(virtualMachine.OSProfile.WindowsConfiguration.ProvisionVMAgent);
                     osProfile.Append("\n\t\t\t\tEnableAutomaticUpdates: ")
-                            .Append(virtualMachine.OsProfile.WindowsConfiguration.EnableAutomaticUpdates);
+                            .Append(virtualMachine.OSProfile.WindowsConfiguration.EnableAutomaticUpdates);
                     osProfile.Append("\n\t\t\t\tTimeZone: ")
-                            .Append(virtualMachine.OsProfile.WindowsConfiguration.TimeZone);
+                            .Append(virtualMachine.OSProfile.WindowsConfiguration.TimeZone);
                 }
-                if (virtualMachine.OsProfile.LinuxConfiguration != null)
+                if (virtualMachine.OSProfile.LinuxConfiguration != null)
                 {
                     osProfile.Append("\n\t\t\tLinuxConfiguration: ");
                     osProfile.Append("\n\t\t\t\tDisablePasswordAuthentication: ")
-                            .Append(virtualMachine.OsProfile.LinuxConfiguration.DisablePasswordAuthentication);
+                            .Append(virtualMachine.OSProfile.LinuxConfiguration.DisablePasswordAuthentication);
                 }
             }
             else
@@ -599,7 +599,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .ToString());
         }
 
-        public static void PrintStorageAccountKeys(IList<StorageAccountKey> storageAccountKeys)
+        public static void PrintStorageAccountKeys(IReadOnlyList<StorageAccountKey> storageAccountKeys)
         {
             foreach (var storageAccountKey in storageAccountKeys)
             {

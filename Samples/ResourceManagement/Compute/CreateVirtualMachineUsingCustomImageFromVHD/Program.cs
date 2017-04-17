@@ -116,7 +116,7 @@ namespace CreateVirtualMachineUsingCustomImageFromVHD
                         .Define(customImageName)
                         .WithRegion(region)
                         .WithExistingResourceGroup(rgName)
-                        .WithLinuxFromVhd(linuxVM.OsUnmanagedDiskVhdUri, OperatingSystemStateTypes.Generalized)
+                        .WithLinuxFromVhd(linuxVM.OSUnmanagedDiskVhdUri, OperatingSystemStateTypes.Generalized)
                         .DefineDataDiskImage()
                             .WithLun(linuxVM.UnmanagedDataDisks[1].Lun)
                             .FromVhd(linuxVM.UnmanagedDataDisks[1].VhdUri)
@@ -191,7 +191,7 @@ namespace CreateVirtualMachineUsingCustomImageFromVHD
                 Utilities.Log("Getting OS and data disks SAS Uris");
 
                 // OS Disk SAS Uri
-                var osDisk = azure.Disks.GetById(linuxVM3.OsDiskId);
+                var osDisk = azure.Disks.GetById(linuxVM3.OSDiskId);
 
                 var osDiskSasUri = osDisk.GrantAccess(24 * 60);
 

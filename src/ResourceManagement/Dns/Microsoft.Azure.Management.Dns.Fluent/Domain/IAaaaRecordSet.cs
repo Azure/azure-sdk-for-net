@@ -8,11 +8,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// An immutable client-side representation of a AAAA (IPv6) record set in Azure DNS Zone.
     /// </summary>
     public interface IAaaaRecordSet  :
-        IDnsRecordSet
+        Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet
     {
         /// <summary>
         /// Gets the IPv6 addresses of AAAA records in this record set.
         /// </summary>
-        System.Collections.Generic.IList<string> IPv6Addresses { get; }
+        System.Collections.Generic.IReadOnlyList<string> IPv6Addresses { get; }
     }
 }

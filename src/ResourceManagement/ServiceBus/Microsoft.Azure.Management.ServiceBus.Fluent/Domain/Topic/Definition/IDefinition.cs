@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.ServiceBus.Fluent.Topic.Definition
 {
+    using System;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ServiceBus.Fluent;
-    using System;
 
     /// <summary>
     /// The stage of the topic definition allowing to define default TTL for messages.

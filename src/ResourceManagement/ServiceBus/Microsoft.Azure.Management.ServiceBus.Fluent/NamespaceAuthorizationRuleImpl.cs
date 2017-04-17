@@ -7,10 +7,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using NamespaceAuthorizationRule.Definition;
     using NamespaceAuthorizationRule.Update;
     using ResourceManager.Fluent.Core;
-    using Management.Fluent.ServiceBus.Models;
+    using Management.ServiceBus.Fluent.Models;
     using ServiceBus.Fluent;
     using System.Collections.Generic;
-    using Management.Fluent.ServiceBus;
 
     /// <summary>
     /// Implementation for NamespaceAuthorizationRule.
@@ -50,14 +49,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         public string NamespaceName()
         {
             return this.parentName;
-        }
-
-        IReadOnlyList<AccessRights> IAuthorizationRule<INamespaceAuthorizationRule>.Rights
-        {
-            get
-            {
-                return base.Rights();
-            }
         }
 
         ///GENMHASH:323E13EA523CC5C9992A3C5081E83085:3854D5948CC5EB985EFD17B41F7BD546
@@ -101,56 +92,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 this.NamespaceName(),
                 this.Name,
                 cancellationToken);
-        }
-
-        async Task<IAuthorizationKeys> IAuthorizationRule<INamespaceAuthorizationRule>.RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken)
-        {
-            return await base.RegenerateKeyAsync(policykey, cancellationToken);
-        }
-
-        async Task<IAuthorizationKeys> IAuthorizationRule<INamespaceAuthorizationRule>.GetKeysAsync(CancellationToken cancellationToken)
-        {
-            return await base.GetKeysAsync(cancellationToken);
-        }
-
-        IAuthorizationKeys IAuthorizationRule<INamespaceAuthorizationRule>.GetKeys()
-        {
-            return base.GetKeys();
-        }
-
-        IAuthorizationKeys IAuthorizationRule<INamespaceAuthorizationRule>.RegenerateKey(Policykey policykey)
-        {
-            return base.RegenerateKey(policykey);
-        }
-
-        IUpdate AuthorizationRule.Update.IWithListen<IUpdate>.WithListeningEnabled()
-        {
-            return base.WithListeningEnabled();
-        }
-
-        IUpdate AuthorizationRule.Update.IWithSend<IUpdate>.WithSendingEnabled()
-        {
-            return base.WithSendingEnabled();
-        }
-
-        IUpdate AuthorizationRule.Update.IWithManage<IUpdate>.WithManagementEnabled()
-        {
-            return base.WithManagementEnabled();
-        }
-
-        IWithCreate AuthorizationRule.Definition.IWithListen<IWithCreate>.WithListeningEnabled()
-        {
-            return base.WithListeningEnabled();
-        }
-
-        IWithCreate AuthorizationRule.Definition.IWithSend<IWithCreate>.WithSendingEnabled()
-        {
-            return base.WithSendingEnabled();
-        }
-
-        IWithCreate AuthorizationRule.Definition.IWithManage<IWithCreate>.WithManagementEnabled()
-        {
-            return base.WithManagementEnabled();
         }
     }
 }

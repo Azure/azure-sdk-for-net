@@ -2,9 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
     using System;
 
     internal partial class RestorePointImpl 
@@ -29,6 +28,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             get
             {
                 return this.EarliestRestoreDate();
+            }
+        }
+
+        /// <summary>
+        /// Gets restore point creation time (ISO8601 format). Populated when
+        /// restorePointType = CONTINUOUS. Null otherwise.
+        /// </summary>
+        System.DateTime Microsoft.Azure.Management.Sql.Fluent.IRestorePoint.RestorePointCreationDate
+        {
+            get
+            {
+                return this.RestorePointCreationDate();
             }
         }
 
@@ -66,14 +77,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
-        /// Gets restore point creation time (ISO8601 format). Populated when
-        /// restorePointType = CONTINUOUS. Null otherwise.
+        /// Gets the resource ID string.
         /// </summary>
-        System.DateTime Microsoft.Azure.Management.Sql.Fluent.IRestorePoint.RestorePointCreationDate
+        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
         {
             get
             {
-                return this.RestorePointCreationDate();
+                return this.Id();
             }
         }
 
@@ -85,17 +95,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             get
             {
                 return this.ResourceGroupName();
-            }
-        }
-
-        /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id();
             }
         }
     }

@@ -6,11 +6,9 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Fluent.ServiceBus
+namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using Microsoft.Azure;
-    using Microsoft.Azure.Management;
-    using Microsoft.Azure.Management.Fluent;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;

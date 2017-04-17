@@ -7,9 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateD
     /// <summary>
     /// The first stage of the probe definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithPort<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithPort<ParentT>
     {
     }
 
@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateD
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
-        IWithPort<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithAttach<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithPort<ParentT>
     {
     }
 
@@ -73,9 +73,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateD
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>,
-        IWithNumberOfProbes<ParentT>,
-        IWithIntervalInSeconds<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithNumberOfProbes<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.UpdateDefinition.IWithIntervalInSeconds<ParentT>
     {
     }
 }

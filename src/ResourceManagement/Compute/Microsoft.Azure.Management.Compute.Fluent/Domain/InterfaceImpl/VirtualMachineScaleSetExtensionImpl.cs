@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using VirtualMachineScaleSet.Definition;
-    using VirtualMachineScaleSet.Update;
-    using VirtualMachineScaleSetExtension.Definition;
-    using VirtualMachineScaleSetExtension.Update;
-    using VirtualMachineScaleSetExtension.UpdateDefinition;
-    using Models;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;

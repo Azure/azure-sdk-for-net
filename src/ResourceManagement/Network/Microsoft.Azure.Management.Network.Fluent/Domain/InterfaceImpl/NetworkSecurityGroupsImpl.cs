@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;

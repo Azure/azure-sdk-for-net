@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// <summary>
     /// Type representing encryption settings to be applied to a Linux virtual machine.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuTGludXhWTURpc2tFbmNyeXB0aW9uQ29uZmlndXJhdGlvbg==
-    public sealed class LinuxVMDiskEncryptionConfiguration  :
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuTGludXhWTURpc2tFbmNyeXB0aW9uQ29uZmlndXJhdGlvbg==
+    public sealed partial class LinuxVMDiskEncryptionConfiguration  :
         VirtualMachineEncryptionConfiguration<Microsoft.Azure.Management.Compute.Fluent.LinuxVMDiskEncryptionConfiguration>
     {
         /// <summary>

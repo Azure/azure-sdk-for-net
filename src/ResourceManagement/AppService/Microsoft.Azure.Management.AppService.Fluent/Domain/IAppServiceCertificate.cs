@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// version number.).
     /// </remarks>
     public interface IAppServiceCertificate  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IAppServiceManager,Models.CertificateInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager,Models.CertificateInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificate>
     {
         /// <summary>

@@ -9,8 +9,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using System;
     using ResourceManager.Fluent.Core;
     using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
-    using Management.Fluent.ServiceBus;
+    using Management.ServiceBus.Fluent.Models;
 
     /// <summary>
     /// Implementation for Subscription.
@@ -33,7 +32,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
 
 
         ///GENMHASH:D34AFBD0F174F19A653AA4494C6644CF:FAF1EE7AC452C290A5530A75FBBD6949
-        internal SubscriptionImpl(string resourceGroupName, string namespaceName, string topicName, string name, Region region, Management.Fluent.ServiceBus.Models.SubscriptionInner inner, IServiceBusManager manager) : base(name, inner, manager)
+        internal SubscriptionImpl(string resourceGroupName, string namespaceName, string topicName, string name, Region region, Management.ServiceBus.Fluent.Models.SubscriptionInner inner, IServiceBusManager manager) : base(name, inner, manager)
         {
             this.namespaceName = namespaceName;
             this.region = region;

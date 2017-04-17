@@ -10,12 +10,12 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// Entry point to SQL FirewallRule management API.
     /// </summary>
     public interface ISqlFirewallRules  :
-        ISupportsDeletingById,
-        ISupportsGettingById<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
-        ISupportsDeletingByParent,
-        IHasManager<ISqlManager>,
-        IHasInner<IServersOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByParent,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Sql.Fluent.IServersOperations>
     {
         /// <summary>
         /// Lists resources of the specified type in the specified resource group and SQLServer.
@@ -23,14 +23,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="sqlServerName">The name of SQLServer.</param>
         /// <return>The list of SQLDatabases in a SQLServer.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule> ListBySqlServer(string resourceGroupName, string sqlServerName);
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule> ListBySqlServer(string resourceGroupName, string sqlServerName);
 
         /// <summary>
         /// Gets the SQLDatabase based on the SQLServer.
         /// </summary>
         /// <param name="sqlServer">The instance of SQLServer.</param>
         /// <return>The list of SQLDatabases in a SQLServer.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule> ListBySqlServer(ISqlServer sqlServer);
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule> ListBySqlServer(ISqlServer sqlServer);
 
         /// <summary>
         /// Gets the SQLDatabase based on the resource group name, SQLServer name and FirewallRule name.

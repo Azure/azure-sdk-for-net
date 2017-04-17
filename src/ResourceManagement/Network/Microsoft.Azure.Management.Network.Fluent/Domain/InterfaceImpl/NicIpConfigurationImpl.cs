@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Associate a subnet with the network interface IP configuration.
         /// </summary>
         /// <param name="name">The subnet name.</param>
-        /// <return>The next stage of the network interface IP configuration definition.</return>
+        /// <return>The next stage of the definition.</return>
         NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithSubnet<NetworkInterface.Update.IUpdate>.WithSubnet(string name)
         {
             return this.WithSubnet(name) as NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate>;
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Associate a subnet with the network interface IP configuration.
         /// </summary>
         /// <param name="name">The subnet name.</param>
-        /// <return>The next stage of the network interface IP configuration definition.</return>
+        /// <return>The next stage of the definition.</return>
         NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithSubnet<NetworkInterface.Definition.IWithCreate>.WithSubnet(string name)
         {
             return this.WithSubnet(name) as NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate>;
@@ -502,7 +502,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// based on the provided definition.
         /// </summary>
         /// <param name="creatable">A creatable definition for a new virtual network.</param>
-        /// <return>The next stage of the network interface IP configuration definition.</return>
+        /// <return>The next stage of the definition.</return>
         NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithNewNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
         {
             return this.WithNewNetwork(creatable) as NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate>;
@@ -516,7 +516,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name of the new virtual network.</param>
         /// <param name="addressSpace">The address space for rhe virtual network.</param>
-        /// <return>The next stage of the network interface IP configuration definition.</return>
+        /// <return>The next stage of the definition.</return>
         NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithNewNetwork(string name, string addressSpace)
         {
             return this.WithNewNetwork(name, addressSpace) as NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate>;
@@ -529,7 +529,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// network IP address space.
         /// </summary>
         /// <param name="addressSpace">The address space for the virtual network.</param>
-        /// <return>The next stage of the network interface IP configuration definition.</return>
+        /// <return>The next stage of the definition.</return>
         NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithNewNetwork(string addressSpace)
         {
             return this.WithNewNetwork(addressSpace) as NicIPConfiguration.UpdateDefinition.IWithPrivateIP<NetworkInterface.Update.IUpdate>;
@@ -539,7 +539,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Associate an existing virtual network with the network interface IP configuration.
         /// </summary>
         /// <param name="network">An existing virtual network.</param>
-        /// <return>The next stage of the network interface IP configuration definition.</return>
+        /// <return>The next stage of the definition.</return>
         NicIPConfiguration.UpdateDefinition.IWithSubnet<NetworkInterface.Update.IUpdate> NicIPConfiguration.UpdateDefinition.IWithNetwork<NetworkInterface.Update.IUpdate>.WithExistingNetwork(INetwork network)
         {
             return this.WithExistingNetwork(network) as NicIPConfiguration.UpdateDefinition.IWithSubnet<NetworkInterface.Update.IUpdate>;
@@ -550,7 +550,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// based on the provided definition.
         /// </summary>
         /// <param name="creatable">A creatable definition for a new virtual network.</param>
-        /// <return>The next stage of the network interface IP configuration definition.</return>
+        /// <return>The next stage of the definition.</return>
         NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithNewNetwork(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork> creatable)
         {
             return this.WithNewNetwork(creatable) as NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate>;
@@ -564,7 +564,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// </summary>
         /// <param name="name">The name of the new virtual network.</param>
         /// <param name="addressSpace">The address space for rhe virtual network.</param>
-        /// <return>The next stage of the network interface IP configuration definition.</return>
+        /// <return>The next stage of the definition.</return>
         NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithNewNetwork(string name, string addressSpace)
         {
             return this.WithNewNetwork(name, addressSpace) as NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate>;
@@ -577,7 +577,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// network IP address space.
         /// </summary>
         /// <param name="addressSpace">The address space for the virtual network.</param>
-        /// <return>The next stage of the network interface IP configuration definition.</return>
+        /// <return>The next stage of the definition.</return>
         NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithNewNetwork(string addressSpace)
         {
             return this.WithNewNetwork(addressSpace) as NicIPConfiguration.Definition.IWithPrivateIP<NetworkInterface.Definition.IWithCreate>;
@@ -587,7 +587,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Associate an existing virtual network with the network interface IP configuration.
         /// </summary>
         /// <param name="network">An existing virtual network.</param>
-        /// <return>The next stage of the network interface IP configuration definition.</return>
+        /// <return>The next stage of the definition.</return>
         NicIPConfiguration.Definition.IWithSubnet<NetworkInterface.Definition.IWithCreate> NicIPConfiguration.Definition.IWithNetwork<NetworkInterface.Definition.IWithCreate>.WithExistingNetwork(INetwork network)
         {
             return this.WithExistingNetwork(network) as NicIPConfiguration.Definition.IWithSubnet<NetworkInterface.Definition.IWithCreate>;

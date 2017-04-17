@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     /// <summary>
     /// The first stage of the load balancing rule definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithProtocol<ParentT>
     {
@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithAttach<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithProtocol<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithFrontendPort<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithFrontend<ParentT>,
-        IWithProbe<ParentT>,
-        IWithBackend<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithProbe<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithBackend<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithBackendPort<ParentT>
     {
     }
@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the backend port to send the load-balanced traffic to.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithBackendPort<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 
@@ -80,10 +80,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithFloatingIP<ParentT>,
-        IWithIdleTimeoutInMinutes<ParentT>,
-        IWithLoadDistribution<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithIdleTimeoutInMinutes<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithLoadDistribution<ParentT>
     {
     }
 
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the frontend port to load balance.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithFrontendPort<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.HasFrontendPort.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithProbe<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
     {
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefi
     /// <summary>
     /// The stage of a load balancing rule definition allowing to specify the transport protocol to apply the rule to.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithProtocol<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,Microsoft.Azure.Management.Network.Fluent.Models.TransportProtocol>
     {

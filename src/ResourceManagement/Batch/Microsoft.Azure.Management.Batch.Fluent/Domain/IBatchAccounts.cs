@@ -2,32 +2,31 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
-
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+
     /// <summary>
     /// Entry point to Azure Batch account management API.
     /// </summary>
     public interface IBatchAccounts  :
-        ISupportsCreating<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        ISupportsGettingById<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        ISupportsDeletingById,
-        ISupportsDeletingByResourceGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        ISupportsBatchDeletion,
-        IHasManager<IBatchManager>,
-        IHasInner<IBatchAccountOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<BatchAccount.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IBatchManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<IBatchAccountOperations>
     {
         /// <summary>
-        /// Queries the number of the batch account can be created in specified region`.
+        /// Looks up the number of Batch accounts that can be created in the specified region.
         /// </summary>
-        /// <param name="region">region the region in for which to check quota</param>
-        /// <returns>whether the number of batch accounts can be created in specified region.</returns>
+        /// <param name="region">An Azure region.</param>
+        /// <return>The number of Batch accounts that can be created in the specified region.</return>
         int GetBatchAccountQuotaByLocation(Region region);
-
     }
 }

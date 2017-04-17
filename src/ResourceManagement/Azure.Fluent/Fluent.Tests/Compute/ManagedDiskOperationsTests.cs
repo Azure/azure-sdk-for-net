@@ -56,7 +56,7 @@ namespace Fluent.Tests.Compute
                     Assert.Equal(disk.CreationMethod, DiskCreateOption.Empty);
                     Assert.False(disk.IsAttachedToVirtualMachine);
                     Assert.Equal(disk.SizeInGB, 100);
-                    Assert.Null(disk.OsType);
+                    Assert.Null(disk.OSType);
                     Assert.NotNull(disk.Source);
                     Assert.Equal(disk.Source.Type, CreationSourceType.Empty);
                     Assert.Null(disk.Source.SourceId());
@@ -150,7 +150,7 @@ namespace Fluent.Tests.Compute
                     Assert.Equal(disk.CreationMethod, DiskCreateOption.Copy);
                     Assert.False(disk.IsAttachedToVirtualMachine);
                     Assert.Equal(disk.SizeInGB, 200);
-                    Assert.Null(disk.OsType);
+                    Assert.Null(disk.OSType);
                     Assert.NotNull(disk.Source);
                     Assert.Equal(disk.Source.Type, CreationSourceType.CopiedFromDisk);
                     Assert.True(disk.Source.SourceId().Equals(emptyDisk.Id, StringComparison.OrdinalIgnoreCase));
@@ -211,7 +211,7 @@ namespace Fluent.Tests.Compute
                     Assert.Equal(snapshot.Sku, DiskSkuTypes.StandardLRS);
                     Assert.Equal(snapshot.CreationMethod, DiskCreateOption.Copy);
                     Assert.Equal(snapshot.SizeInGB, 200);
-                    Assert.Null(snapshot.OsType);
+                    Assert.Null(snapshot.OSType);
                     Assert.NotNull(snapshot.Source);
                     Assert.Equal(snapshot.Source.Type, CreationSourceType.CopiedFromDisk);
                     Assert.True(snapshot.Source.SourceId().Equals(emptyDisk.Id, StringComparison.OrdinalIgnoreCase));
@@ -230,7 +230,7 @@ namespace Fluent.Tests.Compute
                     Assert.Equal(fromSnapshotDisk.Sku, DiskSkuTypes.StandardLRS);
                     Assert.Equal(fromSnapshotDisk.CreationMethod, DiskCreateOption.Copy);
                     Assert.Equal(fromSnapshotDisk.SizeInGB, 300);
-                    Assert.Null(fromSnapshotDisk.OsType);
+                    Assert.Null(fromSnapshotDisk.OSType);
                     Assert.NotNull(fromSnapshotDisk.Source);
                     Assert.Equal(fromSnapshotDisk.Source.Type, CreationSourceType.CopiedFromSnapshot);
                     Assert.True(fromSnapshotDisk.Source.SourceId().Equals(snapshot.Id));

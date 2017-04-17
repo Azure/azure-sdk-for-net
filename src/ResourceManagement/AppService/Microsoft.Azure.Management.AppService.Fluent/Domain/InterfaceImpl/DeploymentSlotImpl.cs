@@ -4,14 +4,24 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.AppService.Fluent.Models;
     using Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.DeploymentSlot.Update;
+    using Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.UpdateDefinition;
+    using Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.UpdateDefinition;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Update;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.UpdateDefinition;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
+    using System;
 
     internal partial class DeploymentSlotImpl 
     {
@@ -871,7 +881,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the operating system the web app is running on.
         /// </summary>
-        OperatingSystem Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.OperatingSystem
+        Microsoft.Azure.Management.AppService.Fluent.OperatingSystem Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.OperatingSystem
         {
             get
             {
@@ -1114,9 +1124,9 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <return>The mapping from host names and the host name bindings.</return>
-        async Task<System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.GetHostNameBindingsAsync(CancellationToken cancellationToken)
+        async Task<System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>> Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.GetHostNameBindingsAsync(CancellationToken cancellationToken)
         {
-            return await this.GetHostNameBindingsAsync(cancellationToken) as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>;
+            return await this.GetHostNameBindingsAsync(cancellationToken) as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.AppService.Fluent.IHostNameBinding>;
         }
 
         /// <summary>

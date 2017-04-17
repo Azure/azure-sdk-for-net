@@ -8,8 +8,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// Represents a virtual machine image publisher.
     /// </summary>
     public interface IVirtualMachinePublisher  :
-        IHasName
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName
     {
+        /// <summary>
+        /// Gets the region where virtual machine images from this publisher are available.
+        /// </summary>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Region { get; }
+
         /// <summary>
         /// Gets the offers from this publisher.
         /// </summary>
@@ -19,10 +24,5 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the virtual machine image extensions from this publisher.
         /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageTypes ExtensionTypes { get; }
-
-        /// <summary>
-        /// Gets the region where virtual machine images from this publisher are available.
-        /// </summary>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Region { get; }
     }
 }

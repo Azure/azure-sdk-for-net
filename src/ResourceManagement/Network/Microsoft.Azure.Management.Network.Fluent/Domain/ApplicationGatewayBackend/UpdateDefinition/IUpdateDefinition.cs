@@ -9,8 +9,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 
@@ -21,8 +21,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>,
-        IWithAddress<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition.IWithAddress<ParentT>
     {
     }
 
@@ -33,18 +33,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
     public interface IWithAddress<ParentT> 
     {
         /// <summary>
-        /// Adds the specified existing IP address to the backend.
-        /// </summary>
-        /// <param name="ipAddress">An IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ParentT> WithIPAddress(string ipAddress);
-
-        /// <summary>
         /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
         /// </summary>
         /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ParentT> WithFqdn(string fqdn);
+
+        /// <summary>
+        /// Adds the specified existing IP address to the backend.
+        /// </summary>
+        /// <param name="ipAddress">An IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ParentT> WithIPAddress(string ipAddress);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.UpdateDefinition.IWithAttach<ParentT>
     {
     }
 }

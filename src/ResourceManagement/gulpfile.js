@@ -95,7 +95,7 @@ var mappings = {
         'args': '-FT 1'
     },
     'servicebus': {
-        'dir': 'ServiceBus/Microsoft.Azure.Management.Fluent.ServiceBus',
+        'dir': 'ServiceBus/Microsoft.Azure.Management.ServiceBus.Fluent',
         'source': 'arm-servicebus\2015-08-01\swagger\servicebus.json',
         'package': 'Microsoft.Azure.Management.Fluent.ServiceBus',
         'args': '-FT 1'

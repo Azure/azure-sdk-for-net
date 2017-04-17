@@ -10,8 +10,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage
     /// An immutable client-side representation of a data disk image in an image resource.
     /// </summary>
     public interface ICustomImageDataDisk  :
-        IHasInner<Microsoft.Azure.Management.Compute.Fluent.Models.ImageDataDisk>,
-        IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Compute.Fluent.Models.ImageDataDisk>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>
     {
     }
 }

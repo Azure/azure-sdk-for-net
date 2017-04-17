@@ -10,9 +10,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point to virtual machine scale set network interface management API.
     /// </summary>
     public interface IVirtualMachineScaleSetNetworkInterfaces  :
-        ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>,
-        IHasInner<Microsoft.Azure.Management.Network.Fluent.INetworkInterfacesOperations>,
-        IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Network.Fluent.INetworkInterfacesOperations>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>
     {
         /// <summary>
         /// Gets a network interface associated with a virtual machine scale set instance.

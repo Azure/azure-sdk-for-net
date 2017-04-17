@@ -10,17 +10,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point to public IP address management.
     /// </summary>
     public interface IPublicIPAddresses  :
-        ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
-        ISupportsCreating<PublicIPAddress.Definition.IBlank>,
-        ISupportsDeletingById,
-        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
-        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
-        ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
-        ISupportsDeletingByResourceGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
-        ISupportsBatchDeletion,
-        IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
-        IHasInner<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddressesOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<PublicIPAddress.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Network.Fluent.IPublicIPAddressesOperations>
     {
     }
 }

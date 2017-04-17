@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlElasticPools.SqlElasticPoolsC
     /// Entry point to SQL ElasticPool management API, which already have the SQLServer specified.
     /// </summary>
     public interface ISqlElasticPoolsCreatable  :
-        ISqlElasticPools
+        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPools
     {
         Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IBlank DefinedWithSqlServer(string resourceGroupName, string sqlServerName, string elasticPoolName, Region region);
     }

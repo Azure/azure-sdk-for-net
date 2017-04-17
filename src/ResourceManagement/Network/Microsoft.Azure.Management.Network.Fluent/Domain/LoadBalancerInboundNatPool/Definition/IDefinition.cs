@@ -22,11 +22,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithAttach<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithProtocol<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithFrontend<ParentT>,
-        IWithFrontendPortRange<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithFrontendPortRange<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithBackendPort<ParentT>
     {
     }
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
     /// <summary>
     /// The first stage of the inbound NAT pool definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.Definition.IWithProtocol<ParentT>
     {
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.D
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>
     {
     }
 }

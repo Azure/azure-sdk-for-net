@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.U
     /// the application gateway available at as Internet-facing.
     /// </summary>
     public interface IWithPublicIPAddress  :
-        IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Update.IUpdate>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update.IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Update.IUpdate>
     {
     }
 
@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.U
     /// The entirety of an application gateway frontend update as part of an application gateway update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
-        IWithPublicIPAddress
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.Update.IWithPublicIPAddress
     {
     }
 }

@@ -12,19 +12,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point for Virtual Network management API in Azure.
     /// </summary>
     public interface INetwork  :
-        IGroupableResource<Microsoft.Azure.Management.Network.Fluent.INetworkManager,Models.VirtualNetworkInner>,
-        IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetwork>,
-        IUpdatable<Network.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Network.Fluent.INetworkManager,Models.VirtualNetworkInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetwork>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<Network.Update.IUpdate>
     {
-        /// <summary>
-        /// Gets list of address spaces associated with this virtual network, in the CIDR notation.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> AddressSpaces { get; }
-
         /// <summary>
         /// Gets list of DNS server IP addresses associated with this virtual network.
         /// </summary>
         System.Collections.Generic.IReadOnlyList<string> DnsServerIPs { get; }
+
+        /// <summary>
+        /// Gets list of address spaces associated with this virtual network, in the CIDR notation.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<string> AddressSpaces { get; }
 
         /// <summary>
         /// Gets subnets of this virtual network as a map indexed by subnet name

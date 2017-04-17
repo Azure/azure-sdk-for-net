@@ -9,12 +9,12 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update
     /// The template for a SQLElasticPool update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IWithDatabaseDtuMax,
-        IWithDatabaseDtuMin,
-        IWithDtu,
-        IWithStorageCapacity,
-        IWithDatabase,
-        IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update.IWithDatabaseDtuMax,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update.IWithDatabaseDtuMin,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update.IWithDtu,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update.IWithStorageCapacity,
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Update.IWithDatabase,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>
     {
     }
 

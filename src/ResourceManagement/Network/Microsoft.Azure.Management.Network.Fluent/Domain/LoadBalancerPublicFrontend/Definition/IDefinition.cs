@@ -8,18 +8,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.D
     /// <summary>
     /// The stage of a public frontend definition allowing to specify an existing public IP address.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IWithPublicIPAddress<ParentT>  :
-        IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>>
+        Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Definition.IWithExistingPublicIPAddress<Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithPublicFrontendOrBackend>>
     {
     }
 
     /// <summary>
     /// The first stage of a public frontend definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
-        IWithPublicIPAddress<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithPublicIPAddress<ParentT>
     {
     }
 
@@ -28,9 +28,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.D
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
-        IWithPublicIPAddress<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithAttach<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.Definition.IWithPublicIPAddress<ParentT>
     {
     }
 
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerPublicFrontend.D
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>
     {
     }
 }

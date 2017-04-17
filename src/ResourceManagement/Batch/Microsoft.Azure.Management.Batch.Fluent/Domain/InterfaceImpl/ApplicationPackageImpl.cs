@@ -2,86 +2,107 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
-
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Batch.Fluent.Models;
     using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Rest;
     using System;
-    public partial class ApplicationPackageImpl 
+    using Models;
+
+    internal partial class ApplicationPackageImpl 
     {
-        /// <returns>the sate of the application package</returns>
-        Microsoft.Azure.Management.Batch.Fluent.Models.PackageState Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.State
+        /// <summary>
+        /// Activates the application package.
+        /// </summary>
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <param name="format">The format of the uploaded Batch application package, either "zip" or "tar".</param>
+        void Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.Activate(string format)
         {
-            get
-            { 
-                return this.State();
-            }
+
+            this.ActivateAsync(format).GetAwaiter().GetResult();
         }
-        /// <returns>the name of application package.</returns>
-        string IHasName.Name
-        {
-            get
-            { 
-                return this.Name() as string;
-            }
-        }
-        /// <returns>the date when last time this application package was activate.</returns>
+
+        /// <summary>
+        /// Gets the last time this application package was activated.
+        /// </summary>
         System.DateTime Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.LastActivationTime
         {
             get
-            { 
+            {
                 return this.LastActivationTime();
             }
         }
 
         /// <summary>
-        /// Activates the application package.
+        /// Gets the state of the application package.
         /// </summary>
-        /// <param name="format">format format of the uploaded package supported values zip, tar</param>
-        void Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.Activate(string format)
-        { 
-            ((IApplicationPackage)this).ActivateAsync(format).ConfigureAwait(false).GetAwaiter().GetResult();
+        PackageState Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.State
+        {
+            get
+            {
+                return this.State();
+            }
         }
 
         /// <summary>
-        /// Activates the application package.
+        /// Activates the application package asynchronously.
         /// </summary>
-        /// <param name="format">format format of the uploaded package supported values zip, tar</param>
-        async Task IApplicationPackage.ActivateAsync(string format, CancellationToken cancellationToken)
+        /// <remarks>
+        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
+        /// <param name="format">The format of the uploaded Batch application package, either "zip" or "tar".</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.ActivateAsync(string format, CancellationToken cancellationToken)
         {
+ 
             await this.ActivateAsync(format, cancellationToken);
         }
 
-        /// <returns>the expiry of the storage url for application package</returns>
-        System.DateTime Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.StorageUrlExpiry
-        {
-            get
-            { 
-            return this.StorageUrlExpiry();
-            }
-        }
-        /// <returns>the format of application package</returns>
+        /// <summary>
+        /// Gets the format of the application package.
+        /// </summary>
         string Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.Format
         {
             get
-            { 
-            return this.Format() as string;
+            {
+                return this.Format();
             }
         }
+
         /// <summary>
         /// Deletes the application package.
         /// </summary>
-        void Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.Delete() { 
+        void Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.Delete()
+        {
+ 
             this.Delete();
         }
 
-        /// <returns>the storage Url of application package where application should be uploaded</returns>
+        /// <summary>
+        /// Gets the storage URL of the application package where teh application should be uploaded.
+        /// </summary>
         string Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.StorageUrl
         {
             get
-            { 
-            return this.StorageUrl() as string;
+            {
+                return this.StorageUrl();
+            }
+        }
+
+        /// <summary>
+        /// Gets the expiry of the storage URL for the application package.
+        /// </summary>
+        System.DateTime Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.StorageUrlExpiry
+        {
+            get
+            {
+                return this.StorageUrlExpiry();
             }
         }
     }

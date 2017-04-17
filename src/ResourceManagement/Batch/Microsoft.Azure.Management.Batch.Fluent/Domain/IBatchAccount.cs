@@ -2,76 +2,68 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
-
-    using Microsoft.Azure.Management.Batch.Fluent.Models;
     using Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using System.Threading;
-    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using System.Collections.Generic;
+    using Models;
 
     /// <summary>
     /// An immutable client-side representation of an Azure Batch account.
     /// </summary>
     public interface IBatchAccount  :
-        IGroupableResource<IBatchManager, BatchAccountInner>,
-        IRefreshable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
-        IUpdatable<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IBatchManager, BatchAccountInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<BatchAccount.Update.IUpdate>
     {
-        /// <returns>the provisioned state of the resource. Possible values include:</returns>
-        /// <returns>'Invalid', 'Creating', 'Deleting', 'Succeeded', 'Failed', 'Cancelled'</returns>
-        Microsoft.Azure.Management.Batch.Fluent.Models.ProvisioningState ProvisioningState { get; }
-
-        /// <returns>Get the accountEndpoint value.</returns>
+        /// <summary>
+        /// Gets Batch account endpoint.
+        /// </summary>
         string AccountEndpoint { get; }
 
-        /// <returns>the properties and status of any auto storage account associated with</returns>
-        /// <returns>the account</returns>
-        Microsoft.Azure.Management.Batch.Fluent.Models.AutoStorageProperties AutoStorage { get; }
+        /// <summary>
+        /// Regenerates the access keys for the Batch account.
+        /// </summary>
+        /// <param name="keyType">The type if key to regenerate.</param>
+        /// <return>Regenerated access keys for this Batch account.</return>
+        Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys RegenerateKeys(AccountKeyType keyType);
 
-        /// <returns>the core quota for this BatchAccount account</returns>
-        int CoreQuota { get; }
-
-        /// <returns>the pool quota for this BatchAccount account</returns>
-        int PoolQuota { get; }
-
-        /// <returns>the active job and job schedule quota for this BatchAccount account</returns>
+        /// <summary>
+        /// Gets the active job and job schedule quota for this Batch account.
+        /// </summary>
         int ActiveJobAndJobScheduleQuota { get; }
 
-        /// <returns>the access keys for this batch account</returns>
+        /// <return>The access keys for this Batch account.</return>
         Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys GetKeys();
 
-        
-        /// <returns>the access keys for this batch account</returns>
-        Task<BatchAccountKeys> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
-
         /// <summary>
-        /// Regenerates the access keys for batch account.
+        /// Gets the pool quota for this Batch account.
         /// </summary>
-        /// <param name="keyType">keyType either primary or secondary key to be regenerated</param>
-        /// <returns>the access keys for this batch account</returns>
-        BatchAccountKeys RegenerateKeys(AccountKeyType keyType);
+        int PoolQuota { get; }
 
         /// <summary>
-        /// Regenerates the access keys for batch account.
+        /// Gets applications in this Batch account, indexed by name.
         /// </summary>
-        /// <param name="keyType">keyType either primary or secondary key to be regenerated</param>
-        /// <returns>the access keys for this batch account</returns>
-        Task<BatchAccountKeys> RegenerateKeysAsync(AccountKeyType keyType, CancellationToken cancellationToken = default(CancellationToken));
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Batch.Fluent.IApplication> Applications { get; }
 
         /// <summary>
-        /// Synchronize the storage account keys for batch account.
+        /// Gets the properties and status of any auto storage account associated with the Batch account.
+        /// </summary>
+        AutoStorageProperties AutoStorage { get; }
+
+        /// <summary>
+        /// Gets the core quota for this Batch account.
+        /// </summary>
+        int CoreQuota { get; }
+
+        /// <summary>
+        /// Gets the provisioned state of the resource.
+        /// </summary>
+        ProvisioningState ProvisioningState { get; }
+
+        /// <summary>
+        /// Synchronizes the storage account keys for this Batch account.
         /// </summary>
         void SynchronizeAutoStorageKeys();
-
-        /// <summary>
-        /// Synchronize the storage account keys for batch account.
-        /// </summary>
-        Task SynchronizeAutoStorageKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <returns>the application in this batch account.</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Batch.Fluent.IApplication> Applications { get; }
-
     }
 }

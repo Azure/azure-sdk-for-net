@@ -141,7 +141,7 @@ namespace ManageDns
                 Utilities.Log("Updating root DNS zone " + CustomDomainName + "...");
                 rootDnsZone = rootDnsZone.Update()
                         .DefineARecordSet("employees")
-                            .WithIpv4Address(vm1PublicIpAddress.IPAddress)
+                            .WithIPv4Address(vm1PublicIpAddress.IPAddress)
                             .Attach()
                         .Apply();
                 Utilities.Log("Updated root DNS zone " + rootDnsZone.Name);
@@ -228,7 +228,7 @@ namespace ManageDns
                 Utilities.Log("Updating child DNS zone " + partnerSubDomainName + "...");
                 partnersDnsZone = partnersDnsZone.Update()
                         .DefineARecordSet("@")
-                            .WithIpv4Address(vm2PublicIpAddress.IPAddress)
+                            .WithIPv4Address(vm2PublicIpAddress.IPAddress)
                             .Attach()
                         .Apply();
                 Utilities.Log("Updated child DNS zone " + partnersDnsZone.Name);

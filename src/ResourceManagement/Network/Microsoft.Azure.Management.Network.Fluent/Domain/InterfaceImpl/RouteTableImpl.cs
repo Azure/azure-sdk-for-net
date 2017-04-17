@@ -4,6 +4,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Network.Fluent.Route.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.Route.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Route.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition;
     using Microsoft.Azure.Management.Network.Fluent.RouteTable.Update;

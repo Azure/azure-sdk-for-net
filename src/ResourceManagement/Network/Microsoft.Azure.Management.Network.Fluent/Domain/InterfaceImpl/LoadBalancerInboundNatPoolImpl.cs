@@ -57,17 +57,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the starting frontend port number.
-        /// </summary>
-        int Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.FrontendPortRangeStart
-        {
-            get
-            {
-                return this.FrontendPortRangeStart();
-            }
-        }
-
-        /// <summary>
         /// Gets the ending frontend port number.
         /// </summary>
         int Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.FrontendPortRangeEnd
@@ -75,6 +64,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
             get
             {
                 return this.FrontendPortRangeEnd();
+            }
+        }
+
+        /// <summary>
+        /// Gets the starting frontend port number.
+        /// </summary>
+        int Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatPool.FrontendPortRangeStart
+        {
+            get
+            {
+                return this.FrontendPortRangeStart();
             }
         }
 

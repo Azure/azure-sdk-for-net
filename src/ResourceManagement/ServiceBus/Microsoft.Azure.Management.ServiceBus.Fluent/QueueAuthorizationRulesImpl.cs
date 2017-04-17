@@ -5,8 +5,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using ResourceManager.Fluent.Core;
-    using Management.Fluent.ServiceBus.Models;
-    using Management.Fluent.ServiceBus;
+    using Management.ServiceBus.Fluent.Models;
     using ServiceBus.Fluent;
     using System;
     using Rest.Azure;

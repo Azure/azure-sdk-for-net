@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
 
@@ -16,6 +16,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.Name();
+            }
+        }
+
+        /// <summary>
+        /// Gets the instance view of the scale set virtual machine extension.
+        /// </summary>
+        Models.VirtualMachineExtensionInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMInstanceExtension.InstanceView
+        {
+            get
+            {
+                return this.InstanceView() as Models.VirtualMachineExtensionInstanceView;
             }
         }
 
@@ -50,17 +61,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.AutoUpgradeMinorVersionEnabled();
-            }
-        }
-
-        /// <summary>
-        /// Gets the instance view of the virtual machine extension.
-        /// </summary>
-        Models.VirtualMachineExtensionInstanceView Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMInstanceExtension.InstanceView
-        {
-            get
-            {
-                return this.InstanceView() as Models.VirtualMachineExtensionInstanceView;
             }
         }
 

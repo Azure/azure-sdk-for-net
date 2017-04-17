@@ -10,9 +10,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Virtual machine scale set network interface.
     /// </summary>
     public interface IVirtualMachineScaleSetNetworkInterface  :
-        INetworkInterfaceBase,
-        IResource,
-        IRefreshable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>
+        Microsoft.Azure.Management.Network.Fluent.INetworkInterfaceBase,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface>
     {
         /// <summary>
         /// Gets the IP configurations of this network interface, indexed by their names.

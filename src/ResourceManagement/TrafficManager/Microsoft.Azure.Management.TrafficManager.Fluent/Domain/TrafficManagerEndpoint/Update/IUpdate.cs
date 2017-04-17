@@ -30,18 +30,18 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
     public interface IWithNestedProfileConfig 
     {
         /// <summary>
-        /// Specifies a nested traffic manager profile for the endpoint.
-        /// </summary>
-        /// <param name="nestedProfile">The nested traffic manager profile.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint ToProfile(ITrafficManagerProfile nestedProfile);
-
-        /// <summary>
         /// Specifies the minimum number of endpoints to be online for the nested profile to be considered healthy.
         /// </summary>
         /// <param name="count">Number of endpoints.</param>
         /// <return>The next stage of the endpoint update.</return>
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint WithMinimumEndpointsToEnableTraffic(int count);
+
+        /// <summary>
+        /// Specifies a nested traffic manager profile for the endpoint.
+        /// </summary>
+        /// <param name="nestedProfile">The nested traffic manager profile.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint ToProfile(ITrafficManagerProfile nestedProfile);
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
     {
         /// <summary>
         /// Specifies the weight for the endpoint that will be used when priority-based routing method
-        /// is TrafficRoutingMethod.PRIORITY enabled on the profile.
+        /// is  TrafficRoutingMethod.PRIORITY enabled on the profile.
         /// </summary>
         /// <param name="priority">The endpoint priority.</param>
         /// <return>The next stage of the update.</return>
@@ -76,10 +76,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
     /// The set of configurations that can be updated for all endpoint irrespective of their type (Azure, external, nested profile).
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>,
-        IWithRoutingWeight,
-        IWithRoutingPriority,
-        IWithTrafficDisabledOrEnabled
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>,
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithRoutingWeight,
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithRoutingPriority,
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithTrafficDisabledOrEnabled
     {
     }
 
@@ -89,16 +89,16 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
     public interface IWithTrafficDisabledOrEnabled 
     {
         /// <summary>
-        /// Specifies that the endpoint should be excluded from receiving traffic.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithTrafficDisabled();
-
-        /// <summary>
         /// Specifies that the endpoint should receive the traffic.
         /// </summary>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithTrafficEnabled();
+
+        /// <summary>
+        /// Specifies that the endpoint should be excluded from receiving traffic.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithTrafficDisabled();
     }
 
     /// <summary>

@@ -5,22 +5,22 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
     using Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition;
     using Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update;
+    using System.Collections.Generic;
     using System;
-    using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
 
     internal partial class SubscriptionImpl 
     {
         /// <summary>
         /// Gets the manager client of this resource type.
         /// </summary>
-        IServiceBusManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<IServiceBusManager>.Manager
+        Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager>.Manager
         {
             get
             {
-                return this.Manager as IServiceBusManager;
+                return this.Manager as Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager;
             }
         }
 
@@ -51,9 +51,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="durationInMinutes">Idle duration in minutes.</param>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithDeleteOnIdle.WithDeleteOnIdleDurationInMinutes(int durationInMinutes)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithDeleteOnIdle.WithDeleteOnIdleDurationInMinutes(int durationInMinutes)
         {
-            return this.WithDeleteOnIdleDurationInMinutes(durationInMinutes) as Subscription.Update.IUpdate;
+            return this.WithDeleteOnIdleDurationInMinutes(durationInMinutes) as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
@@ -63,9 +63,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="durationInMinutes">Idle duration in minutes.</param>
         /// <return>The next stage of subscription definition.</return>
-        Subscription.Definition.IWithCreate Subscription.Definition.IWithDeleteOnIdle.WithDeleteOnIdleDurationInMinutes(int durationInMinutes)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithDeleteOnIdle.WithDeleteOnIdleDurationInMinutes(int durationInMinutes)
         {
-            return this.WithDeleteOnIdleDurationInMinutes(durationInMinutes) as Subscription.Definition.IWithCreate;
+            return this.WithDeleteOnIdleDurationInMinutes(durationInMinutes) as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -73,9 +73,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// or delete messages from it's internal store.
         /// </summary>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithMessageBatching.WithoutMessageBatching()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithMessageBatching.WithoutMessageBatching()
         {
-            return this.WithoutMessageBatching() as Subscription.Update.IUpdate;
+            return this.WithoutMessageBatching() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
@@ -83,9 +83,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// messages from it's internal store. This increases the throughput.
         /// </summary>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithMessageBatching.WithMessageBatching()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithMessageBatching.WithMessageBatching()
         {
-            return this.WithMessageBatching() as Subscription.Update.IUpdate;
+            return this.WithMessageBatching() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
@@ -94,9 +94,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// from it's internal store.
         /// </summary>
         /// <return>The next stage of subscription definition.</return>
-        Subscription.Definition.IWithCreate Subscription.Definition.IWithMessageBatching.WithoutMessageBatching()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithMessageBatching.WithoutMessageBatching()
         {
-            return this.WithoutMessageBatching() as Subscription.Definition.IWithCreate;
+            return this.WithoutMessageBatching() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -105,72 +105,72 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="deliveryCount">Maximum delivery subscription.</param>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount.WithMessageMovedToDeadLetterQueueOnMaxDeliveryCount(int deliveryCount)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithMessageMovedToDeadLetterQueueOnMaxDeliveryCount.WithMessageMovedToDeadLetterQueueOnMaxDeliveryCount(int deliveryCount)
         {
-            return this.WithMessageMovedToDeadLetterQueueOnMaxDeliveryCount(deliveryCount) as Subscription.Update.IUpdate;
+            return this.WithMessageMovedToDeadLetterQueueOnMaxDeliveryCount(deliveryCount) as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that expired message should not be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithExpiredMessageMovedToDeadLetterSubscription.WithoutExpiredMessageMovedToDeadLetterSubscription()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithExpiredMessageMovedToDeadLetterSubscription.WithoutExpiredMessageMovedToDeadLetterSubscription()
         {
-            return this.WithoutExpiredMessageMovedToDeadLetterSubscription() as Subscription.Update.IUpdate;
+            return this.WithoutExpiredMessageMovedToDeadLetterSubscription() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that expired message must be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithExpiredMessageMovedToDeadLetterSubscription.WithExpiredMessageMovedToDeadLetterSubscription()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithExpiredMessageMovedToDeadLetterSubscription.WithExpiredMessageMovedToDeadLetterSubscription()
         {
-            return this.WithExpiredMessageMovedToDeadLetterSubscription() as Subscription.Update.IUpdate;
+            return this.WithExpiredMessageMovedToDeadLetterSubscription() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that expired message should not be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription definition.</return>
-        Subscription.Definition.IWithCreate Subscription.Definition.IWithExpiredMessageMovedToDeadLetterSubscription.WithoutExpiredMessageMovedToDeadLetterSubscription()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithExpiredMessageMovedToDeadLetterSubscription.WithoutExpiredMessageMovedToDeadLetterSubscription()
         {
-            return this.WithoutExpiredMessageMovedToDeadLetterSubscription() as Subscription.Definition.IWithCreate;
+            return this.WithoutExpiredMessageMovedToDeadLetterSubscription() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Specifies that expired message must be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription definition.</return>
-        Subscription.Definition.IWithCreate Subscription.Definition.IWithExpiredMessageMovedToDeadLetterSubscription.WithExpiredMessageMovedToDeadLetterSubscription()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithExpiredMessageMovedToDeadLetterSubscription.WithExpiredMessageMovedToDeadLetterSubscription()
         {
-            return this.WithExpiredMessageMovedToDeadLetterSubscription() as Subscription.Definition.IWithCreate;
+            return this.WithExpiredMessageMovedToDeadLetterSubscription() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate;
         }
 
         /// <summary>
         /// Specifies that filter evaluation failed message must be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException.WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException.WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException()
         {
-            return this.WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException() as Subscription.Update.IUpdate;
+            return this.WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that filter evaluation failed message should not be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException.WithoutMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException.WithoutMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException()
         {
-            return this.WithoutMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException() as Subscription.Update.IUpdate;
+            return this.WithoutMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that filter evaluation failed message must be moved to dead-letter subscription.
         /// </summary>
         /// <return>The next stage of subscription definition.</return>
-        Subscription.Definition.IWithCreate Subscription.Definition.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException.WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException.WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException()
         {
-            return this.WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException() as Subscription.Definition.IWithCreate;
+            return this.WithMessageMovedToDeadLetterSubscriptionOnFilterEvaluationException() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -178,9 +178,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="ttl">Time to live duration.</param>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithDefaultMessageTTL.WithDefaultMessageTTL(TimeSpan ttl)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithDefaultMessageTTL.WithDefaultMessageTTL(TimeSpan ttl)
         {
-            return this.WithDefaultMessageTTL(ttl) as Subscription.Update.IUpdate;
+            return this.WithDefaultMessageTTL(ttl) as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
@@ -189,9 +189,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="ttl">Time to live duration.</param>
         /// <return>The next stage of subscription definition.</return>
-        Subscription.Definition.IWithCreate Subscription.Definition.IWithDefaultMessageTTL.WithDefaultMessageTTL(TimeSpan ttl)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithDefaultMessageTTL.WithDefaultMessageTTL(TimeSpan ttl)
         {
-            return this.WithDefaultMessageTTL(ttl) as Subscription.Definition.IWithCreate;
+            return this.WithDefaultMessageTTL(ttl) as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -200,9 +200,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="deliveryCount">Maximum delivery count.</param>
         /// <return>The next stage of subscription definition.</return>
-        Subscription.Definition.IWithCreate Subscription.Definition.IWithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount.WithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount(int deliveryCount)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount.WithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount(int deliveryCount)
         {
-            return this.WithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount(deliveryCount) as Subscription.Definition.IWithCreate;
+            return this.WithMessageMovedToDeadLetterSubscriptionOnMaxDeliveryCount(deliveryCount) as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -253,27 +253,27 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// Specifies that session support should be disabled for the subscription.
         /// </summary>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithSession.WithoutSession()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithSession.WithoutSession()
         {
-            return this.WithoutSession() as Subscription.Update.IUpdate;
+            return this.WithoutSession() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that session support should be enabled for the subscription.
         /// </summary>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithSession.WithSession()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithSession.WithSession()
         {
-            return this.WithSession() as Subscription.Update.IUpdate;
+            return this.WithSession() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that session support should be enabled for the subscription.
         /// </summary>
         /// <return>The next stage of subscription definition.</return>
-        Subscription.Definition.IWithCreate Subscription.Definition.IWithSession.WithSession()
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithSession.WithSession()
         {
-            return this.WithSession() as Subscription.Definition.IWithCreate;
+            return this.WithSession() as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the duration after which the message expires, starting from when the message is sent to subscription.
         /// </summary>
-        TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.DefaultMessageTtlDuration
+        System.TimeSpan Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.DefaultMessageTtlDuration
         {
             get
             {
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the current status of the subscription.
         /// </summary>
-        EntityStatus Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.Status
+        Microsoft.Azure.Management.ServiceBus.Fluent.Models.EntityStatus Microsoft.Azure.Management.ServiceBus.Fluent.ISubscription.Status
         {
             get
             {
@@ -491,9 +491,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="durationInSeconds">Duration of a lock in seconds.</param>
         /// <return>The next stage of subscription update.</return>
-        Subscription.Update.IUpdate Subscription.Update.IWithMessageLockDuration.WithMessageLockDurationInSeconds(int durationInSeconds)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IWithMessageLockDuration.WithMessageLockDurationInSeconds(int durationInSeconds)
         {
-            return this.WithMessageLockDurationInSeconds(durationInSeconds) as Subscription.Update.IUpdate;
+            return this.WithMessageLockDurationInSeconds(durationInSeconds) as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Update.IUpdate;
         }
 
         /// <summary>
@@ -503,9 +503,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// </summary>
         /// <param name="durationInSeconds">Duration of a lock in seconds.</param>
         /// <return>The next stage of subscription definition.</return>
-        Subscription.Definition.IWithCreate Subscription.Definition.IWithMessageLockDuration.WithMessageLockDurationInSeconds(int durationInSeconds)
+        Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithMessageLockDuration.WithMessageLockDurationInSeconds(int durationInSeconds)
         {
-            return this.WithMessageLockDurationInSeconds(durationInSeconds) as Subscription.Definition.IWithCreate;
+            return this.WithMessageLockDurationInSeconds(durationInSeconds) as Microsoft.Azure.Management.ServiceBus.Fluent.Subscription.Definition.IWithCreate;
         }
     }
 }

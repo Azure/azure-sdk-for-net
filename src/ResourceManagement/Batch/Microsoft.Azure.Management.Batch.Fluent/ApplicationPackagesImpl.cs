@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// Represents a applicationPackage collection associated with a application.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmJhdGNoLmltcGxlbWVudGF0aW9uLkFwcGxpY2F0aW9uUGFja2FnZXNJbXBs
-    public partial class ApplicationPackagesImpl :
+    internal partial class ApplicationPackagesImpl :
         ExternalChildResourcesCached<ApplicationPackageImpl,
             IApplicationPackage,
             Management.Batch.Fluent.Models.ApplicationPackageInner,

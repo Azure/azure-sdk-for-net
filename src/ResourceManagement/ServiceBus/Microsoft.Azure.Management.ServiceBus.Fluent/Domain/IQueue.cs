@@ -4,10 +4,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
     using Microsoft.Azure.Management.ServiceBus.Fluent.Queue.Update;
     using System;
-    using ServiceBus.Fluent;
-    using Management.Fluent.ServiceBus.Models;
 
     /// <summary>
     /// Type representing Service Bus queue.
@@ -18,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// version number.).
     /// </remarks>
     public interface IQueue  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<IServiceBusManager, QueueInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager,Microsoft.Azure.Management.ServiceBus.Fluent.Models.QueueInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.ServiceBus.Fluent.IQueue>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<Queue.Update.IUpdate>
     {
@@ -45,7 +44,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the current status of the queue.
         /// </summary>
-        EntityStatus Status { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.Models.EntityStatus Status { get; }
 
         /// <summary>
         /// Gets number of active messages in the queue.
@@ -80,7 +79,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the duration of the duplicate detection history.
         /// </summary>
-        TimeSpan DuplicateMessageDetectionHistoryDuration { get; }
+        System.TimeSpan DuplicateMessageDetectionHistoryDuration { get; }
 
         /// <summary>
         /// Gets the exact time the queue was updated.
@@ -116,7 +115,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Gets the duration after which the message expires, starting from when the message is sent to queue.
         /// </summary>
-        TimeSpan DefaultMessageTtlDuration { get; }
+        System.TimeSpan DefaultMessageTtlDuration { get; }
 
         /// <summary>
         /// Gets the idle duration after which the queue is automatically deleted.

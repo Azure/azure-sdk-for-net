@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
 
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets OS disk image in the virtual machine image.
         /// </summary>
-        Models.OSDiskImage Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.OsDiskImage
+        Models.OSDiskImage Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.OSDiskImage
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the resource id of this image.
+        /// Gets the resource ID of this image.
         /// </summary>
         string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.Id
         {
@@ -75,13 +75,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets data disk images in the virtual machine image, indexed by the disk lun.
+        /// Gets the region in which virtual machine image is available.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<int,Models.DataDiskImage> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.DataDiskImages
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.Location
         {
             get
             {
-                return this.DataDiskImages() as System.Collections.Generic.IReadOnlyDictionary<int,Models.DataDiskImage>;
+                return this.Location() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
             }
         }
 
@@ -97,13 +97,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the region in which virtual machine image is available.
+        /// Gets data disk images in the virtual machine image, indexed by the disk LUN.
         /// </summary>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.Location
+        System.Collections.Generic.IReadOnlyDictionary<int,Models.DataDiskImage> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.DataDiskImages
         {
             get
             {
-                return this.Location() as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
+                return this.DataDiskImages() as System.Collections.Generic.IReadOnlyDictionary<int,Models.DataDiskImage>;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.ImageReference() as ImageReference;
+                return this.ImageReference();
             }
         }
     }

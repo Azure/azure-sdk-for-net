@@ -29,18 +29,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.D
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  DefinitionStages.WithAttach.attach().</typeparam>
     public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IBlank<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithProtocol<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontend<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFrontendPort<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithAttach<ParentT>
     {
     }
 
     /// <summary>
     /// The first stage of the inbound NAT rule definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithProtocol<ParentT>
     {
@@ -62,10 +62,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.D
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithBackendPort<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithFloatingIP<ParentT>,
-        IWithIdleTimeout<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IWithIdleTimeout<ParentT>
     {
     }
 

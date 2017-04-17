@@ -4,20 +4,20 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using SqlDatabase.Definition;
+    using Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition;
     using System.Collections.Generic;
 
     /// <summary>
     /// Entry point to SQL Database management API.
     /// </summary>
     public interface ISqlDatabases  :
-        ISupportsCreating<SqlDatabase.Definition.IBlank>,
-        ISupportsDeletingById,
-        ISupportsGettingById<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
-        ISupportsDeletingByParent,
-        IHasManager<ISqlManager>,
-        IHasInner<IDatabasesOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<SqlDatabase.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByParent,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Sql.Fluent.IDatabasesOperations>
     {
         /// <summary>
         /// Lists resources of the specified type in the specified resource group and SQLServer.
@@ -25,14 +25,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="resourceGroupName">The name of the resource group to list the resources from.</param>
         /// <param name="sqlServerName">The name of SQLServer.</param>
         /// <return>The list of SQLDatabases in a SQLServer.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListBySqlServer(string resourceGroupName, string sqlServerName);
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListBySqlServer(string resourceGroupName, string sqlServerName);
 
         /// <summary>
         /// Gets the SQLDatabase based on the SQLServer.
         /// </summary>
         /// <param name="sqlServer">The instance of SQLServer.</param>
         /// <return>The list of SQLDatabases in a SQLServer.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListBySqlServer(ISqlServer sqlServer);
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListBySqlServer(ISqlServer sqlServer);
 
         /// <summary>
         /// Gets the SQLDatabase based on the resource group name, SQLServer name and SQLDatabase name.

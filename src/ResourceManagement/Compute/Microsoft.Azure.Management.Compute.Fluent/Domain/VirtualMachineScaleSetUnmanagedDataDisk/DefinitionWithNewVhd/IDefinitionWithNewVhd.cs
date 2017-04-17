@@ -7,12 +7,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmana
     /// <summary>
     /// The entirety of a unmanaged data disk of a virtual machine scale set definition.
     /// </summary>
-    /// <typeparam name="Parent">The return type of the final DefinitionStages.WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IDefinitionWithNewVhd<ParentT>  :
-        IBlank<ParentT>,
-        IWithDiskSource<ParentT>,
-        IWithNewVhdDiskSettings<ParentT>,
-        IWithAttach<ParentT>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithDiskSource<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithNewVhdDiskSettings<ParentT>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithAttach<ParentT>
     {
     }
 }

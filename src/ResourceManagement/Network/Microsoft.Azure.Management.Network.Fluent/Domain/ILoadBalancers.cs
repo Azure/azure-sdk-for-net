@@ -15,17 +15,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface ILoadBalancers  :
-        ISupportsCreating<LoadBalancer.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        ISupportsDeletingById,
-        ISupportsDeletingByResourceGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
-        ISupportsBatchDeletion,
-        IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
-        IHasInner<Microsoft.Azure.Management.Network.Fluent.ILoadBalancersOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<LoadBalancer.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Network.Fluent.ILoadBalancersOperations>
     {
     }
 }

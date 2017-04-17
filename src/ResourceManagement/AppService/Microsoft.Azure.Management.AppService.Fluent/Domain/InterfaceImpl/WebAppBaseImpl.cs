@@ -5,8 +5,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
+    using Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.HostNameBinding.UpdateDefinition;
+    using Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.HostNameSslBinding.UpdateDefinition;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.Update;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppAuthentication.UpdateDefinition;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.WebAppBase.Update;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.Definition;
+    using Microsoft.Azure.Management.AppService.Fluent.WebAppSourceControl.UpdateDefinition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System.Collections.Generic;
     using System;
 
@@ -563,7 +573,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Adds a list of default documents.
         /// </summary>
         /// <param name="documents">List of default documents.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithDefaultDocuments(IList<string> documents)
         {
             return this.WithDefaultDocuments(documents) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -573,7 +583,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// Specifies if web sockets are enabled.
         /// </summary>
         /// <param name="enabled">True if web sockets are enabled.</param>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithWebSocketsEnabled(bool enabled)
         {
             return this.WithWebSocketsEnabled(enabled) as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -582,7 +592,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Turn off PHP support.
         /// </summary>
-        /// <return>The next stage of the web app definition.</return>
+        /// <return>The next stage of the definition.</return>
         WebAppBase.Definition.IWithCreate<FluentT> WebAppBase.Definition.IWithSiteConfigs<FluentT>.WithoutPhp()
         {
             return this.WithoutPhp() as WebAppBase.Definition.IWithCreate<FluentT>;
@@ -882,7 +892,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <summary>
         /// Gets the operating system the web app is running on.
         /// </summary>
-        OperatingSystem Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.OperatingSystem
+        Microsoft.Azure.Management.AppService.Fluent.OperatingSystem Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.OperatingSystem
         {
             get
             {

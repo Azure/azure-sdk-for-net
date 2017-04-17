@@ -10,9 +10,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     /// The entirety of virtual machine scale set extension update as a part of parent virtual machine scale set update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IUpdate>,
-        IWithAutoUpgradeMinorVersion,
-        IWithSettings
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IUpdate>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IWithAutoUpgradeMinorVersion,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IWithSettings
     {
     }
 
@@ -41,6 +41,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
     public interface IWithSettings 
     {
         /// <summary>
+        /// Specifies private settings.
+        /// </summary>
+        /// <param name="settings">The private settings.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IUpdate WithProtectedSettings(IDictionary<string,object> settings);
+
+        /// <summary>
+        /// Specifies public settings.
+        /// </summary>
+        /// <param name="settings">The public settings.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IUpdate WithPublicSettings(IDictionary<string,object> settings);
+
+        /// <summary>
         /// Specifies a private settings entry.
         /// </summary>
         /// <param name="key">The key of a private settings entry.</param>
@@ -55,19 +69,5 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtens
         /// <param name="value">The value of the public settings entry.</param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IUpdate WithPublicSetting(string key, object value);
-
-        /// <summary>
-        /// Specifies public settings.
-        /// </summary>
-        /// <param name="settings">The public settings.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IUpdate WithPublicSettings(IDictionary<string,object> settings);
-
-        /// <summary>
-        /// Specifies private settings.
-        /// </summary>
-        /// <param name="settings">The private settings.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IUpdate WithProtectedSettings(IDictionary<string,object> settings);
     }
 }

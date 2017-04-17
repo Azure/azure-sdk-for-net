@@ -68,12 +68,12 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.U
     /// The entirety of an inbound NAT rule update as part of a load balancer update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithBackendPort,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithFloatingIP,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithFrontend,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithFrontendPort,
-        IWithIdleTimeout,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithIdleTimeout,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Update.IWithProtocol
     {
     }

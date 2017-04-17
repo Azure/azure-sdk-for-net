@@ -4,6 +4,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
     internal partial class WindowsVolumeEncryptionMonitorImpl 
     {
@@ -11,30 +13,43 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor>.Refresh()
+        Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor>.Refresh()
         {
             return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor;
         }
 
         /// <summary>
-        /// Gets operating system type of the virtual machine.
+        /// Gets operating system disk encryption status.
         /// </summary>
-        Models.OperatingSystemTypes Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor.OsType
+        Microsoft.Azure.Management.Compute.Fluent.EncryptionStatus Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor.OSDiskStatus
         {
             get
             {
-                return this.OsType();
+                return this.OsDiskStatus() as Microsoft.Azure.Management.Compute.Fluent.EncryptionStatus;
             }
         }
 
+        /// <remarks>
+        /// Gets (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+        /// version number.).
+        /// </remarks>
         /// <summary>
-        /// Gets operating system disk encryption status.
+        /// Gets observable that emits encryption status once the refresh is done.
         /// </summary>
-        EncryptionStatus Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor.OsDiskStatus
+        async Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor>.RefreshAsync(CancellationToken cancellationToken)
+        {
+            return await this.RefreshAsync(cancellationToken) as Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor;
+        }
+
+        /// <summary>
+        /// Gets data disks encryption status.
+        /// </summary>
+        Microsoft.Azure.Management.Compute.Fluent.EncryptionStatus Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor.DataDiskStatus
         {
             get
             {
-                return this.OsDiskStatus() as EncryptionStatus;
+                return this.DataDiskStatus() as Microsoft.Azure.Management.Compute.Fluent.EncryptionStatus;
             }
         }
 
@@ -50,22 +65,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets data disks encryption status.
+        /// Gets operating system type of the virtual machine.
         /// </summary>
-        EncryptionStatus Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor.DataDiskStatus
+        Models.OperatingSystemTypes Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor.OSType
         {
             get
             {
-                return this.DataDiskStatus() as EncryptionStatus;
+                return this.OsType();
             }
-        }
-
-        /// <summary>
-        /// Gets observable that emits encryption status once the refresh is done.
-        /// </summary>
-        async Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor.RefreshAsync(CancellationToken cancellationToken)
-        {
-            return await this.RefreshAsync(cancellationToken);
         }
     }
 }

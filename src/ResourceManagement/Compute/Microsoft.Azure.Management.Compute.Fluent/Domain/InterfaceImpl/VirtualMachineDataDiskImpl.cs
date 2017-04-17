@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Models;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     internal partial class VirtualMachineDataDiskImpl 
@@ -30,17 +30,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets Gets the disk caching type.
-        /// possible values are: 'None', 'ReadOnly', 'ReadWrite'.
+        /// Gets the logical unit number assigned to this data disk.
         /// </summary>
-        /// <summary>
-        /// Gets the caching type.
-        /// </summary>
-        Models.CachingTypes? Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CachingType
+        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Lun
         {
             get
             {
-                return this.CachingType();
+                return this.Lun();
             }
         }
 
@@ -56,17 +52,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the size of this data disk in GB.
-        /// </summary>
-        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Size
-        {
-            get
-            {
-                return this.Size();
-            }
-        }
-
-        /// <summary>
         /// Gets the creation method used while creating this disk.
         /// </summary>
         Models.DiskCreateOptionTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CreationMethod
@@ -78,13 +63,24 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the logical unit number assigned to this data disk.
+        /// Gets the disk caching type.
         /// </summary>
-        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Lun
+        Models.CachingTypes? Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CachingType
         {
             get
             {
-                return this.Lun();
+                return this.CachingType();
+            }
+        }
+
+        /// <summary>
+        /// Gets the size of this data disk in GB.
+        /// </summary>
+        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Size
+        {
+            get
+            {
+                return this.Size();
             }
         }
     }

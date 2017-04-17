@@ -58,17 +58,17 @@ namespace Azure.Tests.Compute
                     //
                     var monitor = virtualMachine.DiskEncryption.GetMonitor();
                     Assert.NotNull(monitor);
-                    Assert.NotNull(monitor.OsDiskStatus);
+                    Assert.NotNull(monitor.OSDiskStatus);
                     Assert.NotNull(monitor.DataDiskStatus);
-                    Assert.True(monitor.OsDiskStatus.Equals(EncryptionStatus.NotEncrypted));
+                    Assert.True(monitor.OSDiskStatus.Equals(EncryptionStatus.NotEncrypted));
                     Assert.True(monitor.DataDiskStatus.Equals(EncryptionStatus.NotEncrypted));
                     // Check monitor refresh
                     //
                     var monitor1 = monitor.Refresh();
                     Assert.NotNull(monitor1);
-                    Assert.NotNull(monitor1.OsDiskStatus);
+                    Assert.NotNull(monitor1.OSDiskStatus);
                     Assert.NotNull(monitor1.DataDiskStatus);
-                    Assert.True(monitor.OsDiskStatus.Equals(EncryptionStatus.NotEncrypted));
+                    Assert.True(monitor.OSDiskStatus.Equals(EncryptionStatus.NotEncrypted));
                     Assert.True(monitor.DataDiskStatus.Equals(EncryptionStatus.NotEncrypted));
 
                     var monitor2 = virtualMachine
@@ -76,13 +76,13 @@ namespace Azure.Tests.Compute
                         .Enable(keyVaultId, aadClientId, aadSecret);
 
                     Assert.NotNull(monitor2);
-                    Assert.NotNull(monitor2.OsDiskStatus);
+                    Assert.NotNull(monitor2.OSDiskStatus);
                     Assert.NotNull(monitor2.DataDiskStatus);
                     monitor1.Refresh();
-                    Assert.True(monitor1.OsDiskStatus.Equals(monitor2.OsDiskStatus));
+                    Assert.True(monitor1.OSDiskStatus.Equals(monitor2.OSDiskStatus));
                     Assert.True(monitor1.DataDiskStatus.Equals(monitor2.DataDiskStatus));
                     monitor2.Refresh();
-                    Assert.True(monitor2.OsDiskStatus.Equals(EncryptionStatus.EncryptionInProgress));
+                    Assert.True(monitor2.OSDiskStatus.Equals(EncryptionStatus.EncryptionInProgress));
                     TestHelper.WriteLine(virtualMachine.Id);
                 }
                 finally

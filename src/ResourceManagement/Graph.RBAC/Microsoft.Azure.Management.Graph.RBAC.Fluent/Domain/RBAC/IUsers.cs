@@ -2,47 +2,44 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
-
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Rest;
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition;
-    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to AD user management API.
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface IUsers  :
-        // ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>,
-        IHasManager<IGraphRbacManager>,
-        IHasInner<IUsersOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.IGraphRbacManager>
     {
         /// <summary>
         /// Gets the information about a user.
         /// </summary>
-        /// <param name="objectId">objectId the unique object id</param>
-        /// <returns>an immutable representation of the resource</returns>
+        /// <param name="objectId">The unique object id.</param>
+        /// <return>An immutable representation of the resource.</return>
         Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser GetByObjectId(string objectId);
 
         /// <summary>
         /// Gets the information about a user.
         /// </summary>
-        /// <param name="upn">upn the user principal name</param>
-        /// <returns>an immutable representation of the resource</returns>
+        /// <param name="upn">The user principal name.</param>
+        /// <return>An immutable representation of the resource.</return>
         Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser GetByUserPrincipalName(string upn);
 
         /// <summary>
         /// Gets the information about a user.
         /// </summary>
-        /// <param name="upn">upn the user principal name</param>
-        /// <param name="cancellationToken">cancellationToken the cancellation token</param>
-        /// <returns>an Future based service call</returns>
+        /// <param name="upn">The user principal name.</param>
+        /// <return>An Future based service call.</return>
         Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser> GetByUserPrincipalNameAsync(string upn, CancellationToken cancellationToken = default(CancellationToken));
-
     }
 }

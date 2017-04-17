@@ -3,15 +3,14 @@
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-    using ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to virtual machine scale set instance management API.
     /// </summary>
     public interface IVirtualMachineScaleSetVMs  :
-        ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>,
-        IHasManager<IComputeManager>,
-        IHasInner<IVirtualMachineScaleSetVMsOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMsOperations>
     {
     }
 }

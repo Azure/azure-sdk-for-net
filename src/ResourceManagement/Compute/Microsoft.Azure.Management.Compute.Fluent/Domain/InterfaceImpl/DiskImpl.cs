@@ -4,23 +4,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Disk.Definition;
-    using Disk.Update;
-    using Models;
+    using Microsoft.Azure.Management.Compute.Fluent.Disk.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.Disk.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Rest;
 
     internal partial class DiskImpl 
     {
         /// <summary>
-        /// Gets true if the disk is attached to a virtual machine, false if is
-        /// in detached state.
+        /// Gets the resource ID of the virtual machine this disk is attached to, or null
+        /// if the disk is in a detached state.
         /// </summary>
-        bool Microsoft.Azure.Management.Compute.Fluent.IDisk.IsAttachedToVirtualMachine
+        string Microsoft.Azure.Management.Compute.Fluent.IDisk.VirtualMachineId
         {
             get
             {
-                return this.IsAttachedToVirtualMachine();
+                return this.VirtualMachineId();
             }
         }
 
@@ -36,6 +36,69 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets true if the disk is attached to a virtual machine, otherwise false.
+        /// </summary>
+        bool Microsoft.Azure.Management.Compute.Fluent.IDisk.IsAttachedToVirtualMachine
+        {
+            get
+            {
+                return this.IsAttachedToVirtualMachine();
+            }
+        }
+
+        /// <summary>
+        /// Gets the details of the source from which the disk is created.
+        /// </summary>
+        CreationSource Microsoft.Azure.Management.Compute.Fluent.IDisk.Source
+        {
+            get
+            {
+                return this.Source() as CreationSource;
+            }
+        }
+
+        /// <summary>
+        /// Grants access to the disk.
+        /// </summary>
+        /// <param name="accessDurationInSeconds">The access duration in seconds.</param>
+        /// <return>The read-only SAS URI to the disk.</return>
+        string Microsoft.Azure.Management.Compute.Fluent.IDisk.GrantAccess(int accessDurationInSeconds)
+        {
+            return this.GrantAccess(accessDurationInSeconds);
+        }
+
+        /// <summary>
+        /// Gets the disk SKU.
+        /// </summary>
+        Models.DiskSkuTypes Microsoft.Azure.Management.Compute.Fluent.IDisk.Sku
+        {
+            get
+            {
+                return this.Sku() as Models.DiskSkuTypes;
+            }
+        }
+
+        /// <summary>
+        /// Revokes access granted to the disk.
+        /// </summary>
+        void Microsoft.Azure.Management.Compute.Fluent.IDisk.RevokeAccess()
+        {
+ 
+            this.RevokeAccess();
+        }
+
+        /// <summary>
+        /// Gets the type of the operating system on the disk.
+        /// </summary>
+        Models.OperatingSystemTypes? Microsoft.Azure.Management.Compute.Fluent.IDisk.OSType
+        {
+            get
+            {
+                return this.OsType();
+            }
+        }
+
+        /// <summary>
         /// Gets disk size in GB.
         /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IDisk.SizeInGB
@@ -47,74 +110,70 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the disk sku.
+        /// Specifies the operating system.
         /// </summary>
-        Models.DiskSkuTypes Microsoft.Azure.Management.Compute.Fluent.IDisk.Sku
+        /// <param name="osType">Operating system type.</param>
+        /// <return>The next stage of the update.</return>
+        Disk.Update.IUpdate Disk.Update.IWithOSSettings.WithOSType(OperatingSystemTypes osType)
         {
-            get
-            {
-                return this.Sku() as Models.DiskSkuTypes;
-            }
+            return this.WithOSType(osType) as Disk.Update.IUpdate;
         }
 
         /// <summary>
-        /// Gets resource id of the virtual machine this disk is attached to, null
-        /// if the disk is in detached state.
+        /// Specifies a source specialized or generalized Windows OS VHD.
         /// </summary>
-        string Microsoft.Azure.Management.Compute.Fluent.IDisk.VirtualMachineId
+        /// <param name="vhdUrl">The source VHD URL.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithWindowsDiskSource.WithWindowsFromVhd(string vhdUrl)
         {
-            get
-            {
-                return this.VirtualMachineId();
-            }
+            return this.WithWindowsFromVhd(vhdUrl) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
-        /// Gets the details of the source from which disk is created.
+        /// Specifies a source Windows OS managed snapshot.
         /// </summary>
-        CreationSource Microsoft.Azure.Management.Compute.Fluent.IDisk.Source
+        /// <param name="sourceSnapshotId">Snapshot resource ID.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithWindowsDiskSource.WithWindowsFromSnapshot(string sourceSnapshotId)
         {
-            get
-            {
-                return this.Source() as CreationSource;
-            }
+            return this.WithWindowsFromSnapshot(sourceSnapshotId) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
-        /// Revoke access granted to the disk.
+        /// Specifies a source Windows OS managed snapshot.
         /// </summary>
-        void Microsoft.Azure.Management.Compute.Fluent.IDisk.RevokeAccess()
+        /// <param name="sourceSnapshot">Source snapshot.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithWindowsDiskSource.WithWindowsFromSnapshot(ISnapshot sourceSnapshot)
         {
- 
-            this.RevokeAccess();
+            return this.WithWindowsFromSnapshot(sourceSnapshot) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
-        /// Grants access to the disk.
+        /// Specifies a source Windows OS managed disk.
         /// </summary>
-        /// <param name="accessDurationInSeconds">The access duration in seconds.</param>
-        /// <return>The readonly SAS uri to the disk.</return>
-        string Microsoft.Azure.Management.Compute.Fluent.IDisk.GrantAccess(int accessDurationInSeconds)
+        /// <param name="sourceDiskId">Source managed disk resource ID.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithWindowsDiskSource.WithWindowsFromDisk(string sourceDiskId)
         {
-            return this.GrantAccess(accessDurationInSeconds);
+            return this.WithWindowsFromDisk(sourceDiskId) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
-        /// Gets the type of operating system in the disk.
+        /// Specifies a source Windows OS managed disk.
         /// </summary>
-        Models.OperatingSystemTypes? Microsoft.Azure.Management.Compute.Fluent.IDisk.OsType
+        /// <param name="sourceDisk">Source managed disk.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithWindowsDiskSource.WithWindowsFromDisk(IDisk sourceDisk)
         {
-            get
-            {
-                return this.OsType();
-            }
+            return this.WithWindowsFromDisk(sourceDisk) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
         /// Specifies the source data managed snapshot.
         /// </summary>
-        /// <param name="snapshotId">Snapshot resource id.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="snapshotId">Snapshot resource ID.</param>
+        /// <return>The next stage of the definition.</return>
         Disk.Definition.IWithCreateAndSize Disk.Definition.IWithDataDiskFromSnapshot.FromSnapshot(string snapshotId)
         {
             return this.FromSnapshot(snapshotId) as Disk.Definition.IWithCreateAndSize;
@@ -124,136 +183,46 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies the source data managed snapshot.
         /// </summary>
         /// <param name="snapshot">Snapshot resource.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <return>The next stage of the definition.</return>
         Disk.Definition.IWithCreateAndSize Disk.Definition.IWithDataDiskFromSnapshot.FromSnapshot(ISnapshot snapshot)
         {
             return this.FromSnapshot(snapshot) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
-        /// Specifies the operating system type.
+        /// Specifies the source data VHD.
         /// </summary>
-        /// <param name="osType">Operating system type.</param>
-        /// <return>The next stage of the managed disk update.</return>
-        Disk.Update.IUpdate Disk.Update.IWithOsSettings.WithOSType(OperatingSystemTypes osType)
-        {
-            return this.WithOSType(osType) as Disk.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Specifies the source specialized or generalized Windows OS vhd.
-        /// </summary>
-        /// <param name="vhdUrl">The source vhd url.</param>
-        /// <return>The next stage of the managed disk definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithWindowsDiskSource.WithWindowsFromVhd(string vhdUrl)
-        {
-            return this.WithWindowsFromVhd(vhdUrl) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the source Windows OS managed snapshot.
-        /// </summary>
-        /// <param name="sourceSnapshotId">Snapshot resource id.</param>
-        /// <return>The next stage of the managed disk definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithWindowsDiskSource.WithWindowsFromSnapshot(string sourceSnapshotId)
-        {
-            return this.WithWindowsFromSnapshot(sourceSnapshotId) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the source Windows OS managed snapshot.
-        /// </summary>
-        /// <param name="sourceSnapshot">Source snapshot.</param>
-        /// <return>The next stage of the managed disk definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithWindowsDiskSource.WithWindowsFromSnapshot(ISnapshot sourceSnapshot)
-        {
-            return this.WithWindowsFromSnapshot(sourceSnapshot) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the source Windows OS managed disk.
-        /// </summary>
-        /// <param name="sourceDiskId">Source managed disk resource id.</param>
-        /// <return>The next stage of the managed disk definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithWindowsDiskSource.WithWindowsFromDisk(string sourceDiskId)
-        {
-            return this.WithWindowsFromDisk(sourceDiskId) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the source Windows OS managed disk.
-        /// </summary>
-        /// <param name="sourceDisk">Source managed disk.</param>
-        /// <return>The next stage of the managed disk definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithWindowsDiskSource.WithWindowsFromDisk(IDisk sourceDisk)
-        {
-            return this.WithWindowsFromDisk(sourceDisk) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the source data vhd.
-        /// </summary>
-        /// <param name="vhdUrl">The source vhd url.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="vhdUrl">The source VHD URL.</param>
+        /// <return>The next stage of the definition.</return>
         Disk.Definition.IWithCreateAndSize Disk.Definition.IWithDataDiskFromVhd.FromVhd(string vhdUrl)
         {
             return this.FromVhd(vhdUrl) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
-        /// Begins definition of managed disk containing data.
-        /// </summary>
-        /// <return>The next stage of the managed disk definition.</return>
-        Disk.Definition.IWithDataDiskSource Disk.Definition.IWithData.WithData()
-        {
-            return this.WithData() as Disk.Definition.IWithDataDiskSource;
-        }
-
-        /// <summary>
         /// Specifies the disk size.
         /// </summary>
         /// <param name="sizeInGB">The disk size in GB.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <return>The next stage of the definition.</return>
         Disk.Definition.IWithCreateAndSize Disk.Definition.IWithCreateAndSize.WithSizeInGB(int sizeInGB)
         {
             return this.WithSizeInGB(sizeInGB) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
-        /// Specifies the source Linux OS managed snapshot.
+        /// Begins definition of managed disk containing data.
         /// </summary>
-        /// <param name="sourceSnapshotId">Snapshot resource id.</param>
-        /// <return>The next stage of the managed disk definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromSnapshot(string sourceSnapshotId)
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithDataDiskSource Disk.Definition.IWithData.WithData()
         {
-            return this.WithLinuxFromSnapshot(sourceSnapshotId) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the source Linux OS managed snapshot.
-        /// </summary>
-        /// <param name="sourceSnapshot">Source snapshot.</param>
-        /// <return>The next stage of the managed disk definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromSnapshot(ISnapshot sourceSnapshot)
-        {
-            return this.WithLinuxFromSnapshot(sourceSnapshot) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the source specialized or generalized Linux OS vhd.
-        /// </summary>
-        /// <param name="vhdUrl">The source vhd url.</param>
-        /// <return>The next stage of the managed disk definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromVhd(string vhdUrl)
-        {
-            return this.WithLinuxFromVhd(vhdUrl) as Disk.Definition.IWithCreateAndSize;
+            return this.WithData() as Disk.Definition.IWithDataDiskSource;
         }
 
         /// <summary>
         /// Specifies the source Linux OS managed disk.
         /// </summary>
-        /// <param name="sourceDiskId">Source managed disk resource id.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="sourceDiskId">Source managed disk resource ID.</param>
+        /// <return>The next stage of the definition.</return>
         Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromDisk(string sourceDiskId)
         {
             return this.WithLinuxFromDisk(sourceDiskId) as Disk.Definition.IWithCreateAndSize;
@@ -263,17 +232,47 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies the source Linux OS managed disk.
         /// </summary>
         /// <param name="sourceDisk">Source managed disk.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <return>The next stage of the definition.</return>
         Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromDisk(IDisk sourceDisk)
         {
             return this.WithLinuxFromDisk(sourceDisk) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
-        /// Specifies the id of source data managed disk.
+        /// Specifies the source specialized or generalized Linux OS VHD.
         /// </summary>
-        /// <param name="managedDiskId">Source managed disk resource id.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="vhdUrl">The source VHD URL.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromVhd(string vhdUrl)
+        {
+            return this.WithLinuxFromVhd(vhdUrl) as Disk.Definition.IWithCreateAndSize;
+        }
+
+        /// <summary>
+        /// Specifies the source Linux OS managed snapshot.
+        /// </summary>
+        /// <param name="sourceSnapshotId">Snapshot resource ID.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromSnapshot(string sourceSnapshotId)
+        {
+            return this.WithLinuxFromSnapshot(sourceSnapshotId) as Disk.Definition.IWithCreateAndSize;
+        }
+
+        /// <summary>
+        /// Specifies the source Linux OS managed snapshot.
+        /// </summary>
+        /// <param name="sourceSnapshot">Source snapshot.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromSnapshot(ISnapshot sourceSnapshot)
+        {
+            return this.WithLinuxFromSnapshot(sourceSnapshot) as Disk.Definition.IWithCreateAndSize;
+        }
+
+        /// <summary>
+        /// Specifies the ID of source data managed disk.
+        /// </summary>
+        /// <param name="managedDiskId">Source managed disk resource ID.</param>
+        /// <return>The next stage of the definition.</return>
         Disk.Definition.IWithCreateAndSize Disk.Definition.IWithDataDiskFromDisk.FromDisk(string managedDiskId)
         {
             return this.FromDisk(managedDiskId) as Disk.Definition.IWithCreateAndSize;
@@ -283,27 +282,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies the source data managed disk.
         /// </summary>
         /// <param name="managedDisk">Source managed disk.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <return>The next stage of the definition.</return>
         Disk.Definition.IWithCreateAndSize Disk.Definition.IWithDataDiskFromDisk.FromDisk(IDisk managedDisk)
         {
             return this.FromDisk(managedDisk) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
-        /// Specifies the sku.
+        /// Specifies the SKU.
         /// </summary>
-        /// <param name="sku">The sku.</param>
-        /// <return>The next stage of the managed disk update.</return>
+        /// <param name="sku">A SKU.</param>
+        /// <return>The next stage of the update.</return>
         Disk.Update.IUpdate Disk.Update.IWithSku.WithSku(DiskSkuTypes sku)
         {
             return this.WithSku(sku) as Disk.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies the sku.
+        /// Specifies the SKU.
         /// </summary>
-        /// <param name="sku">The sku.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <param name="sku">The SKU.</param>
+        /// <return>The next stage of the definition.</return>
         Disk.Definition.IWithCreate Disk.Definition.IWithSku.WithSku(DiskSkuTypes sku)
         {
             return this.WithSku(sku) as Disk.Definition.IWithCreate;
@@ -313,26 +312,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies the disk size.
         /// </summary>
         /// <param name="sizeInGB">The disk size in GB.</param>
-        /// <return>The next stage of the managed disk update.</return>
+        /// <return>The next stage of the update.</return>
         Disk.Update.IUpdate Disk.Update.IWithSize.WithSizeInGB(int sizeInGB)
         {
             return this.WithSizeInGB(sizeInGB) as Disk.Update.IUpdate;
         }
 
         /// <summary>
-        /// Refreshes the resource to sync with Azure.
-        /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IDisk Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IDisk>.Refresh()
-        {
-            return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IDisk;
-        }
-
-        /// <summary>
         /// Specifies the disk size for an empty disk.
         /// </summary>
         /// <param name="sizeInGB">The disk size in GB.</param>
-        /// <return>The next stage of the managed disk definition.</return>
+        /// <return>The next stage of the definition.</return>
         Disk.Definition.IWithCreate Disk.Definition.IWithDataDiskSource.WithSizeInGB(int sizeInGB)
         {
             return this.WithSizeInGB(sizeInGB) as Disk.Definition.IWithCreate;

@@ -31,11 +31,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the protocol.
         /// </summary>
-        ProbeProtocol Microsoft.Azure.Management.Network.Fluent.IHasProtocol<ProbeProtocol>.Protocol
+        Models.ProbeProtocol Microsoft.Azure.Management.Network.Fluent.IHasProtocol<Models.ProbeProtocol>.Protocol
         {
             get
             {
-                return this.Protocol();
+                return this.Protocol() as Models.ProbeProtocol;
             }
         }
 

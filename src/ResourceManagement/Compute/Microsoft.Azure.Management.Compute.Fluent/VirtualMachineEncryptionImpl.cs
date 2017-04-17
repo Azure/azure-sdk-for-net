@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public async Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> GetMonitorAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IDiskVolumeEncryptionMonitor monitor = null;
-            if (this.virtualMachine.OsType == OperatingSystemTypes.Linux) 
+            if (this.virtualMachine.OSType == OperatingSystemTypes.Linux) 
             {
                 monitor = new LinuxDiskVolumeEncryptionMonitorImpl(virtualMachine.Id, virtualMachine.Manager);
             } 
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:63180E26DE0748370CBF1E688F400DA7:5A16D5F74FDBF1874F9D0EA507F123B3
         public async Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> EnableAsync(string keyVaultId, string aadClientId, string aadSecret, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (this.virtualMachine.OsType == OperatingSystemTypes.Linux) 
+            if (this.virtualMachine.OSType == OperatingSystemTypes.Linux) 
             {
                 return await EnableAsync(new LinuxVMDiskEncryptionConfiguration(keyVaultId, aadClientId, aadSecret), cancellationToken);
             } 

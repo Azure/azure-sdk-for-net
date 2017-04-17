@@ -836,7 +836,7 @@ namespace Azure.Tests.Sql
                     .Create();
         }
 
-        private static void ValidateListSqlFirewallRule(IList<ISqlFirewallRule> sqlFirewallRules)
+        private static void ValidateListSqlFirewallRule(IReadOnlyList<ISqlFirewallRule> sqlFirewallRules)
         {
             Assert.True(sqlFirewallRules.Any(firewallRule => StringComparer.OrdinalIgnoreCase.Equals(firewallRule.Name, SqlFirewallRuleName)));
         }
@@ -853,7 +853,7 @@ namespace Azure.Tests.Sql
             Assert.Equal(Region.USCentral, sqlFirewallRule.Region);
         }
 
-        private static void ValidateListSqlElasticPool(IList<ISqlElasticPool> sqlElasticPools)
+        private static void ValidateListSqlElasticPool(IReadOnlyList<ISqlElasticPool> sqlElasticPools)
         {
             Assert.True(sqlElasticPools.Any(elasticPool => StringComparer.OrdinalIgnoreCase.Equals(elasticPool.Name, SqlElasticPoolName)));
         }
@@ -875,7 +875,7 @@ namespace Azure.Tests.Sql
             Assert.NotEqual(0, sqlElasticPool.Dtu);
         }
 
-        private static void ValidateListSqlDatabase(IList<ISqlDatabase> sqlDatabases)
+        private static void ValidateListSqlDatabase(IReadOnlyList<ISqlDatabase> sqlDatabases)
         {
             Assert.True(sqlDatabases.Any(database => StringComparer.OrdinalIgnoreCase.Equals(database.Name, SqlDatabaseName)));
         }

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definit
     public interface IDefinition  :
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IBlank,
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IWithGroup,
-        IWithCreate
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IWithCreate
     {
     }
 
@@ -24,9 +24,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definit
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IWithCreate>,
-        IWithRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IWithCreate>,
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IWithRule
     {
     }
 
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definit
     /// The first stage of the definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IWithGroup>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Definition.IWithGroup>
     {
     }
 }

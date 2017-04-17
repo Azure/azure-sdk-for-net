@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:7DBF1DD4080EA265532035CF9FB8D313:1A99BFC30D31869BE5E39DD7E4E0639D
-        public async Task ConvertToManagedAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task MigrateToManagedAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             await Inner.ConvertToManagedDisksAsync(groupName, name, cancellationToken);
         }

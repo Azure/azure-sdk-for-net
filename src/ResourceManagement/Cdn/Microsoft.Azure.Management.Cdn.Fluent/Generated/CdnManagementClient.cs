@@ -558,7 +558,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ResourceUsage>>> ListResourceUsageWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ResourceUsageInner>>> ListResourceUsageWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (SubscriptionId == null)
             {
@@ -675,7 +675,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ResourceUsage>>();
+            var _result = new AzureOperationResponse<IPage<ResourceUsageInner>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -688,7 +688,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<ResourceUsage>>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<ResourceUsageInner>>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -903,7 +903,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ResourceUsage>>> ListResourceUsageNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ResourceUsageInner>>> ListResourceUsageNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1012,7 +1012,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ResourceUsage>>();
+            var _result = new AzureOperationResponse<IPage<ResourceUsageInner>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1025,7 +1025,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<ResourceUsage>>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<ResourceUsageInner>>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

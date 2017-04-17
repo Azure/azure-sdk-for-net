@@ -115,6 +115,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
+        /// <return>
+        /// The network security group associated with this subnet, if any
+        /// Note that this method will result in a call to Azure each time it is invoked.
+        /// </return>
+        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.ISubnet.GetNetworkSecurityGroup()
+        {
+            return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
+        }
+
         /// <summary>
         /// Gets the resource ID of the route table associated with this subnet, if any.
         /// </summary>
@@ -124,15 +133,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 return this.RouteTableId();
             }
-        }
-
-        /// <return>
-        /// The network security group associated with this subnet, if any
-        /// Note that this method will result in a call to Azure each time it is invoked.
-        /// </return>
-        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup Microsoft.Azure.Management.Network.Fluent.ISubnet.GetNetworkSecurityGroup()
-        {
-            return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Specifies the IP address space of the subnet, within the address space of the network.
         /// </summary>
         /// <param name="cidr">The IP address space prefix using the CIDR notation.</param>
-        /// <return>The next stage of the subnet definition.</return>
+        /// <return>The next stage of the definition.</return>
         Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet> Subnet.Definition.IWithAddressPrefix<Network.Definition.IWithCreateAndSubnet>.WithAddressPrefix(string cidr)
         {
             return this.WithAddressPrefix(cidr) as Subnet.Definition.IWithAttach<Network.Definition.IWithCreateAndSubnet>;
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Specifies the IP address space of the subnet, within the address space of the network.
         /// </summary>
         /// <param name="cidr">The IP address space prefix using the CIDR notation.</param>
-        /// <return>The next stage of the subnet definition.</return>
+        /// <return>The next stage of the definition.</return>
         Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate> Subnet.UpdateDefinition.IWithAddressPrefix<Network.Update.IUpdate>.WithAddressPrefix(string cidr)
         {
             return this.WithAddressPrefix(cidr) as Subnet.UpdateDefinition.IWithAttach<Network.Update.IUpdate>;

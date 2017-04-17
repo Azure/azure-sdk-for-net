@@ -48,10 +48,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update
     /// The entirety of a probe update as part of a load balancer update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
-        IWithPort,
-        IWithIntervalInSeconds,
-        IWithNumberOfProbes
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IWithPort,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IWithIntervalInSeconds,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Update.IWithNumberOfProbes
     {
     }
 }

@@ -2,9 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Models;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
 
     internal partial class TransparentDataEncryptionActivityImpl 
     {
@@ -16,6 +15,51 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             get
             {
                 return this.Name();
+            }
+        }
+
+        /// <summary>
+        /// Gets the status transparent data encryption of the Azure SQL Database.
+        /// </summary>
+        string Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity.Status
+        {
+            get
+            {
+                return this.Status();
+            }
+        }
+
+        /// <summary>
+        /// Gets name of the SQL Server to which this replication belongs.
+        /// </summary>
+        string Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity.SqlServerName
+        {
+            get
+            {
+                return this.SqlServerName();
+            }
+        }
+
+        /// <summary>
+        /// Gets the percent complete of the transparent data encryption scan for a
+        /// Azure SQL Database.
+        /// </summary>
+        double Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity.PercentComplete
+        {
+            get
+            {
+                return this.PercentComplete();
+            }
+        }
+
+        /// <summary>
+        /// Gets name of the SQL Database to which this replication belongs.
+        /// </summary>
+        string Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity.DatabaseName
+        {
+            get
+            {
+                return this.DatabaseName();
             }
         }
 
@@ -38,51 +82,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             get
             {
                 return this.ResourceGroupName();
-            }
-        }
-
-        /// <summary>
-        /// Gets the status transparent data encryption of the Azure SQL Database.
-        /// </summary>
-        string Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity.Status
-        {
-            get
-            {
-                return this.Status();
-            }
-        }
-
-        /// <summary>
-        /// Gets the percent complete of the transparent data encryption scan for a
-        /// Azure SQL Database.
-        /// </summary>
-        double Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity.PercentComplete
-        {
-            get
-            {
-                return this.PercentComplete();
-            }
-        }
-
-        /// <summary>
-        /// Gets name of the SQL Server to which this replication belongs.
-        /// </summary>
-        string Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity.SqlServerName
-        {
-            get
-            {
-                return this.SqlServerName();
-            }
-        }
-
-        /// <summary>
-        /// Gets name of the SQL Database to which this replication belongs.
-        /// </summary>
-        string Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity.DatabaseName
-        {
-            get
-            {
-                return this.DatabaseName();
             }
         }
     }

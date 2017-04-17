@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.U
     /// <summary>
     /// The first stage of the inbound NAT pool definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  WithAttach.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.UpdateDefinition.IWithProtocol<ParentT>
     {
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.U
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>
     {
     }
 
@@ -75,11 +75,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.U
     /// </summary>
     /// <typeparam name="ParentT">The return type of the final  UpdateDefinitionStages.WithAttach.attach().</typeparam>
     public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.UpdateDefinition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.UpdateDefinition.IWithAttach<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.UpdateDefinition.IWithProtocol<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.UpdateDefinition.IWithFrontend<ParentT>,
-        IWithFrontendPortRange<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.UpdateDefinition.IWithFrontendPortRange<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatPool.UpdateDefinition.IWithBackendPort<ParentT>
     {
     }

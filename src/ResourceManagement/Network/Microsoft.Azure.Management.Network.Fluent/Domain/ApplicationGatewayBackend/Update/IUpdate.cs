@@ -19,13 +19,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutFqdn(string fqdn);
 
         /// <summary>
-        /// Ensures the specified IP address is not associated with this backend.
-        /// </summary>
-        /// <param name="ipAddress">An IP address.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutIPAddress(string ipAddress);
-
-        /// <summary>
         /// Ensure the specified address is not associated with this backend.
         /// </summary>
         /// <param name="address">An existing address currently associated with the backend.</param>
@@ -33,11 +26,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutAddress(ApplicationGatewayBackendAddress address);
 
         /// <summary>
-        /// Adds the specified existing IP address to the backend.
+        /// Ensures the specified IP address is not associated with this backend.
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithIPAddress(string ipAddress);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutIPAddress(string ipAddress);
 
         /// <summary>
         /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
@@ -45,14 +38,21 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
         /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithFqdn(string fqdn);
+
+        /// <summary>
+        /// Adds the specified existing IP address to the backend.
+        /// </summary>
+        /// <param name="ipAddress">An IP address.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithIPAddress(string ipAddress);
     }
 
     /// <summary>
     /// The entirety of an application gateway backend update as part of an application gateway update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
-        IWithAddress
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IWithAddress
     {
     }
 }

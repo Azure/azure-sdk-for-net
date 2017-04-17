@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet
     /// The entirety of a PTR record set update as a part of parent DNS zone update.
     /// </summary>
     public interface IUpdatePtrRecordSet  :
-        IWithPtrRecordTargetDomainName,
-        IUpdate
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update.IWithPtrRecordTargetDomainName,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update.IUpdate
     {
     }
 }

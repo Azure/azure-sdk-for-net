@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
-    using Management.Fluent.ServiceBus.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
 
     /// <summary>
     /// The result of checking for Service Bus namespace name availability.
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// version number.).
     /// </remarks>
     public interface ICheckNameAvailabilityResult  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<CheckNameAvailabilityResultInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.ServiceBus.Fluent.Models.CheckNameAvailabilityResultInner>
     {
         /// <summary>
         /// Gets an error message explaining the Reason value in more detail.
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// Gets the unavailabilityReason that a namespace name could not be used. The
         /// Reason element is only returned if NameAvailable is false.
         /// </summary>
-        UnavailableReason UnavailabilityReason { get; }
+        Microsoft.Azure.Management.ServiceBus.Fluent.Models.UnavailableReason UnavailabilityReason { get; }
 
         /// <summary>
         /// Gets a boolean value that indicates whether the name is available for

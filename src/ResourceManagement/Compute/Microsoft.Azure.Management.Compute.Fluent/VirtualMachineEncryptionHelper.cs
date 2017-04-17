@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         internal VirtualMachineEncryptionHelper(IVirtualMachine virtualMachine)
         {
             this.virtualMachine = virtualMachine;
-            this.osType = this.virtualMachine.OsType;
+            this.osType = this.virtualMachine.OSType;
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     throw new Exception(ERROR_ON_LINUX_DECRYPTING_NON_DATA_DISK_IS_NOT_SUPPORTED);
                 }
                 var monitor = await GetDiskVolumeEncryptDecryptStatusAsync(virtualMachine, cancellationToken);
-                if (monitor.OsDiskStatus.Equals(EncryptionStatus.Encrypted))
+                if (monitor.OSDiskStatus.Equals(EncryptionStatus.Encrypted))
                 {
                     throw new Exception(ERROR_ON_LINUX_DATA_DISK_DECRYPT_NOT_ALLOWED_IF_OS_DISK_IS_ENCRYPTED);
                 }

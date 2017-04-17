@@ -10,8 +10,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
     /// The stage to decide whether using existing database or not.
     /// </summary>
     public interface IWithExistingDatabase  :
-        IWithSourceDatabaseId,
-        IWithCreateWithElasticPoolOptions
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithSourceDatabaseId,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreateWithElasticPoolOptions
     {
     }
 
@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
     /// The SQL Database interface with all starting options for definition.
     /// </summary>
     public interface IWithAllDifferentOptions  :
-        IWithElasticPoolName,
-        IWithSourceDatabaseId,
-        IWithCreate
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithElasticPoolName,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithSourceDatabaseId,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate
     {
     }
 
@@ -62,8 +62,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
     /// specify.
     /// </summary>
     public interface IWithCreateWithLessOptions  :
-        ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate>
     {
     }
 
@@ -139,9 +139,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
     }
 
     public interface IWithCreateWithElasticPoolOptions  :
-        IWithCollation,
-        IWithMaxSizeBytes,
-        IWithCreateWithLessOptions
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCollation,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithMaxSizeBytes,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreateWithLessOptions
     {
     }
 
@@ -175,11 +175,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        IWithServiceObjective,
-        IWithEdition,
-        IWithCollationAllCreateOptions,
-        IWithMaxSizeBytesAllCreateOptions,
-        IWithCreateWithLessOptions
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithServiceObjective,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithEdition,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCollationAllCreateOptions,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithMaxSizeBytesAllCreateOptions,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreateWithLessOptions
     {
     }
 
@@ -187,13 +187,12 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
     /// Container interface for all the definitions that need to be implemented.
     /// </summary>
     public interface IDefinition  :
-        IBlank,
-        IWithCreate,
-        IWithSourceDatabaseId,
-        IWithExistingDatabase,
-        IWithElasticPoolName,
-        IWithCreateMode,
-        IWithCreateWithLessOptions
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IBlank,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreate,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithSourceDatabaseId,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithElasticPoolName,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreateMode,
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithCreateWithLessOptions
     {
     }
 
@@ -214,7 +213,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition
     /// The first stage of the SQL Server definition.
     /// </summary>
     public interface IBlank  :
-        IWithAllDifferentOptions
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IWithAllDifferentOptions
     {
     }
 

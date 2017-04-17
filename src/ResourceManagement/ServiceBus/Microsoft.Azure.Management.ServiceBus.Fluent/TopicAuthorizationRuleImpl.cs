@@ -7,10 +7,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     using TopicAuthorizationRule.Definition;
     using TopicAuthorizationRule.Update;
     using ResourceManager.Fluent.Core;
-    using Management.Fluent.ServiceBus.Models;
+    using Management.ServiceBus.Fluent.Models;
     using ServiceBus.Fluent;
     using System.Collections.Generic;
-    using Management.Fluent.ServiceBus;
 
     /// <summary>
     /// Implementation for TopicAuthorizationRule.
@@ -61,14 +60,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
             return this.parentName;
         }
 
-        IReadOnlyList<AccessRights> IAuthorizationRule<ITopicAuthorizationRule>.Rights
-        {
-            get
-            {
-                return base.Rights();
-            }
-        }
-
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:EF7BE4FD6602A9C76AF00072DF1A0223
         protected async override Task<ResourceListKeysInner> GetKeysInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -113,56 +104,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 this.TopicName(),
                 this.Name,
                 cancellationToken);
-        }
-
-        async Task<IAuthorizationKeys> IAuthorizationRule<ITopicAuthorizationRule>.RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken)
-        {
-            return await base.RegenerateKeyAsync(policykey, cancellationToken);
-        }
-
-        async Task<IAuthorizationKeys> IAuthorizationRule<ITopicAuthorizationRule>.GetKeysAsync(CancellationToken cancellationToken)
-        {
-            return await base.GetKeysAsync(cancellationToken);
-        }
-
-        IAuthorizationKeys IAuthorizationRule<ITopicAuthorizationRule>.GetKeys()
-        {
-            return base.GetKeys();
-        }
-
-        IAuthorizationKeys IAuthorizationRule<ITopicAuthorizationRule>.RegenerateKey(Policykey policykey)
-        {
-            return base.RegenerateKey(policykey);
-        }
-
-        IUpdate AuthorizationRule.Update.IWithListen<IUpdate>.WithListeningEnabled()
-        {
-            return base.WithListeningEnabled();
-        }
-
-        IUpdate AuthorizationRule.Update.IWithSend<IUpdate>.WithSendingEnabled()
-        {
-            return base.WithSendingEnabled();
-        }
-
-        IUpdate AuthorizationRule.Update.IWithManage<IUpdate>.WithManagementEnabled()
-        {
-            return base.WithManagementEnabled();
-        }
-
-        IWithCreate AuthorizationRule.Definition.IWithListen<IWithCreate>.WithListeningEnabled()
-        {
-            return base.WithListeningEnabled();
-        }
-
-        IWithCreate AuthorizationRule.Definition.IWithSend<IWithCreate>.WithSendingEnabled()
-        {
-            return base.WithSendingEnabled();
-        }
-
-        IWithCreate AuthorizationRule.Definition.IWithManage<IWithCreate>.WithManagementEnabled()
-        {
-            return base.WithManagementEnabled();
         }
     }
 }

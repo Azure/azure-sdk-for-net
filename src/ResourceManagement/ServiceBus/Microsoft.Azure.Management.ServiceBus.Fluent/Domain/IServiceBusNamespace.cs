@@ -2,11 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.ServiceBus.Fluent
 {
-    using Management.Fluent.ServiceBus.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ServiceBus.Fluent.ServiceBusNamespace.Update;
-    using ServiceBus.Fluent;
+    using Microsoft.Azure.Management.ServiceBus.Fluent.Models;
     using System;
 
     /// <summary>
@@ -18,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// version number.).
     /// </remarks>
     public interface IServiceBusNamespace  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IServiceBusManager, NamespaceModelInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager,Microsoft.Azure.Management.ServiceBus.Fluent.Models.NamespaceModelInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusNamespace>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<ServiceBusNamespace.Update.IUpdate>
     {

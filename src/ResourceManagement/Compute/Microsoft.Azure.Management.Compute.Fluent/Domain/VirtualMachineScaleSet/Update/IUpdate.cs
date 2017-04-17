@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
-    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Update;
-    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.UpdateDefinition;
 
     /// <summary>
     /// The stage of the virtual machine definition allowing to specify extensions.
@@ -18,11 +16,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     public interface IWithExtension 
     {
         /// <summary>
-        /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
+        /// Removes the extension with the specified name from the virtual machines in the scale set.
         /// </summary>
-        /// <param name="name">The reference name for the extension.</param>
-        /// <return>The first stage of the extension reference update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IUpdate UpdateExtension(string name);
+        /// <param name="name">The reference name of the extension to be removed/uninstalled.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithoutExtension(string name);
 
         /// <summary>
         /// Begins the definition of an extension reference to be attached to the virtual machines in the scale set.
@@ -32,11 +30,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply> DefineNewExtension(string name);
 
         /// <summary>
-        /// Removes the extension with the specified name from the virtual machines in the scale set.
+        /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
         /// </summary>
-        /// <param name="name">The reference name of the extension to be removed/uninstalled.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithoutExtension(string name);
+        /// <param name="name">The reference name for the extension.</param>
+        /// <return>The first stage of the extension reference update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IUpdate UpdateExtension(string name);
     }
 
     /// <summary>
@@ -67,7 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// the primary network interface of the scale set virtual machines.
     /// </summary>
     public interface IWithPrimaryInternalLoadBalancer  :
-        IWithApply
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply
     {
         /// <summary>
         /// Specifies the load balancer to be used as the internal load balancer for the virtual machines in the
@@ -169,12 +167,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// network interface of the scale set virtual machines.
     /// </summary>
     public interface IWithPrimaryLoadBalancer  :
-        IWithPrimaryInternalLoadBalancer
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer
     {
         /// <summary>
         /// Specifies the load balancer to be used as the Internet-facing load balancer for the virtual machines in the
         /// scale set.
-        /// This will replace the current internet-facing load balancer associated with the virtual machines in the
+        /// This will replace the current Internet-facing load balancer associated with the virtual machines in the
         /// scale set (if any).
         /// By default all the backend and inbound NAT pool of the load balancer will be associated with the primary
         /// network interface of the virtual machines unless a subset of them is selected in the next stages.
@@ -185,19 +183,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     }
 
     /// <summary>
-    /// The stage of a virtual machine scale set update containing inputs for the resource to be updated
-    /// (via WithApply.apply()).
+    /// The stage of a virtual machine scale set update containing inputs for the resource to be updated.
     /// </summary>
     public interface IWithApply  :
-        IAppliable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
-        IUpdateWithTags<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply>,
-        IWithManagedDataDisk,
-        IWithSku,
-        IWithCapacity,
-        IWithExtension,
-        IWithoutPrimaryLoadBalancer,
-        IWithoutPrimaryLoadBalancerBackend,
-        IWithoutPrimaryLoadBalancerNatPool
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply>,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithManagedDataDisk,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithUnmanagedDataDisk,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithSku,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithCapacity,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithExtension,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool
     {
     }
 
@@ -206,7 +204,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// of the selected internal load balancer with the primary network interface of the scale set virtual machines.
     /// </summary>
     public interface IWithPrimaryInternalLoadBalancerBackendOrNatPool  :
-        IWithPrimaryInternalLoadBalancerNatPool
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool
     {
         /// <summary>
         /// Associates the specified internal load balancer backends with the primary network interface of the
@@ -222,7 +220,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// load balancer with the primary network interface of the virtual machines in the scale set.
     /// </summary>
     public interface IWithPrimaryInternalLoadBalancerNatPool  :
-        IWithApply
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply
     {
         /// <summary>
         /// Associates the specified internal load balancer inbound NAT pools with the the primary network interface of
@@ -239,7 +237,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// the scale set.
     /// </summary>
     public interface IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool  :
-        IWithPrimaryInternetFacingLoadBalancerNatPool
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool
     {
         /// <summary>
         /// Associates the specified Internet-facing load balancer backends with the primary network interface of the
@@ -251,12 +249,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     }
 
     /// <summary>
-    /// The entirety of the load balancer update.
+    /// The entirety of the virtual machine scale set update.
     /// </summary>
     public interface IUpdate  :
-        IWithPrimaryLoadBalancer,
-        IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool,
-        IWithPrimaryInternalLoadBalancerBackendOrNatPool
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool
     {
     }
 
@@ -276,7 +274,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
         /// Specifies that a managed disk needs to be created implicitly with the given settings.
         /// </summary>
         /// <param name="sizeInGB">The size of the managed disk.</param>
-        /// <param name="lun">The disk lun.</param>
+        /// <param name="lun">The disk LUN.</param>
         /// <param name="cachingType">The caching type.</param>
         /// <return>The next stage of virtual machine scale set update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType);
@@ -285,18 +283,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
         /// Specifies that a managed disk needs to be created implicitly with the given settings.
         /// </summary>
         /// <param name="sizeInGB">The size of the managed disk.</param>
-        /// <param name="lun">The disk lun.</param>
+        /// <param name="lun">The disk LUN.</param>
         /// <param name="cachingType">The caching type.</param>
         /// <param name="storageAccountType">The storage account type.</param>
         /// <return>The next stage of virtual machine scale set update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType, StorageAccountTypes storageAccountType);
 
         /// <summary>
-        /// Detaches managed data disk with the given lun from the virtual machine scale set instances.
+        /// Detaches managed data disk with the given LUN from the virtual machine scale set instances.
         /// </summary>
-        /// <param name="lun">The disk lun.</param>
+        /// <param name="lun">The disk LUN.</param>
         /// <return>The next stage of virtual machine scale set update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithoutDataDisk(int lun);
+    }
+
+    /// <summary>
+    /// The stage of the virtual machine scale set definition allowing to specify unmanaged data disk.
+    /// </summary>
+    public interface IWithUnmanagedDataDisk 
+    {
     }
 
     /// <summary>
@@ -304,7 +309,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     /// Internet-facing load balancer with the primary network interface of the virtual machines in the scale set.
     /// </summary>
     public interface IWithPrimaryInternetFacingLoadBalancerNatPool  :
-        IWithPrimaryInternalLoadBalancer
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer
     {
         /// <summary>
         /// Associates inbound NAT pools of the selected Internet-facing load balancer with the primary network interface

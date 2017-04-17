@@ -99,7 +99,7 @@ namespace Fluent.Tests.Compute
                 Assert.True(dockerExtensionImage.PublisherName.Equals(dockerExtensionPublisherName, StringComparison.OrdinalIgnoreCase));
                 Assert.True(dockerExtensionImage.TypeName.Equals(dockerExtensionImageTypeName, StringComparison.OrdinalIgnoreCase));
                 Assert.True(dockerExtensionImage.VersionName.Equals(versionName, StringComparison.OrdinalIgnoreCase));
-                Assert.True(dockerExtensionImage.OsType == OperatingSystemTypes.Linux || dockerExtensionImage.OsType == OperatingSystemTypes.Windows);
+                Assert.True(dockerExtensionImage.OSType == OperatingSystemTypes.Linux || dockerExtensionImage.OSType == OperatingSystemTypes.Windows);
             }
         }
     }

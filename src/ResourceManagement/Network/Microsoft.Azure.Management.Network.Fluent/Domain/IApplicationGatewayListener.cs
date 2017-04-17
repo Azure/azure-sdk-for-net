@@ -14,20 +14,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface IApplicationGatewayListener  :
-        IHasInner<Models.ApplicationGatewayHttpListenerInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        IHasSslCertificate<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate>,
-        IHasPublicIPAddress,
-        IHasProtocol<Models.ApplicationGatewayProtocol>,
-        IHasHostName,
-        IHasServerNameIndication,
-        IHasSubnet
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayHttpListenerInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
+        Microsoft.Azure.Management.Network.Fluent.IHasSslCertificate<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate>,
+        Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress,
+        Microsoft.Azure.Management.Network.Fluent.IHasProtocol<Models.ApplicationGatewayProtocol>,
+        Microsoft.Azure.Management.Network.Fluent.IHasHostName,
+        Microsoft.Azure.Management.Network.Fluent.IHasServerNameIndication,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet
     {
-        /// <summary>
-        /// Gets the number of the frontend port the listener is listening on.
-        /// </summary>
-        int FrontendPortNumber { get; }
-
         /// <summary>
         /// Gets the frontend IP configuration this listener is associated with.
         /// </summary>
@@ -37,5 +32,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the name of the frontend port the listener is listening on.
         /// </summary>
         string FrontendPortName { get; }
+
+        /// <summary>
+        /// Gets the number of the frontend port the listener is listening on.
+        /// </summary>
+        int FrontendPortNumber { get; }
     }
 }

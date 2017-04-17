@@ -9,10 +9,10 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRou
     /// The entirety of an application gateway request routing rule update as part of an application gateway update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
-        IWithListener,
-        IWithBackend,
-        IWithBackendHttpConfiguration
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate>,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Update.IWithListener,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Update.IWithBackend,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayRequestRoutingRule.Update.IWithBackendHttpConfiguration
     {
     }
 

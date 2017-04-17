@@ -14,13 +14,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// version number.).
     /// </remarks>
     public interface ILoadBalancerInboundNatRule  :
-        IHasFrontend,
-        IHasBackendPort,
-        IHasProtocol<Models.TransportProtocol>,
-        IHasFloatingIP,
-        IHasFrontendPort,
-        IHasInner<Models.InboundNatRuleInner>,
-        IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>
+        Microsoft.Azure.Management.Network.Fluent.IHasFrontend,
+        Microsoft.Azure.Management.Network.Fluent.IHasBackendPort,
+        Microsoft.Azure.Management.Network.Fluent.IHasProtocol<Models.TransportProtocol>,
+        Microsoft.Azure.Management.Network.Fluent.IHasFloatingIP,
+        Microsoft.Azure.Management.Network.Fluent.IHasFrontendPort,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.InboundNatRuleInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>
     {
         /// <summary>
         /// Gets the number of minutes before an idle connection is closed.

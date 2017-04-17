@@ -27,6 +27,21 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                                 .Select(inner=> new Operation(inner));
         }
 
+        public IEnumerable<ResourceUsage> ListResourceUsage()
+        {
+            return Manager.Inner.ListResourceUsage()
+                                .AsContinuousCollection(link => Manager.Inner.ListResourceUsageNext(link))
+                                .Select(inner => new ResourceUsage(inner));
+
+        }
+
+        public IEnumerable<EdgeNode> ListEdgeNodes()
+        {
+            return Manager.Inner.EdgeNodes.List()
+                                .AsContinuousCollection(link => Manager.Inner.EdgeNodes.ListNext(link))
+                                .Select(inner => new EdgeNode(inner));
+        }
+
         ///GENMHASH:8C72A32C69D3B2099B1D93E3B9873A71:FE90FEDDCD7F5DB55096DEBEBB032C64
         public async Task LoadEndpointContentAsync(
             string resourceGroupName, 

@@ -4,13 +4,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using AvailabilitySet.Definition;
-    using AvailabilitySet.Update;
-    using Models;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using System.Collections.Generic;
-    using ResourceManager.Fluent.Core;
 
     internal partial class AvailabilitySetImpl 
     {
@@ -25,19 +24,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
+        /// <return>The virtual machine sizes supported in the availability set.</return>
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.ListVirtualMachineSizes()
+        {
+            return this.ListVirtualMachineSizes() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>;
+        }
+
         /// <summary>
         /// Gets the statuses of the existing virtual machines in the availability set.
         /// </summary>
-        System.Collections.Generic.IList<Models.InstanceViewStatus> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.Statuses
+        System.Collections.Generic.IReadOnlyList<Models.InstanceViewStatus> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.Statuses
         {
             get
             {
-                return this.Statuses() as System.Collections.Generic.IList<Models.InstanceViewStatus>;
+                return this.Statuses() as System.Collections.Generic.IReadOnlyList<Models.InstanceViewStatus>;
             }
         }
 
         /// <summary>
-        /// Gets the availability set sku.
+        /// Gets the availability set SKU.
         /// </summary>
         Models.AvailabilitySetSkuTypes Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.Sku
         {
@@ -72,10 +77,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>.Refresh()
+        /// <return>The Observable to refreshed resource.</return>
+        async Task<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>.RefreshAsync(CancellationToken cancellationToken)
         {
-            return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet;
+            return await this.RefreshAsync(cancellationToken) as Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet;
         }
 
         /// <summary>
@@ -99,9 +104,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the sku type for the availability set.
+        /// Specifies the SKU type for the availability set.
         /// </summary>
-        /// <param name="skuType">The sku type.</param>
+        /// <param name="skuType">The SKU type.</param>
         /// <return>The next stage of the definition.</return>
         AvailabilitySet.Update.IUpdate AvailabilitySet.Update.IWithSku.WithSku(AvailabilitySetSkuTypes skuType)
         {
@@ -109,19 +114,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the sku type for the availability set.
+        /// Specifies the SKU type for the availability set.
         /// </summary>
         /// <param name="skuType">The sku type.</param>
         /// <return>The next stage of the definition.</return>
         AvailabilitySet.Definition.IWithCreate AvailabilitySet.Definition.IWithSku.WithSku(AvailabilitySetSkuTypes skuType)
         {
             return this.WithSku(skuType) as AvailabilitySet.Definition.IWithCreate;
-        }
-
-        /// <returns>The virtual machine sizes supported in the availability set.</returns>
-        IEnumerable<IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.ListVirtualMachineSizes()
-        {
-            return this.ListVirtualMachineSizes();
         }
     }
 }

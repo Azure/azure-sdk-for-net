@@ -14,9 +14,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update
     /// Call  Update.apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
-        IUpdateWithTags<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update.IUpdate>,
-        IWithRule
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update.IUpdate>,
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update.IWithRule
     {
     }
 
@@ -25,6 +25,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update
     /// </summary>
     public interface IWithRule 
     {
+        /// <summary>
+        /// Begins the description of an update of an existing security rule of this network security group.
+        /// </summary>
+        /// <param name="name">The name of an existing security rule.</param>
+        /// <return>The first stage of the security rule update description.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Update.IUpdate UpdateRule(string name);
+
         /// <summary>
         /// Begins the definition of a new security rule to be added to this network security group.
         /// </summary>
@@ -38,12 +45,5 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update
         /// <param name="name">The name of the security rule to remove.</param>
         /// <return>The next stage of the network security group description.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update.IUpdate WithoutRule(string name);
-
-        /// <summary>
-        /// Begins the description of an update of an existing security rule of this network security group.
-        /// </summary>
-        /// <param name="name">The name of an existing security rule.</param>
-        /// <return>The first stage of the security rule update description.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Update.IUpdate UpdateRule(string name);
     }
 }

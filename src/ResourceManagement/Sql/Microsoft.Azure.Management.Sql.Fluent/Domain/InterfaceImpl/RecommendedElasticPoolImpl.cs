@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
-    
+    using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Models;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
     using System.Collections.Generic;
     using System;
 
@@ -20,15 +20,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             {
                 return this.Name();
             }
-        }
-
-        /// <summary>
-        /// Refreshes the resource to sync with Azure.
-        /// </summary>
-        /// <return>The refreshed resource.</return>
-        Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool>.Refresh()
-        {
-            return this.Refresh() as Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool;
         }
 
         /// <summary>
@@ -48,18 +39,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Fetches list of databases by making call to Azure.
         /// </summary>
         /// <return>List of the databases in recommended elastic pool.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.ListDatabases()
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.ListDatabases()
         {
-            return this.ListDatabases() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>;
+            return this.ListDatabases() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>;
         }
 
         /// <summary>
         /// Fetches list of metrics information by making call to Azure.
         /// </summary>
         /// <return>List of the databases in recommended elastic pool.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPoolMetric> Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.ListMetrics()
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPoolMetric> Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.ListMetrics()
         {
-            return this.ListMetrics() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPoolMetric>;
+            return this.ListMetrics() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPoolMetric>;
         }
 
         /// <summary>
@@ -152,11 +143,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the list of Azure SQL Databases in this pool. Expanded property.
         /// </summary>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.Databases
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.Sql.Fluent.IRecommendedElasticPool.Databases
         {
             get
             {
-                return this.Databases() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>;
+                return this.Databases() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase>;
             }
         }
 
@@ -201,6 +192,17 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             get
             {
                 return this.ResourceGroupName();
+            }
+        }
+
+        /// <summary>
+        /// Gets the manager client of this resource type.
+        /// </summary>
+        Microsoft.Azure.Management.Sql.Fluent.ISqlManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>.Manager
+        {
+            get
+            {
+                return this.Manager as Microsoft.Azure.Management.Sql.Fluent.ISqlManager;
             }
         }
     }

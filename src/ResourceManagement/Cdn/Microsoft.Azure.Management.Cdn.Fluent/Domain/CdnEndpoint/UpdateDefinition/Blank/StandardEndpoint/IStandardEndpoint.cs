@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateDefinition.Bla
     /// <summary>
     /// The stage of the CDN profile endpoint definition allowing to specify the origin.
     /// </summary>
-    /// <typeparam name="Parent">The return type of AttachableStandard.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent CDN profile update to return to after attaching this definition.</typeparam>
     public interface IStandardEndpoint<ParentT> 
     {
         /// <summary>

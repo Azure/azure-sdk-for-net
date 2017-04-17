@@ -2,11 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.AppService.Fluent
 {
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
-
     internal partial class AppServiceDomainsImpl 
     {
         /// <summary>

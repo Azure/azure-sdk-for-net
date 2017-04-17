@@ -51,22 +51,22 @@ namespace Fluent.Tests.Compute
                     // Validate caching, size and the default storage account type set for the managed disk
                     // backing os disk
                     //
-                    Assert.NotNull(virtualMachine.OsDiskStorageAccountType);
-                    Assert.Equal(virtualMachine.OsDiskCachingType, CachingTypes.ReadWrite);
+                    Assert.NotNull(virtualMachine.OSDiskStorageAccountType);
+                    Assert.Equal(virtualMachine.OSDiskCachingType, CachingTypes.ReadWrite);
                     Assert.Equal(virtualMachine.Size, VirtualMachineSizeTypes.StandardD5V2);
                     // Validate the implicit managed disk created by CRP to back the os disk
                     //
-                    Assert.NotNull(virtualMachine.OsDiskId);
-                    var osDisk = computeManager.Disks.GetById(virtualMachine.OsDiskId);
+                    Assert.NotNull(virtualMachine.OSDiskId);
+                    var osDisk = computeManager.Disks.GetById(virtualMachine.OSDiskId);
                     Assert.True(osDisk.IsAttachedToVirtualMachine);
-                    Assert.Equal(osDisk.OsType, OperatingSystemTypes.Linux);
+                    Assert.Equal(osDisk.OSType, OperatingSystemTypes.Linux);
                     // Check the auto created public ip
                     //
                     var publicIPId = virtualMachine.GetPrimaryPublicIPAddressId();
                     Assert.NotNull(publicIPId);
                     // Validates the options which are valid only for native disks
                     //
-                    Assert.Null(virtualMachine.OsUnmanagedDiskVhdUri);
+                    Assert.Null(virtualMachine.OSUnmanagedDiskVhdUri);
                     Assert.NotNull(virtualMachine.UnmanagedDataDisks);
                     Assert.True(virtualMachine.UnmanagedDataDisks.Count == 0);
                 }
@@ -340,9 +340,9 @@ namespace Fluent.Tests.Compute
                     Assert.NotNull(customImage);
                     Assert.NotNull(customImage.SourceVirtualMachineId);
                     Assert.True(customImage.SourceVirtualMachineId.Equals(virtualMachine1.Id, StringComparison.OrdinalIgnoreCase));
-                    Assert.NotNull(customImage.OsDiskImage);
-                    Assert.Equal(customImage.OsDiskImage.OsState, OperatingSystemStateTypes.Generalized);
-                    Assert.Equal(customImage.OsDiskImage.OsType, OperatingSystemTypes.Linux);
+                    Assert.NotNull(customImage.OSDiskImage);
+                    Assert.Equal(customImage.OSDiskImage.OsState, OperatingSystemStateTypes.Generalized);
+                    Assert.Equal(customImage.OSDiskImage.OsType, OperatingSystemTypes.Linux);
                     Assert.NotNull(customImage.DataDiskImages);
                     Assert.Equal(customImage.DataDiskImages.Count, 5);
                     foreach (ImageDataDisk imageDataDisk in customImage.DataDiskImages.Values)
@@ -562,7 +562,7 @@ namespace Fluent.Tests.Compute
                             .Create();
 
                     Assert.False(nativeVM.IsManagedDiskEnabled);
-                    var osVhdUri = nativeVM.OsUnmanagedDiskVhdUri;
+                    var osVhdUri = nativeVM.OSUnmanagedDiskVhdUri;
                     Assert.NotNull(osVhdUri);
 
                     computeManager.VirtualMachines.DeleteById(nativeVM.Id);
@@ -589,7 +589,7 @@ namespace Fluent.Tests.Compute
                             .Create();
 
                     Assert.True(managedVM.IsManagedDiskEnabled);
-                    Assert.True(managedVM.OsDiskId.Equals(osDisk.Id, StringComparison.OrdinalIgnoreCase));
+                    Assert.True(managedVM.OSDiskId.Equals(osDisk.Id, StringComparison.OrdinalIgnoreCase));
                 }
                 finally
                 {

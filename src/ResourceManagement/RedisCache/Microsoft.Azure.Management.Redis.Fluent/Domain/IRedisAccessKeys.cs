@@ -3,18 +3,18 @@
 namespace Microsoft.Azure.Management.Redis.Fluent
 {
     /// <summary>
-    /// The RedisCache.Keys action result.
+    /// The <code>RedisCache.keys()</code> action result.
     /// </summary>
     public interface IRedisAccessKeys 
     {
         /// <summary>
-        /// Gets a secondary key value.
-        /// </summary>
-        string SecondaryKey { get; }
-
-        /// <summary>
         /// Gets a primary key value.
         /// </summary>
         string PrimaryKey { get; }
+
+        /// <summary>
+        /// Gets a secondary key value.
+        /// </summary>
+        string SecondaryKey { get; }
     }
 }

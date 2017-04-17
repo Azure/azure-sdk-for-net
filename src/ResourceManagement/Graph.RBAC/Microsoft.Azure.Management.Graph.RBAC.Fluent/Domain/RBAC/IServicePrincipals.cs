@@ -2,54 +2,52 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
-
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Rest;
-    using System.Threading;
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
-    using System.Threading.Tasks;
-    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Entry point to service principal management API.
     /// </summary>
     /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
+    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
+    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
+    /// version number.).
     /// </remarks>
     public interface IServicePrincipals  :
-        // ISupportsCreating<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IBlank>,
-        ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>,
-        IHasManager<IGraphRbacManager>,
-        IHasInner<IServicePrincipalsOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.IGraphRbacManager>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipalsOperations>
     {
         /// <summary>
         /// Gets the information about a service principal.
         /// </summary>
-        /// <param name="objectId">objectId the unique object id</param>
-        /// <returns>an immutable representation of the resource</returns>
+        /// <param name="objectId">The unique object id.</param>
+        /// <return>An immutable representation of the resource.</return>
         Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal GetByObjectId(string objectId);
 
         /// <summary>
         /// Gets the information about a service principal.
         /// </summary>
-        /// <param name="appId">appId the application id (or the client id)</param>
-        /// <returns>an immutable representation of the resource</returns>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal GetByAppId(string appId);
-
-        /// <summary>
-        /// Gets the information about a service principal.
-        /// </summary>
-        /// <param name="spn">spn the service principal name</param>
-        /// <returns>an immutable representation of the resource</returns>
+        /// <param name="spn">The service principal name.</param>
+        /// <return>An immutable representation of the resource.</return>
         Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal GetByServicePrincipalName(string spn);
 
         /// <summary>
         /// Gets the information about a service principal.
         /// </summary>
-        /// <param name="spn">spn      the service principal name</param>
-        /// <param name="cancellationToken">cancellationToken the cancellation token</param>
-        /// <returns>the Observable to the request</returns>
-        Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByServicePrincipalNameAsync(string spn, CancellationToken cancellationToken = default(CancellationToken));
+        /// <param name="appId">The application id (or the client id).</param>
+        /// <return>An immutable representation of the resource.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal GetByAppId(string appId);
 
+        /// <summary>
+        /// Gets the information about a service principal.
+        /// </summary>
+        /// <param name="spn">The service principal name.</param>
+        /// <return>The Observable to the request.</return>
+        Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByServicePrincipalNameAsync(string spn, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

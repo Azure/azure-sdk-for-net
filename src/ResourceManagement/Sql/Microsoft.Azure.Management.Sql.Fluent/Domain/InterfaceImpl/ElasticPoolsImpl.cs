@@ -5,41 +5,21 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using SqlElasticPool.Definition;
-    using SqlElasticPools.SqlElasticPoolsCreatable;
-    using SqlServer.ElasticPools;
-    using Models;
+    using Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition;
+    using Microsoft.Azure.Management.Sql.Fluent.SqlElasticPools.SqlElasticPoolsCreatable;
+    using Microsoft.Azure.Management.Sql.Fluent.SqlServer.ElasticPools;
     using System.Collections.Generic;
 
     internal partial class ElasticPoolsImpl 
     {
         /// <summary>
-        /// Gets a particular elastic pool.
+        /// Creates a new elastic pool in SQL Server.
         /// </summary>
-        /// <param name="elasticPoolName">Name of the elastic pool to get.</param>
-        /// <return>Returns the elastic pool with in the SQL Server.</return>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool SqlServer.ElasticPools.IElasticPools.Get(string elasticPoolName)
+        /// <param name="elasticPoolName">Name of the elastic pool to be created.</param>
+        /// <return>Returns a stage to specify arguments of the elastic pool.</return>
+        SqlElasticPool.Definition.IBlank SqlServer.ElasticPools.IElasticPools.Define(string elasticPoolName)
         {
-            return this.Get(elasticPoolName) as Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool;
-        }
-
-        /// <summary>
-        /// Delete specified elastic pool in the server.
-        /// </summary>
-        /// <param name="elasticPoolName">Name of the elastic pool to delete.</param>
-        /// <return>Observable for the delete operation.</return>
-        async Task SqlServer.ElasticPools.IElasticPools.DeleteAsync(string elasticPoolName, CancellationToken cancellationToken)
-        {
-            await this.DeleteAsync(elasticPoolName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the elastic pools for the server.
-        /// </summary>
-        /// <return>List of elastic pools for the server.</return>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> SqlServer.ElasticPools.IElasticPools.List()
-        {
-            return this.List() as System.Collections.Generic.IList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
+            return this.Define(elasticPoolName) as SqlElasticPool.Definition.IBlank;
         }
 
         /// <summary>
@@ -53,13 +33,33 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
-        /// Creates a new elastic pool in SQL Server.
+        /// Delete specified elastic pool in the server.
         /// </summary>
-        /// <param name="elasticPoolName">Name of the elastic pool to be created.</param>
-        /// <return>Returns a stage to specify arguments of the elastic pool.</return>
-        SqlElasticPool.Definition.IBlank SqlServer.ElasticPools.IElasticPools.Define(string elasticPoolName)
+        /// <param name="elasticPoolName">Name of the elastic pool to delete.</param>
+        /// <return>Observable for the delete operation.</return>
+        async Task SqlServer.ElasticPools.IElasticPools.DeleteAsync(string elasticPoolName, CancellationToken cancellationToken)
         {
-            return this.Define(elasticPoolName) as SqlElasticPool.Definition.IBlank;
+ 
+            await this.DeleteAsync(elasticPoolName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns all the elastic pools for the server.
+        /// </summary>
+        /// <return>List of elastic pools for the server.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> SqlServer.ElasticPools.IElasticPools.List()
+        {
+            return this.List() as System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
+        }
+
+        /// <summary>
+        /// Gets a particular elastic pool.
+        /// </summary>
+        /// <param name="elasticPoolName">Name of the elastic pool to get.</param>
+        /// <return>Returns the elastic pool with in the SQL Server.</return>
+        Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool SqlServer.ElasticPools.IElasticPools.Get(string elasticPoolName)
+        {
+            return this.Get(elasticPoolName) as Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// version number.).
     /// </remarks>
     public interface IAppServiceCertificateOrder  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<IAppServiceManager,Models.AppServiceCertificateOrderInner>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.AppService.Fluent.IAppServiceManager,Models.AppServiceCertificateOrderInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.AppService.Fluent.IAppServiceCertificateOrder>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<AppServiceCertificateOrder.Update.IUpdate>
     {

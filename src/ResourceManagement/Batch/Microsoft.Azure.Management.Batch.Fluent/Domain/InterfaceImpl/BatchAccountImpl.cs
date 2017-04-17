@@ -2,229 +2,238 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Batch.Fluent
 {
-
-    using Microsoft.Azure.Management.Batch.Fluent.Models;
-    using Microsoft.Azure.Management.Storage.Fluent;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Batch.Fluent.Application.Definition;
+    using Microsoft.Azure.Management.Batch.Fluent.Application.Update;
+    using Microsoft.Azure.Management.Batch.Fluent.Application.UpdateDefinition;
     using Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition;
     using Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update;
-    using Microsoft.Azure.Management.Storage.Fluent.Models;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    using System.Threading;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Storage.Fluent;
     using System.Collections.Generic;
-    public partial class BatchAccountImpl 
+    using Models;
+
+    internal partial class BatchAccountImpl 
     {
         /// <summary>
-        /// Specifies that an existing storage account to be attached with the batch account.
+        /// Specifies an existing storage account to associate with the Batch account.
         /// </summary>
-        /// <param name="storageAccount">storageAccount existing storage account to be used</param>
-        /// <returns>the stage representing updatable batch account definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IWithStorageAccount.WithExistingStorageAccount(IStorageAccount storageAccount) { 
-            return this.WithExistingStorageAccount( storageAccount) as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate;
+        /// <param name="storageAccount">An existing storage account.</param>
+        /// <return>The next stage of the update.</return>
+        BatchAccount.Update.IUpdate BatchAccount.Update.IWithStorageAccount.WithExistingStorageAccount(IStorageAccount storageAccount)
+        {
+            return this.WithExistingStorageAccount(storageAccount) as BatchAccount.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies that a storage account to be attached with the batch account.
+        /// Removes the associated storage account.
         /// </summary>
-        /// <param name="storageAccountCreatable">storageAccountCreatable storage account to be created along with and used in batch</param>
-        /// <returns>the stage representing updatable batch account definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IWithStorageAccount.WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> storageAccountCreatable) { 
-            return this.WithNewStorageAccount( storageAccountCreatable) as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate;
+        /// <return>The next stage of the update.</return>
+        BatchAccount.Update.IUpdate BatchAccount.Update.IWithStorageAccount.WithoutStorageAccount()
+        {
+            return this.WithoutStorageAccount() as BatchAccount.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies that an existing storage account to be attached with the batch account.
+        /// Specifies a new storage account to create and associate with the Batch account.
         /// </summary>
-        /// <param name="storageAccountName">storageAccountName name of new storage account to be created and used in batch account</param>
-        /// <returns>the stage representing updatable batch account definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IWithStorageAccount.WithNewStorageAccount(string storageAccountName) { 
-            return this.WithNewStorageAccount( storageAccountName) as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate;
+        /// <param name="storageAccountCreatable">The definition of the storage account.</param>
+        /// <return>The next stage of the update.</return>
+        BatchAccount.Update.IUpdate BatchAccount.Update.IWithStorageAccount.WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> storageAccountCreatable)
+        {
+            return this.WithNewStorageAccount(storageAccountCreatable) as BatchAccount.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies that storage account should be removed from the batch account.
+        /// Specifies a new storage account to create and associate with the Batch account.
         /// </summary>
-        /// <returns>the stage representing updatable batch account definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IWithStorageAccount.WithoutStorageAccount() { 
-            return this.WithoutStorageAccount() as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate;
+        /// <param name="storageAccountName">The name of a new storage account.</param>
+        /// <return>The next stage of the update.</return>
+        BatchAccount.Update.IUpdate BatchAccount.Update.IWithStorageAccount.WithNewStorageAccount(string storageAccountName)
+        {
+            return this.WithNewStorageAccount(storageAccountName) as BatchAccount.Update.IUpdate;
         }
 
-        /// <returns>the pool quota for this BatchAccount account</returns>
+        /// <summary>
+        /// Gets the pool quota for this Batch account.
+        /// </summary>
         int Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.PoolQuota
         {
             get
-            { 
-            return this.PoolQuota();
+            {
+                return this.PoolQuota();
             }
         }
 
-        /// <returns>the access keys for this batch account</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.GetKeys() { 
-            return ((IBatchAccount)this).GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        /// <return>The access keys for this Batch account.</return>
+        Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.GetKeys()
+        {
+            return this.GetKeysAsync().GetAwaiter().GetResult();
         }
 
-        /// <returns>the access keys for this batch account</returns>
-        async Task<BatchAccountKeys> IBatchAccount.GetKeysAsync(CancellationToken cancellationToken)
-        {
-            return await this.GetKeysAsync(cancellationToken);
-        }
-        /// <returns>the core quota for this BatchAccount account</returns>
+        /// <summary>
+        /// Gets the core quota for this Batch account.
+        /// </summary>
         int Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.CoreQuota
         {
             get
-            { 
-            return this.CoreQuota();
+            {
+                return this.CoreQuota();
             }
         }
-        /// <returns>the properties and status of any auto storage account associated with</returns>
-        /// <returns>the account</returns>
-        Microsoft.Azure.Management.Batch.Fluent.Models.AutoStorageProperties Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.AutoStorage
+
+        /// <summary>
+        /// Gets the properties and status of any auto storage account associated with the Batch account.
+        /// </summary>
+        AutoStorageProperties Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.AutoStorage
         {
             get
-            { 
-            return this.AutoStorage() as Microsoft.Azure.Management.Batch.Fluent.Models.AutoStorageProperties;
+            {
+                return this.AutoStorage() as AutoStorageProperties;
             }
         }
-        /// <returns>Get the accountEndpoint value.</returns>
+
+        /// <summary>
+        /// Gets Batch account endpoint.
+        /// </summary>
         string Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.AccountEndpoint
         {
             get
-            { 
-            return this.AccountEndpoint() as string;
+            {
+                return this.AccountEndpoint();
             }
         }
-        /// <returns>the provisioned state of the resource. Possible values include:</returns>
-        /// <returns>'Invalid', 'Creating', 'Deleting', 'Succeeded', 'Failed', 'Cancelled'</returns>
-        Microsoft.Azure.Management.Batch.Fluent.Models.ProvisioningState Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.ProvisioningState
+
+        /// <summary>
+        /// Gets the provisioned state of the resource.
+        /// </summary>
+        ProvisioningState Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.ProvisioningState
         {
             get
-            { 
-            return this.ProvisioningState();
+            {
+                return this.ProvisioningState();
             }
         }
-        /// <returns>the active job and job schedule quota for this BatchAccount account</returns>
+
+        /// <summary>
+        /// Gets the active job and job schedule quota for this Batch account.
+        /// </summary>
         int Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.ActiveJobAndJobScheduleQuota
         {
             get
-            { 
-            return this.ActiveJobAndJobScheduleQuota();
+            {
+                return this.ActiveJobAndJobScheduleQuota();
             }
         }
 
         /// <summary>
-        /// Synchronize the storage account keys for batch account.
+        /// Synchronizes the storage account keys for this Batch account.
         /// </summary>
         void Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.SynchronizeAutoStorageKeys()
-        { 
-            ((IBatchAccount)this).SynchronizeAutoStorageKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Synchronize the storage account keys for batch account.
-        /// </summary>
-        async Task IBatchAccount.SynchronizeAutoStorageKeysAsync(CancellationToken cancellationToken)
         {
-            await this.SynchronizeAutoStorageKeysAsync(cancellationToken);
+            this.SynchronizeAutoStorageKeysAsync().GetAwaiter().GetResult(); ;
         }
 
         /// <summary>
-        /// Regenerates the access keys for batch account.
+        /// Regenerates the access keys for the Batch account.
         /// </summary>
-        /// <param name="keyType">keyType either primary or secondary key to be regenerated</param>
-        /// <returns>the access keys for this batch account</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.RegenerateKeys(AccountKeyType keyType) { 
-            return ((IBatchAccount)this).RegenerateKeysAsync(keyType).ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Regenerates the access keys for batch account.
-        /// </summary>
-        /// <param name="keyType">keyType either primary or secondary key to be regenerated</param>
-        /// <returns>the access keys for this batch account</returns>
-        async Task<BatchAccountKeys> IBatchAccount.RegenerateKeysAsync(AccountKeyType keyType, CancellationToken cancellationToken)
+        /// <param name="keyType">The type if key to regenerate.</param>
+        /// <return>Regenerated access keys for this Batch account.</return>
+        Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.RegenerateKeys(AccountKeyType keyType)
         {
-            return await this.RegenerateKeysAsync(keyType, cancellationToken);
+            return this.RegenerateKeysAsync(keyType).GetAwaiter().GetResult();
         }
 
-        /// <returns>the application in this batch account.</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Batch.Fluent.IApplication> Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.Applications
+        /// <summary>
+        /// Gets applications in this Batch account, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Batch.Fluent.IApplication> Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.Applications
         {
             get
-            { 
-            return this.Applications() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Batch.Fluent.IApplication>;
+            {
+                return this.Applications() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Batch.Fluent.IApplication>;
             }
         }
+
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
-        /// <returns>the refreshed resource</returns>
-        Microsoft.Azure.Management.Batch.Fluent.IBatchAccount Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.Refresh() { 
-            return this.Refresh() as Microsoft.Azure.Management.Batch.Fluent.IBatchAccount;
+        /// <return>The Observable to refreshed resource.</return>
+        async Task<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount> Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.RefreshAsync(CancellationToken cancellationToken)
+        {
+            return await this.RefreshAsync(cancellationToken) as Microsoft.Azure.Management.Batch.Fluent.IBatchAccount;
         }
 
         /// <summary>
-        /// Specifies that an existing storage account to be attached with the batch account.
+        /// Specifies an existing storage account to associate with the Batch account.
         /// </summary>
-        /// <param name="storageAccount">storageAccount existing storage account to be used</param>
-        /// <returns>the stage representing creatable batch account definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithCreate Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithStorage.WithExistingStorageAccount(IStorageAccount storageAccount) { 
-            return this.WithExistingStorageAccount( storageAccount) as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithCreate;
+        /// <param name="storageAccount">An existing storage account.</param>
+        /// <return>The next stage of the definition.</return>
+        BatchAccount.Definition.IWithCreate BatchAccount.Definition.IWithStorage.WithExistingStorageAccount(IStorageAccount storageAccount)
+        {
+            return this.WithExistingStorageAccount(storageAccount) as BatchAccount.Definition.IWithCreate;
         }
 
         /// <summary>
-        /// Specifies that a storage account to be attached with the batch account.
+        /// Specifies a new storage account to associate with the Batch account.
         /// </summary>
-        /// <param name="storageAccountCreatable">storageAccountCreatable storage account to be created along with and used in batch</param>
-        /// <returns>the stage representing creatable batch account definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithCreate Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithStorage.WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> storageAccountCreatable) { 
-            return this.WithNewStorageAccount( storageAccountCreatable) as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithCreate;
+        /// <param name="storageAccountCreatable">A storage account to be created along with and used in the Batch account.</param>
+        /// <return>The next stage of the definition.</return>
+        BatchAccount.Definition.IWithCreate BatchAccount.Definition.IWithStorage.WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> storageAccountCreatable)
+        {
+            return this.WithNewStorageAccount(storageAccountCreatable) as BatchAccount.Definition.IWithCreate;
         }
 
         /// <summary>
-        /// Specifies that an existing storage account to be attached with the batch account.
+        /// Specifies the name of a new storage account to be created and associated with this Batch account.
         /// </summary>
-        /// <param name="storageAccountName">storageAccountName name of new storage account to be created and used in batch account</param>
-        /// <returns>the stage representing creatable batch account definition</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithCreate Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithStorage.WithNewStorageAccount(string storageAccountName) { 
-            return this.WithNewStorageAccount( storageAccountName) as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithCreate;
+        /// <param name="storageAccountName">The name of a new storage account.</param>
+        /// <return>The next stage of the definition.</return>
+        BatchAccount.Definition.IWithCreate BatchAccount.Definition.IWithStorage.WithNewStorageAccount(string storageAccountName)
+        {
+            return this.WithNewStorageAccount(storageAccountName) as BatchAccount.Definition.IWithCreate;
         }
 
         /// <summary>
-        /// Begins the description of an update of an existing application of this batch account.
+        /// Begins the description of an update of an existing Batch application in this Batch account.
         /// </summary>
-        /// <param name="applicationId">applicationId the reference name for the application to be updated</param>
-        /// <returns>the stage representing updatable application.</returns>
-        Microsoft.Azure.Management.Batch.Fluent.Application.Update.IUpdate Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IWithApplication.UpdateApplication(string applicationId) { 
-            return this.UpdateApplication( applicationId) as Microsoft.Azure.Management.Batch.Fluent.Application.Update.IUpdate;
+        /// <param name="applicationId">The reference name of the application to be updated.</param>
+        /// <return>The first stage of a Batch application update.</return>
+        Application.Update.IUpdate BatchAccount.Update.IWithApplication.UpdateApplication(string applicationId)
+        {
+            return this.UpdateApplication(applicationId) as Application.Update.IUpdate;
         }
 
         /// <summary>
-        /// Deletes specified application from the batch account.
+        /// Removes the specified application from the Batch account.
         /// </summary>
-        /// <param name="applicationId">applicationId the reference name for the application to be removed</param>
-        /// <returns>the stage representing updatable batch account definition.</returns>
-        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IWithApplication.WithoutApplication(string applicationId) { 
-            return this.WithoutApplication( applicationId) as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate;
+        /// <param name="applicationId">The reference name for the application to be removed.</param>
+        /// <return>The next stage of the update.</return>
+        BatchAccount.Update.IUpdate BatchAccount.Update.IWithApplication.WithoutApplication(string applicationId)
+        {
+            return this.WithoutApplication(applicationId) as BatchAccount.Update.IUpdate;
         }
 
         /// <summary>
-        /// Specifies definition of an application to be created in a batch account.
+        /// Starts a definition of an application to be created in the Batch account.
         /// </summary>
-        /// <param name="applicationId">applicationId the reference name for application</param>
-        /// <returns>the stage representing configuration for the extension</returns>
-        Microsoft.Azure.Management.Batch.Fluent.Application.UpdateDefinition.IBlank<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate> Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IWithApplication.DefineNewApplication(string applicationId) { 
-            return this.DefineNewApplication( applicationId) as Microsoft.Azure.Management.Batch.Fluent.Application.UpdateDefinition.IBlank<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Update.IUpdate>;
+        /// <param name="applicationId">The reference name for the application.</param>
+        /// <return>The first stage of a Batch application definition.</return>
+        Application.UpdateDefinition.IBlank<BatchAccount.Update.IUpdate> BatchAccount.Update.IWithApplication.DefineNewApplication(string applicationId)
+        {
+            return this.DefineNewApplication(applicationId) as Application.UpdateDefinition.IBlank<BatchAccount.Update.IUpdate>;
         }
 
         /// <summary>
-        /// First stage to create new application in Batch account.
+        /// The stage of a Batch account definition allowing to add a Batch application.
         /// </summary>
-        /// <param name="applicationId">applicationId id of the application to create</param>
-        /// <returns>next stage to create the Batch account.</returns>
-        Microsoft.Azure.Management.Batch.Fluent.Application.Definition.IBlank<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithApplicationAndStorage> Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithApplication.DefineNewApplication(string applicationId) { 
-            return this.DefineNewApplication( applicationId) as Microsoft.Azure.Management.Batch.Fluent.Application.Definition.IBlank<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IWithApplicationAndStorage>;
+        /// <param name="applicationId">The id of the application to create.</param>
+        /// <return>The next stage of the definition.</return>
+        Application.Definition.IBlank<BatchAccount.Definition.IWithApplicationAndStorage> BatchAccount.Definition.IWithApplication.DefineNewApplication(string applicationId)
+        {
+            return this.DefineNewApplication(applicationId) as Application.Definition.IBlank<BatchAccount.Definition.IWithApplicationAndStorage>;
         }
-
     }
 }

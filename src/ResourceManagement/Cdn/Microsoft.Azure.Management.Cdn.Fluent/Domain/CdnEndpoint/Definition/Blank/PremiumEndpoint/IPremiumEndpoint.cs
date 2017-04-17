@@ -2,11 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.Blank.PremiumEndpoint
 {
+    using Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition;
+
     /// <summary>
-    /// The stage of the CDN profile endpoint definition allowing to specify the origin
-    /// for CDN Profile with Premium Verizon sku.
+    /// The stage of a CDN profile endpoint definition allowing to specify the origin
+    /// for the CDN profile with teh Premium Verizon SKU.
     /// </summary>
-    /// <typeparam name="Parent">The return type of AttachablePremium.attach().</typeparam>
+    /// <typeparam name="ParentT">The stage of the parent CDN profile definition to return to after attaching this definition.</typeparam>
     public interface IPremiumEndpoint<ParentT> 
     {
         /// <summary>

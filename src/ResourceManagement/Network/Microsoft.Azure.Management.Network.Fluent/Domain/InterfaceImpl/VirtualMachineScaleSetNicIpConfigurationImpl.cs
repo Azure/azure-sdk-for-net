@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Collections.Generic;
 
     internal partial class VirtualMachineScaleSetNicIPConfigurationImpl 
     {
