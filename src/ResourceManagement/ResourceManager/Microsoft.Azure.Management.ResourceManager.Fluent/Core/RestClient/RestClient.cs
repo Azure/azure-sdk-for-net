@@ -3,9 +3,13 @@
 
 using Microsoft.Rest;
 using Microsoft.Rest.TransientFaultHandling;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Net.NetworkInformation;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 {
@@ -79,6 +83,28 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             internal RestClientBuilder()
             {
                 handlers = new List<DelegatingHandler>();
+                WithUserAgent("MacAddressHash", HashMACAddress(GetMACAddress()));
+            }
+
+            private string GetMACAddress()
+            {
+                NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+                String sMacAddress = string.Empty;
+                foreach (NetworkInterface adapter in nics)
+                {
+                    if (sMacAddress == String.Empty) // only return MAC Address from first card
+                    {
+                        IPInterfaceProperties properties = adapter.GetIPProperties();
+                        sMacAddress = adapter.GetPhysicalAddress().ToString();
+                    }
+                }
+                return sMacAddress;
+            }
+
+            private string HashMACAddress(string macAddress)
+            {
+                var hashInput = Encoding.UTF8.GetBytes(macAddress);
+                return BitConverter.ToString(SHA256.Create().ComputeHash(hashInput)).Replace("-", string.Empty).ToLowerInvariant();
             }
 
             #region Fluent builder interfaces

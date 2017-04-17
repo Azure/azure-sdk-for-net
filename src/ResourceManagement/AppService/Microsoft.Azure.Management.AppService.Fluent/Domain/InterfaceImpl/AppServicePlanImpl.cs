@@ -7,7 +7,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     using Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Definition;
     using Microsoft.Azure.Management.AppService.Fluent.AppServicePlan.Update;
     using Microsoft.Azure.Management.AppService.Fluent.Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
 
     internal partial class AppServicePlanImpl 
     {
