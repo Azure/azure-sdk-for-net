@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:0E9769D28DB5D19653E121715C77F6C8:87B8885472B9F53C36F3E59296FB7453
-        public IList<string> TargetDomainNames()
+        public IReadOnlyList<string> TargetDomainNames()
         {
             List<string> targetDomainNames = new List<string>();
             if (Inner.PtrRecords != null) {

@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:4E53164CA4B37A1BF907696B7858DE65:0789FFFE5FE21310241EC5F7738AE5A4
-        public IList<string> Ipv6Addresses()
+        public IReadOnlyList<string> Ipv6Addresses()
         {
             List<string> ipv6Addresses = new List<string>();
             if (Inner.AaaaRecords != null) {

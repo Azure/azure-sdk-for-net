@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:0E666BFDFC9A666CA31FD735D7839414:2AAE577C01D4088729534C3BC39664A7
-        public IList<IServerMetric> ListUsages()
+        public IReadOnlyList<IServerMetric> ListUsages()
         {
             var usages = Manager.Inner.Servers.ListUsages(
                 ResourceGroupName,

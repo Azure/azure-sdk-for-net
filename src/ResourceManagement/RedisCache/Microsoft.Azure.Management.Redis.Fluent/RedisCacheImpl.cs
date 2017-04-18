@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:CC99BC6F0FDDE008E581A6EB944FE764:0C30EC62BAFB5962817F1799BCD0FA3F
-        public IList<Models.ScheduleEntry> ListPatchSchedules()
+        public IReadOnlyList<Models.ScheduleEntry> ListPatchSchedules()
         {
             RedisPatchScheduleInner patchSchedules = null;
             try

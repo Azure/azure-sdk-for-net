@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:2EBE0E253F1D6DB178F3433FF5310EA8:90C2D44162C23B74515368207322B17F
-        public IList<string> NameServers()
+        public IReadOnlyList<string> NameServers()
         {
             List<string> nameServers = new List<string>();
             if (Inner.NsRecords != null)

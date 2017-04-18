@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:606A3D349546DF27E3A091C321476658:DE6214AA350F8F418A233CAFCB35739F
-        public IList<string> NetworkInterfaceIds()
+        public IReadOnlyList<string> NetworkInterfaceIds()
         {
             return Inner
                 .NetworkProfile

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:C183D7089E5DF699C59758CC103308DF:9A4ADAD649EDB890CDCEB767D8708E33
-        public IList<IElasticPoolActivity> ListActivities()
+        public IReadOnlyList<IElasticPoolActivity> ListActivities()
         {
             var activities = Manager.Inner.ElasticPools.ListActivity(
                 ResourceGroupName,
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:CD775E31F43CBA6304D6EEA9E01682A1:2A3515CB32DF22200CBB032FFC4BCCFC
-        public IList<ISqlDatabase> ListDatabases()
+        public IReadOnlyList<ISqlDatabase> ListDatabases()
         {
             var databases = Manager.Inner.ElasticPools.ListDatabases(
                         ResourceGroupName,
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:DA730BE4F3BEA4D8DCD1631C079435CB:2D0DE4C2F41ED4D39BD2E654A3511EEE
-        public IList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolDatabaseActivity> ListDatabaseActivities()
+        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolDatabaseActivity> ListDatabaseActivities()
         {
             var databaseActivities = Manager.Inner.ElasticPools.ListDatabaseActivity(
                     ResourceGroupName,

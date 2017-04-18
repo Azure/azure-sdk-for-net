@@ -30,13 +30,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:16CEA22B57032A6757D8EFC1BF423794:F46E4D0A3CDB6C5AE412BF5B7FB52B09
-        public IList<ISqlFirewallRule> ListBySqlServer(string resourceGroupName, string sqlServerName)
+        public IReadOnlyList<ISqlFirewallRule> ListBySqlServer(string resourceGroupName, string sqlServerName)
         {
             return new List<ISqlFirewallRule>(this.ListByParent(resourceGroupName, sqlServerName));
         }
 
         ///GENMHASH:CD989F8A79EC70D56C4F5154E2B8BE11:57462F0C7FF757AFBBFD3B3561C9F9ED
-        public IList<ISqlFirewallRule> ListBySqlServer(ISqlServer sqlServer)
+        public IReadOnlyList<ISqlFirewallRule> ListBySqlServer(ISqlServer sqlServer)
         {
             return new List<ISqlFirewallRule>(this.ListByParent(sqlServer));
         }

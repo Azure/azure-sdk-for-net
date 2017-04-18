@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ResourceManager.Fluent.Core;
     using System.Threading.Tasks;
     using System.Threading;
+    using System.Linq;
 
     /// <summary>
     /// Implementation for Network
@@ -26,7 +27,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Network.Definition.IDefinition,
         Network.Update.IUpdate
     {
-        private IDictionary<string, ISubnet> subnets;
+        private Dictionary<string, ISubnet> subnets;
         ///GENMHASH:3D0F0C9DA19FF797EAF5133A38664022:55E548B15E635A8197D52049D3FAB8D3
         internal NetworkImpl(string name, VirtualNetworkInner innerModel, INetworkManager networkManager)
             : base(name, innerModel, networkManager)
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:7D80D923C32722759F2DC956E9A32D71
         override protected void InitializeChildrenFromInner()
         {
-            subnets = new SortedDictionary<string, ISubnet>();
+            subnets = new Dictionary<string, ISubnet>();
             IList<SubnetInner> inners = Inner.Subnets;
             if (inners != null)
             {
@@ -124,29 +125,29 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:0A630A9A81A6D7FB1D87E339FE830A51:FD878AA481D05018C98B67E014CFC475
-        internal IList<string> AddressSpaces()
+        internal IReadOnlyList<string> AddressSpaces()
         {
             if (Inner.AddressSpace == null)
                 return new List<string>();
             else if (Inner.AddressSpace.AddressPrefixes == null)
                 return new List<string>();
             else
-                return Inner.AddressSpace.AddressPrefixes;
+                return Inner.AddressSpace.AddressPrefixes?.ToList();
         }
 
         ///GENMHASH:08B7E1E5C1AFE7A46CE9F049D5CDA430:6FEBAF2F043487BFE65A5D9D04AA1315
-        internal IList<string> DnsServerIPs()
+        internal IReadOnlyList<string> DnsServerIPs()
         {
             if (Inner.DhcpOptions == null)
                 return new List<string>();
             else if (Inner.DhcpOptions.DnsServers == null)
                 return new List<string>();
             else
-                return Inner.DhcpOptions.DnsServers;
+                return Inner.DhcpOptions.DnsServers?.ToList();
         }
 
         ///GENMHASH:690E8F594CD13FA2074316AFD9B45928:8131F4AA7A989D064C8AB8B74BFCAD25
-        internal IDictionary<string, ISubnet> Subnets()
+        internal IReadOnlyDictionary<string, ISubnet> Subnets()
         {
             return subnets;
         }

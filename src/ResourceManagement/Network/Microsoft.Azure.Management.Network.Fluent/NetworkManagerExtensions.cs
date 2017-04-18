@@ -39,10 +39,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// Internal utility function
-        internal static IList<ISubnet> ListAssociatedSubnets(this INetworkManager manager, IList<SubnetInner> subnetRefs)
+        internal static IReadOnlyList<ISubnet> ListAssociatedSubnets(this INetworkManager manager, IList<SubnetInner> subnetRefs)
         {
             IDictionary<string, INetwork> networks = new Dictionary<string, INetwork>();
-            IList<ISubnet> subnets = new List<ISubnet>();
+            var subnets = new List<ISubnet>();
             if (subnetRefs != null)
             {
                 foreach (SubnetInner subnetRef in subnetRefs)

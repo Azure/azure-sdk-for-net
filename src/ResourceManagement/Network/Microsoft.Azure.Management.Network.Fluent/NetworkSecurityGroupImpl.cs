@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         NetworkSecurityGroup.Definition.IDefinition,
         NetworkSecurityGroup.Update.IUpdate
     {
-        private IDictionary<string, INetworkSecurityRule> rules;
-        private IDictionary<string, INetworkSecurityRule> defaultRules;
+        private Dictionary<string, INetworkSecurityRule> rules;
+        private Dictionary<string, INetworkSecurityRule> defaultRules;
         ///GENMHASH:EF8FBA50FA03F1FE4888F19050CEDBB9:55E548B15E635A8197D52049D3FAB8D3
         internal  NetworkSecurityGroupImpl(
             string name,
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:6D9F740D6D73C56877B02D9F1C96F6E7:6624452329542D5B0E4B4BE8D790304C
         override protected void InitializeChildrenFromInner ()
         {
-            rules = new SortedDictionary<string, INetworkSecurityRule>();
+            rules = new Dictionary<string, INetworkSecurityRule>();
             IList<SecurityRuleInner> inners = Inner.SecurityRules;
             if (inners != null)
             {
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            defaultRules = new SortedDictionary<string, INetworkSecurityRule>();
+            defaultRules = new Dictionary<string, INetworkSecurityRule>();
             inners = Inner.DefaultSecurityRules;
             if (inners != null)
             {
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #region Actions
 
         ///GENMHASH:E78D7ACAEEE05A0117BC7B6E41B0D53B:062BFEFE0393BE2C1D9F8B1A963FDE23
-        internal IList<ISubnet> ListAssociatedSubnets()
+        internal IReadOnlyList<ISubnet> ListAssociatedSubnets()
         {
             return Manager.ListAssociatedSubnets(Inner.Subnets);
         }
@@ -139,13 +139,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         #region Accessors
 
         ///GENMHASH:F8F85F9267133B95FDDB0B6F1F27E816:FC8B3AE517369B64F33F8DC475426F01
-        internal IDictionary<string, INetworkSecurityRule> SecurityRules ()
+        internal IReadOnlyDictionary<string, INetworkSecurityRule> SecurityRules ()
         {
             return rules;
         }
 
         ///GENMHASH:79407FFCDB8168F82199BE25744F9808:90E13C4BC15B37167DE1F6486AFDC06C
-        internal IDictionary<string, INetworkSecurityRule> DefaultSecurityRules ()
+        internal IReadOnlyDictionary<string, INetworkSecurityRule> DefaultSecurityRules ()
         {
             return defaultRules;
         }

@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Implementation of SrvRecordSet.
@@ -55,11 +56,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:4FC81B687476F8722014B0A4F98E1756:8E7FFCF6FB312ED092A54EB827BE698C
-        public IList<SrvRecord> Records()
+        public IReadOnlyList<SrvRecord> Records()
         {
             if (Inner.SrvRecords != null)
             {
-                return Inner.SrvRecords;
+                return Inner.SrvRecords?.ToList();
             }
             return new List<SrvRecord>();
         }

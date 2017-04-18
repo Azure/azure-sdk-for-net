@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:E78D7ACAEEE05A0117BC7B6E41B0D53B:062BFEFE0393BE2C1D9F8B1A963FDE23
-        public IList<ISubnet> ListAssociatedSubnets()
+        public IReadOnlyList<ISubnet> ListAssociatedSubnets()
         {
             return this.Manager.ListAssociatedSubnets(Inner.Subnets);
         }

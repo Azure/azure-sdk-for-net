@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         private ResourceId resourceId;
 
         ///GENMHASH:DF46C62E0E8998CD0340B3F8A136F135:2EE5EC6E56E27CC62928F7FDA722AB08
-        public IList<ISqlDatabase> Databases()
+        public IReadOnlyList<ISqlDatabase> Databases()
         {
             return Inner.Databases.Select(databaseInner => (ISqlDatabase)new SqlDatabaseImpl(
                 databaseInner.Name,
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:CD775E31F43CBA6304D6EEA9E01682A1:FE7D9343E169D0420CF0E1FC9A9A3736
-        public IList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListDatabases()
+        public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListDatabases()
         {
             var databases = Manager.Inner.RecommendedElasticPools.ListDatabases(
                 ResourceGroupName(),
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:77909FCEE2BCE7A1585A5D65D695B384:13846C17B14D55E5F3A4AE220EAFBEDC
-        public IList<IRecommendedElasticPoolMetric> ListMetrics()
+        public IReadOnlyList<IRecommendedElasticPoolMetric> ListMetrics()
         {
             var metricInner = Manager.Inner.RecommendedElasticPools.ListMetrics(
                 ResourceGroupName(),

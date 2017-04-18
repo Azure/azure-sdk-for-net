@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Implementation of TxtRecordSet.
@@ -59,10 +60,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:4FC81B687476F8722014B0A4F98E1756:271F0595F800257FBA25E945FA53FCF5
-        public IList<TxtRecord> Records()
+        public IReadOnlyList<TxtRecord> Records()
         {
             if (Inner.TxtRecords != null) {
-                return Inner.TxtRecords;
+                return Inner.TxtRecords?.ToList();
             }
             return new List<TxtRecord>();
         }

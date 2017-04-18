@@ -214,9 +214,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:3BC1B56E1EA6D8692923934DD96FA69E:3E899646D6EF65C7F18D49308FB9672A
-        public IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> GeoFilters()
+        public IReadOnlyList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> GeoFilters()
         {
-                return Inner.GeoFilters;
+                return Inner.GeoFilters?.ToList();
         }
 
         ///GENMHASH:6F62B34CB3A912AA692DBF18C6F448CB:A04B2C5688B47A48AC0B72C698E4AFC4
@@ -393,9 +393,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:02F4B346FD2A70C665ACC639FDB892A8:55B871B6D1B5DB1661BCCFCFAE29D39C
-        public IList<string> ContentTypesToCompress()
+        public IReadOnlyList<string> ContentTypesToCompress()
         {
-			return Inner.ContentTypesToCompress;
+			return Inner.ContentTypesToCompress?.ToList();
         }
 
         ///GENMHASH:E6BF4911DAC5A8F7935D5D2C29B496A4:5599AE7A8F08BDC419B9D9D6350D80B3
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:C245F1873A239F9C8B080F237C995994:CADA2D8BC52DA7D402455B63B068EB16
-        public IList<string> CustomDomains()
+        public IReadOnlyList<string> CustomDomains()
         {
 			return this.customDomainList.Select(cd => cd.HostName).ToList();
         }

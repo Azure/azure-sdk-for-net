@@ -1535,13 +1535,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:FD4CE9D235CA642C8185D0844177DDFB:D7E2129941B29E412D9F2124F2BAE432
-        public IList<string> VhdContainers()
+        public IReadOnlyList<string> VhdContainers()
         {
             if (Inner.VirtualMachineProfile.StorageProfile != null
                 && Inner.VirtualMachineProfile.StorageProfile.OsDisk != null
                 && Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers != null)
             {
-                return Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers;
+                return Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers?.ToList();
             }
             return new List<string>();
         }

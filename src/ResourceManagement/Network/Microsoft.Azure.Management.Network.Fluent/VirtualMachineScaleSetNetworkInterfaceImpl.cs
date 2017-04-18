@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ResourceManager.Fluent.Core;
     using System.Threading.Tasks;
     using System.Threading;
+    using System.Linq;
 
     internal partial class VirtualMachineScaleSetNetworkInterfaceImpl :
         ResourceBase<IVirtualMachineScaleSetNetworkInterface,
@@ -84,22 +85,22 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return Inner.DnsSettings.InternalDomainNameSuffix;
         }
 
-        internal IList<string> DnsServers()
+        internal IReadOnlyList<string> DnsServers()
         {
             if (Inner.DnsSettings == null || Inner.DnsSettings.DnsServers == null)
             {
                 return new List<string>();
             }
-            return Inner.DnsSettings.DnsServers;
+            return Inner.DnsSettings.DnsServers?.ToList();
         }
 
-        internal IList<string> AppliedDnsServers()
+        internal IReadOnlyList<string> AppliedDnsServers()
         {
             if (Inner.DnsSettings == null || Inner.DnsSettings.AppliedDnsServers == null)
             {
                 return new List<string>();
             }
-            return Inner.DnsSettings.AppliedDnsServers;
+            return Inner.DnsSettings.AppliedDnsServers?.ToList();
         }
 
         internal string PrimaryPrivateIP()

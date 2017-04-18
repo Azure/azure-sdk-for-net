@@ -99,16 +99,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:744A3724C9A3248553B33B2939CE091A:47A4EFA20BF9EBE9F94B6AF74FC75F03
-        internal IList<ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
+        internal IReadOnlyList<ILoadBalancerInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
         {
-            IList<InboundNatRuleInner> inboundNatPoolRefs = Inner.LoadBalancerInboundNatRules;
+            var inboundNatPoolRefs = Inner.LoadBalancerInboundNatRules;
             if (inboundNatPoolRefs == null)
             {
                 return new List<ILoadBalancerInboundNatRule>();
             }
 
-            Dictionary<string, ILoadBalancer> loadBalancers = new Dictionary<string, ILoadBalancer>();
-            List<ILoadBalancerInboundNatRule> rules = new List<ILoadBalancerInboundNatRule>();
+            var loadBalancers = new Dictionary<string, ILoadBalancer>();
+            var rules = new List<ILoadBalancerInboundNatRule>();
             foreach (var reference in inboundNatPoolRefs)
             {
                 string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(reference.Id);
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:D5259819D030517B66106CDFA84D3219:3471F8356719EA5868DD7F34332B58E4
-        internal IList<ILoadBalancerBackend> ListAssociatedLoadBalancerBackends()
+        internal IReadOnlyList<ILoadBalancerBackend> ListAssociatedLoadBalancerBackends()
         {
             var backendRefs = Inner.LoadBalancerBackendAddressPools;
             if (backendRefs == null)
