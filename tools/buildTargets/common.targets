@@ -143,8 +143,7 @@
         VisualStudioVersion=$(VisualStudioVersion); 
         PackageOutputPath=$(PackageOutputPath); 
         NoPackageAnalysis=true; 
-        IncludeSymbols=true; 
-        Properties=TargetFramework=$(NetFx452);
+        IncludeSymbols=true;
         NoBuild=true;">
       <Output TaskParameter="TargetOutputs" ItemName="SdkNuGetPackages" />
     </MSBuild>
@@ -153,11 +152,14 @@
   </Target>
 
   <Target Name="PublishNuget">
+    <Error Condition=" ('$(NugetPackageName)' == '') " Text="Please Provide Package Name that has to be published" />
+    <Error Condition=" ('$(NugetPackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
+    <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
     <!--PackageOutputPath-->
     <PropertyGroup>
-      <PublishNugetToDir Condition=" '$(PublishNugetToDir)' == '' ">$(LibraryRoot)\PublishedNugets</PublishNugetToDir>
+      <PublishNugetToDir Condition=" '$(PublishNugetToDir)' == '' ">$(LibraryRoot)PublishedNugets</PublishNugetToDir>
     </PropertyGroup>
-    <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
+
     <Message Text="Trying to Create directory $(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir))" />
     <MakeDir Directories="$(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(PublishNugetToDir)', '^(?i)http'))" />
     <Message Text="Publishing directory detected $(PublishNugetToDir)" Condition="Exists($(PublishNugetToDir))" />
@@ -166,7 +168,7 @@
     </PropertyGroup>
 
     <Message Importance="high" Text="Publishing main and symbols packages to the cloud at $(NuGetPublishingSource)" />
-    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputPath)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(PublishDestination)"
+    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputPath)\*$(NugetPackageName)*.nupkg&quot; $(NuGetKey)$(PublishDestination)"
 			  IgnoreExitCode="true" />
     
 			  <!--Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />-->

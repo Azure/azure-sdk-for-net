@@ -87,7 +87,7 @@
 		<OnPremiseBuildFile Include="$(CIToolsPath)\*Tools.Build.*.dll" />
     </ItemGroup>
     <!--<Exec Command="msbuild /v:q @(OnPremiseBuildProj)"  />-->
-	      <OnPremiseBuildProj Include="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise\*.csproj" />
+	      
 	<MSBuild Targets="Restore"
 		Projects="@(OnPremiseBuildProj)"
 		ContinueOnError="ErrorAndStop" />
