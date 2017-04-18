@@ -1,4 +1,4 @@
-﻿<Project>
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<ItemGroup Label="SDKProject">
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AnalysisServices\Management.Analysis\Microsoft.Azure.Management.Analysis.csproj" />		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Authorization\Management.Authorization\Microsoft.Azure.Management.Authorization.csproj" />		
@@ -18,7 +18,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Graph.RBAC\Graph.RBAC\Microsoft.Azure.Graph.RBAC.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Insights\Microsoft.Azure.Insights\Microsoft.Azure.Insights.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)IotHub\Management.IotHub\Microsoft.Azure.Management.IotHub.csproj" />
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)KeyVault\Management.KeyVault\Microsoft.Azure.Management.KeyVault.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)KeyVault\Management\Management.KeyVault\Microsoft.Azure.Management.KeyVault.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)MachineLearning\Management.MachineLearning\Microsoft.Azure.Management.MachineLearning.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Logic\Management.Logic\Microsoft.Azure.Management.Logic.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Media\Management.Media\Microsoft.Azure.Management.Media.csproj" />
@@ -73,7 +73,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Graph.RBAC\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Insights\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)IotHub\**\*Tests.csproj" ProjectType="Test"/>
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)KeyVault\**\*Tests.csproj" ProjectType="Test"/>
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)KeyVault\Management\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)MachineLearning\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Logic\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Media\**\*Tests.csproj" ProjectType="Test"/>
