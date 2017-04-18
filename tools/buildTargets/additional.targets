@@ -56,4 +56,30 @@
 	
 </Target>
 -->
+	
+  <Target Name="Publi" DependsOnTargets="PrepareForAutoRestLibraries">
+    <Error Condition=" ('$(PackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
+    <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
+    <Message Text="Trying to Create directory $(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource))" />
+    <MakeDir Directories="$(NuGetPublishingSource)" Condition="!Exists($(NuGetPublishingSource)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(NuGetPublishingSource)', '^(?i)http'))" />
+    <Message Text="Publishing directory detected $(NuGetPublishingSource)" Condition="Exists($(NuGetPublishingSource))" />
+    <PropertyGroup>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' == '' "></ActualSource>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' != '' "> -Source $(NuGetPublishingSource)</ActualSource>
+    </PropertyGroup>
+
+    <!--Ran 'nuget push' on the main package, will automatically push the symbol package at the same time-->
+    <Message Importance="high" Text="Publishing main and symbols packages to the cloud at $(NuGetPublishingSource)" />
+    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)"
+			  IgnoreExitCode="true"
+			  Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
+
+    <Message Text="Not publishing package %(SdkNuGetPackage.Identity) as Publish is set to 'false' for the component."
+				 Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
+
+    <MSBuild Projects="$(MSBuildProjectFullPath)"
+				 Properties="NuGetKey=$(NuGetKey);NetCorePackageName=%(NetCore_AutoRestLibraries.PackageName);PackageOutputDir=$(PackageOutputDir)"
+				 Targets="PublishNetCorePackage" Condition=" %(NetCore_AutoRestLibraries.PackageName) != '' " />
+  </Target>
+
 </Project>

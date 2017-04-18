@@ -3,7 +3,7 @@
     <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
   </PropertyGroup>
 
-  <Target Name="PreSign">
+  <Target Name="PreSign" Condition=" '$(CodeSign)' == 'true' ">
     <GetFrameworkSdkPath>
       <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
     </GetFrameworkSdkPath>
@@ -88,6 +88,10 @@
     </ItemGroup>
     <!--<Exec Command="msbuild /v:q @(OnPremiseBuildProj)"  />-->
 
+	    <MSBuild Targets="Restore"
+         Projects="@(ProjectToBuild)"
+         ContinueOnError="ErrorAndStop" />
+	
     <MSBuild Targets="Build"
          Projects="@(OnPremiseBuildProj)"
          Condition="'$(OnPremiseBuild)' == 'true'"

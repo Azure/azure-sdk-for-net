@@ -12,9 +12,11 @@
 		<ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
 		<BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
 		<BuiltPackageOutputDir>$(BinariesFolder)\packages</BuiltPackageOutputDir>
+		<DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
 		<CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
 		<Scope Condition=" '$(Scope)' == '' ">All</Scope>
 		<NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
+    <NugetKey Condition=" '$(Scope)' == '' ">1234</NugetKey>
 		<ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
 	</PropertyGroup>
   <PropertyGroup>
