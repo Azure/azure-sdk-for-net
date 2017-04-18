@@ -16,7 +16,7 @@ namespace Fluent.Tests.Compute
 {
     public class VirtualMachineCustomImageOperationsTest
     {
-        private readonly Region Location = Region.USWestCentral;
+        private readonly Region Location = Region.USEast;
 
         [Fact]
         public void CanCreateImageFromNativeVhd()
@@ -35,9 +35,7 @@ namespace Fluent.Tests.Compute
                             Location,
                             computeManager);
                     //
-                    var creatableDisk = computeManager
-                            .VirtualMachineCustomImages
-                            .Define(vhdBasedImageName)
+                    var creatableDisk = computeManager.VirtualMachineCustomImages.Define(vhdBasedImageName)
                             .WithRegion(Location)
                             .WithNewResourceGroup(rgName)
                             .WithLinuxFromVhd(linuxVM.OSUnmanagedDiskVhdUri, OperatingSystemStateTypes.Generalized)
