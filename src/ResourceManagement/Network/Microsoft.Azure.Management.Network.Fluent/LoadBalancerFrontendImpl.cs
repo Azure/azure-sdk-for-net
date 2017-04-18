@@ -75,9 +75,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:4EDB057B59A7F7BB0C722F8A1399C004:239049AD1BE51FBFCA5EFE2D3D90D634
-        internal IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule> LoadBalancingRules ()
+        internal IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule> LoadBalancingRules ()
         {
-            IDictionary<string, ILoadBalancingRule> rules = new SortedDictionary<string, ILoadBalancingRule>();
+            var rules = new Dictionary<string, ILoadBalancingRule>();
             if(Inner.LoadBalancingRules != null)
             {
                 foreach(var innerRef in Inner.LoadBalancingRules)
@@ -93,9 +93,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:8A52CACDB59192E1D0B37583E7088612:E06C6AC8649C7D094661074B1621FE5E
-        internal IDictionary<string, ILoadBalancerInboundNatPool> InboundNatPools ()
+        internal IReadOnlyDictionary<string, ILoadBalancerInboundNatPool> InboundNatPools ()
         {
-            IDictionary<string, ILoadBalancerInboundNatPool> pools = new SortedDictionary<string, ILoadBalancerInboundNatPool>();
+            var pools = new Dictionary<string, ILoadBalancerInboundNatPool>();
             if (Inner.InboundNatPools != null)
             {
                 foreach (var innerRef in Inner.InboundNatPools)
@@ -113,9 +113,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:E8B1A4CD5F6DE0F12BD4A52F19DDADA3:D324027CACD9F0F14120E933769AE69D
-        internal IDictionary<string, ILoadBalancerInboundNatRule> InboundNatRules ()
+        internal IReadOnlyDictionary<string, ILoadBalancerInboundNatRule> InboundNatRules ()
         {
-            IDictionary<string, ILoadBalancerInboundNatRule> rules = new SortedDictionary<string, ILoadBalancerInboundNatRule>();
+            var rules = new Dictionary<string, ILoadBalancerInboundNatRule>();
             if (Inner.InboundNatRules != null)
             {
                 foreach (var innerRef in Inner.InboundNatRules)

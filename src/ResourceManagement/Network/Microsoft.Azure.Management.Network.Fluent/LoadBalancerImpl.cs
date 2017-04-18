@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private IDictionary<string, string> creatablePIPKeys = new Dictionary<string, string>();
 
         // Children
-        private IDictionary<string, ILoadBalancerBackend> backends;
-        private IDictionary<string, ILoadBalancerTcpProbe> tcpProbes;
-        private IDictionary<string, ILoadBalancerHttpProbe> httpProbes;
-        private IDictionary<string, ILoadBalancingRule> loadBalancingRules;
-        private IDictionary<string, ILoadBalancerFrontend> frontends;
-        private IDictionary<string, ILoadBalancerInboundNatRule> inboundNatRules;
-        private IDictionary<string, ILoadBalancerInboundNatPool> inboundNatPools;
+        private Dictionary<string, ILoadBalancerBackend> backends;
+        private Dictionary<string, ILoadBalancerTcpProbe> tcpProbes;
+        private Dictionary<string, ILoadBalancerHttpProbe> httpProbes;
+        private Dictionary<string, ILoadBalancingRule> loadBalancingRules;
+        private Dictionary<string, ILoadBalancerFrontend> frontends;
+        private Dictionary<string, ILoadBalancerInboundNatRule> inboundNatRules;
+        private Dictionary<string, ILoadBalancerInboundNatPool> inboundNatPools;
 
         ///GENMHASH:A5942A0C76A5AF979ACC449D61F54472:55E548B15E635A8197D52049D3FAB8D3
         internal  LoadBalancerImpl (
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:38719597698E42AABAD5A9917188C155:D9C6887E0B146C62C173F2FC8A940200
         private void InitializeFrontendsFromInner ()
         {
-            frontends = new SortedDictionary<string, ILoadBalancerFrontend>();
+            frontends = new Dictionary<string, ILoadBalancerFrontend>();
             IList<FrontendIPConfigurationInner> frontendsInner = Inner.FrontendIPConfigurations;
             if (frontendsInner != null)
             {
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:38BB8357245354CED812C58E4EC79068:DC3D25D8FDD465052EB41638FB17F9B2
         private void InitializeBackendsFromInner ()
         {
-            backends = new SortedDictionary<string, ILoadBalancerBackend>();
+            backends = new Dictionary<string, ILoadBalancerBackend>();
             IList<BackendAddressPoolInner> backendsInner = Inner.BackendAddressPools;
             if (backendsInner != null)
             {
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:7963C76B84396C00185D8DA2B2F7C665:F1E436F5834A4C1F8A48115529DB0ACD
         private void InitializeLoadBalancingRulesFromInner()
         {
-            loadBalancingRules = new SortedDictionary<string, ILoadBalancingRule>();
+            loadBalancingRules = new Dictionary<string, ILoadBalancingRule>();
             IList<LoadBalancingRuleInner> rulesInner = Inner.LoadBalancingRules;
             if (rulesInner != null)
             {
@@ -275,8 +275,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:12C04D490C1E5A715E97451A0D94F9ED:EF6B6A3CB2DFC605432EDB763513E641
         private void InitializeProbesFromInner ()
         {
-            httpProbes = new SortedDictionary<string, ILoadBalancerHttpProbe>();
-            tcpProbes = new SortedDictionary<string, ILoadBalancerTcpProbe>();
+            httpProbes = new Dictionary<string, ILoadBalancerHttpProbe>();
+            tcpProbes = new Dictionary<string, ILoadBalancerTcpProbe>();
             if (Inner.Probes != null) {
                 foreach (var probeInner in Inner.Probes) {
                     var probe = new LoadBalancerProbeImpl(probeInner, this);
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private void InitializeInboundNatPoolsFromInner ()
         {
 
-            inboundNatPools = new SortedDictionary<string, ILoadBalancerInboundNatPool>();
+            inboundNatPools = new Dictionary<string, ILoadBalancerInboundNatPool>();
             if (Inner.InboundNatPools != null) {
                 foreach (var inner in Inner.InboundNatPools)
                 {
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:D7F8078784461C05471F1B08FCC5E9D9:A3C76C7153C126B77AA240D3FCFB08EC
         private void InitializeInboundNatRulesFromInner ()
         {
-            inboundNatRules = new SortedDictionary<string, ILoadBalancerInboundNatRule>();
+            inboundNatRules = new Dictionary<string, ILoadBalancerInboundNatRule>();
             if (Inner.InboundNatRules != null) {
                 foreach (var inner in Inner.InboundNatRules) {
                     var rule = new LoadBalancerInboundNatRuleImpl(inner, this);
@@ -778,13 +778,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:A45CE73D7318CE351EAF634272B1CA21:AAFEA7A6CB469B72F235861703236767
-        internal IDictionary<string, ILoadBalancerBackend> Backends ()
+        internal IReadOnlyDictionary<string, ILoadBalancerBackend> Backends ()
         {
             return backends;
         }
 
         ///GENMHASH:8A52CACDB59192E1D0B37583E7088612:ABDF5C10B8D024D4FF2F19FCC08D545B
-        internal IDictionary<string, ILoadBalancerInboundNatPool> InboundNatPools ()
+        internal IReadOnlyDictionary<string, ILoadBalancerInboundNatPool> InboundNatPools ()
         {
             return inboundNatPools;
         }
@@ -796,31 +796,31 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:3BF87DE2E0C9BBAA60FEF8B345571B0D:78DEDBCE9849DD9B71BA61C7FBEA3261
-        internal IDictionary<string, ILoadBalancerFrontend> Frontends ()
+        internal IReadOnlyDictionary<string, ILoadBalancerFrontend> Frontends ()
         {
             return frontends;
         }
 
         ///GENMHASH:E8B1A4CD5F6DE0F12BD4A52F19DDADA3:08B702001C3E5904E4105656090C99DB
-        internal IDictionary<string, ILoadBalancerInboundNatRule> InboundNatRules ()
+        internal IReadOnlyDictionary<string, ILoadBalancerInboundNatRule> InboundNatRules ()
         {
             return inboundNatRules;
         }
 
         ///GENMHASH:24748C01B3C4E2C8AA78FF1218414773:1E910A825FD89730E12401CA3FB434B7
-        internal IDictionary<string, ILoadBalancerHttpProbe> HttpProbes ()
+        internal IReadOnlyDictionary<string, ILoadBalancerHttpProbe> HttpProbes ()
         {
             return httpProbes;
         }
 
         ///GENMHASH:4EDB057B59A7F7BB0C722F8A1399C004:AAA6E6E9080AF0A38342B9778B29320E
-        internal IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
+        internal IReadOnlyDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
         {
             return loadBalancingRules;
         }
 
         ///GENMHASH:6352ECA72191EB7B29EABE1E30B18CF4:CF345546D001F32F4850EF402DE6ED22
-        internal List<string> PublicIPAddressIds()
+        internal IReadOnlyList<string> PublicIPAddressIds()
         {
             List<string> publicIPAddressIds = new List<string>();
             foreach (ILoadBalancerFrontend frontend in Frontends().Values)
