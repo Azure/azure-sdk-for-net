@@ -56,7 +56,7 @@ namespace Samples.Tests
                 ManageWebAppSlots.Program.RunSample);
         }
 
-        [Fact]
+        [Fact(Skip = "Manual Only test: cannot be run in automation because it needs user input.")]
         [Trait("Samples", "AppService")]
         public void ManageWebAppSqlConnectionTest()
         {

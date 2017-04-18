@@ -16,10 +16,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
     {
         public enum Level
         {
-            NONE,
-            BASIC,
-            HEADERS,
-            BODY
+            None,
+            Basic,
+            Headers,
+            Body,
+            BodyAndHeaders
         };
 
         public Level LogLevel { get; set; }
@@ -33,13 +34,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (LogLevel == Level.NONE)
+            if (LogLevel == Level.None)
             {
                 return await base.SendAsync(request, cancellationToken);
             }
 
             ServiceClientTracing.Information("Request: {0} {1}", request.Method, request.RequestUri);
-            if (LogLevel == Level.BODY || LogLevel == Level.HEADERS)
+            if (LogLevel == Level.BodyAndHeaders || LogLevel == Level.Headers)
             {
                 ServiceClientTracing.Information("  headers:");
                 foreach (var header in request.Headers)
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                 }
             }
 
-            if (LogLevel == Level.BODY)
+            if (LogLevel == Level.Body || LogLevel == Level.BodyAndHeaders)
             {
                 if (request.Content != null)
                 {
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             }
 
             HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
-            if (LogLevel == Level.BODY || LogLevel == Level.HEADERS)
+            if (LogLevel == Level.BodyAndHeaders || LogLevel == Level.Headers)
             {
                 ServiceClientTracing.Information("Response:");
                 ServiceClientTracing.Information("  headers:");
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             }
 
 
-            if (LogLevel == Level.BODY)
+            if (LogLevel == Level.Body || LogLevel == Level.BodyAndHeaders)
             {
                 bool isEncoded = IsHeaderPresent(response.Content.Headers, "Content-Encoding");
                 if (!isEncoded && response.Content != null)

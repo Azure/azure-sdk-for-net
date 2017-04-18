@@ -103,7 +103,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => NetworkManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
@@ -112,7 +112,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => ComputeManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
@@ -121,7 +121,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => Microsoft.Azure.Management.ResourceManager.Fluent.ResourceManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c)
                 .WithSubscription(c.DefaultSubscriptionId));
         }
@@ -131,7 +131,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => BatchManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
@@ -140,7 +140,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => SqlManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
@@ -149,7 +149,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => AppServiceManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
@@ -159,7 +159,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => KeyVaultManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
@@ -168,7 +168,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => CdnManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
@@ -177,7 +177,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => RedisManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
@@ -186,7 +186,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => StorageManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
@@ -195,7 +195,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => ServiceBusManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
         }
 
@@ -204,7 +204,7 @@ namespace Fluent.Tests.Common
             return CreateMockedManager(c => Microsoft.Azure.Management.ResourceManager.Fluent.ResourceManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c));
         }
 
