@@ -12,10 +12,13 @@
 		<ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
 		<BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
 		<BuiltPackageOutputDir>$(BinariesFolder)\packages</BuiltPackageOutputDir>
+		<DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
 		<CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
 		<Scope Condition=" '$(Scope)' == '' ">All</Scope>
 		<NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
-		<ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
+    <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
+    <NugetPackageName/>
+    <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
 	</PropertyGroup>
   <PropertyGroup>
     <!--OnPremiseBuildTasks is not a good name, but CI server is using that, will update across soon-->

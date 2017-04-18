@@ -3,7 +3,7 @@
     <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
   </PropertyGroup>
 
-  <Target Name="PreSign">
+  <Target Name="PreSign" Condition=" '$(CodeSign)' == 'true' ">
     <GetFrameworkSdkPath>
       <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
     </GetFrameworkSdkPath>
@@ -87,11 +87,15 @@
 		<OnPremiseBuildFile Include="$(CIToolsPath)\*Tools.Build.*.dll" />
     </ItemGroup>
     <!--<Exec Command="msbuild /v:q @(OnPremiseBuildProj)"  />-->
-	      <OnPremiseBuildProj Include="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise\*.csproj" />
+	      
 	<MSBuild Targets="Restore"
 		Projects="@(OnPremiseBuildProj)"
 		ContinueOnError="ErrorAndStop" />
 
+	    <MSBuild Targets="Restore"
+         Projects="@(ProjectToBuild)"
+         ContinueOnError="ErrorAndStop" />
+	
     <MSBuild Targets="Build"
          Projects="@(OnPremiseBuildProj)"
          Condition="'$(OnPremiseBuild)' == 'true'"
