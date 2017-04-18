@@ -27,16 +27,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGatewaySku class.
         /// </summary>
-        /// <param name="name">Gateway SKU name. Possible values are: 'Basic',
-        /// 'HighPerformance','Standard', 'UltraPerformance', 'VpnGw1',
-        /// 'VpnGw2' and 'VpnGw3'. Possible values include: 'Basic',
-        /// 'HighPerformance', 'Standard', 'UltraPerformance', 'VpnGw1',
-        /// 'VpnGw2', 'VpnGw3'</param>
-        /// <param name="tier">Gateway SKU tier. Possible values are: 'Basic',
-        /// 'HighPerformance','Standard', 'UltraPerformance', 'VpnGw1',
-        /// 'VpnGw2' and 'VpnGw3'. Possible values include: 'Basic',
-        /// 'HighPerformance', 'Standard', 'UltraPerformance', 'VpnGw1',
-        /// 'VpnGw2', 'VpnGw3'</param>
+        /// <param name="name">Gateway SKU name. Possible values include:
+        /// 'Basic', 'HighPerformance', 'Standard', 'UltraPerformance',
+        /// 'VpnGw1', 'VpnGw2', 'VpnGw3'</param>
+        /// <param name="tier">Gateway SKU tier. Possible values include:
+        /// 'Basic', 'HighPerformance', 'Standard', 'UltraPerformance',
+        /// 'VpnGw1', 'VpnGw2', 'VpnGw3'</param>
         /// <param name="capacity">The capacity.</param>
         public VirtualNetworkGatewaySku(string name = default(string), string tier = default(string), int? capacity = default(int?))
         {
@@ -46,9 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets gateway SKU name. Possible values are: 'Basic',
-        /// 'HighPerformance','Standard', 'UltraPerformance', 'VpnGw1',
-        /// 'VpnGw2' and 'VpnGw3'. Possible values include: 'Basic',
+        /// Gets or sets gateway SKU name. Possible values include: 'Basic',
         /// 'HighPerformance', 'Standard', 'UltraPerformance', 'VpnGw1',
         /// 'VpnGw2', 'VpnGw3'
         /// </summary>
@@ -56,9 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets gateway SKU tier. Possible values are: 'Basic',
-        /// 'HighPerformance','Standard', 'UltraPerformance', 'VpnGw1',
-        /// 'VpnGw2' and 'VpnGw3'. Possible values include: 'Basic',
+        /// Gets or sets gateway SKU tier. Possible values include: 'Basic',
         /// 'HighPerformance', 'Standard', 'UltraPerformance', 'VpnGw1',
         /// 'VpnGw2', 'VpnGw3'
         /// </summary>
