@@ -114,7 +114,7 @@ namespace Samples.Tests
                Path.Combine("..", "Common"));
         }
 
-        [Fact]
+        [Fact(Skip ="Manual only test: Requires user interaction.")]
         [Trait("Samples", "AppService")]
         public void ManageLinuxWebAppSqlConnectionTest()
         {
