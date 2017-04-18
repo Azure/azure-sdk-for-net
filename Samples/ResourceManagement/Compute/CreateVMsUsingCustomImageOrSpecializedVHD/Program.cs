@@ -50,7 +50,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 Utilities.Log("Creating a Linux VM");
 
                 var linuxVM = azure.VirtualMachines.Define(linuxVmName1)
-                        .WithRegion(Region.USEast)
+                        .WithRegion(Region.USWest)
                         .WithNewResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIPAddressDynamic()
@@ -113,7 +113,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                 Utilities.Log("Creating a Linux VM using captured image - " + capturedImageUri);
 
                 var linuxVM2 = azure.VirtualMachines.Define(linuxVmName2)
-                        .WithRegion(Region.USEast)
+                        .WithRegion(Region.USWest)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIPAddressDynamic()
@@ -144,7 +144,7 @@ namespace CreateVMsUsingCustomImageOrSpecializedVHD
                         + " of deleted VM");
 
                 var linuxVM3 = azure.VirtualMachines.Define(linuxVmName3)
-                        .WithRegion(Region.USEast)
+                        .WithRegion(Region.USWest)
                         .WithExistingResourceGroup(rgName)
                         .WithNewPrimaryNetwork("10.0.0.0/28")
                         .WithPrimaryPrivateIPAddressDynamic()

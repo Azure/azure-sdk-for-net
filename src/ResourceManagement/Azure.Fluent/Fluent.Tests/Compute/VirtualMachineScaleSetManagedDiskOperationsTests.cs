@@ -18,7 +18,7 @@ namespace Fluent.Tests.Compute
 
     public class VirtualMachineScaleSetManagedDiskOperationsTests
     {
-        private readonly Region Location = Region.USWestCentral;
+        private readonly Region Location = Region.USEast;
 
         [Fact]
         public void CanCreateUpdateVirtualMachineScaleSetFromPIRWithManagedDisk()

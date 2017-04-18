@@ -17,7 +17,7 @@ namespace CreateVirtualMachineUsingCustomImageFromVHD
     {
         private static string userName = "tirekicker";
         private static string password = "12NewPA$$w0rd!";
-        private static Region region = Region.USWestCentral;
+        private static Region region = Region.USWest;
 
         /**
          * Azure Compute sample for managing virtual machines -

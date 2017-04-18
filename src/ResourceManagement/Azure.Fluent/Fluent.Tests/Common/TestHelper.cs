@@ -327,7 +327,7 @@ namespace Fluent.Tests.Common
                 port,
                 userName,
                 password,
-                "sudo waagent - deprovision + user--force"));
+                "sudo waagent -deprovision+user --force"));
         }
 
         public static async Task<HttpResponseMessage> CheckAddress(string url)
