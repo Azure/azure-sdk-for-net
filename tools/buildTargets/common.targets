@@ -54,7 +54,7 @@
 
     <Message Text="Cleaning Initiated....." />
     <MSBuild Targets="$(LatestProjectDefaultCleanTarget)"
-         Projects="@(ProjectToBuild)"
+         Projects="@(SDKProject);@(SDKProject)"
              Properties="PackageOutputPath=$(PackageOutputPath)"
          ContinueOnError="ErrorAndStop" />
   </Target>
@@ -219,9 +219,4 @@
   <!--Do not delete-->
   <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)"/>
 
-
-
-  
-  
-  
 </Project>
