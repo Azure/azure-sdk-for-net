@@ -1,4 +1,4 @@
-﻿<Project>
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<ItemGroup Label="SDKProject">
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AnalysisServices\Management.Analysis\Microsoft.Azure.Management.Analysis.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Authorization\Management.Authorization\Microsoft.Azure.Management.Authorization.csproj" />		
