@@ -30,7 +30,7 @@
     </BuildTraversedProjectsDependsOn>
 	
 	<RestoreTraversedProjectsDependsOn>
-		<!--RestoreLatestProjects;-->
+		RestoreLatestProjects;
 	</RestoreTraversedProjectsDependsOn>
 
     <CleanTraversedProjectsDependsOn>
