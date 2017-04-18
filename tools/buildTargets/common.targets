@@ -1,14 +1,18 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-<!--
-  <Import Project="$(MSBuildExtensionsPath)\..\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets"/>
-  <Import Condition=" $(OnPremiseBuild) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
-  <Import Project="$(MSBuildExtensionsPath)\..\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Sdks\NuGet.Build.Tasks.Pack\build\NuGet.Build.Tasks.Pack.targets" />
-  -->
-  
+  <Import Project="common.tasks"/>
+  <Import Project="signing.targets"/>
+  <PropertyGroup>
+    <NetFx452>net452</NetFx452>
+    <NetStd14>netstandard1.4</NetStd14>
+  </PropertyGroup>
+  <!--<ItemGroup>
+    <FilesToSign/>
+  </ItemGroup>-->
   
   <PropertyGroup>
     <PreBuildStaticAnalysisTargets>
+      BuildCiSign;
+      BuildMsBuildTask;
       CategorizeProjects;
     </PreBuildStaticAnalysisTargets>
   </PropertyGroup>
@@ -19,6 +23,9 @@
       PreBuildStaticAnalysis;
       <!-- RestoreLatestProjects; -->
       BuildLatestProjects;
+      PreSign;
+      Sign;
+      PostSign;
       Package
     </BuildTraversedProjectsDependsOn>
 	
@@ -72,24 +79,51 @@
 	<!-- $(MSBuildProjectDefaultTargets)-->
       <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
     </PropertyGroup>
-	
 	  
-	  <Message Text="Building SDK Projects ..... @(SDKProject)" />
-    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
-         Projects="@(SDKProject)"
-		BuildInParallel="$(BuildInParallel)"
-         ContinueOnError="ErrorAndStop" />
+	  <Message Text="Building SDK Projects ..... @(SDKProject)" />    
+    <MSBuild Targets="Build"
+             Projects="@(SDKProject)"
+             Properties="TargetFramework=$(NetFx452)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="net452Assemblies" />
+    </MSBuild>
+
+    <MSBuild Targets="Build" 
+             Projects="@(SDKProject)" 
+             Properties="TargetFramework=$(NetStd14)"
+             BuildInParallel="$(BuildInParallel)" 
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" />
+    </MSBuild>
+
+    <!--BuildInParallel="$(BuildInParallel)"-->
+    <!--<Properties="GeneratePackageOnBuild=true;IncludeSymbols=true">-->
+    <ItemGroup>
+      <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies)" />
+    </ItemGroup>    
     
     <Message Text="Building SDKTest Projects ....... @(SDKTestProject)" />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
          Projects="@(SDKTestProject)"
          Condition=" '$(SkipBuildingTestProjects)' != 'false' "
-         ContinueOnError="ErrorAndStop" />
-        
-         <!--<Properties="GeneratePackageOnBuild=true;IncludeSymbols=true">-->
-         
+         ContinueOnError="ErrorAndStop">
+    </MSBuild>         
   </Target>
 
+  <Target Name="Test" DependsOnTargets="PreBuildStaticAnalysis">
+    <Message Text="Executing Tests......"/>
+    <ItemGroup>
+      <FinalTestsToRun Include="@(SDKTestProject)"/>
+      <FinalTestsToRun Remove="@(DoNotRunTests)" />
+    </ItemGroup>
+    <Message Text="Final Tests to run.... @(FinalTestsToRun)" />    
+    <Exec Command="dotnet test %(FinalTestsToRun.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\%(FinalTestsToRun.Filename).trx --no-build" Condition="@(FinalTestsToRun) != ''" ContinueOnError="false" WorkingDirectory="%(FinalTestsToRun.RootDir)%(FinalTestsToRun.Directory)" />
+  </Target>
+  
+  <!--
+   $(LibraryRoot)\TestResults\%(SDKTestProject.Filename).trx
+  -->
   <Target Name="Package">
     <Message Text="Packaging..... @(SDKProject)"/>
     <MSBuild
@@ -105,54 +139,16 @@
 
   </Target>
   
-  <Target Name="PublishNugetPackage">
-    
-  </Target>
-
-  <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)">
-  <!--
-    <MSBuild Targets="GetPackageReferences"
-            Projects="@(ProjectToBuild)"
-            ContinueOnError="ErrorAndStop">
-      <Output TaskParameter="TargetOutputs" ItemName="OtherProjectReferences" />
-    </MSBuild>
-  
-    <Error Condition=" '@(OtherProjectReferences)' != '' " Text="Contains Project References, build cannot continue. Please remove all Project references from CI builds" />
-  -->
-  </Target>
-  
-  <Target Name="GetPackageReferences" Returns="@(ProjectReference)" />
-  
   <Target Name="CategorizeProjects">
-  <Message Text="Categorizing...."/>
-    <ItemGroup>
-      <SDKProject Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' != 'Test' "/>
-      <SDKTestProject Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' == 'Test' "/>
-    </ItemGroup>
-    
-	<Message Text="Building SDK Projects ..... @(SDKProject)" />
-	
-	<Message Text="Building Test Projects ..... @(SDKTestProject)" />
-	
+    <Message Text="Categorizing...."/>
+      <ItemGroup>
+        <SDKProject Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' != 'Test' "/>
+        <SDKTestProject Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' == 'Test' "/>
+      </ItemGroup>
+  	<Message Text="Building SDK Projects ..... @(SDKProject)" />
+	  <Message Text="Building Test Projects ..... @(SDKTestProject)" />
   </Target>
 
-  <Target Name="PrintStuff">
-    <Message Text="ProgFiles .... $(ProgramFiles)" />
-    <Message Text="$(MSBuildExtensionsPath)" />
-    <!--
-    <Message Text="%(VsIDENugetPackageReference.Identity) and %(VsIDENugetPackageReference.Version) "/>
-    <Message Text="%(VsIDEProjectReference.Identity) "/>
--->
-    
+  <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)">    
   </Target>
-
-  <Target Name="GetWellKnownProperties">
-    
-  </Target>
-  
-  <Target Name="_SplitProjectReferencesByFileExistence">
-	<!-- Noop --> 
-</Target>
-
-
 </Project>

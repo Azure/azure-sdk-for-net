@@ -1,9 +1,4 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<!--<Import Project="SdkCommon\dirs.proj" />-->
 	<Import Project="Sdks\dirs.proj" />
-<!--
-<Import Project="SdkCommon\dirs.proj" />
-	<Import Condition="Exists('Profiles\dir.proj')" Project="Profiles\dirs.proj" />
-	<Import Condition="Exists('SdkCommon\dir.proj')" Project="SdkCommon\dirs.proj" />
-	<Import Condition="Exists('SDKs\dir.proj')" Project="SDKs\dirs.proj" />
-	-->
 </Project>
