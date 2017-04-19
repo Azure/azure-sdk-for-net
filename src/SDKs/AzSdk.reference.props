@@ -4,6 +4,12 @@
 	<PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6,3.0.0)" />
   </ItemGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <NoWarn>1591;1701;1573</NoWarn>
+  </PropertyGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
   <!--

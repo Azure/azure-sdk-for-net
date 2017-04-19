@@ -10,4 +10,10 @@
     <!-- This is needed for discovering tests in test explorer -->
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />	
   </ItemGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <NoWarn>1591;1701;1573</NoWarn>
+  </PropertyGroup>
 </Project>
