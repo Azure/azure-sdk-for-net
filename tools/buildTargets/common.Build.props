@@ -16,9 +16,11 @@
 	<SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+	<NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Label="ReleaseBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Release|AnyCPU' ">
     <SignAssembly>true</SignAssembly>
+	<NoWarn>1591</NoWarn>
   </PropertyGroup>
 	
   <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
