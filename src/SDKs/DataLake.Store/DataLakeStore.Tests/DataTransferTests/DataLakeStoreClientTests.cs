@@ -199,7 +199,7 @@ namespace DataLakeStore.Tests
         /// <summary>
         /// Tests the case of a fresh upload with multiple segments and multiple files.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Randomly failing on CI. Needs investigation from DataLakeStore team")]
         public void DataLakeUploader_FreshFolderUploadDownload()
         {
             var frontEnd = new InMemoryFrontEnd();

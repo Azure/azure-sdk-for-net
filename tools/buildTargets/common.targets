@@ -11,6 +11,7 @@
       BuildMsBuildTask;
       CategorizeProjects;
       GetScopedProjects;
+	  <!-- GetProjectReferences; -->
     </PreBuildStaticAnalysisTargets>
   </PropertyGroup>
   <PropertyGroup>
@@ -25,15 +26,19 @@
       RestoreLatestProjects;
       BuildLatestProjects;
       PreSign;
-      Package
     </BuildTraversedProjectsDependsOn>	
 	  <RestoreTraversedProjectsDependsOn>
 		  RestoreLatestProjects;
 	  </RestoreTraversedProjectsDependsOn>
     <CleanTraversedProjectsDependsOn>
       CleanLatestProjects;
-      _CleanSDKPackageFiles
+      CleanSDKPackageFiles
     </CleanTraversedProjectsDependsOn>
+  </PropertyGroup>
+  <PropertyGroup>
+	<RunTestProjectsDependsOn>
+		Test
+	</RunTestProjectsDependsOn>
   </PropertyGroup>
   
   <Target Name="CleanLatestProjects" DependsOnTargets="$(PreBuildCategorizePrjectTargets)">
@@ -47,7 +52,7 @@
          ContinueOnError="ErrorAndStop" />
   </Target>
 
-  <Target Name="_CleanSDKPackageFiles">
+  <Target Name="CleanSDKPackageFiles">
     <ItemGroup>
       <_SDKPackageFilesToDelete Include="$(PackageOutputPath)\*.nupkg"/>
       <_SDKPackageFilesToDelete Include="$(BaseIntermediateOutputPath)\*.nuspec"/>
