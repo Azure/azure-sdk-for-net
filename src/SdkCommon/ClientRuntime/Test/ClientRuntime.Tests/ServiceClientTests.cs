@@ -224,8 +224,8 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.True(testProduct.Product.Name.Equals(testProductName));
             Assert.True(testProduct.Product.Version.Equals(testProductVersion));
         }
-        
-#if NET451
+        /*
+#if FullNetFx
         [Fact]
         public void VerifyOsInfoInUserAgent()
         {
@@ -241,5 +241,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.NotEmpty(osProduct.Product.Version);
         }
 #endif
+*/
     }
 }

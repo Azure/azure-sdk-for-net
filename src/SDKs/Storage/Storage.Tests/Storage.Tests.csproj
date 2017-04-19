@@ -12,9 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="6.2.0-preview" />
-
-    <!--<ProjectReference Include="..\Management.Storage\Microsoft.Azure.Management.Storage.csproj" />-->
+    <!--<PackageReference Include="Microsoft.Azure.Management.Storage" Version="6.2.0-preview" />-->
+    <ProjectReference Include="..\Management.Storage\Microsoft.Azure.Management.Storage.csproj" />
   </ItemGroup>
   
   <ItemGroup>

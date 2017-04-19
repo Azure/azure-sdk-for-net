@@ -10,9 +10,8 @@
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Websites" Version="1.6.0-preview" />
-    
-    <!--<ProjectReference Include="..\Management.Websites\Microsoft.Azure.Management.Websites.csproj" />-->
+    <!--<PackageReference Include="Microsoft.Azure.Management.Websites" Version="1.6.0-preview" />-->    
+    <ProjectReference Include="..\Management.Websites\Microsoft.Azure.Management.Websites.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">

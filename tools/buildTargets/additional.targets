@@ -29,9 +29,11 @@
     <!--<Error Condition=" '@(OtherProjectReferences)' != '' " Text="Contains Project References, build cannot continue. Please remove all Project references from CI builds" />-->
 
 
+    <!--
+    <Properties="GeneratePackageOnBuild=true;IncludeSymbols=true">
+    $(MSBuildProjectDefaultTargets)
+    -->
   </Target>
-
-
 
   <Target Name="GetPackageReferences" Returns="@(ProjectReference)" />
   <Target Name="GetOutputPath" Returns="$(OutputPath)\$(AssemblyName).dll" />
@@ -47,8 +49,11 @@
 
   </Target>
 
-  <Target Name="GetWellKnownProperties">
+  <Target Name="Foo">
+    <Message Text="%(SDKProject.Identity)" />
 
+    <Message Text="%(SDKProject.Identity)" />
+    <Message Text="%(SDKProject.RootDir)%(SDKProject.Directory)::TrimEnd('\')" />
   </Target>
 
   <!--

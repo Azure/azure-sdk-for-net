@@ -10,9 +10,9 @@
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Redis" Version="4.3.0-preview" />
+    <!--<PackageReference Include="Microsoft.Azure.Management.Redis" Version="4.3.0-preview" />-->
     
-    <!--<ProjectReference Include="..\Management.Redis\Microsoft.Azure.Management.Redis.csproj" />-->
+    <ProjectReference Include="..\Management.Redis\Microsoft.Azure.Management.Redis.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">

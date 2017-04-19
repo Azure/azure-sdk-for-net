@@ -1,7 +1,5 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="dirs.proj" />
-	
-  
+	<Import Project="dirs.proj" />  
 	<PropertyGroup>
 		<LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
 		<LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
@@ -21,7 +19,6 @@
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
 	</PropertyGroup>
   <PropertyGroup>
-    <!--OnPremiseBuildTasks is not a good name, but CI server is using that, will update across soon-->
     <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
     <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
     <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
@@ -50,10 +47,7 @@
 			<Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)"
 			  IgnoreExitCode="true"
 			  Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
-
-  </Target>
-  
-  
+  </Target>  
 	<Import Project="tools\buildTargets\common.Build.props"/>
 	<Import Project="tools\buildTargets\common.NugetPackage.props" />	
 </Project>
