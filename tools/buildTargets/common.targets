@@ -25,7 +25,6 @@
       PreBuildStaticAnalysis;
       RestoreLatestProjects;
       BuildLatestProjects;
-      Test
       PreSign;
     </BuildTraversedProjectsDependsOn>	
 	  <RestoreTraversedProjectsDependsOn>
@@ -40,6 +39,9 @@
 	<RunTestProjectsDependsOn>
 		Test
 	</RunTestProjectsDependsOn>
+    <RunSignDependsOn>
+      PreSign
+    </RunSignDependsOn>
   </PropertyGroup>
   
   <Target Name="CleanLatestProjects" DependsOnTargets="$(PreBuildCategorizePrjectTargets)">
