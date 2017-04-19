@@ -114,7 +114,7 @@ namespace ManageFunctionAppSourceControl
                         .WithNewResourceGroup(rgName)
                         .WithExistingStorageAccount(app2.StorageAccount)
                         .DefineSourceControl()
-                            .WithPublicGitRepository("https://github.com/jianghaolu/square-function-app-sample.git")
+                            .WithPublicGitRepository("https://github.com/jianghaolu/square-function-app-sample")
                             .WithBranch("master")
                             .Attach()
                         .Create();
