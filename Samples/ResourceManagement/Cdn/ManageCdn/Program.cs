@@ -162,7 +162,7 @@ namespace ManageCdn
                     .WithJavaVersion(JavaVersion.V8Newest)
                     .WithWebContainer(WebContainer.Tomcat8_0Newest)
                     .DefineSourceControl()
-                        .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test.git")
+                        .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
                         .WithBranch("master")
                         .Attach()
                     .Create();

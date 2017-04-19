@@ -84,7 +84,11 @@ namespace Azure.Tests
                     Assert.Null(azure.ApplicationGateways.GetById(id));
                 }
 
-                azure.ResourceGroups.DeleteByName(rgName);
+                try
+                {
+                    azure.ResourceGroups.DeleteByName(rgName);
+                }
+                catch { }
             }
         }
 
