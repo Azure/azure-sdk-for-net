@@ -1,25 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
-    <Description>Scheduler.Tests Class Library</Description>
-    <Authors>Microsoft Corporation</Authors>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
-    <DelaySign>true</DelaySign>
-    <AssemblyName>Scheduler.Test</AssemblyName>
-    <AssemblyOriginatorKeyFile>../../../../tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
     <PackageId>Scheduler.Test</PackageId>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
+    <Description>Scheduler.Tests Class Library</Description>
+    <AssemblyName>Scheduler.Test</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Scheduler" Version="2.2.0" />
-    
-    <!--<ProjectReference Include="..\Management.Scheduler\Microsoft.Azure.Management.Scheduler.csproj" />-->
+    <!--<PackageReference Include="Microsoft.Azure.Management.Scheduler" Version="2.2.0" />-->    
+    <ProjectReference Include="..\Management.Scheduler\Microsoft.Azure.Management.Scheduler.csproj" />
   </ItemGroup>
   
   <ItemGroup>

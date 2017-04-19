@@ -1,4 +1,10 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<!-- <Import Project="tools\buildTargets\common.Build.props"/> -->
-	<!-- <Import Project="tools\buildTargets\common.NugetPackage.props" />	 -->
+  <PropertyGroup Label="DebugBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Debug|AnyCPU' ">
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Label="ReleaseBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Release|AnyCPU' ">    
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
 </Project>

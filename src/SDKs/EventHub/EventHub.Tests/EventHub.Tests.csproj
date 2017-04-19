@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.EventHub" Version="1.1.0" />
+    <ProjectReference Include="..\Management.EventHub\Microsoft.Azure.Management.EventHub.csproj" />
   </ItemGroup>
   
   <ItemGroup>

@@ -2,11 +2,12 @@
 	<Import Project="Directory.Build.props" />
 	<Import Project="Directory.Build.targets" />
 	<Import Project="test.props" />
-	<Import Project="AzSdk.props" />
-	
-	<Target Name="Clean" DependsOnTargets="$(CleanTraversedProjectsDependsOn)" />  
-	<Target Name="Restore" DependsOnTargets="$(RestoreTraversedProjectsDependsOn)" />
-	<Target Name="Build" DependsOnTargets="Restore;$(BuildTraversedProjectsDependsOn)" />
+	<Import Project="AzSdk.props" />	
+
+	<Target Name="Clean" DependsOnTargets="$(CleanTraversedProjectsDependsOn)" />
+	<Target Name="Restore" DependsOnTargets="$(RestoreTraversedProjectsDependsOn)" /> 
+	<Target Name="Build" DependsOnTargets="$(BuildTraversedProjectsDependsOn)" />
 	<Target Name="Rebuild" DependsOnTargets="Clean;Build" />
-	<Target Name="FullBuild" DependsOnTargets="ReBuild;Test" />
+	<Target Name="FullBuild" DependsOnTargets="Build;RunTests;Package;Publish" />
+	<Target Name="RunTests" DependsOnTargets="$(RunTestProjectsDependsOn)" />
 </Project>

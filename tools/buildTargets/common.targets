@@ -4,62 +4,55 @@
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
     <NetStd14>netstandard1.4</NetStd14>
-  </PropertyGroup>
-  <!--<ItemGroup>
-    <FilesToSign/>
-  </ItemGroup>-->
-  
+  </PropertyGroup>  
   <PropertyGroup>
     <PreBuildStaticAnalysisTargets>
       BuildCiSign;
       BuildMsBuildTask;
       CategorizeProjects;
       GetScopedProjects;
+	  <!-- GetProjectReferences; -->
     </PreBuildStaticAnalysisTargets>
   </PropertyGroup>
-
   <PropertyGroup>
     <PreBuildCategorizePrjectTargets>
       CategorizeProjects;
       GetScopedProjects;
     </PreBuildCategorizePrjectTargets>
   </PropertyGroup>
-
-
   <PropertyGroup>
     <BuildTraversedProjectsDependsOn>
       PreBuildStaticAnalysis;
-      <!-- RestoreLatestProjects; -->
+      RestoreLatestProjects;
       BuildLatestProjects;
       PreSign;
-      Sign;
-      PostSign;
-      Package
-    </BuildTraversedProjectsDependsOn>
-	
-	<RestoreTraversedProjectsDependsOn>
-		RestoreLatestProjects;
-	</RestoreTraversedProjectsDependsOn>
-
+    </BuildTraversedProjectsDependsOn>	
+	  <RestoreTraversedProjectsDependsOn>
+		  RestoreLatestProjects;
+	  </RestoreTraversedProjectsDependsOn>
     <CleanTraversedProjectsDependsOn>
       CleanLatestProjects;
-      _CleanSDKPackageFiles
+      CleanSDKPackageFiles
     </CleanTraversedProjectsDependsOn>
   </PropertyGroup>
+  <PropertyGroup>
+	<RunTestProjectsDependsOn>
+		Test
+	</RunTestProjectsDependsOn>
+  </PropertyGroup>
   
-  <Target Name="CleanLatestProjects">
+  <Target Name="CleanLatestProjects" DependsOnTargets="$(PreBuildCategorizePrjectTargets)">
     <PropertyGroup>
       <LatestProjectDefaultCleanTarget Condition=" '$(LatestProjectDefaultCleanTarget)' == '' ">Clean</LatestProjectDefaultCleanTarget>
     </PropertyGroup>
-
     <Message Text="Cleaning Initiated....." />
     <MSBuild Targets="$(LatestProjectDefaultCleanTarget)"
-         Projects="@(ProjectToBuild)"
+         Projects="@(SDKProject);@(SDKTestProject)"
              Properties="PackageOutputPath=$(PackageOutputPath)"
          ContinueOnError="ErrorAndStop" />
   </Target>
 
-  <Target Name="_CleanSDKPackageFiles">
+  <Target Name="CleanSDKPackageFiles">
     <ItemGroup>
       <_SDKPackageFilesToDelete Include="$(PackageOutputPath)\*.nupkg"/>
       <_SDKPackageFilesToDelete Include="$(BaseIntermediateOutputPath)\*.nuspec"/>
@@ -73,8 +66,7 @@
       <LatestProjectDefaultRestoreTarget Condition=" '$(LatestProjectDefaultRestoreTarget)' == '' ">Restore</LatestProjectDefaultRestoreTarget>
     </PropertyGroup>	
 	  <Message Text="Now Restoring @(ProjectToBuild)" Condition="$(Scope) == 'All'" />
-    <Message Text="Now Restoring @(SDKProject);@(SDKTestProject)" Condition="$(Scope) == 'All'" />
-	
+    <Message Text="Now Restoring @(SDKProject);@(SDKTestProject)" Condition="$(Scope) != 'All'" />	
     <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
          Projects="@(ProjectToBuild)"
          ContinueOnError="ErrorAndStop" Condition="$(Scope) == 'All'" />
@@ -88,14 +80,13 @@
     <Message Text="IsBuildingInVS: $(AddProjectReferenceForDebuggingPurpose)"/>
     <Message Text="IsCIBuild: $(AddNugetReferenceForCIandCmdlineBuild)"/>
     <PropertyGroup>
-	<!-- $(MSBuildProjectDefaultTargets)-->
       <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
     </PropertyGroup>
 	  
 	  <Message Text="Building SDK Projects ..... @(SDKProject)" />    
     <MSBuild Targets="Build"
              Projects="@(SDKProject)"
-             Properties="TargetFramework=$(NetFx452)"
+             Properties="TargetFramework=$(NetFx452);DelaySign=$(DelaySign);AssemblyOriginatorKeyFile=$(AssemblyOriginatorKeyFile);SignAssembly=true"
              BuildInParallel="$(BuildInParallel)"
              ContinueOnError="ErrorAndStop">
       <Output TaskParameter="TargetOutputs" ItemName="net452Assemblies" />
@@ -108,9 +99,6 @@
              ContinueOnError="ErrorAndStop">
       <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" />
     </MSBuild>
-
-    <!--BuildInParallel="$(BuildInParallel)"-->
-    <!--<Properties="GeneratePackageOnBuild=true;IncludeSymbols=true">-->
     <ItemGroup>
       <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies)" />
     </ItemGroup>    
@@ -155,7 +143,6 @@
     <Error Condition=" ('$(NugetPackageName)' == '') " Text="Please Provide Package Name that has to be published" />
     <Error Condition=" ('$(NugetPackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
-    <!--PackageOutputPath-->
     <PropertyGroup>
       <PublishNugetToDir Condition=" '$(PublishNugetToDir)' == '' ">$(LibraryRoot)PublishedNugets</PublishNugetToDir>
     </PropertyGroup>
@@ -169,59 +156,39 @@
 
     <Message Importance="high" Text="Publishing main and symbols packages to the cloud at $(NuGetPublishingSource)" />
     <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputPath)\*$(NugetPackageName)*.nupkg&quot; $(NuGetKey)$(PublishDestination)"
-			  IgnoreExitCode="true" />
-    
+			  IgnoreExitCode="true" />    
 			  <!--Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />-->
   </Target>
   
   <Target Name="CategorizeProjects">
     <Message Text="Categorizing...."/>
-
     <ItemGroup>
       <ProductProjects Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' != 'Test' "/>
       <TestProjects Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' == 'Test' "/>
-    </ItemGroup>
-    
+    </ItemGroup>    
       <ItemGroup Condition=" '$(Scope)' == 'All'">
         <SDKProject Include="@(ProductProjects)" />
         <SDKTestProject Include="@(TestProjects)" />
       </ItemGroup>
-
     <Message Text="Product...... $(LibrarySourceFolder)\$(Scope)\**\*.csproj" />
-    <Message Text="Test.... $(LibrarySourceFolder)\$(Scope)\**\*.Test*.csproj" />
-    
+    <Message Text="Test.... $(LibrarySourceFolder)\$(Scope)\**\*.Test*.csproj" />    
     <ItemGroup Condition=" '$(Scope)' != 'All'">
       <ScopedProjects Include="$(LibrarySourceFolder)\$(Scope)\**\*.csproj" Exclude="$(LibrarySourceFolder)\$(Scope)\**\*.Test*.csproj" />
       <ScopedTestProjects Include="$(LibrarySourceFolder)\$(Scope)\**\*.Test*.csproj" />
-    </ItemGroup>
-	  
+    </ItemGroup>	  
 		<Message Text="Categorized SDK Scoped Projects ..... @(ScopedProjects)" Condition=" '$(Scope)' != 'All'" />
 	  <Message Text="Categorized Test Scoped Projects ..... @(ScopedTestProjects)" Condition=" '$(Scope)' != 'All'" />
     <Message Text="Categorized SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' == 'All'" />
     <Message Text="Categorized Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' == 'All'" />
   </Target>
-
   <Target Name="GetScopedProjects" Condition=" '$(Scope)' != 'All'">
     <ItemGroup>
       <SDKProject Include="@(ScopedProjects)" />
       <SDKTestProject Include="@(ScopedTestProjects)" />
     </ItemGroup>
-
-
-    <Message Text="Building SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' != 'All'" />
-    <Message Text="Building Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' != 'All'" />
-    
-    <!--
-    <SDKProject Remove="@(ScopedTestProjects)" />
-    -->
+    <Message Text="Scoped SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' != 'All'" />
+    <Message Text="Scoped Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' != 'All'" />
   </Target>
-
   <!--Do not delete-->
   <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)"/>
-
-
-
-  
-  
-  
 </Project>

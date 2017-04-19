@@ -1,38 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
-  
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />  
   <PropertyGroup>
+    <PackageId>CustomerInsights.Tests</PackageId>
     <Description>CustomerInsights.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>CustomerInsights.Tests</AssemblyName>
-    
-    <!--<TargetFramework>netcoreapp1.0</TargetFramework>
-    <DelaySign>true</DelaySign>
-    <AssemblyName>CustomerInsights.Tests</AssemblyName>
-    <AssemblyOriginatorKeyFile>../../../../tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>-->
-    <PackageId>CustomerInsights.Tests</PackageId>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <PackageProjectUrl>https://github.com/Azure/azure-sdk-for-net</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
-    <!--<RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>-->
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\Microsoft.Azure.Management.CustomerInsights\Microsoft.Azure.Management.CustomerInsights.csproj" />-->
-    <PackageReference Include="Microsoft.Azure.Management.CustomerInsights" Version="0.1.0-preview" />
+    <ProjectReference Include="..\Management.CustomerInsights\Microsoft.Azure.Management.CustomerInsights.csproj" />
+    <!--<PackageReference Include="Microsoft.Azure.Management.CustomerInsights" Version="0.1.0-preview" />-->
   </ItemGroup>
 
   <ItemGroup>
@@ -44,30 +25,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>    
   </ItemGroup>
-
-
-  <!--
-  <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Compile Include="..\..\..\..\tools\DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.Management.CustomerInsights\Microsoft.Azure.Management.CustomerInsights.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
-    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.6.7-preview,2.0.0)" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.5.0-preview,2.0.0)" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.3,4.0.0)" />
-    <PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.0.0-preview" />
-    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
-  </ItemGroup>
--->
 </Project>
