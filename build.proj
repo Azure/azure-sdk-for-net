@@ -7,7 +7,7 @@
 	<Target Name="Restore" DependsOnTargets="$(RestoreTraversedProjectsDependsOn)" /> 
 	<Target Name="Build" DependsOnTargets="$(BuildTraversedProjectsDependsOn)" />
 	<Target Name="Rebuild" DependsOnTargets="Clean;Build" />
-	<Target Name="FullBuild" DependsOnTargets="Clean;Build;RunTests" />
+	<Target Name="FullBuild" DependsOnTargets="Clean;Build" />
 	<Target Name="RunTests" DependsOnTargets="$(RunTestProjectsDependsOn)" />
   <Import Project="Directory.Build.targets" />
 </Project>

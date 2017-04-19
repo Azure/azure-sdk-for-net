@@ -25,6 +25,7 @@
       PreBuildStaticAnalysis;
       RestoreLatestProjects;
       BuildLatestProjects;
+      Test
       PreSign;
     </BuildTraversedProjectsDependsOn>	
 	  <RestoreTraversedProjectsDependsOn>
@@ -119,7 +120,7 @@
     </ItemGroup>
     
     <Message Text="Final Tests to run.... @(FinalTestsToRun)" />    
-    <Exec Command="dotnet test %(FinalTestsToRun.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\%(FinalTestsToRun.Filename).trx --no-build" Condition="@(FinalTestsToRun) != ''" ContinueOnError="false" WorkingDirectory="%(FinalTestsToRun.RootDir)%(FinalTestsToRun.Directory)" />
+    <Exec Command="dotnet test %(FinalTestsToRun.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\%(FinalTestsToRun.Filename).trx " Condition="@(FinalTestsToRun) != ''" ContinueOnError="false" WorkingDirectory="%(FinalTestsToRun.RootDir)%(FinalTestsToRun.Directory)" />
   </Target>
   
   <Target Name="Package">
