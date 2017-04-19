@@ -163,23 +163,32 @@
   <Target Name="CategorizeProjects">
     <Message Text="Categorizing...."/>
     <ItemGroup>
-      <ProductProjects Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' != 'Test' "/>
-      <TestProjects Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' == 'Test' "/>
+      <ProductProjects Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' != 'Test' and '%(ProjectToBuild.ExcludeFromBuild)' != 'true' "/>      
+      <TestProjects Include="%(ProjectToBuild.Identity)" Condition=" ('%(ProjectToBuild.ProjectType)' == 'Test' and '%(ProjectToBuild.ExcludeFromBuild)' != 'true') "/>
     </ItemGroup>    
       <ItemGroup Condition=" '$(Scope)' == 'All'">
         <SDKProject Include="@(ProductProjects)" />
         <SDKTestProject Include="@(TestProjects)" />
       </ItemGroup>
-    <Message Text="Product...... $(LibrarySourceFolder)\$(Scope)\**\*.csproj" />
-    <Message Text="Test.... $(LibrarySourceFolder)\$(Scope)\**\*.Test*.csproj" />    
+	<ItemGroup>
+		<KVSamples Include="$(LibrarySourceFolder)\SDKs\KeyVault\dataPlane\Microsoft.Azure.KeyVault.Samples\**\*.*csproj"/>
+	</ItemGroup>
     <ItemGroup Condition=" '$(Scope)' != 'All'">
-      <ScopedProjects Include="$(LibrarySourceFolder)\$(Scope)\**\*.csproj" Exclude="$(LibrarySourceFolder)\$(Scope)\**\*.Test*.csproj" />
-      <ScopedTestProjects Include="$(LibrarySourceFolder)\$(Scope)\**\*.Test*.csproj" />
-    </ItemGroup>	  
+      <ScopedProjects Include="$(LibrarySourceFolder)\$(Scope)\*.csproj" Exclude="$(LibrarySourceFolder)\$(Scope)\*.Test*.csproj" />	    
+      <ScopedTestProjects Include="$(LibrarySourceFolder)\$(Scope)\*.Test*.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <SDKProject Include="%(ScopedProjects.Identity)" Condition=" '%(ScopedProjects.ProjectType)' != 'Test' and '%(ScopedProjects.ExcludeFromBuild)' != 'true' "/>
+      <ScopedTestProjects Include="%(ScopedTestProjects.Identity)" Condition=" ('%(ScopedTestProjects.ProjectType)' == 'Test' and '%(ScopedTestProjects.ExcludeFromBuild)' != 'true') "/>
+    </ItemGroup>
 		<Message Text="Categorized SDK Scoped Projects ..... @(ScopedProjects)" Condition=" '$(Scope)' != 'All'" />
 	  <Message Text="Categorized Test Scoped Projects ..... @(ScopedTestProjects)" Condition=" '$(Scope)' != 'All'" />
     <Message Text="Categorized SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' == 'All'" />
     <Message Text="Categorized Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' == 'All'" />
+    
+    <!--
+    <ScopedProjects Remove="@(KVSamples)"/>
+    -->
   </Target>
   <Target Name="GetScopedProjects" Condition=" '$(Scope)' != 'All'">
     <ItemGroup>

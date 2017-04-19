@@ -1,5 +1,6 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup Label="SDKProject">
+  <!-- <Import Project="KeyVault\dataPlane\dirs.proj" /> -->  
+	<ItemGroup Label="SDKProject">	
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)AnalysisServices\Management.Analysis\Microsoft.Azure.Management.Analysis.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Authorization\Management.Authorization\Microsoft.Azure.Management.Authorization.csproj" />		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Automation\Management.Automation\Microsoft.Azure.Management.Automation.csproj" />
@@ -42,8 +43,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)SqlManagement\Management.Sql\Microsoft.Azure.Management.Sql.csproj" />		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Storage\Management.Storage\Microsoft.Azure.Management.Storage.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TrafficManager\Management.TrafficManager\Microsoft.Azure.Management.TrafficManager.csproj" />
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\Management.Websites\Microsoft.Azure.Management.Websites.csproj" />
-    
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\Management.Websites\Microsoft.Azure.Management.Websites.csproj" /> 
 		<!--	
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Automation\Management.Automation\Microsoft.Azure.Management.Automation.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Authorization\Management.Authorization\Microsoft.Azure.Management.Sql.csproj" />		
@@ -95,8 +95,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)SqlManagement\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Storage\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TrafficManager\**\*Tests.csproj" ProjectType="Test"/>
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\**\*Tests.csproj" ProjectType="Test"/>
-		
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\**\*Tests.csproj" ProjectType="Test"/>		
 	</ItemGroup>
   
   <!--
@@ -106,9 +105,8 @@
   -->
 
   <ItemGroup>
-    <DoNotRunTests Include="$(MSBuildThisFileDirectory)Authorization\**\*Tests.csproj" />
+    <DoNotRunTests Include="$(MSBuildThisFileDirectory)Authorization\**\*Tests.csproj" ProjectType="Test"/>
     <DoNotRunTests Include="$(MSBuildThisFileDirectory)Automation\**\*Tests.csproj" ProjectType="Test"/>
     <DoNotRunTests Include="$(MSBuildThisFileDirectory)RedisCache\**\*Tests.csproj" ProjectType="Test"/>
   </ItemGroup>
 </Project>
-

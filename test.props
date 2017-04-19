@@ -39,8 +39,8 @@
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
 		<!-- <PackageReference Include="Microsoft.NETCore.App" Version="1.0.2" /> -->
 	</ItemGroup>  
-  <ItemGroup>
-	  <Compile Include="$(LibraryToolsFolder)\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
-  </ItemGroup>  
+  <!-- <ItemGroup> -->
+	  <!-- <Compile Include="$(LibraryToolsFolder)\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" /> -->
+  <!-- </ItemGroup>   -->
   
 </Project>
