@@ -88,23 +88,37 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
             private string GetMACAddress()
             {
-                NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
-                String sMacAddress = string.Empty;
-                foreach (NetworkInterface adapter in nics)
+                try
                 {
-                    if (sMacAddress == String.Empty) // only return MAC Address from first card
+                    NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+                    String sMacAddress = string.Empty;
+                    foreach (NetworkInterface adapter in nics)
                     {
-                        IPInterfaceProperties properties = adapter.GetIPProperties();
-                        sMacAddress = adapter.GetPhysicalAddress().ToString();
+                        if (sMacAddress == String.Empty) // only return MAC Address from first card
+                        {
+                            IPInterfaceProperties properties = adapter.GetIPProperties();
+                            sMacAddress = adapter.GetPhysicalAddress().ToString();
+                        }
                     }
+                    return sMacAddress;
                 }
-                return sMacAddress;
+                catch
+                {
+                }
+                return null;
             }
 
             private string HashMACAddress(string macAddress)
             {
-                var hashInput = Encoding.UTF8.GetBytes(macAddress);
-                return BitConverter.ToString(SHA256.Create().ComputeHash(hashInput)).Replace("-", string.Empty).ToLowerInvariant();
+                try
+                {
+                    var hashInput = Encoding.UTF8.GetBytes(macAddress);
+                    return BitConverter.ToString(SHA256.Create().ComputeHash(hashInput)).Replace("-", string.Empty).ToLowerInvariant();
+                }
+                catch
+                {
+                }
+                return "[Unavailable]";
             }
 
             #region Fluent builder interfaces

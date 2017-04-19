@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         protected override SqlServerImpl WrapModel(string name)
         {
             ServerInner inner = new ServerInner();
-            inner.Version = ServerVersion.TwoFullStopZero;
+            inner.Version = ServerVersion.OneTwoFullStopZero;
             return new SqlServerImpl(
                 name,
                 inner,
