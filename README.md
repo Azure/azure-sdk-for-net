@@ -23,7 +23,7 @@ src\SDKs\Compute
 
 ### To build:
 
-####Full Build
+#### Full Build
 
  1. Open VS 2017 command prompt
  2. Navigate to repository root directory
@@ -33,12 +33,12 @@ src\SDKs\Compute
  TestResult can be found under < root >\TestResults
 ##### *Full Build* without any scope will build all SDK's run all tests.
 
-####Build one nuget package
+#### Build one nuget package
 In order to build one package and run it's test
 
  > msbuild build.proj /t:FullBuild /p:scope=SDKs\Compute /p:NugetPackageName=Microsoft.Azure.Management.Compute
 
-####Using Visual Studio:
+#### Using Visual Studio:
  1. Open any solution, say, "SDKs\Compute\Compute.sln"
  2. Invoke "build" command.
 
