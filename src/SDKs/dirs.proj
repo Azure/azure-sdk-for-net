@@ -65,8 +65,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Compute\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ContainerRegistry\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)CustomerInsights\**\*Tests.csproj" ProjectType="Test"/>
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Analytics\**\*Tests.csproj" ProjectType="Test"/>
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Store\**\*Tests.csproj" ProjectType="Test"/>
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Analytics\**\*Tests.csproj" ProjectType="Test"/>		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)DevTestLabs\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Dns\Management.Dns\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)EventHub\**\*Tests.csproj" ProjectType="Test"/>
@@ -99,6 +98,7 @@
 	</ItemGroup>
   
   <!--
+	<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Store\**\*Tests.csproj" ProjectType="Test"/>
   	<ProjectToBuild Include="$(MSBuildThisFileDirectory)Monitor\**\*Tests.csproj" ProjectType="Test"/>
     <ProjectToBuild Include="$(MSBuildThisFileDirectory)RecoveryServices\**\*Tests.csproj" ProjectType="Test"/>
     <ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\DataPlane\**\*Tests.csproj" ProjectType="Test"/>

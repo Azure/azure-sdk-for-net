@@ -20,7 +20,7 @@
 			WindowsSdkPath="$(WindowsSdkPath)"
 			Assembly="%(DelaySignedAssembliesToValidate.Identity)"
 			ExpectedTokenSignature="$(StrongNameToken)"
-			ExpectedDelaySigned="false"
+			ExpectedDelaySigned="true"
 			ContinueOnError="false"
 			Condition="'@(DelaySignedAssembliesToValidate)' != ''"/>
     
@@ -37,7 +37,7 @@
 			WindowsSdkPath="$(WindowsSdkPath)"
 			Assembly="%(DelaySignedAssembliesToValidate.Identity)"
 			ExpectedTokenSignature="$(StrongNameToken)"
-			ExpectedDelaySigned="true"
+			ExpectedDelaySigned="false"
 			ContinueOnError="false"
 			Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''"/>    
   </Target>

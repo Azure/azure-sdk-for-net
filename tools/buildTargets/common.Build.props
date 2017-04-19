@@ -10,34 +10,11 @@
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
     <SkipBuildingTestProject>false</SkipBuildingTestProject>
 	<!-- <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences> -->
-	</PropertyGroup>
-	
-  <PropertyGroup Label="DebugBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Debug|AnyCPU' ">
-	<SignAssembly>true</SignAssembly>
+	  <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-	<NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Label="ReleaseBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Release|AnyCPU' ">
-    <SignAssembly>true</SignAssembly>
-	<DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-	<NoWarn>1591</NoWarn>
-  </PropertyGroup>
-	
-  <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
-    <DefineConstants>FullNetFx</DefineConstants>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-	<GenerateDocumentationFile Condition=" '$(GenerateDocumentationFile)' == '' ">true</GenerateDocumentationFile>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <DefineConstants>NETSTANDARD14</DefineConstants>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-	<GenerateDocumentationFile Condition=" '$(GenerateDocumentationFile)' == '' ">true</GenerateDocumentationFile>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
+	  <NoWarn>1591;1701;1573</NoWarn>
+	</PropertyGroup>
   
   <Choose>
     <When Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
