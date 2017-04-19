@@ -9,6 +9,5 @@
 	<Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 	<Target Name="FullBuild" DependsOnTargets="Clean;Build;RunTests;SignNuget" />
 	<Target Name="RunTests" DependsOnTargets="$(RunTestProjectsDependsOn)" />
-  <Target Name="SignNuget" DependsOnTargets="$(RunSignDependsOn)" />
-  
+  <Target Name="SignNuget" DependsOnTargets="$(RunSignDependsOn)" />  
 </Project>
