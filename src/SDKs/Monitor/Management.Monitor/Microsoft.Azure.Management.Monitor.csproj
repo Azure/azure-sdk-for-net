@@ -14,14 +14,14 @@
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
 		<PackageReference Include="Microsoft.Net.Http" Version="[2.2.28,3.0.0)" />
-		<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
 		<Reference Include="System" />
 		<Reference Include="Microsoft.CSharp" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
 		<PackageReference Include="Microsoft.Net.Http" Version="[2.2.28,3.0.0)" />
-		<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
 		<Reference Include="System" />
 		<Reference Include="Microsoft.CSharp" />
 	</ItemGroup>
