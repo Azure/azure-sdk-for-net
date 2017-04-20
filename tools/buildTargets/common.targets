@@ -64,6 +64,10 @@
       Package;
       PublishingNuget
     </PublishNugetDependsOn>
+
+    <HelpDependsOn>
+      DisplayHelp
+    </HelpDependsOn>
     
   </PropertyGroup>
   
@@ -214,12 +218,26 @@
 		<Message Text="Categorized SDK Scoped Projects ..... @(ScopedProjects)" Condition=" '$(Scope)' != 'All'" />
 	  <Message Text="Categorized Test Scoped Projects ..... @(ScopedTestProjects)" Condition=" '$(Scope)' != 'All'" />
     <Message Text="Categorized SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' == 'All'" />
-    <Message Text="Categorized Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' == 'All'" />
-    
+    <Message Text="Categorized Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' == 'All'" />    
     <!--
     <ScopedProjects Remove="@(KVSamples)"/>
     -->
   </Target>
+  
+  <Target Name="DisplayHelp">
+    <Message Text="msbuild build.proj /t:Build"/>
+    <Message Text="---- will build and create nuget pacakge for the entire repo"/>
+  
+    <Message Text="msbuild build.proj /t:Build /p:Scope=SDKs\Compute" />
+    <Message Text="---- will build Microsoft.Azure.Management.Compute and Compute.Tests project and create nuget pacakge for Compute"/>
+  
+  <Message Text="msbuild build.proj /t:RunTests" />
+  <Message Text="----- will Build and Run tests for the entire repo" />
+  
+  <Message Text="msbuild build.proj /t:RunTests /p:Scope=SDKs\Compute" />
+  <Message Text="----- will Build Compute nuget package and run compute test" />
+  </Target>
+    
   <Target Name="GetScopedProjects" Condition=" '$(Scope)' != 'All'">
     <ItemGroup>
       <SDKProject Include="@(ScopedProjects)" />
