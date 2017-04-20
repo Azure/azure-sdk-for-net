@@ -11,9 +11,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.RecoveryServices" Version="4.0.1-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.RecoveryServices.Backup" Version="1.2.0-preview" />
     
-    <!--<ProjectReference Include="..\Microsoft.Azure.Management.RecoveryServices.Backup\Microsoft.Azure.Management.RecoveryServices.Backup.csproj" />-->
+    <!--<PackageReference Include="Microsoft.Azure.Management.RecoveryServices.Backup" Version="1.2.0-preview" />-->    
+    <ProjectReference Include="..\Management.RecoveryServices.Backup\Microsoft.Azure.Management.RecoveryServices.Backup.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">

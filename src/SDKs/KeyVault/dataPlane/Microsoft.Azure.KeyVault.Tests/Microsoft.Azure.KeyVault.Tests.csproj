@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.KeyVault.Tests</PackageId>
+    <Description>Microsoft.Azure.KeyVault.Tests Class Library</Description>
+    <VersionPrefix>2.0.2</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.KeyVault.Tests</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
+  
+  <ItemGroup>  
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.KeyVault\Microsoft.Azure.KeyVault.csproj" />
+    <ProjectReference Include="..\Microsoft.Azure.KeyVault.TestFramework\Microsoft.Azure.KeyVault.TestFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />-->
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.2" />
+    <!--<PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />-->
+  </ItemGroup>
+
+  <!--<PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD;NETCOREAPP10</DefineConstants>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>-->
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.13.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+</Project>

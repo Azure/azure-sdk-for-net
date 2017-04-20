@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <Description>Microsoft Azure Key Vault Test Framework</Description>
+    <AssemblyTitle>Microsoft Azure Key Vault Test Framework</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.KeyVault.TestFramework</AssemblyName>    
+    <VersionPrefix>2.0.2-preview</VersionPrefix>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.KeyVault\Microsoft.Azure.KeyVault.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.3, 3.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.1, 4.0)" />-->
+    <PackageReference Include="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.1.4-preview" />
+    <!--<PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.3.5-preview, 2.0.0)" />-->
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.0.2" />
+  </ItemGroup>
+
+  <!--
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD;NETSTANDARD15</DefineConstants>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' ">
+    <DefineConstants>$(DefineConstants);NET45;NET451</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+-->
+</Project>

@@ -1,12 +1,14 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="directory.Build.props" />
-	<Import Project="directory.Build.targets" />
+<Project DefaultTargets="FullBuild" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="Directory.Build.props" />	
 	<Import Project="test.props" />
 	<Import Project="AzSdk.props" />
-	
-	<Target Name="Clean" DependsOnTargets="$(CleanTraversedProjectsDependsOn)" />  
-	<Target Name="Restore" DependsOnTargets="$(RestoreTraversedProjectsDependsOn)" />
-	<Target Name="Build" DependsOnTargets="Restore;$(BuildTraversedProjectsDependsOn)" />
+  <Import Project="Directory.Build.targets" />
+	<Target Name="Clean" DependsOnTargets="$(CleanTraversedProjectsDependsOn)" />
+	<Target Name="Restore" DependsOnTargets="$(RestoreTraversedProjectsDependsOn)" /> 
+	<Target Name="Build" DependsOnTargets="$(BuildTraversedProjectsDependsOn)" />
 	<Target Name="Rebuild" DependsOnTargets="Clean;Build" />
-	<Target Name="FullBuild" DependsOnTargets="Rebuild;Test" />
+	<Target Name="PublishNuget" DependsOnTargets="$(PublishNugetDependsOn)" />
+	<Target Name="RunTests" DependsOnTargets="$(RunTestProjectsDependsOn)" />
+  <Target Name="SignNuget" DependsOnTargets="$(SignNugetDependsOn)" />  
+  <Target Name="Help" DependsOnTargets="$(HelpDependsOn)" />  
 </Project>

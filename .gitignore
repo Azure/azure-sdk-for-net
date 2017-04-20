@@ -15,6 +15,7 @@ binaries/
 [Rr]elease/
 build/
 restoredPackages/
+PublishedNugets/
 src/NuGet.Config
 tools/7-zip/
 

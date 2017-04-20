@@ -13,9 +13,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Storage" Version="[5.0.2-preview,6.0)" />
-    <PackageReference Include="Microsoft.Azure.Management.Media" Version="0.2.0" />
     
-    <!--<ProjectReference Include="..\Management.Media\Microsoft.Azure.Management.Media.csproj" />-->
+    <!--<PackageReference Include="Microsoft.Azure.Management.Media" Version="0.2.0" />-->    
+    <ProjectReference Include="..\Management.Media\Microsoft.Azure.Management.Media.csproj" />
   </ItemGroup>
   
   <ItemGroup>

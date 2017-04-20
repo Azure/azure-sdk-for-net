@@ -71,7 +71,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
             {
                 // Throws
                 mockedResolver.Setup(r => r.ResolveKeyAsync(KeyId, ct))
-                    .Throws(new EmptyException());
+                    .Throws(new EmptyException(null));
                 try
                 {
                     await resolver.ResolveKeyAsync(KeyId, ct);

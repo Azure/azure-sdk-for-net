@@ -1,28 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
-  
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />  
   <PropertyGroup>
+    <PackageId>Billing.Tests</PackageId>
     <Description>Billing.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
-    <!--<TargetFramework>netcoreapp1.0</TargetFramework>
-    <DelaySign>true</DelaySign>
     <AssemblyName>Billing.Tests</AssemblyName>
-    <AssemblyOriginatorKeyFile>../../../../tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>-->
-    <PackageId>Billing.Tests</PackageId>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <PackageProjectUrl>https://github.com/Azure/azure-sdk-for-net</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
-    <!--<RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>-->
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>    
   </PropertyGroup>
 
   <PropertyGroup>
@@ -31,7 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.1.0-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.Billing" Version="1.1.0-preview" />
+    <!--<PackageReference Include="Microsoft.Azure.Management.Billing" Version="1.1.0-preview" />-->
+    <ProjectReference Include="..\Management.Billing\Microsoft.Azure.Management.Billing.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,43 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="SessionRecords\Billing.Tests.ScenarioTests.InvoicesTests\GetInvoicesNoResult.json">
+    <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Billing.Tests.ScenarioTests.InvoicesTests\GetInvoiceWithName.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Billing.Tests.ScenarioTests.InvoicesTests\GetLatestInvoice.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Billing.Tests.ScenarioTests.InvoicesTests\ListInvoicesTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Billing.Tests.ScenarioTests.InvoicesTests\ListInvoicesWithQueryParametersTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Billing.Tests.ScenarioTests.OperationsTests\ListOperationsTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </None>    
   </ItemGroup>
-  <!--
-
-  <ItemGroup>
-    <Compile Include="..\..\..\..\tools\DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.Management.Billing\Microsoft.Azure.Management.Billing.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
-    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.6.7-preview,2.0.0)" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.5.1-preview,2.0.0)" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.4,4.0.0)" />
-    <PackageReference Include="Microsoft.Azure.ResourceManager" Version="1.0.0-preview" />
-    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
-  </ItemGroup>
--->
 </Project>

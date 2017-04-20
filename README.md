@@ -1,64 +1,78 @@
 # Microsoft Azure SDK for .NET
-----------
+ ----------
 The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.
 
 ### Target Frameworks:
 
-* .NET Framework 4.5
-* Netstandard 1.5, based on the NetCore framework
+* .NET Framework 4.5.2
+* Netstandard 1.4, based on the NetCore framework
 
 ### Prerequisites:
-  Install .Net CoreCLR Preview 2 using [these steps](https://download.microsoft.com/download/A/3/8/A38489F3-9777-41DD-83F8-2CBDFAB2520C/DotNetCore.1.0.0-VS2015Tools.Preview2.exe).
+  Install VS 2017 (Professional or higher) + VS2017 Update 1
+  (https://www.visualstudio.com/).
+  To know more about VS 2017 and it's project system (https://docs.microsoft.com/en-us/visualstudio/#pivot=workloads&panel=windows)
+
+###Directory Restructure
+Directory structure has been simplified and consolidated in fewer directories
+All Management and Data plane SDKs are now under
+src\SDKs
+e.g.
+src\SDKs\AnalysisService
+src\SDKs\Compute
 
 ### To build:
 
 ####Full Build
 
- 1. Navigate to repository root directory
- 2. Invoke **msbuild** build.proj
+ 1. Open VS 2017 command prompt
+ 2. Navigate to repository root directory
+ 3. Invoke **msbuild** build.proj /t:Build
+ will Build and create nuget Package
+ Local Published nugets can be found under < root >\PublishedNugets
+##### *Build* without any scope will build all SDK's and create nuget packages.
 
 ####Build one nuget package
+In order to build one package and run it's test
 
- 1. **msbuild** build.proj /t:build;package /p:scope=ResourceManagement\Compute
+ > msbuild build.proj /t:Build /p:scope=SDKs\Compute /p:NugetPackageName=Microsoft.Azure.Management.Compute
 
-
-####Using Visual Studio:
-
-  
-
- 1. Open any solution, say, "src\ResourceManagement\Compute\Compute.sln"
- 2. Invoke "build" command.
-
-
+####Build Using Visual Studio:
+ 1. Open any solution, eg "SDKs\Compute\Compute.sln"
+ 2. Build solution
+ 
 ### To run the tests:
-
 Using Visual Studio:
-
   - Build.
-  - "Test Explorer" window will get populated with tests. Go select and invoke.
+  - "Test Explorer" window will get populated with tests. Select test and Run/Debug.
 
 Using the command line:
+msbuild .\build.proj /t:"Runtests" /p:Scope=SDKs\Compute
+in the above example RunTests will build and run tests for Compute only
+or
+dotnet test SDKs\Compute\Compute.Tests\Compute.Tests.csproj
 
   - Refer to the "To build" section to get the command window set up.
-  - Invoke "Test" target from "Build.proj". Likely, you need to build test project first, so put in "build" target as well. 
-        *msbuild build.proj /t:build;test /p:scope=ResourceManagement\Compute*
+  - Invoke "RunTests" target from "Build.proj". RunTests will build and run tests 
+        *msbuild build.proj /t:RunTests /p:scope=SDKs\Compute*
 
 ## To on-board new libraries
 
 ### Project Structure
 
-In "src\ResourceManagement", you will find projects for services that have already been implemented
+In "SDKs\< RPName >", you will find projects for services that have already been implemented
 
+  - Each SDK project needs to target .NET 4.5.2 and .NET Standard 1.4
+	  - Test project needs to target NetCoreApp 1.1
   - Each service contains a project for their generated/customized code
     - The folder 'Generated' contains the generated code
     - The folder 'Customizations' contains additions to the generated code - this can include additions to the generated partial classes, or additional classes that augment the SDK or call the generated code
     - The file 'generate.cmd', used to generate library code for the given service, can also be found in this project
   - Services also contain a project for their tests
 
-### Branches: AutoRest vs. master
+### Branches: vs17Dev vs. master
 
-The **AutoRest** branch contains the code generated from AutoRest tool.
+The **vs17Dev** branch contains the code generated from AutoRest tool.
 
 The **master** branch contains the code generated from Hydra/Hyak.
   - Hydra/Hyak is Azure's legacy code generation technology.
@@ -116,10 +130,10 @@ Once all of the above steps are met, the following process will be followed:
 
 ### Adding Tests
 
-Regarding the test project, one thing that's important is to name the test project by adding a ".Tests" suffix to the folder name for the folder containing your project. For example, the test project for "Compute\Microsoft.Azure.Management.Compute" should be named 'Compute.Tests'
+Regarding the test project, one thing that's important is to name the test project by adding a ".Tests" suffix to the folder name for the folder containing your project. For example, the test project for "Compute\Management.Compute" should be named 'Compute.Tests'
 
   - This is for improving CI performance so to find exactly one copy of your test assembly.
-  - Also, due to test dependencies, the test project should build both .NET 4.5 and NETStandard 1.5. For example, check out "src\ResourceManagement\Resource\Resource.tests"
+  - Also, due to test dependencies, the test project should build both .NET 4.5.2 and NETStandard 1.4. For example, check out "src\SDKs\Resource\Resource.tests"
 
 ### Issues with Generated Code
 
