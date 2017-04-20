@@ -34,6 +34,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <Version>2.2.0-preview</Version>
   </PropertyGroup>
 
 
