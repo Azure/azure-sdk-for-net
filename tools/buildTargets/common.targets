@@ -39,6 +39,9 @@
 	<RunTestProjectsDependsOn>
 		Test
 	</RunTestProjectsDependsOn>
+    <RunSignDependsOn>
+      PreSign
+    </RunSignDependsOn>
   </PropertyGroup>
   
   <Target Name="CleanLatestProjects" DependsOnTargets="$(PreBuildCategorizePrjectTargets)">
@@ -119,7 +122,7 @@
     </ItemGroup>
     
     <Message Text="Final Tests to run.... @(FinalTestsToRun)" />    
-    <Exec Command="dotnet test %(FinalTestsToRun.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\%(FinalTestsToRun.Filename).trx --no-build" Condition="@(FinalTestsToRun) != ''" ContinueOnError="false" WorkingDirectory="%(FinalTestsToRun.RootDir)%(FinalTestsToRun.Directory)" />
+    <Exec Command="dotnet test %(FinalTestsToRun.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\%(FinalTestsToRun.Filename).trx " Condition="@(FinalTestsToRun) != ''" ContinueOnError="false" WorkingDirectory="%(FinalTestsToRun.RootDir)%(FinalTestsToRun.Directory)" />
   </Target>
   
   <Target Name="Package">
@@ -174,8 +177,8 @@
 		<KVSamples Include="$(LibrarySourceFolder)\SDKs\KeyVault\dataPlane\Microsoft.Azure.KeyVault.Samples\**\*.*csproj"/>
 	</ItemGroup>
     <ItemGroup Condition=" '$(Scope)' != 'All'">
-      <ScopedProjects Include="$(LibrarySourceFolder)\$(Scope)\*.csproj" Exclude="$(LibrarySourceFolder)\$(Scope)\*.Test*.csproj" />	    
-      <ScopedTestProjects Include="$(LibrarySourceFolder)\$(Scope)\*.Test*.csproj" />
+      <ScopedProjects Include="$(LibrarySourceFolder)\$(Scope)\**\*.csproj" Exclude="$(LibrarySourceFolder)\$(Scope)\*Tests*\*.Test*.csproj" />	    
+      <ScopedTestProjects Include="$(LibrarySourceFolder)\$(Scope)\*Test*\*.Test*.csproj" />
     </ItemGroup>
     <ItemGroup>
       <SDKProject Include="%(ScopedProjects.Identity)" Condition=" '%(ScopedProjects.ProjectType)' != 'Test' and '%(ScopedProjects.ExcludeFromBuild)' != 'true' "/>
