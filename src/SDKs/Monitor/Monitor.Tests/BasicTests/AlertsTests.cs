@@ -127,6 +127,7 @@ namespace Monitor.Tests.BasicTests
             var handler = new RecordedDelegatingHandler();
             var insightsClient = GetMonitorManagementClient(handler);
             var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, insightsClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expectedParameters.Name + "\",\"id\":\"" + expectedParameters.Id + "\",");
             var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(serializedObject)
@@ -148,6 +149,7 @@ namespace Monitor.Tests.BasicTests
             var handler = new RecordedDelegatingHandler();
             var insightsClient = GetMonitorManagementClient(handler);
             var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expResponse[0].Name + "\",\"id\":\"" + expResponse[0].Id + "\",");
             var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(string.Concat("{ \"value\":", serializedObject, "}"))
@@ -156,8 +158,7 @@ namespace Monitor.Tests.BasicTests
             handler = new RecordedDelegatingHandler(expectedResponse);
             insightsClient = GetMonitorManagementClient(handler);
 
-            var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: " rg1", odataQuery: "resourceUri eq 'resUri'");
-
+            var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: " rg1");
             AreEqual(expResponse, actualResponse.ToList<AlertRuleResource>());
         }
 
@@ -238,7 +239,10 @@ namespace Monitor.Tests.BasicTests
                         SendToServiceOwners = true
                     });
 
+            // Name and id won't be serialized since thwy are readonly
             return new AlertRuleResource(
+                id: "long name",
+                name: "name1",
                 location: "location",
                 alertRuleResourceName: "name1",
                 actions: actions,
@@ -255,7 +259,6 @@ namespace Monitor.Tests.BasicTests
                 description: "description",
                 isEnabled: true,
                 lastUpdatedTime: DateTime.UtcNow,
-                name: "name1",
                 tags: new Dictionary<string, string>()
                 {
                     {"key1", "val1"}

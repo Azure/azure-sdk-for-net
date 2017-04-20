@@ -12,12 +12,12 @@ using Xunit;
 
 namespace Monitor.Tests.BasicTests
 {
-    public class ServiceDiagnosticSettingsTests : TestBase
+    public class DiagnosticSettingsTests : TestBase
     {
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
 
         [Fact]
-        public void ServiceDiagnosticSettings_PutTest()
+        public void DiagnosticSettings_PutTest()
         {
             var expResponse = CreateDiagnosticSettings();
             var handler = new RecordedDelegatingHandler();
@@ -33,12 +33,12 @@ namespace Monitor.Tests.BasicTests
 
             var parameters = CreateDiagnosticSettingsParams();
 
-            ServiceDiagnosticSettingsResource response = insightsClient.ServiceDiagnosticSettings.CreateOrUpdate(resourceUri: ResourceUri, parameters: parameters);
+            DiagnosticSettingsResource response = insightsClient.DiagnosticSettings.CreateOrUpdate(resourceUri: ResourceUri, parameters: parameters, name: "service");
             AreEqual(expResponse, response);
         }
 
         [Fact]
-        public void ServiceDiagnosticSettings_GetTest()
+        public void DiagnosticSettings_GetTest()
         {
             var expResponse = CreateDiagnosticSettings();
             var handler = new RecordedDelegatingHandler();
@@ -52,13 +52,58 @@ namespace Monitor.Tests.BasicTests
             handler = new RecordedDelegatingHandler(expectedResponse);
             insightsClient = GetMonitorManagementClient(handler);
 
-            ServiceDiagnosticSettingsResource actualResponse = insightsClient.ServiceDiagnosticSettings.Get(resourceUri: ResourceUri);
+            DiagnosticSettingsResource actualResponse = insightsClient.DiagnosticSettings.Get(resourceUri: ResourceUri, name: "service");
             AreEqual(expResponse, actualResponse);
         }
 
-        private static ServiceDiagnosticSettingsResource CreateDiagnosticSettingsParams()
+        [Fact]
+        public void DiagnosticSettings_DeleteTest()
         {
-            return new ServiceDiagnosticSettingsResource
+            var expResponse = new Microsoft.Rest.Azure.AzureOperationResponse()
+            {
+                RequestId = "12345-6789"
+            };
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)                
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetMonitorManagementClient(handler);
+
+            var result = insightsClient.DiagnosticSettings.DeleteWithHttpMessagesAsync(resourceUri: ResourceUri, name: "service").Result;
+            Assert.NotNull(result);
+            Assert.NotNull(result.Response);
+            Assert.Equal(result.Response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public void DiagnosticSettings_UpdateTest()
+        {
+            var expResponse = CreateDiagnosticSettings();
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetMonitorManagementClient(handler);
+
+            var parameters = CreateDiagnosticSettingsParams();
+
+            DiagnosticSettingsResource response = insightsClient.DiagnosticSettings.Update(resourceUri: ResourceUri, diagnosticSettingResource: parameters, name: "service");
+            AreEqual(expResponse, response);
+        }
+
+        private static DiagnosticSettingsResource CreateDiagnosticSettingsParams()
+        {
+            return new DiagnosticSettingsResource
             {
                 StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
                 ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule",
@@ -91,9 +136,9 @@ namespace Monitor.Tests.BasicTests
             };
         }
 
-        private static ServiceDiagnosticSettingsResource CreateDiagnosticSettings()
+        private static DiagnosticSettingsResource CreateDiagnosticSettings()
         {
-            return new ServiceDiagnosticSettingsResource
+            return new DiagnosticSettingsResource
             {
                 StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
                 ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule",
@@ -125,7 +170,7 @@ namespace Monitor.Tests.BasicTests
             };
         }
 
-        private static void AreEqual(ServiceDiagnosticSettingsResource exp, ServiceDiagnosticSettingsResource act)
+        private static void AreEqual(DiagnosticSettingsResource exp, DiagnosticSettingsResource act)
         {
             if (exp == act)
             {
