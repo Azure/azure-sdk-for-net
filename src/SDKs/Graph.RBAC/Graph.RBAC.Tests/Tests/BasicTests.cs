@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 var usersByLiveId = client.Users.List(new ODataQuery<User>(f=>f.UserPrincipalName == upn));
                 Assert.NotNull(usersByLiveId);
                 Assert.Equal(1, usersByLiveId.Count());
-
+                
                 string testOrgId = "test2@" + GetTenantAndDomain().Domain;
                 var usersByOrgId = client.Users.List(new ODataQuery<User>(f => f.UserPrincipalName == testOrgId));
                 Assert.NotNull(usersByOrgId);
@@ -356,23 +356,58 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 var users = client.Users.List();
                 Assert.NotNull(users);
 
+                var servicePrincipals = client.ServicePrincipals.List();
+                Assert.NotNull(servicePrincipals);
+
                 var objectByObject = client.Objects.GetObjectsByObjectIds(
                     new GetObjectsParameters
                     { 
                         ObjectIds = new List<string>
-                        {
-                            groups.ElementAt(0).ObjectId,
-                            users.ElementAt(1).ObjectId,
-                            groups.ElementAt(2).ObjectId
+                        {   
+                            users.ElementAt(0).ObjectId,
+                            users.ElementAt(1).ObjectId
                         },
                         Types = new List<string>
                         {
-                            "StubDirectoryObject"
+                            "User"
                         }
                     });
 
                 Assert.NotNull(objectByObject);
-                Assert.Equal(3, objectByObject.Count());
+                Assert.Equal(2, objectByObject.Count());
+
+                objectByObject = client.Objects.GetObjectsByObjectIds(
+                    new GetObjectsParameters
+                    {
+                        ObjectIds = new List<string>
+                        {
+                            groups.ElementAt(0).ObjectId,
+                            groups.ElementAt(1).ObjectId
+                        },
+                        Types = new List<string>
+                        {
+                            "Group"
+                        }
+                    });
+
+                Assert.NotNull(objectByObject);
+                Assert.Equal(2, objectByObject.Count());
+
+                objectByObject = client.Objects.GetObjectsByObjectIds(
+                    new GetObjectsParameters
+                    {
+                        ObjectIds = new List<string>
+                        {
+                            servicePrincipals.ElementAt(0).ObjectId
+                        },
+                        Types = new List<string>
+                        {
+                            "ServicePrincipal"
+                        }
+                    });
+
+                Assert.NotNull(objectByObject);
+                Assert.Equal(1, objectByObject.Count());
             }
         }
     }
