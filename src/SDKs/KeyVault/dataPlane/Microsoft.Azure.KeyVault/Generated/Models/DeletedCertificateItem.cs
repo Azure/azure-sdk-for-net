@@ -16,37 +16,35 @@ namespace Microsoft.Azure.KeyVault.Models
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
-    /// A DeletedKeyBundle consisting of a WebKey plus its Attributes and
-    /// deletion info
+    /// The deleted certificate item containing metadata about the deleted
+    /// certificate.
     /// </summary>
-    public partial class DeletedKeyBundle : KeyBundle
+    public partial class DeletedCertificateItem : CertificateItem
     {
         /// <summary>
-        /// Initializes a new instance of the DeletedKeyBundle class.
+        /// Initializes a new instance of the DeletedCertificateItem class.
         /// </summary>
-        public DeletedKeyBundle() { }
+        public DeletedCertificateItem() { }
 
         /// <summary>
-        /// Initializes a new instance of the DeletedKeyBundle class.
+        /// Initializes a new instance of the DeletedCertificateItem class.
         /// </summary>
-        /// <param name="key">The Json web key.</param>
-        /// <param name="attributes">The key management attributes.</param>
+        /// <param name="id">Certificate identifier.</param>
+        /// <param name="attributes">The certificate management
+        /// attributes.</param>
         /// <param name="tags">Application specific metadata in the form of
         /// key-value pairs.</param>
-        /// <param name="managed">True if the key's lifetime is managed by key
-        /// vault. If this is a key backing a certificate, then managed will be
-        /// true.</param>
+        /// <param name="x509Thumbprint">Thumbprint of the certificate.</param>
         /// <param name="recoveryId">The url of the recovery object, used to
-        /// identify and recover the deleted key.</param>
-        /// <param name="scheduledPurgeDate">The time when the key is scheduled
-        /// to be purged, in UTC</param>
-        /// <param name="deletedDate">The time when the key was deleted, in
-        /// UTC</param>
-        public DeletedKeyBundle(JsonWebKey key = default(JsonWebKey), KeyAttributes attributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? managed = default(bool?), string recoveryId = default(string), System.DateTime? scheduledPurgeDate = default(System.DateTime?), System.DateTime? deletedDate = default(System.DateTime?))
-            : base(key, attributes, tags, managed)
+        /// identify and recover the deleted certificate.</param>
+        /// <param name="scheduledPurgeDate">The time when the certificate is
+        /// scheduled to be purged, in UTC</param>
+        /// <param name="deletedDate">The time when the certificate was
+        /// deleted, in UTC</param>
+        public DeletedCertificateItem(string id = default(string), CertificateAttributes attributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), byte[] x509Thumbprint = default(byte[]), string recoveryId = default(string), System.DateTime? scheduledPurgeDate = default(System.DateTime?), System.DateTime? deletedDate = default(System.DateTime?))
+            : base(id, attributes, tags, x509Thumbprint)
         {
             RecoveryId = recoveryId;
             ScheduledPurgeDate = scheduledPurgeDate;
@@ -55,20 +53,21 @@ namespace Microsoft.Azure.KeyVault.Models
 
         /// <summary>
         /// Gets or sets the url of the recovery object, used to identify and
-        /// recover the deleted key.
+        /// recover the deleted certificate.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryId")]
         public string RecoveryId { get; set; }
 
         /// <summary>
-        /// Gets the time when the key is scheduled to be purged, in UTC
+        /// Gets the time when the certificate is scheduled to be purged, in
+        /// UTC
         /// </summary>
         [JsonConverter(typeof(UnixTimeJsonConverter))]
         [JsonProperty(PropertyName = "scheduledPurgeDate")]
         public System.DateTime? ScheduledPurgeDate { get; protected set; }
 
         /// <summary>
-        /// Gets the time when the key was deleted, in UTC
+        /// Gets the time when the certificate was deleted, in UTC
         /// </summary>
         [JsonConverter(typeof(UnixTimeJsonConverter))]
         [JsonProperty(PropertyName = "deletedDate")]
