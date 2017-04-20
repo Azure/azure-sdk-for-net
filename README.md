@@ -1,5 +1,5 @@
 # Microsoft Azure SDK for .NET
-----------
+ ----------
 The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.
 
@@ -27,34 +27,34 @@ src\SDKs\Compute
 
  1. Open VS 2017 command prompt
  2. Navigate to repository root directory
- 3. Invoke **msbuild** build.proj /t:FullBuild
- FullBuild will Build, RunTests, Package
+ 3. Invoke **msbuild** build.proj /t:Build
+ will Build and create nuget Package
  Local Published nugets can be found under < root >\PublishedNugets
- TestResult can be found under < root >\TestResults
-##### *Full Build* without any scope will build all SDK's run all tests.
+##### *Build* without any scope will build all SDK's and create nuget packages.
 
 ####Build one nuget package
 In order to build one package and run it's test
 
- > msbuild build.proj /t:FullBuild /p:scope=SDKs\Compute /p:NugetPackageName=Microsoft.Azure.Management.Compute
+ > msbuild build.proj /t:Build /p:scope=SDKs\Compute /p:NugetPackageName=Microsoft.Azure.Management.Compute
 
-####Using Visual Studio:
- 1. Open any solution, say, "SDKs\Compute\Compute.sln"
- 2. Invoke "build" command.
-
+####Build Using Visual Studio:
+ 1. Open any solution, eg "SDKs\Compute\Compute.sln"
+ 2. Build solution
+ 
 ### To run the tests:
 Using Visual Studio:
   - Build.
   - "Test Explorer" window will get populated with tests. Select test and Run/Debug.
 
 Using the command line:
-msbuild .\build.proj /t:"Build;Runtests" /p:Scope=SDKs\Compute
+msbuild .\build.proj /t:"Runtests" /p:Scope=SDKs\Compute
+in the above example RunTests will build and run tests for Compute only
 or
 dotnet test SDKs\Compute\Compute.Tests\Compute.Tests.csproj
 
   - Refer to the "To build" section to get the command window set up.
-  - Invoke "Test" target from "Build.proj". Likely, you need to build test project first, so put in "build" target as well. 
-        *msbuild build.proj /t:build;test /p:scope=ResourceManagement\Compute*
+  - Invoke "RunTests" target from "Build.proj". RunTests will build and run tests 
+        *msbuild build.proj /t:RunTests /p:scope=SDKs\Compute*
 
 ## To on-board new libraries
 
