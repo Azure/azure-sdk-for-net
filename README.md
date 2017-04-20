@@ -1,11 +1,11 @@
-﻿
-#Azure Management Libraries for .NET
+
+# Azure Management Libraries for .NET #
 
 This README is based on the latest released preview version (1.0 beta 5). If you are looking for other releases, see [More Information](#more-information)
 
 The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources. Libraries are built on the lower-level, request-response style [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest) and can run side-by-side with [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest).
 
-**1.0 beta 5** is a developer preview that supports major parts of:  
+**1.0.0** is a developer preview that supports major parts of:  
 
 - Azure Virtual Machines and VM Extensions
 - Virtual Machine Scale Sets
@@ -172,7 +172,7 @@ var database = sqlServer.Databases.Define(databaseName)
     .Create();
 ```
 
-#Sample Code
+# Sample Code #
 
 You can find plenty of sample code that illustrates management scenarios in Azure Virtual Machines, Virtual Machine Scale Sets, Managed Disks, Storage, Networking, Resource Manager, SQL Database, App Service (Web Apps), Key Vault, Redis, CDN and Batch … 
 
@@ -318,14 +318,14 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 
 
 
-# Download
+# Download #
 
 
-**1.0 beta 5**
+**1.0.0**
 
-1.0 beta 5 release builds are available on NuGet:
+1.0.0 release builds are available on NuGet:
 
-Azure Management Library                              | Package name                              | Stable (1.0 beta 5 release)
+Azure Management Library                              | Package name                              | Stable (1.0.0 release)
 -----------------------|-------------------------------------------|-----------------------------|-------------------------
 Azure Management Client (wrapper package) | `Microsoft.Azure.Management.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/)
 App Service (Web Apps) | `Microsoft.Azure.Management.AppService.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.AppService.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.AppService.Fluent/)
@@ -348,7 +348,7 @@ Traffic Manager  |`Microsoft.Azure.Management.TrafficManager.Fluent`  | [![NuGet
 
 # Help
 
-If you are migrating your code to 1.0 beta 5, you can use these notes for [preparing your code for 1.0 beta 5 from 1.0 beta 4](./notes/prepare-for-1.0.0-beta5.md).
+If you are migrating your code to 1.0.0, you can use these notes for [preparing your code for 1.0.0 from 1.0.0 beta 5](./notes/prepare-for-1.0.0.md).
 
 If you encounter any bugs with these libraries, please file issues via [Issues](https://github.com/Azure/azure-sdk-for-net/issues) and tag them [Fluent](https://github.com/Azure/azure-sdk-for-net/labels/Fluent) or checkout [StackOverflow for Azure Management Libraries for .NET](http://stackoverflow.com/questions/tagged/azure-sdk).
 
