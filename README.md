@@ -1,3 +1,4 @@
+
 # Microsoft Azure SDK for .NET
  ----------
 The Microsoft Azure SDK for .NET allows you to build applications
@@ -22,7 +23,7 @@ src\SDKs\AnalysisService
 src\SDKs\Compute
 
 ### To build:
-
+#### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory
 ####Full Build
 
  1. Open VS 2017 command prompt
