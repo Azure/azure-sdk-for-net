@@ -22,8 +22,9 @@ src\SDKs\AnalysisService
 src\SDKs\Compute
 
 ### To build:
-
-#### Full Build
+=======
+#### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory
+####Full Build
 
  1. Open VS 2017 command prompt
  2. Navigate to repository root directory
