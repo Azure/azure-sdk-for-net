@@ -533,7 +533,8 @@ namespace Microsoft.Azure.Management.HDInsight
                     VmSize = workerNodeSize
                 },
                 OsProfile = osProfile,
-                ScriptActions = workernodeactions
+                ScriptActions = workernodeactions,
+                DataDisksGroups = clusterCreateParameters.WorkerNodeDataDisksGroups
             };
             roles.Add(workerNode);
 

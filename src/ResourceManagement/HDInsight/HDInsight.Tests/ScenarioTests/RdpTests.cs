@@ -68,7 +68,7 @@ namespace HDInsight.Tests
                         {
                             RdpSettings = new RdpSettings
                             {
-                                ExpiryDate = new DateTime(2016, 10, 20),
+                                ExpiryDate = new DateTime(2018, 10, 20),
                                 Password = "Password1!",
                                 UserName = "rdpuser"
                             }

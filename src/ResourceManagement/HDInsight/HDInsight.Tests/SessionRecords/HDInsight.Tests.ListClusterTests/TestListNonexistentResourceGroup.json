@@ -9,7 +9,7 @@
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.3.0"
+          "v2.0.3"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'nonexistentrg' could not be found.\"\r\n  }\r\n}",
@@ -30,13 +30,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "feb4480e-87bb-4313-a230-20a83be5679d"
+          "c8ac329d-28e2-4a53-aee8-ba35557756ea"
         ],
         "x-ms-correlation-request-id": [
-          "feb4480e-87bb-4313-a230-20a83be5679d"
+          "c8ac329d-28e2-4a53-aee8-ba35557756ea"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20161014T020511Z:feb4480e-87bb-4313-a230-20a83be5679d"
+          "WESTUS2:20170330T074319Z:c8ac329d-28e2-4a53-aee8-ba35557756ea"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 14 Oct 2016 02:05:11 GMT"
+          "Thu, 30 Mar 2017 07:43:18 GMT"
         ]
       },
       "StatusCode": 404
