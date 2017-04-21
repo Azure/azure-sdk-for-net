@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
     public class TestHelper : IDisposable
     {
-        private const string resourceGroup = "RecoveryServicesBackupTestRg";
+        private const string resourceGroup = "SwaggerTestRg";
         private const string vaultName = "SDKTestRsVault";
         private const string location = "westus";
         private const string fabricName = "Azure";
@@ -90,24 +90,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         public string EnableProtection(string containerName, string protectedItemName, string policyName)
         {
             TestUtilities.Wait(10 * 1000);
-            var policy = BackupClient.ProtectionPolicies.Get(vaultName, resourceGroup, policyName);
+            ProtectionPolicyResource policy = BackupClient.ProtectionPolicies.Get(vaultName, resourceGroup, policyName);
 
             BackupClient.ProtectionContainers.Refresh(vaultName, resourceGroup, fabricName);
 
-            var protectableItems = BackupClient.ProtectableItems.List(vaultName, resourceGroup);
+            IPage<WorkloadProtectableItemResource> protectableItems = BackupClient.BackupProtectableItems.List(vaultName, resourceGroup);
 
-            string sourceResourceId = null;
-            if (protectableItems.Any(protectableItem => containerName.Contains(protectableItem.Name.ToLower())))
-            {
-                sourceResourceId = ((AzureIaaSComputeVMProtectableItem)protectableItems.First().Properties).VirtualMachineId;
-            }
+            var desiredProtectedItem = (AzureIaaSComputeVMProtectableItem) protectableItems.First(
+                protectableItem => containerName.ToLower().Contains(protectableItem.Name.ToLower())
+                ).Properties;
 
-            ProtectedItemResource item = new ProtectedItemResource()
+            var item = new ProtectedItemResource()
             {
                 Properties = new AzureIaaSComputeVMProtectedItem()
                 {
                     PolicyId = policy.Id,
-                    SourceResourceId = sourceResourceId
+                    SourceResourceId = desiredProtectedItem.VirtualMachineId,
                 }
             };
 
@@ -258,8 +256,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         public List<ProtectedItemResource> ListItems()
         {
             return GetPagedList(
-                () => BackupClient.ProtectedItems.List(vaultName, resourceGroup),
-                nextLink => BackupClient.ProtectedItems.ListNext(nextLink));
+                () => BackupClient.BackupProtectedItems.List(vaultName, resourceGroup),
+                nextLink => BackupClient.BackupProtectedItems.ListNext(nextLink));
         }
 
         public List<T> GetPagedList<T>(Func<IPage<T>> listResources, Func<string, IPage<T>> listNext)
