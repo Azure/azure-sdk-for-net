@@ -21,7 +21,7 @@ namespace Billing.Tests.ScenarioTests
         /// <summary>
         /// 
         /// </summary>
-        [Fact(Skip ="Missing Recorded Mock file. Billing team needs to investigate and enable this test")]
+        [Fact]
         public void ListOperationsTest()
         {
             var something = typeof(Billing.Tests.ScenarioTests.OperationsTests);
