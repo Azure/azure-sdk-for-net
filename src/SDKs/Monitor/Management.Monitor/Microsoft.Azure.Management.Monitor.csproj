@@ -1,14 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.Monitor</PackageId>
     <Description>Microsoft Azure Monitor Library</Description>
     <VersionPrefix>0.16.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Monitor</AssemblyName>
+
+    <PackageId>Microsoft.Azure.Management.Monitor</PackageId>
     <PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs</PackageTags>
+
+    <PackageProjectUrl>https://github.com/Azure/azure-sdk-for-net</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
+
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>    
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net45;net452;netstandard1.1;netstandard1.5</TargetFrameworks>
+    <TargetFrameworks>net45;net452;netstandard1.1;netstandard1.4;netstandard1.5</TargetFrameworks>
     <RootNamespace>Microsoft.Azure.Insights</RootNamespace>
   </PropertyGroup>
 
@@ -34,6 +48,14 @@
 		<PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
 	</ItemGroup>
 
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+		<PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
+		<PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
+		<PackageReference Include="System.Net.Http" Version="4.3.0" />
+		<PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.1.1" />
+		<PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
+	</ItemGroup>
+  
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
 		<PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
 		<PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.1.1" />
