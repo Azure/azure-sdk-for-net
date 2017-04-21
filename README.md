@@ -23,6 +23,7 @@ src\SDKs\AnalysisService
 src\SDKs\Compute
 
 ### To build:
+=======
 #### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory
 ####Full Build
 
