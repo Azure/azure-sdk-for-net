@@ -62,7 +62,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="accessTier">Required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
         /// include: 'Hot', 'Cool'</param>
-        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?))
+        /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
+        /// storage service if sets to true.</param>
+        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?))
         {
             Sku = sku;
             Kind = kind;
@@ -71,6 +73,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             CustomDomain = customDomain;
             Encryption = encryption;
             AccessTier = accessTier;
+            EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
         }
 
         /// <summary>
@@ -131,6 +134,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessTier")]
         public AccessTier? AccessTier { get; set; }
+
+        /// <summary>
+        /// Gets or sets allows https traffic only to storage service if sets
+        /// to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsHttpsTrafficOnly")]
+        public bool? EnableHttpsTrafficOnly { get; set; }
 
         /// <summary>
         /// Validate the object.
