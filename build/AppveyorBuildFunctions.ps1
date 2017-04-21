@@ -11,14 +11,14 @@ function Build-Solution
         throw "Package restore failed."
     }
 
-    dotnet build src/Microsoft.Azure.ServiceBus/project.json
+    dotnet build src/Microsoft.Azure.ServiceBus/Microsoft.Azure.ServiceBus.csproj
 
     if (-not $?)
     {
         throw "Build failed."
     }
 
-    dotnet build test/Microsoft.Azure.ServiceBus.UnitTests/project.json
+    dotnet build test/Microsoft.Azure.ServiceBus.UnitTests/Microsoft.Azure.ServiceBus.UnitTests.csproj
 
     if (-not $?)
     {
@@ -93,7 +93,7 @@ function Run-UnitTests
     {
         Write-Host "Running unit tests."
 
-        dotnet test test/Microsoft.Azure.ServiceBus.UnitTests/project.json
+        dotnet test test/Microsoft.Azure.ServiceBus.UnitTests/Microsoft.Azure.ServiceBus.UnitTests.csproj
 
         if (-not $?)
         {
