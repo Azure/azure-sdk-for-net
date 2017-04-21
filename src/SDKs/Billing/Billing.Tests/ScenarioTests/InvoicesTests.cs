@@ -20,7 +20,7 @@ namespace Billing.Tests.ScenarioTests
     {
         const string DownloadUrlExpand = "downloadUrl";
         const string RangeFilter = "invoicePeriodEndDate ge 2017-01-31 and invoicePeriodEndDate le 2017-02-28";
-        const string InvoiceName = "2017-02-09-117646100066812";
+        const string InvoiceName = "201705-217994100075389";
 
         [Fact]
         public void ListInvoicesTest()
@@ -63,6 +63,8 @@ namespace Billing.Tests.ScenarioTests
                 Assert.NotNull(invoice);
                 Assert.False(string.IsNullOrWhiteSpace(invoice.DownloadUrl.Url));
                 Assert.True(invoice.DownloadUrl.ExpiryTime.HasValue);
+                Assert.NotNull(invoice.BillingPeriodIds);
+                Assert.Equal(1, invoice.BillingPeriodIds.Count);
             }
         }
 
@@ -78,6 +80,8 @@ namespace Billing.Tests.ScenarioTests
                 Assert.Equal(InvoiceName, invoice.Name);
                 Assert.False(string.IsNullOrWhiteSpace(invoice.DownloadUrl.Url));
                 Assert.True(invoice.DownloadUrl.ExpiryTime.HasValue);
+                Assert.NotNull(invoice.BillingPeriodIds);
+                Assert.Equal(1, invoice.BillingPeriodIds.Count);
             }
         }
 
