@@ -1,4 +1,3 @@
-
 # Microsoft Azure SDK for .NET
  ----------
 The Microsoft Azure SDK for .NET allows you to build applications
@@ -23,6 +22,7 @@ src\SDKs\AnalysisService
 src\SDKs\Compute
 
 ### To build:
+=======
 #### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory
 ####Full Build
 
@@ -33,10 +33,10 @@ src\SDKs\Compute
  Local Published nugets can be found under < root >\PublishedNugets
 ##### *Build* without any scope will build all SDK's and create nuget packages.
 
-####Build one nuget package
+#### Build one nuget package
 In order to build one package and run it's test
 
- > msbuild build.proj /t:Build /p:scope=SDKs\Compute /p:NugetPackageName=Microsoft.Azure.Management.Compute
+> msbuild build.proj /t:Build /p:scope=SDKs\Compute /p:NugetPackageName=Microsoft.Azure.Management.Compute
 
 ####Build Using Visual Studio:
  1. Open any solution, eg "SDKs\Compute\Compute.sln"
