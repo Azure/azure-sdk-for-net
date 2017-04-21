@@ -3464,6 +3464,31 @@ namespace Microsoft.Azure.KeyVault.Tests
             public static readonly string[] AllIssuers = { Self, Unknown };
         }
 
+        private class HttpClientFactory
+        {
+            /// <summary>
+            /// Mimics the implementation of the HttpClientFactory.Create method.
+            /// </summary>
+            /// <param name="handlers">Delegating handlers to act as the pipeline for the client being created.</param>
+            /// <returns>An http client instance with the specified delegating handlers as the inner pipeline.</returns>
+            /// <remarks>
+            /// * The original implementation of this class is in the System.Net.Http.Formatting assembly, which
+            /// does not support .netcoreApp as a target framework. 
+            /// * Since the class is private, no parameter validation is required. However, the provider
+            /// of the delegating handler array must behave, and ensure there are no preset inners.
+            /// </remarks>
+            public static HttpClient Create(DelegatingHandler[] handlers)
+            {
+                for (int idx = 1; idx < handlers.Length; idx++)
+                {
+                    // set each previous handler as the inner of the subsequent one. 
+                    // Last handler becomes the first handler in the pipeline.
+                    handlers[idx].InnerHandler = handlers[idx-1];
+                }
+
+                return new HttpClient(handlers[handlers.Length - 1]);
+            }
+        }
         #endregion
     }
 }
