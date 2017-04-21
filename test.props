@@ -2,23 +2,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
-    <NugetCommonProfileTags>RandomTag</NugetCommonProfileTags>
+    <NugetCommonProfileTags/>
     <PackageOutputPath>$(BuiltPackageOutputDir)</PackageOutputPath>
     <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
     <SkipBuildingTestProject>false</SkipBuildingTestProject>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
-    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">1.1.0</RuntimeFrameworkVersion>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'net452' ">$(PackageTargetFallback);net452;dnxcore50</PackageTargetFallback>
-  </PropertyGroup>
-  <PropertyGroup Label="DebugBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Debug|AnyCPU' ">
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-
-  <PropertyGroup Label="ReleaseBuildOptions" Condition=" '$(Configuration)|$(Platform)'=='Release|AnyCPU' ">
-    <DelaySign>false</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
@@ -27,8 +18,8 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
-    <DefineConstants>netcoreapp1.0</DefineConstants>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+    <DefineConstants>netcoreapp11</DefineConstants>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
@@ -39,8 +30,8 @@
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
 		<!-- <PackageReference Include="Microsoft.NETCore.App" Version="1.0.2" /> -->
 	</ItemGroup>  
-  <!-- <ItemGroup> -->
-	  <!-- <Compile Include="$(LibraryToolsFolder)\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" /> -->
-  <!-- </ItemGroup>   -->
+   <ItemGroup> 
+	   <Compile Include="$(LibraryToolsFolder)\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" /> 
+   </ItemGroup>   
   
 </Project>
