@@ -5,14 +5,10 @@
     <Description>Provides key vault management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.KeyVault</AssemblyName>
-    <VersionPrefix>2.1.0-preview</VersionPrefix>
+    <VersionPrefix>2.2.0-preview</VersionPrefix>
     <PackageTags>Microsoft Azure key vault management;Key Vault;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.1.0-preview</Version>
   </PropertyGroup>
 </Project>
