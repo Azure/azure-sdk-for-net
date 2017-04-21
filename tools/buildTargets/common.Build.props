@@ -3,7 +3,7 @@
 		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <!--<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>-->
-    <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
+    <!--<RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>-->
 	  <NugetCommonProfileTags></NugetCommonProfileTags>
 	  <PackageOutputPath>$(BuiltPackageOutputDir)</PackageOutputPath>
     <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>

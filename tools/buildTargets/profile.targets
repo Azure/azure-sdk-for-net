@@ -1,0 +1,170 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreBuildStaticAnalysisTargets>
+      BuildCiSign;
+      BuildMsBuildTask;
+      CategorizeProjects;
+      <!--GetScopedProjects;-->
+      <!-- GetProjectReferences; -->
+    </PreBuildStaticAnalysisTargets>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildCategorizePrjectTargets>
+      CategorizeProjects;
+      GetScopedProjects;
+    </PreBuildCategorizePrjectTargets>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BuildTraversedProjectsDependsOn>
+      PreBuildStaticAnalysis;
+      RestoreLatestProjects;
+      BuildLatestProjects;
+      Package;
+    </BuildTraversedProjectsDependsOn>
+    <RestoreTraversedProjectsDependsOn>
+      CategorizeProjects;
+      RestoreLatestProjects;
+    </RestoreTraversedProjectsDependsOn>
+    <CleanTraversedProjectsDependsOn>
+      CategorizeProjects;
+      CleanLatestProjects;
+      CleanSDKPackageFiles
+    </CleanTraversedProjectsDependsOn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunTestProjectsDependsOn>
+      PreBuildStaticAnalysis;
+      RestoreLatestProjects;
+      BuildLatestProjects;
+      Test
+    </RunTestProjectsDependsOn>
+
+    <SignNugetDependsOn>
+      PreBuildStaticAnalysis;
+      RestoreLatestProjects;
+      BuildLatestProjects;
+      Test;
+      PreSign;
+      Package;
+    </SignNugetDependsOn>
+
+    <PublishNugetDependsOn>
+      PreBuildStaticAnalysis;
+      RestoreLatestProjects;
+      BuildLatestProjects;
+      Test;
+      PreSign;
+      Package;
+      PublishingNuget
+    </PublishNugetDependsOn>
+
+    <HelpDependsOn>
+      DisplayHelp
+    </HelpDependsOn>
+
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetAzSdkProfile Condition="'$(TargetAzSdkProfile)' == ''">$(AzSdkProfile_Apr2017)</TargetAzSdkProfile>
+    <ProfileNugetPackageDir>$(LibraryRoot)binaries\ProfileNugets\$(TargetAzSdkProfile)\</ProfileNugetPackageDir>
+  </PropertyGroup>
+
+
+  <Target Name="RestoreProfileProjects">
+    <PropertyGroup>
+      <LatestProjectDefaultRestoreTarget Condition=" '$(LatestProjectDefaultRestoreTarget)' == '' ">Restore</LatestProjectDefaultRestoreTarget>
+    </PropertyGroup>
+    <Message Text="Now Restoring @(ProfileProjectToBuild)" />
+    
+    <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
+         Projects="@(ProfileProjectToBuild)"
+         ContinueOnError="ErrorAndStop" />
+    
+  </Target>
+
+  <Target Name="BuildProfileProjects">
+    <Message Text="IsBuildingInVS: $(AddProjectReferenceForDebuggingPurpose)"/>
+    <Message Text="IsCIBuild: $(AddNugetReferenceForCIandCmdlineBuild)"/>
+    <PropertyGroup>
+      <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
+    </PropertyGroup>
+
+    <Message Text="Building SDK Projects ..... @(SDKProject)" />
+    <MSBuild Targets="Build"
+             Projects="@(ProfileProjectToBuild)"
+             Properties="TargetFramework=$(NetFx452)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="net452Assemblies" />
+    </MSBuild>
+
+    <MSBuild Targets="Build"
+             Projects="@(ProfileProjectToBuild)"
+             Properties="TargetFramework=$(NetStd14)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" />
+    </MSBuild>
+    <ItemGroup>
+      <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies)" />
+    </ItemGroup>
+
+    <Message Text="Building SDKTest Projects ....... @(ProfileProjectToBuild)" />
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+         Projects="@(ProfileProjectToBuild)"
+         Condition=" '$(SkipBuildingTestProjects)' != 'false' "
+         ContinueOnError="ErrorAndStop">
+    </MSBuild>
+  </Target>
+
+  <Target Name="PackageProfileProjects">
+    <Message Text="Targeting Profile..... $(TargetAzSdkProfile)"/>
+    <Message Text="Packaging..... @(ProfileProjectToBuild)"/>
+    <MSBuild
+        Projects="@(ProfileProjectToBuild)"
+        Targets="Pack"
+        Properties="Configuration=$(Configuration);
+        VisualStudioVersion=$(VisualStudioVersion); 
+        PackageOutputPath=$(ProfileNugetPackageDir); 
+        NoPackageAnalysis=true; 
+        IncludeSymbols=true;
+        NoBuild=true;">
+      <Output TaskParameter="TargetOutputs" ItemName="SdkNuGetPackages" />
+    </MSBuild>
+
+    <Message Text="Built Nugets @(SdkNuGetPackages)"/>
+  </Target>
+
+  <Target Name="BuildProfile" DependsOnTargets="Cpp;RestoreProfileProjects;BuildProfileProjects;PackageProfileProjects">
+    <Message Text="Done....."/>
+
+  </Target>
+  
+
+  <Target Name="Cpp">
+    <Message Text="Categorizing...."/>
+    <Message Text="Targeting Profile..... $(TargetAzSdkProfile)"/>
+    
+    <ItemGroup>
+      <ProductProjects Include="%(ProfileProjectToBuild.Identity)" Condition=" '%(ProfileProjectToBuild.ProjectType)' == 'Sdk' and '%(ProfileProjectToBuild.AzSdkProfile)' == '$(TargetAzSdkProfile)' "/>      
+      <!--<TestProjects Include="%(ProfileProjectToBuild.Identity)" Condition=" ('%(ProjectToBuild.ProjectType)' == 'Test' and '%(ProjectToBuild.ExcludeFromBuild)' != 'true') "/>-->
+    </ItemGroup>
+   
+    <Message Text="Categorized SDK Projects ..... %(ProfileProjectToBuild.Identity)" />
+    <!--
+    <ScopedProjects Remove="@(KVSamples)"/>
+    $(LibrarySourceFolder)\$(Scope)\ApiVersion*\**\*.csproj
+    -->
+  </Target>
+
+  <Target Name="GetApiDir">
+    <ItemGroup>
+      <ApiDir Include="$(LibrarySourceFolder)\$(Scope)\ApiVersion*\**\*.csproj" />
+              
+    </ItemGroup>
+
+    <Message Text="ApiVersions...... %(ApiDir.RelativeDir)"/>
+    <Message Text="ApiVersions...... %(ApiDir.RecursiveDir)%(RootDir)"/>
+  </Target>
+</Project>

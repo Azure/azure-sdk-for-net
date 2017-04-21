@@ -1,0 +1,110 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.Profiles.props'))" />
+  <PropertyGroup>
+    <AnalysisServicesApiVersion>2016-05-16</AnalysisServicesApiVersion>
+    <AuthorizationApiVersion>2015-07-01</AuthorizationApiVersion>
+    <AutomationApiVersion>2014-06-01</AutomationApiVersion>
+    <BatchApiVersion>2017-01-01</BatchApiVersion>
+    <BillingApiVersion>2017-02-27-preview</BillingApiVersion>
+    <CdnApiVersion>2016-10-02</CdnApiVersion>
+    <CognitiveServices>2016-02-01-preview</CognitiveServices>
+    <ComputeApiVersion>2016-04-30-preview</ComputeApiVersion>
+    <ContainerRegistry>2017-03-01</ContainerRegistry>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AzSdkProfile_Apr2017>Apr2017</AzSdkProfile_Apr2017>
+  </PropertyGroup>
+  
+  
+  <ItemGroup Label="SDK Profile Projects">
+    <ProfileProjectToBuild Include="$(SdkProfileProjectRootDir)\AnalysisServices\ApiVersion_$(AnalysisServicesApiVersion)\Management.Analysis\Microsoft.Azure.Management.Analysis.csproj">
+      <ProjectType>Sdk</ProjectType>
+      <ApiVersion>$(AnalysisServicesApiVersion)</ApiVersion>
+      <AzSdkProfile>$(AzSdkProfile_Apr2017)</AzSdkProfile>
+    </ProfileProjectToBuild>
+    <ProfileProjectToBuild Include="$(SdkProfileProjectRootDir)\Authorization\ApiVersion_$(AuthorizationApiVersion)\Management.Authorization\Microsoft.Azure.Management.Authorization.csproj">
+      <ProjectType>Sdk</ProjectType>
+      <ApiVersion>$(AuthorizationApiVersion)</ApiVersion>
+      <AzSdkProfile>$(AzSdkProfile_Apr2017)</AzSdkProfile>
+    </ProfileProjectToBuild>
+    <ProfileProjectToBuild Include="$(SdkProfileProjectRootDir)\Automation\ApiVersion_$(AutomationApiVersion)\Management.Automation\Microsoft.Azure.Management.Automation.csproj">
+      <ProjectType>Sdk</ProjectType>
+      <ApiVersion>$(AutomationApiVersion)</ApiVersion>
+      <AzSdkProfile>$(AzSdkProfile_Apr2017)</AzSdkProfile>
+    </ProfileProjectToBuild>
+
+    <ProfileProjectToBuild Include="$(SdkProfileProjectRootDir)\Batch\ApiVersion_$(BatchApiVersion)\Management.Batch\Microsoft.Azure.Management.Batch.csproj">
+      <ProjectType>Sdk</ProjectType>
+      <ApiVersion>$(BatchApiVersion)</ApiVersion>
+      <AzSdkProfile>$(AzSdkProfile_Apr2017)</AzSdkProfile>
+    </ProfileProjectToBuild>
+    <ProfileProjectToBuild Include="$(SdkProfileProjectRootDir)\Billing\ApiVersion_$(BillingApiVersion)\Management.Billing\Microsoft.Azure.Management.Billing.csproj">
+      <ProjectType>Sdk</ProjectType>
+      <ApiVersion>$(BillingApiVersion)</ApiVersion>
+      <AzSdkProfile>$(AzSdkProfile_Apr2017)</AzSdkProfile>
+    </ProfileProjectToBuild>
+    <ProfileProjectToBuild Include="$(SdkProfileProjectRootDir)\Cdn\ApiVersion_$(CdnApiVersion)\Management.Cdn\Microsoft.Azure.Management.Cdn.csproj">
+      <ProjectType>Sdk</ProjectType>
+      <ApiVersion>$(CdnApiVersion)</ApiVersion>
+      <AzSdkProfile>$(AzSdkProfile_Apr2017)</AzSdkProfile>
+    </ProfileProjectToBuild>
+    <ProfileProjectToBuild Include="$(SdkProfileProjectRootDir)\CognitiveServices\ApiVersion_$(CognitiveServices)\Management.CognitiveServices\Microsoft.Azure.Management.CognitiveServices.csproj">
+      <ProjectType>Sdk</ProjectType>
+      <ApiVersion>$(CognitiveServices)</ApiVersion>
+      <AzSdkProfile>$(AzSdkProfile_Apr2017)</AzSdkProfile>
+    </ProfileProjectToBuild>
+    <ProfileProjectToBuild Include="$(SdkProfileProjectRootDir)\Compute\ApiVersion_$(ComputeApiVersion)\Management.Compute\Microsoft.Azure.Management.Compute.csproj">
+      <ApiVersion>$(ComputeApiVersion)</ApiVersion>
+      <ProjectType>Sdk</ProjectType>
+      <AzSdkProfile>$(AzSdkProfile_Apr2017)</AzSdkProfile>
+    </ProfileProjectToBuild>
+    <ProfileProjectToBuild Include="$(SdkProfileProjectRootDir)\ContainerRegistry\ApiVersion_$(ContainerRegistry)\Management.ContainerRegistry\Microsoft.Azure.Management.ContainerRegistry.csproj">
+      <ApiVersion>$(ContainerRegistry)</ApiVersion>
+      <ProjectType>Sdk</ProjectType>
+      <AzSdkProfile>$(AzSdkProfile_Apr2017)</AzSdkProfile>
+    </ProfileProjectToBuild>
+
+
+    <!--	
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)CustomerInsights\Management.CustomerInsights\Microsoft.Azure.Management.CustomerInsights.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Analytics\Management.DataLake.Analytics\Microsoft.Azure.Management.DataLake.Analytics.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Store\Management.DataLake.Store\Microsoft.Azure.Management.DataLake.Store.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)DevTestLabs\Management.DevTestLabs\Microsoft.Azure.Management.DevTestLabs.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Dns\Management.Dns\Microsoft.Azure.Management.Dns.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)EventHub\Management.EventHub\Microsoft.Azure.Management.EventHub.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Graph.RBAC\Graph.RBAC\Microsoft.Azure.Graph.RBAC.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Insights\Microsoft.Azure.Insights\Microsoft.Azure.Insights.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)IotHub\Management.IotHub\Microsoft.Azure.Management.IotHub.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)KeyVault\Management\Management.KeyVault\Microsoft.Azure.Management.KeyVault.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)MachineLearning\Management.MachineLearning\Microsoft.Azure.Management.MachineLearning.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Logic\Management.Logic\Microsoft.Azure.Management.Logic.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Media\Management.Media\Microsoft.Azure.Management.Media.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Monitor\Management.Monitor\Microsoft.Azure.Management.Monitor.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Network\Management.Network\Microsoft.Azure.Management.Network.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)NotificationHubs\Management.NotificationHubs\Microsoft.Azure.Management.NotificationHubs.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)OperationalInsights\Management.OperationalInsights\Microsoft.Azure.Management.OperationalInsights.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)PowerBIEmbedded\Management.PowerBIEmbedded\Microsoft.Azure.Management.PowerBIEmbedded.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)RecoveryServices\Management.RecoveryServices\Microsoft.Azure.Management.RecoveryServices.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)RecoveryServices.Backup\Management.RecoveryServices.Backup\Microsoft.Azure.Management.RecoveryServices.Backup.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)RedisCache\Management.Redis\Microsoft.Azure.Management.Redis.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Relay\Management.Relay\Microsoft.Azure.Management.Relay.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Resource\Management.ResourceManager\Microsoft.Azure.Management.ResourceManager.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Scheduler\Management.Scheduler\Microsoft.Azure.Management.Scheduler.csproj" />
+     
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)ServerManagement\Management.ServerManagement\Microsoft.Azure.Management.ServerManagement.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)ServiceBus\Management.ServiceBus\Microsoft.Azure.Management.ServiceBus.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)ServiceFabric\Management.ServiceFabric\Microsoft.Azure.Management.ServiceFabric.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)SqlManagement\Management.Sql\Microsoft.Azure.Management.Sql.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)Storage\Management.Storage\Microsoft.Azure.Management.Storage.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)TrafficManager\Management.TrafficManager\Microsoft.Azure.Management.TrafficManager.csproj" />
+    <ProfileProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\Management.Websites\Microsoft.Azure.Management.Websites.csproj" />
+    
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\Management\Management.Search\Management.Search.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\DataPlane\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Automation\Management.Automation\Microsoft.Azure.Management.Automation.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Authorization\Management.Authorization\Microsoft.Azure.Management.Sql.csproj" />		
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)\Authorization.Tests\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+		-->
+  </ItemGroup>
+</Project>
