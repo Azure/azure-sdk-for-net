@@ -10,6 +10,8 @@ environment:
     secure: xohonz/X8PPLOVIdT3ch2C5XeSa30RwR6NuXFh4e85svXT1mJNGGO1HQEGxCk3wp
   AppId:
     secure: c+H140oRJfHtmFHZxSRLWocv5AU0q33X7kgMcTcXxhJvtVhk2WAk1dRQkSN+SyoA
+  CodeCov:
+    secure: 4/S+CQQJP+gBYrAOj6c1zg3GBMbhKofjIbqq7z6GeVUIWDJCd3ATGsDRT4++bruM
 before_build:
 - ps: >-
     . .\build\AppveyorBuildFunctions.ps1

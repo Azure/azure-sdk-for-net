@@ -93,12 +93,30 @@ function Run-UnitTests
     {
         Write-Host "Running unit tests."
 
-        dotnet test test/Microsoft.Azure.ServiceBus.UnitTests/Microsoft.Azure.ServiceBus.UnitTests.csproj
+        Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile nuget.exe
+        $openCoverVersion = '4.6.684'
+        # Using a temporary version of OpenCover until a NuGet is published. https://github.com/OpenCover/opencover/issues/669
+        Invoke-WebRequest -Uri "https://ci.appveyor.com/api/buildjobs/v896p89ur5qpd4he/artifacts/main%2Fbin%2Fpackages%2Fnuget%2Fopencover%2FOpenCover.4.6.684.nupkg" -OutFile "OpenCover.4.6.684.nupkg"
+        & .\nuget.exe install opencover -version $openCoverVersion -source $ENV:APPVEYOR_BUILD_FOLDER\
+        $openCoverConsole = $ENV:APPVEYOR_BUILD_FOLDER + '\OpenCover.' + $openCoverVersion + '\tools\OpenCover.Console.exe'
+        $coverageFile = $ENV:APPVEYOR_BUILD_FOLDER + '\coverage.xml'
+        $target = '-target:C:\Program Files\dotnet\dotnet.exe'
+        $testProject = $ENV:APPVEYOR_BUILD_FOLDER + '\test\Microsoft.Azure.ServiceBus.UnitTests\Microsoft.Azure.ServiceBus.UnitTests.csproj'
+        $targetArgs = '-targetargs: test ' + $testProject + ' -f netcoreapp1.0'
+        $filter = '-filter:+[Microsoft.Azure.ServiceBus*]* -[Microsoft.Azure.ServiceBus.UnitTests]*'
+        $output = '-output:' + $coverageFile
+
+        & $openCoverConsole $target $targetArgs $filter $output '-register:user' '-oldStyle'
 
         if (-not $?)
         {
             throw "Unit tests failed."
         }
+
+        $ENV:PATH = 'C:\\Python34;C:\\Python34\\Scripts;' + $ENV:PATH
+        python -m pip install --upgrade pip
+        pip install git+git://github.com/codecov/codecov-python.git
+        codecov -f $coverageFile -t $ENV:CodeCov -X gcov
     }
     else
     {
