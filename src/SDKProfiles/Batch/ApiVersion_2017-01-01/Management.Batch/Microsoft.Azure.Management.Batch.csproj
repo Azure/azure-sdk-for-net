@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Batch</PackageId>
+    <Description>Provides management capabilities for Azure Batch service accounts.</Description>
+    <AssemblyTitle>Microsoft Azure Batch Management Library</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.Management.Batch</AssemblyName>
+    <VersionPrefix>4.2.0</VersionPrefix>
+    <PackageTags>Microsoft Azure batch management</PackageTags>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>

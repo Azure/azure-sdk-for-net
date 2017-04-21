@@ -2,6 +2,6 @@
   <!-- <Import Project="Directory.Build.props" /> -->
   
   <PropertyGroup>
-	<SdkProfileProjectRootDir>$(LibrarySourceFolder)\SDKs</SdkProfileProjectRootDir>
+	<SdkProfileProjectRootDir>$(LibrarySourceFolder)\src\SDKProfiles</SdkProfileProjectRootDir>
   </PropertyGroup>
 </Project>

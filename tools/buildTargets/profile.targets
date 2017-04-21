@@ -58,7 +58,14 @@
       Package;
       PublishingNuget
     </PublishNugetDependsOn>
-
+    <BuildProfileTraversedProjectDependsOn>
+      Cpp;
+      CleanProfileProjects;
+      CleanProfileSDKPackages;
+      RestoreProfileProjects;
+      BuildProfileProjects;
+      PackageProfileProjects
+    </BuildProfileTraversedProjectDependsOn>
     <HelpDependsOn>
       DisplayHelp
     </HelpDependsOn>
@@ -67,9 +74,28 @@
 
   <PropertyGroup>
     <TargetAzSdkProfile Condition="'$(TargetAzSdkProfile)' == ''">$(AzSdkProfile_Apr2017)</TargetAzSdkProfile>
-    <ProfileNugetPackageDir>$(LibraryRoot)binaries\ProfileNugets\$(TargetAzSdkProfile)\</ProfileNugetPackageDir>
+    <ProfileNugetPackageOutputDir>$(LibraryRoot)binaries\ProfileNugets\$(TargetAzSdkProfile)\</ProfileNugetPackageOutputDir>
   </PropertyGroup>
 
+  <Target Name="CleanProfileProjects" >
+    <PropertyGroup>
+      <LatestProjectDefaultCleanTarget Condition=" '$(LatestProjectDefaultCleanTarget)' == '' ">Clean</LatestProjectDefaultCleanTarget>
+    </PropertyGroup>
+    <Message Text="Cleaning Initiated....." />
+    <MSBuild Targets="$(LatestProjectDefaultCleanTarget)"
+         Projects="@(ProfileProjectToBuild)"
+             Properties="PackageOutputPath=$(ProfileNugetPackageOutputDir)"
+         ContinueOnError="ErrorAndStop" />
+  </Target>
+
+  <Target Name="CleanProfileSDKPackages">
+    <ItemGroup>
+      <_SDKPackageFilesToDelete Include="$(ProfileNugetPackageOutputDir)\*.nupkg"/>
+      <_SDKPackageFilesToDelete Include="$(BaseIntermediateOutputPath)\*.nuspec"/>
+    </ItemGroup>
+    <Message Text="Cleaning..... @(_SDKPackageFilesToDelete)" Condition=" '@(_SDKPackageFilesToDelete)' != '' " />
+    <Delete Files="@(_SDKPackageFilesToDelete)" Condition=" '@(_SDKPackageFilesToDelete)' != '' " ContinueOnError="true"/>
+  </Target>
 
   <Target Name="RestoreProfileProjects">
     <PropertyGroup>
@@ -126,7 +152,7 @@
         Targets="Pack"
         Properties="Configuration=$(Configuration);
         VisualStudioVersion=$(VisualStudioVersion); 
-        PackageOutputPath=$(ProfileNugetPackageDir); 
+        PackageOutputPath=$(ProfileNugetPackageOutputDir); 
         NoPackageAnalysis=true; 
         IncludeSymbols=true;
         NoBuild=true;">
@@ -135,12 +161,6 @@
 
     <Message Text="Built Nugets @(SdkNuGetPackages)"/>
   </Target>
-
-  <Target Name="BuildProfile" DependsOnTargets="Cpp;RestoreProfileProjects;BuildProfileProjects;PackageProfileProjects">
-    <Message Text="Done....."/>
-
-  </Target>
-  
 
   <Target Name="Cpp">
     <Message Text="Categorizing...."/>
@@ -156,15 +176,5 @@
     <ScopedProjects Remove="@(KVSamples)"/>
     $(LibrarySourceFolder)\$(Scope)\ApiVersion*\**\*.csproj
     -->
-  </Target>
-
-  <Target Name="GetApiDir">
-    <ItemGroup>
-      <ApiDir Include="$(LibrarySourceFolder)\$(Scope)\ApiVersion*\**\*.csproj" />
-              
-    </ItemGroup>
-
-    <Message Text="ApiVersions...... %(ApiDir.RelativeDir)"/>
-    <Message Text="ApiVersions...... %(ApiDir.RecursiveDir)%(RootDir)"/>
   </Target>
 </Project>

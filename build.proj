@@ -1,6 +1,6 @@
-<Project DefaultTargets="FullBuild" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
 	<Import Project="Directory.Build.props" />
-  <Import Project="$(LibrarySourceFolder)\SDKProfiles\NetSdk-Apr2017.azProfile"/>
+  <Import Project="$(LibrarySourceFolder)\SDKProfiles\_AzProfileConfigs\NetSdk-Apr2017.azProfile"/>
 	<Import Project="test.props" />
 	<Import Project="AzSdk.props" />
   <Import Project="Directory.Build.targets" />
@@ -13,6 +13,7 @@
 	<Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 	<Target Name="PublishNuget" DependsOnTargets="$(PublishNugetDependsOn)" />
 	<Target Name="RunTests" DependsOnTargets="$(RunTestProjectsDependsOn)" />
-  <Target Name="SignNuget" DependsOnTargets="$(SignNugetDependsOn)" />  
+  <Target Name="SignNuget" DependsOnTargets="$(SignNugetDependsOn)" />
+  <Target Name="BuildProfile" DependsOnTargets="$(BuildProfileTraversedProjectDependsOn)"/>
   <Target Name="Help" DependsOnTargets="$(HelpDependsOn)" />  
 </Project>
