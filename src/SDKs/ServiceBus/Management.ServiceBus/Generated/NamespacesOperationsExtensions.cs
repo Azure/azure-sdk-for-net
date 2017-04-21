@@ -22,6 +22,40 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class NamespacesOperationsExtensions
     {
             /// <summary>
+            /// Check the give namespace name availability.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to check availability of the given namespace name
+            /// </param>
+            public static CheckNameAvailabilityResult CheckNameAvailabilityMethod(this INamespacesOperations operations, CheckNameAvailability parameters)
+            {
+                return operations.CheckNameAvailabilityMethodAsync(parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the give namespace name availability.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to check availability of the given namespace name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityMethodAsync(this INamespacesOperations operations, CheckNameAvailability parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityMethodWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all the available namespaces within the subscription, irrespective of
             /// the resource groups.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
@@ -61,7 +95,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             public static IPage<NamespaceResource> ListByResourceGroup(this INamespacesOperations operations, string resourceGroupName)
             {
@@ -76,7 +110,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -98,7 +132,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name.
@@ -120,7 +154,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name.
@@ -148,10 +182,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             public static void Delete(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
@@ -167,10 +201,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -188,10 +222,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             public static NamespaceResource Get(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
@@ -206,10 +240,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -223,6 +257,54 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
+            /// Updates a service namespace. Once created, this namespace's resource
+            /// manifest is immutable. This operation is idempotent.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update a namespace resource.
+            /// </param>
+            public static NamespaceResource Update(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceUpdateParameters parameters)
+            {
+                return operations.UpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a service namespace. Once created, this namespace's resource
+            /// manifest is immutable. This operation is idempotent.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to update a namespace resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NamespaceResource> UpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the authorization rules for a namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
             /// </summary>
@@ -230,10 +312,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             public static IPage<SharedAccessAuthorizationRuleResource> ListAuthorizationRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
@@ -248,10 +330,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -272,13 +354,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Namespace authorization rule name.
+            /// The authorizationrule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -296,13 +378,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Namespace authorization rule name.
+            /// The authorizationrule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -326,13 +408,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Authorization rule name.
+            /// The authorizationrule name.
             /// </param>
             public static void DeleteAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -347,13 +429,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Authorization rule name.
+            /// The authorizationrule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -371,13 +453,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Authorization rule name.
+            /// The authorizationrule name.
             /// </param>
             public static SharedAccessAuthorizationRuleResource GetAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -392,13 +474,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Authorization rule name.
+            /// The authorizationrule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -419,13 +501,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
+            /// The authorizationrule name.
             /// </param>
             public static ResourceListKeys ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -440,13 +522,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
+            /// The authorizationrule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -467,13 +549,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
+            /// The authorizationrule name.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to regenerate the authorization rule.
@@ -491,13 +573,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
+            /// The authorizationrule name.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to regenerate the authorization rule.
@@ -522,7 +604,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name.
@@ -544,7 +626,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name.
@@ -572,10 +654,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             public static void BeginDelete(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
@@ -591,10 +673,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

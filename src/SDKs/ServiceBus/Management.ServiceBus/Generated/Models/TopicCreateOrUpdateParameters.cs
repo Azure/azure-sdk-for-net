@@ -120,11 +120,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets last time the message was sent, or a request was
-        /// received, for this topic.
+        /// Gets last time the message was sent, or a request was received, for
+        /// this topic.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessedAt")]
-        public System.DateTime? AccessedAt { get; set; }
+        public System.DateTime? AccessedAt { get; protected set; }
 
         /// <summary>
         /// Gets or sets timeSpan idle interval after which the topic is
@@ -142,15 +142,15 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityAvailabilityStatus? EntityAvailabilityStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets exact time the message was created.
+        /// Gets exact time the message was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public System.DateTime? CreatedAt { get; set; }
+        public System.DateTime? CreatedAt { get; protected set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.countDetails")]
-        public MessageCountDetails CountDetails { get; set; }
+        public MessageCountDetails CountDetails { get; protected set; }
 
         /// <summary>
         /// Gets or sets default message time to live value. This is the
@@ -230,10 +230,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? RequiresDuplicateDetection { get; set; }
 
         /// <summary>
-        /// Gets or sets size of the topic, in bytes.
+        /// Gets size of the topic, in bytes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sizeInBytes")]
-        public long? SizeInBytes { get; set; }
+        public long? SizeInBytes { get; protected set; }
 
         /// <summary>
         /// Gets or sets enumerates the possible values for the status of a
@@ -245,10 +245,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityStatus? Status { get; set; }
 
         /// <summary>
-        /// Gets or sets number of subscriptions.
+        /// Gets number of subscriptions.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subscriptionCount")]
-        public int? SubscriptionCount { get; set; }
+        public int? SubscriptionCount { get; protected set; }
 
         /// <summary>
         /// Gets or sets value that indicates whether the topic supports
@@ -258,10 +258,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? SupportOrdering { get; set; }
 
         /// <summary>
-        /// Gets or sets the exact time the message was updated.
+        /// Gets the exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public System.DateTime? UpdatedAt { get; set; }
+        public System.DateTime? UpdatedAt { get; protected set; }
 
         /// <summary>
         /// Validate the object.

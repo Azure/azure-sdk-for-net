@@ -10,8 +10,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
-  <ItemGroup>
-    <!--<PackageReference Include="Microsoft.Azure.Management.ServiceBus" Version="0.1.0-preview" />-->    
+  <ItemGroup>   
     <ProjectReference Include="..\Management.ServiceBus\Microsoft.Azure.Management.ServiceBus.csproj" />
   </ItemGroup>
   
