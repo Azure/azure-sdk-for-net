@@ -114,6 +114,64 @@ namespace Microsoft.Azure.Management.Logic
             }
 
             /// <summary>
+            /// Lists the callback URL for a trigger of a workflow version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='versionId'>
+            /// The workflow versionId.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The workflow trigger name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The callback URL parameters.
+            /// </param>
+            public static WorkflowTriggerCallbackUrl ListCallbackUrl(this IWorkflowVersionsOperations operations, string resourceGroupName, string workflowName, string versionId, string triggerName, GetCallbackUrlParameters parameters = default(GetCallbackUrlParameters))
+            {
+                return operations.ListCallbackUrlAsync(resourceGroupName, workflowName, versionId, triggerName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the callback URL for a trigger of a workflow version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='versionId'>
+            /// The workflow versionId.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The workflow trigger name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The callback URL parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WorkflowTriggerCallbackUrl> ListCallbackUrlAsync(this IWorkflowVersionsOperations operations, string resourceGroupName, string workflowName, string versionId, string triggerName, GetCallbackUrlParameters parameters = default(GetCallbackUrlParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListCallbackUrlWithHttpMessagesAsync(resourceGroupName, workflowName, versionId, triggerName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of workflow versions.
             /// </summary>
             /// <param name='operations'>

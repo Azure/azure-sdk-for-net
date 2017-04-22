@@ -151,6 +151,54 @@ namespace Test.Azure.Management.Logic
     }
 }";
 
+        protected string regenerateAccessKeyDefinition = @"{
+    '$schema': 'http://json-schema.org/draft-04/schema/2016-06-01/workflowdefinition.json#',
+    'triggers': {
+        'manual': {
+            'type':'request',
+            'kind':'http'
+        },
+    },
+    'actions': {
+        'response': {
+            'type': 'response',
+            'inputs': {
+                'statusCode': '200',
+                'body': {
+                    'value': 'test',
+                },
+                'headers': {
+                }
+            }
+        }
+    }
+}";
+
+        protected string listSwaggerDefinition = @"{
+    '$schema': 'http://json-schema.org/draft-04/schema/2016-06-01',
+    'triggers': {
+        'request': {
+            'type': 'Request',
+            'kind': 'Http',
+            'inputs': {
+                'relativePath': 'abc/{xyz}',
+                'method': 'get'
+            }
+        }
+    },
+    'actions': {
+        'response': {
+            'type': 'response',
+            'inputs': {
+                'statusCode': '200',
+                'body': {},
+                'headers': {}
+            }
+        }
+    },
+    'outputs': {}
+}";
+
         protected string simpleTriggerDefinition = @"{
     '$schema':'http://schema.management.azure.com/providers/Microsoft.Logic/schemas/2014-12-01-preview/workflowdefinition.json#',
     'contentVersion':'1.0.0.0',
