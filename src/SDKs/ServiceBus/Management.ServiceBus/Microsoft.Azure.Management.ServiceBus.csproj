@@ -10,6 +10,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <Version>0.2.0-preview</Version>
   </PropertyGroup>
   
 
