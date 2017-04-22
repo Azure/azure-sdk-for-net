@@ -6,6 +6,8 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Automation\Management.Automation\Microsoft.Azure.Management.Automation.csproj" />
     
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Batch\Management\Management.Batch\Microsoft.Azure.Management.Batch.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Batch\dataPlane\Client\Src\Azure.Batch\Azure.Batch.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Batch\dataPlane\Client\Tests\ObjectModel\Common\Common.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Billing\Management.Billing\Microsoft.Azure.Management.Billing.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Cdn\Management.Cdn\Microsoft.Azure.Management.Cdn.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)CognitiveServices\Management.CognitiveServices\Microsoft.Azure.Management.CognitiveServices.csproj" />
@@ -60,6 +62,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Automation\**\*Tests.csproj" ProjectType="Test"/>
     
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Batch\Management\**\*Tests.csproj" ProjectType="Test"/>
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Batch\dataPlane\Client\Tests\ObjectModel\*.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Billing\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Cdn\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)CognitiveServices\**\*Tests.csproj" ProjectType="Test"/>

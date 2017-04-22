@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     /// <summary>
     /// Exception thrown for an invalid response with BatchError information.
     /// </summary>
-#if !PORTABLE
+#if FullNetFx
     [System.Serializable]
 #endif
     public class BatchErrorException : Microsoft.Rest.RestException
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
         }
 
-#if !PORTABLE
+#if FullNetFx
         /// <summary>
         /// Initializes a new instance of the BatchErrorException class.
         /// </summary>

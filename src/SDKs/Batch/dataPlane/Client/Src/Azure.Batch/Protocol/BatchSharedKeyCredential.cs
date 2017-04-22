@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Batch.Protocol
             signature.Append('/').Append(AccountName).Append('/').Append(httpRequest.RequestUri.AbsolutePath.TrimStart('/').Replace("%5C", "/").Replace("%2F", "/"));
             if (!string.IsNullOrEmpty(httpRequest.RequestUri.Query))
             {
-#if !PORTABLE
+#if FullNetFx
                 NameValueCollection queryVariables = System.Web.HttpUtility.ParseQueryString(httpRequest.RequestUri.Query);
                 List<string> queryVariableKeys = new List<string>(queryVariables.AllKeys);
 #else

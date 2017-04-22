@@ -11,7 +11,7 @@
     using System.Threading.Tasks;
     using Microsoft.Azure.Batch.FileStaging;
     using Models = Microsoft.Azure.Batch.Protocol.Models;
-    using Microsoft.Rest.Azure;
+    //using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Manages the AddTasks workflow, performs multiple CloudTaskAdd requests, and handles retries/exception handling.
