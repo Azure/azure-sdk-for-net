@@ -1,6 +1,10 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="common.tasks"/>
   <Import Project="signing.targets"/>
+  <ItemGroup>
+	<!-- <TargetFx Include="net452" /> -->
+	<TargetFx Include="net452;netstandard1.4" />
+	</ItemGroup>
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
     <NetStd14>netstandard1.4</NetStd14>
@@ -113,22 +117,27 @@
       <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
     </PropertyGroup>
 	  
-	  <Message Text="Building SDK Projects ..... @(SDKProject)" />    
+	  <Message Text="Building SDK Projects ..... @(SDKProject)" />  
+<Message Text="%(TargetFx.Identity)"/>
+
+ 
     <MSBuild Targets="Build"
              Projects="@(SDKProject)"
-             Properties="TargetFramework=$(NetFx452);DelaySign=$(DelaySign);AssemblyOriginatorKeyFile=$(AssemblyOriginatorKeyFile);SignAssembly=true"
+             Properties="TargetFramework=%(TargetFx.Identity)"
              BuildInParallel="$(BuildInParallel)"
              ContinueOnError="ErrorAndStop">
       <Output TaskParameter="TargetOutputs" ItemName="net452Assemblies" />
     </MSBuild>
+	
+<!--Properties="TargetFramework=$(NetFx452);DelaySign=$(DelaySign);AssemblyOriginatorKeyFile=$(AssemblyOriginatorKeyFile);SignAssembly=true -->
 
-    <MSBuild Targets="Build" 
-             Projects="@(SDKProject)" 
-             Properties="TargetFramework=$(NetStd14)"
-             BuildInParallel="$(BuildInParallel)" 
-             ContinueOnError="ErrorAndStop">
-      <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" />
-    </MSBuild>
+    <!-- <MSBuild Targets="Build"  -->
+             <!-- Projects="@(SDKProject)"  -->
+             <!-- Properties="TargetFramework=$(NetStd14)" -->
+             <!-- BuildInParallel="$(BuildInParallel)"  -->
+             <!-- ContinueOnError="ErrorAndStop"> -->
+      <!-- <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" /> -->
+    <!-- </MSBuild> -->
     <ItemGroup>
       <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies)" />
     </ItemGroup>    

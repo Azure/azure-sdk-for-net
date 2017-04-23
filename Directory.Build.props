@@ -42,12 +42,7 @@
     <ClientRuntimeRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</ClientRuntimeRootDir>
     <SdkCommonRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</SdkCommonRootDir>
   </PropertyGroup>
-
-    <Target Name="PublishLocal">
-			<Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)"
-			  IgnoreExitCode="true"
-			  Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
-  </Target>  
+ 
 	<Import Project="tools\buildTargets\common.Build.props"/>
 	<Import Project="tools\buildTargets\common.NugetPackage.props" />	
 </Project>
