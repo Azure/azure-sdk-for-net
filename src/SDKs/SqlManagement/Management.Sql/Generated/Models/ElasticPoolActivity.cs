@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// DTU cap.</param>
         /// <param name="requestedDtuGuarantee">The requested DTU
         /// guarantee.</param>
-        public ElasticPoolActivity(string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.DateTime? endTime = default(System.DateTime?), int? errorCode = default(int?), string errorMessage = default(string), int? errorSeverity = default(int?), string operation = default(string), string operationId = default(string), int? percentComplete = default(int?), int? requestedDatabaseDtuMax = default(int?), int? requestedDatabaseDtuMin = default(int?), int? requestedDtu = default(int?), string requestedElasticPoolName = default(string), long? requestedStorageLimitInGB = default(long?), string elasticPoolName = default(string), string serverName = default(string), System.DateTime? startTime = default(System.DateTime?), string state = default(string), int? requestedStorageLimitInMB = default(int?), int? requestedDatabaseDtuGuarantee = default(int?), int? requestedDatabaseDtuCap = default(int?), int? requestedDtuGuarantee = default(int?))
+        public ElasticPoolActivity(string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.DateTime? endTime = default(System.DateTime?), int? errorCode = default(int?), string errorMessage = default(string), int? errorSeverity = default(int?), string operation = default(string), System.Guid operationId = default(System.Guid), int? percentComplete = default(int?), int? requestedDatabaseDtuMax = default(int?), int? requestedDatabaseDtuMin = default(int?), int? requestedDtu = default(int?), string requestedElasticPoolName = default(string), long? requestedStorageLimitInGB = default(long?), string elasticPoolName = default(string), string serverName = default(string), System.DateTime? startTime = default(System.DateTime?), string state = default(string), int? requestedStorageLimitInMB = default(int?), int? requestedDatabaseDtuGuarantee = default(int?), int? requestedDatabaseDtuCap = default(int?), int? requestedDtuGuarantee = default(int?))
             : base(id, name, type)
         {
             Location = location;
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets the unique operation ID.
         /// </summary>
         [JsonProperty(PropertyName = "properties.operationId")]
-        public string OperationId { get; private set; }
+        public System.Guid OperationId { get; private set; }
 
         /// <summary>
         /// Gets the percentage complete if available.

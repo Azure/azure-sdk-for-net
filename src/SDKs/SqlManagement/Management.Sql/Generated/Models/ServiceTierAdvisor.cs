@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// advisor.</param>
         /// <param name="confidence">Gets or sets confidence for service tier
         /// advisor.</param>
-        public ServiceTierAdvisor(string name = default(string), string id = default(string), System.DateTime? observationPeriodStart = default(System.DateTime?), System.DateTime? observationPeriodEnd = default(System.DateTime?), double? activeTimeRatio = default(double?), double? minDtu = default(double?), double? avgDtu = default(double?), double? maxDtu = default(double?), double? maxSizeInGB = default(double?), IList<SloUsageMetric> serviceLevelObjectiveUsageMetrics = default(IList<SloUsageMetric>), string currentServiceLevelObjective = default(string), System.Guid? currentServiceLevelObjectiveId = default(System.Guid?), string usageBasedRecommendationServiceLevelObjective = default(string), System.Guid? usageBasedRecommendationServiceLevelObjectiveId = default(System.Guid?), string databaseSizeBasedRecommendationServiceLevelObjective = default(string), System.Guid? databaseSizeBasedRecommendationServiceLevelObjectiveId = default(System.Guid?), string disasterPlanBasedRecommendationServiceLevelObjective = default(string), System.Guid? disasterPlanBasedRecommendationServiceLevelObjectiveId = default(System.Guid?), string overallRecommendationServiceLevelObjective = default(string), System.Guid? overallRecommendationServiceLevelObjectiveId = default(System.Guid?), double? confidence = default(double?))
+        public ServiceTierAdvisor(string name = default(string), string id = default(string), System.DateTime? observationPeriodStart = default(System.DateTime?), System.DateTime? observationPeriodEnd = default(System.DateTime?), double? activeTimeRatio = default(double?), double? minDtu = default(double?), double? avgDtu = default(double?), double? maxDtu = default(double?), double? maxSizeInGB = default(double?), IList<SloUsageMetric> serviceLevelObjectiveUsageMetrics = default(IList<SloUsageMetric>), string currentServiceLevelObjective = default(string), System.Guid? currentServiceLevelObjectiveId = default(System.Guid?), string usageBasedRecommendationServiceLevelObjective = default(string), System.Guid? usageBasedRecommendationServiceLevelObjectiveId = default(System.Guid?), string databaseSizeBasedRecommendationServiceLevelObjective = default(string), System.Guid? databaseSizeBasedRecommendationServiceLevelObjectiveId = default(System.Guid?), string disasterPlanBasedRecommendationServiceLevelObjective = default(string), System.Guid? disasterPlanBasedRecommendationServiceLevelObjectiveId = default(System.Guid?), string overallRecommendationServiceLevelObjective = default(string), System.Guid? overallRecommendationServiceLevelObjectiveId = default(System.Guid?), double confidence = default(double))
             : base(name, id)
         {
             ObservationPeriodStart = observationPeriodStart;
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets or sets confidence for service tier advisor.
         /// </summary>
         [JsonProperty(PropertyName = "properties.confidence")]
-        public double? Confidence { get; private set; }
+        public double Confidence { get; private set; }
 
     }
 }
