@@ -13,6 +13,8 @@
     <!--<PackageReference Include="Microsoft.Azure.Management.Redis" Version="4.3.0-preview" />-->
     
     <ProjectReference Include="..\Management.Redis\Microsoft.Azure.Management.Redis.csproj" />
+    
+    <ProjectReference Include="..\Redis.JsonRpc\Redis.JsonRpc.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
