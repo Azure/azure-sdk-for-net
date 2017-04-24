@@ -1,11 +1,12 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--<Import Project="common.targets"/>-->
   <!--
   <Import Project="$(MSBuildExtensionsPath)\..\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets"/>
   <Import Condition=" $(OnPremiseBuild) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
   <Import Project="$(MSBuildExtensionsPath)\..\Common7\IDE\CommonExtensions\Microsoft\NuGet\NuGet.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Sdks\NuGet.Build.Tasks.Pack\build\NuGet.Build.Tasks.Pack.targets" />
   -->
-  <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)">
+  <!--<Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)">-->
     <!--
     <MSBuild Targets="GetPackageReferences"
             Projects="@(ProjectToBuild)"
@@ -32,15 +33,99 @@
     <!--
     <Properties="GeneratePackageOnBuild=true;IncludeSymbols=true">
     $(MSBuildProjectDefaultTargets)
+    
+    <CreateItem Include="$(TargetFrameworks)">
+      <Output ItemName="Fl" TaskParameter="Include" />
+    </CreateItem>
+    
+    <CreateItem Include="@(SDKProject.Identity)" AdditionalMetadata="FxList=%(Fl.Identity)">
+      <Output TaskParameter="Include" ItemName="ProjMeta"/>
+    </CreateItem>
+    Include="%(Fl.Identity)"
+    
+     
+<Message Text="%(TargetFx.Identity)"/>
+    <PropertyGroup>
+      <TargetToCall><CallTarget Targets="PrintStuff"/></TargetToCall>
+    </PropertyGroup>
+
+    Properties="PreBuildEvent=$(TargetToCall);
+    Properties="TargetFramework=$(NetFx452);DelaySign=$(DelaySign);AssemblyOriginatorKeyFile=$(AssemblyOriginatorKeyFile);SignAssembly=true 
+    -->
+  <!--</Target>-->
+
+  <Target Name="GetPackageReferences" Returns="@(ProjectReference)" />
+  <Target Name="GetFxList" Returns="$(TargetFrameworks)" />
+  <Target Name="GetOutputPath" Returns="$(OutputPath)\$(AssemblyName).dll" />
+
+  <!--<Target Name="GetProjMetaData" Inputs="@(SDKProject)" Returns="@(ProjMeta)" Outputs="@(ProjMeta)">-->
+
+    <!--<Target Name="GetProjMetaData" Returns="@(ProjMeta)">-->
+  
+  <Target Name="GetPmd" Inputs="@(SDKProject)" Outputs="%(SDKProject.Identity)" Returns="@(FxName)">
+    <Message Text="In GetPmd....... @(SDKProject)"/>
+    
+    <CreateItem Include="$(TargetFrameworks)">
+      <Output ItemName="Fl" TaskParameter="Include" />
+    </CreateItem>
+ 
+    <ItemGroup>
+      
+        <FxName Include="%(Fl.Identity)" />
+      
+    </ItemGroup>
+
+    <Copy SourceFiles="@(someFiles)" DestinationFolder="@(destiDir)" />
+
+  </Target>
+
+
+  <Target Name="MyCustomTarget1">
+    <Message Text="Custom 11   1111  111111"/>
+  </Target>
+
+  <Target Name="MyCustomTarget2">
+    <Message Text="Custom 22222222222222"/>
+  </Target>
+  
+  <Target Name="md">
+
+    <Message Text="@(ProjectToBuild)"/>
+    <Message Text="@(Project)"/>
+
+    <Message Text="$(Scope)"/>
+    <DebugTask/>
+
+    <!--pItems="@(ProjectToBuild)"-->
+    <CategorizeProjects    
+      SourceRootDirPath="$(LibrarySourceFolder)"
+      BuildScope="$(Scope)"
+      ProjectCol="@(ProjectToBuild)">
+      <Output TaskParameter="SDKProjectsToBuild" ItemName="MProj" />
+    </CategorizeProjects>
+
+    <!--<Message Text="%(MProj.Identity) .... %(MProj.TargetFx1)" Condition=" '%(MProj.TargetFx1)' != '' "/>-->
+    <Message Text="%(MProj.Identity) .... %(MProj.TargetFx2)" Condition=" '%(MProj.TargetFx2)' != '' "/>
+
+        
+<!--
+    <Message Text="TargetFx1 ...... %(MProj.TargetFx1)"  Condition="'%(MProj.TargetFx1)' != ''"/>
+    <Message Text="Fx2 ..... %(MProj.TargetFx2)" Condition="'%(MProj.TargetFx2)' != ''" />
+    -->
+    
+    <!--
+    <MSBuild Targets="GetPmd" Projects="@(SDKProject)">
+      <Output TaskParameter="TargetOutputs" ItemName="modifiedSDKProject" />
+    </MSBuild>
+    
+    <Message Text="in md.... %(modifiedSDKProject.Identity)"/>
+
+    <Message Text="in md.... %(SDKProject.FxName)"/>
     -->
   </Target>
 
-  <Target Name="GetPackageReferences" Returns="@(ProjectReference)" />
-  <Target Name="GetOutputPath" Returns="$(OutputPath)\$(AssemblyName).dll" />
-
-
   <Target Name="PrintStuff">
-    <Message Text="ProgFiles .... $(ProgramFiles)" />
+    <Message Text="###******(((((())))))))) PrintStuff ...... ProgFiles .... $(ProgramFiles)" />
     <Message Text="$(MSBuildExtensionsPath)" />
     <!--
     <Message Text="%(VsIDENugetPackageReference.Identity) and %(VsIDENugetPackageReference.Version) "/>

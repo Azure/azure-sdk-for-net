@@ -1,9 +1,10 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="common.tasks"/>
   <Import Project="signing.targets"/>
+  <Import Project="additional.targets"/>
+  
   <ItemGroup>
-	<!-- <TargetFx Include="net452" /> -->
-	<TargetFx Include="net452;netstandard1.4" />
+	  <TargetFx Include="net452;netstandard1.4" />
 	</ItemGroup>
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
@@ -117,27 +118,31 @@
       <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
     </PropertyGroup>
 	  
-	  <Message Text="Building SDK Projects ..... @(SDKProject)" />  
-<Message Text="%(TargetFx.Identity)"/>
-
+	  <Message Text="Building SDK Projects ..... @(SDKProject)" /> 
  
     <MSBuild Targets="Build"
              Projects="@(SDKProject)"
-             Properties="TargetFramework=%(TargetFx.Identity)"
+             Properties="TargetFramework=$(NetFx452)"
              BuildInParallel="$(BuildInParallel)"
              ContinueOnError="ErrorAndStop">
       <Output TaskParameter="TargetOutputs" ItemName="net452Assemblies" />
     </MSBuild>
-	
-<!--Properties="TargetFramework=$(NetFx452);DelaySign=$(DelaySign);AssemblyOriginatorKeyFile=$(AssemblyOriginatorKeyFile);SignAssembly=true -->
 
-    <!-- <MSBuild Targets="Build"  -->
-             <!-- Projects="@(SDKProject)"  -->
-             <!-- Properties="TargetFramework=$(NetStd14)" -->
-             <!-- BuildInParallel="$(BuildInParallel)"  -->
-             <!-- ContinueOnError="ErrorAndStop"> -->
-      <!-- <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" /> -->
-    <!-- </MSBuild> -->
+     <MSBuild Targets="Build"  
+              Projects="@(SDKProject)"  
+              Properties="TargetFramework=$(NetStd14)" 
+              BuildInParallel="$(BuildInParallel)"  
+              ContinueOnError="ErrorAndStop"> 
+       <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" /> 
+     </MSBuild> 
+    
+    <Message Text="building UnitTargetProjects ..... @(UniTargetSDKProject)"/>
+         <MSBuild Targets="Build"  
+              Projects="@(UniTargetSDKProject)"
+              BuildInParallel="$(BuildInParallel)"
+              ContinueOnError="ErrorAndStop"> 
+       <Output TaskParameter="TargetOutputs" ItemName="uniTargetAssemblies" /> 
+     </MSBuild> 
     <ItemGroup>
       <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies)" />
     </ItemGroup>    
@@ -149,7 +154,7 @@
          ContinueOnError="ErrorAndStop">
     </MSBuild>         
   </Target>
-
+  
   <Target Name="Test">
     <Message Text="Executing Tests......"/>
     
@@ -164,7 +169,10 @@
   </Target>
   
   <Target Name="Package">
-    <Message Text="Packaging..... @(SDKProject)"/>
+    <Message Text="Packaging..... @(SDKProject);@(UniTargetSDKProject)"/>
+    <ItemGroup>
+      <ProjectsToPackage Include="@(SDKProject);@(UniTargetSDKProject)"/>
+    </ItemGroup>
     <MSBuild
         Projects="@(SDKProject)"
         Targets="Pack"
@@ -215,7 +223,6 @@
 		<KVSamples Include="$(LibrarySourceFolder)\SDKs\KeyVault\dataPlane\Microsoft.Azure.KeyVault.Samples\**\*.*csproj"/>
 	</ItemGroup>
     
-      
     <ItemGroup Condition=" '$(Scope)' != 'All'">
       <ScopedProjects Include="$(LibrarySourceFolder)\$(Scope)\**\*.csproj" Exclude="$(LibrarySourceFolder)\$(Scope)\*Tests*\*.Test*.csproj" />	    
       <ScopedTestProjects Include="$(LibrarySourceFolder)\$(Scope)\*Test*\*.Test*.csproj" />
@@ -231,8 +238,15 @@
     <!--
     <ScopedProjects Remove="@(KVSamples)"/>
     -->
+    
   </Target>
   
+  <Target Name="FilterUniTargetProjects">
+    <ItemGroup>
+      <SDKProject Remove="@(UniTargetSDKProject)"/>
+    </ItemGroup>
+  </Target>
+    
   <Target Name="DisplayHelp">
     <Message Text="msbuild build.proj /t:Build"/>
     <Message Text="---- will build and create nuget pacakge for the entire repo"/>
@@ -255,6 +269,7 @@
     <Message Text="Scoped SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' != 'All'" />
     <Message Text="Scoped Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' != 'All'" />
   </Target>
+  
   <!--Do not delete-->
   <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)"/>
 </Project>

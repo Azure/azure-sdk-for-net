@@ -14,6 +14,18 @@
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
 	  <NoWarn>1591;1701;1573</NoWarn>
+
+
+
+    <!--
+    <PostBuildEvent>
+      
+    </PostBuildEvent>
+
+    <PreBuildEvent>
+      <CallTarget Targets="PrintStuff"/>
+    </PreBuildEvent>
+    -->
 	</PropertyGroup>
 	
 	

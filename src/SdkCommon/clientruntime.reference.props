@@ -25,4 +25,8 @@
   <!-- <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' "> -->
     <!-- <DefineConstants>netstandard14</DefineConstants> -->
   <!-- </PropertyGroup> -->
+
+  <Target Name="MyCustomTarget1">
+    <Message Text="Custom 11   1111  111111"/>
+  </Target>
 </Project>
