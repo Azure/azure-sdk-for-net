@@ -49,7 +49,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// <param name="description">Localized description for the
         /// metadata.</param>
         /// <param name="provisioningState">Provisioning state. Possible values
-        /// include: 'Provisioning', 'Succeeded', 'Failed'</param>
+        /// include: 'Provisioning', 'Succeeded', 'Expiring', 'Deleting',
+        /// 'HumanIntervention', 'Failed'</param>
         /// <param name="profiles">Profiles set for the assignment.</param>
         /// <param name="interactions">Interactions set for the
         /// assignment.</param>
@@ -67,7 +68,11 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// assignment.</param>
         /// <param name="roleAssignments">The Role assignments set for the
         /// assignment.</param>
-        public RoleAssignmentResourceFormat(RoleTypes role, IList<AssignmentPrincipal> principals, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string assignmentName = default(string), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, string> description = default(IDictionary<string, string>), ProvisioningStates? provisioningState = default(ProvisioningStates?), ResourceSetDescription profiles = default(ResourceSetDescription), ResourceSetDescription interactions = default(ResourceSetDescription), ResourceSetDescription links = default(ResourceSetDescription), ResourceSetDescription kpis = default(ResourceSetDescription), ResourceSetDescription sasPolicies = default(ResourceSetDescription), ResourceSetDescription connectors = default(ResourceSetDescription), ResourceSetDescription views = default(ResourceSetDescription), ResourceSetDescription relationshipLinks = default(ResourceSetDescription), ResourceSetDescription relationships = default(ResourceSetDescription), ResourceSetDescription widgetTypes = default(ResourceSetDescription), ResourceSetDescription roleAssignments = default(ResourceSetDescription))
+        /// <param name="conflationPolicies">Widget types set for the
+        /// assignment.</param>
+        /// <param name="segments">The Role assignments set for the
+        /// assignment.</param>
+        public RoleAssignmentResourceFormat(RoleTypes role, IList<AssignmentPrincipal> principals, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string assignmentName = default(string), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, string> description = default(IDictionary<string, string>), string provisioningState = default(string), ResourceSetDescription profiles = default(ResourceSetDescription), ResourceSetDescription interactions = default(ResourceSetDescription), ResourceSetDescription links = default(ResourceSetDescription), ResourceSetDescription kpis = default(ResourceSetDescription), ResourceSetDescription sasPolicies = default(ResourceSetDescription), ResourceSetDescription connectors = default(ResourceSetDescription), ResourceSetDescription views = default(ResourceSetDescription), ResourceSetDescription relationshipLinks = default(ResourceSetDescription), ResourceSetDescription relationships = default(ResourceSetDescription), ResourceSetDescription widgetTypes = default(ResourceSetDescription), ResourceSetDescription roleAssignments = default(ResourceSetDescription), ResourceSetDescription conflationPolicies = default(ResourceSetDescription), ResourceSetDescription segments = default(ResourceSetDescription))
             : base(id, name, type)
         {
             TenantId = tenantId;
@@ -88,6 +93,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
             Relationships = relationships;
             WidgetTypes = widgetTypes;
             RoleAssignments = roleAssignments;
+            ConflationPolicies = conflationPolicies;
+            Segments = segments;
         }
 
         /// <summary>
@@ -116,10 +123,10 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
 
         /// <summary>
         /// Gets provisioning state. Possible values include: 'Provisioning',
-        /// 'Succeeded', 'Failed'
+        /// 'Succeeded', 'Expiring', 'Deleting', 'HumanIntervention', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningStates? ProvisioningState { get; protected set; }
+        public string ProvisioningState { get; protected set; }
 
         /// <summary>
         /// Gets or sets type of roles. Possible values include: 'Admin',
@@ -199,6 +206,18 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.roleAssignments")]
         public ResourceSetDescription RoleAssignments { get; set; }
+
+        /// <summary>
+        /// Gets or sets widget types set for the assignment.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.conflationPolicies")]
+        public ResourceSetDescription ConflationPolicies { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Role assignments set for the assignment.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.segments")]
+        public ResourceSetDescription Segments { get; set; }
 
         /// <summary>
         /// Validate the object.

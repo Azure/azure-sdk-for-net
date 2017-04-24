@@ -172,6 +172,52 @@ namespace Microsoft.Azure.Management.CustomerInsights
             }
 
             /// <summary>
+            /// Suggests relationships to create relationship links.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the hub.
+            /// </param>
+            /// <param name='interactionName'>
+            /// The name of the interaction.
+            /// </param>
+            public static SuggestRelationshipLinksResponse SuggestRelationshipLinks(this IInteractionsOperations operations, string resourceGroupName, string hubName, string interactionName)
+            {
+                return operations.SuggestRelationshipLinksAsync(resourceGroupName, hubName, interactionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Suggests relationships to create relationship links.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the hub.
+            /// </param>
+            /// <param name='interactionName'>
+            /// The name of the interaction.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SuggestRelationshipLinksResponse> SuggestRelationshipLinksAsync(this IInteractionsOperations operations, string resourceGroupName, string hubName, string interactionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SuggestRelationshipLinksWithHttpMessagesAsync(resourceGroupName, hubName, interactionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates an interaction or updates an existing interaction within a hub.
             /// </summary>
             /// <param name='operations'>

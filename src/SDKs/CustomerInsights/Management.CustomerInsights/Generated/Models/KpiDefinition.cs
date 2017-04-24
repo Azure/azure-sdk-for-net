@@ -12,25 +12,23 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
     using Management;
     using CustomerInsights;
     using Rest;
-    using Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The KPI resource format.
+    /// Defines the KPI Threshold limits.
     /// </summary>
-    [JsonTransformation]
-    public partial class KpiResourceFormat : ProxyResource
+    public partial class KpiDefinition
     {
         /// <summary>
-        /// Initializes a new instance of the KpiResourceFormat class.
+        /// Initializes a new instance of the KpiDefinition class.
         /// </summary>
-        public KpiResourceFormat() { }
+        public KpiDefinition() { }
 
         /// <summary>
-        /// Initializes a new instance of the KpiResourceFormat class.
+        /// Initializes a new instance of the KpiDefinition class.
         /// </summary>
         /// <param name="entityType">The mapping entity type. Possible values
         /// include: 'None', 'Profile', 'Interaction', 'Relationship'</param>
@@ -42,9 +40,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// 'Count', 'None', 'CountDistinct'</param>
         /// <param name="expression">The computation expression for the
         /// KPI.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="tenantId">The hub name.</param>
         /// <param name="kpiName">The KPI name.</param>
         /// <param name="displayName">Localized display name for the
@@ -65,8 +60,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// <param name="thresHolds">The KPI thresholds.</param>
         /// <param name="aliases">The aliases.</param>
         /// <param name="extracts">The KPI extracts.</param>
-        public KpiResourceFormat(EntityTypes entityType, string entityTypeName, CalculationWindowTypes calculationWindow, KpiFunctions function, string expression, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string kpiName = default(string), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, string> description = default(IDictionary<string, string>), string calculationWindowFieldName = default(string), string unit = default(string), string filter = default(string), IList<string> groupBy = default(IList<string>), IList<KpiGroupByMetadata> groupByMetadata = default(IList<KpiGroupByMetadata>), IList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default(IList<KpiParticipantProfilesMetadata>), string provisioningState = default(string), KpiThresholds thresHolds = default(KpiThresholds), IList<KpiAlias> aliases = default(IList<KpiAlias>), IList<KpiExtract> extracts = default(IList<KpiExtract>))
-            : base(id, name, type)
+        public KpiDefinition(EntityTypes entityType, string entityTypeName, CalculationWindowTypes calculationWindow, KpiFunctions function, string expression, string tenantId = default(string), string kpiName = default(string), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, string> description = default(IDictionary<string, string>), string calculationWindowFieldName = default(string), string unit = default(string), string filter = default(string), IList<string> groupBy = default(IList<string>), IList<KpiGroupByMetadata> groupByMetadata = default(IList<KpiGroupByMetadata>), IList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default(IList<KpiParticipantProfilesMetadata>), string provisioningState = default(string), KpiThresholds thresHolds = default(KpiThresholds), IList<KpiAlias> aliases = default(IList<KpiAlias>), IList<KpiExtract> extracts = default(IList<KpiExtract>))
         {
             EntityType = entityType;
             EntityTypeName = entityTypeName;
@@ -93,50 +87,50 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// Gets or sets the mapping entity type. Possible values include:
         /// 'None', 'Profile', 'Interaction', 'Relationship'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.entityType")]
+        [JsonProperty(PropertyName = "entityType")]
         public EntityTypes EntityType { get; set; }
 
         /// <summary>
         /// Gets or sets the mapping entity name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.entityTypeName")]
+        [JsonProperty(PropertyName = "entityTypeName")]
         public string EntityTypeName { get; set; }
 
         /// <summary>
         /// Gets the hub name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tenantId")]
+        [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; protected set; }
 
         /// <summary>
         /// Gets the KPI name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.kpiName")]
+        [JsonProperty(PropertyName = "kpiName")]
         public string KpiName { get; protected set; }
 
         /// <summary>
         /// Gets or sets localized display name for the KPI.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.displayName")]
+        [JsonProperty(PropertyName = "displayName")]
         public IDictionary<string, string> DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets localized description for the KPI.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.description")]
+        [JsonProperty(PropertyName = "description")]
         public IDictionary<string, string> Description { get; set; }
 
         /// <summary>
         /// Gets or sets the calculation window. Possible values include:
         /// 'Lifetime', 'Hour', 'Day', 'Week', 'Month'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.calculationWindow")]
+        [JsonProperty(PropertyName = "calculationWindow")]
         public CalculationWindowTypes CalculationWindow { get; set; }
 
         /// <summary>
         /// Gets or sets name of calculation window field.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.calculationWindowFieldName")]
+        [JsonProperty(PropertyName = "calculationWindowFieldName")]
         public string CalculationWindowFieldName { get; set; }
 
         /// <summary>
@@ -144,68 +138,68 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// include: 'Sum', 'Avg', 'Min', 'Max', 'Last', 'Count', 'None',
         /// 'CountDistinct'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.function")]
+        [JsonProperty(PropertyName = "function")]
         public KpiFunctions Function { get; set; }
 
         /// <summary>
         /// Gets or sets the computation expression for the KPI.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.expression")]
+        [JsonProperty(PropertyName = "expression")]
         public string Expression { get; set; }
 
         /// <summary>
         /// Gets or sets the unit of measurement for the KPI.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.unit")]
+        [JsonProperty(PropertyName = "unit")]
         public string Unit { get; set; }
 
         /// <summary>
         /// Gets or sets the filter expression for the KPI.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.filter")]
+        [JsonProperty(PropertyName = "filter")]
         public string Filter { get; set; }
 
         /// <summary>
         /// Gets or sets the group by properties for the KPI.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.groupBy")]
+        [JsonProperty(PropertyName = "groupBy")]
         public IList<string> GroupBy { get; set; }
 
         /// <summary>
         /// Gets the KPI GroupByMetadata.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.groupByMetadata")]
+        [JsonProperty(PropertyName = "groupByMetadata")]
         public IList<KpiGroupByMetadata> GroupByMetadata { get; protected set; }
 
         /// <summary>
         /// Gets the participant profiles.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.participantProfilesMetadata")]
+        [JsonProperty(PropertyName = "participantProfilesMetadata")]
         public IList<KpiParticipantProfilesMetadata> ParticipantProfilesMetadata { get; protected set; }
 
         /// <summary>
         /// Gets provisioning state. Possible values include: 'Provisioning',
         /// 'Succeeded', 'Expiring', 'Deleting', 'HumanIntervention', 'Failed'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; protected set; }
 
         /// <summary>
         /// Gets or sets the KPI thresholds.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.thresHolds")]
+        [JsonProperty(PropertyName = "thresHolds")]
         public KpiThresholds ThresHolds { get; set; }
 
         /// <summary>
         /// Gets or sets the aliases.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.aliases")]
+        [JsonProperty(PropertyName = "aliases")]
         public IList<KpiAlias> Aliases { get; set; }
 
         /// <summary>
         /// Gets or sets the KPI extracts.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.extracts")]
+        [JsonProperty(PropertyName = "extracts")]
         public IList<KpiExtract> Extracts { get; set; }
 
         /// <summary>

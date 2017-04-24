@@ -13,16 +13,13 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
     using CustomerInsights;
 
     /// <summary>
-    /// Defines values for ConnectorTypes.
+    /// Defines values for DataSourceType.
     /// </summary>
-    public static class ConnectorTypes
+    public static class DataSourceType
     {
-        public const string None = "None";
-        public const string CRM = "CRM";
-        public const string AzureBlob = "AzureBlob";
-        public const string Salesforce = "Salesforce";
-        public const string ExchangeOnline = "ExchangeOnline";
-        public const string Outbound = "Outbound";
+        public const string ConnectorMapping = "ConnectorMapping";
+        public const string LinkInteraction = "LinkInteraction";
+        public const string SystemDefault = "SystemDefault";
     }
 }
 

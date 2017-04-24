@@ -52,7 +52,9 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// <param name="linkName">The name of the Relationship Link.</param>
         /// <param name="mappings">The mappings between Interaction and
         /// Relationship fields.</param>
-        /// <param name="provisioningState">Provisioning state.</param>
+        /// <param name="provisioningState">Provisioning state. Possible values
+        /// include: 'Provisioning', 'Succeeded', 'Expiring', 'Deleting',
+        /// 'HumanIntervention', 'Failed'</param>
         /// <param name="relationshipGuidId">The relationship guid id.</param>
         /// <param name="tenantId">The hub name.</param>
         public RelationshipLinkResourceFormat(string interactionType, IList<ParticipantPropertyReference> profilePropertyReferences, IList<ParticipantPropertyReference> relatedProfilePropertyReferences, string relationshipName, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, string> description = default(IDictionary<string, string>), string linkName = default(string), IList<RelationshipLinkFieldMapping> mappings = default(IList<RelationshipLinkFieldMapping>), string provisioningState = default(string), string relationshipGuidId = default(string), string tenantId = default(string))
@@ -111,7 +113,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public IList<ParticipantPropertyReference> ProfilePropertyReferences { get; set; }
 
         /// <summary>
-        /// Gets provisioning state.
+        /// Gets provisioning state. Possible values include: 'Provisioning',
+        /// 'Succeeded', 'Expiring', 'Deleting', 'HumanIntervention', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; protected set; }
