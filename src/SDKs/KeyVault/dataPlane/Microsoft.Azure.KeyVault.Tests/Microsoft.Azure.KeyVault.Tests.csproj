@@ -24,11 +24,6 @@
     <ProjectReference Include="..\Microsoft.Azure.KeyVault.TestFramework\Microsoft.Azure.KeyVault.TestFramework.csproj" />
   </ItemGroup>
 
-  <!--<PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD;NETCOREAPP10</DefineConstants>
-    <DebugType>portable</DebugType>
-  </PropertyGroup>-->
-
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.13.9" />
   </ItemGroup>
