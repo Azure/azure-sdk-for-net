@@ -31,71 +31,86 @@ namespace SubscriptionCleaner
             foreach (var file in files)
             {
                 Console.WriteLine($"Cleaning subscription from auth '{file}'");
-                //=================================================================
-                // Authenticate
-                AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(file);
-
-                var azure = Azure
-                    .Configure()
-                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
-                    .Authenticate(credentials)
-                    .WithDefaultSubscription();
-
-                var client = new Microsoft.Azure.Management.ResourceManager.ResourceManagementClient(credentials);
-                client.SubscriptionId = credentials.DefaultSubscriptionId;
-
-                Regex r = new Regex(@"-(\d)d", RegexOptions.IgnoreCase);
-                var matches = r.Matches(Path.GetFileName(file));
-                int dayTTL = -1;
-
-                if(matches.Count>0)
+                try
                 {
-                    dayTTL = Convert.ToInt32(matches[0].Value[1])-'0';
-                    Console.WriteLine($" - Resource group TTL for this subscription is '{dayTTL}' day(s).");
-                }
+                    //=================================================================
+                    // Authenticate
+                    AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromFile(file);
 
-                foreach (var rg in azure.ResourceGroups.List())
-                {
+                    var azure = Azure
+                        .Configure()
+                        .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
+                        .Authenticate(credentials)
+                        .WithDefaultSubscription();
+
+                    var client = new Microsoft.Azure.Management.ResourceManager.ResourceManagementClient(credentials);
+                    client.SubscriptionId = credentials.DefaultSubscriptionId;
+
+                    Regex r = new Regex(@"-(\d)d", RegexOptions.IgnoreCase);
+                    var matches = r.Matches(Path.GetFileName(file));
+                    int dayTTL = -1;
+
+                    if (matches.Count > 0)
+                    {
+                        dayTTL = Convert.ToInt32(matches[0].Value[1]) - '0';
+                        Console.WriteLine($" - Resource group TTL for this subscription is '{dayTTL}' day(s).");
+                    }
+
                     try
                     {
-                        if (rg.Name.EndsWith("-permanent", StringComparison.OrdinalIgnoreCase))
+                        foreach (var rg in azure.ResourceGroups.List())
                         {
-                            Console.WriteLine($" - Resource Group '{rg.Name}' is marked as 'DO NOT DELETE'. Skipping.");
-                            continue;
-                        }
-                        if("Deleting".Equals(rg.ProvisioningState, StringComparison.OrdinalIgnoreCase))
-                        {
-                            Console.WriteLine($" - Resource Group '{rg.Name}' is already in 'Deleting' state.");
-                            continue;
-                        }
-
-                        var rgCreationTime = GetRGCreationDateTime(credentials, client, rg);
-
-                        if (dayTTL != -1)
-                        {
-                            var duration = (DateTime.Now - rgCreationTime).TotalDays;
-                            if(duration < dayTTL)
+                            try
                             {
-                                Console.WriteLine($" - Resource Group '{rg.Name}' was created less than {dayTTL} day(s) ago. Skipping.");
-                                continue;
+                                if (rg.Name.EndsWith("-permanent", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    Console.WriteLine($" - Resource Group '{rg.Name}' is marked as 'DO NOT DELETE'. Skipping.");
+                                    continue;
+                                }
+                                if ("Deleting".Equals(rg.ProvisioningState, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    Console.WriteLine($" - Resource Group '{rg.Name}' is already in 'Deleting' state.");
+                                    continue;
+                                }
+
+                                var rgCreationTime = GetRGCreationDateTime(credentials, client, rg);
+
+                                if (dayTTL != -1)
+                                {
+                                    var duration = (DateTime.Now - rgCreationTime).TotalDays;
+                                    if (duration < dayTTL)
+                                    {
+                                        Console.WriteLine($" - Resource Group '{rg.Name}' was created less than {dayTTL} day(s) ago. Skipping.");
+                                        continue;
+                                    }
+                                }
+
+                                client.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rg.Name)
+                                    .ConfigureAwait(false)
+                                    .GetAwaiter()
+                                    .GetResult();
+
+                                Console.WriteLine($" - Deleted Resource Group '{rg.Name}'.");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($" [ERROR]: Exception while deleting Resource Group '{rg.Name}'.");
+                                Console.WriteLine(ex);
                             }
                         }
-
-                        client.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rg.Name)
-                            .ConfigureAwait(false)
-                            .GetAwaiter()
-                            .GetResult();
-
-                        Console.WriteLine($" - Deleted Resource Group '{rg.Name}'.");
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($" [ERROR]: Exception while deleting Resource Group '{rg.Name}'.");
+                        Console.WriteLine($" [ERROR]: Exception while listing Resource Groups.");
                         Console.WriteLine(ex);
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($" [ERROR]: Exception during authentication.");
+                    Console.WriteLine(ex);
+                }
             }
-
             Console.WriteLine("Cleanup finished ");
         }
 
