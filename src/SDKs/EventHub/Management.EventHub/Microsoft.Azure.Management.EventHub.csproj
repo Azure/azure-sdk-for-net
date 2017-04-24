@@ -3,12 +3,11 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.EventHub</PackageId>
     <Description>Provides developers with a library to create and manage all Azure Event Hubs resources. Note: This client library is for EventHub under Azure Resource Manager.</Description>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionPrefix>1.2.0</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.EventHub</AssemblyName>
     <PackageTags>Microsoft Azure EventHubs Management;Event Hubs;Event Hubs management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-    <Version>1.2.0</Version>
   </PropertyGroup>
 </Project>
