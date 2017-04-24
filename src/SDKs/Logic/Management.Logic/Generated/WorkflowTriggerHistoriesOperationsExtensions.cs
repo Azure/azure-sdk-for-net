@@ -90,7 +90,8 @@ namespace Microsoft.Azure.Management.Logic
             /// The workflow trigger name.
             /// </param>
             /// <param name='historyName'>
-            /// The workflow trigger history name.
+            /// The workflow trigger history name. Corresponds to the run name for triggers
+            /// that resulted in a run.
             /// </param>
             public static WorkflowTriggerHistory Get(this IWorkflowTriggerHistoriesOperations operations, string resourceGroupName, string workflowName, string triggerName, string historyName)
             {
@@ -113,7 +114,8 @@ namespace Microsoft.Azure.Management.Logic
             /// The workflow trigger name.
             /// </param>
             /// <param name='historyName'>
-            /// The workflow trigger history name.
+            /// The workflow trigger history name. Corresponds to the run name for triggers
+            /// that resulted in a run.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -124,6 +126,57 @@ namespace Microsoft.Azure.Management.Logic
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Resubmits a workflow run based on the trigger history.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The workflow trigger name.
+            /// </param>
+            /// <param name='historyName'>
+            /// The workflow trigger history name. Corresponds to the run name for triggers
+            /// that resulted in a run.
+            /// </param>
+            public static void Resubmit(this IWorkflowTriggerHistoriesOperations operations, string resourceGroupName, string workflowName, string triggerName, string historyName)
+            {
+                operations.ResubmitAsync(resourceGroupName, workflowName, triggerName, historyName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resubmits a workflow run based on the trigger history.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The workflow trigger name.
+            /// </param>
+            /// <param name='historyName'>
+            /// The workflow trigger history name. Corresponds to the run name for triggers
+            /// that resulted in a run.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ResubmitAsync(this IWorkflowTriggerHistoriesOperations operations, string resourceGroupName, string workflowName, string triggerName, string historyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.ResubmitWithHttpMessagesAsync(resourceGroupName, workflowName, triggerName, historyName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
