@@ -30,11 +30,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
     /// 
     /// Here, if the VM is a Classic Compute VM, set VirtualMachineType as "Classic" and if it is a Compute VM, set VirtualMachineType as "Compute"
     /// </summary>
-    public class ItemScenarioTests : TestBase, IDisposable
+    public class IaasVmSimpleE2ETests : TestBase, IDisposable
     {
 
         [Fact]
-        public void TriggerBackupAndRestoreTest()
+        public void IaasVmTriggerBackupAndRestoreTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             using(var testHelper = new TestHelper())
@@ -50,13 +50,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
                 // 1. Enable protection
                 testHelper.EnableProtection(containerName, itemName, policyName);
-
+                
                 // 2. List protected items
-                var items = testHelper.ListItems();
+                var items = testHelper.ListProtectedItems();
                 Assert.NotNull(items);
                 Assert.True(items.Any(item => itemName.Contains(item.Name.ToLower())));
 
                 // 3. Trigger backup
+                var backupStartTime = DateTime.UtcNow;
                 var backupJobId = testHelper.Backup(containerName, itemName);
                 testHelper.WaitForJobCompletion(backupJobId);
 
@@ -64,6 +65,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
                 var recoveryPoints = testHelper.ListRecoveryPoints(containerName, itemName);
                 Assert.NotNull(recoveryPoints);
                 Assert.True(recoveryPoints.Any());
+
+                var iaasVmRecoveryPoint = (IaasVMRecoveryPoint) recoveryPoints.First().Properties;
+                Assert.NotNull(iaasVmRecoveryPoint);
+                Assert.True(iaasVmRecoveryPoint.RecoveryPointTime.Value >= backupStartTime);
 
                 // 5. Trigger restore
                 var backedupItem = items.First(item => item.Name.Equals(containerUniqueName));

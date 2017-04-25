@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.RecoveryServices;
-using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Management.RecoveryServices.Models;
 using Microsoft.Azure.Management.Resources;
@@ -13,15 +11,16 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
+using HttpStatusCode = System.Net.HttpStatusCode;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
     public class TestHelper : IDisposable
     {
-        private const string resourceGroup = "SwaggerTestRg";
-        private const string vaultName = "SDKTestRsVault";
-        private const string location = "westus";
-        private const string fabricName = "Azure";
+        public string ResourceGroup = "SwaggerTestRg";
+        public string VaultName = "SDKTestRsVault";
+        public string Location = "westus";
+        public string FabricName = "Azure";
 
         public RecoveryServicesClient VaultClient { get; private set; }
 
@@ -34,7 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
             CreateResourceGroup(context);
 
-            CreateVault(vaultName);
+            CreateVault(VaultName);
         }
 
         private void CreateResourceGroup(MockContext context)
@@ -43,10 +42,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
             try
             {
-                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroup,
+                resourcesClient.ResourceGroups.CreateOrUpdate(ResourceGroup,
                 new ResourceGroup
                 {
-                    Location = location
+                    Location = Location
                 });
 
             }
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         {
             Vault vault = new Vault()
             {
-                Location = location,
+                Location = Location,
                 Sku = new Sku()
                 {
                     Name = SkuName.Standard
@@ -70,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
             try
             {
-                VaultClient.Vaults.CreateOrUpdate(resourceGroup, vaultName, vault);
+                VaultClient.Vaults.CreateOrUpdate(ResourceGroup, vaultName, vault);
             }
             catch (CloudException ex)
             {
@@ -80,21 +79,46 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
         public void DisposeVaults()
         {
-            var vaults = VaultClient.Vaults.ListByResourceGroup(resourceGroup);
+            var vaults = VaultClient.Vaults.ListByResourceGroup(ResourceGroup);
             foreach (var vault in vaults)
             {
-                VaultClient.Vaults.Delete(resourceGroup, vault.Name);
+                VaultClient.Vaults.Delete(ResourceGroup, vault.Name);
             }
+        }
+
+        public List<ProtectionPolicyResource> ListAllPoliciesWithRetries()
+        {
+            List<ProtectionPolicyResource> policies = new List<ProtectionPolicyResource>();
+
+            RetryActionWithTimeout(
+                () => policies = GetPagedList(() => BackupClient.BackupPolicies.List(VaultName, ResourceGroup),
+                        nextLink => BackupClient.BackupPolicies.ListNext(nextLink)),
+                () => policies.Count > 0,
+                TimeSpan.FromMinutes(5),
+                statusCode => ResourceNotSyncedRetryLogic(statusCode));
+
+            return policies;
+        }
+
+        public ProtectionPolicyResource GetPolicyWithRetries(string policyName)
+        {
+            ProtectionPolicyResource policy = null;
+            RetryActionWithTimeout(
+                () => policy = BackupClient.ProtectionPolicies.Get(VaultName, ResourceGroup, policyName),
+                () => policy != null,
+                TimeSpan.FromSeconds(30),
+                statusCode => ResourceNotSyncedRetryLogic(statusCode));
+
+            return policy;
         }
 
         public string EnableProtection(string containerName, string protectedItemName, string policyName)
         {
-            TestUtilities.Wait(10 * 1000);
-            ProtectionPolicyResource policy = BackupClient.ProtectionPolicies.Get(vaultName, resourceGroup, policyName);
+            ProtectionPolicyResource policy = GetPolicyWithRetries(policyName);
 
-            BackupClient.ProtectionContainers.Refresh(vaultName, resourceGroup, fabricName);
+            BackupClient.ProtectionContainers.Refresh(VaultName, ResourceGroup, FabricName);
 
-            IPage<WorkloadProtectableItemResource> protectableItems = BackupClient.BackupProtectableItems.List(vaultName, resourceGroup);
+            IPage<WorkloadProtectableItemResource> protectableItems = BackupClient.BackupProtectableItems.List(VaultName, ResourceGroup);
 
             var desiredProtectedItem = (AzureIaaSComputeVMProtectableItem) protectableItems.First(
                 protectableItem => containerName.ToLower().Contains(protectableItem.Name.ToLower())
@@ -108,18 +132,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
                     SourceResourceId = desiredProtectedItem.VirtualMachineId,
                 }
             };
-
-            TestUtilities.Wait(10 * 1000);
+            
             var response = BackupClient.ProtectedItems.CreateOrUpdateWithHttpMessagesAsync(
-                vaultName, resourceGroup, fabricName, containerName, protectedItemName, item).Result;
+                VaultName, ResourceGroup, FabricName, containerName, protectedItemName, item).Result;
             ValidateOperationResponse(response);
 
             var jobResponse = GetOperationResponse<ProtectedItemResource, OperationStatusJobExtendedInfo>(
                 containerName, protectedItemName, response,
                 operationId => BackupClient.ProtectedItemOperationResults.GetWithHttpMessagesAsync(
-                    vaultName, resourceGroup, fabricName, containerName, protectedItemName, operationId).Result,
+                    VaultName, ResourceGroup, FabricName, containerName, protectedItemName, operationId).Result,
                 operationId => BackupClient.ProtectedItemOperationStatuses.GetWithHttpMessagesAsync(
-                    vaultName, resourceGroup, fabricName, containerName, protectedItemName, operationId).Result);
+                    VaultName, ResourceGroup, FabricName, containerName, protectedItemName, operationId).Result);
 
             Assert.NotNull(jobResponse.JobId);
 
@@ -137,15 +160,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             };
 
             var response = BackupClient.Backups.TriggerWithHttpMessagesAsync(
-                vaultName, resourceGroup, fabricName, containerName, protectedItemName, request).Result;
+                VaultName, ResourceGroup, FabricName, containerName, protectedItemName, request).Result;
             ValidateOperationResponse(response);
 
             var jobResponse = GetOperationResponse<ProtectedItemResource, OperationStatusJobExtendedInfo>(
                 containerName, protectedItemName, response,
                 operationId => BackupClient.ProtectedItemOperationResults.GetWithHttpMessagesAsync(
-                    vaultName, resourceGroup, fabricName, containerName, protectedItemName, operationId).Result,
+                    VaultName, ResourceGroup, FabricName, containerName, protectedItemName, operationId).Result,
                 operationId => BackupClient.ProtectedItemOperationStatuses.GetWithHttpMessagesAsync(
-                    vaultName, resourceGroup, fabricName, containerName, protectedItemName, operationId).Result);
+                    VaultName, ResourceGroup, FabricName, containerName, protectedItemName, operationId).Result);
 
             Assert.NotNull(jobResponse.JobId);
 
@@ -169,7 +192,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
         public string GetJobStatus(string jobId)
         {
-            var result = BackupClient.JobDetails.GetWithHttpMessagesAsync(vaultName, resourceGroup, jobId).Result;
+            var result = BackupClient.JobDetails.GetWithHttpMessagesAsync(VaultName, ResourceGroup, jobId).Result;
             Assert.NotNull(result);
             Assert.Equal(result.Response.StatusCode, System.Net.HttpStatusCode.OK);
             return ((AzureIaaSVMJob)result.Body.Properties).Status;
@@ -180,9 +203,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             return jobStatus.CompareTo("InProgress") == 0 || jobStatus.CompareTo("Cancelling") == 0;
         }
 
-        public void RetryActionWithTimeout(Action action, Func<bool> validator, TimeSpan timeout, Func<System.Net.HttpStatusCode, bool> shouldRetry)
+        public void RetryActionWithTimeout(Action action, Func<bool> validator, TimeSpan timeout, Func<HttpStatusCode, bool> shouldRetry)
         {
             DateTime timedOut = DateTime.Now + timeout;
+
             do
             {
                 try
@@ -197,7 +221,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
                     }
                 }
             }
-
             while (DateTime.Now < timedOut && !validator());
         }
 
@@ -209,6 +232,99 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             Assert.True(response.Response.Headers.Contains("Azure-AsyncOperation"));
             Assert.True(response.Response.Headers.Contains("Retry-After"));
         }
+        
+        public List<ProtectedItemResource> ListProtectedItems()
+        {
+            return GetPagedList(
+                () => BackupClient.BackupProtectedItems.List(VaultName, ResourceGroup),
+                nextLink => BackupClient.BackupProtectedItems.ListNext(nextLink));
+        }
+
+        public List<T> GetPagedList<T>(Func<IPage<T>> listResources, Func<string, IPage<T>> listNext)
+            where T : Models.Resource
+        {
+            var resources = new List<T>();
+            string nextLink = null;
+
+            var pagedResources = listResources();
+
+            foreach (var pagedResource in pagedResources)
+            {
+                resources.Add(pagedResource);
+            }
+
+            while (!string.IsNullOrEmpty(nextLink))
+            {
+                nextLink = pagedResources.NextPageLink;
+
+                foreach (var pagedResource in listNext(nextLink))
+                {
+                    resources.Add(pagedResource);
+                }
+            }
+
+            return resources;
+        }
+
+        public List<RecoveryPointResource> ListRecoveryPoints(string containerName, string protectedItemName)
+        {
+            return GetPagedList(
+                () => BackupClient.RecoveryPoints.List(VaultName, ResourceGroup, FabricName, containerName, protectedItemName),
+                nextLink => BackupClient.RecoveryPoints.ListNext(nextLink));
+        }
+
+        public string Restore(string containerName, string protectedItemName, string recoveryPointName, string sourceResourceId, string storageAccountId)
+        {
+            RestoreRequestResource request = new RestoreRequestResource()
+            {
+                Properties = new IaasVMRestoreRequest()
+                {
+                    CreateNewCloudService = false,
+                    RecoveryPointId = recoveryPointName,
+                    RecoveryType = RecoveryType.RestoreDisks,
+                    Region = Location,
+                    SourceResourceId = sourceResourceId,
+                    StorageAccountId = storageAccountId,
+                }
+            };
+            var response = BackupClient.Restores.TriggerWithHttpMessagesAsync(
+                VaultName, ResourceGroup, FabricName, containerName, protectedItemName, recoveryPointName, request).Result;
+            ValidateOperationResponse(response);
+
+            var jobResponse = GetOperationResponse<ProtectedItemResource, OperationStatusJobExtendedInfo>(
+                containerName, protectedItemName, response,
+                operationId => BackupClient.ProtectedItemOperationResults.GetWithHttpMessagesAsync(
+                    VaultName, ResourceGroup, FabricName, containerName, protectedItemName, operationId).Result,
+                operationId => BackupClient.ProtectedItemOperationStatuses.GetWithHttpMessagesAsync(
+                    VaultName, ResourceGroup, FabricName, containerName, protectedItemName, operationId).Result);
+
+            Assert.NotNull(jobResponse.JobId);
+
+            return jobResponse.JobId;
+        }
+
+        public string DisableProtection(string containerName, string itemName)
+        {
+            var response = BackupClient.ProtectedItems.DeleteWithHttpMessagesAsync(
+                VaultName, ResourceGroup, FabricName, containerName, itemName).Result;
+            ValidateOperationResponse(response);
+
+            var jobResponse = GetOperationStatus<OperationStatusJobExtendedInfo>(
+                containerName, itemName, response,
+                operationId => BackupClient.BackupOperationStatuses.GetWithHttpMessagesAsync(
+                    VaultName, ResourceGroup, operationId).Result);
+
+            Assert.NotNull(jobResponse.JobId);
+
+            return jobResponse.JobId;
+        }
+
+        public TokenInformation GetBackupSecurityPin()
+        {
+            return BackupClient.SecurityPINs.Get(VaultName, ResourceGroup);
+        }
+
+        #region Private Method
 
         private T GetOperationStatus<T>(string containerName, string itemName, AzureOperationResponse response,
             Func<string, AzureOperationResponse<OperationStatus>> getOpStatus)
@@ -253,92 +369,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             return (S)(opStatusResponse.Body.Properties);
         }
 
-        public List<ProtectedItemResource> ListItems()
+        private bool ResourceNotSyncedRetryLogic(HttpStatusCode statusCode)
         {
-            return GetPagedList(
-                () => BackupClient.BackupProtectedItems.List(vaultName, resourceGroup),
-                nextLink => BackupClient.BackupProtectedItems.ListNext(nextLink));
-        }
-
-        public List<T> GetPagedList<T>(Func<IPage<T>> listResources, Func<string, IPage<T>> listNext)
-            where T : Models.Resource
-        {
-            var resources = new List<T>();
-            string nextLink = null;
-
-            var pagedResources = listResources();
-
-            foreach (var pagedResource in pagedResources)
+            bool shouldRetry = statusCode == (HttpStatusCode)429 || statusCode == HttpStatusCode.NotFound;
+            if (shouldRetry)
             {
-                resources.Add(pagedResource);
+                TestUtilities.Wait(TimeSpan.FromSeconds(30));
             }
-
-            while (!string.IsNullOrEmpty(nextLink))
-            {
-                nextLink = pagedResources.NextPageLink;
-
-                foreach (var pagedResource in listNext(nextLink))
-                {
-                    resources.Add(pagedResource);
-                }
-            }
-
-            return resources;
+            return shouldRetry;
         }
 
-        public List<RecoveryPointResource> ListRecoveryPoints(string containerName, string protectedItemName)
-        {
-            return GetPagedList(
-                () => BackupClient.RecoveryPoints.List(vaultName, resourceGroup, fabricName, containerName, protectedItemName),
-                nextLink => BackupClient.RecoveryPoints.ListNext(nextLink));
-        }
 
-        public string Restore(string containerName, string protectedItemName, string recoveryPointName, string sourceResourceId, string storageAccountId)
-        {
-            RestoreRequestResource request = new RestoreRequestResource()
-            {
-                Properties = new IaasVMRestoreRequest()
-                {
-                    CreateNewCloudService = false,
-                    RecoveryPointId = recoveryPointName,
-                    RecoveryType = RecoveryType.RestoreDisks,
-                    Region = location,
-                    SourceResourceId = sourceResourceId,
-                    StorageAccountId = storageAccountId,
-                }
-            };
-            var response = BackupClient.Restores.TriggerWithHttpMessagesAsync(
-                vaultName, resourceGroup, fabricName, containerName, protectedItemName, recoveryPointName, request).Result;
-            ValidateOperationResponse(response);
-
-            var jobResponse = GetOperationResponse<ProtectedItemResource, OperationStatusJobExtendedInfo>(
-                containerName, protectedItemName, response,
-                operationId => BackupClient.ProtectedItemOperationResults.GetWithHttpMessagesAsync(
-                    vaultName, resourceGroup, fabricName, containerName, protectedItemName, operationId).Result,
-                operationId => BackupClient.ProtectedItemOperationStatuses.GetWithHttpMessagesAsync(
-                    vaultName, resourceGroup, fabricName, containerName, protectedItemName, operationId).Result);
-
-            Assert.NotNull(jobResponse.JobId);
-
-            return jobResponse.JobId;
-        }
-
-        public string DisableProtection(string containerName, string itemName)
-        {
-            var response = BackupClient.ProtectedItems.DeleteWithHttpMessagesAsync(
-                vaultName, resourceGroup, fabricName, containerName, itemName).Result;
-            ValidateOperationResponse(response);
-
-            var jobResponse = GetOperationStatus<OperationStatusJobExtendedInfo>(
-                containerName, itemName, response,
-                operationId => BackupClient.BackupOperationStatuses.GetWithHttpMessagesAsync(
-                    vaultName, resourceGroup, operationId).Result);
-
-            Assert.NotNull(jobResponse.JobId);
-
-            return jobResponse.JobId;
-        }
-
+        #endregion
         public void Dispose()
         {
             DisposeVaults();
