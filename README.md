@@ -14,7 +14,7 @@ that take advantage of scalable cloud computing resources.
   (https://www.visualstudio.com/).
   To know more about VS 2017 and it's project system (https://docs.microsoft.com/en-us/visualstudio/#pivot=workloads&panel=windows)
 
-###Directory Restructure
+### Directory Restructure
 Directory structure has been simplified and consolidated in fewer directories
 All Management and Data plane SDKs are now under
 src\SDKs
@@ -25,7 +25,7 @@ src\SDKs\Compute
 ### To build:
 =======
 #### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory
-####Full Build
+#### Full Build
 
  1. Open VS 2017 command prompt
  2. Navigate to repository root directory
@@ -39,7 +39,7 @@ In order to build one package and run it's test
 
 > msbuild build.proj /t:Build /p:scope=SDKs\Compute /p:NugetPackageName=Microsoft.Azure.Management.Compute
 
-####Build Using Visual Studio:
+#### Build Using Visual Studio:
  1. Open any solution, eg "SDKs\Compute\Compute.sln"
  2. Build solution
  
