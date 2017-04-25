@@ -82,10 +82,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the namespace.
+        /// Gets provisioning state of the namespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; protected set; }
 
         /// <summary>
         /// Gets or sets state of the namespace. Possible values include:
@@ -97,23 +97,22 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public NamespaceState? Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the time the namespace was created.
+        /// Gets the time the namespace was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public System.DateTime? CreatedAt { get; set; }
+        public System.DateTime? CreatedAt { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the time the namespace was updated.
+        /// Gets the time the namespace was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public System.DateTime? UpdatedAt { get; set; }
+        public System.DateTime? UpdatedAt { get; protected set; }
 
         /// <summary>
-        /// Gets or sets endpoint you can use to perform Service Bus
-        /// operations.
+        /// Gets endpoint you can use to perform Service Bus operations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceBusEndpoint")]
-        public string ServiceBusEndpoint { get; set; }
+        public string ServiceBusEndpoint { get; protected set; }
 
         /// <summary>
         /// Gets or sets indicates whether to create an ACS namespace.

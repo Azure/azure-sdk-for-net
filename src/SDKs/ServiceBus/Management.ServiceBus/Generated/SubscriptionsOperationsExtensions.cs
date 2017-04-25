@@ -22,17 +22,17 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class SubscriptionsOperationsExtensions
     {
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic.
+            /// List all the subscriptions under a specified topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639400.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -43,17 +43,17 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic.
+            /// List all the subscriptions under a specified topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639400.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -77,10 +77,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -104,10 +104,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -137,10 +137,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -161,10 +161,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -188,10 +188,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -212,10 +212,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The namespace name
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic.
+            /// List all the subscriptions under a specified topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639400.aspx" />
             /// </summary>
             /// <param name='operations'>
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic.
+            /// List all the subscriptions under a specified topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639400.aspx" />
             /// </summary>
             /// <param name='operations'>

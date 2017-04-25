@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
@@ -87,13 +87,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
-        /// The name of the queue to be deleted.
+        /// The queue name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -113,10 +113,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The namespace name
@@ -170,16 +170,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// Creates an authorization rule for a queue.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='parameters'>
         /// The shared access authorization rule.
@@ -205,16 +205,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705609.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -234,16 +234,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705611.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -266,16 +266,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705608.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -299,16 +299,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705606.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='queueName'>
         /// The queue name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to regenerate the authorization rule.

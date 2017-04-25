@@ -47,36 +47,36 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// Gets or sets number of active messages in the queue, topic, or
+        /// Gets number of active messages in the queue, topic, or
         /// subscription.
         /// </summary>
         [JsonProperty(PropertyName = "activeMessageCount")]
-        public long? ActiveMessageCount { get; set; }
+        public long? ActiveMessageCount { get; protected set; }
 
         /// <summary>
-        /// Gets or sets number of messages that are dead lettered.
+        /// Gets number of messages that are dead lettered.
         /// </summary>
         [JsonProperty(PropertyName = "deadLetterMessageCount")]
-        public long? DeadLetterMessageCount { get; set; }
+        public long? DeadLetterMessageCount { get; protected set; }
 
         /// <summary>
-        /// Gets or sets number of scheduled messages.
+        /// Gets number of scheduled messages.
         /// </summary>
         [JsonProperty(PropertyName = "scheduledMessageCount")]
-        public long? ScheduledMessageCount { get; set; }
+        public long? ScheduledMessageCount { get; protected set; }
 
         /// <summary>
-        /// Gets or sets number of messages transferred into dead letters.
+        /// Gets number of messages transferred into dead letters.
         /// </summary>
         [JsonProperty(PropertyName = "transferDeadLetterMessageCount")]
-        public long? TransferDeadLetterMessageCount { get; set; }
+        public long? TransferDeadLetterMessageCount { get; protected set; }
 
         /// <summary>
-        /// Gets or sets number of messages transferred to another queue,
-        /// topic, or subscription.
+        /// Gets number of messages transferred to another queue, topic, or
+        /// subscription.
         /// </summary>
         [JsonProperty(PropertyName = "transferMessageCount")]
-        public long? TransferMessageCount { get; set; }
+        public long? TransferMessageCount { get; protected set; }
 
     }
 }
