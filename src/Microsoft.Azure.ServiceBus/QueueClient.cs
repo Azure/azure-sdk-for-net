@@ -24,9 +24,36 @@ namespace Microsoft.Azure.ServiceBus
         AmqpSessionClient sessionClient;
         SessionPumpHost sessionPumpHost;
 
+        /// <summary>
+        /// Instantiates a new <see cref="QueueClient"/> to perform operations on a queue.
+        /// </summary>
+        /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and queue information.</param>
+        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
+        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        public QueueClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
+            : this(connectionStringBuilder.GetNamespaceConnectionString(), connectionStringBuilder.EntityPath, receiveMode, retryPolicy)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates a new <see cref="QueueClient"/> to perform operations on a queue.
+        /// </summary>
+        /// <param name="connectionString">Namespace connection string. <remarks>Should not contain queue information.</remarks></param>
+        /// <param name="entityPath">Path to the queue</param>
+        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
+        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         public QueueClient(string connectionString, string entityPath, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
             : this(new ServiceBusNamespaceConnection(connectionString), entityPath, receiveMode, retryPolicy ?? RetryPolicy.Default)
         {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
+            }
+            if (string.IsNullOrWhiteSpace(entityPath))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
+            }
+
             this.ownsConnection = true;
         }
 
@@ -166,7 +193,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        internal ServiceBusConnection ServiceBusConnection { get; set; }
+        internal ServiceBusConnection ServiceBusConnection { get; }
 
         ICbsTokenProvider CbsTokenProvider { get; }
 

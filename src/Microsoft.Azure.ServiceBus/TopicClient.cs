@@ -17,9 +17,34 @@ namespace Microsoft.Azure.ServiceBus
         readonly object syncLock;
         MessageSender innerSender;
 
+        /// <summary>
+        /// Instantiates a new <see cref="TopicClient"/> to perform operations on a topic.
+        /// </summary>
+        /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
+        /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        public TopicClient(ServiceBusConnectionStringBuilder connectionStringBuilder, RetryPolicy retryPolicy = null)
+            : this(connectionStringBuilder.GetNamespaceConnectionString(), connectionStringBuilder.EntityPath, retryPolicy)
+        {
+        }
+
+        /// <summary>
+        /// Instantiates a new <see cref="TopicClient"/> to perform operations on a topic.
+        /// </summary>
+        /// <param name="connectionString">Namespace connection string. <remarks>Should not contain topic information.</remarks></param>
+        /// <param name="entityPath">Path to the topic</param>
+        /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         public TopicClient(string connectionString, string entityPath, RetryPolicy retryPolicy = null)
             : this(new ServiceBusNamespaceConnection(connectionString), entityPath, retryPolicy ?? RetryPolicy.Default)
         {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
+            }
+            if (string.IsNullOrWhiteSpace(entityPath))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
+            }
+
             this.ownsConnection = true;
         }
 
@@ -61,7 +86,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        internal ServiceBusNamespaceConnection ServiceBusConnection { get; set; }
+        internal ServiceBusNamespaceConnection ServiceBusConnection { get; }
 
         ICbsTokenProvider CbsTokenProvider { get; }
 
