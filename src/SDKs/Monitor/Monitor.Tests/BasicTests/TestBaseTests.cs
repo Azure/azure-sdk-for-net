@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Monitor;
-using Microsoft.Azure.Monitor.Models;
-using Microsoft.Azure.Monitor.Management;
+using Microsoft.Azure.Management.Monitor;
+using Microsoft.Azure.Management.Monitor.Models;
+using Microsoft.Azure.Management.Monitor.Management;
 using Microsoft.Rest;
 using Xunit;
 

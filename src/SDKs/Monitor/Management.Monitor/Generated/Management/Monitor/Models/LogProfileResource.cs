@@ -6,11 +6,12 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Monitor.Management.Models
+namespace Microsoft.Azure.Management.Monitor.Management.Models
 {
     using Microsoft.Azure;
-    using Microsoft.Azure.Monitor;
-    using Microsoft.Azure.Monitor.Management;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Monitor;
+    using Microsoft.Azure.Management.Monitor.Management;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;

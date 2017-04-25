@@ -6,10 +6,11 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Monitor.Management
+namespace Microsoft.Azure.Management.Monitor.Management
 {
     using Microsoft.Azure;
-    using Microsoft.Azure.Monitor;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Monitor;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;

@@ -7,8 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Monitor.Management;
-using Microsoft.Azure.Monitor.Management.Models;
+using Microsoft.Azure.Management.Monitor.Management;
+using Microsoft.Azure.Management.Monitor.Management.Models;
 using Xunit;
 
 namespace Monitor.Tests.BasicTests

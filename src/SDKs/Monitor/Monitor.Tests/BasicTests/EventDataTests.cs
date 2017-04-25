@@ -7,8 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Monitor;
-using Microsoft.Azure.Monitor.Models;
+using Microsoft.Azure.Management.Monitor;
+using Microsoft.Azure.Management.Monitor.Models;
 using Microsoft.Rest.Azure.OData;
 using Xunit;
 

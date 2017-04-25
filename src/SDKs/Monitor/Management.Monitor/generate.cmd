@@ -31,5 +31,5 @@ echo **** INFO: Installing AutoRest package
 call npm install autorest -g
 
 :new
-call autoRest -Modeler CompositeSwagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Monitor -Input %specFile1% -outputDirectory %generateFolder1% -Header MICROSOFT_MIT -FT 1
-call autoRest -Modeler CompositeSwagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Monitor.Management -Input %specFile2% -outputDirectory %generateFolder2% -Header MICROSOFT_MIT -FT 1
+call autoRest -Modeler CompositeSwagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Monitor -Input %specFile1% -outputDirectory %generateFolder1% -Header MICROSOFT_MIT -FT 1
+call autoRest -Modeler CompositeSwagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Monitor.Management -Input %specFile2% -outputDirectory %generateFolder2% -Header MICROSOFT_MIT -FT 1
