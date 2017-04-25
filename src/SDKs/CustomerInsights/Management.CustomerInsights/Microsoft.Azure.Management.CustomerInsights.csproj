@@ -2,7 +2,7 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <Description>Provides developers with libraries to create and manage Namespaces and manage Authorization Rules. Note: This client library is for CustomerInsights under Azure Resource Manager.</Description>
-    <VersionPrefix>0.1.1-preview</VersionPrefix>
+    <VersionPrefix>0.9.1-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.CustomerInsights</AssemblyName>
     <PackageId>Microsoft.Azure.Management.CustomerInsights</PackageId>
     <PackageTags>Microsoft Azure CustomerInsights Management;CustomerInsights;CustomerInsights management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
