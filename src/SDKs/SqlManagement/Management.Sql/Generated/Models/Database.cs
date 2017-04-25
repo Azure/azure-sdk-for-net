@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// apply when creating this database. If createMode is not Default,
         /// this value is ignored. Not supported for DataWarehouse edition.
         /// Possible values include: 'AdventureWorksLT'</param>
-        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), string databaseId = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? recoveryServicesRecoveryPointResourceId = default(System.DateTime?), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), IList<ServiceTierAdvisor> serviceTierAdvisors = default(IList<ServiceTierAdvisor>), IList<TransparentDataEncryption> transparentDataEncryption = default(IList<TransparentDataEncryption>), IList<RecommendedIndex> recommendedIndex = default(IList<RecommendedIndex>), System.Guid? failoverGroupId = default(System.Guid?), ReadScale? readScale = default(ReadScale?), string sampleName = default(string))
+        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), System.Guid? databaseId = default(System.Guid?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), string recoveryServicesRecoveryPointResourceId = default(string), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), IList<ServiceTierAdvisor> serviceTierAdvisors = default(IList<ServiceTierAdvisor>), IList<TransparentDataEncryption> transparentDataEncryption = default(IList<TransparentDataEncryption>), IList<RecommendedIndex> recommendedIndex = default(IList<RecommendedIndex>), System.Guid? failoverGroupId = default(System.Guid?), ReadScale? readScale = default(ReadScale?), string sampleName = default(string))
             : base(location, id, name, type, tags)
         {
             Kind = kind;
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets the ID of the database.
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseId")]
-        public string DatabaseId { get; private set; }
+        public System.Guid? DatabaseId { get; private set; }
 
         /// <summary>
         /// Gets this records the earliest start date and time that restore is
@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Specifies the resource ID of the recovery point to restore from.
         /// </summary>
         [JsonProperty(PropertyName = "properties.recoveryServicesRecoveryPointResourceId")]
-        public System.DateTime? RecoveryServicesRecoveryPointResourceId { get; set; }
+        public string RecoveryServicesRecoveryPointResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets the edition of the database. The DatabaseEditions
