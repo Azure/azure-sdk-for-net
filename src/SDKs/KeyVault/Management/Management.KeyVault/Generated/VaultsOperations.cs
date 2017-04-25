@@ -1199,7 +1199,7 @@ namespace Microsoft.Azure.Management.KeyVault
         }
 
         /// <summary>
-        /// Deletes the specified vault forever. aka Purges the deleted Azure key
+        /// Permanently deletes the specified vault. aka Purges the deleted Azure key
         /// vault.
         /// </summary>
         /// <param name='vaultName'>
@@ -1223,7 +1223,7 @@ namespace Microsoft.Azure.Management.KeyVault
         }
 
         /// <summary>
-        /// Deletes the specified vault forever. aka Purges the deleted Azure key
+        /// Permanently deletes the specified vault. aka Purges the deleted Azure key
         /// vault.
         /// </summary>
         /// <param name='vaultName'>
