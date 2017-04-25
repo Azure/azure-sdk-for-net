@@ -10,6 +10,8 @@ namespace Microsoft.Azure.ServiceBus.Core
     {
         MessageReceiver InnerReceiver { get; }
 
+        int PrefetchCount { get; set; }
+
         Task OnAddRuleAsync(RuleDescription description);
 
         Task OnRemoveRuleAsync(string ruleName);

@@ -61,7 +61,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        ServiceBusNamespaceConnection ServiceBusConnection { get; set; }
+        internal ServiceBusNamespaceConnection ServiceBusConnection { get; set; }
 
         ICbsTokenProvider CbsTokenProvider { get; }
 

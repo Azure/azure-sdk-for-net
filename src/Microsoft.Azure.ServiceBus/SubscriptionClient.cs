@@ -50,6 +50,24 @@ namespace Microsoft.Azure.ServiceBus
 
         public ReceiveMode ReceiveMode { get; }
 
+        /// <summary>
+        /// Gets or sets the number of messages that the subscription client can simultaneously request.
+        /// </summary>
+        /// <value>The number of messages that the subscription client can simultaneously request.</value>
+        public int PrefetchCount
+        {
+            get => this.ServiceBusConnection.PrefetchCount;
+
+            set
+            {
+                this.ServiceBusConnection.PrefetchCount = value;
+                if (this.innerSubscriptionClient != null)
+                {
+                    this.innerSubscriptionClient.PrefetchCount = value;
+                }
+            }
+        }
+
         internal IInnerSubscriptionClient InnerSubscriptionClient
         {
             get
@@ -120,7 +138,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        ServiceBusNamespaceConnection ServiceBusConnection { get; }
+        internal ServiceBusNamespaceConnection ServiceBusConnection { get; }
 
         ICbsTokenProvider CbsTokenProvider { get; }
 

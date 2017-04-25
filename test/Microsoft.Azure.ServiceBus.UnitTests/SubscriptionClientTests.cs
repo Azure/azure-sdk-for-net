@@ -194,5 +194,39 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await topicClient.CloseAsync();
             }
         }
+
+        [Fact]
+        [DisplayTestMethodName]
+        async Task UpdatingPrefetchCountOnSubscriptionClientUpdatesTheReceiverPrefetchCount()
+        {
+            var subscriptionClient = new SubscriptionClient(
+                TestUtility.NamespaceConnectionString,
+                TestConstants.NonPartitionedTopicName,
+                TestConstants.SubscriptionName,
+                ReceiveMode.ReceiveAndDelete);
+
+            try
+            {
+                Assert.Equal(0, subscriptionClient.PrefetchCount);
+
+                subscriptionClient.PrefetchCount = 2;
+                Assert.Equal(2, subscriptionClient.PrefetchCount);
+                Assert.Equal(2, subscriptionClient.ServiceBusConnection.PrefetchCount);
+
+                // Message receiver should be created with latest prefetch count (lazy load).
+                Assert.Equal(2, subscriptionClient.InnerSubscriptionClient.InnerReceiver.PrefetchCount);
+
+                subscriptionClient.PrefetchCount = 3;
+                Assert.Equal(3, subscriptionClient.PrefetchCount);
+                Assert.Equal(3, subscriptionClient.ServiceBusConnection.PrefetchCount);
+
+                // Already created message receiver should have its prefetch value updated.
+                Assert.Equal(3, subscriptionClient.InnerSubscriptionClient.InnerReceiver.PrefetchCount);
+            }
+            finally
+            {
+                await subscriptionClient.CloseAsync();
+            }
+        }
     }
 }
