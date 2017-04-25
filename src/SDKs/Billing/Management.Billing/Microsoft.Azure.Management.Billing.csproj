@@ -2,7 +2,7 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />  
   <PropertyGroup>
     <Description>Microsoft Azure Billing Management Library</Description>
-    <VersionPrefix>1.1.0-preview</VersionPrefix>
+    <VersionPrefix>2.0.0-preview</VersionPrefix>
     <Authors>Microsoft</Authors>
     <AssemblyName>Microsoft.Azure.Management.Billing</AssemblyName>
     <PackageId>Microsoft.Azure.Management.Billing</PackageId>
@@ -23,5 +23,5 @@
     <PackageReference Include="System.Net.Http" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.1.1" />
     <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
-  </ItemGroup>  
+  </ItemGroup>
 </Project>

@@ -12,14 +12,14 @@ namespace Billing.Tests.Helpers
 {
     public static class BillingTestUtilities
     {
-        public static BillingClient GetBillingManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
+        public static BillingManagementClient GetBillingManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
             if (handler != null)
             {
                 handler.IsPassThrough = true;
             }
 
-            var client = context.GetServiceClient<BillingClient>(handlers:
+            var client = context.GetServiceClient<BillingManagementClient>(handlers:
                 handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
             return client;
         }

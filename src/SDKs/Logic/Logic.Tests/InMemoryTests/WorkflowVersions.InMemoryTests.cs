@@ -145,6 +145,56 @@ namespace Test.Azure.Management.Logic
 
         #endregion
 
+        #region WorkflowVersions_ListCallbackUrl
+
+        [Fact]
+        public void WorkflowVersions_ListCallbackUrl_Exception()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.InternalServerError,
+                Content = this.Empty
+            };
+
+            Assert.Throws<ValidationException>(() => client.WorkflowVersions.ListCallbackUrl(null, "wfName", "version", "triggerName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowVersions.ListCallbackUrl("rgName", null, "version", "triggerName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowVersions.ListCallbackUrl("rgName", "wfName", null, "triggerName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowVersions.ListCallbackUrl("rgName", "wfName", "version", null));
+            Assert.Throws<CloudException>(() => client.WorkflowVersions.ListCallbackUrl("rgName", "wfName", "version", "triggerName"));
+        }
+
+        [Fact]
+        public void WorkflowVersions_ListCallbackUrl_OK()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            var triggerCallbackUrl = @"https://prod-07.westus.logic.azure.com:443" +
+                @"/subscriptions/66666666-6666-6666-6666-666666666666/resourceGroups/rgName" +
+                @"/providers/Microsoft.Logic/workflows/wfName/triggers/manual/listCallbackUrl";
+            var responseContent = new StringContent($"{{ 'value' : '{triggerCallbackUrl}' }}");
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = responseContent,
+            };
+
+            var triggerUrl = client.WorkflowVersions.ListCallbackUrl("rgName", "wfName", "version", "triggerName");
+
+            // Validates request.
+            handler.Request.ValidateAuthorizationHeader();
+            handler.Request.ValidateMethod(HttpMethod.Post);
+
+            // Validates result.
+            Assert.Equal(triggerCallbackUrl, triggerUrl.Value);
+        }
+
+        #endregion
+
         #region Validation
 
         private void ValidateWorkflowVersion1(WorkflowVersion workflow)
