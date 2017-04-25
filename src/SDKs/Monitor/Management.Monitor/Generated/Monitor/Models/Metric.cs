@@ -6,10 +6,10 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Insights.Models
+namespace Microsoft.Azure.Monitor.Models
 {
     using Microsoft.Azure;
-    using Microsoft.Azure.Insights;
+    using Microsoft.Azure.Monitor;
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;

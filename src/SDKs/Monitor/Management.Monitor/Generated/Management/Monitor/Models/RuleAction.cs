@@ -6,11 +6,11 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Insights.Models
+namespace Microsoft.Azure.Monitor.Management.Models
 {
     using Microsoft.Azure;
-    using Microsoft.Azure.Management;
-    using Microsoft.Azure.Management.Insights;
+    using Microsoft.Azure.Monitor;
+    using Microsoft.Azure.Monitor.Management;
     using System.Linq;
 
     /// <summary>

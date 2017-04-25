@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Xml;
-using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.Azure.Monitor.Management.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -110,7 +110,7 @@ namespace Monitor.Tests.Helpers
 
         public class PolymorphicTypeConverter<T> : CustomCreationConverter<T>
         {
-            public const string ClientNamespace = "Microsoft.Azure.Management.Insights.Models";
+            public const string ClientNamespace = "Microsoft.Azure.Management.Monitor.Models";
 
             private readonly string[] namespaceMappings;
 

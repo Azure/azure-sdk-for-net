@@ -8,8 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Insights;
-using Microsoft.Azure.Insights.Models;
+using Microsoft.Azure.Monitor;
+using Microsoft.Azure.Monitor.Models;
 using Xunit;
 
 namespace Monitor.Tests.BasicTests

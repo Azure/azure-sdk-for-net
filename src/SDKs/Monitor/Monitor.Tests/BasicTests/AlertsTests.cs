@@ -7,8 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Management.Insights;
-using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.Azure.Monitor.Management;
+using Microsoft.Azure.Monitor.Management.Models;
 using Xunit;
 
 namespace Monitor.Tests.BasicTests
@@ -229,15 +229,17 @@ namespace Monitor.Tests.BasicTests
 
         private AlertRuleResource GetCreateOrUpdateRuleParameter()
         {
-            List<RuleAction> actions = new List<RuleAction>();
-            actions.Add(new RuleEmailAction()
-                    {
-                        CustomEmails = new List<string>()
+            List<RuleAction> actions = new List<RuleAction>
+            {
+                new RuleEmailAction()
+                {
+                    CustomEmails = new List<string>()
                         {
                             "emailid1"
                         },
-                        SendToServiceOwners = true
-                    });
+                    SendToServiceOwners = true
+                }
+            };
 
             // Name and id won't be serialized since thwy are readonly
             return new AlertRuleResource(
@@ -268,16 +270,17 @@ namespace Monitor.Tests.BasicTests
 
         private List<AlertRuleResource> GetRuleResourceCollection()
         {
-            List<RuleAction> actions = new List<RuleAction>();
-            actions.Add(new RuleEmailAction()
+            List<RuleAction> actions = new List<RuleAction>
             {
-                CustomEmails = new List<string>()
+                new RuleEmailAction()
+                {
+                    CustomEmails = new List<string>()
                         {
                             "eamil1"
                         },
-                SendToServiceOwners = true
-            });
-
+                    SendToServiceOwners = true
+                }
+            };
             return new List<AlertRuleResource>
             {
                 new AlertRuleResource(
