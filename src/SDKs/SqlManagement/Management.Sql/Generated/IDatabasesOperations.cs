@@ -24,6 +24,37 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IDatabasesOperations
     {
         /// <summary>
+        /// Returns a list of database restore points.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the server.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database from which to retrieve available restore
+        /// points.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IEnumerable<RestorePoint>>> ListRestorePointsWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Imports a bacpac into a new database.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -186,7 +217,8 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<ReplicationLink>> GetReplicationLinkWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, string linkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Failover the database replication link.
+        /// Sets which replica database is primary by failing over from the
+        /// current primary replica database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -217,7 +249,8 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse> FailoverReplicationLinkWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, string linkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Force failover the database replication link, which may result in
+        /// Sets which replica database is primary by failing over from the
+        /// current primary replica database. This operation might result in
         /// data loss.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -332,37 +365,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> ResumeWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns a list of database restore points.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
-        /// </param>
-        /// <param name='serverName'>
-        /// The name of the server.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database from which to retrieve available restore
-        /// points.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IEnumerable<RestorePoint>>> ListRestorePointsWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new database or updates an existing database. Location is
         /// a required property in the request body, and it must be the same as
@@ -915,7 +917,8 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<ImportExportResponse>> BeginExportWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ExportRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Failover the database replication link.
+        /// Sets which replica database is primary by failing over from the
+        /// current primary replica database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -946,7 +949,8 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse> BeginFailoverReplicationLinkWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, string linkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Force failover the database replication link, which may result in
+        /// Sets which replica database is primary by failing over from the
+        /// current primary replica database. This operation might result in
         /// data loss.
         /// </summary>
         /// <param name='resourceGroupName'>

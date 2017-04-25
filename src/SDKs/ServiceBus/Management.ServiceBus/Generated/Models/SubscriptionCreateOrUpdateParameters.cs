@@ -106,11 +106,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets last time there was a receive request to this
-        /// subscription.
+        /// Gets last time there was a receive request to this subscription.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessedAt")]
-        public System.DateTime? AccessedAt { get; set; }
+        public System.DateTime? AccessedAt { get; protected set; }
 
         /// <summary>
         /// Gets or sets timeSpan idle interval after which the topic is
@@ -122,13 +121,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.countDetails")]
-        public MessageCountDetails CountDetails { get; set; }
+        public MessageCountDetails CountDetails { get; protected set; }
 
         /// <summary>
-        /// Gets or sets exact time the message was created.
+        /// Gets exact time the message was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public System.DateTime? CreatedAt { get; set; }
+        public System.DateTime? CreatedAt { get; protected set; }
 
         /// <summary>
         /// Gets or sets default message time to live value. This is the
@@ -188,10 +187,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public int? MaxDeliveryCount { get; set; }
 
         /// <summary>
-        /// Gets or sets number of messages.
+        /// Gets number of messages.
         /// </summary>
         [JsonProperty(PropertyName = "properties.messageCount")]
-        public long? MessageCount { get; set; }
+        public long? MessageCount { get; protected set; }
 
         /// <summary>
         /// Gets or sets value indicating if a subscription supports the
@@ -210,10 +209,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityStatus? Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the exact time the message was updated.
+        /// Gets the exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public System.DateTime? UpdatedAt { get; set; }
+        public System.DateTime? UpdatedAt { get; protected set; }
 
         /// <summary>
         /// Validate the object.

@@ -168,8 +168,8 @@ namespace Microsoft.Azure.Management.KeyVault
         /// </exception>
         Task<AzureOperationResponse<DeletedVault>> GetDeletedWithHttpMessagesAsync(string vaultName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified vault forever. aka Purges the deleted Azure
-        /// key vault.
+        /// Permanently deletes the specified vault. aka Purges the deleted
+        /// Azure key vault.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the soft-deleted vault.
@@ -191,8 +191,8 @@ namespace Microsoft.Azure.Management.KeyVault
         /// </exception>
         Task<AzureOperationResponse> PurgeDeletedWithHttpMessagesAsync(string vaultName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified vault forever. aka Purges the deleted Azure
-        /// key vault.
+        /// Permanently deletes the specified vault. aka Purges the deleted
+        /// Azure key vault.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the soft-deleted vault.

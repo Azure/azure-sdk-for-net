@@ -13,10 +13,10 @@ namespace Microsoft.Azure.KeyVault.Models
     using Rest;
     using Rest.Serialization;
     using Newtonsoft.Json;
-    using Microsoft.Azure.KeyVault.WebKey;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// A DeletedKeyBundle consisting of a WebKey plus its Attributes and

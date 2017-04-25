@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// Description of a namespace resource.
     /// </summary>
     [JsonTransformation]
-    public partial class NamespaceResource : Resource
+    public partial class NamespaceResource : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the NamespaceResource class.
@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the NamespaceResource class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
+        /// <param name="location">Resource location.</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">Provisioning state of the
@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// namespace.</param>
         /// <param name="enabled">Specifies whether this instance is
         /// enabled.</param>
-        public NamespaceResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), NamespaceState? status = default(NamespaceState?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), bool? createACSNamespace = default(bool?), bool? enabled = default(bool?))
-            : base(location, id, name, type, tags)
+        public NamespaceResource(string id = default(string), string name = default(string), string location = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), NamespaceState? status = default(NamespaceState?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), bool? createACSNamespace = default(bool?), bool? enabled = default(bool?))
+            : base(id, name, location, type, tags)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
@@ -70,10 +70,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the namespace.
+        /// Gets provisioning state of the namespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; protected set; }
 
         /// <summary>
         /// Gets or sets state of the namespace. Possible values include:
@@ -85,23 +85,22 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public NamespaceState? Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the time the namespace was created.
+        /// Gets the time the namespace was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public System.DateTime? CreatedAt { get; set; }
+        public System.DateTime? CreatedAt { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the time the namespace was updated.
+        /// Gets the time the namespace was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public System.DateTime? UpdatedAt { get; set; }
+        public System.DateTime? UpdatedAt { get; protected set; }
 
         /// <summary>
-        /// Gets or sets endpoint you can use to perform Service Bus
-        /// operations.
+        /// Gets endpoint you can use to perform Service Bus operations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceBusEndpoint")]
-        public string ServiceBusEndpoint { get; set; }
+        public string ServiceBusEndpoint { get; protected set; }
 
         /// <summary>
         /// Gets or sets indicates whether to create an ACS namespace.
@@ -121,9 +120,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (Sku != null)
             {
                 Sku.Validate();

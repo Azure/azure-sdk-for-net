@@ -1,0 +1,1547 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest/import?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvaW1wb3J0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"value\": \"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\",\r\n  \"pwd\": \"123\",\r\n  \"policy\": {\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "3415"
+        ],
+        "x-ms-client-request-id": [
+          "3853815d-06d7-4643-be5c-19eadfce1e30"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"sid\": \"https://kv-sdk-test.vault-int.azure-int.net/secrets/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1492544886,\r\n    \"updated\": 1492544886,\r\n    \"purgedisabled\": false\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=KeyVaultTest\",\r\n      \"ekus\": [],\r\n      \"key_usage\": [],\r\n      \"validity_months\": 297,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1492544886,\r\n      \"updated\": 1492544886\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1888"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:48:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "3a56f6d8-304c-49fb-ba30-1d9491555bd7"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3806e73f-5ffb-41df-a950-f55489fd02b6"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedcertificates/CertCreateDeleteRecoverPurgeTest\",\r\n  \"deletedDate\": 1492544887,\r\n  \"scheduledPurgeDate\": 1500320887,\r\n  \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"sid\": \"https://kv-sdk-test.vault-int.azure-int.net/secrets/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1492544886,\r\n    \"updated\": 1492544886,\r\n    \"purgedisabled\": false\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=KeyVaultTest\",\r\n      \"ekus\": [],\r\n      \"key_usage\": [],\r\n      \"validity_months\": 297,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1492544886,\r\n      \"updated\": 1492544886\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2057"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:48:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "1e8efad4-2ae8-440a-a39a-002c23d0395e"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8f73a8e5-d01d-4f58-a330-51aff7e4e1f3"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedcertificates/CertCreateDeleteRecoverPurgeTest\",\r\n  \"deletedDate\": 1492544965,\r\n  \"scheduledPurgeDate\": 1500320965,\r\n  \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"sid\": \"https://kv-sdk-test.vault-int.azure-int.net/secrets/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1492544886,\r\n    \"updated\": 1492544886,\r\n    \"purgedisabled\": false\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=KeyVaultTest\",\r\n      \"ekus\": [],\r\n      \"key_usage\": [],\r\n      \"validity_months\": 297,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1492544886,\r\n      \"updated\": 1492544886\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2057"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "6911cbc7-0f9a-4705-832c-22777048a738"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5bc76d1f-a9bb-4e4b-958e-eeb895748778"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "108"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:48:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "7f693d22-2d22-4f16-a4b4-f045476db73e"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f294f35c-d145-409e-aac2-acce63e7b169"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "108"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "570940e5-764f-4a76-b531-20bf052d4601"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "92750751-81b3-4607-b25b-f5c7e84f3579"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "108"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "571abb6e-8d93-4ba0-bb12-8f181a48b3f3"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4c05202a-efe8-4794-aef9-657049f0d511"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "108"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "d2b46c8c-eefe-4f46-9787-a82bfb8eb5c1"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3bb1ba96-17db-436b-ac77-10b9062b2bdd"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"sid\": \"https://kv-sdk-test.vault-int.azure-int.net/secrets/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1492544886,\r\n    \"updated\": 1492544886,\r\n    \"purgedisabled\": false\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=KeyVaultTest\",\r\n      \"ekus\": [],\r\n      \"key_usage\": [],\r\n      \"validity_months\": 297,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1492544886,\r\n      \"updated\": 1492544886\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1888"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "b16aaedd-a1fa-48fc-a739-d59fe622d5f5"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5d6e8aeb-359f-456c-ac4a-f5121c4eb389"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"sid\": \"https://kv-sdk-test.vault-int.azure-int.net/secrets/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1492544886,\r\n    \"updated\": 1492544886,\r\n    \"purgedisabled\": false\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=KeyVaultTest\",\r\n      \"ekus\": [],\r\n      \"key_usage\": [],\r\n      \"validity_months\": 297,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1492544886,\r\n      \"updated\": 1492544886\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1888"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "9573a99f-07f7-4c08-ae7b-010f6b35db4e"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8ca92deb-8522-43b4-b396-d8ecfa6bedc8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"sid\": \"https://kv-sdk-test.vault-int.azure-int.net/secrets/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1492544886,\r\n    \"updated\": 1492544886,\r\n    \"purgedisabled\": false\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=KeyVaultTest\",\r\n      \"ekus\": [],\r\n      \"key_usage\": [],\r\n      \"validity_months\": 297,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1492544886,\r\n      \"updated\": 1492544886\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1888"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "0cb14ba8-83f8-44e9-8f3c-9c0d82049074"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//certificates/CertCreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9jZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8427281b-982f-4c0b-9c08-91a8003a3ea7"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "108"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:25 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "f0512e91-eed6-4e27-b7be-d0eaf9a1f1bc"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ad8b830a-17dd-4704-8cd0-934a746f82a1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Deleted Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "116"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:48:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "b86616dc-cd5b-4636-878f-5c66e57eab88"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d89070e2-9a8f-4350-9534-9c0d72cd2db3"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Deleted Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "116"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:48:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "8cedf4e5-8de5-4ba7-9ae6-e724f6f81681"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a5755afc-007a-4f4b-a7c1-c6d4594e6718"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Deleted Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "116"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:48:14 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "20baa08c-600b-4340-b38b-47e4dac6da15"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6eb2f661-9ff4-4c07-a42d-b0e408adc3f1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Deleted Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "116"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:48:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "cd2097d3-6fe8-4c21-a935-d61d59eb258e"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6c575dc1-1669-4cda-ab5d-83f88d0bba0b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedcertificates/CertCreateDeleteRecoverPurgeTest\",\r\n  \"deletedDate\": 1492544887,\r\n  \"scheduledPurgeDate\": 1500320887,\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1492544886,\r\n    \"updated\": 1492544886,\r\n    \"purgedisabled\": false\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "298"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "bac6cbd3-8e98-4fa5-94cc-7e53b20ad2fd"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9417c98a-33b1-4ac1-b677-af381bcad8fe"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Deleted Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "116"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:25 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "146c0a7a-c413-4a39-bbd4-80507776bc68"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a61a50ac-1f48-47cd-a889-c4198f0c8ea6"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Deleted Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "116"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:25 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "6df00476-c69a-4b18-b414-5c5cb901f2b0"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d729ae27-d919-4cae-9427-10ed5f4e4617"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Deleted Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "116"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "3417472e-0c1d-4a28-964d-dc5e2c49b13b"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "06b370e5-086d-47cd-97e2-0eeedd7aaf72"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedcertificates/CertCreateDeleteRecoverPurgeTest\",\r\n  \"deletedDate\": 1492544965,\r\n  \"scheduledPurgeDate\": 1500320965,\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1492544886,\r\n    \"updated\": 1492544886,\r\n    \"purgedisabled\": false\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "298"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "4c6f5e41-d5aa-4536-aa87-d62ee0051d6d"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "75293082-b342-4ca6-9aac-6563ae33a7f0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"CertificateNotFound\",\r\n    \"message\": \"Deleted Certificate not found: CertCreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "116"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "a7959186-ae3a-4184-b6bc-800da7cb2dbb"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/deletedcertificates/CertCreateDeleteRecoverPurgeTest/recover?api-version=2016-10-01",
+      "EncodedRequestUri": "L2RlbGV0ZWRjZXJ0aWZpY2F0ZXMvQ2VydENyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvcmVjb3Zlcj9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "bca156a0-497b-4312-bf31-17a1e18e2e78"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"sid\": \"https://kv-sdk-test.vault-int.azure-int.net/secrets/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1492544886,\r\n    \"updated\": 1492544886,\r\n    \"purgedisabled\": false\r\n  },\r\n  \"policy\": {\r\n    \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/policy\",\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=KeyVaultTest\",\r\n      \"ekus\": [],\r\n      \"key_usage\": [],\r\n      \"validity_months\": 297,\r\n      \"basic_constraints\": {\r\n        \"ca\": false\r\n      }\r\n    },\r\n    \"lifetime_actions\": [\r\n      {\r\n        \"trigger\": {\r\n          \"lifetime_percentage\": 80\r\n        },\r\n        \"action\": {\r\n          \"action_type\": \"EmailContacts\"\r\n        }\r\n      }\r\n    ],\r\n    \"issuer\": {\r\n      \"name\": \"Unknown\"\r\n    },\r\n    \"attributes\": {\r\n      \"enabled\": true,\r\n      \"created\": 1492544886,\r\n      \"updated\": 1492544886\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1888"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "d3ed414b-bf30-422a-a21b-ef6e61484fcf"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/certificates/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd?api-version=2016-10-01",
+      "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9DZXJ0Q3JlYXRlRGVsZXRlUmVjb3ZlclB1cmdlVGVzdC82NjAwODRlNDI5OGI0ODUxOGNlMjAwOTcyZDE0ZWZkZD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e8fed7c2-51fc-48a3-81e9-dc3a01863ffc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://kv-sdk-test.vault-int.azure-int.net/certificates/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"sid\": \"https://kv-sdk-test.vault-int.azure-int.net/secrets/CertCreateDeleteRecoverPurgeTest/660084e4298b48518ce200972d14efdd\",\r\n  \"x5t\": \"fLi3U52HunIVNXubkEnf8tP6Wbo\",\r\n  \"cer\": \"MIICODCCAeagAwIBAgIQqHmpBAv+CY9IJFoUhlbziTAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTE1MDQyOTIxNTM0MVoXDTM5MTIzMTIzNTk1OVowFzEVMBMGA1UEAxMMS2V5VmF1bHRUZXN0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5bVAT73zr4+N4WVv2+SvTunAw08ksS4BrJW/nNliz3S9XuzMBMXvmYzU5HJ8TtEgluBiZZYd5qsMJD+OXHSNbsLdmMhni0jYX09h3XlC2VJw2sGKeYF+xEaavXm337aZZaZyjrFBrrUl51UePaN+kVFXNlBb3N3TYpqa7KokXenJQuR+i9Gv9a77c0UsSsDSryxppYhKK7HvTZCpKrhVtulF5iPMswWe9np3uggfMamyIsK/0L7X9w9B2qN7993RR0A00nOk4H6CnkuwO77dSsD0KJsk6FyAoZBzRXDZh9+d9R76zCL506NcQy/jl0lCiQYwsUX73PG5pxOh02OwKwIDAQABo0swSTBHBgNVHQEEQDA+gBAS5AktBh0dTwCNYSHcFmRjoRgwFjEUMBIGA1UEAxMLUm9vdCBBZ2VuY3mCEAY3bACqAGSKEc+41KpcNfQwCQYFKw4DAh0FAANBAGqIjo2geVagzuzaZOe1ClGKhZeiCKfWAxklaGN+qlGUbVS4IN4V1lot3VKnzabasmkEHeNxPwLn1qvSD0cX9CE=\",\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 1430344421,\r\n    \"exp\": 2208988799,\r\n    \"created\": 1492544886,\r\n    \"updated\": 1492544886,\r\n    \"purgedisabled\": false\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1317"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "81c17278-d6ee-4666-8955-c32f613c2ab9"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//deletedcertificates/CertCreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVkY2VydGlmaWNhdGVzL0NlcnRDcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "55bea751-6ec1-418b-9838-3f772701d5d8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.1.0-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 18 Apr 2017 19:49:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "29cc3401-e1ee-4ec3-afd5-bb85e12da6c9"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1171"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "VaultAddress": "https://kv-sdk-test.vault-int.azure-int.net/",
+    "KeyName": "sdktestkey",
+    "KeyVersion": "cad640c7cba04ded82c0c058ca16283c",
+    "SoftDeleteEnabled": "True"
+  }
+}

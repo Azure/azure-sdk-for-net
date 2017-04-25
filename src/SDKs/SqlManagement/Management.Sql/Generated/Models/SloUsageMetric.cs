@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// for SLO usage metric.</param>
         /// <param name="inRangeTimeRatio">Gets or sets inRangeTimeRatio for
         /// SLO usage metric.</param>
-        public SloUsageMetric(string serviceLevelObjective = default(string), System.Guid? serviceLevelObjectiveId = default(System.Guid?), double? inRangeTimeRatio = default(double?))
+        public SloUsageMetric(string serviceLevelObjective = default(string), System.Guid serviceLevelObjectiveId = default(System.Guid), double inRangeTimeRatio = default(double))
         {
             ServiceLevelObjective = serviceLevelObjective;
             ServiceLevelObjectiveId = serviceLevelObjectiveId;
@@ -52,25 +52,24 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the serviceLevelObjective for SLO usage metric.
-        /// Possible values include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1',
-        /// 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'System', 'System2',
-        /// 'ElasticPool'
+        /// Gets the serviceLevelObjective for SLO usage metric. Possible
+        /// values include: 'Basic', 'S0', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3',
+        /// 'P4', 'P6', 'P11', 'P15', 'System', 'System2', 'ElasticPool'
         /// </summary>
         [JsonProperty(PropertyName = "serviceLevelObjective")]
-        public string ServiceLevelObjective { get; set; }
+        public string ServiceLevelObjective { get; private set; }
 
         /// <summary>
-        /// Gets or sets the serviceLevelObjectiveId for SLO usage metric.
+        /// Gets the serviceLevelObjectiveId for SLO usage metric.
         /// </summary>
         [JsonProperty(PropertyName = "serviceLevelObjectiveId")]
-        public System.Guid? ServiceLevelObjectiveId { get; set; }
+        public System.Guid ServiceLevelObjectiveId { get; private set; }
 
         /// <summary>
         /// Gets or sets inRangeTimeRatio for SLO usage metric.
         /// </summary>
         [JsonProperty(PropertyName = "inRangeTimeRatio")]
-        public double? InRangeTimeRatio { get; set; }
+        public double InRangeTimeRatio { get; private set; }
 
     }
 }

@@ -14,8 +14,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Rest;
     using Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,11 +30,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the SubscriptionResource class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
+        /// <param name="location">Resource location.</param>
         /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="accessedAt">Last time there was a receive request to
         /// this subscription.</param>
         /// <param name="autoDeleteOnIdle">TimeSpan idle interval after which
@@ -74,8 +71,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Restoring', 'SendDisabled', 'Unknown'</param>
         /// <param name="updatedAt">The exact time the message was
         /// updated.</param>
-        public SubscriptionResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTime? accessedAt = default(System.DateTime?), string autoDeleteOnIdle = default(string), MessageCountDetails countDetails = default(MessageCountDetails), System.DateTime? createdAt = default(System.DateTime?), string defaultMessageTimeToLive = default(string), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), bool? enableBatchedOperations = default(bool?), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), bool? isReadOnly = default(bool?), string lockDuration = default(string), int? maxDeliveryCount = default(int?), long? messageCount = default(long?), bool? requiresSession = default(bool?), EntityStatus? status = default(EntityStatus?), System.DateTime? updatedAt = default(System.DateTime?))
-            : base(location, id, name, type, tags)
+        public SubscriptionResource(string id = default(string), string name = default(string), string location = default(string), string type = default(string), System.DateTime? accessedAt = default(System.DateTime?), string autoDeleteOnIdle = default(string), MessageCountDetails countDetails = default(MessageCountDetails), System.DateTime? createdAt = default(System.DateTime?), string defaultMessageTimeToLive = default(string), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), bool? enableBatchedOperations = default(bool?), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), bool? isReadOnly = default(bool?), string lockDuration = default(string), int? maxDeliveryCount = default(int?), long? messageCount = default(long?), bool? requiresSession = default(bool?), EntityStatus? status = default(EntityStatus?), System.DateTime? updatedAt = default(System.DateTime?))
+            : base(id, name, location, type)
         {
             AccessedAt = accessedAt;
             AutoDeleteOnIdle = autoDeleteOnIdle;
@@ -96,11 +93,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// Gets or sets last time there was a receive request to this
-        /// subscription.
+        /// Gets last time there was a receive request to this subscription.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessedAt")]
-        public System.DateTime? AccessedAt { get; set; }
+        public System.DateTime? AccessedAt { get; protected set; }
 
         /// <summary>
         /// Gets or sets timeSpan idle interval after which the topic is
@@ -112,13 +108,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.countDetails")]
-        public MessageCountDetails CountDetails { get; set; }
+        public MessageCountDetails CountDetails { get; protected set; }
 
         /// <summary>
-        /// Gets or sets exact time the message was created.
+        /// Gets exact time the message was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public System.DateTime? CreatedAt { get; set; }
+        public System.DateTime? CreatedAt { get; protected set; }
 
         /// <summary>
         /// Gets or sets default message time to live value. This is the
@@ -178,10 +174,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public int? MaxDeliveryCount { get; set; }
 
         /// <summary>
-        /// Gets or sets number of messages.
+        /// Gets number of messages.
         /// </summary>
         [JsonProperty(PropertyName = "properties.messageCount")]
-        public long? MessageCount { get; set; }
+        public long? MessageCount { get; protected set; }
 
         /// <summary>
         /// Gets or sets value indicating if a subscription supports the
@@ -200,21 +196,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityStatus? Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the exact time the message was updated.
+        /// Gets the exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public System.DateTime? UpdatedAt { get; set; }
+        public System.DateTime? UpdatedAt { get; protected set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }
 

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The service objectives capabilities.
+    /// The service objectives capability.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ServiceObjectiveCapability
@@ -45,7 +45,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">The unique ID of the service objective.</param>
         /// <param name="supportedMaxSizes">The list of supported maximum
         /// database sizes for this service objective.</param>
-        public ServiceObjectiveCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), PerformanceLevelUnit? unit = default(PerformanceLevelUnit?), int? value = default(int?), string id = default(string), IList<MaxSizeCapability> supportedMaxSizes = default(IList<MaxSizeCapability>))
+        /// <param name="includedMaxSize">The included (free) max size for this
+        /// service level objective.</param>
+        public ServiceObjectiveCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), PerformanceLevelUnit? unit = default(PerformanceLevelUnit?), int? value = default(int?), System.Guid id = default(System.Guid), IList<MaxSizeCapability> supportedMaxSizes = default(IList<MaxSizeCapability>), MaxSizeCapability includedMaxSize = default(MaxSizeCapability))
         {
             Name = name;
             Status = status;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             Value = value;
             Id = id;
             SupportedMaxSizes = supportedMaxSizes;
+            IncludedMaxSize = includedMaxSize;
             CustomInit();
         }
 
@@ -91,7 +94,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets the unique ID of the service objective.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        public System.Guid Id { get; private set; }
 
         /// <summary>
         /// Gets the list of supported maximum database sizes for this service
@@ -99,6 +102,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "supportedMaxSizes")]
         public IList<MaxSizeCapability> SupportedMaxSizes { get; private set; }
+
+        /// <summary>
+        /// Gets the included (free) max size for this service level objective.
+        /// </summary>
+        [JsonProperty(PropertyName = "includedMaxSize")]
+        public MaxSizeCapability IncludedMaxSize { get; private set; }
 
     }
 }

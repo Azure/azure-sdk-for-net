@@ -370,6 +370,45 @@ namespace Microsoft.Azure.KeyVault
     }
 
     /// <summary>
+    /// The Key Vault deleted certificate identifier. Aka the recoveryId.
+    /// </summary>
+    public sealed class DeletedCertificateIdentifier : ObjectIdentifier
+    {
+        /// <summary>
+        /// Verifies whether the identifier is a valid KeyVault deleted certificate identifier.
+        /// </summary>
+        /// <param name="identifier">The key vault certificate identifier.</param>
+        /// <returns>True if the identifier is a valid KeyVault deleted certificate. False otherwise.</returns>
+        public static bool IsDeletedCertificateIdentifier( string identifier )
+        {
+            return ObjectIdentifier.IsObjectIdentifier( "deletedcertificates", identifier );
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="vaultBaseUrl"> the vault base URL</param>
+        /// <param name="name">the name of the deleted certificate</param>
+        public DeletedCertificateIdentifier( string vaultBaseUrl, string name )
+            : base( vaultBaseUrl, "deletedcertificates", name, string.Empty )
+        {
+            Identifier = BaseIdentifier; // Deleted entities are unversioned.
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="identifier">The identifier for the deleted certificate. Aka the recoveryId return from deletion.</param>
+        public DeletedCertificateIdentifier( string identifier )
+            : base( "deletedcertificates", identifier )
+        {
+            Version = string.Empty;
+            Identifier = BaseIdentifier; // Deleted entities are unversioned.
+        }
+    }
+
+
+    /// <summary>
     /// The Key Vault certificate operation identifier.
     /// </summary>
     public sealed class CertificateOperationIdentifier : ObjectIdentifier

@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for SqlManagementClient.
+    /// Extension methods for Operations.
     /// </summary>
-    public static partial class SqlManagementClientExtensions
+    public static partial class OperationsExtensions
     {
             /// <summary>
             /// Lists all of the available SQL Rest API operations.
@@ -27,9 +27,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static OperationListResult ListOperations(this ISqlManagementClient operations)
+            public static OperationListResult List(this IOperations operations)
             {
-                return operations.ListOperationsAsync().GetAwaiter().GetResult();
+                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationListResult> ListOperationsAsync(this ISqlManagementClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationListResult> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListOperationsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
