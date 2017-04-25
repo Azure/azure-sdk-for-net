@@ -7,7 +7,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure CustomerInsights Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure CustomerInsights management functions for managing the Microsoft Azure CustomerInsights service.")]
 
-[assembly: AssemblyVersion("0.9.1.0")]
+[assembly: AssemblyVersion("0.9.0.0")]
 [assembly: AssemblyFileVersion("0.9.1.0")]
 
 [assembly: AssemblyConfiguration("")]
