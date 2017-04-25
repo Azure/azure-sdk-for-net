@@ -17,17 +17,23 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AccessRights.
+    /// Defines values for UnavailableReason.
     /// </summary>
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum AccessRights
+    public enum UnavailableReason
     {
-        [EnumMember(Value = "Manage")]
-        Manage,
-        [EnumMember(Value = "Send")]
-        Send,
-        [EnumMember(Value = "Listen")]
-        Listen
+        [EnumMember(Value = "None")]
+        None,
+        [EnumMember(Value = "InvalidName")]
+        InvalidName,
+        [EnumMember(Value = "SubscriptionIsDisabled")]
+        SubscriptionIsDisabled,
+        [EnumMember(Value = "NameInUse")]
+        NameInUse,
+        [EnumMember(Value = "NameInLockdown")]
+        NameInLockdown,
+        [EnumMember(Value = "TooManyNamespaceInCurrentSubscription")]
+        TooManyNamespaceInCurrentSubscription
     }
 }
 
