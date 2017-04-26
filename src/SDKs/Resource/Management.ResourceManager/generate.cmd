@@ -8,12 +8,12 @@ setlocal
 set autoRestVersion=0.17.0-Special-20161018
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
-set resSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/resources/2016-09-01/swagger/resources.json"
+set resSpecFile="https://raw.githubusercontent.com/luanshixia/azure-rest-api-specs/30b9804022d2512f304557911b6e31dcb0ff20ee/arm-resources/resources/2017-05-10/swagger/resources.json"
 set lockSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/locks/2016-09-01/swagger/locks.json"
 set featureSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/features/2015-12-01/swagger/features.json"
 set subscriptionSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/subscriptions/2016-06-01/swagger/subscriptions.json"
 set policySpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/policy/2016-04-01/swagger/policy.json"
-set linkSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/resources/2016-09-01/swagger/links.json"
+set linkSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/links/2016-09-01/swagger/links.json"
 
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
