@@ -9,7 +9,14 @@
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
     <TestProjectType>true</TestProjectType>
   </PropertyGroup>
-  <!--
+  <ItemGroup>
+    <!-- <ProjectReference Include="..\..\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" /> -->
+    <!-- <ProjectReference Include="..\..\ClientRuntime.Azure\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" /> -->
+    <!-- <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" /> -->
+    <!-- <ProjectReference Include="..\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" /> -->
+    <!-- <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" /> -->
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.5,3.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
@@ -17,14 +24,7 @@
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />    
   </ItemGroup>
-  -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
-    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
-    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
-    <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
-    <ProjectReference Include="..\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
-  </ItemGroup>
+  
   
   <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System" />

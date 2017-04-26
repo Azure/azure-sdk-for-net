@@ -3,6 +3,7 @@
 	<Import Project="test.props" />
 	<Import Project="AzSdk.props" />
   <Import Project="Directory.Build.targets" />
+  
 	<Target Name="Clean" DependsOnTargets="$(CleanTraversedProjectsDependsOn)" />
 	<Target Name="Restore" DependsOnTargets="$(RestoreTraversedProjectsDependsOn)" /> 
 	<Target Name="Build" DependsOnTargets="$(BuildTraversedProjectsDependsOn)" />

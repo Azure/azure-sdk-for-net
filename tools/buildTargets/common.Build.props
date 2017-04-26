@@ -14,7 +14,38 @@
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
 	  <NoWarn>1591;1701;1573</NoWarn>
+
+
+
+    <!--
+    <PostBuildEvent>
+      
+    </PostBuildEvent>
+
+    <PreBuildEvent>
+      <CallTarget Targets="PrintStuff"/>
+    </PreBuildEvent>
+    -->
 	</PropertyGroup>
+	
+	
+	  <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
+    <DefineConstants>FullNetFx</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+    <DefineConstants>netstandard14</DefineConstants>
+	 <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+    <DefineConstants>netcoreapp11</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
   
   <Choose>
     <When Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
