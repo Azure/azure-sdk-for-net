@@ -1,18 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.DataLake.Store</PackageId>
     <Description>Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.</Description>
     <VersionPrefix>2.1.2-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.DataLake.Store</AssemblyName>
-    <PackageId>Microsoft.Azure.Management.DataLake.Store</PackageId>
     <PackageTags>Microsoft Azure Data Lake Store management;DataLakeStore;Data Lake Store management</PackageTags>
     <PackageReleaseNotes>See https://github.com/azure/azure-sdk-for-net/blob/vs17Dev/src/SDKs/DataLake.Store/changelog.md for release notes.</PackageReleaseNotes>
   </PropertyGroup>
-
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
-
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
     <PackageReference Include="System.Threading.Thread" Version="4.0.0" />
   </ItemGroup>
