@@ -12,20 +12,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.DataLake;
     using Microsoft.Azure.Management.DataLake.Analytics;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for FileType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum FileType
+    public static class FileType
     {
-        [EnumMember(Value = "Assembly")]
-        Assembly,
-        [EnumMember(Value = "Resource")]
-        Resource
+        public const string Assembly = "Assembly";
+        public const string Resource = "Resource";
+        public const string Nodeploy = "Nodeploy";
     }
 }
