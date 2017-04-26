@@ -87,6 +87,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Resource\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Scheduler\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\Management\**\*Tests.csproj" ProjectType="Test"/>
+    	<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\DataPlane\**\*Tests.csproj" ProjectType="Test"/>
 		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ServerManagement\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ServiceBus\**\*Tests.csproj" ProjectType="Test"/>
@@ -101,7 +102,6 @@
 	<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Store\**\*Tests.csproj" ProjectType="Test"/>
   	<ProjectToBuild Include="$(MSBuildThisFileDirectory)Monitor\**\*Tests.csproj" ProjectType="Test"/>
     <ProjectToBuild Include="$(MSBuildThisFileDirectory)RecoveryServices\**\*Tests.csproj" ProjectType="Test"/>
-    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\DataPlane\**\*Tests.csproj" ProjectType="Test"/>
   -->
 
   <ItemGroup>
