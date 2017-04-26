@@ -1,23 +1,58 @@
-﻿
-#Azure Management Libraries for .NET
 
-This README is based on the latest released preview version (1.0 beta 5). If you are looking for other releases, see [More Information](#more-information)
+# Azure Management Libraries for .NET #
+
+This README is based on the released stable version (1.0.0). If you are looking for other releases, see [More Information](#more-information)
 
 The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources. Libraries are built on the lower-level, request-response style [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest) and can run side-by-side with [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest).
 
-**1.0 beta 5** is a developer preview that supports major parts of:  
+## Feature Availability and Road Map as of Version 1.0.0 ##
 
-- Azure Virtual Machines and VM Extensions
-- Virtual Machine Scale Sets
-- Managed Disks
-- Storage
-- Networking (virtual networks, subnets, network interfaces, IP addresses, network security groups, load balancers, DNS, traffic managers and application gateways)
-- Resource Manager
-- SQL Database (databases, firewalls and elastic pools)
-- App Service (Web Apps)
-- Key Vault, Redis, CDN and Batch.
+<table>
+  <tr>
+    <th align="left">Service | feature</th>
+    <th align="left">Available as GA</th>
+    <th align="left">Available as Preview</th>
+    <th align="left">Coming soon</th>
+  </tr>
+  <tr>
+    <td>Compute</td>
+    <td>Virtual machines and VM extensions<br>Virtual machine scale sets<br>Managed disks</td>
+    <td></td>
+    <td valign="top">Azure container services<br>Azure container registry</td>
+  </tr>
+  <tr>
+    <td>Storage</td>
+    <td>Storage accounts</td>
+    <td></td>
+    <td>Encryption</td>
+  </tr>
+  <tr>
+    <td>SQL Database</td>
+    <td>Databases<br>Firewalls<br>Elastic pools</td>
+    <td></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td>Networking</td>
+    <td>Virtual networks<br>Network interfaces<br>IP addresses<br>Routing table<br>Network security groups<br>DNS<br>Traffic managers</td>
+    <td valign="top">Load balancers<br>Application gateways</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td>More services</td>
+    <td>Resource Manager<br>Key Vault<br>Redis<br>CDN<br>Batch</td>
+    <td valign="top">App service - Web apps<br>Functions<br>Service bus</td>
+    <td valign="top">Monitor<br>Graph RBAC<br>DocumentDB<br>Scheduler</td>
+  </tr>
+  <tr>
+    <td>Fundamentals</td>
+    <td>Authentication - core</td>
+    <td>Async methods</td>
+    <td valign="top"></td>
+  </tr>
+</table>
 
-The next preview version of the Azure Management Libraries for .NET is a work in-progress. We will be adding support for more Azure services and applying finishing touches to the API.
+> *Preview* features are flagged in documentation comments in libraries. These features are subject to change. They can be modified in any way, or even removed, in the future.
 
 **Azure Authentication**
 
@@ -35,14 +70,14 @@ You can create a virtual machine instance by using a `Define() … Create()` met
 Console.WriteLine("Creating a Windows VM");
 
 var windowsVM = azure.VirtualMachines.Define("myWindowsVM")
-    .WithRegion(Region.US_EAST)
+    .WithRegion(Region.USEast)
     .WithNewResourceGroup(rgName)
     .WithNewPrimaryNetwork("10.0.0.0/28")
-    .WithPrimaryPrivateIpAddressDynamic()
-    .WithNewPrimaryPublicIpAddress("mywindowsvmdns")
-    .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
+    .WithPrimaryPrivateIPAddressDynamic()
+    .WithNewPrimaryPublicIPAddress("mywindowsvmdns")
+    .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WindowsServer2012R2Datacenter)
     .WithAdminUsername("tirekicker")
-    .WithPassword(password)
+    .WithAdminPassword(password)
     .WithSize(VirtualMachineSizeTypes.StandardD3V2)
     .Create();
 	
@@ -55,32 +90,31 @@ You can update a virtual machine instance by using an `Update() … Apply()` met
 
 ```csharp
 windowsVM.Update()
-	.WithNewDataDisk(20, dataDiskName, CachingTypes.ReadWrite)
-	.Apply();
+    .WithNewDataDisk(20, lun, CachingTypes.ReadWrite)
+    .Apply();
 ```
 **Create a Virtual Machine Scale Set**
 
 You can create a virtual machine scale set instance by using another `Define() … Create()` method chain.
 
 ```csharp
-var virtualMachineScaleSet = azure.VirtualMachineScaleSets
-	.Define(vmssName)
-	.WithRegion(Region.US_EAST)
-	.WithExistingResourceGroup(rgName)
-	.WithSku(VirtualMachineScaleSetSkuTypes.STANDARD_D3_V2)
-	.WithExistingPrimaryNetworkSubnet(network, "Front-end")
-	.WithPrimaryInternetFacingLoadBalancer(loadBalancer1)
-	.WithPrimaryInternetFacingLoadBalancerBackends(backendPoolName1, backendPoolName2)
-	.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPool50XXto22, natPool60XXto23)
-	.WithoutPrimaryInternalLoadBalancer()
-	.WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-	.WithRootUsername(userName)
-	.WithSsh(sshKey)
-	.WithNewDataDisk(100)		 
-	.WithNewDataDisk(100, 1, CachingTypes.ReadWrite)
-	.WithNewDataDisk(100, 2, CachingTypes.ReadWrite, StorageAccountTypes.StandardLRS)
-	.WithCapacity(3)
-	.Create();
+var virtualMachineScaleSet = azure.VirtualMachineScaleSets.Define(vmssName)
+    .WithRegion(Region.USEast)
+    .WithExistingResourceGroup(rgName)
+    .WithSku(VirtualMachineScaleSetSkuTypes.StandardD3v2)
+    .WithExistingPrimaryNetworkSubnet(network, "Front-end")
+    .WithExistingPrimaryInternetFacingLoadBalancer(loadBalancer1)
+    .WithPrimaryInternetFacingLoadBalancerBackends(backendPoolName1, backendPoolName2)
+    .WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPool50XXto22, natPool60XXto23)
+    .WithoutPrimaryInternalLoadBalancer()
+    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+    .WithRootUsername(userName)
+    .WithSsh(sshKey)
+    .WithNewDataDisk(100)
+    .WithNewDataDisk(100, 1, CachingTypes.ReadWrite)
+    .WithNewDataDisk(100, 2, CachingTypes.ReadWrite, StorageAccountTypes.StandardLRS)
+    .WithCapacity(3)
+    .Create();
 ```
 
 **Create a Network Security Group**
@@ -89,29 +123,29 @@ You can create a network security group instance by using another `Define() … 
 
 ```csharp
 var frontEndNSG = azure.NetworkSecurityGroups.Define(frontEndNSGName)
-	.WithRegion(Region.US_EAST)
-	.WithNewResourceGroup(rgName)
-	.DefineRule("ALLOW-SSH")
-	    .AllowInbound()
-	    .FromAnyAddress()
-	    .FromAnyPort()
-	    .ToAnyAddress()
-	    .ToPort(22)
-	    .WithProtocol(SecurityRuleProtocol.Tcp)
-	    .WithPriority(100)
-	    .WithDescription("Allow SSH")
-	    .Attach()
-	.DefineRule("ALLOW-HTTP")
-	    .AllowInbound()
-	    .FromAnyAddress()
-	    .FromAnyPort()
-	    .ToAnyAddress()
-	    .ToPort(80)
-	    .WithProtocol(SecurityRuleProtocol.Tcp)
-	    .WithPriority(101)
-	    .WithDescription("Allow HTTP")
-	    .Attach()
-	.Create();
+    .WithRegion(Region.USEast)
+    .WithNewResourceGroup(rgName)
+    .DefineRule("ALLOW-SSH")
+        .AllowInbound()
+        .FromAnyAddress()
+        .FromAnyPort()
+        .ToAnyAddress()
+        .ToPort(22)
+        .WithProtocol(SecurityRuleProtocol.Tcp)
+        .WithPriority(100)
+        .WithDescription("Allow SSH")
+        .Attach()
+    .DefineRule("ALLOW-HTTP")
+        .AllowInbound()
+        .FromAnyAddress()
+        .FromAnyPort()
+        .ToAnyAddress()
+        .ToPort(80)
+        .WithProtocol(SecurityRuleProtocol.Tcp)
+        .WithPriority(101)
+        .WithDescription("Allow HTTP")
+        .Attach()
+    .Create();
 ```
 
 **Create an Application Gateway**
@@ -119,20 +153,20 @@ var frontEndNSG = azure.NetworkSecurityGroups.Define(frontEndNSGName)
 You can create a application gateway instance by using another `define() … create()` method chain.
 
 ```csharp
-var applicationGateway = azure.ApplicationGateways().Define("myFirstAppGateway")
-    .WithRegion(Region.US_EAST)
+var applicationGateway = azure.ApplicationGateways.Define("myFirstAppGateway")
+    .WithRegion(Region.USEast)
     .WithExistingResourceGroup(resourceGroup)
     // Request routing rule for HTTP from public 80 to public 8080
     .DefineRequestRoutingRule("HTTP-80-to-8080")
         .FromPublicFrontend()
         .FromFrontendHttpPort(80)
         .ToBackendHttpPort(8080)
-        .ToBackendIpAddress("11.1.1.1")
-        .ToBackendIpAddress("11.1.1.2")
-        .ToBackendIpAddress("11.1.1.3")
-        .ToBackendIpAddress("11.1.1.4")
+        .ToBackendIPAddress("11.1.1.1")
+        .ToBackendIPAddress("11.1.1.2")
+        .ToBackendIPAddress("11.1.1.3")
+        .ToBackendIPAddress("11.1.1.4")
         .Attach()
-    .WithExistingPublicIpAddress(publicIpAddress)
+    .WithExistingPublicIPAddress(publicIpAddress)
     .Create();
 ```
 
@@ -141,12 +175,10 @@ var applicationGateway = azure.ApplicationGateways().Define("myFirstAppGateway")
 You can create a Web App instance by using another `define() … create()` method chain.
 
 ```csharp
-var webApp = azure.WebApps()
-    .Define(appName)
+var webApp = azure.WebApps.Define(appName)
+    .WithRegion(Region.USWest)
     .WithNewResourceGroup(rgName)
-    .WithNewAppServicePlan(planName)
-    .WithRegion(Region.US_WEST)
-    .WithPricingTier(AppServicePricingTier.STANDARD_S1)
+    .WithNewFreeAppServicePlan()
     .Create();
 ```
 
@@ -156,7 +188,7 @@ You can create a SQL server instance by using another `define() … create()` me
 
 ```csharp
 var sqlServer = azure.SqlServers.Define(sqlServerName)
-    .WithRegion(Region.US_EAST)
+    .WithRegion(Region.USEast)
     .WithNewResourceGroup(rgName)
     .WithAdministratorLogin(administratorLogin)
     .WithAdministratorPassword(administratorPassword)
@@ -172,9 +204,9 @@ var database = sqlServer.Databases.Define(databaseName)
     .Create();
 ```
 
-#Sample Code
+# Sample Code #
 
-You can find plenty of sample code that illustrates management scenarios in Azure Virtual Machines, Virtual Machine Scale Sets, Managed Disks, Storage, Networking, Resource Manager, SQL Database, App Service (Web Apps), Key Vault, Redis, CDN and Batch … 
+You can find plenty of sample code that illustrates management scenarios (69+ end-to-end scenarios) for Azure Virtual Machines, Virtual Machine Scale Sets, Managed Disks, Storage, Networking, Resource Manager, SQL Database, App Service (Web Apps on Windows and Linux), Key Vault, Redis, CDN and Batch … 
 
 <table>
   <tr>
@@ -184,7 +216,8 @@ You can find plenty of sample code that illustrates management scenarios in Azur
   <tr>
     <td>Virtual Machines</td>
     <td><ul style="list-style-type:circle">
-<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-vm">Manage virtual machine</a></li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-vm">Manage virtual machines</a></li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-vm-async">Manage virtual machines asynchronously</a></li>
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-availability-sets"> Manage availability set</a></li>
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-list-vm-images">List virtual machine images</a></li>
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-using-vm-extensions">Manage virtual machines using VM extensions</a></li>
@@ -211,6 +244,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
     <td>Virtual Machine Scale Sets</td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-scale-sets">Manage virtual machine scale sets (behind an Internet facing load balancer)</a></li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-scale-sets-async">Manage virtual machine scale sets (behind an Internet facing load balancer) asynchronously</a></li>
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-scale-set-with-unmanaged-disks">Manage virtual machine scale sets with unmanaged disks</a></li>
 </ul></td>
   </tr>
@@ -218,6 +252,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
     <td>Storage</td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/storage-dotnet-manage-storage-accounts">Manage storage accounts</a></li>
+<li><a href="https://github.com/Azure-Samples/storage-dotnet-manage-storage-accounts-async">Manage storage accounts asynchronously</a></li>
 </ul></td>
   </tr>
   <tr>
@@ -225,6 +260,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
     <td><ul style="list-style-type:circle">
 
 <li><a href="https://github.com/Azure-Samples/network-dotnet-manage-virtual-network">Manage virtual network</a></li>
+<li><a href="https://github.com/Azure-Samples/network-dotnet-manage-virtual-network-async">Manage virtual network asynchronously</a></li>
 <li><a href="https://github.com/Azure-Samples/network-dotnet-manage-network-interface">Manage network interface</a></li>
 <li><a href="https://github.com/Azure-Samples/network-dotnet-manage-network-security-group">Manage network security group</a></li>
 <li><a href="https://github.com/Azure-Samples/network-dotnet-manage-ip-address">Manage IP address</a></li>
@@ -273,15 +309,50 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 </tr>
 
   <tr>
-    <td>App Service - Web Apps</td>
+    <td>App Service - Web Apps on <b>Windows</b></td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-web-apps">Manage Web apps</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-web-apps-with-custom-domains">Manage Web apps with custom domains</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-configure-deployment-sources-for-web-apps">Configure deployment sources for Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-configure-deployment-sources-for-web-apps-async">Configure deployment sources for Web apps asynchronously</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-staging-and-production-slots-for-web-apps">Manage staging and production slots for Web apps</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-scale-web-apps">Scale Web apps</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-storage-connections-for-web-apps">Manage storage connections for Web apps</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-data-connections-for-web-apps">Manage data connections (such as SQL database and Redis cache) for Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-authentication-for-web-apps">Manage authentication for Web apps</a></li>
+</ul></td>
+  </tr>
+
+  <tr>
+    <td>App Service - Web Apps on <b>Linux</b></td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-web-apps-on-linux">Manage Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-web-apps-on-linux-with-custom-domains">Manage Web apps with custom domains</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-configure-deployment-sources-for-web-apps-on-linux">Configure deployment sources for Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-scale-web-apps-on-linux">Scale Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-storage-connections-for-web-apps-on-linux">Manage storage connections for Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-data-connections-for-web-apps-on-linux">Manage data connections (such as SQL database and Redis cache) for Web apps</a></li>
+</ul></td>
+  </tr>
+  
+  <tr>
+    <td>Functions</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-functions">Manage functions</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-functions-with-custom-domains">Manage functions with custom domains</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-configure-deployment-sources-for-functions">Configure deployment sources for functions</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-authentication-for-functions">Manage authentication for functions</a></li>
+</ul></td>
+  </tr>
+
+  <tr>
+    <td>Service Bus</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/service-bus-dotnet-manage-queue-with-basic-features">Manage queues with basic features</a></li>
+<li><a href="https://github.com/Azure-Samples/service-bus-dotnet-manage-publish-subscribe-with-basic-features">Manage publish-subscribe with basic features</a></li>
+<li><a href="https://github.com/Azure-Samples/service-bus-dotnet-manage-with-claims-based-authorization">Manage queues and publish-subcribe with cliams based authorization</a></li>
+<li><a href="https://github.com/Azure-Samples/service-bus-dotnet-manage-publish-subscribe-with-advanced-features">Manage publish-subscribe with advanced features - sessions, dead-lettering, de-duplication and auto-deletion of idle entries</a></li>
+<li><a href="https://github.com/Azure-Samples/service-bus-dotnet-manage-queue-with-advanced-features">Manage queues with advanced features - sessions, dead-lettering, de-duplication and auto-deletion of idle entries</a></li>
 </ul></td>
   </tr>
 
@@ -292,21 +363,24 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 <li><a href="https://github.com/Azure-Samples/resources-dotnet-manage-resource">Manage resources</a></li>
 <li><a href="https://github.com/Azure-Samples/resources-dotnet-deploy-using-arm-template">Deploy resources with ARM templates</a></li>
 <li><a href="https://github.com/Azure-Samples/resources-dotnet-deploy-using-arm-template-with-progress">Deploy resources with ARM templates (with progress)</a></li>
-<li><a href="https://github.com/Azure-Samples/resources-java-deploy-virtual-machine-with-managed-disks-using-arm-template">Deploy a virtual machine with managed disks using an ARM template</a></li>
+<li><a href="https://github.com/Azure-Samples/resources-dotnet-deploy-virtual-machine-with-managed-disks-using-arm-template">Deploy a virtual machine with managed disks using an ARM template</a></li>
 </ul></td>
   </tr>
+
   <tr>
     <td>Key Vault</td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/key-vault-dotnet-manage-key-vaults">Manage key vaults</a></li>
 </ul></td>
   </tr>
+
   <tr>
     <td>CDN</td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/cdn-dotnet-manage-cdn">Manage CDNs</a></li>
 </ul></td>
   </tr>
+
   <tr>
     <td>Batch</td>
     <td><ul style="list-style-type:circle">
@@ -318,37 +392,37 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 
 
 
-# Download
+# Download #
 
+**1.0.0** release builds are available on NuGet:
 
-**1.0 beta 5**
+|Azure Management Library                     | Package name                                        | Stable (1.0.0 release) |
+|---------------------------------------------|-----------------------------------------------------|------------------------|
+|Azure Management Client (wrapper package)    | `Microsoft.Azure.Management.Fluent`                 | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/) |
+|App Service (Web Apps)                       | `Microsoft.Azure.Management.AppService.Fluent`      | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.AppService.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.AppService.Fluent/) |
+|Batch                                        | `Microsoft.Azure.Management.Batch.Fluent`           | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Batch.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Batch.Fluent/) |
+|CDN                                          | `Microsoft.Azure.Management.Cdn.Fluent`             | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Cdn.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Cdn.Fluent/) |
+|Virtual Machines & Virtual Machine Scale Sets| `Microsoft.Azure.Management.Compute.Fluent`         | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Compute.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Compute.Fluent/) |
+|DNS                                          | `Microsoft.Azure.Management.Dns.Fluent`             | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Dns.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Dns.Fluent/) |
+|Key Vault                                    | `Microsoft.Azure.Management.KeyVault.Fluent`        | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.KeyVault.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.KeyVault.Fluent/) |
+|Networking                                   | `Microsoft.Azure.Management.Network.Fluent`         | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Network.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Network.Fluent/) |
+|Redis Cache                                  | `Microsoft.Azure.Management.Redis.Fluent`           | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Redis.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Redis.Fluent/) |
+|Resource Manager                             | `Microsoft.Azure.Management.ResourceManager.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.ResourceManager.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.ResourceManager.Fluent/) |
+|Service Bus                                  | `Microsoft.Azure.Management.ServiceBus.Fluent`      | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.ServiceBus.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.ServiceBus.Fluent/) |
+|SQL Database                                 | `Microsoft.Azure.Management.Sql.Fluent`             | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Sql.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Sql.Fluent/) |
+|Storage                                      | `Microsoft.Azure.Management.Storage.Fluent`         | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Storage.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Storage.Fluent/) |
+|Traffic Manager                              | `Microsoft.Azure.Management.TrafficManager.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.TrafficManager.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.TrafficManager.Fluent/) |
 
-1.0 beta 5 release builds are available on NuGet:
+---
 
-Azure Management Library                              | Package name                              | Stable (1.0 beta 5 release)
------------------------|-------------------------------------------|-----------------------------|-------------------------
-Azure Management Client (wrapper package) | `Microsoft.Azure.Management.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/)
-App Service (Web Apps) | `Microsoft.Azure.Management.AppService.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.AppService.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.AppService.Fluent/)
-Batch | `Microsoft.Azure.Management.Batch.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Batch.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Batch.Fluent/)
-CDN | `Microsoft.Azure.Management.Cdn.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Cdn.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Cdn.Fluent/)
-Virtual Machines & Virtual Machine Scale Sets | `Microsoft.Azure.Management.Compute.Fluent`    | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Compute.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Compute.Fluent/)
-DNS | `Microsoft.Azure.Management.Dns.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Dns.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Dns.Fluent/)
-Key Vault |`Microsoft.Azure.Management.KeyVault.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.KeyVault.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.KeyVault.Fluent/)
-Networking  |`Microsoft.Azure.Management.Network.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Network.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Network.Fluent/)
-Redis Cache  |`Microsoft.Azure.Management.Redis.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Redis.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Redis.Fluent/)
-Resource Manager  |`Microsoft.Azure.Management.ResourceManager.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.ResourceManager.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.ResourceManager.Fluent/)
-SQL Database  |`Microsoft.Azure.Management.Sql.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Sql.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Sql.Fluent/)
-Storage  |`Microsoft.Azure.Management.Storage.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Storage.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Storage.Fluent/)
-Traffic Manager  |`Microsoft.Azure.Management.TrafficManager.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.TrafficManager.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.TrafficManager.Fluent/)
-
-#Pre-requisites
+# Pre-requisites
 
 - [.NET Core](https://www.microsoft.com/net/core) 
 - Azure Service Principal - see [how to create authentication info](./AUTH.md).
 
 # Help
 
-If you are migrating your code to 1.0 beta 5, you can use these notes for [preparing your code for 1.0 beta 5 from 1.0 beta 4](./notes/prepare-for-1.0.0-beta5.md).
+If you are migrating your code to 1.0.0, you can use these notes for [preparing your code for 1.0.0 from 1.0.0 beta 5](./notes/prepare-for-1.0.0.md).
 
 If you encounter any bugs with these libraries, please file issues via [Issues](https://github.com/Azure/azure-sdk-for-net/issues) and tag them [Fluent](https://github.com/Azure/azure-sdk-for-net/labels/Fluent) or checkout [StackOverflow for Azure Management Libraries for .NET](http://stackoverflow.com/questions/tagged/azure-sdk).
 
@@ -370,6 +444,7 @@ If you would like to become an active contributor to this project please follow 
 
 | Version           | SHA1                                                                                      | Remarks                                               |
 |-------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| 1.0.0-beta5       | [1.0.0-beta5](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta5)           | Tagged release for 1.0.0-beta5 version of Azure management libraries |
 | 1.0.0-beta4       | [1.0.0-beta4](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta4)           | Tagged release for 1.0.0-beta4 version of Azure management libraries |
 | 1.0.0-beta3       | [1.0.0-beta3](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta3)           | Tagged release for 1.0.0-beta3 version of Azure management libraries |
 | AutoRest       | [AutoRest](https://github.com/selvasingh/azure-sdk-for-net/tree/AutoRest)               | Main branch for AutoRest generated raw clients |
