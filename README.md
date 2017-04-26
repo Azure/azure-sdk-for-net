@@ -52,7 +52,7 @@ The Azure Management Libraries for .NET is a higher-level, object-oriented API f
   </tr>
 </table>
 
-> *Preview* features are marked with the @Beta annotation at the class or interface or method level in libraries. These features are subject to change. They can be modified in any way, or even removed, in the future.
+> *Preview* features are flagged in documentation comments in libraries. These features are subject to change. They can be modified in any way, or even removed, in the future.
 
 **Azure Authentication**
 
