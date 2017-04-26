@@ -1,0 +1,323 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourcegroups/TestVaultGetBackupSecurityPinRg?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlZ3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmc/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "07c6f563-c9a0-41cc-aebe-de4e988b65b3"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg\",\r\n  \"name\": \"TestVaultGetBackupSecurityPinRg\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "215"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 25 Apr 2017 19:15:45 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "fd133db9-273d-4dcd-b752-375c4a40f874"
+        ],
+        "x-ms-correlation-request-id": [
+          "fd133db9-273d-4dcd-b752-375c4a40f874"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170425T191546Z:fd133db9-273d-4dcd-b752-375c4a40f874"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "91"
+        ],
+        "x-ms-client-request-id": [
+          "2e355ae3-dc5e-4bf0-bf36-0a793aac6352"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"name\": \"TestVaultGetBackupSecurityPin\",\r\n  \"etag\": \"W/\\\"datetime'2017-04-25T19%3A15%3A54.4629548Z'\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "414"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 25 Apr 2017 19:15:55 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "x-ms-request-id": [
+          "ba29e165-e1ea-4e65-84c8-c97c08826745"
+        ],
+        "x-ms-client-request-id": [
+          "2e355ae3-dc5e-4bf0-bf36-0a793aac6352"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "ba29e165-e1ea-4e65-84c8-c97c08826745"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170425T191555Z:ba29e165-e1ea-4e65-84c8-c97c08826745"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin/backupSecurityPIN?api-version=2016-12-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbi9iYWNrdXBTZWN1cml0eVBJTj9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e159b761-8c57-4d68-b4cf-8ba5d3b417b5"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/1.3.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"expiryTimeInUtcTicks\": 636287448577927231,\r\n  \"securityPIN\": \"055947\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 25 Apr 2017 19:15:57 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "3f52b61c-21b6-4afd-afae-ce3981faeb31"
+        ],
+        "x-ms-client-request-id": [
+          "e159b761-8c57-4d68-b4cf-8ba5d3b417b5",
+          "e159b761-8c57-4d68-b4cf-8ba5d3b417b5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "3f52b61c-21b6-4afd-afae-ce3981faeb31"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170425T191558Z:3f52b61c-21b6-4afd-afae-ce3981faeb31"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cz9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "88fa91ba-e32e-4290-b24f-bf66947b6b21"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westus\",\r\n      \"name\": \"TestVaultGetBackupSecurityPin\",\r\n      \"etag\": \"W/\\\"datetime'2017-04-25T19%3A15%3A54.4629548Z'\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 25 Apr 2017 19:15:57 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "f12a44f6-75d9-45bc-827d-1537aa633512"
+        ],
+        "x-ms-client-request-id": [
+          "88fa91ba-e32e-4290-b24f-bf66947b6b21"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14961"
+        ],
+        "x-ms-correlation-request-id": [
+          "f12a44f6-75d9-45bc-827d-1537aa633512"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170425T191558Z:f12a44f6-75d9-45bc-827d-1537aa633512"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/TestVaultGetBackupSecurityPinRg/providers/Microsoft.RecoveryServices/vaults/TestVaultGetBackupSecurityPin?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1Rlc3RWYXVsdEdldEJhY2t1cFNlY3VyaXR5UGluUmcvcHJvdmlkZXJzL01pY3Jvc29mdC5SZWNvdmVyeVNlcnZpY2VzL3ZhdWx0cy9UZXN0VmF1bHRHZXRCYWNrdXBTZWN1cml0eVBpbj9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5cf9a61c-b99d-480f-bbe2-dbb32e35edc0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 25 Apr 2017 19:16:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fc8cb401-7341-4610-b1d0-7b1123584e54"
+        ],
+        "x-ms-client-request-id": [
+          "5cf9a61c-b99d-480f-bbe2-dbb32e35edc0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "fc8cb401-7341-4610-b1d0-7b1123584e54"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170425T191602Z:fc8cb401-7341-4610-b1d0-7b1123584e54"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f7424430-103b-4ba3-bd9e-b6f0986f848a"
+  }
+}

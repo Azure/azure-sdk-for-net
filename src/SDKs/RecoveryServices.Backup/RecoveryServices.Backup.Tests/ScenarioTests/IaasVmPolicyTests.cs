@@ -13,12 +13,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
     public class IaasVmPolicyTests: TestBase, IDisposable
     {
         private const string PoliciesTestVault = "DefaultPolicyTestVault";
+        private const string PoliciesTestVaultRg = "DefaultPolicyTestVaultRg";
 
         [Fact]
         public void ListDefaultPolicy()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
-            using (var testHelper = new TestHelper() { VaultName = PoliciesTestVault})
+            using (var testHelper = new TestHelper() { VaultName = PoliciesTestVault, ResourceGroup = PoliciesTestVaultRg})
             {
                 testHelper.Initialize(context);
                 List<ProtectionPolicyResource> policies = testHelper.ListAllPoliciesWithRetries();

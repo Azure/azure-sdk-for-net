@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
                         nextLink => BackupClient.BackupPolicies.ListNext(nextLink)),
                 () => policies.Count > 0,
                 TimeSpan.FromMinutes(5),
-                statusCode => ResourceNotSyncedRetryLogic(statusCode));
+                ResourceNotSyncedRetryLogic);
 
             return policies;
         }
@@ -106,8 +106,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             RetryActionWithTimeout(
                 () => policy = BackupClient.ProtectionPolicies.Get(VaultName, ResourceGroup, policyName),
                 () => policy != null,
-                TimeSpan.FromSeconds(30),
-                statusCode => ResourceNotSyncedRetryLogic(statusCode));
+                TimeSpan.FromMinutes(5),
+                ResourceNotSyncedRetryLogic);
 
             return policy;
         }
@@ -123,6 +123,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             var desiredProtectedItem = (AzureIaaSComputeVMProtectableItem) protectableItems.First(
                 protectableItem => containerName.ToLower().Contains(protectableItem.Name.ToLower())
                 ).Properties;
+
+            Assert.NotNull(desiredProtectedItem);
 
             var item = new ProtectedItemResource()
             {
