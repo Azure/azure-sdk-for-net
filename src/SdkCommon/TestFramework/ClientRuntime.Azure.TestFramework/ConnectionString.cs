@@ -76,6 +76,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                                                .GetFields(BindingFlags.Public | BindingFlags.Static)
                                                select fi.GetRawConstantValue().ToString()).ToList<string>();
 
+            
             connectionKeyNames.ForEach((li) => KeyValuePairs.Add(li, string.Empty));
         }
         

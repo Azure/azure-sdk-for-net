@@ -1,5 +1,14 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
 
+### Changes in 2.2.0-preview
+- Introduces the new package item type for catalog items.
+- Switched the FileType enum to a string since this field is read only and will have new types added and changed with some regularity.
+- Allows for listing the following catalog items from their parent's parent item (the database)
+    - Table
+    - view
+    - Table valued function
+    - Table statistics
+
 ### Changes in 2.1.1-preview
 - Update underlying AutoRest framework to the latest. This cleans up a lot of the generated code, making it easier to read.
 - The property `FirewallAllowAzureIps` in the Account object is currently ignored by the service and will not have a value when calling get. This property will be enabled and honored by the service in a future update.
