@@ -35,13 +35,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         private string _ignoreDirNameForSearchingProjects;
 
-        List<string> wkProj45Paths = new List<string>() { "*Etw.csproj", "*Log4net.csproj" };
-        List<string> wkTest45Projects = new List<string>() { "*Net45Tests.csproj", "*Tracing.Tests.csproj" };
+        List<string> wkProj45Paths;
+        List<string> wkTest45Projects;
 
         private List<string> _searchedAllProjects;
-
         private List<string> _finalDirListForSearchingProjects;
-
         private List<string> _overAllIgnoreProjects;
 #endregion
 
@@ -51,7 +49,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             _finalDirListForSearchingProjects = new List<string>();
             _overAllIgnoreProjects = new List<string>();
 
-            _defaultTestProjTokens = new string[] { "*tests.csproj", "*test.csproj" };
+            _defaultTestProjTokens = new string[] { "*tests.csproj", "*test.csproj", "*KeyVault.TestFramework.csproj" };
+            wkProj45Paths = new List<string>() { "*Etw.csproj", "*Log4net.csproj", "*Azure.TestFramework.csproj", "*Test.HttpRecorder.csproj" };
+            wkTest45Projects = new List<string>() { "*Net45Tests.csproj", "*Tracing.Tests.csproj" };
         }
 
         #region Task properties

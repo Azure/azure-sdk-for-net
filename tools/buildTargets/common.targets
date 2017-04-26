@@ -250,8 +250,6 @@
 	  <Message Text="Categorized Test Scoped Projects ..... @(ScopedTestProjects)" Condition=" '$(Scope)' != 'All'" />
     <Message Text="Categorized SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' == 'All'" />
     <Message Text="Categorized Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' == 'All'" />
-
-    
     <Message Text="SDKProjects ....... @(SDKProject->Count())"/>
     <Message Text="TestSDKProjects ....... @(SDKTestProject->Count())"/>
     

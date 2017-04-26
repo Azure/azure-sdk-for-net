@@ -129,7 +129,11 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() == 5);
+                //Since HttpRecorder and TestFramework are multi-targeting, they are no 
+                //longer treated as regular nuget packages (targeting net452 and netStd1.4)
+                //but rather projects that are built without any targetFx
+                //
+                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() == 3);
                 Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() == 5);
 
                 Assert.True(cproj.WellKnowSDKNet452Projects.Count() > 0);
@@ -151,7 +155,10 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() == 2);
+                //Since HttpRecorder and TestFramework are multi-targeting, they are no 
+                //longer treated as regular nuget packages (targeting net452 and netStd1.4)
+                //but rather projects that are build without any targetFx
+                Assert.Null(cproj.SDKProjectsToBuild);
                 Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() == 2);
             }
             else

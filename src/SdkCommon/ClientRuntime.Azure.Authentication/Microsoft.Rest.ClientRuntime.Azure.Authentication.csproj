@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('clientruntime.reference.props'))" />
   <PropertyGroup>
+    <PackageId>Microsoft.Rest.ClientRuntime.Azure.Authentication</PackageId>
     <Description>Provides ADAL based authentication for Azure management client libraries</Description>
-    <Copyright>Copyright (c) Microsoft Corporation</Copyright>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.Authentication</AssemblyName>
     <AssemblyTitle>Authentication for Azure Management Clients</AssemblyTitle>
     <VersionPrefix>2.2.13</VersionPrefix>    
-    <PackageId>Microsoft.Rest.ClientRuntime.Azure.Authentication</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime Authentication $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
@@ -22,6 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6]" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6,3.0.0)" />
   </ItemGroup>
 </Project>
