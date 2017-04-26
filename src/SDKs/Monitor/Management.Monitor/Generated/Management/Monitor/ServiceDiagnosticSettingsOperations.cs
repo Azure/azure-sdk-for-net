@@ -79,7 +79,6 @@ namespace Microsoft.Azure.Management.Monitor.Management
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        [System.Obsolete()]
         public async Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> GetWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)
@@ -259,7 +258,6 @@ namespace Microsoft.Azure.Management.Monitor.Management
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        [System.Obsolete()]
         public async Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceUri, ServiceDiagnosticSettingsResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)
@@ -460,7 +458,6 @@ namespace Microsoft.Azure.Management.Monitor.Management
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        [System.Obsolete()]
         public async Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> UpdateWithHttpMessagesAsync(string resourceUri, ServiceDiagnosticSettingsResource serviceDiagnosticSettingsResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)
