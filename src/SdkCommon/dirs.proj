@@ -3,17 +3,17 @@
 		<NugetCommonTags>Common ClientRuntime</NugetCommonTags>
 	</PropertyGroup>
 	<ItemGroup Label="SDKProject">
-    <!--
+    
 	<ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Azure\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />    
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Log4Net\Microsoft.Rest.ClientRuntime.Log4Net.csproj" />	
-    -->
+    
     <ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Etw\Microsoft.Rest.ClientRuntime.Etw.csproj" />
     
 	</ItemGroup>
 
-	<!--
+	
 	<ItemGroup Label="TestSDKProject">
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime\ClientRuntime.Tests\Microsoft.Rest.ClientRuntime.Tests.csproj" ProjectType="Test" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ClientRuntime.Azure\ClientRuntime.Azure.Tests\Microsoft.Rest.ClientRuntime.Azure.Tests.csproj" ProjectType="Test" />
@@ -35,7 +35,6 @@
 		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TestFramework\TestFramework.Tests\TestFramework.Tests.csproj" ProjectType="Test" />
 	</ItemGroup>
-	-->
 
   <ItemGroup>
     <UniTargetSDKProject Include="$(MSBuildThisFileDirectory)ClientRuntime.Etw\Microsoft.Rest.ClientRuntime.Etw.csproj" />

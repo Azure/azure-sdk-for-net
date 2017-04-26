@@ -8,7 +8,7 @@
   <UsingTask TaskName="FilterOutAutoRestLibraries" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
   <UsingTask TaskName="BuildProjectTemplatesTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
   <UsingTask TaskName="DebugTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
-  <UsingTask TaskName="CategorizeProjects" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
+  <UsingTask TaskName="SDKCategorizeProjects" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
 
   <UsingTask Condition=" $(OnPremiseBuild) " TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
   <UsingTask Condition=" $(OnPremiseBuild) " TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />

@@ -7,14 +7,33 @@ using System.Collections.Generic;
 
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Execution;
+using Microsoft.WindowsAzure.Build.Tasks.Utilities;
 
 namespace Microsoft.WindowsAzure.Build.Tasks
 {
-    public class CategorizeProjects : Task
+    /// <summary>
+    /// This task will enable getting projects that needs to be built.
+    /// Currently this task makes the following assumption:
+    /// 1) We have hard coded to search for only *.csproj files as the projects that needs to be built
+    /// It has the capability and properties that will accomodate any number of project file extension (using ; separated list)
+    /// 2) It has currently hard-coded to ignore KeyVault Sample projects (they do not need to be built anytime)
+    /// 3) Due to a Msbuild capability of not able to provide outputs for multi-targeting projects, we need to separate out projects 
+    /// that are only targeting one framework version.
+    /// So in our entire build system, we assume that all our proejcts target only .NET 452 and .NET Standard 1.4
+    /// Not sure if we want to accomodate random target frameworks (possibly not), but then there are always exceptions and we are not
+    /// ready for those exceptions.
+    /// Need to file an issue to investigate this and enable it.
+    /// 
+    /// </summary>
+    public class SDKCategorizeProjects : Task
     {
+        #region fields
         private string _defaultFileExt = "*.csproj";
         private string _defaultBuildScope = "All";
-        private string _defaultTestProj = "*tests.csproj";
+        private string[] _defaultTestProjTokens;
+        private string KV_IGNOREDIRNAME = "Microsoft.Azure.KeyVault.Samples";
+
+        private string _ignoreDirNameForSearchingProjects;
 
         List<string> wkProj45Paths = new List<string>() { "*Etw.csproj", "*Log4net.csproj" };
         List<string> wkTest45Projects = new List<string>() { "*Net45Tests.csproj", "*Tracing.Tests.csproj" };
@@ -24,67 +43,111 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         private List<string> _finalDirListForSearchingProjects;
 
         private List<string> _overAllIgnoreProjects;
+#endregion
 
-        public CategorizeProjects()
+        public SDKCategorizeProjects()
         {
             _searchedAllProjects = new List<string>();
             _finalDirListForSearchingProjects = new List<string>();
             _overAllIgnoreProjects = new List<string>();
+
+            _defaultTestProjTokens = new string[] { "*tests.csproj", "*test.csproj" };
         }
 
         #region Task properties
 
+        /// <summary>
+        /// Source Root Dir Path to search projects
+        /// </summary>
         [Required]
         public string SourceRootDirPath { get; set; }
 
+        /// <summary>
+        /// BuildScope
+        /// </summary>
         [Required]
         public string BuildScope { get; set; }
 
-        public string IgnoreDirForSearchingProjects { get; set; }
+        /// <summary>
+        /// Directory name which needs to be ignore during searching of projects
+        /// We ignore all directory paths that has the provided directory name
+        /// for e.g. Microsoft.Azure.KeyVault.Samples, we will ignore any paths that has the given names
+        /// </summary>
+        public string IgnoreDirNameForSearchingProjects
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(_ignoreDirNameForSearchingProjects))
+                {
+                    _ignoreDirNameForSearchingProjects = KV_IGNOREDIRNAME;
+                }
+
+                return _ignoreDirNameForSearchingProjects;
+            }
+            set
+            {
+                _ignoreDirNameForSearchingProjects = value;
+            }
+        }
         
-        public string SearchProjectFileExt { get; set; }
+        /// <summary>
+        /// List of project file extension.
+        /// Currently only hard coded to .csproj files
+        /// </summary>
+        private string SearchProjectFileExt { get; set; }
 
+        /// <summary>
+        /// List of projects that needs to be built
+        /// </summary>
         [Output]
-        public ITaskItem[] SDKProjectsToBuild { get; set; }
+        public ITaskItem[] SDKProjectsToBuild { get; private set; }
 
+        /// <summary>
+        /// List of Test Projects that needs to be build
+        /// </summary>
         [Output]
-        public ITaskItem[] SDKTestProjectsToBuild { get; set; }
+        public ITaskItem[] SDKTestProjectsToBuild { get; private set; }
 
+        /// <summary>
+        /// List of .NET 452 projects that will be separated from the list of projects that 
+        /// are multi targeting
+        /// 
+        /// </summary>
         [Output]
-        public ITaskItem[] WellKnowSDKNet452Projects { get; set; }
+        public ITaskItem[] WellKnowSDKNet452Projects { get; private set; }
 
+        //[Output]
+        //public ITaskItem[] Foo { get; private set; }
+
+        /// <summary>
+        /// List of .NET 452 test projects that will be separated from the list of projects that
+        /// are multi-targeting
+        /// </summary>
         [Output]
-        public ITaskItem[] WellKnowTestSDKNet452Projects { get; set; }
+        public ITaskItem[] WellKnowTestSDKNet452Projects { get; private set; }
         #endregion
 
         public override bool Execute()
         {
             List<string> sdkProjects = new List<string>();
             List<string> testProjects = new List<string>();
-
-
-
             List<ITaskItem> sdkTaskItems = new List<ITaskItem>();
             List<ITaskItem> testTaskItems = new List<ITaskItem>();
 
             Init();
             if (BuildScope.Equals("All", StringComparison.OrdinalIgnoreCase))
             {
-                SearchAllProjectFiles(SourceRootDirPath, SearchProjectFileExt);
                 sdkProjects = SearchOnlySdkProjects(SourceRootDirPath);
                 testProjects = SearchOnlyTestProjects(SourceRootDirPath);
             }
             else //We set default scope to All if empty/null, so safe to evaluate to Else in this case
             {
-                SearchAllProjectFiles(SourceRootDirPath, SearchProjectFileExt);
                 sdkProjects = ScopedSdkProjects(SourceRootDirPath, BuildScope);
                 testProjects = ScopedTestProjects(SourceRootDirPath, BuildScope);
             }
 
             UpdateWellKnowProjectList();
-            //sdkProjects = sdkProjects.Except<string>(SearchWellKnowProjects(wkProj45Paths))?.ToList<string>();
-            //testProjects = testProjects.Except<string>(SearchWellKnowProjects(wkTest45Projects))?.ToList<string>();
-            
+
             foreach (string testProj in testProjects)
             {
                 TaskItem ti = new TaskItem(testProj);
@@ -94,6 +157,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             foreach(string projPath in sdkProjects)
             {
                 TaskItem ti = new TaskItem(projPath);
+
+                //This will be enabled, once we find a good way to parse project files that are .NET SDK based.
+                //Currently the build engine unable to execute property functions and gives error. Need to find if I am using 
+                // the righ set of API's.
+                //We want to avoid parsing xml project file as much as possible.
+
                 //Dictionary<string, string> targetFxMetaData = GetMetaData(ti);
                 //foreach (KeyValuePair<string, string> kv in targetFxMetaData)
                 //{
@@ -122,10 +191,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             string searchProjInDirPath = Path.Combine(rootSearchDirPath, scope);
             if (Directory.Exists(searchProjInDirPath))
             {
-                var ssdkProj = SearchOnlySdkProjects(searchProjInDirPath);
-                var stestProj = SearchOnlyTestProjects(searchProjInDirPath);
+                var scopedSdkProjs = SearchOnlySdkProjects(searchProjInDirPath);
+                //var stestProj = SearchOnlyTestProjects(searchProjInDirPath);
 
-                var scopedSdkProjs = ssdkProj.Except<string>(stestProj);
+                //var scopedSdkProjs = ssdkProj.Except<string>(stestProj, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
                 if (scopedSdkProjs.Any<string>())
                 {
                     finalSdkProj.AddRange(scopedSdkProjs);
@@ -162,6 +231,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         #endregion
             
         #region All
+            /// <summary>
+            /// This searches all the projects from the root directory sepcified
+            /// This also creates ignore list of projects
+            /// </summary>
+            /// <param name="rootSearchDirPath"></param>
+            /// <param name="projectExts"></param>
+            /// <returns></returns>
         private List<string> SearchAllProjectFiles(string rootSearchDirPath, string projectExts)
         {
             List<string> searchedProjects = new List<string>();
@@ -172,14 +248,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             List<string> projectExtList = projectExts.Split(';').ToList<string>();
 
             var allProjFiles = Directory.EnumerateFiles(SourceRootDirPath, _defaultFileExt, SearchOption.AllDirectories);
-            var ignoredFiles = from s in allProjFiles where s.Contains(IgnoreDirForSearchingProjects) select s;
+            var ignoredFiles = GetAndUpdateIgnoredProjects(SourceRootDirPath);
 
-            if(ignoredFiles.Any<string>())
-            {
-                _overAllIgnoreProjects.AddRange(ignoredFiles);
-            }
-
-            var finalProjects = allProjFiles.Except<string>(ignoredFiles);
+            var finalProjects = allProjFiles.Except<string>(ignoredFiles, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
 
             if (finalProjects.Any<string>())
                 _searchedAllProjects.AddRange(finalProjects);
@@ -189,17 +260,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         private List<string> SearchOnlySdkProjects(string rootSearchDirPath)
         {
-            List<string> ignoreList = _overAllIgnoreProjects;
-            ignoreList.AddRange(SearchOnlyTestProjects(rootSearchDirPath));
-            ignoreList.AddRange(SearchWellKnowProjects(wkProj45Paths));
-
             List<string> sdkProjFiles = new List<string>();
-            var sdkProj = Directory.EnumerateFiles(rootSearchDirPath, _defaultFileExt, SearchOption.AllDirectories);
-            //sdkProj = sdkProj.Except<string>(_overAllIgnoreProjects);
-            //List<string> testProjects = SearchOnlyTestProjects(rootSearchDirPath);
-            //List<string> wkProj = SearchWellKnowProjects(wkProj45Paths);
-            //sdkProj = sdkProj.Except<string>(wkProj);
-            var finalSdkProj = sdkProj.Except<string>(ignoreList);
+            var sdkProj = Directory.EnumerateFiles(rootSearchDirPath, _defaultFileExt, SearchOption.AllDirectories)?.ToList<string>();
+            var testProj = SearchOnlyTestProjects(rootSearchDirPath);
+
+            var finalSdkProj = sdkProj.Except<string>(_overAllIgnoreProjects, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
+            finalSdkProj = finalSdkProj.Except<string>(testProj, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
 
             if (finalSdkProj.Any<string>())
             {
@@ -213,25 +279,23 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         private List<string> SearchOnlyTestProjects(string rootSearchDirPath)
         {
-            List<string> ignoreList = new List<string>();
-            //ignoreList.AddRange(_overAllIgnoreProjects);
-            ignoreList.AddRange(SearchWellKnowProjects(wkTest45Projects));
-
             List<string> testProj = new List<string>();
-            var tp = Directory.EnumerateFiles(rootSearchDirPath, _defaultTestProj, SearchOption.AllDirectories);
-            //List<string> wkTestProj = SearchWellKnowProjects(wkTest45Projects);
-            //tp = tp.Except<string>(wkTestProj);
-            var finalTp = tp.Except<string>(ignoreList);
+            List<string> tp = new List<string>();
+            foreach(string token in _defaultTestProjTokens)
+            {
+                var intrimTP = Directory.EnumerateFiles(rootSearchDirPath, token, SearchOption.AllDirectories)?.ToList<string>();
+               
+                if(intrimTP.Any<string>())
+                {
+                    tp.AddRange(intrimTP);
+                }
+            }
+
+            var finalTp = tp.Except<string>(_overAllIgnoreProjects, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)))?.ToList<string>();
             if (finalTp.Any<string>())
             {
                 testProj.AddRange(finalTp);
             }
-
-            foreach(string lst in ignoreList)
-            {
-                testProj.Except<string>()
-            }
-
             return testProj;
         }
         #endregion
@@ -256,7 +320,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             Dictionary<string, string> fxDict = new Dictionary<string, string>();
             int monikerCount = 0;
             string[] fxMonikers = new string[] { "TargetFx1", "TargetFx2" };
+
+            var ver = ProjectCollection.GlobalProjectCollection.DefaultToolsVersion;
             Project loadedPoj = ProjectCollection.GlobalProjectCollection.LoadProject(projSpec.ItemSpec);
+
+
 
             string targetFxList = loadedPoj.GetPropertyValue("TargetFrameworks");
             var fxNames = targetFxList.Split(';').ToList<string>();
@@ -331,6 +399,43 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 Log.LogMessage("Empty Scope Detected, setting BuildScope to 'All'");
                 BuildScope = _defaultBuildScope;
             }
+
+            //Get All Projects
+            SearchAllProjectFiles(SourceRootDirPath, SearchProjectFileExt);
+
+            //Get overall ignore list
+            _overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkProj45Paths));
+            _overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkTest45Projects));
+        }
+
+        private List<string> GetAndUpdateIgnoredProjects(string sourceRootDir)
+        {
+            //ClientIntegrationTesting
+            // FileConventions
+            // FileStaging
+            string[] ignoreTokens = null;
+            
+            if(!string.IsNullOrEmpty(IgnoreDirNameForSearchingProjects))
+            {
+                IgnoreDirNameForSearchingProjects = IgnoreDirNameForSearchingProjects.Trim();
+                ignoreTokens = IgnoreDirNameForSearchingProjects.Split(' ');
+            }
+
+            var allProjFiles = Directory.EnumerateFiles(sourceRootDir, _defaultFileExt, SearchOption.AllDirectories);
+
+            foreach(string tokenToIgnore in ignoreTokens)
+            {
+                var ignoredFiles = from s in allProjFiles where s.Contains(tokenToIgnore) select s;
+                if(ignoredFiles.Any<string>())
+                {
+                    _overAllIgnoreProjects.AddRange(ignoredFiles);
+                }
+            }
+
+            _overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkProj45Paths));
+            _overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkTest45Projects));
+
+            return _overAllIgnoreProjects;
         }
     }
 }

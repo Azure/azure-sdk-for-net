@@ -17,6 +17,13 @@
     <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
     <NugetPackageName/>
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
+    <DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples Gallery Intune ClientRuntime.Azure.TestFramework Microsoft.Azure.Test.HttpRecorder Batch\dataPlane KeyVault\dataPlane Search</DefaultPathTokenToIgnore>
+    <!--Microsoft.Azure.KeyVault.Samples ClientIntegrationTesting FileConventions FileStaging
+    ClientRuntime.Azure.TestFramework
+    Condition=" '$(IgnorePathTokens)' == '' "
+    
+  ClientRuntime.Azure.TestFramework Microsoft.Azure.Test.HttpRecorder
+    -->
 	</PropertyGroup>
   <PropertyGroup>
     <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>

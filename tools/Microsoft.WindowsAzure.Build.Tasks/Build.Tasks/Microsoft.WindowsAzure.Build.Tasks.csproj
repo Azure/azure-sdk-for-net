@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\</OutputPath>
+    <OutputPath>..\..\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,8 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildProjectTemplatesTask.cs" />
-    <Compile Include="CategorizeProjects.cs" />
+    <Compile Include="SDKCategorizeProjects.cs" />
     <Compile Include="DebugTask.cs" />
+    <Compile Include="Utilities\ObjectComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FilterOutAutoRestLibraries.cs" />
     <Compile Include="RegexReplacementTask.cs" />

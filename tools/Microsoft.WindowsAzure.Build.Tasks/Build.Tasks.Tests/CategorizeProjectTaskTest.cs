@@ -18,21 +18,42 @@ namespace Build.Tasks.Tests
         {
             sourceRootDir = GetSourceRootDir();
             sourceRootDir = Path.Combine(sourceRootDir, "src");
-            //ignoreDir = Path.Combine(sourceRootDir, @"SDKs\KeyVault\dataPlane\Microsoft.Azure.KeyVault.Samples");
             ignoreDir = @"Microsoft.Azure.KeyVault.Samples";
         }
+
+        [Fact]
+        public void IgnoreDirTokens()
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = "All";
+            cproj.IgnoreDirNameForSearchingProjects = string.Join(" ", ignoreDir, "ClientIntegrationTesting", "FileStaging");
+
+            if (cproj.Execute())
+            {
+                //Using a random number, basically if the number of projects drop below a certain, should fail this test
+                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() > 10);
+                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() > 10);
+            }
+            else
+            {
+                Assert.True(false);
+            }
+        }
+
         [Fact]
         public void CategorizeProjects()
         {
-            CategorizeProjects cproj = new CategorizeProjects();
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = "All";
-            cproj.IgnoreDirForSearchingProjects = Path.Combine(ignoreDir);
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
 
             if(cproj.Execute())
             {
-                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() > 0);
-                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() > 0);
+                //Using a random number, basically if the number of projects drop below a certain, should fail this test
+                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() > 20);
+                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() > 20);
             }
             else
             {
@@ -43,10 +64,10 @@ namespace Build.Tasks.Tests
         [Fact]
         public void ScopedProject()
         {
-            CategorizeProjects cproj = new CategorizeProjects();
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = @"SDKs\Compute";
-            cproj.IgnoreDirForSearchingProjects = Path.Combine(ignoreDir);
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
 
             if (cproj.Execute())
             {
@@ -63,10 +84,10 @@ namespace Build.Tasks.Tests
         [Fact]
         public void IgnoredProjects()
         {
-            CategorizeProjects cproj = new CategorizeProjects();
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = @"SDKs\KeyVault\dataPlane";
-            cproj.IgnoreDirForSearchingProjects = Path.Combine(ignoreDir);
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
 
             if (cproj.Execute())
             {
@@ -82,10 +103,10 @@ namespace Build.Tasks.Tests
         [Fact]
         public void ClientRuntimeProjects()
         {
-            CategorizeProjects cproj = new CategorizeProjects();
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = @"SDKCommon\ClientRuntime";
-            cproj.IgnoreDirForSearchingProjects = Path.Combine(ignoreDir);
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
 
             if (cproj.Execute())
             {
@@ -101,10 +122,10 @@ namespace Build.Tasks.Tests
         [Fact]
         public void SDKCommonProjects()
         {
-            CategorizeProjects cproj = new CategorizeProjects();
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = @"SDKCommon";
-            cproj.IgnoreDirForSearchingProjects = Path.Combine(ignoreDir);
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
 
             if (cproj.Execute())
             {
@@ -123,15 +144,56 @@ namespace Build.Tasks.Tests
         [Fact]
         public void TestFrameworkDir()
         {
-            CategorizeProjects cproj = new CategorizeProjects();
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = @"SDKCommon\TestFramework";
-            cproj.IgnoreDirForSearchingProjects = Path.Combine(ignoreDir);
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
 
             if (cproj.Execute())
             {
                 Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() == 2);
-                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() ==3);
+                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() == 2);
+            }
+            else
+            {
+                Assert.True(false);
+            }
+        }
+
+        [Fact]
+        public void FindTestProject()
+        {
+            //Operational Insights have named their projects as test.csproj rather than tests.csproj
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"SDKs\OperationalInsights";
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+
+            if (cproj.Execute())
+            {
+                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() == 1);
+                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() == 1);
+            }
+            else
+            {
+                
+                Assert.True(false);
+            }
+        }
+
+        [Fact]
+        public void TestIgnoredTokesn()
+        {
+            //Operational Insights have named their projects as test.csproj rather than tests.csproj
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"SDKs\Gallery";
+            cproj.IgnoreDirNameForSearchingProjects = @"Gallery";
+
+            if (cproj.Execute())
+            {
+                Assert.Null(cproj.SDKProjectsToBuild);
+                Assert.Null(cproj.SDKTestProjectsToBuild);
             }
             else
             {
