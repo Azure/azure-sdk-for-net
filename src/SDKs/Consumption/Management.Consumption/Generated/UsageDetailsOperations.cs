@@ -111,9 +111,9 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            if (top > 100)
+            if (top > 1000)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 100);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
             }
             if (top < 1)
             {
