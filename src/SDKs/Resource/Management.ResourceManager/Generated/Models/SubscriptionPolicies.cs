@@ -24,11 +24,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the SubscriptionPolicies class.
         /// </summary>
         /// <param name="locationPlacementId">The subscription location
-        /// placement Id. The Id indicates which regions are visible for a
+        /// placement ID. The ID indicates which regions are visible for a
         /// subscription. For example, a subscription with a location
         /// placement Id of Public_2014-09-01 has access to Azure public
         /// regions.</param>
-        /// <param name="quotaId">The subscription quota Id.</param>
+        /// <param name="quotaId">The subscription quota ID.</param>
         /// <param name="spendingLimit">The subscription spending limit.
         /// Possible values include: 'On', 'Off', 'CurrentPeriodOff'</param>
         public SubscriptionPolicies(string locationPlacementId = default(string), string quotaId = default(string), spendingLimit? spendingLimit = default(spendingLimit?))
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets the subscription location placement Id. The Id indicates
+        /// Gets the subscription location placement ID. The ID indicates
         /// which regions are visible for a subscription. For example, a
         /// subscription with a location placement Id of Public_2014-09-01
         /// has access to Azure public regions.
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string LocationPlacementId { get; private set; }
 
         /// <summary>
-        /// Gets the subscription quota Id.
+        /// Gets the subscription quota ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "quotaId")]
         public string QuotaId { get; private set; }

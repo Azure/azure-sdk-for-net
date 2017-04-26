@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// Lock owner properties.
+    /// </summary>
     public partial class ManagementLockOwner
     {
         /// <summary>
@@ -20,7 +23,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ManagementLockOwner class.
         /// </summary>
-        /// <param name="applicationId">The application Id of the lock
+        /// <param name="applicationId">The application ID of the lock
         /// owner.</param>
         public ManagementLockOwner(string applicationId = default(string))
         {
@@ -28,7 +31,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the application Id of the lock owner.
+        /// Gets or sets the application ID of the lock owner.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationId")]
         public string ApplicationId { get; set; }

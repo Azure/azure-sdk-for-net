@@ -20,14 +20,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the SubResource class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         public SubResource(string id = default(string))
         {
             Id = id;
         }
 
         /// <summary>
-        /// Gets or sets resource Id
+        /// Gets or sets resource ID
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

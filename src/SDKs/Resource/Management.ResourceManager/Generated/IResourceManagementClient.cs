@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.ResourceManager
     using Models;
 
     /// <summary>
+    /// Provides operations for working with resources and resource groups.
     /// </summary>
     public partial interface IResourceManagementClient : System.IDisposable
     {
@@ -37,14 +38,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 

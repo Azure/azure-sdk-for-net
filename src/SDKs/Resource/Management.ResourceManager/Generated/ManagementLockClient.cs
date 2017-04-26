@@ -13,6 +13,10 @@ namespace Microsoft.Azure.Management.ResourceManager
     using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// Azure resources can be locked to prevent other users in your
+    /// organization from deleting or modifying resources.
+    /// </summary>
     public partial class ManagementLockClient : Microsoft.Rest.ServiceClient<ManagementLockClient>, IManagementLockClient, IAzureClient
     {
         /// <summary>
@@ -36,14 +40,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for the operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 

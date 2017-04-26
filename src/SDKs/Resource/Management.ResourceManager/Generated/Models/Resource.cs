@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="location">Resource location</param>
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets resource ID
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }

@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.ResourceManager
     using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// Provides operations for working with resources and resource groups.
+    /// </summary>
     public partial class ResourceManagementClient : Microsoft.Rest.ServiceClient<ResourceManagementClient>, IResourceManagementClient, IAzureClient
     {
         /// <summary>
@@ -36,14 +39,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -302,7 +303,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             this.Tags = new TagsOperations(this);
             this.DeploymentOperations = new DeploymentOperations(this);
             this.BaseUri = new System.Uri("https://management.azure.com");
-            this.ApiVersion = "2016-09-01";
+            this.ApiVersion = "2017-05-10";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

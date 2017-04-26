@@ -8,49 +8,47 @@
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
+    /// Azure resources can be linked together to form logical relationships.
+    /// You can establish links between resources belonging to different
+    /// resource groups. However, all the linked resources must belong to the
+    /// same subscription. Each resource can be linked to 50 other resources.
+    /// If any of the linked resources are deleted or moved, the link owner
+    /// must clean up the remaining link.
     /// </summary>
-    public partial interface IManagementLinkClient : IDisposable
+    public partial interface IManagementLinkClient : System.IDisposable
     {
-        /// <summary>
+        /// <summary>   
         /// The base URI of the service.
         /// </summary>
-        Uri BaseUri { get; set; }
+        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        JsonSerializerSettings SerializationSettings { get; }
+        Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        JsonSerializerSettings DeserializationSettings { get; }
+        Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
-        ServiceClientCredentials Credentials { get; }
+        Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for the operation.
         /// </summary>
         string ApiVersion { get; }
 

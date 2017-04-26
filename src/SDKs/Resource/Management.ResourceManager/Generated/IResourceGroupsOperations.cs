@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Management.ResourceManager
     public partial interface IResourceGroupsOperations
     {
         /// <summary>
-        /// Get all of the resources under a subscription.
+        /// Get all the resources for a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Query parameters. If null is passed returns all resource groups.
+        /// The resource group with the resources to get.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<GenericResource>>> ListResourcesWithHttpMessagesAsync(string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Checks whether resource group exists.
+        /// Checks whether a resource group exists.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to check. The name is case
@@ -62,14 +62,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<bool>> CheckExistenceWithHttpMessagesAsync(string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Create a resource group.
+        /// Creates a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to be created or updated.
+        /// The name of the resource group to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create or update resource group service
-        /// operation.
+        /// Parameters supplied to the create or update a resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -88,10 +87,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ResourceGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, ResourceGroup parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Delete resource group.
+        /// Deletes a resource group.
         /// </summary>
+        /// <remarks>
+        /// When you delete a resource group, all of its resources are also
+        /// deleted. Deleting a resource group deletes all of its template
+        /// deployments and currently stored operations.
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to be deleted. The name is case
+        /// The name of the resource group to delete. The name is case
         /// insensitive.
         /// </param>
         /// <param name='customHeaders'>
@@ -108,7 +112,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Get a resource group.
+        /// Gets a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to get. The name is case
@@ -131,18 +135,20 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ResourceGroup>> GetWithHttpMessagesAsync(string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
+        /// Updates a resource group.
+        /// </summary>
+        /// <remarks>
         /// Resource groups can be updated through a simple PATCH operation to
         /// a group address. The format of the request is the same as that
-        /// for creating a resource groups, though if a field is unspecified
-        /// current value will be carried over.
-        /// </summary>
+        /// for creating a resource group. If a field is unspecified, the
+        /// current value is retained.
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to be created or updated. The name
-        /// is case insensitive.
+        /// The name of the resource group to update. The name is case
+        /// insensitive.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the update state resource group service
-        /// operation.
+        /// Parameters supplied to update a resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -164,11 +170,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Captures the specified resource group as a template.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to be created or updated.
+        /// The name of the resource group to export as a template.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the export template resource group
-        /// operation.
+        /// Parameters for exporting the template.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -187,7 +192,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ResourceGroupExportResult>> ExportTemplateWithHttpMessagesAsync(string resourceGroupName, ExportTemplateRequest parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets a collection of resource groups.
+        /// Gets all the resource groups for a subscription.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -209,10 +214,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceGroup>>> ListWithHttpMessagesAsync(Microsoft.Rest.Azure.OData.ODataQuery<ResourceGroupFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<ResourceGroupFilter>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Delete resource group.
+        /// Deletes a resource group.
         /// </summary>
+        /// <remarks>
+        /// When you delete a resource group, all of its resources are also
+        /// deleted. Deleting a resource group deletes all of its template
+        /// deployments and currently stored operations.
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to be deleted. The name is case
+        /// The name of the resource group to delete. The name is case
         /// insensitive.
         /// </param>
         /// <param name='customHeaders'>
@@ -229,7 +239,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Get all of the resources under a subscription.
+        /// Get all the resources for a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -251,7 +261,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<GenericResource>>> ListResourcesNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets a collection of resource groups.
+        /// Gets all the resource groups for a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

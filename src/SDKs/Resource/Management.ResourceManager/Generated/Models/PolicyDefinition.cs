@@ -24,18 +24,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the PolicyDefinition class.
         /// </summary>
-        /// <param name="policyType">Gets or sets policy definition policy
-        /// type. Possible values include: 'NotSpecified', 'BuiltIn',
-        /// 'Custom'</param>
-        /// <param name="displayName">Gets or sets the policy definition
-        /// display name.</param>
-        /// <param name="description">Gets or sets the policy definition
+        /// <param name="policyType">The type of policy definition. Possible
+        /// values are NotSpecified, BuiltIn, and Custom. Possible values
+        /// include: 'NotSpecified', 'BuiltIn', 'Custom'</param>
+        /// <param name="displayName">The display name of the policy
+        /// definition.</param>
+        /// <param name="description">The policy definition
         /// description.</param>
-        /// <param name="policyRule">Gets or sets the policy rule.</param>
-        /// <param name="id">Gets or sets the Id of the policy
-        /// definition.</param>
-        /// <param name="name">Gets or sets the name of the policy
-        /// definition.</param>
+        /// <param name="policyRule">The policy rule.</param>
+        /// <param name="id">The ID of the policy definition.</param>
+        /// <param name="name">The name of the policy definition. If you do
+        /// not specify a value for name, the value is inferred from the name
+        /// value in the request URI.</param>
         public PolicyDefinition(string policyType = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object), string id = default(string), string name = default(string))
         {
             PolicyType = policyType;
@@ -47,14 +47,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets policy definition policy type. Possible values
-        /// include: 'NotSpecified', 'BuiltIn', 'Custom'
+        /// Gets or sets the type of policy definition. Possible values are
+        /// NotSpecified, BuiltIn, and Custom. Possible values include:
+        /// 'NotSpecified', 'BuiltIn', 'Custom'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.policyType")]
         public string PolicyType { get; set; }
 
         /// <summary>
-        /// Gets or sets the policy definition display name.
+        /// Gets or sets the display name of the policy definition.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
@@ -72,13 +73,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public object PolicyRule { get; set; }
 
         /// <summary>
-        /// Gets or sets the Id of the policy definition.
+        /// Gets or sets the ID of the policy definition.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the policy definition.
+        /// Gets or sets the name of the policy definition. If you do not
+        /// specify a value for name, the value is inferred from the name
+        /// value in the request URI.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

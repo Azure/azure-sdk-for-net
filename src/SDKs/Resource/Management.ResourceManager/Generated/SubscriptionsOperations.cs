@@ -42,10 +42,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         public SubscriptionClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a list of the subscription locations.
+        /// Gets all available geo-locations.
         /// </summary>
+        /// <remarks>
+        /// This operation provides all the locations that are available for resource
+        /// providers; however, each resource provider may support a subset of this
+        /// list.
+        /// </remarks>
         /// <param name='subscriptionId'>
-        /// Id of the subscription
+        /// The ID of the target subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -219,10 +224,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets details about particular subscription.
+        /// Gets details about a specified subscription.
         /// </summary>
         /// <param name='subscriptionId'>
-        /// Id of the subscription.
+        /// The ID of the target subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -396,7 +401,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a list of subscriptions.
+        /// Gets all subscriptions for a tenant.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -544,7 +549,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Subscription>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Subscription>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {
@@ -564,7 +569,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a list of subscriptions.
+        /// Gets all subscriptions for a tenant.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -712,7 +717,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Subscription>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Subscription>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {

@@ -42,14 +42,20 @@ namespace Microsoft.Azure.Management.ResourceManager
         public ResourceManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Move resources from one resource group to another. The resources being
-        /// moved should all be in the same resource group.
+        /// Moves resources from one resource group to another resource group.
         /// </summary>
+        /// <remarks>
+        /// The resources to move must be in the same source resource group. The
+        /// target resource group may be in a different subscription. When moving
+        /// resources, both the source group and the target group are locked for the
+        /// duration of the operation. Write and delete operations are blocked on the
+        /// groups until the move completes.
+        /// </remarks>
         /// <param name='sourceResourceGroupName'>
-        /// Source resource group name.
+        /// The name of the resource group containing the rsources to move.
         /// </param>
         /// <param name='parameters'>
-        /// move resources' parameters.
+        /// Parameters for moving resources.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -66,7 +72,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Get all of the resources under a subscription.
+        /// Get all the resources in a subscription.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -251,25 +257,26 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Checks whether resource exists.
+        /// Checks whether a resource exists.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group containing the resource to check. The name
+        /// is case insensitive.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// Resource identity.
+        /// The resource provider of the resource to check.
         /// </param>
         /// <param name='parentResourcePath'>
-        /// Resource identity.
+        /// The parent resource identity.
         /// </param>
         /// <param name='resourceType'>
-        /// Resource identity.
+        /// The resource type.
         /// </param>
         /// <param name='resourceName'>
-        /// Resource identity.
+        /// The name of the resource to check whether it exists.
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -471,22 +478,23 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Deletes a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group that contains the resource to delete. The
+        /// name is case insensitive.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// Resource identity.
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='parentResourcePath'>
-        /// Resource identity.
+        /// The parent resource identity.
         /// </param>
         /// <param name='resourceType'>
-        /// Resource identity.
+        /// The resource type.
         /// </param>
         /// <param name='resourceName'>
-        /// Resource identity.
+        /// The name of the resource to delete.
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -503,28 +511,29 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Create a resource.
+        /// Creates a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group for the resource. The name is case
+        /// insensitive.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// Resource identity.
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='parentResourcePath'>
-        /// Resource identity.
+        /// The parent resource identity.
         /// </param>
         /// <param name='resourceType'>
-        /// Resource identity.
+        /// The resource type of the resource to create.
         /// </param>
         /// <param name='resourceName'>
-        /// Resource identity.
+        /// The name of the resource to create.
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='parameters'>
-        /// Create or update resource parameters.
+        /// Parameters for creating or updating the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -543,25 +552,26 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Returns a resource belonging to a resource group.
+        /// Gets a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group containing the resource to get. The name is
+        /// case insensitive.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// Resource identity.
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='parentResourcePath'>
-        /// Resource identity.
+        /// The parent resource identity.
         /// </param>
         /// <param name='resourceType'>
-        /// Resource identity.
+        /// The resource type of the resource.
         /// </param>
         /// <param name='resourceName'>
-        /// Resource identity.
+        /// The name of the resource to get.
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -780,15 +790,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Checks whether resource exists.
+        /// Checks by ID whether a resource exists.
         /// </summary>
         /// <param name='resourceId'>
-        /// The fully qualified Id of the resource, including the resource name and
-        /// resource type. For example,
-        /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite
+        /// The fully qualified ID of the resource, including the resource name and
+        /// resource type. Use the format,
+        /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -943,15 +953,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Deletes a resource.
+        /// Deletes a resource by ID.
         /// </summary>
         /// <param name='resourceId'>
-        /// The fully qualified Id of the resource, including the resource name and
-        /// resource type. For example,
-        /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite
+        /// The fully qualified ID of the resource, including the resource name and
+        /// resource type. Use the format,
+        /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -968,15 +978,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Create a resource.
+        /// Create a resource by ID.
         /// </summary>
         /// <param name='resourceId'>
-        /// The fully qualified Id of the resource, including the resource name and
-        /// resource type. For example,
-        /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite
+        /// The fully qualified ID of the resource, including the resource name and
+        /// resource type. Use the format,
+        /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='parameters'>
         /// Create or update resource parameters.
@@ -998,15 +1008,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a resource.
+        /// Gets a resource by ID.
         /// </summary>
         /// <param name='resourceId'>
-        /// The fully qualified Id of the resource, including the resource name and
-        /// resource type. For example,
-        /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite
+        /// The fully qualified ID of the resource, including the resource name and
+        /// resource type. Use the format,
+        /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1181,14 +1191,20 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Move resources from one resource group to another. The resources being
-        /// moved should all be in the same resource group.
+        /// Moves resources from one resource group to another resource group.
         /// </summary>
+        /// <remarks>
+        /// The resources to move must be in the same source resource group. The
+        /// target resource group may be in a different subscription. When moving
+        /// resources, both the source group and the target group are locked for the
+        /// duration of the operation. Write and delete operations are blocked on the
+        /// groups until the move completes.
+        /// </remarks>
         /// <param name='sourceResourceGroupName'>
-        /// Source resource group name.
+        /// The name of the resource group containing the rsources to move.
         /// </param>
         /// <param name='parameters'>
-        /// move resources' parameters.
+        /// Parameters for moving resources.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1367,22 +1383,23 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Deletes a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group that contains the resource to delete. The
+        /// name is case insensitive.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// Resource identity.
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='parentResourcePath'>
-        /// Resource identity.
+        /// The parent resource identity.
         /// </param>
         /// <param name='resourceType'>
-        /// Resource identity.
+        /// The resource type.
         /// </param>
         /// <param name='resourceName'>
-        /// Resource identity.
+        /// The name of the resource to delete.
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1572,28 +1589,29 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Create a resource.
+        /// Creates a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group for the resource. The name is case
+        /// insensitive.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// Resource identity.
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='parentResourcePath'>
-        /// Resource identity.
+        /// The parent resource identity.
         /// </param>
         /// <param name='resourceType'>
-        /// Resource identity.
+        /// The resource type of the resource to create.
         /// </param>
         /// <param name='resourceName'>
-        /// Resource identity.
+        /// The name of the resource to create.
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='parameters'>
-        /// Create or update resource parameters.
+        /// Parameters for creating or updating the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1845,15 +1863,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Deletes a resource.
+        /// Deletes a resource by ID.
         /// </summary>
         /// <param name='resourceId'>
-        /// The fully qualified Id of the resource, including the resource name and
-        /// resource type. For example,
-        /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite
+        /// The fully qualified ID of the resource, including the resource name and
+        /// resource type. Use the format,
+        /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1999,15 +2017,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Create a resource.
+        /// Create a resource by ID.
         /// </summary>
         /// <param name='resourceId'>
-        /// The fully qualified Id of the resource, including the resource name and
-        /// resource type. For example,
-        /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite
+        /// The fully qualified ID of the resource, including the resource name and
+        /// resource type. Use the format,
+        /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
         /// </param>
         /// <param name='apiVersion'>
-        /// Api version to use.
+        /// The API version to use for the operation.
         /// </param>
         /// <param name='parameters'>
         /// Create or update resource parameters.
@@ -2218,7 +2236,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Get all of the resources under a subscription.
+        /// Get all the resources in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
