@@ -12,8 +12,8 @@ if  "%1" == "" (
     set specFile="%1"
 )
 
-set repoRoot=%~dp0..\..\..
-set generateFolder=%~dp0Microsoft.Azure.Management.Batch\Generated
+set repoRoot=%~dp0..\..\..\..
+set generateFolder=%~dp0Management.Batch\Generated
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
 
