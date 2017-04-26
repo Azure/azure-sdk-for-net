@@ -25,7 +25,7 @@
         {
             this.testOutputHelper = testOutputHelper;
 
-            this.sourceLocation = @"..\..\..\src\Azure.Batch";
+            this.sourceLocation = @"..\..\..\..\Azure.Batch";
             this.proxySourceLocation = Path.Combine(this.sourceLocation, GeneratedProtocolFolder);
         }
 
