@@ -101,8 +101,8 @@ namespace EventHub.Tests.ScenarioTests
                 {
                     Assert.True(getNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
                     Assert.True(getNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
-                }  
-                               
+                }
+                TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 // Delete namespace
                 EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
             }

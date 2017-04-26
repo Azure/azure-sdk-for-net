@@ -79,8 +79,10 @@ namespace ServiceBus.Tests.ScenarioTests
                 {
                     Location = location,
                     EnableExpress = true,                   
-                    IsAnonymousAccessible = true                   
-                };
+                    IsAnonymousAccessible = true,
+                    MaxDeliveryCount = 5,
+                    MaxSizeInMegabytes = 1024
+            };
 
                 var updateQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, updateQueuesParameter);
                 Assert.NotNull(updateQueueResponse);

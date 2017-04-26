@@ -24,6 +24,28 @@ namespace Microsoft.Azure.Management.ServiceBus
     public partial interface INamespacesOperations
     {
         /// <summary>
+        /// Check the give namespace name availability.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters to check availability of the given namespace name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityMethodWithHttpMessagesAsync(CheckNameAvailability parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets all the available namespaces within the subscription,
         /// irrespective of the resource groups.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
@@ -49,7 +71,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -74,7 +96,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639408.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The namespace name.
@@ -104,10 +126,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639389.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -127,10 +149,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639379.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -149,14 +171,43 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </exception>
         Task<AzureOperationResponse<NamespaceResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates a service namespace. Once created, this namespace's
+        /// resource manifest is immutable. This operation is idempotent.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to update a namespace resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<NamespaceResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, NamespaceUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets the authorization rules for a namespace.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -179,13 +230,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639410.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Namespace authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='parameters'>
         /// The shared access authorization rule.
@@ -211,13 +262,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639417.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -237,13 +288,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639392.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -267,13 +318,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639398.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -297,13 +348,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt718977.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorization rule name.
+        /// The authorizationrule name.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to regenerate the authorization rule.
@@ -331,7 +382,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639408.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The namespace name.
@@ -361,10 +412,10 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639389.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The namespace name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

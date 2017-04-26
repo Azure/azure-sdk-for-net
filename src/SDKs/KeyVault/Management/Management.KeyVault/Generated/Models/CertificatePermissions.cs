@@ -29,5 +29,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public const string Setissuers = "setissuers";
         public const string Deleteissuers = "deleteissuers";
         public const string Manageissuers = "manageissuers";
+        public const string Recover = "recover";
+        public const string Purge = "purge";
     }
 }

@@ -4,9 +4,9 @@
 ::
 
 @echo off
-set autoRestVersion=0.16.0-Nightly20160426 
+set autoRestVersion=1.0.0-Nightly20170129
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-eventhub/2015-08-01/swagger/EventHub.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0cd4da929a9900eb3ac160b1d6c4cb11feca57de/arm-eventhub/2015-08-01/swagger/EventHub.json"
 ) else (
     set specFile="%1"
 )

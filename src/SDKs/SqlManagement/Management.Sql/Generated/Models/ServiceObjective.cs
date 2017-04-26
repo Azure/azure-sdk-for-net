@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// objective.</param>
         /// <param name="enabled">Gets whether the service level objective is
         /// enabled.</param>
-        public ServiceObjective(string name = default(string), string id = default(string), string serviceObjectiveName = default(string), bool? isDefault = default(bool?), bool? isSystem = default(bool?), string description = default(string), bool? enabled = default(bool?))
+        public ServiceObjective(string name = default(string), string id = default(string), string serviceObjectiveName = default(string), bool isDefault = default(bool), bool isSystem = default(bool), string description = default(string), bool enabled = default(bool))
             : base(name, id)
         {
             ServiceObjectiveName = serviceObjectiveName;
@@ -72,14 +72,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// objective.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isDefault")]
-        public bool? IsDefault { get; private set; }
+        public bool IsDefault { get; private set; }
 
         /// <summary>
         /// Gets whether the service level objective is a system service
         /// objective.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isSystem")]
-        public bool? IsSystem { get; private set; }
+        public bool IsSystem { get; private set; }
 
         /// <summary>
         /// Gets the description for the service level objective.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets whether the service level objective is enabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
-        public bool? Enabled { get; private set; }
+        public bool Enabled { get; private set; }
 
     }
 }
