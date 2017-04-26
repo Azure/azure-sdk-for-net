@@ -10,6 +10,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-    <RootNamespace>Microsoft.Azure.Monitor</RootNamespace>
+    <RootNamespace>Microsoft.Azure.Management.Monitor</RootNamespace>
   </PropertyGroup>
 </Project>
