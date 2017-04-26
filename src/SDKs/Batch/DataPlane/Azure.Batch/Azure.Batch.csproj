@@ -36,12 +36,14 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+      <!--
+      Disable this temporarily until we can find a workaround for ReferenceOutputAssembly being broken
       <ProjectReference Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">
-          <!--<ReferenceOutputAssembly>false</ReferenceOutputAssembly>-->
+          <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
           <Private>False</Private>
       </ProjectReference>
-      <!--<Analyzer Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\$(OutputPath)\ConfigureAwaitAnalyzer.dll" />-->
       <Analyzer Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\bin\Debug\netstandard1.4\ConfigureAwaitAnalyzer.dll" />
+      -->
 
   </ItemGroup>
 
