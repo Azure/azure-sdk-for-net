@@ -23,25 +23,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ResourceGroupPatchable class.
         /// </summary>
-        /// <param name="id">The ID of the resource group.</param>
         /// <param name="name">The name of the resource group.</param>
         /// <param name="managedBy">The ID of the resource that manages this
         /// resource group.</param>
         /// <param name="tags">The tags attached to the resource group.</param>
-        public ResourceGroupPatchable(string id = default(string), string name = default(string), ResourceGroupProperties properties = default(ResourceGroupProperties), string managedBy = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
+        public ResourceGroupPatchable(string name = default(string), ResourceGroupProperties properties = default(ResourceGroupProperties), string managedBy = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
         {
-            Id = id;
             Name = name;
             Properties = properties;
             ManagedBy = managedBy;
             Tags = tags;
         }
-
-        /// <summary>
-        /// Gets the ID of the resource group.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the resource group.
