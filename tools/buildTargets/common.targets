@@ -203,7 +203,7 @@
   </Target>
 
   <Target Name="PublishingNuget">
-    <Error Condition=" ('$(NugetPackageName)' == '') " Text="Please Provide Package Name that has to be published" />
+    <Error Condition=" ('$(NugetPackageName)' == '') " Text="Please Provide Package Name that has to be published /p:NugetPackagename=[packagename]" />
     <Error Condition=" ('$(NugetPackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
     <PropertyGroup>
