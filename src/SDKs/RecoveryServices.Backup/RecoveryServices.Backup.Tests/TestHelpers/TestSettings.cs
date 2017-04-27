@@ -7,26 +7,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
-    public class TestSettingsSchema
-    {
-        public string VirtualMachineName { get; set; }
-
-        public string VirtualMachineResourceGroupName { get; set; }
-
-        public string VirtualMachineType { get; set; }
-
-        public string RestoreStorageAccountName { get; set; }
-
-        public string RestoreStorageAccountResourceGroupName { get; set; }
-    }
-
     public class TestSettings
     {
-        public const string _VirtualMachineName = "VirtualMachineName";
-        public const string _VirtualMachineResourceGroupName = "VirtualMachineResourceGroupName";
-        public const string _VirtualMachineType = "VirtualMachineType";
-        public const string _RestoreStorageAccountName = "RestoreStorageAccountName";
-        public const string _RestoreStorageAccountResourceGroupName = "RestoreStorageAccountResourceGroupName";
+        public string ResourceGroupName { get; set; }
 
         public string VirtualMachineName { get; set; }
 
@@ -38,19 +21,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
         public string RestoreStorageAccountResourceGroupName { get; set; }
 
-        public TestSettings()
+        public TestSettings Initialize()
         {
-            var content = File.ReadAllText(@"TestSettings.json");
+            string content = File.ReadAllText(@"TestSettings.json");
             JObject jObject = JObject.Parse(content);
-            var testSettings = JsonConvert.DeserializeObject<TestSettingsSchema>(jObject.ToString());
+            var testSettings = JsonConvert.DeserializeObject<TestSettings>(jObject.ToString());
 
+            ResourceGroupName = testSettings.ResourceGroupName;
             VirtualMachineName = testSettings.VirtualMachineName;
             VirtualMachineResourceGroupName = testSettings.VirtualMachineResourceGroupName;
             VirtualMachineType = testSettings.VirtualMachineType;
             RestoreStorageAccountName = testSettings.RestoreStorageAccountName;
             RestoreStorageAccountResourceGroupName = testSettings.RestoreStorageAccountResourceGroupName;
+            return this;
         }
 
-        public static TestSettings Instance = new TestSettings();
+        public static TestSettings Instance = new TestSettings().Initialize();
+
+        public void Commit()
+        {
+            string testSettingsJson = JsonConvert.SerializeObject(this, Formatting.Indented);
+            File.WriteAllText(@"TestSettings.json", testSettingsJson);
+        }
     }
 }

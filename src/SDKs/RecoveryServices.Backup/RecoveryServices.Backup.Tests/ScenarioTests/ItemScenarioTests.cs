@@ -32,17 +32,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
     /// </summary>
     public class ItemScenarioTests : TestBase, IDisposable
     {
-        TestHelper testHelper { get; set; }
-
-        public ItemScenarioTests()
-        {
-            testHelper = new TestHelper();
-        }
 
         [Fact]
         public void TriggerBackupAndRestoreTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
+            using(var testHelper = new TestHelper())
             {
                 testHelper.Initialize(context);
 
@@ -85,7 +80,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
         public void Dispose()
         {
-            testHelper.Dispose();
+            
         }
     }
 }
