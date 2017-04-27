@@ -17,21 +17,15 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for CalculationWindowTypes.
+    /// Defines values for InstanceOperationType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum CalculationWindowTypes
+    public enum InstanceOperationType
     {
-        [EnumMember(Value = "Lifetime")]
-        Lifetime,
-        [EnumMember(Value = "Hour")]
-        Hour,
-        [EnumMember(Value = "Day")]
-        Day,
-        [EnumMember(Value = "Week")]
-        Week,
-        [EnumMember(Value = "Month")]
-        Month
+        [EnumMember(Value = "Upsert")]
+        Upsert,
+        [EnumMember(Value = "Delete")]
+        Delete
     }
 }
 

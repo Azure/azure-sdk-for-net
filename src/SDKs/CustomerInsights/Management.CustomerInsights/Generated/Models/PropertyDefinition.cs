@@ -53,7 +53,11 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// property.</param>
         /// <param name="schemaItemPropLink">URL encoded schema.org item prop
         /// link for the property.</param>
-        public PropertyDefinition(string fieldName, string fieldType, string arrayValueSeparator = default(string), IList<ProfileEnumValidValuesFormat> enumValidValues = default(IList<ProfileEnumValidValuesFormat>), bool? isArray = default(bool?), bool? isEnum = default(bool?), bool? isFlagEnum = default(bool?), bool? isImage = default(bool?), bool? isLocalizedString = default(bool?), bool? isName = default(bool?), bool? isRequired = default(bool?), string propertyId = default(string), string schemaItemPropLink = default(string))
+        /// <param name="maxLength">Max length of string. Used only if type is
+        /// string.</param>
+        /// <param name="isAvailableInGraph">Whether property is available in
+        /// graph or not.</param>
+        public PropertyDefinition(string fieldName, string fieldType, string arrayValueSeparator = default(string), IList<ProfileEnumValidValuesFormat> enumValidValues = default(IList<ProfileEnumValidValuesFormat>), bool? isArray = default(bool?), bool? isEnum = default(bool?), bool? isFlagEnum = default(bool?), bool? isImage = default(bool?), bool? isLocalizedString = default(bool?), bool? isName = default(bool?), bool? isRequired = default(bool?), string propertyId = default(string), string schemaItemPropLink = default(string), int? maxLength = default(int?), bool? isAvailableInGraph = default(bool?))
         {
             ArrayValueSeparator = arrayValueSeparator;
             EnumValidValues = enumValidValues;
@@ -68,6 +72,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
             IsRequired = isRequired;
             PropertyId = propertyId;
             SchemaItemPropLink = schemaItemPropLink;
+            MaxLength = maxLength;
+            IsAvailableInGraph = isAvailableInGraph;
         }
 
         /// <summary>
@@ -151,6 +157,18 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "schemaItemPropLink")]
         public string SchemaItemPropLink { get; set; }
+
+        /// <summary>
+        /// Gets or sets max length of string. Used only if type is string.
+        /// </summary>
+        [JsonProperty(PropertyName = "maxLength")]
+        public int? MaxLength { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether property is available in graph or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "isAvailableInGraph")]
+        public bool? IsAvailableInGraph { get; set; }
 
         /// <summary>
         /// Validate the object.
