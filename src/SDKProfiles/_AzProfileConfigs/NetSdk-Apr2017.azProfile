@@ -15,7 +15,10 @@
   <PropertyGroup>
     <AzSdkProfile_Apr2017>Apr2017</AzSdkProfile_Apr2017>
   </PropertyGroup>
-  
+
+  <PropertyGroup>
+    <PackageTags>SDK-Profile-Apr2017;$(PackageTags)</PackageTags>
+  </PropertyGroup>
   
   <ItemGroup Label="SDK Profile Projects">
     <ProfileProjectToBuild Include="$(SdkProfileProjectRootDir)\AnalysisServices\ApiVersion_$(AnalysisServicesApiVersion)\Management.Analysis\Microsoft.Azure.Management.Analysis.csproj">

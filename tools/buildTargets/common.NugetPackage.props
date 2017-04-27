@@ -7,7 +7,7 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>    
-    <PackageTags>$(PackageTags) $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
+    <!--<PackageTags>$(PackageTags) $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>-->
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
 	<GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>

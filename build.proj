@@ -1,11 +1,8 @@
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
-	<Import Project="Directory.Build.props" />
-  <Import Project="$(LibrarySourceFolder)\SDKProfiles\_AzProfileConfigs\NetSdk-Apr2017.azProfile"/>
+<Project DefaultTargets="BuildProfile" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
+	<Import Project="Directory.Build.props" />	
 	<Import Project="test.props" />
 	<Import Project="AzSdk.props" />
-  <Import Project="Directory.Build.targets" />
-  
-  
+	<Import Project="Directory.Build.targets" />  
   
 	<Target Name="Clean" DependsOnTargets="$(CleanTraversedProjectsDependsOn)" />
 	<Target Name="Restore" DependsOnTargets="$(RestoreTraversedProjectsDependsOn)" /> 
@@ -13,7 +10,7 @@
 	<Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 	<Target Name="PublishNuget" DependsOnTargets="$(PublishNugetDependsOn)" />
 	<Target Name="RunTests" DependsOnTargets="$(RunTestProjectsDependsOn)" />
-  <Target Name="SignNuget" DependsOnTargets="$(SignNugetDependsOn)" />
-  <Target Name="BuildProfile" DependsOnTargets="$(BuildProfileTraversedProjectDependsOn)"/>
-  <Target Name="Help" DependsOnTargets="$(HelpDependsOn)" />  
+	<Target Name="SignNuget" DependsOnTargets="$(SignNugetDependsOn)" />
+	<Target Name="BuildProfile" DependsOnTargets="$(BuildProfileTraversedProjectDependsOn)"/>
+	<Target Name="Help" DependsOnTargets="$(HelpDependsOn)" />  
 </Project>

@@ -6,7 +6,7 @@
     <VersionPrefix>1.1.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Analysis</AssemblyName>
     <PackageId>Microsoft.Azure.Management.Analysis</PackageId>
-    <PackageTags>Microsoft Azure resource management;asazure;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
+    <PackageTags>$(PackageTags);Microsoft Azure resource management;asazure;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

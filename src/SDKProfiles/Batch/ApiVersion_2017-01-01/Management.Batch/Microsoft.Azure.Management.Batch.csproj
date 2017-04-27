@@ -6,7 +6,7 @@
     <AssemblyTitle>Microsoft Azure Batch Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Batch</AssemblyName>
     <VersionPrefix>4.2.0</VersionPrefix>
-    <PackageTags>Microsoft Azure batch management</PackageTags>    
+    <PackageTags>$(PackageTags);Microsoft Azure batch management</PackageTags>    
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

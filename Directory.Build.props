@@ -49,5 +49,6 @@
 			  Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
   </Target>  
 	<Import Project="tools\buildTargets\common.Build.props"/>
-	<Import Project="tools\buildTargets\common.NugetPackage.props" />	
+	<Import Project="tools\buildTargets\common.NugetPackage.props" />
+  <Import Project="$(LibrarySourceFolder)\SDKProfiles\_AzProfileConfigs\NetSdk-Apr2017.azProfile"/>
 </Project>

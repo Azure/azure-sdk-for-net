@@ -6,7 +6,7 @@
     <VersionPrefix>2.5.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Authorization</AssemblyName>
     <PackageId>Microsoft.Azure.Management.Authorization</PackageId>
-    <PackageTags>Microsoft Azure Management;Authorization;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
+    <PackageTags>$(PackageTags);Microsoft Azure Management;Authorization;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

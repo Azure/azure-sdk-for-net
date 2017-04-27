@@ -13,7 +13,7 @@
     <SignAssembly>true</SignAssembly>
     -->
     <PackageId>Microsoft.Azure.Management.Cdn</PackageId>
-    <PackageTags>Microsoft Azure CDN management;CDN;Cdn management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
+    <PackageTags>$(PackageTags);Microsoft Azure CDN management;CDN;Cdn management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
     <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
     <PackageProjectUrl>https://github.com/Azure/azure-sdk-for-net</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>

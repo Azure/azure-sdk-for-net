@@ -11,7 +11,7 @@
     <AssemblyOriginatorKeyFile>../../../../tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>-->
     <PackageId>Microsoft.Azure.Management.Compute</PackageId>
-    <PackageTags>Microsoft Azure resource management;virtual machine;compute;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
+    <PackageTags>$(PackageTags);Microsoft Azure resource management;virtual machine;compute;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
     <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
     <PackageProjectUrl>https://github.com/Azure/azure-sdk-for-net</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>

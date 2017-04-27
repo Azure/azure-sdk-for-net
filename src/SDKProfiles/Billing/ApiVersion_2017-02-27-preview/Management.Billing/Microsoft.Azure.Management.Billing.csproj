@@ -6,7 +6,7 @@
     <Authors>Microsoft</Authors>
     <AssemblyName>Microsoft.Azure.Management.Billing</AssemblyName>
     <PackageId>Microsoft.Azure.Management.Billing</PackageId>
-    <PackageTags>Microsoft Azure Billing management;Billing;Billing management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
+    <PackageTags>$(PackageTags);Microsoft Azure Billing management;Billing;Billing management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

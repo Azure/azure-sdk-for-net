@@ -6,7 +6,7 @@
     <VersionPrefix>2.0.3</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
     <PackageId>Microsoft.Azure.Management.Automation</PackageId>
-    <tags>Microsoft "Microsoft Azure" Automation Azure REST HTTP client azureofficial windowsazureofficial</tags>
+    <PackageTags>$(PackageTags);Microsoft "Microsoft Azure" Automation Azure REST HTTP client azureofficial windowsazureofficial</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
