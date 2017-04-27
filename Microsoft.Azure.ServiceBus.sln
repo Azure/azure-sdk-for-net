@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A7C6F327-6E00-4D96-9AE7-60BF2DD50069}"
 EndProject
@@ -9,12 +9,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{5FDD29DE-4CB9-4C79-BBD4-8A61DA5676E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.ServiceBus.UnitTests", "test\Microsoft.Azure.ServiceBus.UnitTests\Microsoft.Azure.ServiceBus.UnitTests.csproj", "{BDA98E20-3A26-4A5A-9371-CB02B73E3434}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{7DEB55BB-1957-4A19-ACBC-B413CA68DC4B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendSample", "samples\SendSample\SendSample.csproj", "{DC1B79BF-9145-4756-A08A-B9AA7F5A2E37}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReceiveSample", "samples\ReceiveSample\ReceiveSample.csproj", "{3E771E9B-F9BB-45FB-A68D-CD6B87267C4E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AAAE4295-4177-4501-B490-E26082D097A5}"
 	ProjectSection(SolutionItems) = preProject
@@ -47,22 +41,6 @@ Global
 		{BDA98E20-3A26-4A5A-9371-CB02B73E3434}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BDA98E20-3A26-4A5A-9371-CB02B73E3434}.Release|x64.ActiveCfg = Release|Any CPU
 		{BDA98E20-3A26-4A5A-9371-CB02B73E3434}.Release|x86.ActiveCfg = Release|Any CPU
-		{DC1B79BF-9145-4756-A08A-B9AA7F5A2E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC1B79BF-9145-4756-A08A-B9AA7F5A2E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC1B79BF-9145-4756-A08A-B9AA7F5A2E37}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{DC1B79BF-9145-4756-A08A-B9AA7F5A2E37}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DC1B79BF-9145-4756-A08A-B9AA7F5A2E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC1B79BF-9145-4756-A08A-B9AA7F5A2E37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DC1B79BF-9145-4756-A08A-B9AA7F5A2E37}.Release|x64.ActiveCfg = Release|Any CPU
-		{DC1B79BF-9145-4756-A08A-B9AA7F5A2E37}.Release|x86.ActiveCfg = Release|Any CPU
-		{3E771E9B-F9BB-45FB-A68D-CD6B87267C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E771E9B-F9BB-45FB-A68D-CD6B87267C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E771E9B-F9BB-45FB-A68D-CD6B87267C4E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3E771E9B-F9BB-45FB-A68D-CD6B87267C4E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3E771E9B-F9BB-45FB-A68D-CD6B87267C4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E771E9B-F9BB-45FB-A68D-CD6B87267C4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E771E9B-F9BB-45FB-A68D-CD6B87267C4E}.Release|x64.ActiveCfg = Release|Any CPU
-		{3E771E9B-F9BB-45FB-A68D-CD6B87267C4E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,7 +48,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A042ADF0-EF65-4F87-B634-322A409F3D61} = {A7C6F327-6E00-4D96-9AE7-60BF2DD50069}
 		{BDA98E20-3A26-4A5A-9371-CB02B73E3434} = {5FDD29DE-4CB9-4C79-BBD4-8A61DA5676E6}
-		{DC1B79BF-9145-4756-A08A-B9AA7F5A2E37} = {7DEB55BB-1957-4A19-ACBC-B413CA68DC4B}
-		{3E771E9B-F9BB-45FB-A68D-CD6B87267C4E} = {7DEB55BB-1957-4A19-ACBC-B413CA68DC4B}
 	EndGlobalSection
 EndGlobal
