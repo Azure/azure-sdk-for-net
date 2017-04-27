@@ -372,9 +372,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<DeploymentExtended> List(this IDeploymentsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter>))
+            public static Microsoft.Rest.Azure.IPage<DeploymentExtended> ListByResourceGroup(this IDeploymentsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter>))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListAsync(resourceGroupName, odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListByResourceGroupAsync(resourceGroupName, odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -393,9 +393,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<DeploymentExtended>> ListAsync(this IDeploymentsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<DeploymentExtended>> ListByResourceGroupAsync(this IDeploymentsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -531,9 +531,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<DeploymentExtended> ListNext(this IDeploymentsOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<DeploymentExtended> ListByResourceGroupNext(this IDeploymentsOperations operations, string nextPageLink)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -548,9 +548,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<DeploymentExtended>> ListNextAsync(this IDeploymentsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<DeploymentExtended>> ListByResourceGroupNextAsync(this IDeploymentsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

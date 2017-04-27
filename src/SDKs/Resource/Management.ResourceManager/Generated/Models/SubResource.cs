@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// Sub-resource.
+    /// </summary>
     public partial class SubResource : Microsoft.Rest.Azure.IResource
     {
         /// <summary>

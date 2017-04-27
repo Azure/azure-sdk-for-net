@@ -18,6 +18,46 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class ResourcesOperationsExtensions
     {
             /// <summary>
+            /// Get all the resources for a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group with the resources to get.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static Microsoft.Rest.Azure.IPage<GenericResource> ListByResourceGroup(this IResourcesOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter>))
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).ListByResourceGroupAsync(resourceGroupName, odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all the resources for a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group with the resources to get.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Microsoft.Rest.Azure.IPage<GenericResource>> ListByResourceGroupAsync(this IResourcesOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Moves resources from one resource group to another resource group.
             /// </summary>
             /// <remarks>
@@ -820,6 +860,40 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async System.Threading.Tasks.Task<GenericResource> BeginCreateOrUpdateByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateByIdWithHttpMessagesAsync(resourceId, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all the resources for a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static Microsoft.Rest.Azure.IPage<GenericResource> ListByResourceGroupNext(this IResourcesOperations operations, string nextPageLink)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all the resources for a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Microsoft.Rest.Azure.IPage<GenericResource>> ListByResourceGroupNextAsync(this IResourcesOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

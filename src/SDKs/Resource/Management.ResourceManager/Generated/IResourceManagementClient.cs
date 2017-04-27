@@ -76,14 +76,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         IProvidersOperations Providers { get; }
 
         /// <summary>
-        /// Gets the IResourceGroupsOperations.
-        /// </summary>
-        IResourceGroupsOperations ResourceGroups { get; }
-
-        /// <summary>
         /// Gets the IResourcesOperations.
         /// </summary>
         IResourcesOperations Resources { get; }
+
+        /// <summary>
+        /// Gets the IResourceGroupsOperations.
+        /// </summary>
+        IResourceGroupsOperations ResourceGroups { get; }
 
         /// <summary>
         /// Gets the ITagsOperations.

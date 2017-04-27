@@ -18,46 +18,6 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class ResourceGroupsOperationsExtensions
     {
             /// <summary>
-            /// Get all the resources for a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group with the resources to get.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static Microsoft.Rest.Azure.IPage<GenericResource> ListResources(this IResourceGroupsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter>))
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListResourcesAsync(resourceGroupName, odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all the resources for a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group with the resources to get.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<GenericResource>> ListResourcesAsync(this IResourceGroupsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.ListResourcesWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Checks whether a resource group exists.
             /// </summary>
             /// <param name='operations'>
@@ -92,7 +52,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Creates a resource group.
+            /// Creates or updates a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -109,7 +69,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Creates a resource group.
+            /// Creates or updates a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -223,9 +183,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='parameters'>
             /// Parameters supplied to update a resource group.
             /// </param>
-            public static ResourceGroup Patch(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters)
+            public static ResourceGroup Update(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroupPatchable parameters)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).PatchAsync(resourceGroupName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).UpdateAsync(resourceGroupName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -248,9 +208,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<ResourceGroup> PatchAsync(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroup parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<ResourceGroup> UpdateAsync(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroupPatchable parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -369,40 +329,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async System.Threading.Tasks.Task BeginDeleteAsync(this IResourceGroupsOperations operations, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Get all the resources for a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static Microsoft.Rest.Azure.IPage<GenericResource> ListResourcesNext(this IResourceGroupsOperations operations, string nextPageLink)
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceGroupsOperations)s).ListResourcesNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all the resources for a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<GenericResource>> ListResourcesNextAsync(this IResourceGroupsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.ListResourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>

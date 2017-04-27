@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// Resource.
+    /// </summary>
     public partial class Resource : Microsoft.Rest.Azure.IResource
     {
         /// <summary>

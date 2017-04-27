@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// The detailed error message of resource management.
+    /// </summary>
     public partial class ResourceManagementErrorWithDetails
     {
         /// <summary>

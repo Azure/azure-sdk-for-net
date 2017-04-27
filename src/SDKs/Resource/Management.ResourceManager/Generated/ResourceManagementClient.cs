@@ -76,14 +76,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         public virtual IProvidersOperations Providers { get; private set; }
 
         /// <summary>
-        /// Gets the IResourceGroupsOperations.
-        /// </summary>
-        public virtual IResourceGroupsOperations ResourceGroups { get; private set; }
-
-        /// <summary>
         /// Gets the IResourcesOperations.
         /// </summary>
         public virtual IResourcesOperations Resources { get; private set; }
+
+        /// <summary>
+        /// Gets the IResourceGroupsOperations.
+        /// </summary>
+        public virtual IResourceGroupsOperations ResourceGroups { get; private set; }
 
         /// <summary>
         /// Gets the ITagsOperations.
@@ -298,8 +298,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         {
             this.Deployments = new DeploymentsOperations(this);
             this.Providers = new ProvidersOperations(this);
-            this.ResourceGroups = new ResourceGroupsOperations(this);
             this.Resources = new ResourcesOperations(this);
+            this.ResourceGroups = new ResourceGroupsOperations(this);
             this.Tags = new TagsOperations(this);
             this.DeploymentOperations = new DeploymentOperations(this);
             this.BaseUri = new System.Uri("https://management.azure.com");
