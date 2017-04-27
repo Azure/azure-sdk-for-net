@@ -147,10 +147,9 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-
-            var result = client.ResourceGroups.Patch("foo", new ResourceGroup
+            var result = client.ResourceGroups.Update("foo", new ResourceGroupPatchable
             {
-                Location = "WestEurope",
+                Name = "foo",
             });
 
             JObject json = JObject.Parse(handler.Request);
@@ -176,9 +175,9 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler();
             var client = GetResourceManagementClient(handler);
 
-            Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.Patch(null, new ResourceGroup()));
-            Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.Patch("foo", null));
-            Assert.Throws<ArgumentOutOfRangeException>(() => client.ResourceGroups.Patch("~`123", new ResourceGroup()));
+            Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.Update(null, new ResourceGroupPatchable()));
+            Assert.Throws<ArgumentNullException>(() => client.ResourceGroups.Update("foo", null));
+            Assert.Throws<ArgumentOutOfRangeException>(() => client.ResourceGroups.Update("~`123", new ResourceGroupPatchable()));
         }
 
         [Fact]

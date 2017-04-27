@@ -903,7 +903,7 @@ namespace ResourceGroups.Tests
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo");
+            var result = client.Deployments.ListByResourceGroup("foo");
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -1010,7 +1010,7 @@ namespace ResourceGroups.Tests
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo", new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Succeeded") { Top = 10 });
+            var result = client.Deployments.ListByResourceGroup("foo", new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Succeeded") { Top = 10 });
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -1120,7 +1120,7 @@ namespace ResourceGroups.Tests
 
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo", new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Succeeded") { Top = 10 });
+            var result = client.Deployments.ListByResourceGroup("foo", new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Succeeded") { Top = 10 });
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -1151,7 +1151,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Deployments.List("foo");
+            var result = client.Deployments.ListByResourceGroup("foo");
             Assert.Empty(result);
         }
     }

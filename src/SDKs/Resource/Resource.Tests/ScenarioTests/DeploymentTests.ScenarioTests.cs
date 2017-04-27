@@ -137,7 +137,7 @@ namespace ResourceGroups.Tests
 
                 TestUtilities.Wait(1000);
 
-                var deploymentListResult = client.Deployments.List(groupName, null);
+                var deploymentListResult = client.Deployments.ListByResourceGroup(groupName, null);
                 var deploymentGetResult = client.Deployments.Get(groupName, deploymentName);
 
                 Assert.NotEmpty(deploymentListResult);
@@ -345,10 +345,10 @@ namespace ResourceGroups.Tests
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
-                var deploymentListResult = client.Deployments.List(groupName, new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Running"));
+                var deploymentListResult = client.Deployments.ListByResourceGroup(groupName, new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Running"));
                 if (null == deploymentListResult|| deploymentListResult.Count() == 0)
                 {
-                    deploymentListResult = client.Deployments.List(groupName, new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Accepted"));
+                    deploymentListResult = client.Deployments.ListByResourceGroup(groupName, new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Accepted"));
                 }
                 var deploymentGetResult = client.Deployments.Get(groupName, deploymentName);
 
