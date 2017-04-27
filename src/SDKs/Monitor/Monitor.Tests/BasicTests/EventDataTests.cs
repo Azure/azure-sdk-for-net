@@ -7,15 +7,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Insights;
-using Microsoft.Azure.Insights.Models;
+using Microsoft.Azure.Management.Monitor;
+using Microsoft.Azure.Management.Monitor.Models;
 using Microsoft.Rest.Azure.OData;
 using Xunit;
 
 namespace Monitor.Tests.BasicTests
 {
     /// <summary>
-    /// <para>Class to unit test the Insights API methods.</para>
+    /// <para>Class to unit test the Monitor API methods.</para>
     /// <para>The goal of these tests is to find out if the serialization/deserialization is working properly. Testing other features is out of scope.</para>
     /// </summary>
     public class EventDataInMemoryTests : TestBase

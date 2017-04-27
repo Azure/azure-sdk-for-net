@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Management.Insights;
-using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.Azure.Management.Monitor.Management;
+using Microsoft.Azure.Management.Monitor.Management.Models;
 using Xunit;
 
 namespace Monitor.Tests.BasicTests
@@ -17,7 +17,7 @@ namespace Monitor.Tests.BasicTests
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
 
         [Fact]
-        public void LogProfiles_PutTest()
+        public void ServiceDiagnosticSettings_PutTest()
         {
             var expResponse = CreateDiagnosticSettings();
             var handler = new RecordedDelegatingHandler();
@@ -38,7 +38,7 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
-        public void LogProfiles_GetTest()
+        public void ServiceDiagnosticSettings_GetTest()
         {
             var expResponse = CreateDiagnosticSettings();
             var handler = new RecordedDelegatingHandler();
