@@ -21,6 +21,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string HighPerformance = "HighPerformance";
         public const string Standard = "Standard";
         public const string UltraPerformance = "UltraPerformance";
+        public const string VpnGw1 = "VpnGw1";
+        public const string VpnGw2 = "VpnGw2";
+        public const string VpnGw3 = "VpnGw3";
     }
 }
 

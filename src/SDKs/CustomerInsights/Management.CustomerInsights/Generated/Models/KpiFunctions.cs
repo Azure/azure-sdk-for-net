@@ -35,7 +35,9 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         [EnumMember(Value = "Count")]
         Count,
         [EnumMember(Value = "None")]
-        None
+        None,
+        [EnumMember(Value = "CountDistinct")]
+        CountDistinct
     }
 }
 
