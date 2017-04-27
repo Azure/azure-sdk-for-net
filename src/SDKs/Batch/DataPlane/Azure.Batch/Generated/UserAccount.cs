@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// A user account to create on an Azure Batch node. Tasks may specify to execute under the security context of the user 
-    /// account.
+    /// A user account to create on an Azure Batch node. Tasks may be configured to execute in the security context of the 
+    /// user account.
     /// </summary>
     public partial class UserAccount : ITransportObjectProvider<Models.UserAccount>, IPropertyMetadata
     {

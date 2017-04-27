@@ -201,7 +201,8 @@ namespace Microsoft.Azure.Batch
         /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any pool in the Batch service.
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
-        /// <param name="virtualMachineSize">The size of virtual machines in the pool.  See https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-size-specs/ for sizes.</param>
+        /// <param name="virtualMachineSize">
+        /// The size of virtual machines in the pool.  See https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/ for sizes. Batch supports all Azure cloud service VM sizes except ExtraSmall, A1V2 and A2V2.</param>
         /// <param name="cloudServiceConfiguration">The <see cref="CloudServiceConfiguration"/> for the pool.</param>
         /// <param name="targetDedicatedComputeNodes">
         /// The desired number of dedicated compute nodes in the pool.
@@ -217,8 +218,6 @@ namespace Microsoft.Azure.Batch
         /// To add the pool to the Batch account, call <see cref="CloudPool.CommitAsync"/>.</returns>
         /// <remarks>
         /// <para>For information about Azure Guest OS families, see https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/ </para>
-        /// <para>For information about available sizes of virtual machines, see https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/.
-        /// Batch supports all Azure cloud service VM sizes except ExtraSmall.</para>
         /// </remarks>
         public CloudPool CreatePool(
             string poolId,
@@ -243,7 +242,9 @@ namespace Microsoft.Azure.Batch
         /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any pool in the Batch service.
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
-        /// <param name="virtualMachineSize">The size of virtual machines in the pool.  See https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-size-specs/ for sizes.</param>
+        /// <param name="virtualMachineSize">The size of virtual machines in the pool. 
+        /// See https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/ for windows sizes and https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/ for linux sizes.
+        /// </param>
         /// <param name="virtualMachineConfiguration">The <see cref="VirtualMachineConfiguration"/> for the pool.</param>
         /// <param name="targetDedicatedComputeNodes">
         /// The desired number of dedicated compute nodes in the pool.
