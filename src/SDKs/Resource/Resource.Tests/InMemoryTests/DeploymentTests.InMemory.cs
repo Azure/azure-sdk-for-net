@@ -200,8 +200,8 @@ namespace ResourceGroups.Tests
                 {
                     Properties = new DeploymentProperties()
                     {
-                        Template = templateString,
-                        Parameters = i == 0 ? parametersStringFull: parametersStringsShort,
+                        Template = JObject.Parse(templateString),
+                        Parameters = i == 0 ? JObject.Parse(parametersStringFull) : JObject.Parse(parametersStringsShort),
                         Mode = DeploymentMode.Incremental
                     }
                 };
@@ -217,7 +217,7 @@ namespace ResourceGroups.Tests
 
                 // Validate payload
                 Assert.Equal("Incremental", json["properties"]["mode"].Value<string>());
-                Assert.Equal("tianotest04", json["properties"]["parameters"]["storageAccountName"]["value"].Value<string>());
+                Assert.Equal("tianotest04", i == 0 ? json["properties"]["parameters"]["parameters"]["storageAccountName"]["value"].Value<string>() : json["properties"]["parameters"]["storageAccountName"]["value"].Value<string>());
                 Assert.Equal("1.0.0.0", json["properties"]["template"]["contentVersion"].Value<string>());
 
                 // Validate result

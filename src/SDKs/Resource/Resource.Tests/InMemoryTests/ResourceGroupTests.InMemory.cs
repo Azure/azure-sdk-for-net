@@ -160,7 +160,7 @@ namespace ResourceGroups.Tests
             Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
 
             // Validate payload
-            Assert.Equal("WestEurope", json["location"].Value<string>());
+            Assert.Equal("foo", json["name"].Value<string>());
 
             // Validate response
             Assert.Equal("/subscriptions/abc123/resourcegroups/csmrgr5mfggio", result.Id);
