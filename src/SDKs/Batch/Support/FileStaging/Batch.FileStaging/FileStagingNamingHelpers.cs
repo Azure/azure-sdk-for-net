@@ -13,19 +13,13 @@
 // limitations under the License.
 
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Threading;
-using System.Security;
-using System.Runtime.InteropServices;
 
 namespace Microsoft.Azure.Batch.FileStaging
 {
-    internal sealed class FileStagingLinkedSources
+    internal static class FileStagingNamingHelpers
     {
+        public const int MaxContainerNameLength = 63;
 
         private static string MakeDefaultNamePlusNamingFragment(string namingFragment)
         {
@@ -44,20 +38,14 @@ namespace Microsoft.Azure.Batch.FileStaging
             return newName;
         }
 
-        // lock used to ensure only one name is created at a time.
-        private static object _lockForContainerNaming = new object();
-
         internal static string ConstructDefaultName(string namingFragment)
         {
-            lock (_lockForContainerNaming)
-            {
-                Thread.Sleep(30);  // make sure no two names are identical
+            string timeString = DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss");
+            string containerName = MakeDefaultNamePlusNamingFragment(namingFragment) + timeString + Guid.NewGuid().ToString("D");
 
-                string uniqueLetsHope = DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss-fff");
-                string defContainerName = MakeDefaultNamePlusNamingFragment(namingFragment) + uniqueLetsHope;
+            containerName = containerName.Length > MaxContainerNameLength ? containerName.Substring(0, MaxContainerNameLength) : containerName;
 
-                return defContainerName;
-            }
+            return containerName;
         }
     }
 }

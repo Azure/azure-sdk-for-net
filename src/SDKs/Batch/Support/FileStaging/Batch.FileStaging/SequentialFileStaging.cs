@@ -12,22 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#pragma warning disable 436  // Temporary bridge until the Batch core NuGet without file staging is published
-
 using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Text;
 using System.IO;
-using System.Threading;
-using System.Diagnostics;
-using System.Security;
-using System.Runtime.InteropServices;
-
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-using BatchFS=Microsoft.Azure.Batch.FileStaging;
 
 namespace Microsoft.Azure.Batch.FileStaging
 {
@@ -144,7 +134,7 @@ namespace Microsoft.Azure.Batch.FileStaging
         {
             if (!File.Exists(this.LocalFileToStage))
             {
-                throw new FileNotFoundException(string.Format(BatchFS.ErrorMessages.FileStagingLocalFileNotFound, this.LocalFileToStage));
+                throw new FileNotFoundException(string.Format(ErrorMessages.FileStagingLocalFileNotFound, this.LocalFileToStage));
             }
         }
 
@@ -202,7 +192,7 @@ namespace Microsoft.Azure.Batch.FileStaging
 
             // 2. create container if it doesn't exist
             CloudBlobContainer storagecontainer = client.GetContainerReference(container);
-            storagecontainer.CreateIfNotExists();
+            storagecontainer.CreateIfNotExistsAsync().GetAwaiter().GetResult();
 
             // 3. validate policy, create/overwrite if doesn't match
             bool policyFound = false;
@@ -214,7 +204,7 @@ namespace Microsoft.Azure.Batch.FileStaging
                 Permissions = permissions
             };
 
-            BlobContainerPermissions blobPermissions = storagecontainer.GetPermissions();
+            BlobContainerPermissions blobPermissions = storagecontainer.GetPermissionsAsync().GetAwaiter().GetResult();
 
             if (blobPermissions.SharedAccessPolicies.ContainsKey(policy))
             {
@@ -235,7 +225,7 @@ namespace Microsoft.Azure.Batch.FileStaging
 
             if (!policyFound)
             {
-                storagecontainer.SetPermissions(blobPermissions);
+                storagecontainer.SetPermissionsAsync(blobPermissions).GetAwaiter().GetResult();
             }
 
             // 4. genereate SAS and return
@@ -250,7 +240,7 @@ namespace Microsoft.Azure.Batch.FileStaging
             if ((null != filesToStage) && (filesToStage.Count > 0))
             {
                 // construct the name of the new blob container.
-                seqArtifact.BlobContainerCreated = FileStagingLinkedSources.ConstructDefaultName(seqArtifact.NamingFragment).ToLowerInvariant();
+                seqArtifact.BlobContainerCreated = FileStagingNamingHelpers.ConstructDefaultName(seqArtifact.NamingFragment).ToLowerInvariant();
 
                 // get any instance for the storage credentials
                 FileToStage anyRealInstance = FindAtLeastOne(filesToStage);
@@ -320,7 +310,7 @@ namespace Microsoft.Azure.Batch.FileStaging
 
             if (null == seqArtifact)
             {
-                throw new ArgumentOutOfRangeException(BatchFS.ErrorMessages.FileStagingIncorrectArtifact);
+                throw new ArgumentOutOfRangeException(ErrorMessages.FileStagingIncorrectArtifact);
             }
 
             // is there any work to do?
