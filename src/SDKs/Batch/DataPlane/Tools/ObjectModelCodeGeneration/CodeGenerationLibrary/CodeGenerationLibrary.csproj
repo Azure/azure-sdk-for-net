@@ -6,6 +6,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <AssemblyName>CodeGenerationLibrary</AssemblyName>
     <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup>

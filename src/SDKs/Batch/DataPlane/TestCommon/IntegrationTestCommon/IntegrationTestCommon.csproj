@@ -6,6 +6,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <AssemblyName>IntegrationTestCommon</AssemblyName>
     <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup>
