@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!--<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />-->  
+  <!--<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />-->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('CR.test.reference.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Rest.ClientRuntime.Tracing.Tests</PackageId>
     <Description>Test Project for Microsoft Rest ClientRuntime Tracing</Description>
@@ -18,7 +19,7 @@
     <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="1.0.41" />
     
     
-    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <!--<ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />-->
     <ProjectReference Include="..\..\ClientRuntime.Etw\Microsoft.Rest.ClientRuntime.Etw.csproj" />    
     <ProjectReference Include="..\..\ClientRuntime.Log4Net\Microsoft.Rest.ClientRuntime.Log4Net.csproj" />
     

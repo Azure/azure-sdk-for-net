@@ -279,16 +279,16 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
                 this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
 #else
-                throw new NotSupportedException("Username/Password login is supported only in NET45 projects");
+                throw new NotSupportedException("Username/Password login is supported only in NET452 and above projects");
 #endif
             }
             else
             {
-#if NET45
+#if FullNetFx
                 InteractiveLogin(this.Tenant, PowerShellClientId,
                                     aadServiceSettings, graphAADServiceSettings);
 #else
-                throw new NotSupportedException("Interactive Login is supported only in NET45 projects");
+                throw new NotSupportedException("Interactive Login is supported only in NET452 and above projects");
 #endif
             }
 #endregion
