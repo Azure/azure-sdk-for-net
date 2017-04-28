@@ -3,9 +3,9 @@
   <Import Project="signing.targets"/>
   <Import Project="additional.targets"/>
   
-  <ItemGroup>
+  <!--<ItemGroup>
 	  <TargetFx Include="net452;netstandard1.4" />
-	</ItemGroup>
+	</ItemGroup>-->
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
     <NetStd14>netstandard1.4</NetStd14>
@@ -17,18 +17,13 @@
       CPP;
       <!--CategorizeProjects;-->
       <!--GetScopedProjects;-->
-	  <!-- GetProjectReferences; -->
+      <!-- GetProjectReferences; -->
     </PreBuildStaticAnalysisTargets>
-  </PropertyGroup>
-  <PropertyGroup>
     <PreBuildCategorizePrjectTargets>
       <!--CategorizeProjects;-->
       CPP;
       GetScopedProjects;
     </PreBuildCategorizePrjectTargets>
-  </PropertyGroup>
-  
-  <PropertyGroup>
     <BuildTraversedProjectsDependsOn>
       PreBuildStaticAnalysis;
       RestoreLatestProjects;
@@ -131,6 +126,7 @@
       <TestNet452SDKProj Include="@(Net452TestSdkProj)"/>
     -->
  <Message Text="Building SDK Projects ..... @(SDKProject)" />
+    
     <MSBuild Targets="Build"
              Projects="@(SDKProject)"
              Properties="TargetFramework=$(NetFx452)"
@@ -158,10 +154,10 @@
     
     <ItemGroup>
       <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies);@(Net452SDKAssemblies)" />
-    </ItemGroup>    
+    </ItemGroup>
     
-    <Message Text="Building SDK Projects ..... @(SDKTestProject);@(TestNet452SDKProj)" />
-    <Message Text="Building SDKTest Projects ....... @(SDKTestProject);@(TestNet452SDKProj)" />
+    <Message Text="Building SDKTest Projects ....... %(SDKTestProject.Identity)" />
+    <Message Text="Building net452Test Projects ....... %(TestNet452SDKProj.Identity)" />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
          Projects="@(SDKTestProject);@(TestNet452SDKProj)"
          Condition=" '$(SkipBuildingTestProjects)' != 'false' "

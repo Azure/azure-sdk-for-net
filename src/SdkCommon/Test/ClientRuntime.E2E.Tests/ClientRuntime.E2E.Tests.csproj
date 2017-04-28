@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />  
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('CR.test.reference.props'))" />  
   <PropertyGroup>
     <Description>Microsoft Rest ClientRuntime End to End Tests</Description>
     <AssemblyName>ClientRuntime.E2E.Tests</AssemblyName>
@@ -20,7 +20,7 @@
     <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.7.0,2.0.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
 
-    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <!--<ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />-->
     <ProjectReference Include="..\..\ClientRuntime.Azure\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
     
     <!--

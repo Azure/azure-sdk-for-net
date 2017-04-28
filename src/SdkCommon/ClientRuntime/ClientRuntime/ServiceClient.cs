@@ -10,7 +10,7 @@ namespace Microsoft.Rest
     using System.Net.Http.Headers;
     using System.Reflection;
     using Microsoft.Rest.TransientFaultHandling;
-#if NET45
+#if FullNetFx
     using Microsoft.Win32;
 #endif
 
@@ -48,8 +48,8 @@ namespace Microsoft.Rest
         /// </summary>
         private string _fxVersion;
 
-        #region NET45 specific code
-#if NET45
+        #region Full Net Fx specific code
+#if FullNetFx
         /// <summary>
         /// Indicates OS Name
         /// </summary>
@@ -134,7 +134,7 @@ namespace Microsoft.Rest
                 {
                     _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
                     _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(FXVERSION, FrameworkVersion));
-#if NET45
+#if FullNetFx
                     _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSNAME, OsName));
                     _defaultUserAgentInfoList.Add(new ProductInfoHeaderValue(OSVERSION, OsVersion));
 #endif
@@ -292,7 +292,7 @@ namespace Microsoft.Rest
         protected static HttpClientHandler CreateRootHandler()
         {
             // Create our root handler
-#if NET45
+#if FullNetFx
             return new WebRequestHandler();
 #else
             return new HttpClientHandler();
