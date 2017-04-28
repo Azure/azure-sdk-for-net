@@ -788,10 +788,6 @@ namespace Microsoft.Azure.Management.Storage
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (parameters == null)
-            {
-                parameters = new StorageAccountUpdateParameters();
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2362,10 +2358,6 @@ namespace Microsoft.Azure.Management.Storage
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (parameters == null)
-            {
-                parameters = new StorageAccountCreateParameters();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

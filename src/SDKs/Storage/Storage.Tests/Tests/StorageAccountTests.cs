@@ -855,7 +855,6 @@ namespace Storage.Tests
                     Services = "bftq",
                     ResourceTypes = "sco",
                     Permissions = "rdwlacup",
-                    IPAddressOrRange = "0.0.0.0-255.255.255.255",
                     Protocols = HttpProtocol.Httpshttp,
                     SharedAccessStartTime = DateTime.UtcNow,
                     SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
@@ -868,7 +867,6 @@ namespace Storage.Tests
                 Assert.Equal(accountSasParameters.Services, resultCredentials.Services);
                 Assert.Equal(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
                 Assert.Equal(accountSasParameters.Permissions, resultCredentials.Permissions);
-                Assert.Equal(accountSasParameters.IPAddressOrRange, resultCredentials.IPAddressOrRange);
                 Assert.Equal(accountSasParameters.Protocols, resultCredentials.Protocols);
 
                 //Assert.Equal(accountSasParameters.SharedAccessStartTime, resultCredentials.SharedAccessStartTime);
@@ -975,7 +973,6 @@ namespace Storage.Tests
                     CanonicalizedResource = "/blob/" + accountName + "/music",
                     Resource = "c",
                     Permissions = "rdwlacup",
-                    IPAddressOrRange = "0.0.0.0-255.255.255.255",
                     Protocols = HttpProtocol.Httpshttp,
                     SharedAccessStartTime = DateTime.UtcNow,
                     SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
@@ -987,7 +984,6 @@ namespace Storage.Tests
 
                 Assert.Equal(serviceSasParameters.Resource, resultCredentials.Resource);
                 Assert.Equal(serviceSasParameters.Permissions, resultCredentials.Permissions);
-                Assert.Equal(serviceSasParameters.IPAddressOrRange, resultCredentials.IPAddressOrRange);
                 Assert.Equal(serviceSasParameters.Protocols, resultCredentials.Protocols);
 
                 Assert.NotNull(serviceSasParameters.SharedAccessStartTime);
