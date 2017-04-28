@@ -40,9 +40,6 @@
         "System.Xml.Linq": ""
       },
       "dependencies": {
-        "Newtonsoft.Json": "6.0.8",
-        "System.Threading": "4.3.0",
-        "System.Threading.Tasks": "4.3.0"
       }
     },
     "netstandard1.5": {
