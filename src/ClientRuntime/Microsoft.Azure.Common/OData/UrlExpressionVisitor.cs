@@ -317,6 +317,10 @@ namespace Microsoft.Azure.Common.OData
             }
         }
 
+        /// <summary>
+        /// Return a string representation of the processed expression
+        /// </summary>
+        /// <returns>The string representation fo the expression</returns>
         public override string ToString()
         {
             closeUnaryBooleanOperator();
