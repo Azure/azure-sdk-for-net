@@ -21,6 +21,9 @@ namespace ResourceGroups.Tests
         const string GoodWebsiteTemplateUri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-web-app-github-deploy/azuredeploy.json";
         const string BadTemplateUri = "https://testtemplates.blob.core.windows.net/templates/bad-website-1.js";
 
+        const string LocationWestEurope = "West Europe";
+        const string LocationSouthCentralUS = "South Central US";
+
         public ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
@@ -66,7 +69,7 @@ namespace ResourceGroups.Tests
 
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
                 JObject json = JObject.Parse(handler.Request);
@@ -95,7 +98,7 @@ namespace ResourceGroups.Tests
 
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
                 var deployment = client.Deployments.Get(groupName, deploymentName);
@@ -129,7 +132,7 @@ namespace ResourceGroups.Tests
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
                 var deploymentCreateResult = client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
                 Assert.NotNull(deploymentCreateResult.Id);
@@ -178,7 +181,7 @@ namespace ResourceGroups.Tests
                     }
                 };
 
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
 
                 //Action
                 var validationResult = client.Deployments.Validate(groupName, deploymentName, parameters);
@@ -216,7 +219,7 @@ namespace ResourceGroups.Tests
                     }
                 };
 
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
 
                 //Action
                 var validationResult = client.Deployments.Validate(groupName, deploymentName, parameters);
@@ -255,7 +258,7 @@ namespace ResourceGroups.Tests
                     }
                 };
 
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
                 var result = client.Deployments.Validate(groupName, deploymentName, parameters);
                 Assert.NotNull(result);
                 Assert.Equal("InvalidTemplate", result.Error.Code);
@@ -302,7 +305,7 @@ namespace ResourceGroups.Tests
                 string deploymentName = TestUtilities.GenerateName("csmd");
                 string resourceName = TestUtilities.GenerateName("csmr");
 
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
                 // Wait until deployment completes
@@ -342,7 +345,7 @@ namespace ResourceGroups.Tests
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationWestEurope });
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
                 var deploymentListResult = client.Deployments.ListByResourceGroup(groupName, new ODataQuery<DeploymentExtendedFilter>(d => d.ProvisioningState == "Running"));
@@ -391,7 +394,7 @@ namespace ResourceGroups.Tests
                     }
                 };
 
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "South Central US" });
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = LiveDeploymentTests.LocationSouthCentralUS });
                 client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
 
                 // Wait until deployment completes
