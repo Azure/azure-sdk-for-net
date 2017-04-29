@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Subnet information.
+    /// </summary>
     public partial class Subnet
     {
         /// <summary>
@@ -34,17 +37,21 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         }
 
         /// <summary>
+        /// The resource ID of the subnet.
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }
 
         /// <summary>
+        /// The name of the subnet as seen in the lab.
         /// </summary>
         [JsonProperty(PropertyName = "labSubnetName")]
         public string LabSubnetName { get; set; }
 
         /// <summary>
-        /// Possible values include: 'Default', 'Deny', 'Allow'
+        /// The permission policy of the subnet for allowing public IP
+        /// addresses (i.e. Allow, Deny)). Possible values include:
+        /// 'Default', 'Deny', 'Allow'
         /// </summary>
         [JsonProperty(PropertyName = "allowPublicIp")]
         public string AllowPublicIp { get; set; }

@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         }
 
         /// <summary>
+        /// The time of day the schedule will occur.
         /// </summary>
         [JsonProperty(PropertyName = "time")]
         public string Time { get; set; }

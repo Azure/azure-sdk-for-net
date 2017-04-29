@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// Information about an artifact's parameter.
+    /// </summary>
     public partial class ParameterInfo
     {
         /// <summary>
@@ -33,11 +36,13 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         }
 
         /// <summary>
+        /// The name of the artifact parameter.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// The value of the artifact parameter.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

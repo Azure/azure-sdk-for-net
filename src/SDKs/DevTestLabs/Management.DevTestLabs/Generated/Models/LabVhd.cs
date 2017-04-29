@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         }
 
         /// <summary>
-        /// The absolute URI of the VHD.
+        /// The URI to the VHD.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

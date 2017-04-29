@@ -9,6 +9,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <Version>1.3.0</Version>
   </PropertyGroup>
 
 

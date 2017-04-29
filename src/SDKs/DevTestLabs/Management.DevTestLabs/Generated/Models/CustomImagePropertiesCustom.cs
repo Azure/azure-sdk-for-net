@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// Initializes a new instance of the CustomImagePropertiesCustom
         /// class.
         /// </summary>
-        public CustomImagePropertiesCustom(string imageName = default(string), bool? sysPrep = default(bool?), string osType = default(string))
+        public CustomImagePropertiesCustom(string osType, string imageName = default(string), bool? sysPrep = default(bool?))
         {
             ImageName = imageName;
             SysPrep = sysPrep;
@@ -51,11 +51,21 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public bool? SysPrep { get; set; }
 
         /// <summary>
-        /// The OS type of the custom image. Possible values include:
-        /// 'Windows', 'Linux', 'None'
+        /// The OS type of the custom image (i.e. Windows, Linux). Possible
+        /// values include: 'Windows', 'Linux', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
         public string OsType { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (OsType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "OsType");
+            }
+        }
     }
 }
