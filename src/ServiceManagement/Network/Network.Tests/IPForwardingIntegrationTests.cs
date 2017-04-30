@@ -47,7 +47,8 @@ namespace Network.Tests
                         serviceName,
                         deploymentName,
                         NetworkTestConstants.OneWebOneWorkerPkgFilePath,
-                        NetworkTestConstants.VnetOneWebOneWorkerCscfgFilePath);
+                        NetworkTestConstants.VnetOneWebOneWorkerCscfgFilePath,
+                        startDeployment: true);
 
                     try
                     {

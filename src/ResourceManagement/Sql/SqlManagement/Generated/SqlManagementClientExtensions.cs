@@ -21,6 +21,10 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.Sql;
+using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql
 {
@@ -32,5 +36,48 @@ namespace Microsoft.Azure.Management.Sql
     /// </summary>
     public static partial class SqlManagementClientExtensions
     {
+        /// <summary>
+        /// Gets the status of an Azure Sql Database Failover Group Force
+        /// Failover operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ISqlManagementClient.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database Failover Group
+        /// operation.
+        /// </returns>
+        public static FailoverGroupForceFailoverResponse GetFailoverGroupForceFailoverAllowDataLossOperationStatus(this ISqlManagementClient operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISqlManagementClient)s).GetFailoverGroupForceFailoverAllowDataLossOperationStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Database Failover Group Force
+        /// Failover operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ISqlManagementClient.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database Failover Group
+        /// operation.
+        /// </returns>
+        public static Task<FailoverGroupForceFailoverResponse> GetFailoverGroupForceFailoverAllowDataLossOperationStatusAsync(this ISqlManagementClient operations, string operationStatusLink)
+        {
+            return operations.GetFailoverGroupForceFailoverAllowDataLossOperationStatusAsync(operationStatusLink, CancellationToken.None);
+        }
     }
 }

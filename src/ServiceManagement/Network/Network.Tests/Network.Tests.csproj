@@ -110,6 +110,12 @@
     <None Include="SessionRecords\Network.Tests.Routes.MigrateRouteTableTests\ValdiateMigrationRouteTable.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Network.Tests.VipMobilityTests\TestReserveIPWithIPTagsNegative.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Network.Tests.VipMobilityTests\TestReserveIPWithIPTagsSimple.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestData\SimpleMigrationNetworkConfiguration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
