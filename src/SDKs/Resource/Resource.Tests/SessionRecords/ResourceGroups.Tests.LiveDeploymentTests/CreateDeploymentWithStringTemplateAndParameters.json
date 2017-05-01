@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502?api-version=2016-09-01",
+      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502?api-version=2017-05-10",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West Europe\"\r\n}",
       "RequestHeaders": {
@@ -60,7 +60,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617?api-version=2016-09-01",
+      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617?api-version=2017-05-10",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"template\": {\r\n      \"$schema\": \"http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"storageAccountName\": {\r\n          \"type\": \"string\"\r\n        }\r\n      },\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Storage/storageAccounts\",\r\n          \"name\": \"[parameters('storageAccountName')]\",\r\n          \"apiVersion\": \"2015-06-15\",\r\n          \"location\": \"[resourceGroup().location]\",\r\n          \"properties\": {\r\n            \"accountType\": \"Standard_LRS\"\r\n          }\r\n        }\r\n      ],\r\n      \"outputs\": {}\r\n    },\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"value\": \"tianotest102\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -101,7 +101,7 @@
           "no-cache"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617/operationStatuses/08587321097261906755?api-version=2016-09-01"
+          "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617/operationStatuses/08587321097261906755?api-version=2017-05-10"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
@@ -122,7 +122,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617/operationStatuses/08587321097261906755?api-version=2016-09-01",
+      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617/operationStatuses/08587321097261906755?api-version=2017-05-10",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -169,7 +169,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617/operationStatuses/08587321097261906755?api-version=2016-09-01",
+      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617/operationStatuses/08587321097261906755?api-version=2017-05-10",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -216,7 +216,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617?api-version=2016-09-01",
+      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617?api-version=2017-05-10",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -263,7 +263,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617?api-version=2016-09-01",
+      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourcegroups/csmrg502/providers/Microsoft.Resources/deployments/csmd2617?api-version=2017-05-10",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

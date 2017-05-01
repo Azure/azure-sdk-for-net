@@ -1,21 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg4645?api-version=2016-09-01",
+      "RequestUri": "/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d/tagNames/csmtg6923?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFlMjNkNDQtNWY4NC00ZjJmLTkwOGYtZTNiZDMxOTUyNDNkL3RhZ05hbWVzL2NzbXRnNjkyMz9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "48630b18-e0cd-4bc0-9804-ea48a9532eb0"
+          "539746dc-a954-489b-b482-88bd782d61bb"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.0.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg4645\",\r\n  \"tagName\": \"csmtg4645\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d/tagNames/csmtg6923\",\r\n  \"tagName\": \"csmtg6923\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "148"
@@ -30,22 +32,22 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 01:13:55 GMT"
+          "Mon, 01 May 2017 20:51:52 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1183"
         ],
         "x-ms-request-id": [
-          "712748ed-3486-40a7-9872-d2744472f32e"
+          "181b42f1-068a-4d57-a37a-6882caf3eb81"
         ],
         "x-ms-correlation-request-id": [
-          "712748ed-3486-40a7-9872-d2744472f32e"
+          "181b42f1-068a-4d57-a37a-6882caf3eb81"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160727T011356Z:712748ed-3486-40a7-9872-d2744472f32e"
+          "CENTRALUSEUAP:20170501T205152Z:181b42f1-068a-4d57-a37a-6882caf3eb81"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,21 +56,23 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames?api-version=2016-09-01",
+      "RequestUri": "/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d/tagNames?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFlMjNkNDQtNWY4NC00ZjJmLTkwOGYtZTNiZDMxOTUyNDNkL3RhZ05hbWVzP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5b8adf44-e285-4cc7-a984-51a8b9e05053"
+          "9766ea4c-652a-415d-8f33-b8f79a06968c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.0.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/provision_source\",\r\n      \"tagName\": \"provision_source\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/provision_source/tagValues/RMS\",\r\n          \"tagValue\": \"RMS\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg4645\",\r\n      \"tagName\": \"csmtg4645\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d/tagNames/csmtg6923\",\r\n      \"tagName\": \"csmtg6923\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -80,7 +84,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 01:13:55 GMT"
+          "Mon, 01 May 2017 20:51:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -89,16 +93,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14978"
+          "14999"
         ],
         "x-ms-request-id": [
-          "2a6959cc-455d-4b82-81ab-532d761b1e9d"
+          "143eee7e-8d81-4cf6-8d1c-a33781fe7dd4"
         ],
         "x-ms-correlation-request-id": [
-          "2a6959cc-455d-4b82-81ab-532d761b1e9d"
+          "143eee7e-8d81-4cf6-8d1c-a33781fe7dd4"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160727T011356Z:2a6959cc-455d-4b82-81ab-532d761b1e9d"
+          "CENTRALUSEUAP:20170501T205153Z:143eee7e-8d81-4cf6-8d1c-a33781fe7dd4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -107,18 +111,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg4645?api-version=2016-09-01",
+      "RequestUri": "/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d/tagNames/csmtg6923?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFlMjNkNDQtNWY4NC00ZjJmLTkwOGYtZTNiZDMxOTUyNDNkL3RhZ05hbWVzL2NzbXRnNjkyMz9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "560c9463-bb7f-4083-8263-bb9c9047dad9"
+          "c06ffe74-c1c9-4a0b-a766-aad780319c29"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -133,22 +139,22 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 27 Jul 2016 01:13:55 GMT"
+          "Mon, 01 May 2017 20:51:54 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1182"
         ],
         "x-ms-request-id": [
-          "358b04b6-93d2-4579-9a5d-28c126bda1da"
+          "e55c7305-cf29-450e-8635-4a3488a50d03"
         ],
         "x-ms-correlation-request-id": [
-          "358b04b6-93d2-4579-9a5d-28c126bda1da"
+          "e55c7305-cf29-450e-8635-4a3488a50d03"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160727T011356Z:358b04b6-93d2-4579-9a5d-28c126bda1da"
+          "CENTRALUSEUAP:20170501T205154Z:e55c7305-cf29-450e-8635-4a3488a50d03"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -159,10 +165,10 @@
   ],
   "Names": {
     "CreateListAndDeleteSubscriptionTag": [
-      "csmtg4645"
+      "csmtg6923"
     ]
   },
   "Variables": {
-    "SubscriptionId": "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505"
+    "SubscriptionId": "11e23d44-5f84-4f2f-908f-e3bd3195243d"
   }
 }
