@@ -140,14 +140,6 @@ namespace IotHub.Tests.ScenarioTests
                     IotHubTestUtilities.DefaultIotHubName,
                     IotHubTestUtilities.EventsEndpointName,
                     "testConsumerGroup");
-
-                // Delete Hub
-                this.iotHubClient.IotHubResource.Delete(
-                    IotHubTestUtilities.DefaultResourceGroupName,
-                    IotHubTestUtilities.DefaultIotHubName);
-
-                iotHubNameAvailabilityInfo = this.iotHubClient.IotHubResource.CheckNameAvailability(operationInputs);
-                Assert.Equal(true, iotHubNameAvailabilityInfo.NameAvailable);
             }
         }
 
@@ -209,7 +201,7 @@ namespace IotHub.Tests.ScenarioTests
 
                 // Get an Iot Hub
                 var iotHubDesc = this.iotHubClient.IotHubResource.Get(
-                    IotHubTestUtilities.DefaultResourceGroupName,
+                    IotHubTestUtilities.DefaultUpdateResourceGroupName,
                     IotHubTestUtilities.DefaultUpdateIotHubName);
 
 
@@ -218,14 +210,17 @@ namespace IotHub.Tests.ScenarioTests
                 Assert.Equal(iotHub.Sku.Capacity, iotHubDesc.Sku.Capacity);
                 Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, iotHubDesc.Name);
 
-                
-                // Delete Hub
-                this.iotHubClient.IotHubResource.Delete(
-                    IotHubTestUtilities.DefaultResourceGroupName,
-                    IotHubTestUtilities.DefaultUpdateIotHubName);
-
-                iotHubNameAvailabilityInfo = this.iotHubClient.IotHubResource.CheckNameAvailability(operationInputs);
-                Assert.Equal(true, iotHubNameAvailabilityInfo.NameAvailable);
+                //Update Again
+                // perform a dummy update
+                iotHubDesc.Properties.Routing.Endpoints.EventHubs[0].ResourceGroup = "1";
+                retIotHub = this.UpdateIotHub(resourceGroup, iotHubDesc, IotHubTestUtilities.DefaultUpdateIotHubName);
+                Assert.NotNull(retIotHub);
+                Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, retIotHub.Name);
+                Assert.Equal(retIotHub.Properties.Routing.Routes.Count, 4);
+                Assert.Equal(retIotHub.Properties.Routing.Endpoints.EventHubs.Count, 1);
+                Assert.Equal(retIotHub.Properties.Routing.Endpoints.ServiceBusTopics.Count, 1);
+                Assert.Equal(retIotHub.Properties.Routing.Endpoints.ServiceBusQueues.Count, 1);
+                Assert.Equal(retIotHub.Properties.Routing.Routes[0].Name, "route1");
             }
         }
 
@@ -274,28 +269,32 @@ namespace IotHub.Tests.ScenarioTests
                         Condition = "true",
                         EndpointNames = new List<string>() {"events"},
                         IsEnabled = true,
-                        Name = "route1"
+                        Name = "route1",
+                        Source = "DeviceMessages"
                     },
                     new RouteProperties()
                     {
                         Condition = "true",
                         EndpointNames = new List<string>() {"eh1"},
                         IsEnabled = true,
-                        Name = "route2"
+                        Name = "route2",
+                        Source = "DeviceMessages"
                     },
                     new RouteProperties()
                     {
                         Condition = "true",
                         EndpointNames = new List<string>() {"sb1"},
                         IsEnabled = true,
-                        Name = "route3"
+                        Name = "route3",
+                        Source = "DeviceMessages"
                     },
                     new RouteProperties()
                     {
                         Condition = "true",
                         EndpointNames = new List<string>() {"tp1"},
                         IsEnabled = true,
-                        Name = "route4"
+                        Name = "route4",
+                        Source = "DeviceMessages"
                     }
                 }
             };

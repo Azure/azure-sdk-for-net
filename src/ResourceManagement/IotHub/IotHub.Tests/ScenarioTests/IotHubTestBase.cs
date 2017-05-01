@@ -76,9 +76,9 @@ namespace IotHub.Tests.ScenarioTests
 
         protected string CreateExternalEH(ResourceGroup resourceGroup, string location)
         {
-            var namespaceName = "iotHubCSharpSDKEhNamespaceTest";
-            var ehName = "iotHubCSharpSDKEHTest";
-            var authRuleName = "iotHubCSharpSDKEHTestRule";
+            var namespaceName = "iothubcsharpsdkehnamespacetest";
+            var ehName = "iothubcsharpsdkehtest";
+            var authRuleName = "iothubcsharpsdkehtestrule";
 
             var namespaceResource = ehClient.Namespaces.CreateOrUpdate(resourceGroup.Name, namespaceName, new EHModel.NamespaceCreateOrUpdateParameters()
             {
