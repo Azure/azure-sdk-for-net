@@ -240,6 +240,27 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.NotEmpty(osProduct.Product.Name);
             Assert.NotEmpty(osProduct.Product.Version);
         }
+
+        [Fact]
+        public void AddingSpCharsInUserAgent()
+        {
+            string sampleProd = "SampleProdName";
+            string newSampleProd = "NewSampleProdName";
+            string spChars = "*()!@#$%^&";
+            string sampleVersion = "1.*.0.*";
+
+            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+            fakeClient.SetUserAgent(string.Concat(sampleProd, spChars));
+            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
+            var retrievedProdInfo = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(sampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
+            Assert.Equal(retrievedProdInfo?.Product?.Name, sampleProd);
+
+            fakeClient.SetUserAgent(newSampleProd, sampleVersion);
+            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentVersion = fakeClient.HttpClient.DefaultRequestHeaders.UserAgent;
+            var retrievedVersion = userAgentVersion.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(newSampleProd)).FirstOrDefault<ProductInfoHeaderValue>();
+            Assert.Equal(retrievedVersion?.Product?.Version, sampleVersion);
+        }
+
 #endif
     }
 }
