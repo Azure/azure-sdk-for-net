@@ -234,6 +234,21 @@ namespace Sql.Tests
             Assert.NotNull(actual.Type);
         }
 
+        public static void ValidateFailoverGroup(FailoverGroup expected, FailoverGroup actual, string name)
+        {
+            Assert.NotNull(actual.Id);
+            Assert.NotNull(actual.Type);
+            Assert.NotNull(actual.Location);
+
+            Assert.Equal(name, actual.Name);
+            Assert.Equal(expected.ReadOnlyEndpoint.FailoverPolicy, actual.ReadOnlyEndpoint.FailoverPolicy);
+            Assert.Equal(expected.ReadWriteEndpoint.FailoverPolicy, actual.ReadWriteEndpoint.FailoverPolicy);
+            Assert.Equal(expected.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes, actual.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes);
+
+            AssertCollection(expected.Databases, actual.Databases);
+            AssertCollection(expected.PartnerServers.Select(s => s.Id), actual.PartnerServers.Select(s => s.Id));
+        }
+
         public static void ValidateFirewallRule(FirewallRule expected, FirewallRule actual, string name)
         {
             Assert.NotNull(actual.Id);
