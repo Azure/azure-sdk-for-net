@@ -9,12 +9,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// An immutable client-side representation of an application gateway request routing rule.
     /// </summary>
-    /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-    /// version number.).
-    /// </remarks>
     public interface IApplicationGatewayRequestRoutingRule  :
+        IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayRequestRoutingRuleInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress,
