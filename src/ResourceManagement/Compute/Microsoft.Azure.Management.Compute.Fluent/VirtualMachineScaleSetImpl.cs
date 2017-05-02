@@ -434,8 +434,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:062EA8E95730159A684C56D3DFCB4846:2E75CE480B794ADCA106E649FAD94DB6
         public UpgradeMode UpgradeModel()
         {
-            // upgradePolicy is a required property so no null check
-            return Inner.UpgradePolicy.Mode.Value;
+            return (Inner.UpgradePolicy != null) ? Inner.UpgradePolicy.Mode.Value : UpgradeMode.Automatic;
         }
 
         ///GENMHASH:B56D58DDB3B4EFB6D2FB8BFF6488E3FF:48A72DF34AA591EEC3FD96876F4C2258
