@@ -211,15 +211,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 subscriptionClient.PrefetchCount = 2;
                 Assert.Equal(2, subscriptionClient.PrefetchCount);
-                Assert.Equal(2, subscriptionClient.ServiceBusConnection.PrefetchCount);
-
                 // Message receiver should be created with latest prefetch count (lazy load).
                 Assert.Equal(2, subscriptionClient.InnerSubscriptionClient.InnerReceiver.PrefetchCount);
 
                 subscriptionClient.PrefetchCount = 3;
                 Assert.Equal(3, subscriptionClient.PrefetchCount);
-                Assert.Equal(3, subscriptionClient.ServiceBusConnection.PrefetchCount);
-
                 // Already created message receiver should have its prefetch value updated.
                 Assert.Equal(3, subscriptionClient.InnerSubscriptionClient.InnerReceiver.PrefetchCount);
             }

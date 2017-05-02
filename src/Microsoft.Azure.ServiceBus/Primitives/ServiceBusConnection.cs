@@ -14,7 +14,6 @@ namespace Microsoft.Azure.ServiceBus
     public abstract class ServiceBusConnection
     {
         static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
-        int prefetchCount;
 
         protected ServiceBusConnection(TimeSpan operationTimeout, RetryPolicy retryPolicy)
         {
@@ -45,51 +44,11 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public string SasKeyName { get; set; }
 
-        /// <summary>Gets or sets the number of messages that the message receiver can simultaneously request.</summary>
-        /// <value>The number of messages that the message receiver can simultaneously request.</value>
-        public int PrefetchCount
-        {
-            get
-            {
-                return this.prefetchCount;
-            }
-
-            set
-            {
-                if (value < 0)
-                {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(this.PrefetchCount), value, "Value must be greater than 0");
-                }
-
-                this.prefetchCount = value;
-            }
-        }
-
         internal FaultTolerantAmqpObject<AmqpConnection> ConnectionManager { get; set; }
 
         public Task CloseAsync()
         {
             return this.ConnectionManager.CloseAsync();
-        }
-
-        internal MessageSender CreateMessageSender(string entityPath)
-        {
-            MessagingEventSource.Log.MessageSenderCreateStart(this.Endpoint.Host, entityPath);
-            TokenProvider tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(this.SasKeyName, this.SasKey);
-            var cbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.OperationTimeout);
-            AmqpMessageSender messageSender = new AmqpMessageSender(entityPath, null, this, cbsTokenProvider, RetryPolicy.Default);
-            MessagingEventSource.Log.MessageSenderCreateStop(this.Endpoint.Host, entityPath);
-            return messageSender;
-        }
-
-        internal MessageReceiver CreateMessageReceiver(string entityPath, ReceiveMode mode)
-        {
-            MessagingEventSource.Log.MessageReceiverCreateStart(this.Endpoint.Host, entityPath, mode.ToString());
-            TokenProvider tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(this.SasKeyName, this.SasKey);
-            var cbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.OperationTimeout);
-            AmqpMessageReceiver messageReceiver = new AmqpMessageReceiver(entityPath, null, mode, this.PrefetchCount, this, cbsTokenProvider, RetryPolicy.Default);
-            MessagingEventSource.Log.MessageReceiverCreateStop(this.Endpoint.Host, entityPath);
-            return messageReceiver;
         }
 
         protected void InitializeConnection(ServiceBusConnectionStringBuilder builder)

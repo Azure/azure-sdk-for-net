@@ -12,7 +12,5 @@ namespace Microsoft.Azure.ServiceBus
         bool IsClosedOrClosing { get; }
 
         Task CloseAsync();
-
-        Task OnClosingAsync();
     }
 }

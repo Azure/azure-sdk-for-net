@@ -8,10 +8,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Azure.Amqp;
     using Core;
     using Filters;
-    using Messaging.Amqp;
 
     internal sealed class AmqpSubscriptionClient : IInnerSubscriptionClient
     {
+        int prefetchCount;
         readonly object syncLock;
         MessageReceiver innerReceiver;
 
@@ -20,6 +20,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             ServiceBusConnection servicebusConnection,
             RetryPolicy retryPolicy,
             ICbsTokenProvider cbsTokenProvider,
+            int prefetchCount = 0,
             ReceiveMode mode = ReceiveMode.ReceiveAndDelete)
         {
             this.syncLock = new object();
@@ -27,6 +28,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             this.ServiceBusConnection = servicebusConnection;
             this.RetryPolicy = retryPolicy;
             this.CbsTokenProvider = cbsTokenProvider;
+            this.PrefetchCount = prefetchCount;
             this.ReceiveMode = mode;
         }
 
@@ -40,14 +42,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     {
                         if (this.innerReceiver == null)
                         {
-                            this.innerReceiver = new AmqpMessageReceiver(
+                            this.innerReceiver = new MessageReceiver(
                                 this.Path,
                                 MessagingEntityType.Subscriber,
                                 this.ReceiveMode,
-                                this.ServiceBusConnection.PrefetchCount,
                                 this.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.RetryPolicy);
+                                this.RetryPolicy,
+                                this.PrefetchCount);
                         }
                     }
                 }
@@ -62,11 +64,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         /// <value>The number of messages that the subscription client can simultaneously request.</value>
         public int PrefetchCount
         {
-            get => this.ServiceBusConnection.PrefetchCount;
-
+            get => this.prefetchCount;
             set
             {
-                this.ServiceBusConnection.PrefetchCount = value;
+                if (value < 0)
+                {
+                    throw Fx.Exception.ArgumentOutOfRange(nameof(this.PrefetchCount), value, "Value cannot be less than 0.");
+                }
+                this.prefetchCount = value;
                 if (this.innerReceiver != null)
                 {
                     this.innerReceiver.PrefetchCount = value;
@@ -101,10 +106,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] =
                     AmqpMessageConverter.GetRuleDescriptionMap(description);
 
-                AmqpResponseMessage response =
-                    await
-                    ((AmqpMessageReceiver)this.InnerReceiver).ExecuteRequestResponseAsync(amqpRequestMessage)
-                    .ConfigureAwait(false);
+                var response = await this.InnerReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 if (response.StatusCode != AmqpResponseStatusCode.OK)
                 {
@@ -128,10 +130,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                         null);
                 amqpRequestMessage.Map[ManagementConstants.Properties.RuleName] = ruleName;
 
-                var response =
-                    await
-                    ((AmqpMessageReceiver)this.InnerReceiver).ExecuteRequestResponseAsync(amqpRequestMessage)
-                    .ConfigureAwait(false);
+                var response = await this.InnerReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 if (response.StatusCode != AmqpResponseStatusCode.OK)
                 {

@@ -9,7 +9,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using System.IO;
     using System.Net.Sockets;
     using System.Text;
-    using Messaging.Amqp;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
     using Microsoft.Azure.Amqp.Framing;

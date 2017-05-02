@@ -6,12 +6,11 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Amqp;
-    using Core;
     using Microsoft.Azure.Amqp;
-    using Primitives;
+    using Microsoft.Azure.ServiceBus.Core;
+    using Microsoft.Azure.ServiceBus.Primitives;
 
-    public sealed class TopicClient : ClientEntity, ITopicClient
+    public class TopicClient : ClientEntity, ITopicClient
     {
         readonly bool ownsConnection;
         readonly object syncLock;
@@ -74,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus
                     {
                         if (this.innerSender == null)
                         {
-                            this.innerSender = new AmqpMessageSender(
+                            this.innerSender = new MessageSender(
                                 this.TopicName,
                                 MessagingEntityType.Topic,
                                 this.ServiceBusConnection,
@@ -94,7 +93,7 @@ namespace Microsoft.Azure.ServiceBus
 
         TokenProvider TokenProvider { get; }
 
-        public override async Task OnClosingAsync()
+        protected override async Task OnClosingAsync()
         {
             if (this.innerSender != null)
             {

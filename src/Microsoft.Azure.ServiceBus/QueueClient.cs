@@ -15,10 +15,11 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>
     /// Anchor class - all Queue client operations start here.
     /// </summary>
-    public sealed class QueueClient : ClientEntity, IQueueClient
+    public class QueueClient : ClientEntity, IQueueClient
     {
         readonly bool ownsConnection;
         readonly object syncLock;
+        int prefetchCount;
         MessageSender innerSender;
         MessageReceiver innerReceiver;
         AmqpSessionClient sessionClient;
@@ -82,11 +83,14 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The number of messages that the queue client can simultaneously request.</value>
         public int PrefetchCount
         {
-            get => this.ServiceBusConnection.PrefetchCount;
-
+            get => this.prefetchCount;
             set
             {
-                this.ServiceBusConnection.PrefetchCount = value;
+                if (value < 0)
+                {
+                    throw Fx.Exception.ArgumentOutOfRange(nameof(this.PrefetchCount), value, "Value cannot be less than 0.");
+                }
+                this.prefetchCount = value;
                 if (this.innerReceiver != null)
                 {
                     this.innerReceiver.PrefetchCount = value;
@@ -104,7 +108,7 @@ namespace Microsoft.Azure.ServiceBus
                     {
                         if (this.innerSender == null)
                         {
-                            this.innerSender = new AmqpMessageSender(
+                            this.innerSender = new MessageSender(
                                 this.QueueName,
                                 MessagingEntityType.Queue,
                                 this.ServiceBusConnection,
@@ -128,14 +132,14 @@ namespace Microsoft.Azure.ServiceBus
                     {
                         if (this.innerReceiver == null)
                         {
-                            this.innerReceiver = new AmqpMessageReceiver(
+                            this.innerReceiver = new MessageReceiver(
                                 this.QueueName,
                                 MessagingEntityType.Queue,
                                 this.ReceiveMode,
-                                this.ServiceBusConnection.PrefetchCount,
                                 this.ServiceBusConnection,
                                 this.CbsTokenProvider,
-                                this.RetryPolicy);
+                                this.RetryPolicy,
+                                this.PrefetchCount);
                         }
                     }
                 }
@@ -159,7 +163,7 @@ namespace Microsoft.Azure.ServiceBus
                                 this.Path,
                                 MessagingEntityType.Queue,
                                 this.ReceiveMode,
-                                this.ServiceBusConnection.PrefetchCount,
+                                this.PrefetchCount,
                                 this.ServiceBusConnection,
                                 this.CbsTokenProvider,
                                 this.RetryPolicy);
@@ -199,7 +203,7 @@ namespace Microsoft.Azure.ServiceBus
 
         TokenProvider TokenProvider { get; }
 
-        public override async Task OnClosingAsync()
+        protected override async Task OnClosingAsync()
         {
             if (this.innerSender != null)
             {

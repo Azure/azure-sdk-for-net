@@ -7,7 +7,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Azure.Amqp;
     using Azure.Amqp.Encoding;
     using Azure.Amqp.Framing;
-    using Microsoft.Azure.Messaging.Amqp;
 
     public sealed class AmqpRequestMessage
     {

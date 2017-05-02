@@ -7,7 +7,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Text;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Primitives;
+    using Microsoft.Azure.ServiceBus.Core;
+    using Microsoft.Azure.ServiceBus.Primitives;
     using Xunit;
 
     public class SenderReceiverTests : SenderReceiverClientTestBase
@@ -26,8 +27,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async Task MessageReceiverAndMessageSenderCreationWorksAsExpected(string queueName, int messageCount = 10)
         {
             var connection = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
-            var receiver = connection.CreateMessageReceiver(queueName, ReceiveMode.PeekLock);
-            var sender = connection.CreateMessageSender(queueName);
+            var sender = new MessageSender(queueName, connection);
+            var receiver = new MessageReceiver(queueName, connection, receiveMode: ReceiveMode.PeekLock);
 
             try
             {
@@ -46,8 +47,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async Task TopicClientPeekLockDeferTestCase(string queueName, int messageCount = 10)
         {
             var connection = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
-            var receiver = connection.CreateMessageReceiver(queueName, ReceiveMode.PeekLock);
-            var sender = connection.CreateMessageSender(queueName);
+            var sender = new MessageSender(queueName, connection);
+            var receiver = new MessageReceiver(queueName, connection, receiveMode: ReceiveMode.PeekLock);
 
             try
             {
@@ -67,8 +68,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async Task PeekAsyncTest(string queueName, int messageCount = 10)
         {
             var connection = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
-            var receiver = connection.CreateMessageReceiver(queueName, ReceiveMode.ReceiveAndDelete);
-            var sender = connection.CreateMessageSender(queueName);
+            var sender = new MessageSender(queueName, connection);
+            var receiver = new MessageReceiver(queueName, connection, receiveMode: ReceiveMode.ReceiveAndDelete);
 
             try
             {
@@ -87,8 +88,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async Task ReceiveShouldReturnNoLaterThanServerWaitTimeTest(string queueName, int messageCount = 1)
         {
             var connection = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
-            var receiver = connection.CreateMessageReceiver(queueName, ReceiveMode.ReceiveAndDelete);
-            var sender = connection.CreateMessageSender(queueName);
+            var sender = new MessageSender(queueName, connection);
+            var receiver = new MessageReceiver(queueName, connection, receiveMode: ReceiveMode.ReceiveAndDelete);
 
             try
             {
@@ -105,16 +106,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task ReceiverShouldUseTheLatestPrefetchCount()
         {
-            string queueName = TestConstants.NonPartitionedQueueName;
+            var queueName = TestConstants.NonPartitionedQueueName;
             var connection1 = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
-            var connection2 = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString)
-            {
-                PrefetchCount = 1
-            };
-            var receiver1 = connection1.CreateMessageReceiver(queueName, ReceiveMode.ReceiveAndDelete);
-            var receiver2 = connection2.CreateMessageReceiver(queueName, ReceiveMode.ReceiveAndDelete);
-            var sender = connection1.CreateMessageSender(queueName);
-            
+            var connection2 = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
+
+            var sender = new MessageSender(queueName, connection1);
+
+            var receiver1 = new MessageReceiver(queueName, connection1, receiveMode: ReceiveMode.ReceiveAndDelete);
+            var receiver2 = new MessageReceiver(queueName, connection2, receiveMode: ReceiveMode.ReceiveAndDelete, prefetchCount: 1);
+
             Assert.Equal(0, receiver1.PrefetchCount);
             Assert.Equal(1, receiver2.PrefetchCount);
 

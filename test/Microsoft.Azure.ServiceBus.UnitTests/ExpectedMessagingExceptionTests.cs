@@ -6,7 +6,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Primitives;
+    using Microsoft.Azure.ServiceBus.Core;
+    using Microsoft.Azure.ServiceBus.Primitives;
     using Xunit;
 
     public class ExpectedMessagingExceptionTests
@@ -16,8 +17,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             const int messageCount = 2;
             var connection = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
-            var receiver = connection.CreateMessageReceiver(TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock);
-            var sender = connection.CreateMessageSender(TestConstants.NonPartitionedQueueName);
+
+            var sender = new MessageSender(TestConstants.NonPartitionedQueueName, connection);
+            var receiver = new MessageReceiver(TestConstants.NonPartitionedQueueName, connection, receiveMode: ReceiveMode.PeekLock);
 
             try
             {
@@ -104,8 +106,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         async Task CompleteOnPeekedMessagesShouldThrowTest()
         {
             var connection = new ServiceBusNamespaceConnection(TestUtility.NamespaceConnectionString);
-            var receiver = connection.CreateMessageReceiver(TestConstants.NonPartitionedQueueName, ReceiveMode.ReceiveAndDelete);
-            var sender = connection.CreateMessageSender(TestConstants.NonPartitionedQueueName);
+            var sender = new MessageSender(TestConstants.NonPartitionedQueueName, connection);
+            var receiver = new MessageReceiver(TestConstants.NonPartitionedQueueName, connection, receiveMode: ReceiveMode.ReceiveAndDelete);
 
             try
             {

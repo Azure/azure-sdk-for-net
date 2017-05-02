@@ -70,15 +70,15 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 this.PrefetchCount,
                 sessionId);
 
-            AmqpMessageReceiver receiver = new AmqpMessageReceiver(
+            var receiver = new MessageReceiver(
                 this.EntityPath,
                 this.EntityType,
                 this.ReceiveMode,
-                this.PrefetchCount,
                 this.ServiceBusConnection,
                 this.CbsTokenProvider,
-                sessionId,
                 this.RetryPolicy,
+                this.PrefetchCount,
+                sessionId,
                 true);
             try
             {
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 throw AmqpExceptionHelper.GetClientException(exception);
             }
 
-            MessageSession session = new AmqpMessageSession(receiver.SessionId, receiver.LockedUntilUtc, receiver, this.RetryPolicy);
+            MessageSession session = new MessageSession(receiver.SessionId, receiver.LockedUntilUtc, receiver, this.RetryPolicy);
 
             MessagingEventSource.Log.AmqpSessionClientAcceptMessageSessionStop(
                 this.ClientId,

@@ -56,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        public abstract Task OnClosingAsync();
+        protected abstract Task OnClosingAsync();
 
         protected static long GetNextId()
         {

@@ -1,42 +1,34 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus
+namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
-    using Core;
+    using Microsoft.Azure.Amqp;
+    using Microsoft.Azure.ServiceBus.Core;
 
-    internal abstract class MessageSession : MessageReceiver, IMessageSession
+    internal class MessageSession : MessageReceiver, IMessageSession
     {
-        /// <summary>Represents a message session that allows grouping of related messages for processing in a single transaction.</summary>
-        protected MessageSession(ReceiveMode receiveMode, string sessionId, DateTime lockedUntilUtc, MessageReceiver innerReceiver, RetryPolicy retryPolicy)
-            : base(receiveMode, innerReceiver.OperationTimeout, retryPolicy)
+        public MessageSession(string sessionId, DateTime lockedUntilUtc, MessageReceiver innerMessageReceiver, RetryPolicy retryPolicy)
+            : base(innerMessageReceiver.ReceiveMode, innerMessageReceiver.OperationTimeout, retryPolicy)
         {
-            if (innerReceiver == null)
-            {
-                throw Fx.Exception.ArgumentNull("innerReceiver");
-            }
-
             this.SessionId = sessionId;
             this.LockedUntilUtc = lockedUntilUtc;
-            this.InnerMessageReceiver = innerReceiver;
+            this.InnerMessageReceiver = innerMessageReceiver ?? throw Fx.Exception.ArgumentNull(nameof(innerMessageReceiver));
+            this.ReceiveMode = innerMessageReceiver.ReceiveMode;
         }
-
-        public string SessionId { get; protected set; }
-
-        public DateTime LockedUntilUtc { get; protected set;  }
 
         public override string Path
         {
-            get { return this.InnerMessageReceiver.Path;  }
+            get { return this.InnerMessageReceiver.Path; }
         }
 
         protected MessageReceiver InnerMessageReceiver { get; set; }
 
-        public override async Task OnClosingAsync()
+        protected override async Task OnClosingAsync()
         {
             if (this.InnerMessageReceiver != null)
             {
@@ -58,12 +50,6 @@ namespace Microsoft.Azure.ServiceBus
         {
             return this.OnRenewLockAsync();
         }
-
-        protected abstract Task<Stream> OnGetStateAsync();
-
-        protected abstract Task OnSetStateAsync(Stream sessionState);
-
-        protected abstract Task OnRenewLockAsync();
 
         protected override Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
         {
@@ -103,6 +89,95 @@ namespace Microsoft.Azure.ServiceBus
         protected override Task<IList<Message>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1)
         {
             return this.InnerMessageReceiver.PeekAsync(messageCount);
+        }
+
+        protected async Task<Stream> OnGetStateAsync()
+        {
+            try
+            {
+                AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, this.OperationTimeout, null);
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionId;
+
+                AmqpResponseMessage amqpResponseMessage = await this.InnerMessageReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+
+                Stream sessionState = null;
+                if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+                {
+                    if (amqpResponseMessage.Map[ManagementConstants.Properties.SessionState] != null)
+                    {
+                        sessionState = new BufferListStream(new[] { amqpResponseMessage.GetValue<ArraySegment<byte>>(ManagementConstants.Properties.SessionState) });
+                    }
+                }
+                else
+                {
+                    throw amqpResponseMessage.ToMessagingContractException();
+                }
+
+                return sessionState;
+            }
+            catch (Exception exception)
+            {
+                throw AmqpExceptionHelper.GetClientException(exception);
+            }
+        }
+
+        protected async Task OnSetStateAsync(Stream sessionState)
+        {
+            try
+            {
+                if (sessionState != null && sessionState.CanSeek && sessionState.Position != 0)
+                {
+                    throw new InvalidOperationException(Resources.CannotSerializeSessionStateWithPartiallyConsumedStream);
+                }
+
+                AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.SetSessionStateOperation, this.OperationTimeout, null);
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionId;
+
+                if (sessionState != null)
+                {
+                    BufferListStream buffer = BufferListStream.Create(sessionState, AmqpConstants.SegmentSize);
+                    ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
+                    amqpRequestMessage.Map[ManagementConstants.Properties.SessionState] = value;
+                }
+                else
+                {
+                    amqpRequestMessage.Map[ManagementConstants.Properties.SessionState] = null;
+                }
+
+                AmqpResponseMessage amqpResponseMessage = await this.InnerMessageReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
+                {
+                    throw amqpResponseMessage.ToMessagingContractException();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw AmqpExceptionHelper.GetClientException(exception);
+            }
+        }
+
+        protected async Task OnRenewLockAsync()
+        {
+            try
+            {
+                AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, this.OperationTimeout, null);
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionId;
+
+                AmqpResponseMessage amqpResponseMessage = await this.InnerMessageReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+
+                if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+                {
+                    this.LockedUntilUtc = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
+                }
+                else
+                {
+                    throw amqpResponseMessage.ToMessagingContractException();
+                }
+            }
+            catch (Exception exception)
+            {
+                throw AmqpExceptionHelper.GetClientException(exception);
+            }
         }
     }
 }

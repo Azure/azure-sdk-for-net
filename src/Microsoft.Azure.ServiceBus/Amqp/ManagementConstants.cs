@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.Messaging.Amqp
+namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using Microsoft.Azure.Amqp.Encoding;
 
@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Messaging.Amqp
         public static class Response
         {
             public const string StatusCode = "statusCode";
-            public const string StatusDescription = "statusDescription";            public const string ErrorCondition = "errorCondition";
+            public const string StatusDescription = "statusDescription";
+            public const string ErrorCondition = "errorCondition";
         }
 
         public static class Operations

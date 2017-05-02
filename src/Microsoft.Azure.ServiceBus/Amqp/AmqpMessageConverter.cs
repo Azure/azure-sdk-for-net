@@ -11,7 +11,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
     using Microsoft.Azure.Amqp.Framing;
-    using Microsoft.Azure.Messaging.Amqp;
     using Microsoft.Azure.ServiceBus.Filters;
     using SBMessage = Microsoft.Azure.ServiceBus.Message;
 
