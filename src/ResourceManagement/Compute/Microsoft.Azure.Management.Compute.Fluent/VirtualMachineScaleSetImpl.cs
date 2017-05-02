@@ -1636,6 +1636,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:D7FDEEE05B0AD7938194763373E58DCF:B966166E0B6ED23B8FE875ADCB3E96A7
         public VirtualMachineScaleSetImpl WithUpgradeMode(UpgradeMode upgradeMode)
         {
+            if (Inner.UpgradePolicy == null)
+            {
+                Inner.UpgradePolicy = new UpgradePolicy();
+            }
+
             Inner
                     .UpgradePolicy
                     .Mode = upgradeMode;
