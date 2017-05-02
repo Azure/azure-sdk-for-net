@@ -13,32 +13,10 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// An immutable client-side representation of an Azure Batch application package.
     /// </summary>
     public interface IApplicationPackage  :
+        IApplicationPackageBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IExternalChildResource<Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage,Microsoft.Azure.Management.Batch.Fluent.IApplication>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<ApplicationPackageInner>
     {
-        /// <summary>
-        /// Activates the application package.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="format">The format of the uploaded Batch application package, either "zip" or "tar".</param>
-        void Activate(string format);
-
-        /// <summary>
-        /// Activates the application package asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="format">The format of the uploaded Batch application package, either "zip" or "tar".</param>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task ActivateAsync(string format, CancellationToken cancellationToken = default(CancellationToken));
-
         /// <summary>
         /// Deletes the application package.
         /// </summary>
