@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// Entry point for CDN profile management API.
     /// </summary>
     public interface ICdnProfiles  :
+        ICdnProfilesBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<CdnProfile.Definition.IBlank>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
@@ -97,18 +98,5 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="profileName">Name of the CDN profile which is unique within the resource group.</param>
         /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
         void StopEndpoint(string resourceGroupName, string profileName, string endpointName);
-
-        /// <summary>
-        /// Checks the availability of a endpoint name without creating the CDN endpoint asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="name">The endpoint resource name to validate.</param>
-        /// <return>The Observable to CheckNameAvailabilityResult object if successful.</return>
-        Task<Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult> CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
-
     }
 }

@@ -11,38 +11,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// An immutable client-side representation of an Azure CDN endpoint.
     /// </summary>
     public interface ICdnEndpoint  :
+        ICdnEndpointBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IExternalChildResource<Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint,Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.EndpointInner>
     {
         /// <summary>
-        /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS for current endpoint asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="hostName">The host name, which must be a domain name, of the custom domain.</param>
-        /// <return>An observable of the result.</return>
-        Task<Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult> ValidateCustomDomainAsync(string hostName, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Stops the CDN endpoint, if it is running.
         /// </summary>
         void Stop();
-
-        /// <summary>
-        /// Forcibly preloads the content of the CDN endpoint asynchronously.
-        /// Note: this is supported for Verizon profiles only.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="contentPaths">The file paths to the content to be loaded.</param>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task LoadContentAsync(IList<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS for current endpoint.
@@ -67,17 +43,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         bool IsHttpsAllowed { get; }
 
         /// <summary>
-        /// Starts the CDN endpoint asynchronously, if it is stopped.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Gets origin host header.
         /// </summary>
         string OriginHostHeader { get; }
@@ -98,17 +63,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         string OriginHostName { get; }
 
         /// <summary>
-        /// Stops the CDN endpoint asynchronously, if it is running.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task StopAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Gets origin path.
         /// </summary>
         string OriginPath { get; }
@@ -117,16 +71,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Gets optimization type.
         /// </summary>
         string OptimizationType { get; }
-
-        /// <remarks>
-        /// Gets (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <summary>
-        /// Gets list of content types to be compressed.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> ContentTypesToCompress { get; }
 
         /// <summary>
         /// Gets endpoint state.
@@ -139,47 +83,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         System.Collections.Generic.IReadOnlyList<Models.GeoFilter> GeoFilters { get; }
 
         /// <summary>
-        /// Forcibly purges the content of the CDN endpoint asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Starts the CDN endpoint, if it is stopped.
         /// </summary>
         void Start();
-
-        /// <remarks>
-        /// Gets (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <summary>
-        /// Gets list of custom domains associated with this endpoint.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> CustomDomains { get; }
 
         /// <summary>
         /// Gets query string caching behavior.
         /// </summary>
         Models.QueryStringCachingBehavior QueryStringCachingBehavior { get; }
-
-        /// <summary>
-        /// Forcibly purges the content of the CDN endpoint.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        void PurgeContent(IList<string> contentPaths);
 
         /// <summary>
         /// Checks the quota and usage of geo filters and custom domains under the current endpoint.
@@ -196,17 +107,5 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Gets true if content compression is enabled, otherwise false.
         /// </summary>
         bool IsCompressionEnabled { get; }
-
-        /// <summary>
-        /// Forcibly preloads the content of the CDN endpoint.
-        /// Note: this is supported for Verizon profiles only.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="contentPaths">The file paths to the content to be loaded.</param>
-        void LoadContent(IList<string> contentPaths);
     }
 }

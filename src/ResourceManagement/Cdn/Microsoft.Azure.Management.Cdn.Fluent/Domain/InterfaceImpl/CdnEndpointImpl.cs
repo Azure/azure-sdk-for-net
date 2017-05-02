@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// version number.).
         /// </remarks>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.PurgeContent(IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.PurgeContent(IList<string> contentPaths)
         {
  
             this.PurgeContentAsync(contentPaths).GetAwaiter().GetResult();
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </remarks>
         /// <param name="hostName">The host name, which must be a domain name, of the custom domain.</param>
         /// <return>An observable of the result.</return>
-        async Task<Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.ValidateCustomDomainAsync(string hostName, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.ValidateCustomDomainAsync(string hostName, CancellationToken cancellationToken)
         {
             return await this.ValidateCustomDomainAsync(hostName, cancellationToken) as Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult;
         }
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.StartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.StartAsync(CancellationToken cancellationToken)
         {
  
             await this.StartAsync(cancellationToken);
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// version number.).
         /// </remarks>
         /// <param name="contentPaths">The file paths to the content to be loaded.</param>
-        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.LoadContent(IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.LoadContent(IList<string> contentPaths)
         {
             this.LoadContentAsync(contentPaths).GetAwaiter().GetResult(); 
         }
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Gets list of content types to be compressed.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.ContentTypesToCompress
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.ContentTypesToCompress
         {
             get
             {
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.StopAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.StopAsync(CancellationToken cancellationToken)
         {
  
             await this.StopAsync(cancellationToken);
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </remarks>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
         {
  
             await this.PurgeContentAsync(contentPaths, cancellationToken);
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Gets list of custom domains associated with this endpoint.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.CustomDomains
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.CustomDomains
         {
             get
             {
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </remarks>
         /// <param name="contentPaths">The file paths to the content to be loaded.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.LoadContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.LoadContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
         {
  
             await this.LoadContentAsync(contentPaths, cancellationToken);

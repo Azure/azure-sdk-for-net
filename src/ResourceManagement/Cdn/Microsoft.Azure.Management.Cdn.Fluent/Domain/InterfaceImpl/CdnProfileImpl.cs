@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </remarks>
         /// <param name="endpointName">A name of an endpoint under the profile.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.StartEndpointAsync(string endpointName, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.StartEndpointAsync(string endpointName, CancellationToken cancellationToken)
         {
  
             await this.StartEndpointAsync(endpointName, cancellationToken);
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.PurgeEndpointContentAsync(string endpointName, IList<string> contentPaths, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.PurgeEndpointContentAsync(string endpointName, IList<string> contentPaths, CancellationToken cancellationToken)
         {
  
             await this.PurgeEndpointContentAsync(endpointName, contentPaths, cancellationToken);
@@ -333,7 +333,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </remarks>
         /// <param name="endpointName">A name of an endpoint under the profile.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.StopEndpointAsync(string endpointName, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.StopEndpointAsync(string endpointName, CancellationToken cancellationToken)
         {
  
             await this.StopEndpointAsync(endpointName, cancellationToken);
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </remarks>
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.PurgeEndpointContent(string endpointName, IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.PurgeEndpointContent(string endpointName, IList<string> contentPaths)
         {
             this.PurgeEndpointContentAsync(endpointName, contentPaths).GetAwaiter().GetResult();
         }
@@ -437,7 +437,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </remarks>
         /// <param name="name">The endpoint resource name to validate.</param>
         /// <return>The Observable of the result if successful.</return>
-        async Task<Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken)
         {
             return await this.CheckEndpointNameAvailabilityAsync(name, cancellationToken) as Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult;
         }
@@ -451,7 +451,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// version number.).
         /// </remarks>
         /// <return>Observable to URI used to login to third party web portal.</return>
-        async Task<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.GenerateSsoUriAsync(CancellationToken cancellationToken)
+        async Task<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.GenerateSsoUriAsync(CancellationToken cancellationToken)
         {
             return await this.GenerateSsoUriAsync(cancellationToken);
         }
@@ -467,7 +467,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </remarks>
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.LoadEndpointContent(string endpointName, IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.LoadEndpointContent(string endpointName, IList<string> contentPaths)
         {
 
             this.LoadEndpointContentAsync(endpointName, contentPaths).GetAwaiter().GetResult(); ;
@@ -485,7 +485,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.LoadEndpointContentAsync(string endpointName, IList<string> contentPaths, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.LoadEndpointContentAsync(string endpointName, IList<string> contentPaths, CancellationToken cancellationToken)
         {
  
             await this.LoadEndpointContentAsync(endpointName, contentPaths, cancellationToken);
@@ -502,7 +502,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="hostName">The host name of the custom domain, which must be a domain name.</param>
         /// <return>The Observable to CustomDomainValidationResult object if successful.</return>
-        async Task<Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.ValidateEndpointCustomDomainAsync(string endpointName, string hostName, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.ValidateEndpointCustomDomainAsync(string endpointName, string hostName, CancellationToken cancellationToken)
         {
             return await this.ValidateEndpointCustomDomainAsync(endpointName, hostName, cancellationToken) as Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult;
         }
