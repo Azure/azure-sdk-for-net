@@ -62,6 +62,8 @@ namespace Microsoft.Azure.ServiceBus
 
         public string TopicName { get; }
 
+        public string Path => this.TopicName;
+
         internal MessageSender InnerSender
         {
             get
