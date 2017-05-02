@@ -352,6 +352,7 @@ namespace Azure.Tests.Sql
                     .WithEdition(DatabaseEditions.Standard)
                     .Create();
 
+                Assert.True(sqlServer.Databases.List().Count > 0);
                 ValidateSqlDatabase(sqlDatabase, SqlDatabaseName);
 
                 // Test transparent data encryption settings.
