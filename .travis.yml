@@ -6,10 +6,10 @@ addons:
     sources:
     packages:
 install:
+  - cat /etc/*release
   - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list' 
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
   - sudo apt-get update
-  - cat /etc/*release
   - sudo apt-get install dotnet-dev-1.0.3 -y
 script: 
   - ./testSdkOnLinux.sh

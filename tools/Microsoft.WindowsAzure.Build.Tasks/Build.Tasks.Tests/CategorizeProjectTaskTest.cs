@@ -1,5 +1,4 @@
-﻿using Microsoft.WindowsAzure.Build.Tasks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
@@ -7,6 +6,7 @@ using System.Reflection;
 using System.IO;
 using System.Linq;
 using Microsoft.Build.Framework;
+using BuildTasks.Core;
 
 namespace Build.Tasks.Tests
 {
@@ -20,6 +20,7 @@ namespace Build.Tasks.Tests
             sourceRootDir = Path.Combine(sourceRootDir, "src");
             ignoreDir = @"Microsoft.Azure.KeyVault.Samples";
         }
+
 
         [Fact]
         public void IgnoreDirTokens()
