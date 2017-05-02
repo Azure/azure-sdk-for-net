@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </remarks>
         /// <param name="name">The endpoint resource name to validate.</param>
         /// <return>The Observable to CheckNameAvailabilityResult object if successful.</return>
-        async Task<Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfilesBeta.CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken)
         {
             return await this.CheckEndpointNameAvailabilityAsync(name, cancellationToken) as Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult;
         }
