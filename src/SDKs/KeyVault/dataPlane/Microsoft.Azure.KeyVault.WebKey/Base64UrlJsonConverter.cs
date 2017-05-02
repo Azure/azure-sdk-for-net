@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
-// 
+//
 
 using System;
 using Newtonsoft.Json;
@@ -32,7 +32,9 @@ namespace Microsoft.Azure.KeyVault.WebKey
         private static byte[] FromBase64UrlString(string input)
         {
             if (string.IsNullOrEmpty(input))
+            {
                 throw new ArgumentNullException("input");
+            }
 
             return Convert.FromBase64String(Pad(input.Replace('-', '+').Replace('_', '/')));
         }
