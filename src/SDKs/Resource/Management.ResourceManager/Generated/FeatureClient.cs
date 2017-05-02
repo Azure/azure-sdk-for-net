@@ -13,6 +13,14 @@ namespace Microsoft.Azure.Management.ResourceManager
     using Microsoft.Rest.Azure;
     using Models;
 
+    /// <summary>
+    /// Azure Feature Exposure Control (AFEC) provides a mechanism for the
+    /// resource providers to control feature exposure to users. Resource
+    /// providers typically use this mechanism to provide public/private
+    /// preview for new features prior to making them generally available.
+    /// Users need to explicitly register for AFEC features to get access to
+    /// such functionality.
+    /// </summary>
     public partial class FeatureClient : Microsoft.Rest.ServiceClient<FeatureClient>, IFeatureClient, IAzureClient
     {
         /// <summary>
@@ -36,14 +44,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 

@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the GenericResource class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
+        /// <param name="id">Resource ID</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="location">Resource location</param>
@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="plan">The plan of the resource.</param>
         /// <param name="properties">The resource properties.</param>
         /// <param name="kind">The kind of the resource.</param>
-        /// <param name="managedBy">Id of the resource that manages this
+        /// <param name="managedBy">ID of the resource that manages this
         /// resource.</param>
-        /// <param name="sku">The sku of the resource.</param>
+        /// <param name="sku">The SKU of the resource.</param>
         /// <param name="identity">The identity of the resource.</param>
         public GenericResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
             : base(id, name, type, location, tags)
@@ -65,13 +65,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Kind { get; set; }
 
         /// <summary>
-        /// Gets or sets id of the resource that manages this resource.
+        /// Gets or sets ID of the resource that manages this resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "managedBy")]
         public string ManagedBy { get; set; }
 
         /// <summary>
-        /// Gets or sets the sku of the resource.
+        /// Gets or sets the SKU of the resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }

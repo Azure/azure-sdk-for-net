@@ -13,39 +13,27 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// <summary>
     /// Resource group information.
     /// </summary>
-    public partial class ResourceGroup
+    public partial class ResourceGroupPatchable
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceGroup class.
+        /// Initializes a new instance of the ResourceGroupPatchable class.
         /// </summary>
-        public ResourceGroup() { }
+        public ResourceGroupPatchable() { }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceGroup class.
+        /// Initializes a new instance of the ResourceGroupPatchable class.
         /// </summary>
-        /// <param name="location">The location of the resource group. It
-        /// cannot be changed after the resource group has been created. It
-        /// muct be one of the supported Azure locations.</param>
-        /// <param name="id">The ID of the resource group.</param>
         /// <param name="name">The name of the resource group.</param>
         /// <param name="managedBy">The ID of the resource that manages this
         /// resource group.</param>
         /// <param name="tags">The tags attached to the resource group.</param>
-        public ResourceGroup(string location, string id = default(string), string name = default(string), ResourceGroupProperties properties = default(ResourceGroupProperties), string managedBy = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
+        public ResourceGroupPatchable(string name = default(string), ResourceGroupProperties properties = default(ResourceGroupProperties), string managedBy = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
         {
-            Id = id;
             Name = name;
             Properties = properties;
-            Location = location;
             ManagedBy = managedBy;
             Tags = tags;
         }
-
-        /// <summary>
-        /// Gets the ID of the resource group.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the resource group.
@@ -57,14 +45,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public ResourceGroupProperties Properties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location of the resource group. It cannot be
-        /// changed after the resource group has been created. It muct be one
-        /// of the supported Azure locations.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the resource that manages this resource
@@ -79,18 +59,5 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
         public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Location == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Location");
-            }
-        }
     }
 }

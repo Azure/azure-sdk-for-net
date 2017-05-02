@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Identity class.
         /// </summary>
-        /// <param name="principalId">The principal id of resource
+        /// <param name="principalId">The principal ID of resource
         /// identity.</param>
-        /// <param name="tenantId">The tenant id of resource.</param>
+        /// <param name="tenantId">The tenant ID of resource.</param>
         /// <param name="type">The identity type. Possible values include:
         /// 'SystemAssigned'</param>
         public Identity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets the principal id of resource identity.
+        /// Gets the principal ID of resource identity.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets the tenant id of resource.
+        /// Gets the tenant ID of resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; private set; }

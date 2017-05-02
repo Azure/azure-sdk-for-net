@@ -18,16 +18,30 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class DeploymentsOperationsExtensions
     {
             /// <summary>
-            /// Delete deployment.
+            /// Deletes a deployment from the deployment history.
             /// </summary>
+            /// <remarks>
+            /// A template deployment that is currently running cannot be deleted.
+            /// Deleting a template deployment removes the associated deployment
+            /// operations. Deleting a template deployment does not affect the state of
+            /// the resource group. This is an asynchronous operation that returns a
+            /// status of 202 until the template deployment is successfully deleted. The
+            /// Location response header contains the URI that is used to obtain the
+            /// status of the process. While the process is running, a call to the URI in
+            /// the Location header returns a status of 202. When the process finishes,
+            /// the URI in the Location header returns a status of 204 on success. If the
+            /// asynchronous request failed, the URI in the Location header returns an
+            /// error-level status code.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group with the deployment to delete. The name is
+            /// case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment to be deleted.
+            /// The name of the deployment to delete.
             /// </param>
             public static void Delete(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
@@ -35,16 +49,30 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Delete deployment.
+            /// Deletes a deployment from the deployment history.
             /// </summary>
+            /// <remarks>
+            /// A template deployment that is currently running cannot be deleted.
+            /// Deleting a template deployment removes the associated deployment
+            /// operations. Deleting a template deployment does not affect the state of
+            /// the resource group. This is an asynchronous operation that returns a
+            /// status of 202 until the template deployment is successfully deleted. The
+            /// Location response header contains the URI that is used to obtain the
+            /// status of the process. While the process is running, a call to the URI in
+            /// the Location header returns a status of 202. When the process finishes,
+            /// the URI in the Location header returns a status of 204 on success. If the
+            /// asynchronous request failed, the URI in the Location header returns an
+            /// error-level status code.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group with the deployment to delete. The name is
+            /// case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment to be deleted.
+            /// The name of the deployment to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -55,16 +83,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Checks whether deployment exists.
+            /// Checks whether the deployment exists.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to check. The name is case insensitive.
+            /// The name of the resource group with the deployment to check. The name is
+            /// case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment to check.
             /// </param>
             public static bool CheckExistence(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
@@ -72,16 +101,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Checks whether deployment exists.
+            /// Checks whether the deployment exists.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to check. The name is case insensitive.
+            /// The name of the resource group with the deployment to check. The name is
+            /// case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment to check.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -95,13 +125,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create a named template deployment using a template.
+            /// Deploys resources to a resource group.
             /// </summary>
+            /// <remarks>
+            /// You can provide the template and parameters directly in the request or
+            /// link to JSON files.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to deploy the resources to. The name is
+            /// case insensitive. The resource group must already exist.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -115,13 +150,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create a named template deployment using a template.
+            /// Deploys resources to a resource group.
             /// </summary>
+            /// <remarks>
+            /// You can provide the template and parameters directly in the request or
+            /// link to JSON files.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to deploy the resources to. The name is
+            /// case insensitive. The resource group must already exist.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -141,16 +181,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Get a deployment.
+            /// Gets a deployment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment to get.
             /// </param>
             public static DeploymentExtended Get(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
@@ -158,16 +198,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Get a deployment.
+            /// Gets a deployment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment to get.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -181,8 +221,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Cancel a currently running template deployment.
+            /// Cancels a currently running template deployment.
             /// </summary>
+            /// <remarks>
+            /// You can cancel a deployment only if the provisioningState is Accepted or
+            /// Running. After the deployment is canceled, the provisioningState is set
+            /// to Canceled. Canceling a template deployment stops the currently running
+            /// template deployment and leaves the resource group partially deployed.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -190,7 +236,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment to cancel.
             /// </param>
             public static void Cancel(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
@@ -198,8 +244,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Cancel a currently running template deployment.
+            /// Cancels a currently running template deployment.
             /// </summary>
+            /// <remarks>
+            /// You can cancel a deployment only if the provisioningState is Accepted or
+            /// Running. After the deployment is canceled, the provisioningState is set
+            /// to Canceled. Canceling a template deployment stops the currently running
+            /// template deployment and leaves the resource group partially deployed.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -207,7 +259,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment to cancel.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -218,19 +270,21 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Validate a deployment template.
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group the template will be deployed to. The name
+            /// is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
             /// </param>
             /// <param name='parameters'>
-            /// Deployment to validate.
+            /// Parameters to validate.
             /// </param>
             public static DeploymentValidateResult Validate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, Deployment parameters)
             {
@@ -238,19 +292,21 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Validate a deployment template.
+            /// Validates whether the specified template is syntactically correct and will
+            /// be accepted by Azure Resource Manager..
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group the template will be deployed to. The name
+            /// is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
             /// </param>
             /// <param name='parameters'>
-            /// Deployment to validate.
+            /// Parameters to validate.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -264,7 +320,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Exports a deployment template.
+            /// Exports the template used for specified deployment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -273,7 +329,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment from which to get the template.
             /// </param>
             public static DeploymentExportResult ExportTemplate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
@@ -281,7 +337,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Exports a deployment template.
+            /// Exports the template used for specified deployment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -290,7 +346,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment from which to get the template.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -304,30 +360,32 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Get a list of deployments.
+            /// Get all the deployments for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to filter by. The name is case insensitive.
+            /// The name of the resource group with the deployments to get. The name is
+            /// case insensitive.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<DeploymentExtended> List(this IDeploymentsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter>))
+            public static Microsoft.Rest.Azure.IPage<DeploymentExtended> ListByResourceGroup(this IDeploymentsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter>))
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListAsync(resourceGroupName, odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListByResourceGroupAsync(resourceGroupName, odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get a list of deployments.
+            /// Get all the deployments for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to filter by. The name is case insensitive.
+            /// The name of the resource group with the deployments to get. The name is
+            /// case insensitive.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -335,25 +393,39 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<DeploymentExtended>> ListAsync(this IDeploymentsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<DeploymentExtended>> ListByResourceGroupAsync(this IDeploymentsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete deployment.
+            /// Deletes a deployment from the deployment history.
             /// </summary>
+            /// <remarks>
+            /// A template deployment that is currently running cannot be deleted.
+            /// Deleting a template deployment removes the associated deployment
+            /// operations. Deleting a template deployment does not affect the state of
+            /// the resource group. This is an asynchronous operation that returns a
+            /// status of 202 until the template deployment is successfully deleted. The
+            /// Location response header contains the URI that is used to obtain the
+            /// status of the process. While the process is running, a call to the URI in
+            /// the Location header returns a status of 202. When the process finishes,
+            /// the URI in the Location header returns a status of 204 on success. If the
+            /// asynchronous request failed, the URI in the Location header returns an
+            /// error-level status code.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group with the deployment to delete. The name is
+            /// case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment to be deleted.
+            /// The name of the deployment to delete.
             /// </param>
             public static void BeginDelete(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
@@ -361,16 +433,30 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Delete deployment.
+            /// Deletes a deployment from the deployment history.
             /// </summary>
+            /// <remarks>
+            /// A template deployment that is currently running cannot be deleted.
+            /// Deleting a template deployment removes the associated deployment
+            /// operations. Deleting a template deployment does not affect the state of
+            /// the resource group. This is an asynchronous operation that returns a
+            /// status of 202 until the template deployment is successfully deleted. The
+            /// Location response header contains the URI that is used to obtain the
+            /// status of the process. While the process is running, a call to the URI in
+            /// the Location header returns a status of 202. When the process finishes,
+            /// the URI in the Location header returns a status of 204 on success. If the
+            /// asynchronous request failed, the URI in the Location header returns an
+            /// error-level status code.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group with the deployment to delete. The name is
+            /// case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment to be deleted.
+            /// The name of the deployment to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -381,13 +467,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create a named template deployment using a template.
+            /// Deploys resources to a resource group.
             /// </summary>
+            /// <remarks>
+            /// You can provide the template and parameters directly in the request or
+            /// link to JSON files.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to deploy the resources to. The name is
+            /// case insensitive. The resource group must already exist.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -401,13 +492,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create a named template deployment using a template.
+            /// Deploys resources to a resource group.
             /// </summary>
+            /// <remarks>
+            /// You can provide the template and parameters directly in the request or
+            /// link to JSON files.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group to deploy the resources to. The name is
+            /// case insensitive. The resource group must already exist.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -427,7 +523,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Get a list of deployments.
+            /// Get all the deployments for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -435,13 +531,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<DeploymentExtended> ListNext(this IDeploymentsOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<DeploymentExtended> ListByResourceGroupNext(this IDeploymentsOperations operations, string nextPageLink)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get a list of deployments.
+            /// Get all the deployments for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -452,9 +548,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<DeploymentExtended>> ListNextAsync(this IDeploymentsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<DeploymentExtended>> ListByResourceGroupNextAsync(this IDeploymentsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
