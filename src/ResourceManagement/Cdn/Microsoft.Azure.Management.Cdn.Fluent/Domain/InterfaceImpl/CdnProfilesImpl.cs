@@ -102,11 +102,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Checks the availability of a endpoint name without creating the CDN endpoint asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="name">The endpoint resource name to validate.</param>
         /// <return>The Observable to CheckNameAvailabilityResult object if successful.</return>
         async Task<Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfilesBeta.CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken)

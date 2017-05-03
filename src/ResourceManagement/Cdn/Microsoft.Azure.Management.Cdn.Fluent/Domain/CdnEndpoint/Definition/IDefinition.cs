@@ -99,12 +99,43 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
     }
 
     /// <summary>
+    /// Members of this stage of the definition that are in Beta.
+    /// </summary>
+    /// <typeparam name="ParentT"></typeparam>
+    public interface IWithStandardAttachBeta<ParentT> : IBeta
+    {
+        /// <summary>
+        /// Specifies the content types to compress.
+        /// </summary>
+        /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithContentTypesToCompress(IList<string> contentTypesToCompress);
+
+        /// <summary>
+        /// Sets the geo filters list.
+        /// </summary>
+        /// <param name="geoFilters">The Geo filters list to set.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters);
+
+        /// <summary>
+        /// Sets the geo filters list for the specified countries list.
+        /// </summary>
+        /// <param name="relativePath">A relative path.</param>
+        /// <param name="action">An action value.</param>
+        /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes);
+    }
+
+    /// <summary>
     /// The final stage of the CDN profile Standard Akamai or Standard Verizon endpoint definition.
     /// At this stage, any remaining optional settings can be specified, or the CDN profile endpoint
     /// definition can be attached to the parent CDN profile definition.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent CDN profile definition to return to after attaching this definition.</typeparam>
     public interface IWithStandardAttach<ParentT>  :
+        IWithStandardAttachBeta<ParentT>,
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IAttachableStandard<ParentT>
     {
         /// <summary>
@@ -113,18 +144,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
         /// <param name="hostName">A custom domain host name.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithCustomDomain(string hostName);
-
-        /// <summary>
-        /// Specifies the content types to compress.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithContentTypesToCompress(IList<string> contentTypesToCompress);
 
         /// <summary>
         /// Specifies the origin path.
@@ -176,18 +195,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithHttpPort(int httpPort);
 
         /// <summary>
-        /// Sets the geo filters list.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="geoFilters">The Geo filters list to set.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters);
-
-        /// <summary>
         /// Specifies if HTTPS traffic is allowed.
         /// </summary>
         /// <param name="httpsAllowed">If set to true Https traffic will be allowed.</param>
@@ -209,19 +216,5 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
         /// <param name="countryCode">An ISO 2 letter country code.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, CountryISOCode countryCode);
-
-        /// <summary>
-        /// Sets the geo filters list for the specified countries list.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="relativePath">A relative path.</param>
-        /// <param name="action">An action value.</param>
-        /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes);
     }
 }

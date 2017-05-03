@@ -25,13 +25,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Starts the definition of a new endpoint to be attached to the CDN profile.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>The first stage of a new CDN endpoint definition.</return>
-        CdnEndpoint.Definition.Blank.StandardEndpoint.IStandardEndpoint<CdnProfile.Definition.IWithStandardCreate> CdnProfile.Definition.IWithStandardCreate.DefineNewEndpoint()
+        CdnEndpoint.Definition.Blank.StandardEndpoint.IStandardEndpoint<CdnProfile.Definition.IWithStandardCreate> CdnProfile.Definition.IWithStandardCreateBeta.DefineNewEndpoint()
         {
             return this.DefineNewEndpoint() as CdnEndpoint.Definition.Blank.StandardEndpoint.IStandardEndpoint<CdnProfile.Definition.IWithStandardCreate>;
         }
@@ -49,15 +44,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Starts the definition of a new endpoint to be attached to the CDN profile.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="name">The name for the endpoint.</param>
         /// <param name="endpointOriginHostname">An endpoint origin hostname.</param>
         /// <return>The first stage of a new CDN endpoint definition.</return>
-        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnProfile.Definition.IWithStandardCreate.DefineNewEndpoint(string name, string endpointOriginHostname)
+        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnProfile.Definition.IWithStandardCreateBeta.DefineNewEndpoint(string name, string endpointOriginHostname)
         {
             return this.DefineNewEndpoint(name, endpointOriginHostname) as CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>;
         }
@@ -75,13 +65,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Starts the definition of a new endpoint to be attached to the CDN profile.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>The first stage of a new CDN endpoint definition.</return>
-        CdnEndpoint.Definition.Blank.PremiumEndpoint.IPremiumEndpoint<CdnProfile.Definition.IWithPremiumVerizonCreate> CdnProfile.Definition.IWithPremiumVerizonCreate.DefineNewPremiumEndpoint()
+        CdnEndpoint.Definition.Blank.PremiumEndpoint.IPremiumEndpoint<CdnProfile.Definition.IWithPremiumVerizonCreate> CdnProfile.Definition.IWithPremiumVerizonCreateBeta.DefineNewPremiumEndpoint()
         {
             return this.DefineNewPremiumEndpoint() as CdnEndpoint.Definition.Blank.PremiumEndpoint.IPremiumEndpoint<CdnProfile.Definition.IWithPremiumVerizonCreate>;
         }
@@ -99,15 +84,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Starts the definition of a new endpoint to be attached to the CDN profile.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="name">The name for the endpoint.</param>
         /// <param name="endpointOriginHostname">The endpoint origin hostname.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
-        CdnEndpoint.Definition.IWithPremiumAttach<CdnProfile.Definition.IWithPremiumVerizonCreate> CdnProfile.Definition.IWithPremiumVerizonCreate.DefineNewPremiumEndpoint(string name, string endpointOriginHostname)
+        CdnEndpoint.Definition.IWithPremiumAttach<CdnProfile.Definition.IWithPremiumVerizonCreate> CdnProfile.Definition.IWithPremiumVerizonCreateBeta.DefineNewPremiumEndpoint(string name, string endpointOriginHostname)
         {
             return this.DefineNewPremiumEndpoint(name, endpointOriginHostname) as CdnEndpoint.Definition.IWithPremiumAttach<CdnProfile.Definition.IWithPremiumVerizonCreate>;
         }
@@ -125,13 +105,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Starts the definition of a new endpoint to be attached to the CDN profile.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>The first stage of an endpoint definition.</return>
-        CdnEndpoint.UpdateDefinition.Blank.StandardEndpoint.IStandardEndpoint<CdnProfile.Update.IUpdate> CdnProfile.Update.IWithEndpoint.DefineNewEndpoint()
+        CdnEndpoint.UpdateDefinition.Blank.StandardEndpoint.IStandardEndpoint<CdnProfile.Update.IUpdate> CdnProfile.Update.IWithEndpointBeta.DefineNewEndpoint()
         {
             return this.DefineNewEndpoint() as CdnEndpoint.UpdateDefinition.Blank.StandardEndpoint.IStandardEndpoint<CdnProfile.Update.IUpdate>;
         }
@@ -149,15 +124,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Specifies definition of an endpoint to be attached to the CDN profile.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="name">The name for the endpoint.</param>
         /// <param name="endpointOriginHostname">The endpoint origin hostname.</param>
         /// <return>The first stage of an endpoint definition.</return>
-        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnProfile.Update.IWithEndpoint.DefineNewEndpoint(string name, string endpointOriginHostname)
+        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnProfile.Update.IWithEndpointBeta.DefineNewEndpoint(string name, string endpointOriginHostname)
         {
             return this.DefineNewEndpoint(name, endpointOriginHostname) as CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>;
         }
@@ -185,13 +155,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Starts the definition of a new endpoint to be attached to this Premium Verizon CDN profile.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>The first stage of an endpoint definition.</return>
-        CdnEndpoint.UpdateDefinition.Blank.PremiumEndpoint.IPremiumEndpoint<CdnProfile.Update.IUpdate> CdnProfile.Update.IWithEndpoint.DefineNewPremiumEndpoint()
+        CdnEndpoint.UpdateDefinition.Blank.PremiumEndpoint.IPremiumEndpoint<CdnProfile.Update.IUpdate> CdnProfile.Update.IWithEndpointBeta.DefineNewPremiumEndpoint()
         {
             return this.DefineNewPremiumEndpoint() as CdnEndpoint.UpdateDefinition.Blank.PremiumEndpoint.IPremiumEndpoint<CdnProfile.Update.IUpdate>;
         }
@@ -209,15 +174,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Starts the definition of a new endpoint to be attached to this Premium Verizon CDN profile.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="name">A name for the endpoint.</param>
         /// <param name="endpointOriginHostname">The endpoint origin hostname.</param>
         /// <return>The first stage of an endpoint definition.</return>
-        CdnEndpoint.UpdateDefinition.IWithPremiumAttach<CdnProfile.Update.IUpdate> CdnProfile.Update.IWithEndpoint.DefineNewPremiumEndpoint(string name, string endpointOriginHostname)
+        CdnEndpoint.UpdateDefinition.IWithPremiumAttach<CdnProfile.Update.IUpdate> CdnProfile.Update.IWithEndpointBeta.DefineNewPremiumEndpoint(string name, string endpointOriginHostname)
         {
             return this.DefineNewPremiumEndpoint(name, endpointOriginHostname) as CdnEndpoint.UpdateDefinition.IWithPremiumAttach<CdnProfile.Update.IUpdate>;
         }
@@ -266,11 +226,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Starts a stopped CDN endpoint asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="endpointName">A name of an endpoint under the profile.</param>
         /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.StartEndpointAsync(string endpointName, CancellationToken cancellationToken)
@@ -282,11 +237,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Forcibly purges CDN endpoint content in the CDN profile asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         /// <return>A representation of the deferred computation of this call.</return>
@@ -326,11 +276,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Stops a running CDN endpoint asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="endpointName">A name of an endpoint under the profile.</param>
         /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.StopEndpointAsync(string endpointName, CancellationToken cancellationToken)
@@ -382,11 +327,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Forcibly purges CDN endpoint content in the CDN profile.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.PurgeEndpointContent(string endpointName, IList<string> contentPaths)
@@ -430,11 +370,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Checks the availability of an endpoint name without creating the CDN endpoint asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="name">The endpoint resource name to validate.</param>
         /// <return>The Observable of the result if successful.</return>
         async Task<Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken)
@@ -445,11 +380,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Asynchronously generates a dynamic SSO URI used to sign into the CDN supplemental portal used for advanced management tasks.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>Observable to URI used to login to third party web portal.</return>
         async Task<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.GenerateSsoUriAsync(CancellationToken cancellationToken)
         {
@@ -460,11 +390,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Forcibly pre-loads CDN endpoint content in the CDN profile.
         /// Note, this is Available for Verizon Profiles only.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.LoadEndpointContent(string endpointName, IList<string> contentPaths)
@@ -477,11 +402,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Forcibly pre-loads CDN endpoint content in the CDN profile asynchronously.
         /// Note, this is Available for Verizon Profiles only.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         /// <return>A representation of the deferred computation of this call.</return>
@@ -494,11 +414,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS in current profile asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="hostName">The host name of the custom domain, which must be a domain name.</param>
         /// <return>The Observable to CustomDomainValidationResult object if successful.</return>
