@@ -13,22 +13,14 @@ namespace Microsoft.Azure.Management.IotHub.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for JobStatus.
+    /// Defines values for IpFilterActionType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum JobStatus
+    public enum IpFilterActionType
     {
-        [EnumMember(Value = "unknown")]
-        Unknown,
-        [EnumMember(Value = "enqueued")]
-        Enqueued,
-        [EnumMember(Value = "running")]
-        Running,
-        [EnumMember(Value = "completed")]
-        Completed,
-        [EnumMember(Value = "failed")]
-        Failed,
-        [EnumMember(Value = "cancelled")]
-        Cancelled
+        [EnumMember(Value = "Accept")]
+        Accept,
+        [EnumMember(Value = "Reject")]
+        Reject
     }
 }

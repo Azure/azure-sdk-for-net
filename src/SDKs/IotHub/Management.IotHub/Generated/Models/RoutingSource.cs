@@ -13,22 +13,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for JobStatus.
+    /// Defines values for RoutingSource.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum JobStatus
+    public static class RoutingSource
     {
-        [EnumMember(Value = "unknown")]
-        Unknown,
-        [EnumMember(Value = "enqueued")]
-        Enqueued,
-        [EnumMember(Value = "running")]
-        Running,
-        [EnumMember(Value = "completed")]
-        Completed,
-        [EnumMember(Value = "failed")]
-        Failed,
-        [EnumMember(Value = "cancelled")]
-        Cancelled
+        public const string DeviceMessages = "DeviceMessages";
+        public const string TwinChangeEvents = "TwinChangeEvents";
+        public const string DeviceLifecycleEvents = "DeviceLifecycleEvents";
+        public const string DeviceJobLifecycleEvents = "DeviceJobLifecycleEvents";
     }
 }
