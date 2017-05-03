@@ -1,4 +1,7 @@
-# Microsoft Azure SDK for .NET
+# THIS BRNACH IS CLOSED, all new PRs should be opened against vs17Dev branch.
+
+
+## Microsoft Azure SDK for .NET
 ----------
 The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.
