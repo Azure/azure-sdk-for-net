@@ -10,12 +10,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// <summary>
     /// Entry point to topic authorization rules management API.
     /// </summary>
-    /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-    /// version number.).
-    /// </remarks>
     public interface ITopicAuthorizationRules  :
+        IBeta,
         Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationRules<Microsoft.Azure.Management.ServiceBus.Fluent.ITopicAuthorizationRule>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<TopicAuthorizationRule.Definition.IBlank>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.ServiceBus.Fluent.ITopicsOperations>

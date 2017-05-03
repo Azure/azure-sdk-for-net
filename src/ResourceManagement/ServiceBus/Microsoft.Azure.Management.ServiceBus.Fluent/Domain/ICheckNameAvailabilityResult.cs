@@ -8,12 +8,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// <summary>
     /// The result of checking for Service Bus namespace name availability.
     /// </summary>
-    /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-    /// version number.).
-    /// </remarks>
     public interface ICheckNameAvailabilityResult  :
+        IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.ServiceBus.Fluent.Models.CheckNameAvailabilityResultInner>
     {
         /// <summary>

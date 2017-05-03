@@ -11,12 +11,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// <summary>
     /// An immutable client-side representation of an Azure Service Bus namespace.
     /// </summary>
-    /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-    /// version number.).
-    /// </remarks>
     public interface IServiceBusNamespace  :
+        IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager,Microsoft.Azure.Management.ServiceBus.Fluent.Models.NamespaceModelInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusNamespace>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<ServiceBusNamespace.Update.IUpdate>

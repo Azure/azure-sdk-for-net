@@ -11,12 +11,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// <summary>
     /// Type representing Service Bus topic.
     /// </summary>
-    /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-    /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-    /// version number.).
-    /// </remarks>
     public interface ITopic  :
+        IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IIndependentChildResource<Microsoft.Azure.Management.ServiceBus.Fluent.IServiceBusManager,Microsoft.Azure.Management.ServiceBus.Fluent.Models.TopicInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.ServiceBus.Fluent.ITopic>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<Topic.Update.IUpdate>,
