@@ -9,12 +9,9 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
     /// <summary>
-    /// Entry point to Azure Graoh RBAC management.
+    /// Entry point to Azure Graph RBAC management.
     /// </summary>
-    /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
-    /// </remarks>
-    public class GraphRbacManager : Manager<IGraphRbacManagementClient>, IGraphRbacManager
+    public class GraphRbacManager : Manager<IGraphRbacManagementClient>, IGraphRbacManager, IBeta
     {
         #region Fluent private collections
         private IUsers users;

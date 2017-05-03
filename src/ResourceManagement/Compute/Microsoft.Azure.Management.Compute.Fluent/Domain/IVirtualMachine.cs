@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure virtual machine.
     /// </summary>
     public interface IVirtualMachine  :
+        IVirtualMachineBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Compute.Fluent.IComputeManager,Models.VirtualMachineInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<VirtualMachine.Update.IUpdate>,
@@ -40,17 +41,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the resource ID of the availability set associated with this virtual machine.
         /// </summary>
         string AvailabilitySetId { get; }
-
-        /// <summary>
-        /// Starts the virtual machine asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the URI to the VHD file backing this virtual machine's operating system disk.
@@ -88,17 +78,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         string Capture(string containerName, string vhdPrefix, bool overwriteVhd);
 
         /// <summary>
-        /// Generalizes the virtual machine asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task GeneralizeAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Gets the virtual machine unique ID.
         /// </summary>
         string VMId { get; }
@@ -126,40 +105,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Restart();
 
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>Extensions attached to the virtual machine.</return>
-        Task<IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> ListExtensionsAsync(CancellationToken cancellationToken = default(CancellationToken));
-
         /// <summary>
         /// Powers off (stops) the virtual machine.
         /// </summary>
         void PowerOff();
-
-        /// <summary>
-        /// Refreshes the virtual machine instance view to sync with Azure.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>An observable that emits the instance view of the virtual machine.</return>
-        Task<Models.VirtualMachineInstanceView> RefreshInstanceViewAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Restarts the virtual machine asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the operating system profile.
@@ -196,17 +145,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Models.VirtualMachineInstanceView RefreshInstanceView();
 
         /// <summary>
-        /// Redeploys the virtual machine asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task RedeployAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Gets the virtual machine size.
         /// </summary>
         Models.VirtualMachineSizeTypes Size { get; }
@@ -230,17 +168,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the managed data disks associated with this virtual machine, indexed by LUN.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> DataDisks { get; }
-
-        /// <summary>
-        /// Powers off (stops) the virtual machine asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Lists all available virtual machine sizes this virtual machine can resized to.
@@ -274,22 +201,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Models.StorageAccountTypes? OSDiskStorageAccountType { get; }
 
         /// <summary>
-        /// Shuts down the virtual machine and releases the compute resources asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Gets the virtual machine instance view.
         /// The instance view will be cached for later retrieval using <code>instanceView</code>.
-        /// </summary>
-        /// <summary>
-        /// Gets the virtual machine's instance view.
         /// </summary>
         Models.VirtualMachineInstanceView InstanceView { get; }
     }

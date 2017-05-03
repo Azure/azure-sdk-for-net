@@ -14,13 +14,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <summary>
         /// Activates the application package.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="format">The format of the uploaded Batch application package, either "zip" or "tar".</param>
-        void Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.Activate(string format)
+        void Microsoft.Azure.Management.Batch.Fluent.IApplicationPackageBeta.Activate(string format)
         {
 
             this.ActivateAsync(format).GetAwaiter().GetResult();
@@ -51,14 +46,9 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <summary>
         /// Activates the application package asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="format">The format of the uploaded Batch application package, either "zip" or "tar".</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage.ActivateAsync(string format, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Batch.Fluent.IApplicationPackageBeta.ActivateAsync(string format, CancellationToken cancellationToken)
         {
  
             await this.ActivateAsync(format, cancellationToken);

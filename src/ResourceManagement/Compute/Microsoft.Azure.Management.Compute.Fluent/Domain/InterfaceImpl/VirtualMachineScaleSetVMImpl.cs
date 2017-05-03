@@ -99,13 +99,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Updates the version of the installed operating system in the virtual machine instance.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>The observable to the reimage action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.ReimageAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.ReimageAsync(CancellationToken cancellationToken)
         {
  
             await this.ReimageAsync(cancellationToken);
@@ -281,13 +276,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Deletes the virtual machine instance.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>The observable to the delete action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.DeleteAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.DeleteAsync(CancellationToken cancellationToken)
         {
  
             await this.DeleteAsync(cancellationToken);
@@ -546,13 +536,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Starts the virtual machine instance.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>The observable to the start action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.StartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.StartAsync(CancellationToken cancellationToken)
         {
  
             await this.StartAsync(cancellationToken);
@@ -592,13 +577,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Shuts down the virtual machine instance and releases the associated compute resources.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>The observable to the deallocate action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.DeallocateAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.DeallocateAsync(CancellationToken cancellationToken)
         {
  
             await this.DeallocateAsync(cancellationToken);
@@ -607,13 +587,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Stops the virtual machine instance.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>The observable to the poweroff action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.PowerOffAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.PowerOffAsync(CancellationToken cancellationToken)
         {
  
             await this.PowerOffAsync(cancellationToken);
@@ -631,13 +606,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Restarts the virtual machine instance.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>The observable to the restart action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.RestartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.RestartAsync(CancellationToken cancellationToken)
         {
  
             await this.RestartAsync(cancellationToken);

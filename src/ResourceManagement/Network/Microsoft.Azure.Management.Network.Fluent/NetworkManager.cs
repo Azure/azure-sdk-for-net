@@ -156,9 +156,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Entry point to application gateway management.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
-        /// </remarks>
         public IApplicationGateways ApplicationGateways
         {
             get
@@ -175,9 +172,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// returns entry point to load balancer management
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
-        /// </remarks>
         public ILoadBalancers LoadBalancers
         {
             get
@@ -208,7 +202,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
     }
 
-    public interface INetworkManager : IManager<INetworkManagementClient>
+    public interface INetworkManagerBeta : IBeta
+    {
+        /// <summary>
+        /// return entry point to load balancer management
+        /// </summary>
+        ILoadBalancers LoadBalancers { get; }
+
+        /// <summary>
+        /// Entry point to application gateway management.
+        /// </summary>
+        IApplicationGateways ApplicationGateways { get; }
+    }
+
+    public interface INetworkManager : INetworkManagerBeta, IManager<INetworkManagementClient>
     {
         /// <summary>
         /// return entry point to virtual network management
@@ -229,16 +236,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// return entry point to network interface management
         /// </summary>
         INetworkInterfaces NetworkInterfaces { get; }
-
-        /// <summary>
-        /// return entry point to load balancer management
-        /// </summary>
-        ILoadBalancers LoadBalancers { get; }
-
-        /// <summary>
-        /// Entry point to application gateway management.
-        /// </summary>
-        IApplicationGateways ApplicationGateways { get;  }
 
         /// <summary>
         /// Entry point to route table management

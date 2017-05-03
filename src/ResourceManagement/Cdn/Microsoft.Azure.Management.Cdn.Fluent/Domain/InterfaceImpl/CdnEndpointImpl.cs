@@ -84,13 +84,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Forcibly purges the content of the CDN endpoint.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.PurgeContent(IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.PurgeContent(IList<string> contentPaths)
         {
  
             this.PurgeContentAsync(contentPaths).GetAwaiter().GetResult();
@@ -161,14 +156,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS for current endpoint asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="hostName">The host name, which must be a domain name, of the custom domain.</param>
         /// <return>An observable of the result.</return>
-        async Task<Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.ValidateCustomDomainAsync(string hostName, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.ValidateCustomDomainAsync(string hostName, CancellationToken cancellationToken)
         {
             return await this.ValidateCustomDomainAsync(hostName, cancellationToken) as Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult;
         }
@@ -207,13 +197,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Starts the CDN endpoint asynchronously, if it is stopped.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.StartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.StartAsync(CancellationToken cancellationToken)
         {
  
             await this.StartAsync(cancellationToken);
@@ -223,13 +208,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Forcibly preloads the content of the CDN endpoint.
         /// Note: this is supported for Verizon profiles only.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="contentPaths">The file paths to the content to be loaded.</param>
-        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.LoadContent(IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.LoadContent(IList<string> contentPaths)
         {
             this.LoadContentAsync(contentPaths).GetAwaiter().GetResult(); 
         }
@@ -256,15 +236,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             }
         }
 
-        /// <remarks>
-        /// Gets (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <summary>
         /// Gets list of content types to be compressed.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.ContentTypesToCompress
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.ContentTypesToCompress
         {
             get
             {
@@ -275,13 +250,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Stops the CDN endpoint asynchronously, if it is running.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.StopAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.StopAsync(CancellationToken cancellationToken)
         {
  
             await this.StopAsync(cancellationToken);
@@ -301,28 +271,18 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Forcibly purges the content of the CDN endpoint asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
         {
  
             await this.PurgeContentAsync(contentPaths, cancellationToken);
         }
 
-        /// <remarks>
-        /// Gets (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <summary>
         /// Gets list of custom domains associated with this endpoint.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.CustomDomains
+        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.CustomDomains
         {
             get
             {
@@ -356,14 +316,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Forcibly preloads the content of the CDN endpoint asynchronously.
         /// Note: this is supported for Verizon profiles only.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="contentPaths">The file paths to the content to be loaded.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.LoadContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.LoadContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
         {
  
             await this.LoadContentAsync(contentPaths, cancellationToken);
@@ -435,14 +390,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Sets the geo filters list.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="geoFilters">The Geo filters list to set.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>.WithGeoFilters(IList<Models.GeoFilter> geoFilters)
+        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttachBeta<CdnProfile.Update.IUpdate>.WithGeoFilters(IList<Models.GeoFilter> geoFilters)
         {
             return this.WithGeoFilters(geoFilters) as CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>;
         }
@@ -480,14 +430,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Specifies the content types to compress.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>.WithContentTypesToCompress(IList<string> contentTypesToCompress)
+        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttachBeta<CdnProfile.Update.IUpdate>.WithContentTypesToCompress(IList<string> contentTypesToCompress)
         {
             return this.WithContentTypesToCompress(contentTypesToCompress) as CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>;
         }
@@ -557,16 +502,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Sets the geo filters list for the specified countries list.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="relativePath">A relative path.</param>
         /// <param name="action">An action.</param>
         /// <param name="countryCodes">A list of ISO 2 letter country codes.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
+        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttachBeta<CdnProfile.Update.IUpdate>.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
         {
             return this.WithGeoFilter(relativePath, action, countryCodes) as CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>;
         }
@@ -643,14 +583,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Sets the geo filters list.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="geoFilters">A geo filters list.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint.WithGeoFilters(IList<Models.GeoFilter> geoFilters)
+        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpointBeta.WithGeoFilters(IList<Models.GeoFilter> geoFilters)
         {
             return this.WithGeoFilters(geoFilters) as CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint;
         }
@@ -697,14 +632,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Specifies the content types to compress.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint.WithContentTypesToCompress(IList<string> contentTypesToCompress)
+        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpointBeta.WithContentTypesToCompress(IList<string> contentTypesToCompress)
         {
             return this.WithContentTypesToCompress(contentTypesToCompress) as CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint;
         }
@@ -793,16 +723,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Sets the geo filters list for the specified countries list.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="relativePath">A relative path.</param>
         /// <param name="action">An action.</param>
         /// <param name="countryCodes">A list of ISO 2 letter country codes.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
+        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpointBeta.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
         {
             return this.WithGeoFilter(relativePath, action, countryCodes) as CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint;
         }
@@ -1081,14 +1006,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Sets the geo filters list.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="geoFilters">The Geo filters list to set.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilters(IList<Models.GeoFilter> geoFilters)
+        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttachBeta<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilters(IList<Models.GeoFilter> geoFilters)
         {
             return this.WithGeoFilters(geoFilters) as CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>;
         }
@@ -1126,14 +1046,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Specifies the content types to compress.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>.WithContentTypesToCompress(IList<string> contentTypesToCompress)
+        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttachBeta<CdnProfile.Definition.IWithStandardCreate>.WithContentTypesToCompress(IList<string> contentTypesToCompress)
         {
             return this.WithContentTypesToCompress(contentTypesToCompress) as CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>;
         }
@@ -1203,16 +1118,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Sets the geo filters list for the specified countries list.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="relativePath">A relative path.</param>
         /// <param name="action">An action value.</param>
         /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
+        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttachBeta<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
         {
             return this.WithGeoFilter(relativePath, action, countryCodes) as CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>;
         }

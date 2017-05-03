@@ -313,11 +313,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Stops the application gateway asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.StopAsync(CancellationToken cancellationToken)
         {
@@ -482,11 +477,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Starts the application gateway asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.StartAsync(CancellationToken cancellationToken)
         {

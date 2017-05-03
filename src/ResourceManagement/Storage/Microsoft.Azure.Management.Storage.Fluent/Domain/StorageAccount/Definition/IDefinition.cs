@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Fluent;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// A storage account definition allowing the sku to be set.
@@ -42,17 +43,12 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition
     /// <summary>
     /// A storage account definition specifying encryption setting.
     /// </summary>
-    public interface IWithEncryption 
+    public interface IWithEncryption : IBeta
     {
         /// <summary>
         /// Specifies the encryption settings on the account. The default
         /// setting is unencrypted.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="encryption">The encryption setting.</param>
         /// <return>The nest stage of storage account definition.</return>
         Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition.IWithCreate WithEncryption(Encryption encryption);

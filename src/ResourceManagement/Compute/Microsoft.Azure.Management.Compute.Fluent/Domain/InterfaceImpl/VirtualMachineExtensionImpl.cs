@@ -342,13 +342,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.Attach() as VirtualMachine.Definition.IWithCreate;
         }
 
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>Observable that emits virtual machine extension instance view.</return>
-        async Task<Models.VirtualMachineExtensionInstanceView> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension.GetInstanceViewAsync(CancellationToken cancellationToken)
+        async Task<Models.VirtualMachineExtensionInstanceView> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBeta.GetInstanceViewAsync(CancellationToken cancellationToken)
         {
             return await this.GetInstanceViewAsync(cancellationToken) as Models.VirtualMachineExtensionInstanceView;
         }

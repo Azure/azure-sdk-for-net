@@ -13,10 +13,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <summary>
     /// Entry point to Azure app service management.
     /// </summary>
-    /// <remarks>
-    /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in future releases, including removal, regardless of any compatibility expectations set by the containing library version number.)
-    /// </remarks>
-    public class AppServiceManager : Manager<IWebSiteManagementClient>, IAppServiceManager
+    public class AppServiceManager : Manager<IWebSiteManagementClient>, IAppServiceManager, IBeta
     {
         private IKeyVaultManager keyVaultManager;
         private IStorageManager storageManager;

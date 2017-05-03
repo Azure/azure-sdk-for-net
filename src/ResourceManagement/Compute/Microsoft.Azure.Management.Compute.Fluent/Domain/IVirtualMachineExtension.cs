@@ -11,18 +11,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure virtual machine extension.
     /// </summary>
     public interface IVirtualMachineExtension  :
+        IVirtualMachineExtensionBeta,
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IExternalChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>
     {
         /// <return>The instance view of the virtual machine extension.</return>
         Models.VirtualMachineExtensionInstanceView GetInstanceView();
-
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>Observable that emits virtual machine extension instance view.</return>
-        Task<Models.VirtualMachineExtensionInstanceView> GetInstanceViewAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -89,11 +89,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Regenerates primary or secondary keys.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="policykey">The key to regenerate.</param>
         /// <return>Stream that emits primary, secondary keys and connection strings.</return>
         async Task<Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys> Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationRule<Microsoft.Azure.Management.ServiceBus.Fluent.INamespaceAuthorizationRule>.RegenerateKeyAsync(Policykey policykey, CancellationToken cancellationToken)
@@ -112,11 +107,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
             }
         }
 
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>Stream that emits primary, secondary keys and connection strings.</return>
         async Task<Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationKeys> Microsoft.Azure.Management.ServiceBus.Fluent.IAuthorizationRule<Microsoft.Azure.Management.ServiceBus.Fluent.INamespaceAuthorizationRule>.GetKeysAsync(CancellationToken cancellationToken)
         {

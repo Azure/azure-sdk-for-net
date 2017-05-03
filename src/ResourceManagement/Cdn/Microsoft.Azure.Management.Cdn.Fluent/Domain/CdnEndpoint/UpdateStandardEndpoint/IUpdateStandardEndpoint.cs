@@ -8,9 +8,39 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoi
     using System.Collections.Generic;
 
     /// <summary>
+    /// Members of this stage of the definition that are in Beta.
+    /// </summary>
+    public interface IUpdateStandardEndpointBeta : IBeta
+    {
+        /// <summary>
+        /// Sets the geo filters list for the specified countries list.
+        /// </summary>
+        /// <param name="relativePath">A relative path.</param>
+        /// <param name="action">An action.</param>
+        /// <param name="countryCodes">A list of ISO 2 letter country codes.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes);
+
+        /// <summary>
+        /// Specifies the content types to compress.
+        /// </summary>
+        /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithContentTypesToCompress(IList<string> contentTypesToCompress);
+
+        /// <summary>
+        /// Sets the geo filters list.
+        /// </summary>
+        /// <param name="geoFilters">A geo filters list.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters);
+    }
+
+    /// <summary>
     /// The stage of an CDN profile endpoint update allowing to specify endpoint properties.
     /// </summary>
     public interface IUpdateStandardEndpoint  :
+        IUpdateStandardEndpointBeta,
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Update.IUpdate
     {
         /// <summary>
@@ -50,37 +80,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoi
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithGeoFilter(string relativePath, GeoFilterActions action, CountryISOCode countryCode);
 
         /// <summary>
-        /// Sets the geo filters list for the specified countries list.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="relativePath">A relative path.</param>
-        /// <param name="action">An action.</param>
-        /// <param name="countryCodes">A list of ISO 2 letter country codes.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes);
-
-        /// <summary>
         /// Adds a new CDN custom domain within an endpoint.
         /// </summary>
         /// <param name="hostName">Custom domain host name.</param>
         /// <return>The next stage of the endpoint update.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithCustomDomain(string hostName);
-
-        /// <summary>
-        /// Specifies the content types to compress.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithContentTypesToCompress(IList<string> contentTypesToCompress);
 
         /// <summary>
         /// Removes the content type to compress from the list.
@@ -136,18 +140,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoi
         /// <param name="compressionEnabled">If true then compression will be enabled.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithCompressionEnabled(bool compressionEnabled);
-
-        /// <summary>
-        /// Sets the geo filters list.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="geoFilters">A geo filters list.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters);
 
         /// <summary>
         /// Specifies if HTTPS traffic is allowed.

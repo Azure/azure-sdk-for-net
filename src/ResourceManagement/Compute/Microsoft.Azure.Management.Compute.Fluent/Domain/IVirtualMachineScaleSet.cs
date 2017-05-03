@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of an Azure virtual machine scale set.
     /// </summary>
     public interface IVirtualMachineScaleSet  :
+        IVirtualMachineScaleSetBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Compute.Fluent.IComputeManager,Models.VirtualMachineScaleSetInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer>
@@ -48,28 +49,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the extensions attached to the virtual machines in the scale set.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension> Extensions { get; }
-
-        /// <summary>
-        /// Re-images (updates the version of the installed operating system) the virtual machines in the scale set asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task ReimageAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Starts the virtual machines in the scale set asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Re-images (updates the version of the installed operating system) the virtual machines in the scale set.
@@ -119,17 +98,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Powers off (stops) the virtual machines in the scale set.
         /// </summary>
         void PowerOff();
-
-        /// <summary>
-        /// Restarts the virtual machines in the scale set asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <return>
         /// The internal load balancer associated with the primary network interface of
@@ -186,17 +154,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend> ListPrimaryInternalLoadBalancerBackends();
 
         /// <summary>
-        /// Powers off (stops) the virtual machines in the scale set asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Gets the operating system disk caching type.
         /// </summary>
         Models.CachingTypes OSDiskCachingType { get; }
@@ -226,17 +183,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </return>
         /// <throws>IOException the IO exception.</throws>
         Microsoft.Azure.Management.Network.Fluent.ILoadBalancer GetPrimaryInternetFacingLoadBalancer();
-
-        /// <summary>
-        /// Shuts down the virtual machines in the scale set and releases its compute resources asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the upgrade model.

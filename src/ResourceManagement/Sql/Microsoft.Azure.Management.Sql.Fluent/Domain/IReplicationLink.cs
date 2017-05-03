@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// An immutable client-side representation of an Azure SQL Replication link.
     /// </summary>
     public interface IReplicationLink  :
+        IReplicationLinkBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Sql.Fluent.IReplicationLink>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ReplicationLinkInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasResourceGroup,
@@ -24,17 +25,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Gets the name of the Azure SQL Server hosting the partner Azure SQL Database.
         /// </summary>
         string PartnerServer { get; }
-
-        /// <summary>
-        /// Forces fail over the Azure SQL Database Replication Link which may result in data loss.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task ForceFailoverAllowDataLossAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the percentage of the seeding completed for the replication link.
@@ -80,17 +70,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Deletes the replication link.
         /// </summary>
         void Delete();
-
-        /// <summary>
-        /// Fails over the Azure SQL Database Replication Link.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task FailoverAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets name of the SQL Server to which this replication belongs.

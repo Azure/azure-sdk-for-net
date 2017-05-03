@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     /// Entry point for storage accounts management API.
     /// </summary>
     public interface IStorageAccounts  :
+        IStorageAccountsBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<StorageAccount.Definition.IBlank>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
@@ -25,18 +26,6 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Storage.Fluent.IStorageManager>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Storage.Fluent.IStorageAccountsOperations>
     {
-        /// <summary>
-        /// Checks that account name is valid and is not in use asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="name">The account name to check.</param>
-        /// <return>Whether the name is available and other info if not.</return>
-        Task<Microsoft.Azure.Management.Storage.Fluent.CheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
-
         /// <summary>
         /// Checks that account name is valid and is not in use.
         /// </summary>
