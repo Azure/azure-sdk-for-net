@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
-using Microsoft.Build.Evaluation;
+//using Microsoft.Build.Evaluation;
 using Microsoft.Build.Execution;
 
 namespace BuildTasks.Core
@@ -300,18 +300,20 @@ namespace BuildTasks.Core
             return results;
         }
 
-        private Dictionary<string, string> GetMetaData(ITaskItem projSpec)
+        public Dictionary<string, string> GetMetaData(ITaskItem projSpec)
         {
             Dictionary<string, string> fxDict = new Dictionary<string, string>();
             int monikerCount = 0;
             string[] fxMonikers = new string[] { "TargetFx1", "TargetFx2" };
 
-            var ver = ProjectCollection.GlobalProjectCollection.DefaultToolsVersion;
-            Project loadedPoj = ProjectCollection.GlobalProjectCollection.LoadProject(projSpec.ItemSpec);
+            Microsoft.Build.Evaluation.Project loadedProj = new Microsoft.Build.Evaluation.Project(projSpec.ItemSpec);
+
+            //var ver = ProjectCollection.GlobalProjectCollection.DefaultToolsVersion;
+            //Project loadedPoj = ProjectCollection.GlobalProjectCollection.LoadProject(projSpec.ItemSpec);
 
 
 
-            string targetFxList = loadedPoj.GetPropertyValue("TargetFrameworks");
+            string targetFxList = loadedProj.GetPropertyValue("TargetFrameworks");
             var fxNames = targetFxList.Split(';').ToList<string>();
 
             KeyValuePair<string, string> kv = new KeyValuePair<string, string>();

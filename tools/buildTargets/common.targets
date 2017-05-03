@@ -12,8 +12,8 @@
   </PropertyGroup>  
   <PropertyGroup>
     <PreBuildStaticAnalysisTargets>
-      <!-- BuildCiSign; -->
-      <!-- BuildMsBuildTask; -->
+      BuildCiSign;
+      BuildMsBuildTask;
       CPP;
       <!--CategorizeProjects;-->
       <!--GetScopedProjects;-->
@@ -144,33 +144,41 @@
        <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" /> 
      </MSBuild> 
     
-	<!--
+	
       <Message Text="Building Non-Multi Targeted projects ..... @(Net452SDKProj)"/>
       <MSBuild Targets="Build"  
               Projects="@(Net452SDKProj)"
               BuildInParallel="$(BuildInParallel)"
-              ContinueOnError="ErrorAndStop"> 
+              ContinueOnError="ErrorAndStop"
+              Condition=" '$(MSBuildRuntimeType)' != 'Core' and $(RuntimeIdentifier.StartsWith('win'))"> 
        <Output TaskParameter="TargetOutputs" ItemName="Net452SDKAssemblies" /> 
      </MSBuild>
-	 -->
+	
     
     <ItemGroup>
       <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies);@(Net452SDKAssemblies)" />
     </ItemGroup>
     
     <Message Text="Building SDKTest Projects ....... %(SDKTestProject.Identity)" />
-    <!--<Message Text="Building net452Test Projects ....... %(TestNet452SDKProj.Identity)" /> -->
+    
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
          Projects="@(SDKTestProject)"
          Condition=" '$(SkipBuildingTestProjects)' != 'false' "
          ContinueOnError="ErrorAndStop">
-    </MSBuild>         
-	<!--Projects="@(SDKTestProject);@(TestNet452SDKProj)" -->
+    </MSBuild>
+
+    <Message Text="Building net452Test Projects ....... %(TestNet452SDKProj.Identity)" 
+          Condition=" $(MSBuildRuntimeType)' != 'Core' and $(RuntimeIdentifier.StartsWith('win')) " />
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+     Projects="@(TestNet452SDKProj)"
+     Condition=" ('$(SkipBuildingTestProjects)' != 'false') and ('$(MSBuildRuntimeType)' != 'Core' and $(RuntimeIdentifier.StartsWith('win')))"
+     ContinueOnError="ErrorAndStop">
+    </MSBuild>
+    <!--Projects="@(SDKTestProject);@(TestNet452SDKProj)" -->
   </Target>
   
   <Target Name="Test">
     <Message Text="Executing Tests......"/>
-    
       
     <ItemGroup>
       <FinalTestsToRun Include="@(SDKTestProject)" />
