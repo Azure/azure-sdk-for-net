@@ -20,7 +20,6 @@ using System;
 using System.Linq;
 using ISubscriptions = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscriptions;
 using ISubscription = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscription;
-using Microsoft.Azure.Management.ServiceBus.Fluent;
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -468,7 +467,23 @@ namespace Microsoft.Azure.Management.Fluent
         #endregion IConfigurable and it's implementation
     }
 
-    public interface IAzure
+    /// <summary>
+    /// Members of IAzure that are in Beta
+    /// </summary>
+    public interface IAzureBeta : IBeta
+    {
+        ILoadBalancers LoadBalancers { get; }
+
+        IApplicationGateways ApplicationGateways { get; }
+
+        IWebApps WebApps { get; }
+
+        IAppServiceManager AppServices { get; }
+
+        IServiceBusNamespaces ServiceBusNamespaces { get; }
+    }
+
+    public interface IAzure : IAzureBeta
     {
         string SubscriptionId { get; }
 
@@ -492,10 +507,6 @@ namespace Microsoft.Azure.Management.Fluent
 
         INetworkInterfaces NetworkInterfaces { get; }
 
-        ILoadBalancers LoadBalancers { get; }
-
-        IApplicationGateways ApplicationGateways { get; }
-
         IDeployments Deployments { get; }
 
         IVirtualMachineImages VirtualMachineImages { get; }
@@ -518,16 +529,10 @@ namespace Microsoft.Azure.Management.Fluent
 
         ICdnProfiles CdnProfiles { get; }
 
-        IWebApps WebApps { get; }
-
-        IAppServiceManager AppServices { get; }
-
         IVirtualMachineCustomImages VirtualMachineCustomImages { get; }
 
         IDisks Disks { get; }
 
         ISnapshots Snapshots { get; }
-
-        IServiceBusNamespaces ServiceBusNamespaces { get; }
     }
 }
