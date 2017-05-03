@@ -25,7 +25,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
 		public string AzureSqlItemName { get; set; }
 
-
 		public string AzureSqlPolicyName { get; set; }
 
 
