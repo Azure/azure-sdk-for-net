@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// in Azure. The final method completing the definition and starting the actual resource creation
         /// process in Azure is {@link Creatable#create()}.
         /// <p>
-        /// Note that the {@link Creatable#create()} method is
+        /// Note that the Creatable#create() method is
         /// only available at the stage of the resource definition that has the minimum set of input
         /// parameters specified. If you do not see {@link Creatable#create()} among the available methods, it
         /// means you have not yet specified all the required input settings. Input settings generally begin
