@@ -24,11 +24,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Resume an Azure SQL Data Warehouse database asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouseBeta.ResumeDataWarehouseAsync(CancellationToken cancellationToken)
         {
@@ -48,11 +43,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Pause an Azure SQL Data Warehouse database asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouseBeta.PauseDataWarehouseAsync(CancellationToken cancellationToken)
         {

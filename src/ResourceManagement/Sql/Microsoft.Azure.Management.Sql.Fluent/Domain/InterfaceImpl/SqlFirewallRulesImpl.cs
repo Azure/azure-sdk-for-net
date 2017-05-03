@@ -17,11 +17,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="resourceGroup">The name of resource group.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <param name="name">The name of resource.</param>
@@ -34,11 +29,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Gets the information about a resource from Azure based on the resource id.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <param name="name">The name of resource.</param>
         /// <return>Observable to an immutable representation of the resource.</return>
@@ -105,11 +95,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Asynchronously delete a resource from Azure, identifying it by its name and its resource group.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="groupName">The group the resource is part of.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <param name="name">The name of the resource.</param>

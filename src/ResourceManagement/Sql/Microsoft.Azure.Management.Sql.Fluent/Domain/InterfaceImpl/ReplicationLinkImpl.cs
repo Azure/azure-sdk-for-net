@@ -36,11 +36,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Forces fail over the Azure SQL Database Replication Link which may result in data loss.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.Sql.Fluent.IReplicationLinkBeta.ForceFailoverAllowDataLossAsync(CancellationToken cancellationToken)
         {
@@ -166,11 +161,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <summary>
         /// Fails over the Azure SQL Database Replication Link.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
         async Task Microsoft.Azure.Management.Sql.Fluent.IReplicationLinkBeta.FailoverAsync(CancellationToken cancellationToken)
         {
