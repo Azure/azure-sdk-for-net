@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
-    public class ProfileScenarioTests : TestBase
+    public partial class ProfileScenarioTests : TestBase
     {
         [Fact]
         public void CrudProfileFullCycle()
