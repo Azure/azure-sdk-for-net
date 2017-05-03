@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.IO;
 
     /// <summary>
     /// FileSystemOperations operations.
@@ -48,6 +49,66 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </return>
         Task<AzureOperationResponse<bool>> PathExistsWithHttpMessagesAsync(string accountName, string getFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Uploads a folder to the specified Data Lake Store account.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='sourcePath'>
+        /// The local source folder to upload to the Data Lake Store account.
+        /// </param>
+        /// <param name='destinationPath'>
+        /// The Data Lake Store path (starting with '/') of the directory to upload to.
+        /// </param>
+        /// <param name='perFileThreadCount'>
+        /// The maximum number of threads to use per file during the upload. By default, this number will be computed based on folder structure and average file size.
+        /// </param>
+        /// <param name='concurrentFileCount'>
+        /// The maximum number of files to upload at once. By default, this number will be computed based on folder structure and number of files.
+        /// </param>
+        /// <param name='resume'>
+        /// A switch indicating if this upload is a continuation of a previous, failed upload. Default is false.
+        /// </param>
+        /// <param name='overwrite'>
+        /// A switch indicating this upload should overwrite the contents of the target directory if it exists. Default is false, and the upload will fast fail if the target location exists.
+        /// </param>
+        /// <param name='uploadAsBinary'>
+        /// A switch indicating this upload should treat all data as binary, which is slightly more performant but does not ensure record boundary integrity. This is recommended for large folders of mixed binary and text files or binary only directories. Default is false
+        /// </param>
+        /// <param name='recurse'>
+        /// A switch indicating this upload should upload the source directory recursively or just the top level. Default is false, only the top level will be uploaded.
+        /// </param>
+        /// <param name='progressTracker'>
+        /// An optional delegate that can be used to track the progress of the upload operation asynchronously.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AdlsErrorException">
+        /// Thrown when the operation returned an invalid status code.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">
+        /// Thrown when the operation takes too long to complete or if the user explicitly cancels it.
+        /// </exception>
+        /// <exception cref="InvalidMetadataException">
+        /// Thrown when resume metadata is corrupt or not associated with the current operation.
+        /// </exception>
+        /// <exception cref="FileNotFoundException">
+        /// Thrown when the source path cannot be found.
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if an invalid upload is attempted or a file/folder is modified externally during the operation.
+        /// </exception>
+        /// <exception cref="TransferFailedException">
+        /// Thrown if the transfer operation fails.
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         void UploadFolder(
             string accountName,
             string sourcePath,
@@ -61,6 +122,63 @@ namespace Microsoft.Azure.Management.DataLake.Store
             IProgress<TransferFolderProgress> progressTracker = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Downloads a folder from the specified Data Lake Store account.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='sourcePath'>
+        /// The Data Lake Store path (starting with '/') of the directory to download.
+        /// </param>
+        /// <param name='destinationPath'>
+        /// The local path to download the folder to.
+        /// </param>
+        /// <param name='perFileThreadCount'>
+        /// The maximum number of threads to use per file during the download. By default, this number will be computed based on folder structure and average file size.
+        /// </param>
+        /// <param name='concurrentFileCount'>
+        /// The maximum number of files to download at once. By default, this number will be computed based on folder structure and number of files.
+        /// </param>
+        /// <param name='resume'>
+        /// A switch indicating if this download is a continuation of a previous, failed download. Default is false.
+        /// </param>
+        /// <param name='overwrite'>
+        /// A switch indicating this download should overwrite the contents of the target directory if it exists. Default is false, and the download will fast fail if the target location exists.
+        /// </param>
+        /// <param name='recurse'>
+        /// A switch indicating this download should download the source directory recursively or just the top level. Default is false, only the top level will be downloaded.
+        /// </param>
+        /// <param name='progressTracker'>
+        /// An optional delegate that can be used to track the progress of the download operation asynchronously.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AdlsErrorException">
+        /// Thrown when the operation returned an invalid status code.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">
+        /// Thrown when the operation takes too long to complete or if the user explicitly cancels it.
+        /// </exception>
+        /// <exception cref="InvalidMetadataException">
+        /// Thrown when resume metadata is corrupt or not associated with the current operation.
+        /// </exception>
+        /// <exception cref="FileNotFoundException">
+        /// Thrown when the source path cannot be found.
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if an invalid download is attempted or a file/folder is modified externally during the operation.
+        /// </exception>
+        /// <exception cref="TransferFailedException">
+        /// Thrown if the transfer operation fails.
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         void DownloadFolder(
             string accountName,
             string sourcePath,
@@ -73,6 +191,60 @@ namespace Microsoft.Azure.Management.DataLake.Store
             IProgress<TransferFolderProgress> progressTracker = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Uploads a file to the specified Data Lake Store account.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='sourcePath'>
+        /// The local source file to upload to the Data Lake Store account.
+        /// </param>
+        /// <param name='destinationPath'>
+        /// The Data Lake Store path (starting with '/') of the directory or directory and filename to upload to.
+        /// </param>
+        /// <param name='threadCount'>
+        /// The maximum number of threads to use during the upload. By default, this number will be computed based on file size.
+        /// </param>
+        /// <param name='resume'>
+        /// A switch indicating if this upload is a continuation of a previous, failed upload. Default is false.
+        /// </param>
+        /// <param name='overwrite'>
+        /// A switch indicating this upload should overwrite the target file if it exists. Default is false, and the upload will fast fail if the target file exists.
+        /// </param>
+        /// <param name='uploadAsBinary'>
+        /// A switch indicating this upload should treat the file as binary, which is slightly more performant but does not ensure record boundary integrity.
+        /// </param>
+        /// <param name='progressTracker'>
+        /// An optional delegate that can be used to track the progress of the upload operation asynchronously.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AdlsErrorException">
+        /// Thrown when the operation returned an invalid status code.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">
+        /// Thrown when the operation takes too long to complete or if the user explicitly cancels it.
+        /// </exception>
+        /// <exception cref="InvalidMetadataException">
+        /// Thrown when resume metadata is corrupt or not associated with the current operation.
+        /// </exception>
+        /// <exception cref="FileNotFoundException">
+        /// Thrown when the source path cannot be found.
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if an invalid upload is attempted or the file is modified externally during the operation.
+        /// </exception>
+        /// <exception cref="TransferFailedException">
+        /// Thrown if the transfer operation fails.
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         void UploadFile(
             string accountName,
             string sourcePath,
@@ -84,6 +256,57 @@ namespace Microsoft.Azure.Management.DataLake.Store
             IProgress<TransferProgress> progressTracker = null,
             CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Downloads a file from the specified Data Lake Store account.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='sourcePath'>
+        /// The Data Lake Store path (starting with '/') of the file to download.
+        /// </param>
+        /// <param name='destinationPath'>
+        /// The local path to download the file to. If a directory is specified, the file name will be the same as the source file name
+        /// </param>
+        /// <param name='threadCount'>
+        /// The maximum number of threads to use during the download. By default, this number will be computed based on file size.
+        /// </param>
+        /// <param name='resume'>
+        /// A switch indicating if this download is a continuation of a previous, failed download. Default is false.
+        /// </param>
+        /// <param name='overwrite'>
+        /// A switch indicating this download should overwrite the the target file if it exists. Default is false, and the download will fast fail if the target file exists.
+        /// </param>
+        /// <param name='progressTracker'>
+        /// An optional delegate that can be used to track the progress of the download operation asynchronously.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AdlsErrorException">
+        /// Thrown when the operation returned an invalid status code.
+        /// </exception>
+        /// <exception cref="TaskCanceledException">
+        /// Thrown when the operation takes too long to complete or if the user explicitly cancels it.
+        /// </exception>
+        /// <exception cref="InvalidMetadataException">
+        /// Thrown when resume metadata is corrupt or not associated with the current operation.
+        /// </exception>
+        /// <exception cref="FileNotFoundException">
+        /// Thrown when the source path cannot be found.
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if an invalid download is attempted or a file is modified externally during the operation.
+        /// </exception>
+        /// <exception cref="TransferFailedException">
+        /// Thrown if the transfer operation fails.
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         void DownloadFile(
             string accountName,
             string sourcePath,
