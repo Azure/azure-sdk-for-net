@@ -31,10 +31,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         string VirtualMachineId { get; }
 
         /// <summary>
-        /// Gets the private IP address allocated to this network interface's primary IP configuration.
-        /// The private IP will be within the virtual network subnet of this network interface.
-        /// </summary>
-        /// <summary>
         /// Gets the private IP addresses.
         /// </summary>
         string PrimaryPrivateIP { get; }

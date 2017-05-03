@@ -208,7 +208,20 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
     }
 
-    public interface INetworkManager : IManager<INetworkManagementClient>
+    public interface INetworkManagerBeta : IBeta
+    {
+        /// <summary>
+        /// return entry point to load balancer management
+        /// </summary>
+        ILoadBalancers LoadBalancers { get; }
+
+        /// <summary>
+        /// Entry point to application gateway management.
+        /// </summary>
+        IApplicationGateways ApplicationGateways { get; }
+    }
+
+    public interface INetworkManager : INetworkManagerBeta, IManager<INetworkManagementClient>
     {
         /// <summary>
         /// return entry point to virtual network management
@@ -229,16 +242,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// return entry point to network interface management
         /// </summary>
         INetworkInterfaces NetworkInterfaces { get; }
-
-        /// <summary>
-        /// return entry point to load balancer management
-        /// </summary>
-        ILoadBalancers LoadBalancers { get; }
-
-        /// <summary>
-        /// Entry point to application gateway management.
-        /// </summary>
-        IApplicationGateways ApplicationGateways { get;  }
 
         /// <summary>
         /// Entry point to route table management
