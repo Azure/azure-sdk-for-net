@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.ForceFailoverAllowDataLossAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Sql.Fluent.IReplicationLinkBeta.ForceFailoverAllowDataLossAsync(CancellationToken cancellationToken)
         {
  
             await this.ForceFailoverAllowDataLossAsync(cancellationToken);
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Sql.Fluent.IReplicationLink.FailoverAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Sql.Fluent.IReplicationLinkBeta.FailoverAsync(CancellationToken cancellationToken)
         {
  
             await this.FailoverAsync(cancellationToken);

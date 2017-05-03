@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouse.ResumeDataWarehouseAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouseBeta.ResumeDataWarehouseAsync(CancellationToken cancellationToken)
         {
  
             await this.ResumeDataWarehouseAsync(cancellationToken);
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouse.PauseDataWarehouseAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouseBeta.PauseDataWarehouseAsync(CancellationToken cancellationToken)
         {
  
             await this.PauseDataWarehouseAsync(cancellationToken);
