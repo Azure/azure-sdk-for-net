@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Observable to response containing whether the DNS is available to be used for a traffic manager profile
         /// and other info if not.
         /// </return>
-        async Task<Microsoft.Azure.Management.TrafficManager.Fluent.CheckProfileDnsNameAvailabilityResult> Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfiles.CheckDnsNameAvailabilityAsync(string dnsNameLabel, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.TrafficManager.Fluent.CheckProfileDnsNameAvailabilityResult> Microsoft.Azure.Management.TrafficManager.Fluent.ITrafficManagerProfilesBeta.CheckDnsNameAvailabilityAsync(string dnsNameLabel, CancellationToken cancellationToken)
         {
             return await this.CheckDnsNameAvailabilityAsync(dnsNameLabel, cancellationToken) as Microsoft.Azure.Management.TrafficManager.Fluent.CheckProfileDnsNameAvailabilityResult;
         }
