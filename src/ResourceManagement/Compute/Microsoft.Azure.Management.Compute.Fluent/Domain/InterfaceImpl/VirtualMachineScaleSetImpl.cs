@@ -707,7 +707,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ReimageAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.ReimageAsync(CancellationToken cancellationToken)
         {
  
             await this.ReimageAsync(cancellationToken);
@@ -981,7 +981,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.StartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.StartAsync(CancellationToken cancellationToken)
         {
  
             await this.StartAsync(cancellationToken);
@@ -1018,7 +1018,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.PowerOffAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.PowerOffAsync(CancellationToken cancellationToken)
         {
  
             await this.PowerOffAsync(cancellationToken);
@@ -1033,7 +1033,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.DeallocateAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.DeallocateAsync(CancellationToken cancellationToken)
         {
  
             await this.DeallocateAsync(cancellationToken);
@@ -1058,7 +1058,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.RestartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.RestartAsync(CancellationToken cancellationToken)
         {
  
             await this.RestartAsync(cancellationToken);

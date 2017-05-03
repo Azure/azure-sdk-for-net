@@ -37,10 +37,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Models.DiskCreateOptionTypes CreationMethod { get; }
 
         /// <summary>
-        /// Gets the disk caching type.
-        /// possible values are: 'None', 'ReadOnly', 'ReadWrite'.
-        /// </summary>
-        /// <summary>
         /// Gets the caching type.
         /// </summary>
         Models.CachingTypes CachingType { get; }

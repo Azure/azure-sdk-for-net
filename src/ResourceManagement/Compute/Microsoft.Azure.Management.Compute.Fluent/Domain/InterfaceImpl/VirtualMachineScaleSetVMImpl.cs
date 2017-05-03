@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>The observable to the reimage action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.ReimageAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.ReimageAsync(CancellationToken cancellationToken)
         {
  
             await this.ReimageAsync(cancellationToken);
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>The observable to the delete action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.DeleteAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.DeleteAsync(CancellationToken cancellationToken)
         {
  
             await this.DeleteAsync(cancellationToken);
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>The observable to the start action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.StartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.StartAsync(CancellationToken cancellationToken)
         {
  
             await this.StartAsync(cancellationToken);
@@ -598,7 +598,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>The observable to the deallocate action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.DeallocateAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.DeallocateAsync(CancellationToken cancellationToken)
         {
  
             await this.DeallocateAsync(cancellationToken);
@@ -613,7 +613,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>The observable to the poweroff action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.PowerOffAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.PowerOffAsync(CancellationToken cancellationToken)
         {
  
             await this.PowerOffAsync(cancellationToken);
@@ -637,7 +637,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// version number.).
         /// </remarks>
         /// <return>The observable to the restart action.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM.RestartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMBeta.RestartAsync(CancellationToken cancellationToken)
         {
  
             await this.RestartAsync(cancellationToken);

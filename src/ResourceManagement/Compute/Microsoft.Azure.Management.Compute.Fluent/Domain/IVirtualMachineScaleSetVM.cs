@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// An immutable client-side representation of a virtual machine instance in an Azure virtual machine scale set.
     /// </summary>
     public interface IVirtualMachineScaleSetVM  :
+        IVirtualMachineScaleSetVMBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVM>,
@@ -39,17 +40,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the extensions associated with the virtual machine instance, indexed by name.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetVMInstanceExtension> Extensions { get; }
-
-        /// <summary>
-        /// Starts the virtual machine instance.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>The observable to the start action.</return>
-        Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets VHD URI to the operating system disk.
@@ -119,17 +109,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> DataDisks { get; }
 
         /// <summary>
-        /// Stops the virtual machine instance.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>The observable to the poweroff action.</return>
-        Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Gets true if this is a Windows virtual machine and automatic update is turned on, false otherwise.
         /// </summary>
         bool IsWindowsAutoUpdateEnabled { get; }
@@ -162,17 +141,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets resource ID of the managed disk backing OS disk.
         /// </summary>
         string OSDiskId { get; }
-
-        /// <summary>
-        /// Updates the version of the installed operating system in the virtual machine instance.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>The observable to the reimage action.</return>
-        Task ReimageAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets true if this is a Windows virtual machine and VM agent is provisioned, false otherwise.
@@ -232,17 +200,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         string InstanceId { get; }
 
         /// <summary>
-        /// Restarts the virtual machine instance.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>The observable to the restart action.</return>
-        Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Gets true if the boot diagnostic is enabled, false otherwise.
         /// </summary>
         bool BootDiagnosticEnabled { get; }
@@ -254,17 +211,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         /// <return>The network interfaces associated with this virtual machine instance.</return>
         System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Network.Fluent.IVirtualMachineScaleSetNetworkInterface> ListNetworkInterfaces();
-
-        /// <summary>
-        /// Deletes the virtual machine instance.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>The observable to the delete action.</return>
-        Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Refreshes the instance view.
@@ -307,17 +253,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets true if this is a Linux virtual machine and password based login is enabled, false otherwise.
         /// </summary>
         bool IsLinuxPasswordAuthenticationEnabled { get; }
-
-        /// <summary>
-        /// Shuts down the virtual machine instance and releases the associated compute resources.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>The observable to the deallocate action.</return>
-        Task DeallocateAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets reference to the platform image that the virtual machine instance operating system is based on,
