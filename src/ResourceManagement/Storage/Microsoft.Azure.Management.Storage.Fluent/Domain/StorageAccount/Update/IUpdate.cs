@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Fluent;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// A storage account update stage allowing to change the parameters.
@@ -51,17 +52,12 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
     /// <summary>
     /// A storage account update allowing encryption to be specified.
     /// </summary>
-    public interface IWithEncryption 
+    public interface IWithEncryption : IBeta
     {
         /// <summary>
         /// Specifies the encryption setting on the account.
         /// The default setting is unencrypted.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="encryption">The encryption setting.</param>
         /// <return>The nest stage of storage account update.</return>
         Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithEncryption(Encryption encryption);
