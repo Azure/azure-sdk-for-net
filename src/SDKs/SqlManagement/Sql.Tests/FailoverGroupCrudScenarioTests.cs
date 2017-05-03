@@ -14,53 +14,17 @@ namespace Sql.Tests
 {
     public class FailoverGroupCrudScenarioTests
     {
-        public static string DefaultPrimaryLocation
-        {
-            get
-            {
-                return "North Europe";
-            }
-        }
-
-        public static string DefaultSecondaryLocation
-        {
-            get
-            {
-                return "SouthEast Asia";
-            }
-        }
-
-        private Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string serverPrefix, string location)
-        {
-            string login = "dummylogin";
-            string password = "Un53cuRE!";
-            string version12 = "12.0";
-            string serverName = SqlManagementTestUtilities.GenerateName(serverPrefix);
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-
-            var v12Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Microsoft.Azure.Management.Sql.Models.Server()
-            {
-                AdministratorLogin = login,
-                AdministratorLoginPassword = password,
-                Version = version12,
-                Tags = tags,
-                Location = location,
-            });
-            SqlManagementTestUtilities.ValidateServer(v12Server, serverName, login, version12, tags, location);
-            return v12Server;
-        }
-
         [Fact]
-        public void TestCreateDeleteFailoverGroup()
+        public void TestCrudFailoverGroup()
         {
             string testPrefix = "sqlcrudtest-";
             string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCreateDeleteFailoverGroup", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCrudFailoverGroup", testPrefix, (resClient, sqlClient, resourceGroup) =>
             {
                 // Create primary and partner servers
                 //
-                Server primaryServer = CreateServer(sqlClient, resourceGroup, testPrefix, DefaultPrimaryLocation);
-                Server partnerServer = CreateServer(sqlClient, resourceGroup, testPrefix, DefaultSecondaryLocation);
+                Server sourceServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultStagePrimaryLocation);
+                Server targetServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultStageSecondaryLocation);
 
                 // Create a failover group
                 //
@@ -69,113 +33,89 @@ namespace Sql.Tests
                 {
                     ReadOnlyEndpoint = new FailoverGroupReadOnlyEndpoint()
                     {
-                        FailoverPolicy = "Disabled",
+                        FailoverPolicy = ReadOnlyEndpointFailoverPolicy.Disabled,
                     },
                     ReadWriteEndpoint = new FailoverGroupReadWriteEndpoint()
                     {
-                        FailoverPolicy = "Automatic",
+                        FailoverPolicy = ReadWriteEndpointFailoverPolicy.Automatic,
                         FailoverWithDataLossGracePeriodMinutes = 120,
                     },
                     PartnerServers = new List<PartnerInfo>()
                     {
-                        new PartnerInfo() { Id = partnerServer.Id },
+                        new PartnerInfo() { Id = targetServer.Id },
                     },
                     Databases = new List<string>(),
                 };
-                var failoverGroup = sqlClient.FailoverGroups.CreateOrUpdate(resourceGroup.Name, primaryServer.Name, failoverGroupName, fgInput);
+                var failoverGroup = sqlClient.FailoverGroups.CreateOrUpdate(resourceGroup.Name, sourceServer.Name, failoverGroupName, fgInput);
                 SqlManagementTestUtilities.ValidateFailoverGroup(fgInput, failoverGroup, failoverGroupName);
 
-                var failoverGroupOnPartner = sqlClient.FailoverGroups.Get(resourceGroup.Name, partnerServer.Name, failoverGroupName);
+                var failoverGroupOnPartner = sqlClient.FailoverGroups.Get(resourceGroup.Name, targetServer.Name, failoverGroupName);
                 Assert.NotNull(failoverGroupOnPartner);
-
-                // Delete failover group and verify
-                //
-                sqlClient.FailoverGroups.Delete(resourceGroup.Name, primaryServer.Name, failoverGroupName);
-                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.FailoverGroups.Get(resourceGroup.Name, primaryServer.Name, failoverGroupName));
-            });
-        }
-
-        [Fact]
-        public void TestUpdateFailoverGroup()
-        {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestUpdateFailoverGroup", testPrefix, (resClient, sqlClient, resourceGroup) =>
-            {
-                // Create primary and partner servers
-                //
-                Server primaryServer = CreateServer(sqlClient, resourceGroup, testPrefix, DefaultPrimaryLocation);
-                Server partnerServer = CreateServer(sqlClient, resourceGroup, testPrefix, DefaultSecondaryLocation);
-
-                // Create a failover group
-                //
-                string failoverGroupName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var fgInput = new FailoverGroup()
-                {
-                    ReadOnlyEndpoint = new FailoverGroupReadOnlyEndpoint()
-                    {
-                        FailoverPolicy = "Disabled",
-                    },
-                    ReadWriteEndpoint = new FailoverGroupReadWriteEndpoint()
-                    {
-                        FailoverPolicy = "Automatic",
-                        FailoverWithDataLossGracePeriodMinutes = 120,
-                    },
-                    PartnerServers = new List<PartnerInfo>()
-                    {
-                        new PartnerInfo() { Id = partnerServer.Id },
-                    },
-                    Databases = new List<string>(),
-                };
-                var failoverGroup = sqlClient.FailoverGroups.CreateOrUpdate(resourceGroup.Name, primaryServer.Name, failoverGroupName, fgInput);
-                SqlManagementTestUtilities.ValidateFailoverGroup(fgInput, failoverGroup, failoverGroupName);
 
                 // Create a database in the primary server
                 //
                 string databaseName = "testdb";
                 var dbInput = new Database()
                 {
-                    Location = primaryServer.Location
+                    Location = sourceServer.Location
                 };
-                Database database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, primaryServer.Name, databaseName, dbInput);
+                Database database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, sourceServer.Name, databaseName, dbInput);
+                Assert.NotNull(database);
 
-                // Update failover group to add database and change Read-write failover policy.
+                // Update failover group to add database and change read-write endpoint's failover policy.
                 //
                 var fgUpdateInput = new FailoverGroup()
                 {
                     ReadOnlyEndpoint = new FailoverGroupReadOnlyEndpoint()
                     {
-                        FailoverPolicy = "Disabled",
+                        FailoverPolicy = ReadOnlyEndpointFailoverPolicy.Disabled,
                     },
                     ReadWriteEndpoint = new FailoverGroupReadWriteEndpoint()
                     {
-                        FailoverPolicy = "Manual",
+                        FailoverPolicy = ReadWriteEndpointFailoverPolicy.Manual,
                     },
                     PartnerServers = new List<PartnerInfo>()
                     {
-                        new PartnerInfo() { Id = partnerServer.Id },
+                        new PartnerInfo() { Id = targetServer.Id },
                     },
                     Databases = new List<string>()
                     {
                         database.Id,
                     },
                 };
-                failoverGroup = sqlClient.FailoverGroups.CreateOrUpdate(resourceGroup.Name, primaryServer.Name, failoverGroupName, fgUpdateInput);
+                failoverGroup = sqlClient.FailoverGroups.CreateOrUpdate(resourceGroup.Name, sourceServer.Name, failoverGroupName, fgUpdateInput);
                 SqlManagementTestUtilities.ValidateFailoverGroup(fgUpdateInput, failoverGroup, failoverGroupName);
 
-                var sourceDatabase = sqlClient.Databases.Get(resourceGroup.Name, primaryServer.Name, databaseName);
-                var targetDatabase = sqlClient.Databases.Get(resourceGroup.Name, partnerServer.Name, databaseName);
-                Assert.NotNull(sourceDatabase.FailoverGroupId);
-                Assert.NotNull(targetDatabase.FailoverGroupId);
-
-                // Delete failover group and verify that databases are removed from failover group
+                // List failover groups on the secondary server and verify
                 //
-                sqlClient.FailoverGroups.Delete(resourceGroup.Name, primaryServer.Name, failoverGroupName);
-                sourceDatabase = sqlClient.Databases.Get(resourceGroup.Name, primaryServer.Name, databaseName);
-                targetDatabase = sqlClient.Databases.Get(resourceGroup.Name, partnerServer.Name, databaseName);
-                Assert.Null(sourceDatabase.FailoverGroupId);
-                Assert.Null(targetDatabase.FailoverGroupId);
-                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.FailoverGroups.Get(resourceGroup.Name, primaryServer.Name, failoverGroupName));
+                var failoverGroupsOnSecondary = sqlClient.FailoverGroups.ListByServer(resourceGroup.Name, targetServer.Name);
+                Assert.NotNull(failoverGroupsOnSecondary);
+                Assert.Equal(1, failoverGroupsOnSecondary.Count());
+
+                var primaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, sourceServer.Name, databaseName);
+                var secondaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, targetServer.Name, databaseName);
+                Assert.NotNull(primaryDatabase.FailoverGroupId);
+                Assert.NotNull(secondaryDatabase.FailoverGroupId);
+
+                // Failover failover group
+                //
+                failoverGroup = sqlClient.FailoverGroups.Failover(resourceGroup.Name, targetServer.Name, failoverGroupName);
+
+                // Get failover group on the new secondary server and verify its replication role
+                //
+                var failoverGroupOnSecondary = sqlClient.FailoverGroups.Get(resourceGroup.Name, sourceServer.Name, failoverGroupName);
+                Assert.Equal(FailoverGroupReplicationRole.Secondary, failoverGroupOnSecondary.ReplicationRole);
+                Assert.Equal(FailoverGroupReplicationRole.Primary, failoverGroupOnSecondary.PartnerServers.First().ReplicationRole);
+
+                // Delete failover group and verify that databases are removed from the failover group
+                //
+                sqlClient.FailoverGroups.Delete(resourceGroup.Name, targetServer.Name, failoverGroupName);
+                primaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, targetServer.Name, databaseName);
+                secondaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, sourceServer.Name, databaseName);
+                Assert.Null(primaryDatabase.FailoverGroupId);
+                Assert.Null(secondaryDatabase.FailoverGroupId);
+                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.FailoverGroups.Get(resourceGroup.Name, sourceServer.Name, failoverGroupName));
+                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.FailoverGroups.Get(resourceGroup.Name, targetServer.Name, failoverGroupName));
             });
         }
     }
