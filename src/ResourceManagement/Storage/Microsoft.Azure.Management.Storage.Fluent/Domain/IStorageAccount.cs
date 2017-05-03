@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     /// An immutable client-side representation of an Azure storage account.
     /// </summary>
     public interface IStorageAccount  :
+        IStorageAccountBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Storage.Fluent.IStorageManager,Models.StorageAccountInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<StorageAccount.Update.IUpdate>
@@ -40,17 +41,6 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         /// 'BlobStorage'.
         /// </summary>
         Models.Kind Kind { get; }
-
-        /// <summary>
-        /// Fetch the up-to-date access keys from Azure for this storage account asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <return>Observable to the access keys for this storage account.</return>
-        Task<System.Collections.Generic.IReadOnlyList<Models.StorageAccountKey>> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the URLs that are used to perform a retrieval of a public blob,
@@ -82,18 +72,6 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         /// 'Available', 'Unavailable'.
         /// </summary>
         Microsoft.Azure.Management.Storage.Fluent.AccountStatuses AccountStatuses { get; }
-
-        /// <summary>
-        /// Regenerates the access keys for this storage account asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="keyName">If the key name.</param>
-        /// <return>Observable to the access keys for this storage account.</return>
-        Task<System.Collections.Generic.IReadOnlyList<Models.StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the creation date and time of the storage account in UTC.
