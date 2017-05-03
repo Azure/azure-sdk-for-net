@@ -30,11 +30,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         /// <summary>
         /// Checks if namespace name is valid and is not in use asynchronously.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="name">The namespace name to check.</param>
         /// <return>Whether the name is available and other info if not.</return>
         Task<Microsoft.Azure.Management.ServiceBus.Fluent.ICheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
