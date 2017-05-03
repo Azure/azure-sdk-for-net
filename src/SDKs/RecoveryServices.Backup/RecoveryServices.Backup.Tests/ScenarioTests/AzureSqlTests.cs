@@ -9,26 +9,18 @@ using Xunit;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
+
 	/// <summary>
-	/// In order to run the tests in Record mode, some test artifacts need to be created manually. Here are the details:
-	/// 1. Resource Group - Any permissible name is allowed.
-	/// 2. Azure VM: any size, version, created in the above resource group.
-	/// 3. Resource Group for Storage Account - Any permissible name is allowed.
-	/// 4. Storage Account: any configuration, but should be of the same version of the above VM, created in the resource group specified for the storage account. 
-	///    This will be used for the restore operation.
-	/// NOTE: Region should preferably be West US. Otherwise, it should be in the same region as the test vault being created.
-	/// 
-	/// These details need to be updated in the TestSettings.json file. A sample is given here:
-	/// 
-	/// {
-	/// "VirtualMachineName": "pstestv2vm1",
-	/// "VirtualMachineResourceGroupName": "pstestrg",
-	/// "VirtualMachineType": "Compute",
-	/// "RestoreStorageAccountName": "pstestrg4762",
-	/// "RestoreStorageAccountResourceGroupName": "pstestrg"
-	/// }
-	/// 
-	/// Here, if the VM is a Classic Compute VM, set VirtualMachineType as "Classic" and if it is a Compute VM, set VirtualMachineType as "Compute"
+	/// To run this test case in record mode, we will have to do following presetup.
+	/// 1.	Create resource and resource group and replace the value accordingly in following lines of the code.
+	/// 			private const string azureSqlVaultName = "sqlpaasrn";
+	/// 			private const string azureSqlResourceGroupName = "sqlpaasrg";
+	///
+	///	2.	Create a policy , Sql Server and and protect the database from Azure Sql Portal.
+	///	3.	Replace the values accordingly in TestSetting.json
+	///				"AzureSqlItemName": "dsName;satyay-sea-d1-fc1-catalog-2016-11-11-17-20;661f0942-d5b7-486a-b3cb-68f97d325a3c",
+	///				"AzureSqlPolicyName": "sqlpaaspolicy",
+	///				"AzureSqlContainerName": "AzureSqlContainer;Sql;sqlpaasrg;sqlpaasserver"
 	/// </summary>
 	public class AzureSqlScenarioTests : TestBase, IDisposable
 	{

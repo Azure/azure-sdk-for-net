@@ -406,6 +406,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 			BackupClient.Dispose();
 			VaultClient.Dispose();
 		}
-
 	}
 }
