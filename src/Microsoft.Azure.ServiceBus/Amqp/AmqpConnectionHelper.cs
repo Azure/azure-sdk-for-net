@@ -20,7 +20,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             bool useWebSockets = false,
             bool sslStreamUpgrade = false,
             System.Net.NetworkCredential networkCredential = null,
-            System.Net.Security.RemoteCertificateValidationCallback certificateValidationCallback = null,
             bool forceTokenProvider = true)
         {
             AmqpSettings settings = new AmqpSettings();
@@ -28,7 +27,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 var tlsSettings = new TlsTransportSettings
                 {
-                    CertificateValidationCallback = certificateValidationCallback,
                     TargetHost = sslHostName
                 };
 
@@ -70,10 +68,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return settings;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.NamingRules",
-            "SA1305:FieldNamesMustNotUseHungarianNotation",
-            Justification = "tpSettings is a local variable.")]
         public static TransportSettings CreateTcpTransportSettings(
             string networkHost,
             string hostName,
@@ -81,8 +75,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             bool useSslStreamSecurity,
             bool sslStreamUpgrade = false,
             string sslHostName = null,
-            System.Security.Cryptography.X509Certificates.X509Certificate2 certificate = null,
-            System.Net.Security.RemoteCertificateValidationCallback certificateValidationCallback = null)
+            System.Security.Cryptography.X509Certificates.X509Certificate2 certificate = null)
         {
             TcpTransportSettings tcpSettings = new TcpTransportSettings
             {
@@ -97,9 +90,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 TlsTransportSettings tlsSettings = new TlsTransportSettings(tcpSettings)
                 {
-                    TargetHost = sslHostName ?? hostName,
-                    Certificate = certificate,
-                    CertificateValidationCallback = certificateValidationCallback
+                    TargetHost = sslHostName ?? hostName
                 };
                 tpSettings = tlsSettings;
             }

@@ -2,7 +2,7 @@ function Build-Solution
 {
     Write-Host "Building Service Bus projects"
 
-    dotnet restore
+    MSBuild.exe Microsoft.Azure.ServiceBus.sln /t:restore /p:Configuration=Debug /p:Platform="Any CPU"
 
     # $? Returns True or False value indicating whether previous command ended with an error.
     # This is used to throw an error that will cause the AppVeyor process to fail as expected.
@@ -11,14 +11,7 @@ function Build-Solution
         throw "Package restore failed."
     }
 
-    dotnet build src/Microsoft.Azure.ServiceBus/Microsoft.Azure.ServiceBus.csproj
-
-    if (-not $?)
-    {
-        throw "Build failed."
-    }
-
-    dotnet build test/Microsoft.Azure.ServiceBus.UnitTests/Microsoft.Azure.ServiceBus.UnitTests.csproj
+    MSBuild.exe Microsoft.Azure.ServiceBus.sln /p:Configuration=Debug /p:Platform="Any CPU"
 
     if (-not $?)
     {

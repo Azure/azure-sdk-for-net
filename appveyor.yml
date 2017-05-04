@@ -3,6 +3,7 @@ branches:
   only:
   - master
   - dev
+image: Visual Studio 2017
 environment:
   ClientSecret:
     secure: /8H7C81iNS+gVi7LhJCEOPUlNaa30y4KcY4nw/g2C4HGxOv6SrcroyDvMnqD+5GN
