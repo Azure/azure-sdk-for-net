@@ -27,15 +27,23 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Initializes a new instance of the BatchAccountKeys class.
         /// </summary>
+        /// <param name="accountName">The Batch account name.</param>
         /// <param name="primary">The primary key associated with the
         /// account.</param>
         /// <param name="secondary">The secondary key associated with the
         /// account.</param>
-        public BatchAccountKeys(string primary = default(string), string secondary = default(string))
+        public BatchAccountKeys(string accountName = default(string), string primary = default(string), string secondary = default(string))
         {
+            AccountName = accountName;
             Primary = primary;
             Secondary = secondary;
         }
+
+        /// <summary>
+        /// Gets the Batch account name.
+        /// </summary>
+        [JsonProperty(PropertyName = "accountName")]
+        public string AccountName { get; protected set; }
 
         /// <summary>
         /// Gets the primary key associated with the account.
