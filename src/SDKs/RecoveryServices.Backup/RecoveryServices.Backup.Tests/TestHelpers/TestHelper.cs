@@ -235,10 +235,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 			Assert.True(response.Response.Headers.Contains("Retry-After"));
 		}
 
-		public List<ProtectedItemResource> ListProtectedItems()
+		public List<ProtectedItemResource> ListProtectedItems(Microsoft.Rest.Azure.OData.ODataQuery<ProtectedItemQueryObject> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<ProtectedItemQueryObject>))
 		{
 			return GetPagedList(
-				() => BackupClient.BackupProtectedItems.List(VaultName, ResourceGroup),
+				() => BackupClient.BackupProtectedItems.List(VaultName, ResourceGroup, odataQuery),
 				nextLink => BackupClient.BackupProtectedItems.ListNext(nextLink));
 		}
 
@@ -338,14 +338,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 				nextLink => BackupClient.BackupProtectionContainers.ListNext(nextLink));
 		}
 
-		public TokenInformation GetBackupSecurityPin()
-		{
-			return BackupClient.SecurityPINs.Get(VaultName, ResourceGroup);
-		}
+        public TokenInformation GetBackupSecurityPin()
+        {
+            return BackupClient.SecurityPINs.Get(VaultName, ResourceGroup);
+        }
 
-		#region Private Method
+        public BackupEngineBaseResource GetBackupEngine(string beName)
+        {
+            return BackupClient.BackupEngines.Get(VaultName, ResourceGroup, beName);
+        }
 
-		private T GetOperationStatus<T>(string containerName, string itemName, AzureOperationResponse response,
+        public List<BackupEngineBaseResource> ListBackupEngine(Microsoft.Rest.Azure.OData.ODataQuery<BMSBackupEnginesQueryObject> odataQuery = null, string skipToken = null)
+        {
+            return GetPagedList(
+                () => BackupClient.BackupEngines.List(VaultName, ResourceGroup, odataQuery, skipToken),
+                nextLink => BackupClient.BackupEngines.ListNext(nextLink));            
+        }
+
+        #region Private Method
+
+        private T GetOperationStatus<T>(string containerName, string itemName, AzureOperationResponse response,
 			Func<string, AzureOperationResponse<OperationStatus>> getOpStatus)
 			where T : OperationStatusExtendedInfo
 		{
