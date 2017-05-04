@@ -23,11 +23,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the FeatureResult class.
         /// </summary>
-        /// <param name="name">Gets or sets the name of the feature.</param>
-        /// <param name="properties">Gets or sets the properties of the
-        /// previewed feature.</param>
-        /// <param name="id">Gets or sets the Id of the feature.</param>
-        /// <param name="type">Gets or sets the type of the feature.</param>
+        /// <param name="name">The name of the feature.</param>
+        /// <param name="properties">Properties of the previewed
+        /// feature.</param>
+        /// <param name="id">The resource ID of the feature.</param>
+        /// <param name="type">The resource type of the feature.</param>
         public FeatureResult(string name = default(string), FeatureProperties properties = default(FeatureProperties), string id = default(string), string type = default(string))
         {
             Name = name;
@@ -43,19 +43,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties of the previewed feature.
+        /// Gets or sets properties of the previewed feature.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public FeatureProperties Properties { get; set; }
 
         /// <summary>
-        /// Gets or sets the Id of the feature.
+        /// Gets or sets the resource ID of the feature.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the feature.
+        /// Gets or sets the resource type of the feature.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

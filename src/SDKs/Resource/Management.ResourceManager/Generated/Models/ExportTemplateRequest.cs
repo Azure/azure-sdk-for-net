@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ExportTemplateRequest class.
         /// </summary>
-        /// <param name="resources">The ids of the resources. The only
-        /// supported string currently is '*' (all resources). Future api
-        /// updates will support exporting specific resources.</param>
+        /// <param name="resources">The IDs of the resources. The only
+        /// supported string currently is '*' (all resources). Future updates
+        /// will support exporting specific resources.</param>
         /// <param name="options">The export template options. Supported
         /// values include 'IncludeParameterDefaultValue', 'IncludeComments'
         /// or 'IncludeParameterDefaultValue, IncludeComments</param>
@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the ids of the resources. The only supported string
-        /// currently is '*' (all resources). Future api updates will support
+        /// Gets or sets the IDs of the resources. The only supported string
+        /// currently is '*' (all resources). Future updates will support
         /// exporting specific resources.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "resources")]

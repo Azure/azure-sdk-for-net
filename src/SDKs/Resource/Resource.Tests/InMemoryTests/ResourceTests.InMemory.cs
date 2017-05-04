@@ -206,7 +206,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.ResourceGroups.ListResources("foo", new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Sites"));
+            var result = client.Resources.ListByResourceGroup("foo", new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Sites"));
             /*new ResourceListParameters
             {              
                 ResourceType = "Sites"
@@ -250,7 +250,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.ResourceGroups.ListResources("foo", new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Sites"));
+            var result = client.Resources.ListByResourceGroup("foo", new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Sites"));
 
 
             // Validate headers

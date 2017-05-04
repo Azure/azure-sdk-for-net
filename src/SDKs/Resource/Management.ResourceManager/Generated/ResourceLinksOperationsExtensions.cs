@@ -8,15 +8,9 @@
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for ResourceLinksOperations.
@@ -24,73 +18,81 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class ResourceLinksOperationsExtensions
     {
             /// <summary>
-            /// Deletes a resource link.
+            /// Deletes a resource link with the specified ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='linkId'>
-            /// The fully qualified Id of the resource link. For example,
+            /// The fully qualified ID of the resource link. Use the format,
+            /// /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}.
+            /// For example,
             /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink
             /// </param>
             public static void Delete(this IResourceLinksOperations operations, string linkId)
             {
-                Task.Factory.StartNew(s => ((IResourceLinksOperations)s).DeleteAsync(linkId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceLinksOperations)s).DeleteAsync(linkId), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a resource link.
+            /// Deletes a resource link with the specified ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='linkId'>
-            /// The fully qualified Id of the resource link. For example,
+            /// The fully qualified ID of the resource link. Use the format,
+            /// /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}.
+            /// For example,
             /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IResourceLinksOperations operations, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IResourceLinksOperations operations, string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(linkId, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
-            /// Create a resource link.
+            /// Creates or updates a resource link between the specified resources.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='linkId'>
-            /// The fully qualified Id of the resource link. For example,
+            /// The fully qualified ID of the resource link. Use the format,
+            /// /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}.
+            /// For example,
             /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink
             /// </param>
             /// <param name='parameters'>
-            /// Create or update resource link parameters.
+            /// Parameters for creating or updating a resource link.
             /// </param>
             public static ResourceLink CreateOrUpdate(this IResourceLinksOperations operations, string linkId, ResourceLink parameters)
             {
-                return Task.Factory.StartNew(s => ((IResourceLinksOperations)s).CreateOrUpdateAsync(linkId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceLinksOperations)s).CreateOrUpdateAsync(linkId, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create a resource link.
+            /// Creates or updates a resource link between the specified resources.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='linkId'>
-            /// The fully qualified Id of the resource link. For example,
+            /// The fully qualified ID of the resource link. Use the format,
+            /// /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}.
+            /// For example,
             /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink
             /// </param>
             /// <param name='parameters'>
-            /// Create or update resource link parameters.
+            /// Parameters for creating or updating a resource link.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceLink> CreateOrUpdateAsync(this IResourceLinksOperations operations, string linkId, ResourceLink parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ResourceLink> CreateOrUpdateAsync(this IResourceLinksOperations operations, string linkId, ResourceLink parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(linkId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -99,7 +101,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a resource link.
+            /// Gets a resource link with the specified ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -110,11 +112,11 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static ResourceLink Get(this IResourceLinksOperations operations, string linkId)
             {
-                return Task.Factory.StartNew(s => ((IResourceLinksOperations)s).GetAsync(linkId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceLinksOperations)s).GetAsync(linkId), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a resource link.
+            /// Gets a resource link with the specified ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -126,7 +128,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceLink> GetAsync(this IResourceLinksOperations operations, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ResourceLink> GetAsync(this IResourceLinksOperations operations, string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(linkId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -135,7 +137,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of resource links under the subscription.
+            /// Gets all the linked resources for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -143,13 +145,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<ResourceLink> ListAtSubscription(this IResourceLinksOperations operations, ODataQuery<ResourceLinkFilter> odataQuery = default(ODataQuery<ResourceLinkFilter>))
+            public static Microsoft.Rest.Azure.IPage<ResourceLink> ListAtSubscription(this IResourceLinksOperations operations, Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter>))
             {
-                return Task.Factory.StartNew(s => ((IResourceLinksOperations)s).ListAtSubscriptionAsync(odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceLinksOperations)s).ListAtSubscriptionAsync(odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of resource links under the subscription.
+            /// Gets all the linked resources for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -160,7 +162,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceLink>> ListAtSubscriptionAsync(this IResourceLinksOperations operations, ODataQuery<ResourceLinkFilter> odataQuery = default(ODataQuery<ResourceLinkFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ResourceLink>> ListAtSubscriptionAsync(this IResourceLinksOperations operations, Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListAtSubscriptionWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -169,39 +171,35 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of resource links at and below the specified source scope. For
-            /// example, to list resource links at and under a resource group, set the
-            /// scope to
-            /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
+            /// Gets a list of resource links at and below the specified source scope.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The fully qualified Id of the source resource scope. For example, to list
-            /// resource links at and under a resource group, set the scope to
+            /// The fully qualified ID of the scope for getting the resource links. For
+            /// example, to list resource links at and under a resource group, set the
+            /// scope to
             /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<ResourceLink> ListAtSourceScope(this IResourceLinksOperations operations, string scope, ODataQuery<ResourceLinkFilter> odataQuery = default(ODataQuery<ResourceLinkFilter>))
+            public static Microsoft.Rest.Azure.IPage<ResourceLink> ListAtSourceScope(this IResourceLinksOperations operations, string scope, Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter>))
             {
-                return Task.Factory.StartNew(s => ((IResourceLinksOperations)s).ListAtSourceScopeAsync(scope, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceLinksOperations)s).ListAtSourceScopeAsync(scope, odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of resource links at and below the specified source scope. For
-            /// example, to list resource links at and under a resource group, set the
-            /// scope to
-            /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
+            /// Gets a list of resource links at and below the specified source scope.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The fully qualified Id of the source resource scope. For example, to list
-            /// resource links at and under a resource group, set the scope to
+            /// The fully qualified ID of the scope for getting the resource links. For
+            /// example, to list resource links at and under a resource group, set the
+            /// scope to
             /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
             /// </param>
             /// <param name='odataQuery'>
@@ -210,7 +208,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceLink>> ListAtSourceScopeAsync(this IResourceLinksOperations operations, string scope, ODataQuery<ResourceLinkFilter> odataQuery = default(ODataQuery<ResourceLinkFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ResourceLink>> ListAtSourceScopeAsync(this IResourceLinksOperations operations, string scope, Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListAtSourceScopeWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -219,7 +217,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of resource links under the subscription.
+            /// Gets all the linked resources for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -227,13 +225,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceLink> ListAtSubscriptionNext(this IResourceLinksOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<ResourceLink> ListAtSubscriptionNext(this IResourceLinksOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IResourceLinksOperations)s).ListAtSubscriptionNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceLinksOperations)s).ListAtSubscriptionNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of resource links under the subscription.
+            /// Gets all the linked resources for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -244,7 +242,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceLink>> ListAtSubscriptionNextAsync(this IResourceLinksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ResourceLink>> ListAtSubscriptionNextAsync(this IResourceLinksOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListAtSubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -253,10 +251,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of resource links at and below the specified source scope. For
-            /// example, to list resource links at and under a resource group, set the
-            /// scope to
-            /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
+            /// Gets a list of resource links at and below the specified source scope.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -264,16 +259,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ResourceLink> ListAtSourceScopeNext(this IResourceLinksOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<ResourceLink> ListAtSourceScopeNext(this IResourceLinksOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IResourceLinksOperations)s).ListAtSourceScopeNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourceLinksOperations)s).ListAtSourceScopeNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of resource links at and below the specified source scope. For
-            /// example, to list resource links at and under a resource group, set the
-            /// scope to
-            /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
+            /// Gets a list of resource links at and below the specified source scope.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -284,7 +276,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceLink>> ListAtSourceScopeNextAsync(this IResourceLinksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ResourceLink>> ListAtSourceScopeNextAsync(this IResourceLinksOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListAtSourceScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

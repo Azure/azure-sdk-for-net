@@ -13,6 +13,10 @@ namespace Microsoft.Azure.Management.ResourceManager
     using Models;
 
     /// <summary>
+    /// All resource groups and resources exist within subscriptions. These
+    /// operation enable you get information about your subscriptions and
+    /// tenants. A tenant is a dedicated instance of Azure Active Directory
+    /// (Azure AD) for your organization.
     /// </summary>
     public partial interface ISubscriptionClient : System.IDisposable
     {
@@ -37,7 +41,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for the operation.
         /// </summary>
         string ApiVersion { get; }
 

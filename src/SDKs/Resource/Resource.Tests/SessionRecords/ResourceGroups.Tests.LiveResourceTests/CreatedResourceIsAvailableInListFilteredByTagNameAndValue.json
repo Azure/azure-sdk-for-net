@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg3878?api-version=2016-09-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg3878?api-version=2017-05-10",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
@@ -202,7 +202,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg3878/resources?$filter=tagname%20eq%20'csmtn5829'%20and%20tagvalue%20eq%20'csmtv1793'&api-version=2016-09-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg3878/resources?$filter=tagname%20eq%20'csmtn5829'%20and%20tagvalue%20eq%20'csmtv1793'&api-version=2017-05-10",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

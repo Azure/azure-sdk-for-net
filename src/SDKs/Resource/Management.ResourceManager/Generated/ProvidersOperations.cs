@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         public ResourceManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Unregisters provider from a subscription.
+        /// Unregisters a subscription from a resource provider.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
-        /// Namespace of the resource provider.
+        /// The namespace of the resource provider to unregister.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -224,10 +224,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Registers provider to be used with a subscription.
+        /// Registers a subscription with a resource provider.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
-        /// Namespace of the resource provider.
+        /// The namespace of the resource provider to register.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -406,14 +406,16 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a list of resource providers.
+        /// Gets all resource providers for a subscription.
         /// </summary>
         /// <param name='top'>
-        /// Query parameters. If null is passed returns all deployments.
+        /// The number of results to return. If null is passed returns all deployments.
         /// </param>
         /// <param name='expand'>
-        /// The $expand query parameter. e.g. To include property aliases in response,
-        /// use $expand=resourceTypes/aliases.
+        /// The properties to include in the results. For example, use
+        /// &amp;$expand=metadata in the query string to retrieve resource provider
+        /// metadata. To include property aliases in response, use
+        /// $expand=resourceTypes/aliases.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -596,14 +598,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a resource provider.
+        /// Gets the specified resource provider.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
-        /// Namespace of the resource provider.
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='expand'>
-        /// The $expand query parameter. e.g. To include property aliases in response,
-        /// use $expand=resourceTypes/aliases.
+        /// The $expand query parameter. For example, to include property aliases in
+        /// response, use $expand=resourceTypes/aliases.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -787,7 +789,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a list of resource providers.
+        /// Gets all resource providers for a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
