@@ -115,6 +115,8 @@
   <Target Name="BuildLatestProjects">  
     <Message Text="IsBuildingInVS: $(AddProjectReferenceForDebuggingPurpose)"/>
     <Message Text="IsCIBuild: $(AddNugetReferenceForCIandCmdlineBuild)"/>
+    <Message Text="RuntimeIdentifier: $(RuntimeIdentifier)"/>
+    <Message Text="MSBuildRuntimeType: $(MSBuildRuntimeType)"/>
     <PropertyGroup>
       <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
     </PropertyGroup>
