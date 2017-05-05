@@ -16,18 +16,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
     /// 			private const string dpmVaultName = "SDKTestDPMVault";
     /// 			private const string dpmResourceGroupName = "SDKTestDPMRg";
     ///
-    ///	2.	Setup a Venus Machine. [Minimum supported Venus - 11.0.137.0]
-    ///             - Install base version of venus and register with backup vault.
-    ///             - Install patch.
-    ///	   Install MARS agent. [Minimum supported agent version - 2.0.9040.0]
+    ///	2.	Setup a Venus Machine. [Minimum supported Venus - 11.0.137.0]    
+    ///	            - Venus setup will install MARS agent. [Minimum supported agent version - 2.0.9040.0]
     ///	   Register with created RS vault.
     ///	   Create a PG. Protect any Datasource from the dpm machine. 
-    ///             - In this setup, system state workload is protected from the venus machine. 
+    ///             - In the below testcase, system state workload is protected from the venus machine. 
     ///	    
     ///	3.	Replace the values accordingly in TestSetting.json
     ///				"DpmDataSourceName": "SystemState;System Protectiond52df287-f0eb-46db-9729-819878c5f132",
+    ///                     - DpmDataSourceName format is Workloadtype;DataSourceUniqueName  where DataSourceUniqueName is DataSourceName+DataSourceId        
     ///	            "DpmProductionServerName": "Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM",
+    ///	                    - DpmProductionServerName format is ContainerType;ContainerName
     ///             "DpmBackupEngineName": "VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM"
+    ///                     - DpmBackupEngineName format is BackupEngineName
     /// </summary>
     public class DpmTests : TestBase, IDisposable
     {
@@ -35,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         private const string dpmResourceGroupName = "SDKTestDPMRg";
 
         [Fact]
-        public void GetTest()
+        public void GetDpmTest()
         {
             var testHelper = new TestHelper() { VaultName = dpmVaultName, ResourceGroup = dpmResourceGroupName };
 
