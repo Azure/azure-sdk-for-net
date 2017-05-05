@@ -1,6 +1,10 @@
 language: csharp
 sudo: required
 dist: trusty
+# safelist
+branches:
+    only:
+    - travisBuild
 addons:
   apt:
     sources:
