@@ -17,7 +17,7 @@
     <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
     <NugetPackageName/>
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
-    <DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples Gallery Intune FileConventions FileStaging ConfigureAwaitAnalyzer ObjectModelCodeGeneration Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests IntegrationTestCommon Search</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples Gallery Intune FileConventions FileStaging ConfigureAwaitAnalyzer ObjectModelCodeGeneration Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests IntegrationTestCommon</DefaultPathTokenToIgnore>
     <!--Microsoft.Azure.KeyVault.Samples 
     ClientRuntime.Azure.TestFramework
     Condition=" '$(IgnorePathTokens)' == '' "
