@@ -4,24 +4,25 @@ set -e
 base=`dirname {BASH_SOURCE[0]}`
 rootdir="$( cd "$base" && pwd )"
 
-dotnet build build.proj
-dotnet Test build.proj
+dotnet msbuild build.proj /t:RunTests
 
-armdir=$rootdir/src/SDKs
-for folder in $armdir/*
+#dotnet Test build.proj
 
-cd $armdir/AnalysisServices/AnalysisServices.Tests
-dotnet test
-cd $armdir 
+#armdir=$rootdir/src/SDKs
+#for folder in $armdir/*
 
-cd $armdir/Billing/Management.Billing
-dotnet test
-cd $armdir 
+#cd $armdir/AnalysisServices/AnalysisServices.Tests
+#dotnet test
+#cd $armdir 
 
-cd $armdir/Cdn/Cdn.Tests
-dotnet test
-cd $armdir 
+#cd $armdir/Billing/Management.Billing
+#dotnet test
+#cd $armdir 
 
-cd $armdir/SDKs/CognitiveServices
-dotnet test
-cd $armdir 
+#cd $armdir/Cdn/Cdn.Tests
+#dotnet test
+#cd $armdir 
+
+#cd $armdir/SDKs/CognitiveServices
+#dotnet test
+#cd $armdir 
