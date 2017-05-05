@@ -9,63 +9,6 @@ ubuntu1404="ubuntu.14.04-x64"
 nugetOrgSource="https://api.nuget.org/v3/index.json"
 localNugetFeed="./tools/LocalNugetFeed"
 
-
-sdkdir=$rootdir/src/SDKs
-
-KVMgmtDir=($sdkdir/KeyVault/Management/*.sln)
-
-KVDataPlaneDir=$sdkdir/KeyVault/dataPlane
-for kvDir in $KVDataPlaneDir/*
-do
-    kvItem=`basename $kvDir`
-    #printf "$kvItem\n"
-    #printf "$kvDir\n"
-    #printf "$sdkdir/$kvItem\n"
-    if [ -d $kvDir ] && [ "$kvItem" != "Microsoft.Azure.KeyVault.Samples" ]
-    then
-        if [ -f $KVDataPlaneDir/*.Tests/*.csproj]; then
-            kvTestProj=($KVDataPlaneDir/*.Tests/*.csproj)
-            dotnet test $kvTestProj -f netcore11
-        else
-            
-        fi
-        if [ -f $kvDir/*.csproj]
-        then
-            $kvProj=($kvDir/*.csproj)
-            dotnet build $kvProj -f $netstd14
-        fi
-        #printf "Samples found .... $sdkdir/$kvItem\n"
-    #kvProj=($kvDir/)
-    fi
-done
-
-: '
-#printf "$sdkdir\n"
-for folder in $sdkdir/*
-do
-    item=`basename $folder`
-    if [ -d $sdkdir/$item ]
-    then
-        if [ -f $sdkdir/$item/*.sln ]
-        then
-            slnFile=($sdkdir/$item/*.sln)
-            printf "Restoring :::::: $slnFile for $ubuntu1404\n"
-            dotnet restore $slnFile -r $ubuntu1404            
-            if [ -d $sdkdir/$item/*.Tests ]
-            then
-                testProj=($sdkdir/$item/*.Tests/*.csproj)
-                printf "Test ------ $testProj for framework $netcore11\n"
-                #dotnet build $testProj -f $netcore11
-                dotnet test $testProj -f $netcore11
-            fi
-        fi
-    fi
-done
-'
-
-
-
-: '
 echo "Restore ClientRuntime for $ubuntu1404"
 dotnet restore src/SdkCommon/ClientRuntime.sln -r $ubuntu1404 -s $nugetOrgSource
 
@@ -81,6 +24,57 @@ dotnet build src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure.Tests/Microso
 echo "Running ClientRuntime Tests $netcore11"
 dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
 dotnet test src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore11
+
+sdkdir=$rootdir/src/SDKs
+
+#printf "$sdkdir\n"
+for folder in $sdkdir/*
+do
+    item=`basename $folder`
+
+    if [ -d $sdkdir/$item ]; then
+        #printf "$sdkdir/$item\n"
+        if [ -f $sdkdir/$item/*.sln ]
+        then
+            slnFile=($sdkdir/$item/*.sln)
+            printf "Restoring :::::: $slnFile for $ubuntu1404\n"
+            dotnet restore $slnFile -r $ubuntu1404            
+            if [ -d $sdkdir/$item/*.Tests ]; then
+                testProj=($sdkdir/$item/*.Tests/*.csproj)
+                if [[ ("$testProj" =~ "Authorization")  || ( "$testProj" =~ "Gallery" ) || ("$testProj" =~ "Automation") || ( "$testProj" =~ "InTune" ) || ( "$testProj" =~ "DataLake.Store" ) ]]; then
+                    printf "\n"
+                else
+                    printf "Test ------ $testProj for framework $netcore11\n"
+                    #dotnet build $testProj -f $netcore11
+                    dotnet test $testProj -f $netcore11
+                fi
+            fi
+        fi
+    fi
+done
+
+KVMgmtDir=($sdkdir/KeyVault/Management/*.sln)
+KVDataPlaneDir=$sdkdir/KeyVault/dataPlane
+for kvDir in $KVDataPlaneDir/*
+do
+    kvItem=`basename $kvDir`
+    if [ -d $kvDir ] && [ "$kvItem" != "Microsoft.Azure.KeyVault.Samples" ]
+    then
+        if [[ "$kvItem" =~ "Tests" ]]; then
+            kvTestProj=($kvDir/ *.csproj)
+            printf "KV TestProject ... $kvTestProj\n"
+            dotnet test $kvTestProj -f netcore11
+        else
+            if [ -f $kvDir/*.csproj ]; then
+                kvSdkProj=($kvDir/*.csproj)
+                printf "KvSdkProj ..... $kvSdkProj\n"
+                dotnet build $kvProj -f $netstd14
+            fi
+        fi
+    fi
+done
+
+
 '
 #echo "base: "$base
 #echo "rootedir: "$rootdir
@@ -94,3 +88,19 @@ dotnet test src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure.Tests/Microsof
             #    printf "Build ------ $sdkProjFile for framework $netstd14\n"
             #    dotnet build $sdkProjFile -f $netstd14
             #fi
+
+: '
+else
+            if [ -d $sdkDir/$item/Management ]; then
+                printf "Found mgmt $sdkDir/$item/Management\n"
+            fi
+            if [ -f $sdkDir/$item/Management/*.sln ]; then
+                mgmtSln=($sdkDir/$item/Management/*.sln)
+                printf "Restoring ## $mgmtSln\n"
+                if [ -d $sdkdir/$item/*.Tests ]; then
+                    mgmtTestProj=($sdkdir/$item/*.Tests/*.csproj)
+                    printf "Test ## $mgmtTestProj for framework $netcore11\n"
+                fi #mgmtTestProject
+            fi #mgmgtSln
+        fi #mgmtSln else
+'
