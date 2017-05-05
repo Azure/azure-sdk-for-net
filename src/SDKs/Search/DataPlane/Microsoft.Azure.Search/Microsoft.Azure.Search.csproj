@@ -13,7 +13,7 @@
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Spatial" Version="6.15.0" />
+    <PackageReference Include="Microsoft.Spatial" Version="7.2.0" />
   </ItemGroup>
 </Project>
   

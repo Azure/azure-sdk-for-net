@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/b80cf239-2c72-47ab-b309-b26aec4656b1/providers/Microsoft.Search/register?api-version=2016-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjgwY2YyMzktMmM3Mi00N2FiLWIzMDktYjI2YWVjNDY1NmIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3JlZ2lzdGVyP2FwaS12ZXJzaW9uPTIwMTYtMDItMDE=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/providers/Microsoft.Search/register?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3JlZ2lzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "898e4588-7236-41bd-ae08-ee24e2bbd152"
+          "7d1cedb6-7dc0-4126-b445-0ed299ab864c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.1-preview"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.1.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b80cf239-2c72-47ab-b309-b26aec4656b1/providers/Microsoft.Search\",\r\n  \"namespace\": \"Microsoft.Search\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"searchServices\",\r\n      \"locations\": [\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"searchServicesCit\",\r\n      \"locations\": [\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"searchServicesNxt\",\r\n      \"locations\": [\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"searchServicesInt\",\r\n      \"locations\": [\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"searchServicesPpe\",\r\n      \"locations\": [\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailabilityCit\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailabilityNxt\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailabilityInt\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailabilityPpe\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailabilityCit\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailabilityNxt\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailabilityInt\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailabilityPpe\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/providers/Microsoft.Search\",\r\n  \"namespace\": \"Microsoft.Search\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"searchServices\",\r\n      \"locations\": [\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"searchServicesCit\",\r\n      \"locations\": [\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"searchServicesNxt\",\r\n      \"locations\": [\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"searchServicesInt\",\r\n      \"locations\": [\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"searchServicesPpe\",\r\n      \"locations\": [\r\n        \"West US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailabilityCit\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailabilityNxt\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailabilityInt\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkServiceNameAvailabilityPpe\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-02-28\",\r\n        \"2014-07-31-Preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailabilityCit\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailabilityNxt\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailabilityInt\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailabilityPpe\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"resourceHealthMetadata\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-19\",\r\n        \"2015-02-28\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registering\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,25 +29,28 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 23 Nov 2016 20:28:29 GMT"
+          "Thu, 04 May 2017 19:02:18 GMT"
         ],
         "Pragma": [
           "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
         ],
         "Vary": [
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1177"
+          "1180"
         ],
         "x-ms-request-id": [
-          "482745ca-1964-4582-a243-8a1eb4f0896a"
+          "8dce0a93-0840-447b-9b4a-b66c32820d2f"
         ],
         "x-ms-correlation-request-id": [
-          "482745ca-1964-4582-a243-8a1eb4f0896a"
+          "8dce0a93-0840-447b-9b4a-b66c32820d2f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20161123T202829Z:482745ca-1964-4582-a243-8a1eb4f0896a"
+          "CENTRALUS:20170504T190218Z:8dce0a93-0840-447b-9b4a-b66c32820d2f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -56,8 +59,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b80cf239-2c72-47ab-b309-b26aec4656b1/resourcegroups/azsmnet5449?api-version=2016-02-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjgwY2YyMzktMmM3Mi00N2FiLWIzMDktYjI2YWVjNDY1NmIxL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ1NDQ5P2FwaS12ZXJzaW9uPTIwMTYtMDItMDE=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet3277?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQzMjc3P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
@@ -68,17 +71,17 @@
           "29"
         ],
         "x-ms-client-request-id": [
-          "56e763c2-3d40-4c74-bede-fb54f92eaa6d"
+          "658065f2-4752-485b-8b39-9b918e688025"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.1-preview"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.1.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b80cf239-2c72-47ab-b309-b26aec4656b1/resourceGroups/azsmnet5449\",\r\n  \"name\": \"azsmnet5449\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet3277\",\r\n  \"name\": \"azsmnet3277\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "175"
@@ -93,22 +96,22 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 23 Nov 2016 20:28:29 GMT"
+          "Thu, 04 May 2017 19:02:18 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1176"
+          "1179"
         ],
         "x-ms-request-id": [
-          "31e9dfc8-0586-491f-bfbd-8b673c71f6da"
+          "280fc723-649e-4eb9-9fc0-bbf1b3cd13e4"
         ],
         "x-ms-correlation-request-id": [
-          "31e9dfc8-0586-491f-bfbd-8b673c71f6da"
+          "280fc723-649e-4eb9-9fc0-bbf1b3cd13e4"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20161123T202830Z:31e9dfc8-0586-491f-bfbd-8b673c71f6da"
+          "CENTRALUS:20170504T190218Z:280fc723-649e-4eb9-9fc0-bbf1b3cd13e4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,8 +120,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/b80cf239-2c72-47ab-b309-b26aec4656b1/resourceGroups/azsmnet5449/providers/Microsoft.Search/searchServices/azs-1893?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjgwY2YyMzktMmM3Mi00N2FiLWIzMDktYjI2YWVjNDY1NmIxL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1NDQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy0xODkzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet3277/providers/Microsoft.Search/searchServices/azs-7303?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQzMjc3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MzAzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  },\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
@@ -129,20 +132,20 @@
           "67"
         ],
         "x-ms-client-request-id": [
-          "b6117534-070a-430b-994a-998df8b572a3"
+          "47f9f178-330b-4afc-9829-a2d5ffc6a5ca"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/1.0.0-rc"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Search.SearchManagementClient/1.0.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b80cf239-2c72-47ab-b309-b26aec4656b1/resourceGroups/azsmnet5449/providers/Microsoft.Search/searchServices/azs-1893\",\r\n  \"name\": \"azs-1893\",\r\n  \"type\": \"Microsoft.Search/searchServices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"replicaCount\": 1,\r\n    \"partitionCount\": 1,\r\n    \"status\": \"running\",\r\n    \"statusDetails\": null,\r\n    \"provisioningState\": \"succeeded\",\r\n    \"hostingMode\": \"Default\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet3277/providers/Microsoft.Search/searchServices/azs-7303\",\r\n  \"name\": \"azs-7303\",\r\n  \"type\": \"Microsoft.Search/searchServices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"replicaCount\": 1,\r\n    \"partitionCount\": 1,\r\n    \"status\": \"running\",\r\n    \"statusDetails\": \"\",\r\n    \"provisioningState\": \"succeeded\",\r\n    \"hostingMode\": \"Default\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "387"
+          "385"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -154,22 +157,22 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 23 Nov 2016 20:28:34 GMT"
+          "Thu, 04 May 2017 19:02:20 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"datetime'2016-11-23T20%3A28%3A35.2701891Z'\""
+          "W/\"datetime'2017-05-04T19%3A02%3A20.1960579Z'\""
         ],
         "x-ms-request-id": [
-          "b6117534-070a-430b-994a-998df8b572a3"
+          "47f9f178-330b-4afc-9829-a2d5ffc6a5ca"
         ],
         "request-id": [
-          "b6117534-070a-430b-994a-998df8b572a3"
+          "47f9f178-330b-4afc-9829-a2d5ffc6a5ca"
         ],
         "elapsed-time": [
-          "3407"
+          "607"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -181,32 +184,32 @@
           "1175"
         ],
         "x-ms-correlation-request-id": [
-          "1ee33603-e518-4341-ac2f-df2dcb900ae3"
+          "aee9c882-6c3a-46aa-b40e-04e847de2e84"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20161123T202835Z:1ee33603-e518-4341-ac2f-df2dcb900ae3"
+          "CENTRALUS:20170504T190220Z:aee9c882-6c3a-46aa-b40e-04e847de2e84"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/b80cf239-2c72-47ab-b309-b26aec4656b1/resourceGroups/azsmnet5449/providers/Microsoft.Search/searchServices/azs-1893/listAdminKeys?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjgwY2YyMzktMmM3Mi00N2FiLWIzMDktYjI2YWVjNDY1NmIxL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1NDQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy0xODkzL2xpc3RBZG1pbktleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet3277/providers/Microsoft.Search/searchServices/azs-7303/listAdminKeys?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQzMjc3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MzAzL2xpc3RBZG1pbktleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7f469733-7693-491a-8dfa-ef65558dc48d"
+          "606dd838-9b7c-4f5f-9764-37e41d9f8525"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/1.0.0-rc"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Search.SearchManagementClient/1.0.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"AB44E2E546965D88196DD2D879081100\",\r\n  \"secondaryKey\": \"FD591FCCA2FC20981D6716A190DF0B01\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"0234C8B553DE29B0B5E91AF3BE58436A\",\r\n  \"secondaryKey\": \"C363DE5E9889A142A7BCAA6834E5916B\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -218,7 +221,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 23 Nov 2016 20:28:36 GMT"
+          "Thu, 04 May 2017 19:02:20 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -231,13 +234,13 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "7f469733-7693-491a-8dfa-ef65558dc48d"
+          "606dd838-9b7c-4f5f-9764-37e41d9f8525"
         ],
         "request-id": [
-          "7f469733-7693-491a-8dfa-ef65558dc48d"
+          "606dd838-9b7c-4f5f-9764-37e41d9f8525"
         ],
         "elapsed-time": [
-          "149"
+          "208"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -249,32 +252,32 @@
           "1174"
         ],
         "x-ms-correlation-request-id": [
-          "63ba1a0d-9aa4-49c8-bf35-c4b3c043dd09"
+          "a4f1eb68-5e08-4d4e-862b-44ddd6ed7d21"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20161123T202837Z:63ba1a0d-9aa4-49c8-bf35-c4b3c043dd09"
+          "CENTRALUS:20170504T190221Z:a4f1eb68-5e08-4d4e-862b-44ddd6ed7d21"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b80cf239-2c72-47ab-b309-b26aec4656b1/resourceGroups/azsmnet5449/providers/Microsoft.Search/searchServices/azs-1893/listQueryKeys?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjgwY2YyMzktMmM3Mi00N2FiLWIzMDktYjI2YWVjNDY1NmIxL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1NDQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy0xODkzL2xpc3RRdWVyeUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet3277/providers/Microsoft.Search/searchServices/azs-7303/listQueryKeys?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQzMjc3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MzAzL2xpc3RRdWVyeUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "29fc3d72-f850-42cc-80f9-98cc399a0de3"
+          "4b9e084c-690f-4b56-8701-372e430719bc"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/1.0.0-rc"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Search.SearchManagementClient/1.0.1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": null,\r\n      \"key\": \"35B497FF057DB4BFC7AC4A5E4C32523A\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": null,\r\n      \"key\": \"8CD02717C0032EA22CB39BAD58284DEC\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -286,7 +289,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 23 Nov 2016 20:28:36 GMT"
+          "Thu, 04 May 2017 19:02:21 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -299,13 +302,13 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "29fc3d72-f850-42cc-80f9-98cc399a0de3"
+          "4b9e084c-690f-4b56-8701-372e430719bc"
         ],
         "request-id": [
-          "29fc3d72-f850-42cc-80f9-98cc399a0de3"
+          "4b9e084c-690f-4b56-8701-372e430719bc"
         ],
         "elapsed-time": [
-          "144"
+          "249"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -314,13 +317,13 @@
           "4.0.30319"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "325340a0-111a-4d4f-99de-fc9f1e3038e5"
+          "b7d1e48f-1d29-4a8a-b284-b4807cb43e3b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20161123T202837Z:325340a0-111a-4d4f-99de-fc9f1e3038e5"
+          "CENTRALUS:20170504T190221Z:b7d1e48f-1d29-4a8a-b284-b4807cb43e3b"
         ]
       },
       "StatusCode": 200
@@ -329,7 +332,7 @@
       "RequestUri": "/indexes?api-version=2016-09-01",
       "EncodedRequestUri": "L2luZGV4ZXM/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet5637\",\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"hotelId\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": true,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"baseRate\",\r\n      \"type\": \"Edm.Double\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"description\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"descriptionFr\",\r\n      \"type\": \"Edm.String\",\r\n      \"analyzer\": \"fr.lucene\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"hotelName\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"category\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"tags\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"parkingIncluded\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"smokingAllowed\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"lastRenovationDate\",\r\n      \"type\": \"Edm.DateTimeOffset\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"rating\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"location\",\r\n      \"type\": \"Edm.GeographyPoint\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    }\r\n  ],\r\n  \"scoringProfiles\": [\r\n    {\r\n      \"name\": \"nearest\",\r\n      \"functions\": [\r\n        {\r\n          \"type\": \"distance\",\r\n          \"distance\": {\r\n            \"referencePointParameter\": \"myloc\",\r\n            \"boostingDistance\": 100.0\r\n          },\r\n          \"fieldName\": \"location\",\r\n          \"boost\": 2.0\r\n        }\r\n      ],\r\n      \"functionAggregation\": \"sum\"\r\n    }\r\n  ],\r\n  \"suggesters\": [\r\n    {\r\n      \"name\": \"sg\",\r\n      \"searchMode\": \"analyzingInfixMatching\",\r\n      \"sourceFields\": [\r\n        \"description\",\r\n        \"hotelName\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet1870\",\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"hotelId\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": true,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"baseRate\",\r\n      \"type\": \"Edm.Double\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"description\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"descriptionFr\",\r\n      \"type\": \"Edm.String\",\r\n      \"analyzer\": \"fr.lucene\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"hotelName\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"category\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"tags\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"key\": false,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"parkingIncluded\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"smokingAllowed\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"lastRenovationDate\",\r\n      \"type\": \"Edm.DateTimeOffset\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"rating\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"retrievable\": true\r\n    },\r\n    {\r\n      \"name\": \"location\",\r\n      \"type\": \"Edm.GeographyPoint\",\r\n      \"key\": false,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": false,\r\n      \"retrievable\": true\r\n    }\r\n  ],\r\n  \"scoringProfiles\": [\r\n    {\r\n      \"name\": \"nearest\",\r\n      \"functions\": [\r\n        {\r\n          \"type\": \"distance\",\r\n          \"distance\": {\r\n            \"referencePointParameter\": \"myloc\",\r\n            \"boostingDistance\": 100.0\r\n          },\r\n          \"fieldName\": \"location\",\r\n          \"boost\": 2.0\r\n        }\r\n      ],\r\n      \"functionAggregation\": \"sum\"\r\n    }\r\n  ],\r\n  \"suggesters\": [\r\n    {\r\n      \"name\": \"sg\",\r\n      \"searchMode\": \"analyzingInfixMatching\",\r\n      \"sourceFields\": [\r\n        \"description\",\r\n        \"hotelName\"\r\n      ]\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -338,23 +341,23 @@
           "3401"
         ],
         "client-request-id": [
-          "3f9114a8-2dd1-400b-9bd9-cb0e19aec712"
+          "9d971c66-d0d2-4111-b995-622f565ad474"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "AB44E2E546965D88196DD2D879081100"
+          "0234C8B553DE29B0B5E91AF3BE58436A"
         ],
         "Prefer": [
           "return=representation"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Search.SearchServiceClient/3.0.0-rc"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Search.SearchServiceClient/3.0.3"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-1893.search-dogfood.windows-int.net/$metadata#indexes/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D413DF4F564470\\\"\",\r\n  \"name\": \"azsmnet5637\",\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"hotelId\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": true,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"baseRate\",\r\n      \"type\": \"Edm.Double\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"description\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"descriptionFr\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": \"fr.lucene\"\r\n    },\r\n    {\r\n      \"name\": \"hotelName\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"category\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"tags\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"parkingIncluded\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"smokingAllowed\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"lastRenovationDate\",\r\n      \"type\": \"Edm.DateTimeOffset\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"rating\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"location\",\r\n      \"type\": \"Edm.GeographyPoint\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    }\r\n  ],\r\n  \"scoringProfiles\": [\r\n    {\r\n      \"name\": \"nearest\",\r\n      \"text\": null,\r\n      \"functions\": [\r\n        {\r\n          \"fieldName\": \"location\",\r\n          \"freshness\": null,\r\n          \"interpolation\": \"linear\",\r\n          \"magnitude\": null,\r\n          \"distance\": {\r\n            \"referencePointParameter\": \"myloc\",\r\n            \"boostingDistance\": 100.0\r\n          },\r\n          \"tag\": null,\r\n          \"type\": \"distance\",\r\n          \"boost\": 2.0\r\n        }\r\n      ],\r\n      \"functionAggregation\": \"sum\"\r\n    }\r\n  ],\r\n  \"defaultScoringProfile\": null,\r\n  \"corsOptions\": null,\r\n  \"suggesters\": [\r\n    {\r\n      \"name\": \"sg\",\r\n      \"searchMode\": \"analyzingInfixMatching\",\r\n      \"sourceFields\": [\r\n        \"description\",\r\n        \"hotelName\"\r\n      ]\r\n    }\r\n  ],\r\n  \"analyzers\": [],\r\n  \"tokenizers\": [],\r\n  \"tokenFilters\": [],\r\n  \"charFilters\": []\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-7303.search-dogfood.windows-int.net/$metadata#indexes/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D4932018F4D207\\\"\",\r\n  \"name\": \"azsmnet1870\",\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"hotelId\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": true,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"baseRate\",\r\n      \"type\": \"Edm.Double\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"description\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"descriptionFr\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": \"fr.lucene\"\r\n    },\r\n    {\r\n      \"name\": \"hotelName\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"category\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"tags\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"parkingIncluded\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"smokingAllowed\",\r\n      \"type\": \"Edm.Boolean\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"lastRenovationDate\",\r\n      \"type\": \"Edm.DateTimeOffset\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"rating\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": true,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    },\r\n    {\r\n      \"name\": \"location\",\r\n      \"type\": \"Edm.GeographyPoint\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": true,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null\r\n    }\r\n  ],\r\n  \"scoringProfiles\": [\r\n    {\r\n      \"name\": \"nearest\",\r\n      \"text\": null,\r\n      \"functions\": [\r\n        {\r\n          \"fieldName\": \"location\",\r\n          \"freshness\": null,\r\n          \"interpolation\": \"linear\",\r\n          \"magnitude\": null,\r\n          \"distance\": {\r\n            \"referencePointParameter\": \"myloc\",\r\n            \"boostingDistance\": 100.0\r\n          },\r\n          \"tag\": null,\r\n          \"type\": \"distance\",\r\n          \"boost\": 2.0\r\n        }\r\n      ],\r\n      \"functionAggregation\": \"sum\"\r\n    }\r\n  ],\r\n  \"defaultScoringProfile\": null,\r\n  \"corsOptions\": null,\r\n  \"suggesters\": [\r\n    {\r\n      \"name\": \"sg\",\r\n      \"searchMode\": \"analyzingInfixMatching\",\r\n      \"sourceFields\": [\r\n        \"description\",\r\n        \"hotelName\"\r\n      ]\r\n    }\r\n  ],\r\n  \"analyzers\": [],\r\n  \"tokenizers\": [],\r\n  \"tokenFilters\": [],\r\n  \"charFilters\": []\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "3141"
@@ -369,22 +372,22 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 23 Nov 2016 20:28:37 GMT"
+          "Thu, 04 May 2017 19:02:22 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D413DF4F564470\""
+          "W/\"0x8D4932018F4D207\""
         ],
         "Location": [
-          "https://azs-1893.search-dogfood.windows-int.net/indexes('azsmnet5637')?api-version=2016-09-01"
+          "https://azs-7303.search-dogfood.windows-int.net/indexes('azsmnet1870')?api-version=2016-09-01"
         ],
         "request-id": [
-          "3f9114a8-2dd1-400b-9bd9-cb0e19aec712"
+          "9d971c66-d0d2-4111-b995-622f565ad474"
         ],
         "elapsed-time": [
-          "730"
+          "690"
         ],
         "OData-Version": [
           "4.0"
@@ -399,8 +402,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/indexes('azsmnet5637')/docs/search.index?api-version=2016-09-01",
-      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ1NjM3JykvZG9jcy9zZWFyY2guaW5kZXg/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
+      "RequestUri": "/indexes('azsmnet1870')/docs/search.index?api-version=2016-09-01",
+      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQxODcwJykvZG9jcy9zZWFyY2guaW5kZXg/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"@search.action\": \"upload\",\r\n      \"hotelId\": \"1\",\r\n      \"baseRate\": 0.0,\r\n      \"description\": \"Best hotel in town\",\r\n      \"descriptionFr\": \"Meilleur hôtel en ville\",\r\n      \"hotelName\": \"Fancy Stay\",\r\n      \"category\": \"Luxury\",\r\n      \"tags\": [\r\n        \"pool\",\r\n        \"view\",\r\n        \"wifi\",\r\n        \"concierge\"\r\n      ],\r\n      \"parkingIncluded\": true,\r\n      \"smokingAllowed\": false,\r\n      \"lastRenovationDate\": \"2010-06-27T00:00:00-08:00\",\r\n      \"rating\": 5,\r\n      \"location\": {\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [\r\n          -122.131577,\r\n          47.678581\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -417,14 +420,14 @@
           "application/json; odata.metadata=none"
         ],
         "api-key": [
-          "AB44E2E546965D88196DD2D879081100"
+          "0234C8B553DE29B0B5E91AF3BE58436A"
         ],
         "Prefer": [
           "return=representation"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Search.SearchIndexClient/3.0.0-rc"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Search.SearchIndexClient/3.0.3"
         ]
       },
       "ResponseBody": "{\"value\":[{\"key\":\"1\",\"status\":true,\"errorMessage\":null,\"statusCode\":201}]}",
@@ -439,7 +442,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 23 Nov 2016 20:28:59 GMT"
+          "Thu, 04 May 2017 19:02:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -448,10 +451,10 @@
           "Accept-Encoding"
         ],
         "request-id": [
-          "343bb962-82a5-4b81-8d49-f359d67775d2"
+          "539f98c0-5c8d-4884-ad47-2eaa6e0aca71"
         ],
         "elapsed-time": [
-          "120"
+          "314"
         ],
         "OData-Version": [
           "4.0"
@@ -466,26 +469,26 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/indexes('azsmnet5637')/docs/$count?api-version=2016-09-01",
-      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ1NjM3JykvZG9jcy8kY291bnQ/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
+      "RequestUri": "/indexes('azsmnet1870')/docs/$count?api-version=2016-09-01",
+      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQxODcwJykvZG9jcy8kY291bnQ/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "cd567a36-d339-4e0c-91d4-c0ff8080cf7f"
+          "5c887146-ec7f-4516-9402-7b1c7bb600c6"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "AB44E2E546965D88196DD2D879081100"
+          "0234C8B553DE29B0B5E91AF3BE58436A"
         ],
         "Prefer": [
           "return=representation"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Search.SearchIndexClient/3.0.0-rc"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Search.SearchIndexClient/3.0.3"
         ]
       },
       "ResponseBody": "1",
@@ -500,7 +503,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 23 Nov 2016 20:29:01 GMT"
+          "Thu, 04 May 2017 19:02:45 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -509,10 +512,10 @@
           "Accept-Encoding"
         ],
         "request-id": [
-          "cd567a36-d339-4e0c-91d4-c0ff8080cf7f"
+          "5c887146-ec7f-4516-9402-7b1c7bb600c6"
         ],
         "elapsed-time": [
-          "6"
+          "1"
         ],
         "OData-Version": [
           "4.0"
@@ -527,8 +530,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/indexes('azsmnet5637')/docs('1')?api-version=2016-09-01&$select=*",
-      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQ1NjM3JykvZG9jcygnMScpP2FwaS12ZXJzaW9uPTIwMTYtMDktMDEmJHNlbGVjdD0lMkE=",
+      "RequestUri": "/indexes('azsmnet1870')/docs('1')?api-version=2016-09-01&$select=*",
+      "EncodedRequestUri": "L2luZGV4ZXMoJ2F6c21uZXQxODcwJykvZG9jcygnMScpP2FwaS12ZXJzaW9uPTIwMTYtMDktMDEmJHNlbGVjdD0lMkE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -539,14 +542,14 @@
           "application/json; odata.metadata=none"
         ],
         "api-key": [
-          "AB44E2E546965D88196DD2D879081100"
+          "0234C8B553DE29B0B5E91AF3BE58436A"
         ],
         "Prefer": [
           "return=representation"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Search.SearchIndexClient/3.0.0-rc"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Search.SearchIndexClient/3.0.3"
         ]
       },
       "ResponseBody": "{\"hotelId\":\"1\",\"baseRate\":0.0,\"description\":\"Best hotel in town\",\"descriptionFr\":\"Meilleur h\\u00f4tel en ville\",\"hotelName\":\"Fancy Stay\",\"category\":\"Luxury\",\"tags\":[\"pool\",\"view\",\"wifi\",\"concierge\"],\"parkingIncluded\":true,\"smokingAllowed\":false,\"lastRenovationDate\":\"2010-06-27T08:00:00Z\",\"rating\":5,\"location\":{\"type\":\"Point\",\"coordinates\":[-122.131577,47.678581],\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"EPSG:4326\"}}}}",
@@ -561,7 +564,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 23 Nov 2016 20:29:01 GMT"
+          "Thu, 04 May 2017 19:02:45 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -570,10 +573,10 @@
           "Accept-Encoding"
         ],
         "request-id": [
-          "4dadb50c-bc3e-4f26-906f-7457ed8b3b56"
+          "04772f24-f776-40f9-bd69-fb3201df1f47"
         ],
         "elapsed-time": [
-          "5"
+          "3"
         ],
         "OData-Version": [
           "4.0"
@@ -588,20 +591,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b80cf239-2c72-47ab-b309-b26aec4656b1/resourceGroups/azsmnet5449/providers/Microsoft.Search/searchServices/azs-1893?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjgwY2YyMzktMmM3Mi00N2FiLWIzMDktYjI2YWVjNDY1NmIxL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1NDQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy0xODkzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet3277/providers/Microsoft.Search/searchServices/azs-7303?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQzMjc3L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy03MzAzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d21b9c6c-84cb-4b09-a9b9-8f97465f4c1f"
+          "db9d8410-3eb4-4ee7-882c-55388b8b3d45"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24214.01",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/1.0.0-rc"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Search.SearchManagementClient/1.0.1"
         ]
       },
       "ResponseBody": "",
@@ -616,19 +619,19 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 23 Nov 2016 20:29:04 GMT"
+          "Thu, 04 May 2017 19:02:47 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d21b9c6c-84cb-4b09-a9b9-8f97465f4c1f"
+          "db9d8410-3eb4-4ee7-882c-55388b8b3d45"
         ],
         "request-id": [
-          "d21b9c6c-84cb-4b09-a9b9-8f97465f4c1f"
+          "db9d8410-3eb4-4ee7-882c-55388b8b3d45"
         ],
         "elapsed-time": [
-          "327"
+          "1610"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -637,13 +640,13 @@
           "4.0.30319"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1173"
+          "1175"
         ],
         "x-ms-correlation-request-id": [
-          "b267710d-bfcf-4237-bcc1-ff288303820b"
+          "376185e6-c30e-4ef8-b1b3-77114ade3b92"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20161123T202905Z:b267710d-bfcf-4237-bcc1-ff288303820b"
+          "CENTRALUS:20170504T190248Z:376185e6-c30e-4ef8-b1b3-77114ade3b92"
         ]
       },
       "StatusCode": 200
@@ -651,14 +654,14 @@
   ],
   "Names": {
     "GenerateName": [
-      "azsmnet5449",
-      "azsmnet5637"
+      "azsmnet3277",
+      "azsmnet1870"
     ],
     "GenerateServiceName": [
-      "azs-1893"
+      "azs-7303"
     ]
   },
   "Variables": {
-    "SubscriptionId": "b80cf239-2c72-47ab-b309-b26aec4656b1"
+    "SubscriptionId": "3c729b2a-4f86-4bb2-abe8-4b8647af156c"
   }
 }
