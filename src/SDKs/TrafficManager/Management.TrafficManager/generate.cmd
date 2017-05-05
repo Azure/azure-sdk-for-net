@@ -4,7 +4,7 @@
 ::
 
 @echo off
-set autoRestVersion=0.16.0
+set autoRestVersion=0.13.2
 if  "%1" == "" (
     set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/776baa315cfda36195fe4b7f38f56e6fa34f1819/arm-trafficmanager/2017-03-01/swagger/trafficmanager.json"
 ) else (
