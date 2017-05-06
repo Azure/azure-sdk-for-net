@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerInsights.Tests", "CustomerInsights.Tests\CustomerInsights.Tests.csproj", "{1928BB6E-0A9C-4B90-9A3C-92CC12625E4C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{54DB2D07-FD74-4A6A-BE00-0CF17418E68C} = {54DB2D07-FD74-4A6A-BE00-0CF17418E68C}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.CustomerInsights", "Management.CustomerInsights\Microsoft.Azure.Management.CustomerInsights.csproj", "{54DB2D07-FD74-4A6A-BE00-0CF17418E68C}"
 EndProject
