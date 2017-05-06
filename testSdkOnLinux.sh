@@ -13,7 +13,8 @@ skip_Rps() {
     retVal=false
     #printf "checking......$1\n"
     if [[ ("$1" =~ "Authorization")  || ( "$1" =~ "Gallery" ) || ("$1" =~ "Automation") || ( "$1" =~ "Intune" ) || ( "$1" =~ "DataLake.Store" ) 
-                || ( "$1" =~ "Monitor" ) || ( "$1" =~ "RedisCache" ) || ( "$1" =~ "Search" ) || ( "$1" =~ "KeyVault.Tests" ) ]]; then                
+                || ( "$1" =~ "Monitor" ) || ( "$1" =~ "RedisCache" ) || ( "$1" =~ "Search" ) || ( "$1" =~ "KeyVault.Tests" ) 
+                || ( "$1" =~ "KeyVault.TestFramework") ]]; then                
         retVal=true
     fi
     echo $retVal
@@ -37,6 +38,11 @@ echo "Running ClientRuntime Tests $netcore11"
 #dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
 dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $netcore11
 dotnet test src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure.Tests/Microsoft.Rest.ClientRuntime.Azure.Tests.csproj -f $netcore11
+
+KVMgmtDir=($sdkdir/KeyVault/Management/*.sln)
+if [ -f $KVMgmtDir ]; then
+    dotnet restore $KVMgmtDir -r ubuntu1404
+fi
 
 sdkdir=$rootdir/src/SDKs
 
@@ -67,9 +73,9 @@ do
     fi
 done
 
-KVMgmtDir=($sdkdir/KeyVault/Management/*.sln)
-if [ -f $KVMgmtDir ]; then
-    dotnet restore $KVMgmtDir -r ubuntu1404
+kvDataPSln=($sdkdir/KeyVault/dataPlane/*.sln)
+if [ -f $kvDataPSln ]; then
+    dotnet restore $kvDataPSln -r ubuntu1404
 fi
 KVDataPlaneDir=$sdkdir/KeyVault/dataPlane
 for kvDir in $KVDataPlaneDir/*
@@ -79,15 +85,20 @@ do
     then
         if [[ "$kvItem" =~ "Tests" ]]; then
             kvTestProj=($kvDir/*.csproj)
-            printf "KV TestProject ... $kvTestProj\n"
-            #dotnet restore $kvTestProj -r $ubuntu1404
-            dotnet test $kvTestProj -f $netcore11
+            kvTProj=$( skip_Rps $kvSdkProj )
+                if [ "$kvTProj" == "false" ]; then
+                    printf "KV TestProject ... $kvTestProj\n"
+                    dotnet restore $kvTestProj -r $ubuntu1404
+                    dotnet test $kvTestProj -f $netcore11
+                fi
         else
             if [ -f $kvDir/*.csproj ]; then
                 kvSdkProj=($kvDir/*.csproj)
-                printf "KvSdkProj ..... $kvSdkProj\n"
-                #dotnet restore $kvSdkProj -r $ubuntu1404
-                dotnet build $kvSdkProj -f $netstd14
+                kvProj=$( skip_Rps $kvSdkProj )
+                if [ "$kvProj" == "false" ]; then
+                    dotnet restore $kvSdkProj -r $ubuntu1404
+                    dotnet build $kvSdkProj -f $netstd14
+                fi
             fi
         fi
     fi
