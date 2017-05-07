@@ -17,6 +17,12 @@
     <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
     <NugetPackageName/>
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
+    <DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples Gallery Intune FileConventions FileStaging ConfigureAwaitAnalyzer ObjectModelCodeGeneration Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests IntegrationTestCommon</DefaultPathTokenToIgnore>
+    <!--Microsoft.Azure.KeyVault.Samples 
+    ClientRuntime.Azure.TestFramework
+    Condition=" '$(IgnorePathTokens)' == '' "
+ClientRuntime.Azure.TestFramework Microsoft.Azure.Test.HttpRecorder
+    -->
 	</PropertyGroup>
   <PropertyGroup>
     <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
@@ -42,12 +48,7 @@
     <ClientRuntimeRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</ClientRuntimeRootDir>
     <SdkCommonRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</SdkCommonRootDir>
   </PropertyGroup>
-
-    <Target Name="PublishLocal">
-			<Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)"
-			  IgnoreExitCode="true"
-			  Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
-  </Target>  
+ 
 	<Import Project="tools\buildTargets\common.Build.props"/>
 	<Import Project="tools\buildTargets\common.NugetPackage.props" />	
 </Project>

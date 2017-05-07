@@ -57,8 +57,9 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// <param name="instancesCount">The instance count.</param>
         /// <param name="lastChangedUtc">The last changed time for the type
         /// definition.</param>
-        /// <param name="provisioningState">The provisioning state of the
-        /// Type.</param>
+        /// <param name="provisioningState">Provisioning state. Possible values
+        /// include: 'Provisioning', 'Succeeded', 'Expiring', 'Deleting',
+        /// 'HumanIntervention', 'Failed'</param>
         /// <param name="schemaItemTypeLink">The schema org link. This helps
         /// ACI identify and suggest semantic models.</param>
         /// <param name="tenantId">The hub name.</param>
@@ -74,7 +75,18 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// participant property name for an interaction ,This is used to
         /// logically represent the agent of the interaction, Specify the
         /// participant name here from ParticipantName.</param>
-        public InteractionResourceFormat(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, IList<string>> attributes = default(IDictionary<string, IList<string>>), IDictionary<string, string> description = default(IDictionary<string, string>), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, IDictionary<string, string>> localizedAttributes = default(IDictionary<string, IDictionary<string, string>>), string smallImage = default(string), string mediumImage = default(string), string largeImage = default(string), string apiEntitySetName = default(string), EntityTypes? entityType = default(EntityTypes?), IList<PropertyDefinition> fields = default(IList<PropertyDefinition>), int? instancesCount = default(int?), System.DateTime? lastChangedUtc = default(System.DateTime?), string provisioningState = default(string), string schemaItemTypeLink = default(string), string tenantId = default(string), string timestampFieldName = default(string), string typeName = default(string), IList<string> idPropertyNames = default(IList<string>), IList<Participant> participantProfiles = default(IList<Participant>), string primaryParticipantProfilePropertyName = default(string))
+        /// <param name="dataSources">This is specific to interactions modeled
+        /// as activities. Data sources are used to determine where data is
+        /// stored and also in precedence rules.</param>
+        /// <param name="defaultDataSourceId">Default data source is
+        /// specifically used in cases where data source is not specified in an
+        /// instance.</param>
+        /// <param name="isActivity">An interaction can be tagged as an
+        /// activity only during create. This enables the interaction to be
+        /// editable and can enable merging of properties from multiple data
+        /// sources based on precedence, which is defined at a link
+        /// level.</param>
+        public InteractionResourceFormat(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, IList<string>> attributes = default(IDictionary<string, IList<string>>), IDictionary<string, string> description = default(IDictionary<string, string>), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, IDictionary<string, string>> localizedAttributes = default(IDictionary<string, IDictionary<string, string>>), string smallImage = default(string), string mediumImage = default(string), string largeImage = default(string), string apiEntitySetName = default(string), EntityTypes? entityType = default(EntityTypes?), IList<PropertyDefinition> fields = default(IList<PropertyDefinition>), int? instancesCount = default(int?), System.DateTime? lastChangedUtc = default(System.DateTime?), string provisioningState = default(string), string schemaItemTypeLink = default(string), string tenantId = default(string), string timestampFieldName = default(string), string typeName = default(string), IList<string> idPropertyNames = default(IList<string>), IList<Participant> participantProfiles = default(IList<Participant>), string primaryParticipantProfilePropertyName = default(string), IList<DataSource> dataSources = default(IList<DataSource>), string defaultDataSourceId = default(string), bool? isActivity = default(bool?))
             : base(id, name, type)
         {
             Attributes = attributes;
@@ -97,6 +109,9 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
             IdPropertyNames = idPropertyNames;
             ParticipantProfiles = participantProfiles;
             PrimaryParticipantProfilePropertyName = primaryParticipantProfilePropertyName;
+            DataSources = dataSources;
+            DefaultDataSourceId = defaultDataSourceId;
+            IsActivity = isActivity;
         }
 
         /// <summary>
@@ -177,7 +192,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public System.DateTime? LastChangedUtc { get; protected set; }
 
         /// <summary>
-        /// Gets the provisioning state of the Type.
+        /// Gets provisioning state. Possible values include: 'Provisioning',
+        /// 'Succeeded', 'Expiring', 'Deleting', 'HumanIntervention', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; protected set; }
@@ -229,6 +245,30 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.primaryParticipantProfilePropertyName")]
         public string PrimaryParticipantProfilePropertyName { get; set; }
+
+        /// <summary>
+        /// Gets this is specific to interactions modeled as activities. Data
+        /// sources are used to determine where data is stored and also in
+        /// precedence rules.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataSources")]
+        public IList<DataSource> DataSources { get; protected set; }
+
+        /// <summary>
+        /// Gets default data source is specifically used in cases where data
+        /// source is not specified in an instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultDataSourceId")]
+        public string DefaultDataSourceId { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets an interaction can be tagged as an activity only
+        /// during create. This enables the interaction to be editable and can
+        /// enable merging of properties from multiple data sources based on
+        /// precedence, which is defined at a link level.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isActivity")]
+        public bool? IsActivity { get; set; }
 
     }
 }

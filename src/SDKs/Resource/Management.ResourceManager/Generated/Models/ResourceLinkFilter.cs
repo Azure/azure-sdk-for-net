@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Resource link filter.
@@ -29,29 +23,29 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ResourceLinkFilter class.
         /// </summary>
-        /// <param name="targetId">The target Id of the resource.</param>
+        /// <param name="targetId">The ID of the target resource.</param>
         public ResourceLinkFilter(string targetId)
         {
             TargetId = targetId;
         }
 
         /// <summary>
-        /// Gets or sets the target Id of the resource.
+        /// Gets or sets the ID of the target resource.
         /// </summary>
-        [JsonProperty(PropertyName = "targetId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetId")]
         public string TargetId { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (TargetId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TargetId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "TargetId");
             }
         }
     }

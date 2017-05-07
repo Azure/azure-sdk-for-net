@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentOperation class.
         /// </summary>
-        /// <param name="id">Full deployment operation id.</param>
-        /// <param name="operationId">Deployment operation id.</param>
+        /// <param name="id">Full deployment operation ID.</param>
+        /// <param name="operationId">Deployment operation ID.</param>
         /// <param name="properties">Deployment properties.</param>
         public DeploymentOperation(string id = default(string), string operationId = default(string), DeploymentOperationProperties properties = default(DeploymentOperationProperties))
         {
@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets full deployment operation id.
+        /// Gets full deployment operation ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets deployment operation id.
+        /// Gets deployment operation ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "operationId")]
         public string OperationId { get; private set; }

@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// <param name="type">Resource type.</param>
         /// <param name="connectorName">The connector name.</param>
         /// <param name="connectorType">Type of connector. Possible values
-        /// include: 'CRM', 'AzureBlob', 'Salesforce'</param>
+        /// include: 'None', 'CRM', 'AzureBlob', 'Salesforce',
+        /// 'ExchangeOnline', 'Outbound'</param>
         /// <param name="created">The created time.</param>
         /// <param name="lastModified">The last monified time.</param>
         /// <param name="connectorMappingName">The connector mapping
@@ -63,7 +64,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// include: 'Creating', 'Created', 'Failed', 'Ready', 'Running',
         /// 'Stopped', 'Expiring'</param>
         /// <param name="tenantId">The hub name.</param>
-        public ConnectorMappingResourceFormat(EntityTypes entityType, string entityTypeName, ConnectorMappingProperties mappingProperties, string id = default(string), string name = default(string), string type = default(string), string connectorName = default(string), ConnectorTypes? connectorType = default(ConnectorTypes?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), string connectorMappingName = default(string), string displayName = default(string), string description = default(string), string dataFormatId = default(string), System.DateTime? nextRunTime = default(System.DateTime?), string runId = default(string), ConnectorMappingStates? state = default(ConnectorMappingStates?), string tenantId = default(string))
+        public ConnectorMappingResourceFormat(EntityTypes entityType, string entityTypeName, ConnectorMappingProperties mappingProperties, string id = default(string), string name = default(string), string type = default(string), string connectorName = default(string), string connectorType = default(string), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), string connectorMappingName = default(string), string displayName = default(string), string description = default(string), string dataFormatId = default(string), System.DateTime? nextRunTime = default(System.DateTime?), string runId = default(string), ConnectorMappingStates? state = default(ConnectorMappingStates?), string tenantId = default(string))
             : base(id, name, type)
         {
             MappingProperties = new ConnectorMappingProperties();
@@ -91,11 +92,11 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public string ConnectorName { get; protected set; }
 
         /// <summary>
-        /// Gets or sets type of connector. Possible values include: 'CRM',
-        /// 'AzureBlob', 'Salesforce'
+        /// Gets or sets type of connector. Possible values include: 'None',
+        /// 'CRM', 'AzureBlob', 'Salesforce', 'ExchangeOnline', 'Outbound'
         /// </summary>
         [JsonProperty(PropertyName = "properties.connectorType")]
-        public ConnectorTypes? ConnectorType { get; set; }
+        public string ConnectorType { get; set; }
 
         /// <summary>
         /// Gets the created time.

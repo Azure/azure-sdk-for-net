@@ -20,14 +20,28 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DebugSetting class.
         /// </summary>
-        /// <param name="detailLevel">The debug detail level.</param>
+        /// <param name="detailLevel">Specifies the type of information to log
+        /// for debugging. The permitted values are none, requestContent,
+        /// responseContent, or both requestContent and responseContent
+        /// separated by a comma. The default is none. When setting this
+        /// value, carefully consider the type of information you are passing
+        /// in during deployment. By logging information about the request or
+        /// response, you could potentially expose sensitive data that is
+        /// retrieved through the deployment operations.</param>
         public DebugSetting(string detailLevel = default(string))
         {
             DetailLevel = detailLevel;
         }
 
         /// <summary>
-        /// Gets or sets the debug detail level.
+        /// Gets or sets specifies the type of information to log for
+        /// debugging. The permitted values are none, requestContent,
+        /// responseContent, or both requestContent and responseContent
+        /// separated by a comma. The default is none. When setting this
+        /// value, carefully consider the type of information you are passing
+        /// in during deployment. By logging information about the request or
+        /// response, you could potentially expose sensitive data that is
+        /// retrieved through the deployment operations.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "detailLevel")]
         public string DetailLevel { get; set; }

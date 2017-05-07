@@ -412,11 +412,30 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
+        /// Recovers the deleted certificate.
+        /// </summary>        
+        /// <param name="recoveryId">The recoveryId of the deleted certificate, returned from deletion.</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>  
+        /// <returns>A response message containing the recovered certificate</returns>
+        public static async Task<CertificateBundle> RecoverDeletedCertificateAsync( this IKeyVaultClient operations, string recoveryId, CancellationToken cancellationToken = default( CancellationToken ) )
+        {
+            if ( string.IsNullOrEmpty( recoveryId ) )
+                throw new ArgumentNullException( nameof( recoveryId ) );
+
+            var certificateRecoveryId = new DeletedCertificateIdentifier(recoveryId);
+
+            using ( var _result = await operations.RecoverDeletedCertificateWithHttpMessagesAsync( certificateRecoveryId.Vault, certificateRecoveryId.Name, null, cancellationToken ).ConfigureAwait( false ) )
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
         /// Purges the deleted secret immediately.
         /// </summary>        
         /// <param name="recoveryId">The recoveryId of the deleted secret, returned from deletion.</param>
         /// <param name="cancellationToken">Optional cancellation token</param>  
-        /// <returns>A response message containing the recovered secret</returns>
+        /// <returns>Task representing the asynchronous execution of this request.</returns>
         public static async Task PurgeDeletedSecretAsync(this IKeyVaultClient operations, string recoveryId, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(recoveryId))
@@ -435,7 +454,7 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>        
         /// <param name="recoveryId">The recoveryId of the deleted key, returned from deletion.</param>
         /// <param name="cancellationToken">Optional cancellation token</param>  
-        /// <returns>A response message containing the recovered key</returns>
+        /// <returns>Task representing the asynchronous execution of this request.</returns>
         public static async Task PurgeDeletedKeyAsync(this IKeyVaultClient operations, string recoveryId, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(recoveryId))
@@ -444,6 +463,25 @@ namespace Microsoft.Azure.KeyVault
             var keyRecoveryId = new DeletedKeyIdentifier(recoveryId);
 
             using (var _result = await operations.PurgeDeletedKeyWithHttpMessagesAsync(keyRecoveryId.Vault, keyRecoveryId.Name, null, cancellationToken).ConfigureAwait(false))
+            {
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Purges the deleted certificate with immediate effect.
+        /// </summary>        
+        /// <param name="recoveryId">The recoveryId of the deleted certificate, returned from deletion.</param>
+        /// <param name="cancellationToken">Optional cancellation token</param>  
+        /// <returns>Task representing the asynchronous execution of this request.</returns>
+        public static async Task PurgeDeletedCertificateAsync( this IKeyVaultClient operations, string recoveryId, CancellationToken cancellationToken = default( CancellationToken ) )
+        {
+            if ( string.IsNullOrEmpty( recoveryId ) )
+                throw new ArgumentNullException( nameof( recoveryId ) );
+
+            var certificateRecoveryId = new DeletedCertificateIdentifier(recoveryId);
+
+            using ( var _result = await operations.PurgeDeletedCertificateWithHttpMessagesAsync( certificateRecoveryId.Vault, certificateRecoveryId.Name, null, cancellationToken ).ConfigureAwait( false ) )
             {
                 return;
             }
