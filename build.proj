@@ -1,4 +1,4 @@
-<Project DefaultTargets="FullBuild" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="RunTests" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Import Project="Directory.Build.props" />	
 	<Import Project="test.props" />
 	<Import Project="AzSdk.props" />
