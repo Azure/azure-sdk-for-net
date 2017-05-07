@@ -79,10 +79,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </param>
         /// <param name='syncFlag'>
         /// Optionally indicates what to do after completion of the concurrent append.
-        /// DATA indicates more data is coming so no sync takes place, METADATA
-        /// indicates a sync should be done to refresh metadata of the file only. CLOSE
-        /// indicates that both the stream and metadata should be refreshed upon append
-        /// completion. Possible values include: 'DATA', 'METADATA', 'CLOSE'
+        /// DATA indicates that more data will be sent immediately by the client, the
+        /// file handle should remain open/locked, and file metadata (including file
+        /// length, last modified time) should NOT get updated. METADATA indicates that
+        /// more data will be sent immediately by the client, the file handle should
+        /// remain open/locked, and file metadata should get updated. CLOSE indicates
+        /// that the client is done sending data, the file handle should be
+        /// closed/unlocked, and file metadata should get updated. Possible values
+        /// include: 'DATA', 'METADATA', 'CLOSE'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1948,11 +1952,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// to append at the end of the stream.
         /// </param>
         /// <param name='syncFlag'>
-        /// Optionally indicates what to do after completion of the append. DATA
-        /// indicates more data is coming so no sync takes place, METADATA indicates a
-        /// sync should be done to refresh metadata of the file only. CLOSE indicates
-        /// that both the stream and metadata should be refreshed upon append
-        /// completion. Possible values include: 'DATA', 'METADATA', 'CLOSE'
+        /// Optionally indicates what to do after completion of the concurrent append.
+        /// DATA indicates that more data will be sent immediately by the client, the
+        /// file handle should remain open/locked, and file metadata (including file
+        /// length, last modified time) should NOT get updated. METADATA indicates that
+        /// more data will be sent immediately by the client, the file handle should
+        /// remain open/locked, and file metadata should get updated. CLOSE indicates
+        /// that the client is done sending data, the file handle should be
+        /// closed/unlocked, and file metadata should get updated. Possible values
+        /// include: 'DATA', 'METADATA', 'CLOSE'
         /// </param>
         /// <param name='leaseId'>
         /// Optional unique GUID per file to ensure single writer semantics, meaning
@@ -2189,11 +2197,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// The indication of if the file should be overwritten.
         /// </param>
         /// <param name='syncFlag'>
-        /// Optionally indicates what to do after completion of the append. DATA
-        /// indicates more data is coming so no sync takes place, METADATA indicates a
-        /// sync should be done to refresh metadata of the file only. CLOSE indicates
-        /// that both the stream and metadata should be refreshed upon create
-        /// completion. Possible values include: 'DATA', 'METADATA', 'CLOSE'
+        /// Optionally indicates what to do after completion of the create. DATA
+        /// indicates that more data will be sent immediately by the client, the file
+        /// handle should remain open/locked, and file metadata (including file length,
+        /// last modified time) should NOT get updated. METADATA indicates that more
+        /// data will be sent immediately by the client, the file handle should remain
+        /// open/locked, and file metadata should get updated. CLOSE indicates that the
+        /// client is done sending data, the file handle should be closed/unlocked, and
+        /// file metadata should get updated. Possible values include: 'DATA',
+        /// 'METADATA', 'CLOSE'
         /// </param>
         /// <param name='leaseId'>
         /// Optional unique GUID per file to ensure single writer semantics, meaning
