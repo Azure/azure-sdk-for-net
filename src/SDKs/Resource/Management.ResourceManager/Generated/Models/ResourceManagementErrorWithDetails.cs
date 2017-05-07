@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// The detailed error message of resource management.
+    /// </summary>
     public partial class ResourceManagementErrorWithDetails
     {
         /// <summary>
@@ -22,9 +25,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the
         /// ResourceManagementErrorWithDetails class.
         /// </summary>
-        /// <param name="code">The error code returned from the server.</param>
-        /// <param name="message">The error message returned from the
-        /// server.</param>
+        /// <param name="code">The error code returned when exporting the
+        /// template.</param>
+        /// <param name="message">The error message describing the export
+        /// error.</param>
         /// <param name="target">The target of the error.</param>
         /// <param name="details">Validation error.</param>
         public ResourceManagementErrorWithDetails(string code = default(string), string message = default(string), string target = default(string), System.Collections.Generic.IList<ResourceManagementErrorWithDetails> details = default(System.Collections.Generic.IList<ResourceManagementErrorWithDetails>))
@@ -36,13 +40,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets the error code returned from the server.
+        /// Gets the error code returned when exporting the template.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; private set; }
 
         /// <summary>
-        /// Gets the error message returned from the server.
+        /// Gets the error message describing the export error.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }

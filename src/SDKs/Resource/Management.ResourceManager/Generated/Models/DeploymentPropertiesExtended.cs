@@ -45,8 +45,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Parameters or ParametersLink.</param>
         /// <param name="parametersLink">The URI referencing the parameters.
         /// Use only one of Parameters or ParametersLink.</param>
-        /// <param name="mode">The deployment mode. Possible values include:
-        /// 'Incremental', 'Complete'</param>
+        /// <param name="mode">The deployment mode. Possible values are
+        /// Incremental and Complete. Possible values include: 'Incremental',
+        /// 'Complete'</param>
         /// <param name="debugSetting">The debug setting of the
         /// deployment.</param>
         public DeploymentPropertiesExtended(string provisioningState = default(string), string correlationId = default(string), System.DateTime? timestamp = default(System.DateTime?), object outputs = default(object), System.Collections.Generic.IList<Provider> providers = default(System.Collections.Generic.IList<Provider>), System.Collections.Generic.IList<Dependency> dependencies = default(System.Collections.Generic.IList<Dependency>), object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?), DebugSetting debugSetting = default(DebugSetting))
@@ -131,8 +132,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public ParametersLink ParametersLink { get; set; }
 
         /// <summary>
-        /// Gets or sets the deployment mode. Possible values include:
-        /// 'Incremental', 'Complete'
+        /// Gets or sets the deployment mode. Possible values are Incremental
+        /// and Complete. Possible values include: 'Incremental', 'Complete'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "mode")]
         public DeploymentMode? Mode { get; set; }

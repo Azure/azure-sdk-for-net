@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ResourceManager
     public partial interface ITenantsOperations
     {
         /// <summary>
-        /// Gets a list of tenants.
+        /// Gets the tenants for your account.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<TenantIdDescription>>> ListWithHttpMessagesAsync(System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets a list of tenants.
+        /// Gets the tenants for your account.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

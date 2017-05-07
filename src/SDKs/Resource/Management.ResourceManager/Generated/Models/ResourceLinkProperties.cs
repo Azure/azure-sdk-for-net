@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The resource link properties.
@@ -29,9 +23,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ResourceLinkProperties class.
         /// </summary>
-        /// <param name="targetId">The fully qualified target resource Id. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite.</param>
-        /// <param name="sourceId">The fully qualified source resource Id. </param>
-        /// <param name="notes">The resource link notes.</param>
+        /// <param name="targetId">The fully qualified ID of the target
+        /// resource in the link.</param>
+        /// <param name="sourceId">The fully qualified ID of the source
+        /// resource in the link. </param>
+        /// <param name="notes">Notes about the resource link.</param>
         public ResourceLinkProperties(string targetId, string sourceId = default(string), string notes = default(string))
         {
             SourceId = sourceId;
@@ -40,35 +36,35 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets the fully qualified source resource Id.
+        /// Gets the fully qualified ID of the source resource in the link.
         /// </summary>
-        [JsonProperty(PropertyName = "sourceId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sourceId")]
         public string SourceId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the fully qualified target resource Id. For example,
-        /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite.
+        /// Gets or sets the fully qualified ID of the target resource in the
+        /// link.
         /// </summary>
-        [JsonProperty(PropertyName = "targetId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetId")]
         public string TargetId { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource link notes.
+        /// Gets or sets notes about the resource link.
         /// </summary>
-        [JsonProperty(PropertyName = "notes")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "notes")]
         public string Notes { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (TargetId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TargetId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "TargetId");
             }
         }
     }

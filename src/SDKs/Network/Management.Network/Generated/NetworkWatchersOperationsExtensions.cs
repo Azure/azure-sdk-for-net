@@ -579,6 +579,56 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Verifies the possibility of establishing a direct TCP connection from a
+            /// virtual machine to a given endpoint including another VM or an arbitrary
+            /// remote server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the network watcher resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher resource.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that determine how the connectivity check will be performed.
+            /// </param>
+            public static ConnectivityInformation CheckConnectivity(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, ConnectivityParameters parameters)
+            {
+                return operations.CheckConnectivityAsync(resourceGroupName, networkWatcherName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Verifies the possibility of establishing a direct TCP connection from a
+            /// virtual machine to a given endpoint including another VM or an arbitrary
+            /// remote server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the network watcher resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher resource.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that determine how the connectivity check will be performed.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ConnectivityInformation> CheckConnectivityAsync(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, ConnectivityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckConnectivityWithHttpMessagesAsync(resourceGroupName, networkWatcherName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified network watcher resource.
             /// </summary>
             /// <param name='operations'>
@@ -934,6 +984,56 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<FlowLogInformation> BeginGetFlowLogStatusAsync(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginGetFlowLogStatusWithHttpMessagesAsync(resourceGroupName, networkWatcherName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Verifies the possibility of establishing a direct TCP connection from a
+            /// virtual machine to a given endpoint including another VM or an arbitrary
+            /// remote server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the network watcher resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher resource.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that determine how the connectivity check will be performed.
+            /// </param>
+            public static ConnectivityInformation BeginCheckConnectivity(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, ConnectivityParameters parameters)
+            {
+                return operations.BeginCheckConnectivityAsync(resourceGroupName, networkWatcherName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Verifies the possibility of establishing a direct TCP connection from a
+            /// virtual machine to a given endpoint including another VM or an arbitrary
+            /// remote server.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the network watcher resource group.
+            /// </param>
+            /// <param name='networkWatcherName'>
+            /// The name of the network watcher resource.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters that determine how the connectivity check will be performed.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ConnectivityInformation> BeginCheckConnectivityAsync(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, ConnectivityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCheckConnectivityWithHttpMessagesAsync(resourceGroupName, networkWatcherName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

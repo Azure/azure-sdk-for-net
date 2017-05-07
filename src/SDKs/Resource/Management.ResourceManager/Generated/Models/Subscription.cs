@@ -23,12 +23,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Subscription class.
         /// </summary>
-        /// <param name="id">The fully qualified Id. For example,
+        /// <param name="id">The fully qualified ID for the subscription. For
+        /// example,
         /// /subscriptions/00000000-0000-0000-0000-000000000000.</param>
-        /// <param name="subscriptionId">The subscription Id.</param>
-        /// <param name="tenantId">The tenant Id.</param>
+        /// <param name="subscriptionId">The subscription ID.</param>
         /// <param name="displayName">The subscription display name.</param>
-        /// <param name="state">The subscription state. Possible values
+        /// <param name="state">The subscription state. Possible values are
+        /// Enabled, Warned, PastDue, Disabled, and Deleted. Possible values
         /// include: 'Enabled', 'Warned', 'PastDue', 'Disabled',
         /// 'Deleted'</param>
         /// <param name="subscriptionPolicies">The subscription
@@ -37,11 +38,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// request. Valid values are one or more combinations of Legacy,
         /// RoleBased, Bypassed, Direct and Management. For example, 'Legacy,
         /// RoleBased'.</param>
-        public Subscription(string id = default(string), string subscriptionId = default(string), string tenantId = default(string), string displayName = default(string), SubscriptionState? state = default(SubscriptionState?), SubscriptionPolicies subscriptionPolicies = default(SubscriptionPolicies), string authorizationSource = default(string))
+        public Subscription(string id = default(string), string subscriptionId = default(string), string displayName = default(string), SubscriptionState? state = default(SubscriptionState?), SubscriptionPolicies subscriptionPolicies = default(SubscriptionPolicies), string authorizationSource = default(string))
         {
             Id = id;
             SubscriptionId = subscriptionId;
-            TenantId = tenantId;
             DisplayName = displayName;
             State = state;
             SubscriptionPolicies = subscriptionPolicies;
@@ -49,23 +49,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets the fully qualified Id. For example,
+        /// Gets the fully qualified ID for the subscription. For example,
         /// /subscriptions/00000000-0000-0000-0000-000000000000.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the subscription Id.
+        /// Gets the subscription ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "subscriptionId")]
         public string SubscriptionId { get; private set; }
-
-        /// <summary>
-        /// Gets the tenant Id.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; private set; }
 
         /// <summary>
         /// Gets the subscription display name.
@@ -74,8 +68,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets the subscription state. Possible values include: 'Enabled',
-        /// 'Warned', 'PastDue', 'Disabled', 'Deleted'
+        /// Gets the subscription state. Possible values are Enabled, Warned,
+        /// PastDue, Disabled, and Deleted. Possible values include:
+        /// 'Enabled', 'Warned', 'PastDue', 'Disabled', 'Deleted'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public SubscriptionState? State { get; private set; }

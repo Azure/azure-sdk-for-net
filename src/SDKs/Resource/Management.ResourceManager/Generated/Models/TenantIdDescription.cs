@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the TenantIdDescription class.
         /// </summary>
-        /// <param name="id">The fully qualified Id. For example,
-        /// /tenants/00000000-0000-0000-0000-000000000000.</param>
-        /// <param name="tenantId">The tenantId. For example,
+        /// <param name="id">The fully qualified ID of the tenant. For
+        /// example, /tenants/00000000-0000-0000-0000-000000000000.</param>
+        /// <param name="tenantId">The tenant ID. For example,
         /// 00000000-0000-0000-0000-000000000000.</param>
         public TenantIdDescription(string id = default(string), string tenantId = default(string))
         {
@@ -34,14 +34,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets the fully qualified Id. For example,
+        /// Gets the fully qualified ID of the tenant. For example,
         /// /tenants/00000000-0000-0000-0000-000000000000.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the tenantId. For example,
+        /// Gets the tenant ID. For example,
         /// 00000000-0000-0000-0000-000000000000.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tenantId")]
