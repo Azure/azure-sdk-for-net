@@ -51,8 +51,9 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// <param name="instancesCount">The instance count.</param>
         /// <param name="lastChangedUtc">The last changed time for the type
         /// definition.</param>
-        /// <param name="provisioningState">The provisioning state of the
-        /// Type.</param>
+        /// <param name="provisioningState">Provisioning state. Possible values
+        /// include: 'Provisioning', 'Succeeded', 'Expiring', 'Deleting',
+        /// 'HumanIntervention', 'Failed'</param>
         /// <param name="schemaItemTypeLink">The schema org link. This helps
         /// ACI identify and suggest semantic models.</param>
         /// <param name="tenantId">The hub name.</param>
@@ -108,7 +109,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public System.DateTime? LastChangedUtc { get; protected set; }
 
         /// <summary>
-        /// Gets the provisioning state of the Type.
+        /// Gets provisioning state. Possible values include: 'Provisioning',
+        /// 'Succeeded', 'Expiring', 'Deleting', 'HumanIntervention', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; protected set; }

@@ -18,13 +18,13 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class ProvidersOperationsExtensions
     {
             /// <summary>
-            /// Unregisters provider from a subscription.
+            /// Unregisters a subscription from a resource provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
+            /// The namespace of the resource provider to unregister.
             /// </param>
             public static Provider Unregister(this IProvidersOperations operations, string resourceProviderNamespace)
             {
@@ -32,13 +32,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Unregisters provider from a subscription.
+            /// Unregisters a subscription from a resource provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
+            /// The namespace of the resource provider to unregister.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -52,13 +52,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Registers provider to be used with a subscription.
+            /// Registers a subscription with a resource provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
+            /// The namespace of the resource provider to register.
             /// </param>
             public static Provider Register(this IProvidersOperations operations, string resourceProviderNamespace)
             {
@@ -66,13 +66,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Registers provider to be used with a subscription.
+            /// Registers a subscription with a resource provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
+            /// The namespace of the resource provider to register.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -86,17 +86,19 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of resource providers.
+            /// Gets all resource providers for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='top'>
-            /// Query parameters. If null is passed returns all deployments.
+            /// The number of results to return. If null is passed returns all deployments.
             /// </param>
             /// <param name='expand'>
-            /// The $expand query parameter. e.g. To include property aliases in response,
-            /// use $expand=resourceTypes/aliases.
+            /// The properties to include in the results. For example, use
+            /// &amp;$expand=metadata in the query string to retrieve resource provider
+            /// metadata. To include property aliases in response, use
+            /// $expand=resourceTypes/aliases.
             /// </param>
             public static Microsoft.Rest.Azure.IPage<Provider> List(this IProvidersOperations operations, int? top = default(int?), string expand = default(string))
             {
@@ -104,17 +106,19 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of resource providers.
+            /// Gets all resource providers for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='top'>
-            /// Query parameters. If null is passed returns all deployments.
+            /// The number of results to return. If null is passed returns all deployments.
             /// </param>
             /// <param name='expand'>
-            /// The $expand query parameter. e.g. To include property aliases in response,
-            /// use $expand=resourceTypes/aliases.
+            /// The properties to include in the results. For example, use
+            /// &amp;$expand=metadata in the query string to retrieve resource provider
+            /// metadata. To include property aliases in response, use
+            /// $expand=resourceTypes/aliases.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -128,17 +132,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a resource provider.
+            /// Gets the specified resource provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
+            /// The namespace of the resource provider.
             /// </param>
             /// <param name='expand'>
-            /// The $expand query parameter. e.g. To include property aliases in response,
-            /// use $expand=resourceTypes/aliases.
+            /// The $expand query parameter. For example, to include property aliases in
+            /// response, use $expand=resourceTypes/aliases.
             /// </param>
             public static Provider Get(this IProvidersOperations operations, string resourceProviderNamespace, string expand = default(string))
             {
@@ -146,17 +150,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a resource provider.
+            /// Gets the specified resource provider.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
+            /// The namespace of the resource provider.
             /// </param>
             /// <param name='expand'>
-            /// The $expand query parameter. e.g. To include property aliases in response,
-            /// use $expand=resourceTypes/aliases.
+            /// The $expand query parameter. For example, to include property aliases in
+            /// response, use $expand=resourceTypes/aliases.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -170,7 +174,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of resource providers.
+            /// Gets all resource providers for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -184,7 +188,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of resource providers.
+            /// Gets all resource providers for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

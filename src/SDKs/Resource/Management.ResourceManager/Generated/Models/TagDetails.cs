@@ -25,7 +25,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         /// <param name="id">The tag ID.</param>
         /// <param name="tagName">The tag name.</param>
-        /// <param name="count">The tag count.</param>
+        /// <param name="count">The total number of resources that use the
+        /// resource tag. When a tag is initially created and has no
+        /// associated resources, the value is 0.</param>
         /// <param name="values">The list of tag values.</param>
         public TagDetails(string id = default(string), string tagName = default(string), TagCount count = default(TagCount), System.Collections.Generic.IList<TagValue> values = default(System.Collections.Generic.IList<TagValue>))
         {
@@ -48,7 +50,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string TagName { get; set; }
 
         /// <summary>
-        /// Gets or sets the tag count.
+        /// Gets or sets the total number of resources that use the resource
+        /// tag. When a tag is initially created and has no associated
+        /// resources, the value is 0.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "count")]
         public TagCount Count { get; set; }

@@ -23,7 +23,6 @@ namespace DataLakeAnalytics.Tests
             {
                 commonData = new CommonTestFixture(context, true);
                 var clientToUse = this.GetDataLakeAnalyticsAccountManagementClient(context);
-
                 // ensure the account doesn't exist
                 Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, commonData.DataLakeAnalyticsAccountName));
 
@@ -235,6 +234,111 @@ namespace DataLakeAnalytics.Tests
 
                 // delete the second account that was created to ensure that we properly clean up after ourselves.
                 clientToUse.Account.Delete(commonData.ResourceGroupName, accountToChange.Name);
+            }
+        }
+
+        [Fact]
+        public void ComputePolicyCrudTest()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context, true);
+                var clientToUse = this.GetDataLakeAnalyticsAccountManagementClient(context);
+                var userPolicyObjectId = new Guid("8ce05900-7a9e-4895-b3f0-0fbcee507803");
+                var userPolicyName = TestUtilities.GenerateName("adlapolicy1");
+                var groupPolicyObjectId = new Guid("0583cfd7-60f5-43f0-9597-68b85591fc69");
+                var groupPolicyName = TestUtilities.GenerateName("adlapolicy2");
+                var adlaAccountName = TestUtilities.GenerateName("adlaacct1");
+                // ensure the account doesn't exist
+                Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, adlaAccountName));
+
+                // Create a test account
+                var responseCreate =
+                    clientToUse.Account.Create(commonData.ResourceGroupName, adlaAccountName,
+                        parameters: new DataLakeAnalyticsAccount
+                        {
+                            Location = commonData.Location,
+                            DefaultDataLakeStoreAccount = commonData.DataLakeStoreAccountName,
+                            DataLakeStoreAccounts = new List<DataLakeStoreAccountInfo>
+                            {
+                                new DataLakeStoreAccountInfo
+                                {
+                                    Name = commonData.DataLakeStoreAccountName,
+                                    Suffix = commonData.DataLakeStoreAccountSuffix
+                                }
+                            },
+                            NewTier = TierType.Commitment100AUHours,
+                            ComputePolicies = new List<ComputePolicyAccountCreateParameters>
+                            {
+                                new ComputePolicyAccountCreateParameters
+                                {
+                                    MaxDegreeOfParallelismPerJob = 1,
+                                    MinPriorityPerJob = 1,
+                                    ObjectId = userPolicyObjectId,
+                                    ObjectType = AADObjectType.User,
+                                    Name = userPolicyName
+                                }
+                            }
+                        });
+
+                // get the account and ensure that all the values are properly set.
+                var responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, adlaAccountName);
+
+                // validate compute policies are set on creation.
+                Assert.True(responseGet.ComputePolicies.Count == 1);
+                Assert.True(responseGet.ComputePolicies.ToList()[0].Name.Equals(userPolicyName));
+
+                // validate compute policy CRUD
+                // add another account
+                var computePolicy = clientToUse.ComputePolicy.CreateOrUpdate(
+                    commonData.ResourceGroupName,
+                    adlaAccountName,
+                    groupPolicyName,
+                    new ComputePolicyCreateOrUpdateParameters
+                    {
+                        MaxDegreeOfParallelismPerJob = 1,
+                        MinPriorityPerJob = 1,
+                        ObjectId = groupPolicyObjectId,
+                        ObjectType = AADObjectType.Group
+                    });
+
+                Assert.Equal(1, computePolicy.MaxDegreeOfParallelismPerJob);
+                Assert.Equal(1, computePolicy.MinPriorityPerJob);
+                Assert.Equal(groupPolicyObjectId, computePolicy.ObjectId);
+                Assert.Equal(AADObjectType.Group, computePolicy.ObjectType);
+
+                // Get the compute policy
+                computePolicy = clientToUse.ComputePolicy.Get(
+                    commonData.ResourceGroupName,
+                    adlaAccountName,
+                    groupPolicyName);
+
+                Assert.Equal(1, computePolicy.MaxDegreeOfParallelismPerJob);
+                Assert.Equal(1, computePolicy.MinPriorityPerJob);
+                Assert.Equal(groupPolicyObjectId, computePolicy.ObjectId);
+                Assert.Equal(AADObjectType.Group, computePolicy.ObjectType);
+
+                // list all policies
+                var policyList = clientToUse.ComputePolicy.ListByAccount(
+                    commonData.ResourceGroupName,
+                    adlaAccountName);
+
+                Assert.Equal(2, policyList.Count());
+
+                // Remove the new policy
+                clientToUse.ComputePolicy.Delete(
+                    commonData.ResourceGroupName,
+                    adlaAccountName,
+                    groupPolicyName);
+
+                policyList = clientToUse.ComputePolicy.ListByAccount(
+                    commonData.ResourceGroupName,
+                    adlaAccountName);
+
+                Assert.Equal(1, policyList.Count());
+
+                // delete the account
+                clientToUse.Account.Delete(commonData.ResourceGroupName, adlaAccountName);
             }
         }
 

@@ -49,12 +49,17 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// Link.</param>
         /// <param name="mappings">The set of properties mappings between the
         /// source and target Types.</param>
-        /// <param name="provisioningState">Provisioning state.</param>
+        /// <param name="provisioningState">Provisioning state. Possible values
+        /// include: 'Provisioning', 'Succeeded', 'Expiring', 'Deleting',
+        /// 'HumanIntervention', 'Failed'</param>
         /// <param name="referenceOnly">Indicating whether the link is
         /// reference only link. This flag is ingored if the Mappings are
         /// defined. If the mappings are not defined and it is set to true,
         /// links processing will not create or update profiles.</param>
-        public LinkResourceFormat(string sourceInteractionType, string targetProfileType, IList<ParticipantPropertyReference> participantPropertyReferences, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string linkName = default(string), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, string> description = default(IDictionary<string, string>), IList<TypePropertiesMapping> mappings = default(IList<TypePropertiesMapping>), string provisioningState = default(string), bool? referenceOnly = default(bool?))
+        /// <param name="operationType">Determines whether this link is
+        /// supposed to create or delete instances if Link is NOT Reference
+        /// Only. Possible values include: 'Upsert', 'Delete'</param>
+        public LinkResourceFormat(string sourceInteractionType, string targetProfileType, IList<ParticipantPropertyReference> participantPropertyReferences, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string linkName = default(string), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, string> description = default(IDictionary<string, string>), IList<TypePropertiesMapping> mappings = default(IList<TypePropertiesMapping>), string provisioningState = default(string), bool? referenceOnly = default(bool?), InstanceOperationType? operationType = default(InstanceOperationType?))
             : base(id, name, type)
         {
             TenantId = tenantId;
@@ -67,6 +72,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
             ParticipantPropertyReferences = participantPropertyReferences;
             ProvisioningState = provisioningState;
             ReferenceOnly = referenceOnly;
+            OperationType = operationType;
         }
 
         /// <summary>
@@ -120,7 +126,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public IList<ParticipantPropertyReference> ParticipantPropertyReferences { get; set; }
 
         /// <summary>
-        /// Gets provisioning state.
+        /// Gets provisioning state. Possible values include: 'Provisioning',
+        /// 'Succeeded', 'Expiring', 'Deleting', 'HumanIntervention', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; protected set; }
@@ -133,6 +140,14 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.referenceOnly")]
         public bool? ReferenceOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets determines whether this link is supposed to create or
+        /// delete instances if Link is NOT Reference Only. Possible values
+        /// include: 'Upsert', 'Delete'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.operationType")]
+        public InstanceOperationType? OperationType { get; set; }
 
         /// <summary>
         /// Validate the object.

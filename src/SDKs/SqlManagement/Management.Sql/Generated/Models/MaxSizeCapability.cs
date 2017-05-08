@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="status">The status of the maximum size capability.
         /// Possible values include: 'Visible', 'Available', 'Default',
         /// 'Disabled'</param>
-        public MaxSizeCapability(long? limit = default(long?), MaxSizeUnits? unit = default(MaxSizeUnits?), CapabilityStatus? status = default(CapabilityStatus?))
+        public MaxSizeCapability(long limit = default(long), MaxSizeUnits? unit = default(MaxSizeUnits?), CapabilityStatus? status = default(CapabilityStatus?))
         {
             Limit = limit;
             Unit = unit;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets the maximum size of the database (see 'unit' for the units).
         /// </summary>
         [JsonProperty(PropertyName = "limit")]
-        public long? Limit { get; private set; }
+        public long Limit { get; private set; }
 
         /// <summary>
         /// Gets the units that the limit is expressed in. Possible values

@@ -175,6 +175,11 @@ namespace KeyVault.TestFramework
             this.retryExecutor.ExecuteAction(() => client.GetDeletedSecretAsync(vaultAddress, secretName).GetAwaiter().GetResult());
         }
 
+        public void WaitOnDeletedCertificate(KeyVaultClient client, string vaultAddress, string certificateName)
+        {
+            this.retryExecutor.ExecuteAction(() => client.GetDeletedCertificateAsync(vaultAddress, certificateName).GetAwaiter().GetResult());
+        }
+
         public void WaitOnKey(KeyVaultClient client, string vaultAddress, string keyName)
         {
             this.retryExecutor.ExecuteAction(() => client.GetKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult());
@@ -185,7 +190,12 @@ namespace KeyVault.TestFramework
             this.retryExecutor.ExecuteAction(() => client.GetSecretAsync(vaultAddress, secretName).GetAwaiter().GetResult());
         }
 
-        public DelegatingHandler[] GetHandlers()
+        public void WaitOnCertificate(KeyVaultClient client, string vaultAddress, string certificateName)
+        {
+            this.retryExecutor.ExecuteAction(() => client.GetCertificateAsync(vaultAddress, certificateName).GetAwaiter().GetResult());
+        }
+
+        public DelegatingHandler[ ] GetHandlers()
         {
             HttpMockServer server = HttpMockServer.CreateInstance();
             var testHttpHandler = new TestHttpMessageHandler();

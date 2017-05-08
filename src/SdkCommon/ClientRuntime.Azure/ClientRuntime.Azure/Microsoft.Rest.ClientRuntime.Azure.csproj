@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('clientruntime.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Rest.ClientRuntime.Azure</PackageId>
+    <Description>Provides common error handling, tracing, and HTTP/REST-based pipeline manipulation.</Description>
+    <AssemblyTitle>Client Runtime for Microsoft Azure Libraries</AssemblyTitle>
+    <VersionPrefix>3.3.6</VersionPrefix>
+    <AssemblyName>Microsoft.Rest.ClientRuntime.Azure</AssemblyName>
+    <PackageTags>Microsoft Azure AutoRest ClientRuntime REST  $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>    
+  </PropertyGroup>
+</Project>

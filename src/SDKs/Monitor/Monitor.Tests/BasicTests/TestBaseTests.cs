@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Insights;
-using Microsoft.Azure.Insights.Models;
-using Microsoft.Azure.Management.Insights;
+using Microsoft.Azure.Management.Monitor;
+using Microsoft.Azure.Management.Monitor.Models;
+using Microsoft.Azure.Management.Monitor.Management;
 using Microsoft.Rest;
 using Xunit;
 

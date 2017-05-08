@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         public FeatureClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a list of previewed features for all the providers in the current
+        /// Gets all the preview features that are available through AFEC for the
         /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -216,10 +216,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a list of previewed features of a resource provider.
+        /// Gets all the preview features in a provider namespace that are available
+        /// through AFEC for the subscription.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
-        /// The namespace of the resource provider.
+        /// The namespace of the resource provider for getting features.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -398,13 +399,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Get all features under the subscription.
+        /// Gets the preview feature with the specified name.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
-        /// Namespace of the resource provider.
+        /// The resource provider namespace for the feature.
         /// </param>
         /// <param name='featureName'>
-        /// Previewed feature name in the resource provider.
+        /// The name of the feature to get.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -589,13 +590,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Registers for a previewed feature of a resource provider.
+        /// Registers the preview feature for the subscription.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
-        /// Namespace of the resource provider.
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='featureName'>
-        /// Previewed feature name in the resource provider.
+        /// The name of the feature to register.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -780,7 +781,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a list of previewed features for all the providers in the current
+        /// Gets all the preview features that are available through AFEC for the
         /// subscription.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -949,7 +950,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a list of previewed features of a resource provider.
+        /// Gets all the preview features in a provider namespace that are available
+        /// through AFEC for the subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

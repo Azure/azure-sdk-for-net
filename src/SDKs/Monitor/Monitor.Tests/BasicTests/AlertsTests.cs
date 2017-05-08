@@ -7,8 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Management.Insights;
-using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.Azure.Management.Monitor.Management;
+using Microsoft.Azure.Management.Monitor.Management.Models;
 using Xunit;
 
 namespace Monitor.Tests.BasicTests
@@ -127,6 +127,7 @@ namespace Monitor.Tests.BasicTests
             var handler = new RecordedDelegatingHandler();
             var insightsClient = GetMonitorManagementClient(handler);
             var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, insightsClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expectedParameters.Name + "\",\"id\":\"" + expectedParameters.Id + "\",");
             var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(serializedObject)
@@ -148,6 +149,7 @@ namespace Monitor.Tests.BasicTests
             var handler = new RecordedDelegatingHandler();
             var insightsClient = GetMonitorManagementClient(handler);
             var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expResponse[0].Name + "\",\"id\":\"" + expResponse[0].Id + "\",");
             var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(string.Concat("{ \"value\":", serializedObject, "}"))
@@ -156,8 +158,7 @@ namespace Monitor.Tests.BasicTests
             handler = new RecordedDelegatingHandler(expectedResponse);
             insightsClient = GetMonitorManagementClient(handler);
 
-            var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: " rg1", odataQuery: "resourceUri eq 'resUri'");
-
+            var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: " rg1");
             AreEqual(expResponse, actualResponse.ToList<AlertRuleResource>());
         }
 
@@ -228,17 +229,22 @@ namespace Monitor.Tests.BasicTests
 
         private AlertRuleResource GetCreateOrUpdateRuleParameter()
         {
-            List<RuleAction> actions = new List<RuleAction>();
-            actions.Add(new RuleEmailAction()
-                    {
-                        CustomEmails = new List<string>()
+            List<RuleAction> actions = new List<RuleAction>
+            {
+                new RuleEmailAction()
+                {
+                    CustomEmails = new List<string>()
                         {
                             "emailid1"
                         },
-                        SendToServiceOwners = true
-                    });
+                    SendToServiceOwners = true
+                }
+            };
 
+            // Name and id won't be serialized since thwy are readonly
             return new AlertRuleResource(
+                id: "long name",
+                name: "name1",
                 location: "location",
                 alertRuleResourceName: "name1",
                 actions: actions,
@@ -255,7 +261,6 @@ namespace Monitor.Tests.BasicTests
                 description: "description",
                 isEnabled: true,
                 lastUpdatedTime: DateTime.UtcNow,
-                name: "name1",
                 tags: new Dictionary<string, string>()
                 {
                     {"key1", "val1"}
@@ -265,16 +270,17 @@ namespace Monitor.Tests.BasicTests
 
         private List<AlertRuleResource> GetRuleResourceCollection()
         {
-            List<RuleAction> actions = new List<RuleAction>();
-            actions.Add(new RuleEmailAction()
+            List<RuleAction> actions = new List<RuleAction>
             {
-                CustomEmails = new List<string>()
+                new RuleEmailAction()
+                {
+                    CustomEmails = new List<string>()
                         {
                             "eamil1"
                         },
-                SendToServiceOwners = true
-            });
-
+                    SendToServiceOwners = true
+                }
+            };
             return new List<AlertRuleResource>
             {
                 new AlertRuleResource(

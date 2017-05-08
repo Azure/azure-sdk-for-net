@@ -1669,6 +1669,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Requests that a backup of the specified key be downloaded to the client.
+        /// Authorization: Requires the keys/backup permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1854,7 +1855,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Restores a backed up key to a vault.
+        /// Restores a backed up key to a vault. Authorization: Requires the
+        /// keys/restore permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -2051,7 +2053,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Encrypts an arbitrary sequence of bytes using an encryption key that is
-        /// stored in a key vault.
+        /// stored in a key vault. Authorization: requires the keys/encrypt permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -2280,7 +2282,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Decrypts a single block of encrypted data.
+        /// Decrypts a single block of encrypted data, using the specified key.
+        /// Authorization: requires the keys/decrypt permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -2509,7 +2512,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Creates a signature from a digest using the specified key.
+        /// Creates a signature from a digest using the specified key. Authorization:
+        /// Requires the keys/sign permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -2739,7 +2743,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Verifies a signature using a specified key.
+        /// Verifies a signature using a specified key. Authorization: Requires the
+        /// keys/verify permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -2978,7 +2983,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Wraps a symmetric key using a specified key.
+        /// Wraps a symmetric key using a specified key. Authorization: Requires the
+        /// keys/wrapKey permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -3208,7 +3214,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Unwraps a symmetric key using the specified key that was initially used for
-        /// wrapping that key.
+        /// wrapping that key. Authorization: Requires the keys/unwrapKey permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -3437,7 +3443,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List deleted keys in the specified vault
+        /// List deleted keys in the specified vault. Authorization: Requires the
+        /// keys/list permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -3631,7 +3638,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Retrieves the deleted key information plus its attributes
+        /// Retrieves the deleted key information plus its attributes. Authorization:
+        /// Requires the keys/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -3817,7 +3825,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Permanently deletes the specified key. aka purges the key.
+        /// Permanently deletes the specified key. aka purges the key. Authorization:
+        /// Requires the keys/purge permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -3982,7 +3991,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Recovers the deleted key back to its current version under /keys
+        /// Recovers the deleted key back to its current version under /keys.
+        /// Authorization: Requires the keys/recover permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -4168,7 +4178,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Sets a secret in a specified key vault.
+        /// Sets a secret in a specified key vault. Authorization: requires the
+        /// secrets/set permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -4392,7 +4403,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Deletes a secret from a specified key vault.
+        /// Deletes a secret from a specified key vault. Authorization: requires the
+        /// secrets/delete permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -4579,7 +4591,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Updates the attributes associated with a specified secret in a given key
-        /// vault.
+        /// vault.  Authorization: requires the secrets/set permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -4797,7 +4809,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Get a specified secret from a given key vault.
+        /// Get a specified secret from a given key vault. Authorization: requires the
+        /// secrets/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -4992,7 +5005,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List secrets in a specified key vault
+        /// List secrets in a specified key vault.  Authorization: requires the
+        /// secrets/list permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -5186,7 +5200,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List the versions of the specified secret.
+        /// List the versions of the specified secret. Authorization: requires the
+        /// secrets/list permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -5389,7 +5404,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List deleted secrets in the specified vault
+        /// List deleted secrets in the specified vault. Authorization: requires the
+        /// secrets/list permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -5583,7 +5599,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Retrieves the deleted secret information plus its attributes
+        /// Retrieves the deleted secret information plus its attributes.
+        /// Authorization: requires the secrets/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -5770,6 +5787,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Permanently deletes the specified secret. aka purges the secret.
+        /// Authorization: requires the secrets/purge permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -5934,7 +5952,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Recovers the deleted secret back to its current version under /secrets
+        /// Recovers the deleted secret back to its current version under /secrets.
+        /// Authorization: requires the secrets/recover permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -6121,6 +6140,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Requests that a backup of the specified secret be downloaded to the client.
+        /// Authorization: requires the secrets/backup permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -6306,7 +6326,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Restores a backed up secret to a vault.
+        /// Restores a backed up secret to a vault. Authorization: requires the
+        /// secrets/restore permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -6502,7 +6523,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List certificates in a specified key vault
+        /// List certificates in a specified key vault. Authorization: requires the
+        /// certificates/list permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -6696,7 +6718,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Deletes a certificate from a specified key vault.
+        /// Deletes a certificate from a specified key vault. Authorization: requires
+        /// the certificates/delete permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -6725,7 +6748,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CertificateBundle>> DeleteCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeletedCertificateBundle>> DeleteCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultBaseUrl == null)
             {
@@ -6849,7 +6872,7 @@ namespace Microsoft.Azure.KeyVault
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<CertificateBundle>();
+            var _result = new AzureOperationResponse<DeletedCertificateBundle>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6862,7 +6885,7 @@ namespace Microsoft.Azure.KeyVault
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<CertificateBundle>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<DeletedCertificateBundle>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -6882,7 +6905,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Sets the certificate contacts for the specified key vault.
+        /// Sets the certificate contacts for the specified key vault. Authorization:
+        /// requires the certificates/managecontacts permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -7073,7 +7097,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Lists the certificate contacts for a specified key vault.
+        /// Lists the certificate contacts for a specified key vault. Authorization:
+        /// requires the certificates/managecontacts permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -7250,7 +7275,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Deletes the certificate contacts for a specified key vault.
+        /// Deletes the certificate contacts for a specified key vault certificate.
+        /// Authorization: requires the certificates/managecontacts permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -7427,7 +7453,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List certificate issuers for a specified key vault.
+        /// List certificate issuers for a specified key vault. Authorization: requires
+        /// the certificates/listIssuers permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -7621,7 +7648,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Sets the specified certificate issuer.
+        /// Sets the specified certificate issuer. Authorization: requires the
+        /// certificates/setIssuers permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -7838,7 +7866,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Updates the specified certificate issuer.
+        /// Updates the specified certificate issuer. Authorization: requires the
+        /// certificates/setIssuers permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -8051,7 +8080,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Lists the specified certificate issuer.
+        /// Lists the specified certificate issuer. Authorization: requires the
+        /// certificates/getIssuers permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -8237,7 +8267,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Deletes the specified certificate issuer.
+        /// Deletes the specified certificate issuer. Authorization: requires the
+        /// certificates/deleteIssuers permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -8424,7 +8455,8 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Creates a new certificate. If this is the first version, the certificate
-        /// resource is created.
+        /// resource is created. Authorization: requires the certificates/create
+        /// permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -8644,7 +8676,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Imports a certificate into a specified key vault.
+        /// Imports a certificate into a specified key vault. Authorization: requires
+        /// the certificates/import permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -8878,7 +8911,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List the versions of a certificate.
+        /// List the versions of a certificate. Authorization: requires the
+        /// certificates/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -9081,7 +9115,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Lists the policy for a certificate.
+        /// Lists the policy for a certificate. Authorization: requires the
+        /// certificates/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -9268,7 +9303,8 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Updates the policy for a certificate. Set specified members in the
-        /// certificate policy. Leave others as null.
+        /// certificate policy. Leave others as null. Authorization: requires the
+        /// certificates/update permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -9469,6 +9505,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Updates the specified attributes associated with the given certificate.
+        /// Authorization: requires the certificates/update permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -9690,7 +9727,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Gets information about a specified certificate.
+        /// Gets information about a specified certificate. Authorization: requires the
+        /// certificates/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -9885,7 +9923,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Updates a certificate operation.
+        /// Updates a certificate operation. Authorization: requires the
+        /// certificates/update permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -10083,7 +10122,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Gets the operation associated with a specified certificate.
+        /// Gets the operation associated with a specified certificate. Authorization:
+        /// requires the certificates/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -10269,7 +10309,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Deletes the operation for a specified certificate.
+        /// Deletes the operation for a specified certificate. Authorization: requires
+        /// the certificates/update permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -10456,7 +10497,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Merges a certificate or a certificate chain with a key pair existing on the
-        /// server.
+        /// server. Authorization: requires the certificates/update permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -10645,6 +10686,741 @@ namespace Microsoft.Azure.KeyVault
             }
             // Deserialize Response
             if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<CertificateBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// List deleted certificates in the specified vault. Authorization: requires
+        /// the certificates/list permission.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='maxresults'>
+        /// Maximum number of results to return in a page. If not specified the service
+        /// will return up to 25 results.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<DeletedCertificateItem>>> GetDeletedCertificatesWithHttpMessagesAsync(string vaultBaseUrl, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (maxresults > 25)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "maxresults", 25);
+            }
+            if (maxresults < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "maxresults", 1);
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("maxresults", maxresults);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetDeletedCertificates", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "deletedcertificates";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            List<string> _queryParameters = new List<string>();
+            if (maxresults != null)
+            {
+                _queryParameters.Add(string.Format("maxresults={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(maxresults, SerializationSettings).Trim('"'))));
+            }
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<DeletedCertificateItem>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<DeletedCertificateItem>>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves the deleted certificate information plus its attributes.
+        /// Authorization: requires the certificates/get permission.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<DeletedCertificateBundle>> GetDeletedCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (certificateName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("certificateName", certificateName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetDeletedCertificate", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "deletedcertificates/{certificate-name}";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{certificate-name}", System.Uri.EscapeDataString(certificateName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<DeletedCertificateBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<DeletedCertificateBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Permanently deletes the specified certificate. aka purges the certificate.
+        /// Authorization: requires the certificates/purge permission.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> PurgeDeletedCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (certificateName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("certificateName", certificateName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "PurgeDeletedCertificate", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "deletedcertificates/{certificate-name}";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{certificate-name}", System.Uri.EscapeDataString(certificateName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 204)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Recovers the deleted certificate back to its current version under
+        /// /certificates. Authorization: requires the certificates/recover permission.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the deleted certificate
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<CertificateBundle>> RecoverDeletedCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (certificateName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("certificateName", certificateName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "RecoverDeletedCertificate", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "deletedcertificates/{certificate-name}/recover";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{certificate-name}", System.Uri.EscapeDataString(certificateName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<CertificateBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -11007,7 +11783,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List deleted keys in the specified vault
+        /// List deleted keys in the specified vault. Authorization: Requires the
+        /// keys/list permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -11175,7 +11952,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List secrets in a specified key vault
+        /// List secrets in a specified key vault.  Authorization: requires the
+        /// secrets/list permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -11343,7 +12121,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List the versions of the specified secret.
+        /// List the versions of the specified secret. Authorization: requires the
+        /// secrets/list permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -11511,7 +12290,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List deleted secrets in the specified vault
+        /// List deleted secrets in the specified vault. Authorization: requires the
+        /// secrets/list permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -11679,7 +12459,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List certificates in a specified key vault
+        /// List certificates in a specified key vault. Authorization: requires the
+        /// certificates/list permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -11847,7 +12628,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List certificate issuers for a specified key vault.
+        /// List certificate issuers for a specified key vault. Authorization: requires
+        /// the certificates/listIssuers permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -12015,7 +12797,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List the versions of a certificate.
+        /// List the versions of a certificate. Authorization: requires the
+        /// certificates/get permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -12164,6 +12947,175 @@ namespace Microsoft.Azure.KeyVault
                 try
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<Page<CertificateItem>>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// List deleted certificates in the specified vault. Authorization: requires
+        /// the certificates/list permission.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<DeletedCertificateItem>>> GetDeletedCertificatesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (nextPageLink == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetDeletedCertificatesNext", tracingParameters);
+            }
+            // Construct URL
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<DeletedCertificateItem>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<DeletedCertificateItem>>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

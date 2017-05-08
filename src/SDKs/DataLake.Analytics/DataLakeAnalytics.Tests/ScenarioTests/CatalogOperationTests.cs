@@ -55,6 +55,16 @@ namespace DataLakeAnalytics.Tests
                     // look for the table we created
                     Assert.True(tableListResponse.Any(table => table.Name.Equals(commonData.TableName)));
 
+                    // get the table list in just the db
+                    tableListResponse = clientToUse.Catalog.ListTablesByDatabase(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName);
+
+                    Assert.True(tableListResponse.Count() >= 1);
+                    
+                    // look for the table we created
+                    Assert.True(tableListResponse.Any(table => table.Name.Equals(commonData.TableName)));
+
                     // Get the specific table as well
                     var tableGetResponse = clientToUse.Catalog.GetTable(
                         commonData.SecondDataLakeAnalyticsAccountName,
@@ -72,6 +82,16 @@ namespace DataLakeAnalytics.Tests
                     // look for the tvf we created
                     Assert.True(tvfListResponse.Any(tvf => tvf.Name.Equals(commonData.TvfName)));
 
+                    // get tvf list in the database
+                    tvfListResponse = clientToUse.Catalog.ListTableValuedFunctionsByDatabase(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName);
+                    
+                    Assert.True(tvfListResponse.Count() >= 1);
+
+                    // look for the tvf we created
+                    Assert.True(tvfListResponse.Any(tvf => tvf.Name.Equals(commonData.TvfName)));
+
                     // Get the specific TVF as well
                     var tvfGetResponse = clientToUse.Catalog.GetTableValuedFunction(
                         commonData.SecondDataLakeAnalyticsAccountName,
@@ -83,6 +103,16 @@ namespace DataLakeAnalytics.Tests
                     var viewListResponse = clientToUse.Catalog.ListViews(
                         commonData.SecondDataLakeAnalyticsAccountName,
                         commonData.DatabaseName, CommonTestFixture.SchemaName);
+
+                    Assert.True(viewListResponse.Count() >= 1);
+
+                    // look for the view we created
+                    Assert.True(viewListResponse.Any(view => view.Name.Equals(commonData.ViewName)));
+
+                    // get the view list from just the database
+                    viewListResponse = clientToUse.Catalog.ListViewsByDatabase(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName);
 
                     Assert.True(viewListResponse.Count() >= 1);
 

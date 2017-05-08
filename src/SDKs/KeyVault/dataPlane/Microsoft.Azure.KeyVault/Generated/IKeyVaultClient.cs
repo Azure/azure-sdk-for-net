@@ -259,7 +259,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Requests that a backup of the specified key be downloaded to the
-        /// client.
+        /// client. Authorization: Requires the keys/backup permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -276,7 +276,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<BackupKeyResult>> BackupKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Restores a backed up key to a vault.
+        /// Restores a backed up key to a vault. Authorization: Requires the
+        /// keys/restore permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -294,7 +295,8 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Encrypts an arbitrary sequence of bytes using an encryption key
-        /// that is stored in a key vault.
+        /// that is stored in a key vault. Authorization: requires the
+        /// keys/encrypt permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -320,7 +322,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<KeyOperationResult>> EncryptWithHttpMessagesAsync(string vaultBaseUrl, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Decrypts a single block of encrypted data.
+        /// Decrypts a single block of encrypted data, using the specified key.
+        /// Authorization: requires the keys/decrypt permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -347,6 +350,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Creates a signature from a digest using the specified key.
+        /// Authorization: Requires the keys/sign permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -374,7 +378,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<KeyOperationResult>> SignWithHttpMessagesAsync(string vaultBaseUrl, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Verifies a signature using a specified key.
+        /// Verifies a signature using a specified key. Authorization: Requires
+        /// the keys/verify permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -406,7 +411,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<KeyVerifyResult>> VerifyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, string keyVersion, string algorithm, byte[] digest, byte[] signature, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Wraps a symmetric key using a specified key.
+        /// Wraps a symmetric key using a specified key. Authorization:
+        /// Requires the keys/wrapKey permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -433,7 +439,8 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Unwraps a symmetric key using the specified key that was initially
-        /// used for wrapping that key.
+        /// used for wrapping that key. Authorization: Requires the
+        /// keys/unwrapKey permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -459,7 +466,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<KeyOperationResult>> UnwrapKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, string keyVersion, string algorithm, byte[] value, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List deleted keys in the specified vault
+        /// List deleted keys in the specified vault. Authorization: Requires
+        /// the keys/list permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -477,7 +485,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<DeletedKeyItem>>> GetDeletedKeysWithHttpMessagesAsync(string vaultBaseUrl, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Retrieves the deleted key information plus its attributes
+        /// Retrieves the deleted key information plus its attributes.
+        /// Authorization: Requires the keys/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -495,6 +504,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Permanently deletes the specified key. aka purges the key.
+        /// Authorization: Requires the keys/purge permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -511,7 +521,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse> PurgeDeletedKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Recovers the deleted key back to its current version under /keys
+        /// Recovers the deleted key back to its current version under /keys.
+        /// Authorization: Requires the keys/recover permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -528,7 +539,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<KeyBundle>> RecoverDeletedKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Sets a secret in a specified key vault.
+        /// Sets a secret in a specified key vault. Authorization: requires the
+        /// secrets/set permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -557,7 +569,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<SecretBundle>> SetSecretWithHttpMessagesAsync(string vaultBaseUrl, string secretName, string value, IDictionary<string, string> tags = default(IDictionary<string, string>), string contentType = default(string), SecretAttributes secretAttributes = default(SecretAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Deletes a secret from a specified key vault.
+        /// Deletes a secret from a specified key vault. Authorization:
+        /// requires the secrets/delete permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -575,7 +588,8 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Updates the attributes associated with a specified secret in a
-        /// given key vault.
+        /// given key vault.  Authorization: requires the secrets/set
+        /// permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -604,7 +618,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<SecretBundle>> UpdateSecretWithHttpMessagesAsync(string vaultBaseUrl, string secretName, string secretVersion, string contentType = default(string), SecretAttributes secretAttributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Get a specified secret from a given key vault.
+        /// Get a specified secret from a given key vault. Authorization:
+        /// requires the secrets/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -624,7 +639,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<SecretBundle>> GetSecretWithHttpMessagesAsync(string vaultBaseUrl, string secretName, string secretVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List secrets in a specified key vault
+        /// List secrets in a specified key vault.  Authorization: requires the
+        /// secrets/list permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -642,7 +658,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<SecretItem>>> GetSecretsWithHttpMessagesAsync(string vaultBaseUrl, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List the versions of the specified secret.
+        /// List the versions of the specified secret. Authorization: requires
+        /// the secrets/list permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -663,7 +680,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<SecretItem>>> GetSecretVersionsWithHttpMessagesAsync(string vaultBaseUrl, string secretName, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List deleted secrets in the specified vault
+        /// List deleted secrets in the specified vault. Authorization:
+        /// requires the secrets/list permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -681,7 +699,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<DeletedSecretItem>>> GetDeletedSecretsWithHttpMessagesAsync(string vaultBaseUrl, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Retrieves the deleted secret information plus its attributes
+        /// Retrieves the deleted secret information plus its attributes.
+        /// Authorization: requires the secrets/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -699,6 +718,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Permanently deletes the specified secret. aka purges the secret.
+        /// Authorization: requires the secrets/purge permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -716,7 +736,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Recovers the deleted secret back to its current version under
-        /// /secrets
+        /// /secrets. Authorization: requires the secrets/recover permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -734,7 +754,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Requests that a backup of the specified secret be downloaded to the
-        /// client.
+        /// client. Authorization: requires the secrets/backup permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -751,7 +771,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<BackupSecretResult>> BackupSecretWithHttpMessagesAsync(string vaultBaseUrl, string secretName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Restores a backed up secret to a vault.
+        /// Restores a backed up secret to a vault. Authorization: requires the
+        /// secrets/restore permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -768,7 +789,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<SecretBundle>> RestoreSecretWithHttpMessagesAsync(string vaultBaseUrl, byte[] secretBundleBackup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List certificates in a specified key vault
+        /// List certificates in a specified key vault. Authorization: requires
+        /// the certificates/list permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -786,7 +808,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<CertificateItem>>> GetCertificatesWithHttpMessagesAsync(string vaultBaseUrl, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Deletes a certificate from a specified key vault.
+        /// Deletes a certificate from a specified key vault. Authorization:
+        /// requires the certificates/delete permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -800,10 +823,11 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CertificateBundle>> DeleteCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DeletedCertificateBundle>> DeleteCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Sets the certificate contacts for the specified key vault.
+        /// Authorization: requires the certificates/managecontacts permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -821,6 +845,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Lists the certificate contacts for a specified key vault.
+        /// Authorization: requires the certificates/managecontacts permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -834,7 +859,9 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<Contacts>> GetCertificateContactsWithHttpMessagesAsync(string vaultBaseUrl, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Deletes the certificate contacts for a specified key vault.
+        /// Deletes the certificate contacts for a specified key vault
+        /// certificate. Authorization: requires the
+        /// certificates/managecontacts permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -848,7 +875,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<Contacts>> DeleteCertificateContactsWithHttpMessagesAsync(string vaultBaseUrl, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List certificate issuers for a specified key vault.
+        /// List certificate issuers for a specified key vault. Authorization:
+        /// requires the certificates/listIssuers permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -866,7 +894,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<CertificateIssuerItem>>> GetCertificateIssuersWithHttpMessagesAsync(string vaultBaseUrl, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Sets the specified certificate issuer.
+        /// Sets the specified certificate issuer. Authorization: requires the
+        /// certificates/setIssuers permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -895,7 +924,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IssuerBundle>> SetCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Updates the specified certificate issuer.
+        /// Updates the specified certificate issuer. Authorization: requires
+        /// the certificates/setIssuers permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -924,7 +954,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IssuerBundle>> UpdateCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, string provider = default(string), IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Lists the specified certificate issuer.
+        /// Lists the specified certificate issuer. Authorization: requires the
+        /// certificates/getIssuers permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -941,7 +972,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IssuerBundle>> GetCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Deletes the specified certificate issuer.
+        /// Deletes the specified certificate issuer. Authorization: requires
+        /// the certificates/deleteIssuers permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -959,7 +991,8 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Creates a new certificate. If this is the first version, the
-        /// certificate resource is created.
+        /// certificate resource is created. Authorization: requires the
+        /// certificates/create permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -985,7 +1018,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<CertificateOperation>> CreateCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Imports a certificate into a specified key vault.
+        /// Imports a certificate into a specified key vault. Authorization:
+        /// requires the certificates/import permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1019,7 +1053,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<CertificateBundle>> ImportCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, string base64EncodedCertificate, string password = default(string), CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List the versions of a certificate.
+        /// List the versions of a certificate. Authorization: requires the
+        /// certificates/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1040,7 +1075,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<CertificateItem>>> GetCertificateVersionsWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Lists the policy for a certificate.
+        /// Lists the policy for a certificate. Authorization: requires the
+        /// certificates/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1058,7 +1094,8 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Updates the policy for a certificate. Set specified members in the
-        /// certificate policy. Leave others as null.
+        /// certificate policy. Leave others as null. Authorization: requires
+        /// the certificates/update permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1079,7 +1116,8 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Updates the specified attributes associated with the given
-        /// certificate.
+        /// certificate. Authorization: requires the certificates/update
+        /// permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1108,7 +1146,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<CertificateBundle>> UpdateCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, string certificateVersion, CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Gets information about a specified certificate.
+        /// Gets information about a specified certificate. Authorization:
+        /// requires the certificates/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1128,7 +1167,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<CertificateBundle>> GetCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, string certificateVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Updates a certificate operation.
+        /// Updates a certificate operation. Authorization: requires the
+        /// certificates/update permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1150,6 +1190,7 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Gets the operation associated with a specified certificate.
+        /// Authorization: requires the certificates/get permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1166,7 +1207,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<CertificateOperation>> GetCertificateOperationWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Deletes the operation for a specified certificate.
+        /// Deletes the operation for a specified certificate. Authorization:
+        /// requires the certificates/update permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1184,7 +1226,8 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Merges a certificate or a certificate chain with a key pair
-        /// existing on the server.
+        /// existing on the server. Authorization: requires the
+        /// certificates/update permission.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
@@ -1208,6 +1251,81 @@ namespace Microsoft.Azure.KeyVault
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<CertificateBundle>> MergeCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, IList<byte[]> x509Certificates, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List deleted certificates in the specified vault. Authorization:
+        /// requires the certificates/list permission.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='maxresults'>
+        /// Maximum number of results to return in a page. If not specified the
+        /// service will return up to 25 results.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<DeletedCertificateItem>>> GetDeletedCertificatesWithHttpMessagesAsync(string vaultBaseUrl, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Retrieves the deleted certificate information plus its attributes.
+        /// Authorization: requires the certificates/get permission.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<DeletedCertificateBundle>> GetDeletedCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Permanently deletes the specified certificate. aka purges the
+        /// certificate. Authorization: requires the certificates/purge
+        /// permission.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> PurgeDeletedCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Recovers the deleted certificate back to its current version under
+        /// /certificates. Authorization: requires the certificates/recover
+        /// permission.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the deleted certificate
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateBundle>> RecoverDeletedCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Retrieves a list of individual key versions with the same key name.
@@ -1240,7 +1358,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<KeyItem>>> GetKeysNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List deleted keys in the specified vault
+        /// List deleted keys in the specified vault. Authorization: Requires
+        /// the keys/list permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1254,7 +1373,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<DeletedKeyItem>>> GetDeletedKeysNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List secrets in a specified key vault
+        /// List secrets in a specified key vault.  Authorization: requires the
+        /// secrets/list permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1268,7 +1388,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<SecretItem>>> GetSecretsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List the versions of the specified secret.
+        /// List the versions of the specified secret. Authorization: requires
+        /// the secrets/list permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1282,7 +1403,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<SecretItem>>> GetSecretVersionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List deleted secrets in the specified vault
+        /// List deleted secrets in the specified vault. Authorization:
+        /// requires the secrets/list permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1296,7 +1418,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<DeletedSecretItem>>> GetDeletedSecretsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List certificates in a specified key vault
+        /// List certificates in a specified key vault. Authorization: requires
+        /// the certificates/list permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1310,7 +1433,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<CertificateItem>>> GetCertificatesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List certificate issuers for a specified key vault.
+        /// List certificate issuers for a specified key vault. Authorization:
+        /// requires the certificates/listIssuers permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1324,7 +1448,8 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<IPage<CertificateIssuerItem>>> GetCertificateIssuersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// List the versions of a certificate.
+        /// List the versions of a certificate. Authorization: requires the
+        /// certificates/get permission.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1336,6 +1461,21 @@ namespace Microsoft.Azure.KeyVault
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<CertificateItem>>> GetCertificateVersionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List deleted certificates in the specified vault. Authorization:
+        /// requires the certificates/list permission.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<DeletedCertificateItem>>> GetDeletedCertificatesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

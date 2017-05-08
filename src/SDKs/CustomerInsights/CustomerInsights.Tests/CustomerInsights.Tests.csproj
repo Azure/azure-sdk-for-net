@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Management.CustomerInsights\Microsoft.Azure.Management.CustomerInsights.csproj" />
-    <!--<PackageReference Include="Microsoft.Azure.Management.CustomerInsights" Version="0.1.0-preview" />-->
   </ItemGroup>
 
   <ItemGroup>
