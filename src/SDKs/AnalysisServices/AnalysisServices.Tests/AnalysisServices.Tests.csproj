@@ -26,6 +26,9 @@
     <None Update="SessionRecords\AnalysisServices.Tests.ScenarioTests.ServerOperationsTests\CreateGetUpdateDeleteTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="SessionRecords\AnalysisServices.Tests.ScenarioTests.ServerOperationsTests\ScaleUpTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   
   <!--
