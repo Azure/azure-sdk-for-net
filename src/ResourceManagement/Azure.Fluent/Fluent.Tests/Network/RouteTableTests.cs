@@ -23,6 +23,7 @@ namespace Fluent.Tests.Network
                 string testId = SdkContext.RandomResourceName("", 9);
                 string resourceGroupName = "rg" + testId;
                 string routeTableName = "rt" + testId;
+                string networkName = "net" + testId;
                 Region region = Region.USEast;
                 string[] routeNames = new string[] { "route1", "route2", "route3" };
 
@@ -59,6 +60,22 @@ namespace Fluent.Tests.Network
                 Assert.Equal("10.0.1.0/24", route.DestinationAddressPrefix);
                 Assert.Equal(RouteNextHopType.VirtualAppliance, route.NextHopType);
                 Assert.Equal("10.1.0.5", route.NextHopIPAddress);
+
+                // Create a subnet that references the route table
+                manager.Networks.Define(networkName)
+                    .WithRegion(region)
+                    .WithExistingResourceGroup(resourceGroupName)
+                    .WithAddressSpace("10.0.0.0/22")
+                    .DefineSubnet("subnet1")
+                        .WithAddressPrefix("10.0.0.0/22")
+                        .WithExistingRouteTable(resource)
+                        .Attach()
+                    .Create();
+
+                var subnets = resource.Refresh().ListAssociatedSubnets();
+                Assert.Equal(1, subnets.Count);
+                Assert.Equal(resource.Id, subnets[0].RouteTableId);
+
                 #endregion
 
                 #region Read
@@ -102,7 +119,6 @@ namespace Fluent.Tests.Network
                 #endregion
 
                 #region Delete
-                manager.RouteTables.DeleteById(resource.Id);
                 manager.ResourceManager.ResourceGroups.DeleteByName(resource.ResourceGroupName);
                 #endregion
             }
