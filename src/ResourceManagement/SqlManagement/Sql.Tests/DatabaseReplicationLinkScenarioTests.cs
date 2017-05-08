@@ -36,7 +36,7 @@ namespace Sql.Tests
                     Tags = tags,
                     Location = SqlManagementTestUtilities.DefaultLocation,
                 });
-                SqlManagementTestUtilities.ValidateServer(v12Server, serverName, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(v12Server, serverName, login, version12, tags, SqlManagementTestUtilities.DefaultNormalizedLocation);
 
                 var dbInput = new Microsoft.Azure.Management.Sql.Models.Database()
                 {
@@ -54,7 +54,7 @@ namespace Sql.Tests
                     Tags = tags,
                     Location = SqlManagementTestUtilities.DefaultLocation,
                 });
-                SqlManagementTestUtilities.ValidateServer(v12Server2, serverName2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(v12Server2, serverName2, login, version12, tags, SqlManagementTestUtilities.DefaultNormalizedLocation);
 
                 // Create another database as an online secondary of the first database
                 var dbInput2 = new Microsoft.Azure.Management.Sql.Models.Database()
@@ -99,7 +99,7 @@ namespace Sql.Tests
                     Tags = tags,
                     Location = SqlManagementTestUtilities.DefaultLocation,
                 });
-                SqlManagementTestUtilities.ValidateServer(v12Server, serverName, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(v12Server, serverName, login, version12, tags, SqlManagementTestUtilities.DefaultNormalizedLocation);
 
                 var dbInput = new Microsoft.Azure.Management.Sql.Models.Database()
                 {
@@ -117,7 +117,7 @@ namespace Sql.Tests
                     Tags = tags,
                     Location = SqlManagementTestUtilities.DefaultLocation,
                 });
-                SqlManagementTestUtilities.ValidateServer(v12Server2, serverName2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(v12Server2, serverName2, login, version12, tags, SqlManagementTestUtilities.DefaultNormalizedLocation);
 
                 // Create another database as an online secondary of the first database
                 var dbInput2 = new Microsoft.Azure.Management.Sql.Models.Database()

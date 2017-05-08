@@ -32,7 +32,7 @@ namespace Sql.Tests
                 names.Add(epName);
                 sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, new ElasticPool()
                 { 
-                    Location = server.Location
+                    Location = SqlManagementTestUtilities.DefaultLocation
                 });
 
                 // Create a elasticPool with Tags and Basic Edition specified
@@ -41,7 +41,7 @@ namespace Sql.Tests
                 names.Add(epName);
                 var ep2Input = new ElasticPool()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     Edition = SqlTestConstants.DefaultElasticPoolEdition,
                     Tags = tags,                    
                 };
@@ -52,7 +52,7 @@ namespace Sql.Tests
                 names.Add(epName);
                 var ep3Input = new ElasticPool()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     Edition = DatabaseEdition.Standard,
                     Tags = tags,
                 };
@@ -82,7 +82,7 @@ namespace Sql.Tests
                 string epName = SqlManagementTestUtilities.GenerateName();
                 var epInput = new ElasticPool()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     Edition = DatabaseEdition.Standard,
                     Tags = tags,
                     Dtu = 100,
@@ -100,7 +100,7 @@ namespace Sql.Tests
                 // 
                 ElasticPool epInput2 = new ElasticPool()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     Dtu = 200
                 };
                 returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput2);
@@ -115,7 +115,7 @@ namespace Sql.Tests
                 // 
                 ElasticPool epInput3 = new ElasticPool()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     DatabaseDtuMax = 100
                 };
                 returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput3);
@@ -130,7 +130,7 @@ namespace Sql.Tests
                 // 
                 ElasticPool epInput4 = new ElasticPool()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     DatabaseDtuMin = 10
                 };
                 returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput4);
@@ -158,7 +158,7 @@ namespace Sql.Tests
                     string name = SqlManagementTestUtilities.GenerateName(testPrefix);
                     inputs.Add(name, new ElasticPool()
                     {
-                        Location = server.Location,
+                        Location = SqlManagementTestUtilities.DefaultLocation,
                         Edition = SqlTestConstants.DefaultElasticPoolEdition
                     });
                     sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, name, inputs[name]);

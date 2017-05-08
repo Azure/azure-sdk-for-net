@@ -30,7 +30,7 @@ namespace Sql.Tests
                 string epName = SqlManagementTestUtilities.GenerateName();
                 var epInput = new ElasticPool()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     Edition = SqlTestConstants.DefaultElasticPoolEdition,
                     Tags = tags,
                     Dtu = 100,
@@ -44,7 +44,7 @@ namespace Sql.Tests
                 string dbName = SqlManagementTestUtilities.GenerateName();
                 var dbInput = new Database()
                 {
-                    Location = server.Location
+                    Location = SqlManagementTestUtilities.DefaultLocation
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 
@@ -52,7 +52,7 @@ namespace Sql.Tests
                 // This is because we moved existing DB to elastic pool instead of creating in Elastic Pool
                 dbInput = new Database()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     ElasticPoolName = epName
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
@@ -83,7 +83,7 @@ namespace Sql.Tests
                 string epName = SqlManagementTestUtilities.GenerateName();
                 var epInput = new ElasticPool()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     Edition = SqlTestConstants.DefaultElasticPoolEdition,
                     Tags = tags,
                     Dtu = 100,
@@ -118,7 +118,7 @@ namespace Sql.Tests
                 string epName = SqlManagementTestUtilities.GenerateName();
                 var epInput = new ElasticPool()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     Edition = SqlTestConstants.DefaultElasticPoolEdition,
                     Tags = tags,
                     Dtu = 100,
@@ -131,7 +131,7 @@ namespace Sql.Tests
                 string epName2 = SqlManagementTestUtilities.GenerateName();
                 epInput = new ElasticPool()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     Edition = SqlTestConstants.DefaultElasticPoolEdition,
                     Tags = tags,
                     Dtu = 100,
@@ -145,7 +145,7 @@ namespace Sql.Tests
                 string dbName = SqlManagementTestUtilities.GenerateName();
                 var dbInput = new Database()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     ElasticPoolName = epName
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
@@ -158,7 +158,7 @@ namespace Sql.Tests
                 // Move database to second elastic pool
                 dbInput = new Database()
                 {
-                    Location = server.Location,
+                    Location = SqlManagementTestUtilities.DefaultLocation,
                     ElasticPoolName = epName2
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);

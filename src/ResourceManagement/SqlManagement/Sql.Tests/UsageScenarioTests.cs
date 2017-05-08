@@ -28,7 +28,7 @@ namespace Sql.Tests
                 string dbName = SqlManagementTestUtilities.GenerateName();
                 var dbInput = new Database()
                 {
-                    Location = server.Location
+                    Location = SqlManagementTestUtilities.DefaultLocation
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
                 IEnumerable<DatabaseMetric> databaseMetrics = sqlClient.Databases.ListUsages(resourceGroup.Name, server.Name, dbName);

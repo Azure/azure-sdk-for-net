@@ -56,14 +56,14 @@ namespace Sql.Tests
                 // Create 1 or 2 databases
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
                 {
-                    Location = server.Location
+                    Location = SqlManagementTestUtilities.DefaultLocation
                 });
 
                 if (preexistingDatabase)
                 {
                     sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName2, new Database()
                     {
-                        Location = server.Location
+                        Location = SqlManagementTestUtilities.DefaultLocation
                     });
 
                     // Verify existence of new database

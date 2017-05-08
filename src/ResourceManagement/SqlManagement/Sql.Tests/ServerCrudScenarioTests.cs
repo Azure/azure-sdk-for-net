@@ -41,7 +41,7 @@ namespace Sql.Tests
                     Tags = tags,
                     Location = SqlManagementTestUtilities.DefaultLocation,
                 });
-                SqlManagementTestUtilities.ValidateServer(v12Server, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(v12Server, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultNormalizedLocation);
 
                 // We ignore the request for v2.0 and create v12.0 anyway unless subscription is whitelisted.
                 string serverNameV2 = SqlManagementTestUtilities.GenerateName(testPrefix);
@@ -54,15 +54,15 @@ namespace Sql.Tests
                     Tags = tags,
                     Location = SqlManagementTestUtilities.DefaultLocation,
                 });
-                SqlManagementTestUtilities.ValidateServer(v2Server, serverNameV2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(v2Server, serverNameV2, login, version12, tags, SqlManagementTestUtilities.DefaultNormalizedLocation);
 
                 // Get first server
                 var getV12Server = sqlClient.Servers.Get(resourceGroup.Name, serverNameV12);
-                SqlManagementTestUtilities.ValidateServer(getV12Server, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(getV12Server, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultNormalizedLocation);
 
                 // Get second server
                 var getV2Server = sqlClient.Servers.Get(resourceGroup.Name, serverNameV2);
-                SqlManagementTestUtilities.ValidateServer(getV2Server, serverNameV2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(getV2Server, serverNameV2, login, version12, tags, SqlManagementTestUtilities.DefaultNormalizedLocation);
 
                 var listServers = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(2, listServers.Count());
