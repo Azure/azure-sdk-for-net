@@ -18,13 +18,13 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class PolicyDefinitionsOperationsExtensions
     {
             /// <summary>
-            /// Create or update a policy definition.
+            /// Creates or updates a policy definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyDefinitionName'>
-            /// The policy definition name.
+            /// The name of the policy definition to create.
             /// </param>
             /// <param name='parameters'>
             /// The policy definition properties.
@@ -35,13 +35,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create or update a policy definition.
+            /// Creates or updates a policy definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyDefinitionName'>
-            /// The policy definition name.
+            /// The name of the policy definition to create.
             /// </param>
             /// <param name='parameters'>
             /// The policy definition properties.
@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes the policy definition.
+            /// Deletes a policy definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyDefinitionName'>
-            /// The policy definition name.
+            /// The name of the policy definition to delete.
             /// </param>
             public static void Delete(this IPolicyDefinitionsOperations operations, string policyDefinitionName)
             {
@@ -72,13 +72,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes the policy definition.
+            /// Deletes a policy definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyDefinitionName'>
-            /// The policy definition name.
+            /// The name of the policy definition to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyDefinitionName'>
-            /// The policy definition name.
+            /// The name of the policy definition to get.
             /// </param>
             public static PolicyDefinition Get(this IPolicyDefinitionsOperations operations, string policyDefinitionName)
             {
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyDefinitionName'>
-            /// The policy definition name.
+            /// The name of the policy definition to get.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the policy definitions of a subscription.
+            /// Gets all the policy definitions for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the policy definitions of a subscription.
+            /// Gets all the policy definitions for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the policy definitions of a subscription.
+            /// Gets all the policy definitions for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the policy definitions of a subscription.
+            /// Gets all the policy definitions for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

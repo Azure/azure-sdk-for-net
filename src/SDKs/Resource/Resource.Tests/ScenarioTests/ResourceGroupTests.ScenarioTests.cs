@@ -55,7 +55,7 @@ namespace ResourceGroups.Tests
                 client.ResourceGroups.Delete(resourceGroupName);
                 var listGroupsResult = client.ResourceGroups.List(null);
 
-                Assert.Throws<CloudException>(() => client.ResourceGroups.ListResources(resourceGroupName));
+                Assert.Throws<CloudException>(() => client.Resources.ListByResourceGroup(resourceGroupName));
 
                 Assert.False(listGroupsResult.Any(rg => rg.Name == resourceGroupName));
             }

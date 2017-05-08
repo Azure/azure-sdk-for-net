@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Previewed feature information.
+    /// Information about feature.
     /// </summary>
     public partial class FeatureProperties
     {
@@ -23,15 +23,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the FeatureProperties class.
         /// </summary>
-        /// <param name="state">Gets or sets the state of the previewed
-        /// feature.</param>
+        /// <param name="state">The registration state of the feature for the
+        /// subscription.</param>
         public FeatureProperties(string state = default(string))
         {
             State = state;
         }
 
         /// <summary>
-        /// Gets or sets the state of the previewed feature.
+        /// Gets or sets the registration state of the feature for the
+        /// subscription.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public string State { get; set; }

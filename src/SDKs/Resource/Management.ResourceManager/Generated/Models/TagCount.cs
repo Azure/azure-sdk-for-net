@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         /// <param name="type">Type of count.</param>
         /// <param name="value">Value of count.</param>
-        public TagCount(string type = default(string), string value = default(string))
+        public TagCount(string type = default(string), int? value = default(int?))
         {
             Type = type;
             Value = value;
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets or sets value of count.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        public int? Value { get; set; }
 
     }
 }

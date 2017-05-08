@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class FeaturesOperationsExtensions
     {
             /// <summary>
-            /// Gets a list of previewed features for all the providers in the current
+            /// Gets all the preview features that are available through AFEC for the
             /// subscription.
             /// </summary>
             /// <param name='operations'>
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of previewed features for all the providers in the current
+            /// Gets all the preview features that are available through AFEC for the
             /// subscription.
             /// </summary>
             /// <param name='operations'>
@@ -48,13 +48,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of previewed features of a resource provider.
+            /// Gets all the preview features in a provider namespace that are available
+            /// through AFEC for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// The namespace of the resource provider.
+            /// The namespace of the resource provider for getting features.
             /// </param>
             public static Microsoft.Rest.Azure.IPage<FeatureResult> List(this IFeaturesOperations operations, string resourceProviderNamespace)
             {
@@ -62,13 +63,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of previewed features of a resource provider.
+            /// Gets all the preview features in a provider namespace that are available
+            /// through AFEC for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// The namespace of the resource provider.
+            /// The namespace of the resource provider for getting features.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -82,16 +84,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Get all features under the subscription.
+            /// Gets the preview feature with the specified name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
+            /// The resource provider namespace for the feature.
             /// </param>
             /// <param name='featureName'>
-            /// Previewed feature name in the resource provider.
+            /// The name of the feature to get.
             /// </param>
             public static FeatureResult Get(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
@@ -99,16 +101,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Get all features under the subscription.
+            /// Gets the preview feature with the specified name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
+            /// The resource provider namespace for the feature.
             /// </param>
             /// <param name='featureName'>
-            /// Previewed feature name in the resource provider.
+            /// The name of the feature to get.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -122,16 +124,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Registers for a previewed feature of a resource provider.
+            /// Registers the preview feature for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
+            /// The namespace of the resource provider.
             /// </param>
             /// <param name='featureName'>
-            /// Previewed feature name in the resource provider.
+            /// The name of the feature to register.
             /// </param>
             public static FeatureResult Register(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
@@ -139,16 +141,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Registers for a previewed feature of a resource provider.
+            /// Registers the preview feature for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Namespace of the resource provider.
+            /// The namespace of the resource provider.
             /// </param>
             /// <param name='featureName'>
-            /// Previewed feature name in the resource provider.
+            /// The name of the feature to register.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -162,7 +164,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of previewed features for all the providers in the current
+            /// Gets all the preview features that are available through AFEC for the
             /// subscription.
             /// </summary>
             /// <param name='operations'>
@@ -177,7 +179,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of previewed features for all the providers in the current
+            /// Gets all the preview features that are available through AFEC for the
             /// subscription.
             /// </summary>
             /// <param name='operations'>
@@ -198,7 +200,8 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of previewed features of a resource provider.
+            /// Gets all the preview features in a provider namespace that are available
+            /// through AFEC for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -212,7 +215,8 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of previewed features of a resource provider.
+            /// Gets all the preview features in a provider namespace that are available
+            /// through AFEC for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

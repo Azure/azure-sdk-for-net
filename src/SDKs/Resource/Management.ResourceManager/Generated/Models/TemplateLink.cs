@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the TemplateLink class.
         /// </summary>
-        /// <param name="uri">URI referencing the template.</param>
-        /// <param name="contentVersion">If included it must match the
+        /// <param name="uri">The URI of the template to deploy.</param>
+        /// <param name="contentVersion">If included, must match the
         /// ContentVersion in the template.</param>
         public TemplateLink(string uri, string contentVersion = default(string))
         {
@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets URI referencing the template.
+        /// Gets or sets the URI of the template to deploy.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
 
         /// <summary>
-        /// Gets or sets if included it must match the ContentVersion in the
+        /// Gets or sets if included, must match the ContentVersion in the
         /// template.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "contentVersion")]

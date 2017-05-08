@@ -1,22 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1P2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
+      "RequestUri": "/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFlMjNkNDQtNWY4NC00ZjJmLTkwOGYtZTNiZDMxOTUyNDNkP2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4df008df-c9ee-44a8-9a0e-cb043bc3048f"
+          "bca4a7b4-345d-4186-bcea-b4f0bd9bbde6"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/1.1.4-preview"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/2.0.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505\",\r\n  \"subscriptionId\": \"89ec4d1d-dcc7-4a3f-a701-0a5d074c8505\",\r\n  \"displayName\": \"Visual Studio Ultimate with MSDN\",\r\n  \"state\": \"Enabled\",\r\n  \"subscriptionPolicies\": {\r\n    \"locationPlacementId\": \"Public_2014-09-01\",\r\n    \"quotaId\": \"MSDN_2014-09-01\",\r\n    \"spendingLimit\": \"On\"\r\n  },\r\n  \"authorizationSource\": \"Legacy\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d\",\r\n  \"subscriptionId\": \"11e23d44-5f84-4f2f-908f-e3bd3195243d\",\r\n  \"displayName\": \"Visual Studio Enterprise\",\r\n  \"state\": \"Enabled\",\r\n  \"subscriptionPolicies\": {\r\n    \"locationPlacementId\": \"Public_2014-09-01\",\r\n    \"quotaId\": \"MSDN_2014-09-01\",\r\n    \"spendingLimit\": \"On\"\r\n  },\r\n  \"authorizationSource\": \"RoleBased\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 31 Aug 2016 22:13:45 GMT"
+          "Mon, 01 May 2017 20:48:18 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -40,13 +41,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "d39876d0-0e07-42ef-9128-b138f686668e"
+          "c2fba440-ff5a-4439-aaef-50230a841dc2"
         ],
         "x-ms-correlation-request-id": [
-          "d39876d0-0e07-42ef-9128-b138f686668e"
+          "c2fba440-ff5a-4439-aaef-50230a841dc2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20160831T221345Z:d39876d0-0e07-42ef-9128-b138f686668e"
+          "WESTUS2:20170501T204819Z:c2fba440-ff5a-4439-aaef-50230a841dc2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -57,6 +58,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505"
+    "SubscriptionId": "11e23d44-5f84-4f2f-908f-e3bd3195243d"
   }
 }

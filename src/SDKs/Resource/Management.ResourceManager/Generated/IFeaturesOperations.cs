@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Management.ResourceManager
     public partial interface IFeaturesOperations
     {
         /// <summary>
-        /// Gets a list of previewed features for all the providers in the
-        /// current subscription.
+        /// Gets all the preview features that are available through AFEC for
+        /// the subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -37,10 +37,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<FeatureResult>>> ListAllWithHttpMessagesAsync(System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets a list of previewed features of a resource provider.
+        /// Gets all the preview features in a provider namespace that are
+        /// available through AFEC for the subscription.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
-        /// The namespace of the resource provider.
+        /// The namespace of the resource provider for getting features.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -59,13 +60,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<FeatureResult>>> ListWithHttpMessagesAsync(string resourceProviderNamespace, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Get all features under the subscription.
+        /// Gets the preview feature with the specified name.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
-        /// Namespace of the resource provider.
+        /// The resource provider namespace for the feature.
         /// </param>
         /// <param name='featureName'>
-        /// Previewed feature name in the resource provider.
+        /// The name of the feature to get.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -84,13 +85,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<FeatureResult>> GetWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Registers for a previewed feature of a resource provider.
+        /// Registers the preview feature for the subscription.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
-        /// Namespace of the resource provider.
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='featureName'>
-        /// Previewed feature name in the resource provider.
+        /// The name of the feature to register.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -109,8 +110,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<FeatureResult>> RegisterWithHttpMessagesAsync(string resourceProviderNamespace, string featureName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets a list of previewed features for all the providers in the
-        /// current subscription.
+        /// Gets all the preview features that are available through AFEC for
+        /// the subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -132,7 +133,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<FeatureResult>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets a list of previewed features of a resource provider.
+        /// Gets all the preview features in a provider namespace that are
+        /// available through AFEC for the subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

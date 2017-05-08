@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class DeploymentOperationsExtensions
     {
             /// <summary>
-            /// Get a list of deployments operations.
+            /// Gets a deployments operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The name of the deployment.
             /// </param>
             /// <param name='operationId'>
-            /// Operation Id.
+            /// The ID of the operation to get.
             /// </param>
             public static DeploymentOperation Get(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, string operationId)
             {
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Get a list of deployments operations.
+            /// Gets a deployments operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The name of the deployment.
             /// </param>
             /// <param name='operationId'>
-            /// Operation Id.
+            /// The ID of the operation to get.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of deployments operations.
+            /// Gets all deployments operations for a deployment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -73,10 +73,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment with the operation to get.
             /// </param>
             /// <param name='top'>
-            /// Query parameters.
+            /// The number of results to return.
             /// </param>
             public static Microsoft.Rest.Azure.IPage<DeploymentOperation> List(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, int? top = default(int?))
             {
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of deployments operations.
+            /// Gets all deployments operations for a deployment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,10 +93,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='deploymentName'>
-            /// The name of the deployment.
+            /// The name of the deployment with the operation to get.
             /// </param>
             /// <param name='top'>
-            /// Query parameters.
+            /// The number of results to return.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of deployments operations.
+            /// Gets all deployments operations for a deployment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of deployments operations.
+            /// Gets all deployments operations for a deployment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

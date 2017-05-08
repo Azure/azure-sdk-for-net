@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Management.ResourceManager
     public partial interface IPolicyDefinitionsOperations
     {
         /// <summary>
-        /// Create or update a policy definition.
+        /// Creates or updates a policy definition.
         /// </summary>
         /// <param name='policyDefinitionName'>
-        /// The policy definition name.
+        /// The name of the policy definition to create.
         /// </param>
         /// <param name='parameters'>
         /// The policy definition properties.
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<PolicyDefinition>> CreateOrUpdateWithHttpMessagesAsync(string policyDefinitionName, PolicyDefinition parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Deletes the policy definition.
+        /// Deletes a policy definition.
         /// </summary>
         /// <param name='policyDefinitionName'>
-        /// The policy definition name.
+        /// The name of the policy definition to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets the policy definition.
         /// </summary>
         /// <param name='policyDefinitionName'>
-        /// The policy definition name.
+        /// The name of the policy definition to get.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<PolicyDefinition>> GetWithHttpMessagesAsync(string policyDefinitionName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets all the policy definitions of a subscription.
+        /// Gets all the policy definitions for a subscription.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<PolicyDefinition>>> ListWithHttpMessagesAsync(Microsoft.Rest.Azure.OData.ODataQuery<PolicyDefinition> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<PolicyDefinition>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Gets all the policy definitions of a subscription.
+        /// Gets all the policy definitions for a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

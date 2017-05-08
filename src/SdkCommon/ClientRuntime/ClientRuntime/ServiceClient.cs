@@ -10,6 +10,7 @@ namespace Microsoft.Rest
     using System.Net.Http.Headers;
     using System.Reflection;
     using Microsoft.Rest.TransientFaultHandling;
+    using System.Text.RegularExpressions;
 #if FullNetFx
     using Microsoft.Win32;
 #endif
@@ -71,12 +72,7 @@ namespace Microsoft.Rest
                 if(string.IsNullOrEmpty(_osName))
                 {
                     _osName = ReadHKLMRegistry(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
-                }
-
-                // If you want to log OsName in userAgent, it has to be without spaces
-                if (!string.IsNullOrEmpty(_osName))
-                {
-                    _osName = _osName.Replace(" ", "_");
+                    _osName = CleanUserAgentInfoEntry(_osName);
                 }
 
                 return _osName;
@@ -96,6 +92,7 @@ namespace Microsoft.Rest
                     string osMajorMinorVersion = ReadHKLMRegistry(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentVersion");
                     string osBuildNumber = ReadHKLMRegistry(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild");
                     _osVersion = string.Format("{0}.{1}", osMajorMinorVersion, osBuildNumber);
+                    _osVersion = CleanUserAgentInfoEntry(_osVersion);
                 }
 
                 return _osVersion;
@@ -463,12 +460,26 @@ namespace Microsoft.Rest
             if (!_disposed && HttpClient != null)
             {
                 MergeUserAgentInfo(DefaultUserAgentInfoList);
-                HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productName, version));
+                string cleanedProductName = CleanUserAgentInfoEntry(productName);                
+                HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(cleanedProductName, version));
                 return true;
             }
 
             // Returns false if the HttpClient was disposed before invoking the method
             return false;
+        }
+
+        /// <summary>
+        /// Cleaning unsupported characters from user agent strings
+        /// </summary>
+        /// <param name="infoEntry"></param>
+        /// <returns></returns>
+        private string CleanUserAgentInfoEntry(string infoEntry)
+        {
+            Regex pattern = new Regex("[~`!@#$%^&*(), ]");            
+            infoEntry = pattern.Replace(infoEntry, "");
+
+            return infoEntry;
         }
 
         /// <summary>
