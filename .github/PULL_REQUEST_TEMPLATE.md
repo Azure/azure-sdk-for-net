@@ -23,5 +23,5 @@ This checklist is used to make sure that common guidelines for a pull request ar
 
 ### [SDK Generation Guidelines](https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/.github/CONTRIBUTING.md#sdk-generation-guidelines)
 - [ ] If an SDK is being regenerated based on a new swagger spec, a link to the pull request containing these swagger spec changes has been included above.
-- [ ] The generate.cmd file for the SDK has been updated with the version of AutoRest, as well as a link to the swagger spec, used to generate the code.
-- [ ] The `project.json` and `AssemblyInfo.cs` files have been updated with the new version of the SDK.
+- [ ] The generate.cmd file for the SDK has been updated with the version of AutoRest, as well as the commitid of your swagger spec or link to the swagger spec, used to generate the code.
+- [ ] The `*.csproj` and `AssemblyInfo.cs` files have been updated with the new version of the SDK.
