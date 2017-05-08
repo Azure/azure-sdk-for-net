@@ -68,9 +68,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
             routes = new Dictionary<string, IRoute>();
             if (Inner.Routes != null)
             {
-                foreach (var innerRoutes in Inner.Routes)
+                foreach (var innerRoute in Inner.Routes)
                 {
-                    routes.Add(Inner.Name, new RouteImpl(innerRoutes, this));
+                    routes[innerRoute.Name] = new RouteImpl(innerRoute, this);
                 }
             }
         }
