@@ -25,6 +25,14 @@ namespace Sql.Tests
             }
         }
 
+        public static string DefaultStageLocation
+        {
+            get
+            {
+                return "Central US";
+            }
+        }
+
         public static SqlManagementClient GetSqlManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
             if (handler != null)
@@ -241,6 +249,12 @@ namespace Sql.Tests
             Assert.Equal(expected.EndIpAddress, actual.EndIpAddress);
         }
 
+        public static void ValidateVnetFirewallRule(VnetFirewallRule expected, VnetFirewallRule actual, string name)
+        {
+            Assert.NotNull(actual.Id);
+            Assert.Equal(expected.VirtualNetworkSubnetId, actual.VirtualNetworkSubnetId);
+        }
+
         public static void RunTestInNewResourceGroup(string suiteName, string testName, string resourcePrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup> test)
         {
             using (MockContext context = MockContext.Start(suiteName, testName))
@@ -268,7 +282,7 @@ namespace Sql.Tests
                 {
                     if (resourceGroup != null)
                     {
-                        resourceClient.ResourceGroups.Delete(resourceGroup.Name);
+                        resourceClient.ResourceGroups.BeginDelete(resourceGroup.Name);
                     }
                 }
             }

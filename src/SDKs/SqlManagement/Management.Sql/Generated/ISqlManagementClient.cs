@@ -101,5 +101,15 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
 
+        /// <summary>
+        /// Gets the IFailoverGroupsOperations.
+        /// </summary>
+        IFailoverGroupsOperations FailoverGroups { get; }
+
+        /// <summary>
+        /// Gets the IVnetFirewallRulesOperations.
+        /// </summary>
+        IVnetFirewallRulesOperations VnetFirewallRules { get; }
+
     }
 }
