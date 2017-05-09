@@ -161,7 +161,7 @@ namespace Batch.Tests.ScenarioTests
                     BatchAccount batchAccount = await this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
                     Assert.Equal(batchAccountName, batchAccount.Name);
                     Assert.True(batchAccount.DedicatedCoreQuota > 0);
-                    Assert.True(batchAccount.LowPriorityCoreQuota > 0);
+                    Assert.Equal(0, batchAccount.LowPriorityCoreQuota);
                     Assert.Equal(PoolAllocationMode.UserSubscription, batchAccount.PoolAllocationMode);
                     Assert.Equal(keyVaultReferenceId, batchAccount.KeyVaultReference.Id);
                     Assert.Equal(keyVaultReferenceUrl, batchAccount.KeyVaultReference.Url);
