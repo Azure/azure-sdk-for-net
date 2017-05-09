@@ -1,0 +1,509 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourcegroups/vnetfirewallrulecrudtest-7288?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzk2NTNkNWItMjRhMC00NzI4LTg3N2MtYmEzNjYzYzZiOTNkL3Jlc291cmNlZ3JvdXBzL3ZuZXRmaXJld2FsbHJ1bGVjcnVkdGVzdC03Mjg4P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"Central US\",\r\n  \"tags\": {\r\n    \"vnetfirewallrulecrudtest-7288\": \"2017-05-09 00:18:10Z\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "112"
+        ],
+        "x-ms-client-request-id": [
+          "62ad8186-8870-4624-a586-43c8ccd6011e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourceGroups/vnetfirewallrulecrudtest-7288\",\r\n  \"name\": \"vnetfirewallrulecrudtest-7288\",\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"vnetfirewallrulecrudtest-7288\": \"2017-05-09 00:18:10Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "278"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 09 May 2017 00:18:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-request-id": [
+          "0c8c4fb9-5055-43cc-89c5-1cbc74fc3132"
+        ],
+        "x-ms-correlation-request-id": [
+          "0c8c4fb9-5055-43cc-89c5-1cbc74fc3132"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170509T001814Z:0c8c4fb9-5055-43cc-89c5-1cbc74fc3132"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourceGroups/vnetfirewallrulecrudtest-7288/providers/Microsoft.Sql/servers/vnetfirewallrulecrudtest-6196?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzk2NTNkNWItMjRhMC00NzI4LTg3N2MtYmEzNjYzYzZiOTNkL3Jlc291cmNlR3JvdXBzL3ZuZXRmaXJld2FsbHJ1bGVjcnVkdGVzdC03Mjg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL3NlcnZlcnMvdm5ldGZpcmV3YWxscnVsZWNydWR0ZXN0LTYxOTY/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"version\": \"12.0\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\"\r\n  },\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "216"
+        ],
+        "x-ms-client-request-id": [
+          "6753be81-e0bc-444e-a516-df6230a2c203"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.3.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourceGroups/vnetfirewallrulecrudtest-7288/providers/Microsoft.Sql/servers/vnetfirewallrulecrudtest-6196\",\r\n  \"name\": \"vnetfirewallrulecrudtest-6196\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Central US\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"vnetfirewallrulecrudtest-6196.vnet-cus1-a.mscds.com\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "577"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, no-cache"
+        ],
+        "Date": [
+          "Tue, 09 May 2017 00:19:05 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "86afae4b-8012-435a-a4d2-749539fe5b3e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Preference-Applied": [
+          "return-content"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1191"
+        ],
+        "x-ms-correlation-request-id": [
+          "4bc8df2e-a2a8-480b-aab0-9bf0bb817290"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170509T001905Z:4bc8df2e-a2a8-480b-aab0-9bf0bb817290"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourceGroups/vnetfirewallrulecrudtest-7288/providers/Microsoft.Sql/servers/vnetfirewallrulecrudtest-6196/virtualNetworkRules/vnetfirewallrulecrudtest-7973?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzk2NTNkNWItMjRhMC00NzI4LTg3N2MtYmEzNjYzYzZiOTNkL3Jlc291cmNlR3JvdXBzL3ZuZXRmaXJld2FsbHJ1bGVjcnVkdGVzdC03Mjg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL3NlcnZlcnMvdm5ldGZpcmV3YWxscnVsZWNydWR0ZXN0LTYxOTYvdmlydHVhbE5ldHdvcmtSdWxlcy92bmV0ZmlyZXdhbGxydWxlY3J1ZHRlc3QtNzk3Mz9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"virtualNetworkSubnetId\": \"/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourceGroups/testrgcus/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/subnet1\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "204"
+        ],
+        "x-ms-client-request-id": [
+          "099e2abc-fc9d-416f-85d9-96d72188c736"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.3.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"UpsertVnetFirewallRule\",\r\n  \"startTime\": \"2017-05-09T00:19:07.967Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "77"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 09 May 2017 00:19:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/providers/Microsoft.Sql/locations/centralus/virtualNetworkRulesOperationResults/3c949ddc-ec04-4a1b-afdc-23f7c217ec11?api-version=2015-05-01-preview"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/providers/Microsoft.Sql/locations/centralus/virtualNetworkRulesAzureAsyncOperation/3c949ddc-ec04-4a1b-afdc-23f7c217ec11?api-version=2015-05-01-preview"
+        ],
+        "x-ms-request-id": [
+          "3c949ddc-ec04-4a1b-afdc-23f7c217ec11"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1190"
+        ],
+        "x-ms-correlation-request-id": [
+          "52753959-60d6-4437-a4e7-101b1ca11259"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170509T001907Z:52753959-60d6-4437-a4e7-101b1ca11259"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/providers/Microsoft.Sql/locations/centralus/virtualNetworkRulesAzureAsyncOperation/3c949ddc-ec04-4a1b-afdc-23f7c217ec11?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzk2NTNkNWItMjRhMC00NzI4LTg3N2MtYmEzNjYzYzZiOTNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL2xvY2F0aW9ucy9jZW50cmFsdXMvdmlydHVhbE5ldHdvcmtSdWxlc0F6dXJlQXN5bmNPcGVyYXRpb24vM2M5NDlkZGMtZWMwNC00YTFiLWFmZGMtMjNmN2MyMTdlYzExP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.3.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"3c949ddc-ec04-4a1b-afdc-23f7c217ec11\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-05-09T00:19:07.967Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 09 May 2017 00:19:37 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "d8efccf2-9f78-4ce0-be3b-551c40bd685c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14964"
+        ],
+        "x-ms-correlation-request-id": [
+          "d3205333-83c0-4ef9-a172-bbd808c77dee"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170509T001938Z:d3205333-83c0-4ef9-a172-bbd808c77dee"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourceGroups/vnetfirewallrulecrudtest-7288/providers/Microsoft.Sql/servers/vnetfirewallrulecrudtest-6196/virtualNetworkRules/vnetfirewallrulecrudtest-7973?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzk2NTNkNWItMjRhMC00NzI4LTg3N2MtYmEzNjYzYzZiOTNkL3Jlc291cmNlR3JvdXBzL3ZuZXRmaXJld2FsbHJ1bGVjcnVkdGVzdC03Mjg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL3NlcnZlcnMvdm5ldGZpcmV3YWxscnVsZWNydWR0ZXN0LTYxOTYvdmlydHVhbE5ldHdvcmtSdWxlcy92bmV0ZmlyZXdhbGxydWxlY3J1ZHRlc3QtNzk3Mz9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.3.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"virtualNetworkSubnetId\": \"/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourceGroups/testrgcus/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/subnet1\"\r\n  },\r\n  \"id\": \"/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourceGroups/vnetfirewallrulecrudtest-7288/providers/Microsoft.Sql/servers/vnetfirewallrulecrudtest-6196/virtualNetworkRules/vnetfirewallrulecrudtest-7973\",\r\n  \"name\": \"vnetfirewallrulecrudtest-7973\",\r\n  \"type\": \"Microsoft.Sql/servers/virtualNetworkRules\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 09 May 2017 00:19:37 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "2be8a280-c409-4b9d-abd0-a1b9c2655470"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14963"
+        ],
+        "x-ms-correlation-request-id": [
+          "34a0a423-962c-427b-9806-437866d0fb38"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170509T001938Z:34a0a423-962c-427b-9806-437866d0fb38"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourceGroups/vnetfirewallrulecrudtest-7288/providers/Microsoft.Sql/servers/vnetfirewallrulecrudtest-6196/virtualNetworkRules/vnetfirewallrulecrudtest-7973?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzk2NTNkNWItMjRhMC00NzI4LTg3N2MtYmEzNjYzYzZiOTNkL3Jlc291cmNlR3JvdXBzL3ZuZXRmaXJld2FsbHJ1bGVjcnVkdGVzdC03Mjg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL3NlcnZlcnMvdm5ldGZpcmV3YWxscnVsZWNydWR0ZXN0LTYxOTYvdmlydHVhbE5ldHdvcmtSdWxlcy92bmV0ZmlyZXdhbGxydWxlY3J1ZHRlc3QtNzk3Mz9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cb77e63d-5443-45d3-a5bf-dae65fb929fa"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.3.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"operation\": \"DropVnetFirewallRule\",\r\n  \"startTime\": \"2017-05-09T00:19:39.853Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "75"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 09 May 2017 00:19:38 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/providers/Microsoft.Sql/locations/centralus/virtualNetworkRulesOperationResults/bb220770-c350-42ec-8599-432a193d3c19?api-version=2015-05-01-preview"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/providers/Microsoft.Sql/locations/centralus/virtualNetworkRulesAzureAsyncOperation/bb220770-c350-42ec-8599-432a193d3c19?api-version=2015-05-01-preview"
+        ],
+        "x-ms-request-id": [
+          "bb220770-c350-42ec-8599-432a193d3c19"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-correlation-request-id": [
+          "d5620110-ba22-4a79-bb65-2ce9e9f60b43"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170509T001939Z:d5620110-ba22-4a79-bb65-2ce9e9f60b43"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/providers/Microsoft.Sql/locations/centralus/virtualNetworkRulesAzureAsyncOperation/bb220770-c350-42ec-8599-432a193d3c19?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzk2NTNkNWItMjRhMC00NzI4LTg3N2MtYmEzNjYzYzZiOTNkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL2xvY2F0aW9ucy9jZW50cmFsdXMvdmlydHVhbE5ldHdvcmtSdWxlc0F6dXJlQXN5bmNPcGVyYXRpb24vYmIyMjA3NzAtYzM1MC00MmVjLTg1OTktNDMyYTE5M2QzYzE5P2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.3.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"bb220770-c350-42ec-8599-432a193d3c19\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-05-09T00:19:39.853Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 09 May 2017 00:20:09 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "fa8c68e0-5d04-410d-9c91-05a13c7fa9f2"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14960"
+        ],
+        "x-ms-correlation-request-id": [
+          "a71b7450-87af-42fc-bf27-23a6b7af123f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170509T002009Z:a71b7450-87af-42fc-bf27-23a6b7af123f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/resourcegroups/vnetfirewallrulecrudtest-7288?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzk2NTNkNWItMjRhMC00NzI4LTg3N2MtYmEzNjYzYzZiOTNkL3Jlc291cmNlZ3JvdXBzL3ZuZXRmaXJld2FsbHJ1bGVjcnVkdGVzdC03Mjg4P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "64391a5c-d3d0-4cec-b0d0-88145aa0f4e2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 09 May 2017 00:20:10 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/79653d5b-24a0-4728-877c-ba3663c6b93d/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1WTkVURklSRVdBTExSVUxFQ1JVRFRFU1Q6MkQ3Mjg4LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1187"
+        ],
+        "x-ms-request-id": [
+          "0f0b263b-e6b9-4718-8ea8-ce81f548818e"
+        ],
+        "x-ms-correlation-request-id": [
+          "0f0b263b-e6b9-4718-8ea8-ce81f548818e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170509T002011Z:0f0b263b-e6b9-4718-8ea8-ce81f548818e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 202
+    }
+  ],
+  "Names": {
+    "RunTestInNewResourceGroup": [
+      "vnetfirewallrulecrudtest-7288"
+    ],
+    "RunTestInNewV12Server": [
+      "vnetfirewallrulecrudtest-6196"
+    ],
+    "TestCreateAndDropVnetFirewallRule": [
+      "vnetfirewallrulecrudtest-7973"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "79653d5b-24a0-4728-877c-ba3663c6b93d"
+  }
+}
