@@ -117,6 +117,33 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             UpdatedAt = updatedAt;
         }
 
+        public QueueCreateOrUpdateParameters(QueueResource queueResource)
+        {
+            Name = queueResource.Name;
+            LockDuration = queueResource.LockDuration;
+            AccessedAt = queueResource.AccessedAt;
+            AutoDeleteOnIdle = queueResource.AutoDeleteOnIdle;
+            EntityAvailabilityStatus = queueResource.EntityAvailabilityStatus;
+            CreatedAt = queueResource.CreatedAt;
+            DefaultMessageTimeToLive = queueResource.DefaultMessageTimeToLive;
+            DuplicateDetectionHistoryTimeWindow = queueResource.DuplicateDetectionHistoryTimeWindow;
+            EnableBatchedOperations = queueResource.EnableBatchedOperations;
+            DeadLetteringOnMessageExpiration = queueResource.DeadLetteringOnMessageExpiration;
+            EnableExpress = queueResource.EnableExpress;
+            EnablePartitioning = queueResource.EnablePartitioning;
+            IsAnonymousAccessible = queueResource.IsAnonymousAccessible;
+            MaxDeliveryCount = queueResource.MaxDeliveryCount;
+            MaxSizeInMegabytes = queueResource.MaxSizeInMegabytes;
+            MessageCount = queueResource.MessageCount;
+            CountDetails = queueResource.CountDetails;
+            RequiresDuplicateDetection = queueResource.RequiresDuplicateDetection;
+            RequiresSession = queueResource.RequiresSession;
+            SizeInBytes = queueResource.SizeInBytes;
+            Status = queueResource.Status;
+            SupportOrdering = queueResource.SupportOrdering;
+            UpdatedAt = queueResource.UpdatedAt;
+        }
+
         /// <summary>
         /// Gets or sets queue name.
         /// </summary>
@@ -138,11 +165,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string LockDuration { get; set; }
 
         /// <summary>
-        /// Gets or sets last time a message was sent, or the last time there
-        /// was a receive request to this queue.
+        /// Gets last time a message was sent, or the last time there was a
+        /// receive request to this queue.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessedAt")]
-        public System.DateTime? AccessedAt { get; set; }
+        public System.DateTime? AccessedAt { get; protected set; }
 
         /// <summary>
         /// Gets or sets the TimeSpan idle interval after which the queue is
@@ -160,10 +187,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityAvailabilityStatus? EntityAvailabilityStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets the exact time the message was created.
+        /// Gets the exact time the message was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public System.DateTime? CreatedAt { get; set; }
+        public System.DateTime? CreatedAt { get; protected set; }
 
         /// <summary>
         /// Gets or sets the default message time to live value. This is the
@@ -232,15 +259,15 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public long? MaxSizeInMegabytes { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of messages in the queue.
+        /// Gets the number of messages in the queue.
         /// </summary>
         [JsonProperty(PropertyName = "properties.messageCount")]
-        public long? MessageCount { get; set; }
+        public long? MessageCount { get; protected set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.countDetails")]
-        public MessageCountDetails CountDetails { get; set; }
+        public MessageCountDetails CountDetails { get; protected set; }
 
         /// <summary>
         /// Gets or sets a value indicating if this queue requires duplicate
@@ -257,10 +284,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? RequiresSession { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of the queue, in bytes.
+        /// Gets the size of the queue, in bytes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sizeInBytes")]
-        public long? SizeInBytes { get; set; }
+        public long? SizeInBytes { get; protected set; }
 
         /// <summary>
         /// Gets or sets enumerates the possible values for the status of a
@@ -279,10 +306,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? SupportOrdering { get; set; }
 
         /// <summary>
-        /// Gets or sets the exact time the message was updated.
+        /// Gets the exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public System.DateTime? UpdatedAt { get; set; }
+        public System.DateTime? UpdatedAt { get; protected set; }
 
         /// <summary>
         /// Validate the object.

@@ -73,19 +73,24 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(getQueueListAllResponse);
                 Assert.True(getQueueListAllResponse.Count() >= 1);                
                 Assert.True(getQueueListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
+
+                getQueueResponse.EnableExpress = true;
+                getQueueResponse.IsAnonymousAccessible = true;
+                getQueueResponse.MaxDeliveryCount = 5;
+                getQueueResponse.MaxSizeInMegabytes = 1024;
                 
-                // Update Queue. 
-                var updateQueuesParameter = new QueueCreateOrUpdateParameters()
-                {
-                    Location = location,
-                    EnableExpress = true,                   
-                    IsAnonymousAccessible = true                   
-                };
+
+                var updateQueuesParameter = new QueueCreateOrUpdateParameters(getQueueResponse);
+                updateQueuesParameter.Location = location;
 
                 var updateQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, updateQueuesParameter);
                 Assert.NotNull(updateQueueResponse);
                 Assert.True(updateQueueResponse.EnableExpress);
                 Assert.True(updateQueueResponse.IsAnonymousAccessible);
+
+
+                // Get the created Queue
+                var getQueueResponse11 = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);
 
                 // Delete Created Queue  and check for the NotFound exception 
                 ServiceBusManagementClient.Queues.Delete(resourceGroup, namespaceName, queueName);

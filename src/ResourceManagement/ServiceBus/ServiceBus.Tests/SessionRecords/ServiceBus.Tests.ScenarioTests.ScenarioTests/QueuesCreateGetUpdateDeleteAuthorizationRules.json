@@ -1,22 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/providers/Microsoft.ServiceBus?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/providers/Microsoft.ServiceBus?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5c2f37df-041c-477b-8e2a-eb0d0343fbdb"
+          "10fedc34-aae9-4ba0-82ad-2dcdebaa327a"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
+          "FxVersion/4.6.24410.01",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/providers/Microsoft.ServiceBus\",\r\n  \"namespace\": \"Microsoft.ServiceBus\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"namespaces\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"West US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Brazil South\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"Central India\",\r\n        \"South India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK West\",\r\n        \"UK South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNamespaceAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"premiumMessagingRegions\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/providers/Microsoft.ServiceBus\",\r\n  \"namespace\": \"Microsoft.ServiceBus\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"namespaces\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"West US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Brazil South\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"Central India\",\r\n        \"South India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK West\",\r\n        \"UK South\",\r\n        \"Korea Central\",\r\n        \"Korea South\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNamespaceAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"sku\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"premiumMessagingRegions\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,61 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:56:37 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
-        ],
-        "x-ms-request-id": [
-          "71414379-7230-459e-b09f-c3f2bb022056"
-        ],
-        "x-ms-correlation-request-id": [
-          "71414379-7230-459e-b09f-c3f2bb022056"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205637Z:71414379-7230-459e-b09f-c3f2bb022056"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourcegroups?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "4eb87dcb-a5bc-40bf-882b-aeb2ea58fffa"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asdfsdfsdf\",\r\n      \"name\": \"asdfsdfsdf\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf\",\r\n      \"name\": \"asfsdfsadfsadf\",\r\n      \"location\": \"australiaeast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/cloudtesthost\",\r\n      \"name\": \"cloudtesthost\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/cloudtestHostMessaging\",\r\n      \"name\": \"cloudtestHostMessaging\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-ApplicationInsights-CentralUS\",\r\n      \"name\": \"Default-ApplicationInsights-CentralUS\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-ServiceBus-EastAsia\",\r\n      \"name\": \"Default-ServiceBus-EastAsia\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-ServiceBus-EastUS2\",\r\n      \"name\": \"Default-ServiceBus-EastUS2\",\r\n      \"location\": \"eastus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-ServiceBus-NorthEurope\",\r\n      \"name\": \"Default-ServiceBus-NorthEurope\",\r\n      \"location\": \"northeurope\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-ServiceBus-WestUS\",\r\n      \"name\": \"Default-ServiceBus-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-SQL-EastAsia\",\r\n      \"name\": \"Default-SQL-EastAsia\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-SQL-NorthCentralUS\",\r\n      \"name\": \"Default-SQL-NorthCentralUS\",\r\n      \"location\": \"northcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-SQL-NorthEurope\",\r\n      \"name\": \"Default-SQL-NorthEurope\",\r\n      \"location\": \"northeurope\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-SQL-SouthCentralUS\",\r\n      \"name\": \"Default-SQL-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-Storage-EastUS\",\r\n      \"name\": \"Default-Storage-EastUS\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-Storage-NorthCentralUS\",\r\n      \"name\": \"Default-Storage-NorthCentralUS\",\r\n      \"location\": \"northcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-Storage-SouthCentralUS\",\r\n      \"name\": \"Default-Storage-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Default-Storage-WestUS\",\r\n      \"name\": \"Default-Storage-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/Group-1\",\r\n      \"name\": \"Group-1\",\r\n      \"location\": \"eastus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/hdinsightUDUMD3X5AJ4LHDCL4OZ6S47XUPJVF3CYXOCTQO4S3PMCGMPZNW4Q-South-Central-US\",\r\n      \"name\": \"hdinsightUDUMD3X5AJ4LHDCL4OZ6S47XUPJVF3CYXOCTQO4S3PMCGMPZNW4Q-South-Central-US\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/pushcthperfbl2\",\r\n      \"name\": \"pushcthperfbl2\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/pushtestservice\",\r\n      \"name\": \"pushtestservice\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/pushtestservice2\",\r\n      \"name\": \"pushtestservice2\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/rrama-7-6-rg\",\r\n      \"name\": \"rrama-7-6-rg\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/sdfasdfsad\",\r\n      \"name\": \"sdfasdfsad\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/testpremiumgroup\",\r\n      \"name\": \"testpremiumgroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 13 Sep 2016 20:56:37 GMT"
+          "Tue, 11 Apr 2017 21:11:22 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -94,13 +41,13 @@
           "14987"
         ],
         "x-ms-request-id": [
-          "71cfda49-e459-4068-962b-2845c90601ad"
+          "9444bb05-d4ad-4dd0-9180-f159879c5bef"
         ],
         "x-ms-correlation-request-id": [
-          "71cfda49-e459-4068-962b-2845c90601ad"
+          "9444bb05-d4ad-4dd0-9180-f159879c5bef"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205637Z:71cfda49-e459-4068-962b-2845c90601ad"
+          "WESTUS2:20170411T211122Z:9444bb05-d4ad-4dd0-9180-f159879c5bef"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -109,8 +56,63 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourcegroups?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d77840c4-d345-4755-837d-9b7232d848bc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-EventHub-SouthCentralUS\",\r\n      \"name\": \"Default-EventHub-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-MachineLearning-SouthCentralUS\",\r\n      \"name\": \"Default-MachineLearning-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Networking\",\r\n      \"name\": \"Default-Networking\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast\",\r\n      \"name\": \"Default-NotificationHubs-AustraliaEast\",\r\n      \"location\": \"australiaeast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-CentralUS\",\r\n      \"name\": \"Default-NotificationHubs-CentralUS\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-ServiceBus-WestUS\",\r\n      \"name\": \"Default-ServiceBus-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-SQL-WestUS\",\r\n      \"name\": \"Default-SQL-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-CentralUS\",\r\n      \"name\": \"Default-Storage-CentralUS\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-EastAsia\",\r\n      \"name\": \"Default-Storage-EastAsia\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-SouthCentralUS\",\r\n      \"name\": \"Default-Storage-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-WestUS\",\r\n      \"name\": \"Default-Storage-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Web-WestUS\",\r\n      \"name\": \"Default-Web-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/DL-SB-APPHOST\",\r\n      \"name\": \"DL-SB-APPHOST\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/DL-SB-DS1\",\r\n      \"name\": \"DL-SB-DS1\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/DL-SB-DS2\",\r\n      \"name\": \"DL-SB-DS2\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/DL-SB-ECA\",\r\n      \"name\": \"DL-SB-ECA\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/DL-SB-FILE\",\r\n      \"name\": \"DL-SB-FILE\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/dl-sb-TSG\",\r\n      \"name\": \"dl-sb-TSG\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Mobile-Default-Web-WestUS\",\r\n      \"name\": \"Mobile-Default-Web-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 11 Apr 2017 21:11:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14986"
+        ],
+        "x-ms-request-id": [
+          "249fcee8-8db7-47d5-afe6-1c2e2214647d"
+        ],
+        "x-ms-correlation-request-id": [
+          "249fcee8-8db7-47d5-afe6-1c2e2214647d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170411T211122Z:249fcee8-8db7-47d5-afe6-1c2e2214647d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Australia East\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -121,16 +123,17 @@
           "103"
         ],
         "x-ms-client-request-id": [
-          "e0998e28-f3a6-4bf6-9e0b-c8cde7106bb3"
+          "712684bb-350e-4531-b9af-44f0f54eb837"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270\",\r\n  \"name\": \"sdk-Namespace-9270\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Unknown\",\r\n    \"metricId\": \"69d753c5-9c09-46a5-ad79-5d71abac3fe5:sdk-Namespace-9270\",\r\n    \"enabled\": false,\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811\",\r\n  \"name\": \"sdk-Namespace-1811\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"provisioningState\": \"Unknown\",\r\n    \"metricId\": \"e2f361f0-3b27-4503-a9cc-21cfba380093:sdk-namespace-1811\",\r\n    \"enabled\": false,\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -142,7 +145,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:56:40 GMT"
+          "Tue, 11 Apr 2017 21:11:26 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -158,7 +161,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "bb8ba761-45a8-4bbb-a7af-cf03eea91dde_M3_M3"
+          "0ab89eac-4e1f-4008-bb9e-fcacea13e9d6_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -167,10 +170,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "42da59f2-60e7-4027-9eaa-20f8bcd8c3b2"
+          "1ee41def-e6e0-42c4-9c46-823526d55a31"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205641Z:42da59f2-60e7-4027-9eaa-20f8bcd8c3b2"
+          "WESTUS2:20170411T211126Z:1ee41def-e6e0-42c4-9c46-823526d55a31"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -179,16 +182,17 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270\",\r\n  \"name\": \"sdk-Namespace-9270\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"69d753c5-9c09-46a5-ad79-5d71abac3fe5:sdk-Namespace-9270\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2016-09-13T20:56:41.78Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-Namespace-9270.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2016-09-13T20:57:06.12Z\",\r\n    \"eventHubEnabled\": true,\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811\",\r\n  \"name\": \"sdk-Namespace-1811\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"e2f361f0-3b27-4503-a9cc-21cfba380093:sdk-namespace-1811\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-04-11T21:11:27.763Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-Namespace-1811.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2017-04-11T21:11:52.21Z\",\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -200,7 +204,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:10 GMT"
+          "Tue, 11 Apr 2017 21:11:56 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -216,135 +220,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "4dc6e68f-57c7-4ac5-8420-95781e94020a_M3_M3"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14984"
-        ],
-        "x-ms-correlation-request-id": [
-          "e35b0b31-0a56-4195-a61f-8bfce279f595"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205711Z:e35b0b31-0a56-4195-a61f-8bfce279f595"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "bf7aa5b9-5bf3-41f5-869c-2b93e93cfb66"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270\",\r\n  \"name\": \"sdk-Namespace-9270\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"69d753c5-9c09-46a5-ad79-5d71abac3fe5:sdk-Namespace-9270\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2016-09-13T20:56:41.78Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-Namespace-9270.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2016-09-13T20:57:06.12Z\",\r\n    \"eventHubEnabled\": true,\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 13 Sep 2016 20:57:15 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "88ae5016-2a5f-4882-9f6c-3008af6477a5_M3_M3"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14983"
-        ],
-        "x-ms-correlation-request-id": [
-          "363cab5e-11f2-4ef7-b148-e1c9ff2aa4ad"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205716Z:363cab5e-11f2-4ef7-b148-e1c9ff2aa4ad"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "5b3e438f-e868-474f-8ab7-2f92279af9cd"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270\",\r\n  \"name\": \"sdk-Namespace-9270\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"69d753c5-9c09-46a5-ad79-5d71abac3fe5:sdk-Namespace-9270\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2016-09-13T20:56:41.78Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-Namespace-9270.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2016-09-13T20:57:06.12Z\",\r\n    \"eventHubEnabled\": true,\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 13 Sep 2016 20:57:15 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "398386d9-15b0-4e8f-8336-27df3e8440ea_M3_M3"
+          "4c214447-ac76-49b0-a7c0-6f25cf340e2a_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -353,10 +229,10 @@
           "14982"
         ],
         "x-ms-correlation-request-id": [
-          "2929ff0f-2061-435b-820b-b0bbf20c8ef9"
+          "4f04aa32-2388-46f3-aa90-5026c8a1d5d4"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205716Z:2929ff0f-2061-435b-820b-b0bbf20c8ef9"
+          "WESTUS2:20170411T211156Z:4f04aa32-2388-46f3-aa90-5026c8a1d5d4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -365,19 +241,150 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d0350162-7ee5-4a52-ac3e-74adadaf7443"
+          "394d0adb-2994-4d8b-865d-16b947d4bea8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811\",\r\n  \"name\": \"sdk-Namespace-1811\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"e2f361f0-3b27-4503-a9cc-21cfba380093:sdk-namespace-1811\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-04-11T21:11:27.763Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-Namespace-1811.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2017-04-11T21:11:52.21Z\",\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 11 Apr 2017 21:12:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "8ee0f808-2b6c-471a-b064-160555933528_M0_M0"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "x-ms-correlation-request-id": [
+          "06b10c9f-e001-4797-b0f4-fd208b9592d4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170411T211202Z:06b10c9f-e001-4797-b0f4-fd208b9592d4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5e4a92de-c2be-439c-95a8-2712cd42ebf1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811\",\r\n  \"name\": \"sdk-Namespace-1811\",\r\n  \"type\": \"Microsoft.ServiceBus/namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"kind\": \"Messaging\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"e2f361f0-3b27-4503-a9cc-21cfba380093:sdk-namespace-1811\",\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-04-11T21:11:27.763Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-Namespace-1811.servicebus.windows.net:443/\",\r\n    \"enabled\": true,\r\n    \"critical\": false,\r\n    \"updatedAt\": \"2017-04-11T21:11:52.21Z\",\r\n    \"namespaceType\": \"Messaging\",\r\n    \"messagingSku\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 11 Apr 2017 21:12:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "ec4cf6db-ae89-420c-8bd1-331fa61330b3_M0_M0"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14980"
+        ],
+        "x-ms-correlation-request-id": [
+          "57f9513a-0cab-496f-a10b-254347d8db95"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170411T211202Z:57f9513a-0cab-496f-a10b-254347d8db95"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f5027dbf-080d-41a9-a93c-d6f8159f2760"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"message\": \"Not Found\",\r\n    \"code\": \"NotFound\"\r\n  }\r\n}",
@@ -395,7 +402,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:58:15 GMT"
+          "Tue, 11 Apr 2017 21:12:58 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -405,19 +412,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "b5fde4ad-d4ea-49e1-9944-a6e8d16dd95b_M3_M3"
+          "bc0cd677-2e1b-492f-9bc2-5f868c188c13_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14974"
+          "14971"
         ],
         "x-ms-correlation-request-id": [
-          "2bb43c00-c610-4384-b67f-3af81bd10462"
+          "25b966e5-a90b-4073-b60a-1a49222c9004"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205815Z:2bb43c00-c610-4384-b67f-3af81bd10462"
+          "WESTUS2:20170411T211259Z:25b966e5-a90b-4073-b60a-1a49222c9004"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -426,8 +433,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Australia East\"\r\n}",
       "RequestHeaders": {
@@ -438,16 +445,17 @@
           "36"
         ],
         "x-ms-client-request-id": [
-          "d6158575-e218-44b5-b25a-ce0e6d1e00f7"
+          "515cd1b1-a231-4c80-854d-6fff9da65713"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793\",\r\n  \"name\": \"sdk-Queues-6793\",\r\n  \"type\": \"Microsoft.ServiceBus/Queues\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"lockDuration\": \"00:01:00\",\r\n    \"maxSizeInMegabytes\": 1024,\r\n    \"requiresDuplicateDetection\": false,\r\n    \"requiresSession\": false,\r\n    \"defaultMessageTimeToLive\": \"10675199.02:48:05.4775807\",\r\n    \"deadLetteringOnMessageExpiration\": false,\r\n    \"duplicateDetectionHistoryTimeWindow\": \"00:10:00\",\r\n    \"maxDeliveryCount\": 10,\r\n    \"enableBatchedOperations\": true,\r\n    \"sizeInBytes\": 0,\r\n    \"messageCount\": 0,\r\n    \"isAnonymousAccessible\": false,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2016-09-13T20:57:19.413\",\r\n    \"updatedAt\": \"2016-09-13T20:57:19.86\",\r\n    \"supportOrdering\": true,\r\n    \"autoDeleteOnIdle\": \"10675199.02:48:05.4775807\",\r\n    \"enablePartitioning\": false,\r\n    \"entityAvailabilityStatus\": \"Available\",\r\n    \"enableExpress\": false\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693\",\r\n  \"name\": \"sdk-Queues-6693\",\r\n  \"type\": \"Microsoft.ServiceBus/Queues\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"lockDuration\": \"00:01:00\",\r\n    \"maxSizeInMegabytes\": 1024,\r\n    \"requiresDuplicateDetection\": false,\r\n    \"requiresSession\": false,\r\n    \"defaultMessageTimeToLive\": \"10675199.02:48:05.4775807\",\r\n    \"deadLetteringOnMessageExpiration\": false,\r\n    \"duplicateDetectionHistoryTimeWindow\": \"00:10:00\",\r\n    \"maxDeliveryCount\": 10,\r\n    \"enableBatchedOperations\": true,\r\n    \"sizeInBytes\": 0,\r\n    \"messageCount\": 0,\r\n    \"isAnonymousAccessible\": false,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-04-11T21:12:05.6Z\",\r\n    \"updatedAt\": \"2017-04-11T21:12:05.633Z\",\r\n    \"supportOrdering\": true,\r\n    \"autoDeleteOnIdle\": \"10675199.02:48:05.4775807\",\r\n    \"enablePartitioning\": false,\r\n    \"entityAvailabilityStatus\": \"Available\",\r\n    \"enableExpress\": false\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -459,7 +467,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:20 GMT"
+          "Tue, 11 Apr 2017 21:12:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -475,7 +483,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "1875ac29-0f5c-4897-b0dd-e68404a75797_M3_M3"
+          "2d568a2f-3ccc-4f20-9c9c-7fb7684fc409_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -484,10 +492,10 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "972e36c2-577c-435b-97a1-6c7b911918ef"
+          "1ebd5010-0a5f-4b45-bf47-95aecdd380f7"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205720Z:972e36c2-577c-435b-97a1-6c7b911918ef"
+          "WESTUS2:20170411T211204Z:1ebd5010-0a5f-4b45-bf47-95aecdd380f7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -496,22 +504,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e36d1232-9395-4528-8897-988f4922a034"
+          "c54a6253-7523-4a00-b0f0-1007b90dead8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793\",\r\n  \"name\": \"sdk-Queues-6793\",\r\n  \"type\": \"Microsoft.ServiceBus/Queues\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"lockDuration\": \"00:01:00\",\r\n    \"maxSizeInMegabytes\": 1024,\r\n    \"requiresDuplicateDetection\": false,\r\n    \"requiresSession\": false,\r\n    \"defaultMessageTimeToLive\": \"10675199.02:48:05.4775807\",\r\n    \"deadLetteringOnMessageExpiration\": false,\r\n    \"duplicateDetectionHistoryTimeWindow\": \"00:10:00\",\r\n    \"maxDeliveryCount\": 10,\r\n    \"enableBatchedOperations\": true,\r\n    \"sizeInBytes\": 0,\r\n    \"messageCount\": 0,\r\n    \"isAnonymousAccessible\": false,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2016-09-13T20:57:19.413Z\",\r\n    \"updatedAt\": \"2016-09-13T20:57:19.86Z\",\r\n    \"accessedAt\": \"0001-01-01T00:00:00Z\",\r\n    \"supportOrdering\": true,\r\n    \"countDetails\": {\r\n      \"activeMessageCount\": 0,\r\n      \"deadLetterMessageCount\": 0,\r\n      \"scheduledMessageCount\": 0,\r\n      \"transferMessageCount\": 0,\r\n      \"transferDeadLetterMessageCount\": 0\r\n    },\r\n    \"autoDeleteOnIdle\": \"10675199.02:48:05.4775807\",\r\n    \"enablePartitioning\": false,\r\n    \"entityAvailabilityStatus\": \"Available\",\r\n    \"enableExpress\": false\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693\",\r\n  \"name\": \"sdk-Queues-6693\",\r\n  \"type\": \"Microsoft.ServiceBus/Queues\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"lockDuration\": \"00:01:00\",\r\n    \"maxSizeInMegabytes\": 1024,\r\n    \"requiresDuplicateDetection\": false,\r\n    \"requiresSession\": false,\r\n    \"defaultMessageTimeToLive\": \"10675199.02:48:05.4775807\",\r\n    \"deadLetteringOnMessageExpiration\": false,\r\n    \"duplicateDetectionHistoryTimeWindow\": \"00:10:00\",\r\n    \"maxDeliveryCount\": 10,\r\n    \"enableBatchedOperations\": true,\r\n    \"sizeInBytes\": 0,\r\n    \"messageCount\": 0,\r\n    \"isAnonymousAccessible\": false,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2017-04-11T21:12:05.6Z\",\r\n    \"updatedAt\": \"2017-04-11T21:12:05.633Z\",\r\n    \"accessedAt\": \"0001-01-01T00:00:00Z\",\r\n    \"supportOrdering\": true,\r\n    \"countDetails\": {\r\n      \"activeMessageCount\": 0,\r\n      \"deadLetterMessageCount\": 0,\r\n      \"scheduledMessageCount\": 0,\r\n      \"transferMessageCount\": 0,\r\n      \"transferDeadLetterMessageCount\": 0\r\n    },\r\n    \"autoDeleteOnIdle\": \"10675199.02:48:05.4775807\",\r\n    \"enablePartitioning\": false,\r\n    \"entityAvailabilityStatus\": \"Available\",\r\n    \"enableExpress\": false\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -523,7 +532,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:20 GMT"
+          "Tue, 11 Apr 2017 21:12:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -539,19 +548,19 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "c031e558-9462-4179-870c-3a9d64a74c71_M3_M3"
+          "0b245aea-bbc9-4d57-84b6-7c4e4b4e160f_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14981"
+          "14979"
         ],
         "x-ms-correlation-request-id": [
-          "e94d9b7d-9736-4a34-89ff-975fb21fc575"
+          "90ed5535-a96c-40fd-aedb-2377c71865ce"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205720Z:e94d9b7d-9736-4a34-89ff-975fb21fc575"
+          "WESTUS2:20170411T211205Z:90ed5535-a96c-40fd-aedb-2377c71865ce"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -560,22 +569,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "94f53636-76b1-4621-a1db-c3025edebf63"
+          "a758eacb-3f0b-4630-9112-fcf3d27ff657"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"message\": \"The requested resource sdk-Queues-6793 does not exist.\",\r\n    \"code\": \"NotFound\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"message\": \"The requested resource sdk-Queues-6693 does not exist.\",\r\n    \"code\": \"NotFound\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "96"
@@ -590,7 +600,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:44 GMT"
+          "Tue, 11 Apr 2017 21:12:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -600,19 +610,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "8670a971-8a8a-4319-b778-f3d836acf0c2_M3_M3"
+          "80b0a2bd-8132-4b25-921c-293ff0b328f3_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14976"
+          "14974"
         ],
         "x-ms-correlation-request-id": [
-          "7c738f7b-cbeb-48de-ae64-adcf02707ef1"
+          "20fefe99-b221-45e9-9bf8-8b60499e1a73"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205744Z:7c738f7b-cbeb-48de-ae64-adcf02707ef1"
+          "WESTUS2:20170411T211228Z:20fefe99-b221-45e9-9bf8-8b60499e1a73"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -621,10 +631,10 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTYzMjc/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTEyMTM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"sdk-AuthRules-6327\",\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\",\r\n      \"Send\"\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"sdk-AuthRules-1213\",\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\",\r\n      \"Send\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -633,16 +643,17 @@
           "116"
         ],
         "x-ms-client-request-id": [
-          "a99752d0-9d5a-4c87-80f5-11dab2989c09"
+          "7aaf16ae-3505-41ae-8da2-cf576d903edb"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327\",\r\n  \"name\": \"sdk-AuthRules-6327\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\",\r\n      \"Send\"\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213\",\r\n  \"name\": \"sdk-AuthRules-1213\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\",\r\n      \"Send\"\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -654,7 +665,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:26 GMT"
+          "Tue, 11 Apr 2017 21:12:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -670,7 +681,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "f6cdcc63-ab7c-4126-a0e7-fc7684e71fe1_M3_M3"
+          "01c60677-3ee2-436d-ae36-6050d8b93aa0_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -679,10 +690,10 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "51a8b574-ea3a-4442-a245-8cbe230c7d09"
+          "67fe6683-1edb-4dee-84ea-91cfe8ffa914"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205726Z:51a8b574-ea3a-4442-a245-8cbe230c7d09"
+          "WESTUS2:20170411T211211Z:67fe6683-1edb-4dee-84ea-91cfe8ffa914"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -691,8 +702,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTYzMjc/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTEyMTM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
@@ -703,16 +714,17 @@
           "68"
         ],
         "x-ms-client-request-id": [
-          "a4edd38e-3ef6-4150-b59c-84d795829073"
+          "ade9261f-2fdc-476a-9e79-c9aa1ba17d3f"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327\",\r\n  \"name\": \"sdk-AuthRules-6327\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213\",\r\n  \"name\": \"sdk-AuthRules-1213\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -724,7 +736,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:33 GMT"
+          "Tue, 11 Apr 2017 21:12:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -740,7 +752,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "014bb850-cdac-4292-8d44-4b264b689afb_M3_M3"
+          "5759bb2c-9ba4-4d7f-8d8c-666a9c7d061f_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -749,10 +761,10 @@
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "2938c9e0-c8db-49cc-8337-6235dfe1f81e"
+          "bf2090c9-fb98-4a2b-9b49-a75894bd6b35"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205733Z:2938c9e0-c8db-49cc-8337-6235dfe1f81e"
+          "WESTUS2:20170411T211217Z:bf2090c9-fb98-4a2b-9b49-a75894bd6b35"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -761,22 +773,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTYzMjc/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTEyMTM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4390ef56-2171-4baa-a3d4-465bc1f51d12"
+          "fc370d6d-b4ec-43a8-9e52-f435664df226"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327\",\r\n  \"name\": \"sdk-AuthRules-6327\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\",\r\n      \"Send\"\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213\",\r\n  \"name\": \"sdk-AuthRules-1213\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\",\r\n      \"Send\"\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -788,7 +801,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:27 GMT"
+          "Tue, 11 Apr 2017 21:12:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -804,71 +817,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "8aae264f-dcbb-4fc0-9539-f5cac095142a_M3_M3"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/SN1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14980"
-        ],
-        "x-ms-correlation-request-id": [
-          "8ed98823-7bd4-4964-8e28-6b4aa99f0f02"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205727Z:8ed98823-7bd4-4964-8e28-6b4aa99f0f02"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTYzMjc/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "5ccf69b2-ddeb-4bf9-9efe-2dfec739d2db"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327\",\r\n  \"name\": \"sdk-AuthRules-6327\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 13 Sep 2016 20:57:33 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/SN1",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "0615a960-2ccd-4663-b637-4a831437c0bd_M3_M3"
+          "781bde53-3621-403e-abc6-f5497f792f89_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -877,10 +826,10 @@
           "14978"
         ],
         "x-ms-correlation-request-id": [
-          "0a7fba4f-d77a-4815-88b9-b9cd69c7c552"
+          "214e35ad-5d21-49c3-85e1-ad9bb3f563d0"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205734Z:0a7fba4f-d77a-4815-88b9-b9cd69c7c552"
+          "WESTUS2:20170411T211211Z:214e35ad-5d21-49c3-85e1-ad9bb3f563d0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -889,22 +838,88 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTYzMjc/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTEyMTM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "28ea8b08-6772-46de-b254-fff60d8252dd"
+          "07fe7cd1-51b6-41e7-b291-fa160ab3e0c1"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"message\": \"The requested resource sdk-AuthRules-6327 does not exist.\",\r\n    \"code\": \"NotFound\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213\",\r\n  \"name\": \"sdk-AuthRules-1213\",\r\n  \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": null,\r\n  \"properties\": {\r\n    \"rights\": [\r\n      \"Listen\"\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 11 Apr 2017 21:12:17 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "16e853d5-00c7-438d-9778-0853ac00086e_M0_M0"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14976"
+        ],
+        "x-ms-correlation-request-id": [
+          "e8fa5b90-3023-4f78-a22b-c03f8db3ba75"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170411T211218Z:e8fa5b90-3023-4f78-a22b-c03f8db3ba75"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTEyMTM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "247653ee-4c24-49e6-b1ef-2e81129c3e0d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"message\": \"The requested resource sdk-AuthRules-1213 does not exist.\",\r\n    \"code\": \"NotFound\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "99"
@@ -919,7 +934,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:41 GMT"
+          "Tue, 11 Apr 2017 21:12:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -929,19 +944,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "78ebe5fb-10b8-4725-a13a-7e94fcc28cd1_M3_M3"
+          "a94db63a-716e-46fa-b4cb-ec3abfc8fb48_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14977"
+          "14975"
         ],
         "x-ms-correlation-request-id": [
-          "65ee9503-19b3-4fd9-9cac-f62b26ac6d96"
+          "0cb768bc-2abc-48cd-a9a3-e3e655831bd8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205742Z:65ee9503-19b3-4fd9-9cac-f62b26ac6d96"
+          "WESTUS2:20170411T211225Z:0cb768bc-2abc-48cd-a9a3-e3e655831bd8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -950,22 +965,23 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzL2F1dGhvcml6YXRpb25SdWxlcz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzL2F1dGhvcml6YXRpb25SdWxlcz9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "269f574e-8a77-4797-a586-71d68487dcc9"
+          "fa94d4f8-05b8-4cd2-bed8-dce8d99a5f46"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327\",\r\n      \"name\": \"sdk-AuthRules-6327\",\r\n      \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n      \"location\": \"Australia East\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"rights\": [\r\n          \"Listen\",\r\n          \"Send\"\r\n        ]\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213\",\r\n      \"name\": \"sdk-AuthRules-1213\",\r\n      \"type\": \"Microsoft.ServiceBus/AuthorizationRules\",\r\n      \"location\": \"Australia East\",\r\n      \"tags\": null,\r\n      \"properties\": {\r\n        \"rights\": [\r\n          \"Listen\",\r\n          \"Send\"\r\n        ]\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -977,7 +993,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:28 GMT"
+          "Tue, 11 Apr 2017 21:12:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -993,19 +1009,19 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "91d908fc-0453-4bdc-86bf-8f6184fb633b_M3_M3"
+          "b8d0b948-8c32-4502-bc46-f07d2d8e3ee6_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14979"
+          "14977"
         ],
         "x-ms-correlation-request-id": [
-          "9d9b43be-b682-4314-94c3-25d6901381d2"
+          "931f154b-9209-4f6c-b31c-41f31a05b0b6"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205728Z:9d9b43be-b682-4314-94c3-25d6901381d2"
+          "WESTUS2:20170411T211211Z:931f154b-9209-4f6c-b31c-41f31a05b0b6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1014,22 +1030,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327/ListKeys?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTYzMjcvTGlzdEtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213/ListKeys?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTEyMTMvTGlzdEtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a906d2a6-c65c-4d87-839e-b67f8d0ee3b2"
+          "1aaac30e-fefe-40b2-b64d-0e37a1220124"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://sdk-namespace-9270.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-6327;SharedAccessKey=gjhg5T0RxoWYWw479NT52XYSuRlrdQzoeqhFQ/Qfhx8=;EntityPath=sdk-Queues-6793\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://sdk-namespace-9270.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-6327;SharedAccessKey=hPS0hYzsXz6HzSGAwJ6DDHy74cVolLRD16m+B2Jlzg8=;EntityPath=sdk-Queues-6793\",\r\n  \"primaryKey\": \"gjhg5T0RxoWYWw479NT52XYSuRlrdQzoeqhFQ/Qfhx8=\",\r\n  \"secondaryKey\": \"hPS0hYzsXz6HzSGAwJ6DDHy74cVolLRD16m+B2Jlzg8=\",\r\n  \"keyName\": \"sdk-AuthRules-6327\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://sdk-namespace-1811.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-1213;SharedAccessKey=MAH9qx7SZ2v/+EtetcaxxK+eIYo62YxPOhQNnbCzXUs=;EntityPath=sdk-Queues-6693\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://sdk-namespace-1811.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-1213;SharedAccessKey=3G4Q6CUHIZEBKa26flvSDT6unK2T958ZruDCKYZz9xE=;EntityPath=sdk-Queues-6693\",\r\n  \"primaryKey\": \"MAH9qx7SZ2v/+EtetcaxxK+eIYo62YxPOhQNnbCzXUs=\",\r\n  \"secondaryKey\": \"3G4Q6CUHIZEBKa26flvSDT6unK2T958ZruDCKYZz9xE=\",\r\n  \"keyName\": \"sdk-AuthRules-1213\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1041,7 +1058,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:34 GMT"
+          "Tue, 11 Apr 2017 21:12:18 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1057,7 +1074,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "d0422967-fab5-47d2-a9a7-2e97ecfc2064_M3_M3"
+          "a1657426-ed25-4d71-8228-843e70892272_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -1066,10 +1083,10 @@
           "1195"
         ],
         "x-ms-correlation-request-id": [
-          "9c5b51dc-7edb-4f80-b4f1-62b43b6ab38f"
+          "4c182204-c144-435a-97af-61e50b0199c6"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205734Z:9c5b51dc-7edb-4f80-b4f1-62b43b6ab38f"
+          "WESTUS2:20170411T211218Z:4c182204-c144-435a-97af-61e50b0199c6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1078,8 +1095,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327/regenerateKeys?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTYzMjcvcmVnZW5lcmF0ZUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213/regenerateKeys?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTEyMTMvcmVnZW5lcmF0ZUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"Policykey\": \"PrimaryKey\"\r\n}",
       "RequestHeaders": {
@@ -1090,16 +1107,17 @@
           "33"
         ],
         "x-ms-client-request-id": [
-          "4d7d204b-eed4-4492-9c7d-ad1206d0626a"
+          "2e115f65-05c3-494a-a12b-fbf9a3e99824"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://sdk-namespace-9270.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-6327;SharedAccessKey=7a1Gr3hEd1cYozJwVuGdFBUzrmVyKRJSaXpFiif1JOc=;EntityPath=sdk-Queues-6793\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://sdk-namespace-9270.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-6327;SharedAccessKey=hPS0hYzsXz6HzSGAwJ6DDHy74cVolLRD16m+B2Jlzg8=;EntityPath=sdk-Queues-6793\",\r\n  \"primaryKey\": \"7a1Gr3hEd1cYozJwVuGdFBUzrmVyKRJSaXpFiif1JOc=\",\r\n  \"secondaryKey\": \"hPS0hYzsXz6HzSGAwJ6DDHy74cVolLRD16m+B2Jlzg8=\",\r\n  \"keyName\": \"sdk-AuthRules-6327\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://sdk-namespace-1811.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-1213;SharedAccessKey=BaitUyFRb5HhafwIbPhPX4PJ0v2Cu4LJkiOIfkXlmrs=;EntityPath=sdk-Queues-6693\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://sdk-namespace-1811.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-1213;SharedAccessKey=3G4Q6CUHIZEBKa26flvSDT6unK2T958ZruDCKYZz9xE=;EntityPath=sdk-Queues-6693\",\r\n  \"primaryKey\": \"BaitUyFRb5HhafwIbPhPX4PJ0v2Cu4LJkiOIfkXlmrs=\",\r\n  \"secondaryKey\": \"3G4Q6CUHIZEBKa26flvSDT6unK2T958ZruDCKYZz9xE=\",\r\n  \"keyName\": \"sdk-AuthRules-1213\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1111,7 +1129,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:35 GMT"
+          "Tue, 11 Apr 2017 21:12:18 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1127,7 +1145,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "4e2e896c-370a-46c4-bd19-140fb723cbfd_M3_M3"
+          "3835f242-2a58-44bb-bc42-e9e4c12c8bc5_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -1136,10 +1154,10 @@
           "1194"
         ],
         "x-ms-correlation-request-id": [
-          "c38c2a76-d86b-4a54-8dcd-95e17486a446"
+          "6d4c7215-1dc7-45dd-b51b-5f7ea4194684"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205735Z:c38c2a76-d86b-4a54-8dcd-95e17486a446"
+          "WESTUS2:20170411T211219Z:6d4c7215-1dc7-45dd-b51b-5f7ea4194684"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1148,8 +1166,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327/regenerateKeys?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTYzMjcvcmVnZW5lcmF0ZUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213/regenerateKeys?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTEyMTMvcmVnZW5lcmF0ZUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"Policykey\": \"SecondaryKey\"\r\n}",
       "RequestHeaders": {
@@ -1160,16 +1178,17 @@
           "35"
         ],
         "x-ms-client-request-id": [
-          "087982fb-35c6-4fa7-92a1-5c457e8b9eb0"
+          "4b660e9b-7133-4664-9a5b-250836def5df"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://sdk-namespace-9270.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-6327;SharedAccessKey=7a1Gr3hEd1cYozJwVuGdFBUzrmVyKRJSaXpFiif1JOc=;EntityPath=sdk-Queues-6793\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://sdk-namespace-9270.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-6327;SharedAccessKey=2KOQPtCbRolwMFI5oWF0NXjWv4I94crD7M+BCq3tpTo=;EntityPath=sdk-Queues-6793\",\r\n  \"primaryKey\": \"7a1Gr3hEd1cYozJwVuGdFBUzrmVyKRJSaXpFiif1JOc=\",\r\n  \"secondaryKey\": \"2KOQPtCbRolwMFI5oWF0NXjWv4I94crD7M+BCq3tpTo=\",\r\n  \"keyName\": \"sdk-AuthRules-6327\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryConnectionString\": \"Endpoint=sb://sdk-namespace-1811.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-1213;SharedAccessKey=BaitUyFRb5HhafwIbPhPX4PJ0v2Cu4LJkiOIfkXlmrs=;EntityPath=sdk-Queues-6693\",\r\n  \"secondaryConnectionString\": \"Endpoint=sb://sdk-namespace-1811.servicebus.windows.net/;SharedAccessKeyName=sdk-AuthRules-1213;SharedAccessKey=MILzQfz4BC7YUNgmFmEH6JXrI1iANJrK8v3yL0zTPuc=;EntityPath=sdk-Queues-6693\",\r\n  \"primaryKey\": \"BaitUyFRb5HhafwIbPhPX4PJ0v2Cu4LJkiOIfkXlmrs=\",\r\n  \"secondaryKey\": \"MILzQfz4BC7YUNgmFmEH6JXrI1iANJrK8v3yL0zTPuc=\",\r\n  \"keyName\": \"sdk-AuthRules-1213\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1181,7 +1200,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:35 GMT"
+          "Tue, 11 Apr 2017 21:12:19 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1197,7 +1216,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "ab3e8a70-4e6e-4e73-8fbd-66373eb82d22_M3_M3"
+          "d13da402-4935-4c4f-abd5-1f25677b6d1a_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -1206,10 +1225,10 @@
           "1193"
         ],
         "x-ms-correlation-request-id": [
-          "4e6a09f2-df6f-4181-bf95-f1d471939f67"
+          "8275618e-de14-41e6-bffe-f8553d888dc0"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205736Z:4e6a09f2-df6f-4181-bf95-f1d471939f67"
+          "WESTUS2:20170411T211219Z:8275618e-de14-41e6-bffe-f8553d888dc0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1218,19 +1237,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793/authorizationRules/sdk-AuthRules-6327?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTYzMjc/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693/authorizationRules/sdk-AuthRules-1213?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzL2F1dGhvcml6YXRpb25SdWxlcy9zZGstQXV0aFJ1bGVzLTEyMTM/YXBpLXZlcnNpb249MjAxNS0wOC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c4653be1-4eed-46cd-95d1-5003f4040fc7"
+          "70f7c078-7d45-40b3-86a8-a642ae6d1882"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -1245,7 +1265,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:36 GMT"
+          "Tue, 11 Apr 2017 21:12:20 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1255,7 +1275,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "cbe83fa4-ea8d-41bc-b9b6-df1f5b00efb1_M3_M3"
+          "787cb9d4-52b9-4b74-90b8-f035562cdba1_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -1264,10 +1284,10 @@
           "1192"
         ],
         "x-ms-correlation-request-id": [
-          "fdb810f0-9b61-4e85-8ede-e8b4fd8a12a3"
+          "d8dfc571-0d23-462a-8e01-b92ab5c94273"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205736Z:fdb810f0-9b61-4e85-8ede-e8b4fd8a12a3"
+          "WESTUS2:20170411T211220Z:d8dfc571-0d23-462a-8e01-b92ab5c94273"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1276,19 +1296,20 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/queues/sdk-Queues-6793?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9xdWV1ZXMvc2RrLVF1ZXVlcy02NzkzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/queues/sdk-Queues-6693?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9xdWV1ZXMvc2RrLVF1ZXVlcy02NjkzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "92737907-1092-4e58-94de-24bd6716250e"
+          "55234a8c-262f-48c9-a0be-1f0a5276410c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -1303,7 +1324,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:42 GMT"
+          "Tue, 11 Apr 2017 21:12:26 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1322,31 +1343,32 @@
           "1191"
         ],
         "x-ms-request-id": [
-          "b0b138fa-cf7f-48c4-8f08-8e6d52df22bd"
+          "42c08297-b6eb-465a-aa51-60ba5a6676c3"
         ],
         "x-ms-correlation-request-id": [
-          "b0b138fa-cf7f-48c4-8f08-8e6d52df22bd"
+          "42c08297-b6eb-465a-aa51-60ba5a6676c3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205742Z:b0b138fa-cf7f-48c4-8f08-8e6d52df22bd"
+          "WESTUS2:20170411T211226Z:42c08297-b6eb-465a-aa51-60ba5a6676c3"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "88a09501-83c5-43d9-bb6f-c024f0b8a52b"
+          "71cd708b-46ad-497a-8229-ca59b917f2ee"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -1361,20 +1383,20 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:57:45 GMT"
+          "Tue, 11 Apr 2017 21:12:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/operationresults/sdk-Namespace-9270?api-version=2015-08-01"
+          "https://management.azure.com/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/operationresults/sdk-Namespace-1811?api-version=2015-08-01"
         ],
         "Server": [
           "Service-Bus-Resource-Provider/SN1",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "ff73d13d-b1df-49f8-9749-f26cbb72043d_M3_M3"
+          "7b3c79ac-e14b-4610-af69-8ffed411ad80_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
@@ -1383,10 +1405,10 @@
           "1190"
         ],
         "x-ms-correlation-request-id": [
-          "76a97f88-99ed-41ec-bb7e-7d3b4444e3d1"
+          "826da24e-bb4e-4bfc-b3a7-ed750ee3bc2c"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205745Z:76a97f88-99ed-41ec-bb7e-7d3b4444e3d1"
+          "WESTUS2:20170411T211229Z:826da24e-bb4e-4bfc-b3a7-ed750ee3bc2c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1395,13 +1417,14 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/69d753c5-9c09-46a5-ad79-5d71abac3fe5/resourceGroups/asfsdfsadfsadf/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-9270/operationresults/sdk-Namespace-9270?api-version=2015-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjlkNzUzYzUtOWMwOS00NmE1LWFkNzktNWQ3MWFiYWMzZmU1L3Jlc291cmNlR3JvdXBzL2FzZnNkZnNhZGZzYWRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtOTI3MC9vcGVyYXRpb25yZXN1bHRzL3Nkay1OYW1lc3BhY2UtOTI3MD9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.ServiceBus/namespaces/sdk-Namespace-1811/operationresults/sdk-Namespace-1811?api-version=2015-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUJ1cy9uYW1lc3BhY2VzL3Nkay1OYW1lc3BhY2UtMTgxMS9vcGVyYXRpb25yZXN1bHRzL3Nkay1OYW1lc3BhY2UtMTgxMT9hcGktdmVyc2lvbj0yMDE1LTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.0.1-preview"
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.ServiceBus.ServiceBusManagementClient/0.2.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -1416,7 +1439,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 13 Sep 2016 20:58:15 GMT"
+          "Tue, 11 Apr 2017 21:12:58 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1426,19 +1449,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "3b2111c3-f52c-4d4c-b75b-8810c26e528d_M3_M3"
+          "77517b10-90ae-4c45-aa29-e200fdf6054b_M0_M0"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/SN1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14975"
+          "14972"
         ],
         "x-ms-correlation-request-id": [
-          "25ddfc77-68d1-4e12-87ab-896ac9772002"
+          "0c65b2b8-4444-4c62-b04c-06ae3a30a111"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160913T205815Z:25ddfc77-68d1-4e12-87ab-896ac9772002"
+          "WESTUS2:20170411T211259Z:0c65b2b8-4444-4c62-b04c-06ae3a30a111"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1449,14 +1472,14 @@
   ],
   "Names": {
     "QueuesCreateGetUpdateDeleteAuthorizationRules": [
-      "sdk-Namespace-9270",
-      "sdk-Queues-6793",
-      "sdk-AuthRules-6327"
+      "sdk-Namespace-1811",
+      "sdk-Queues-6693",
+      "sdk-AuthRules-1213"
     ]
   },
   "Variables": {
-    "SubscriptionId": "69d753c5-9c09-46a5-ad79-5d71abac3fe5",
-    "CreatePrimaryKey": "QmE6bfvzh50I5SELokhSshZp4rOeE+aRHTEdOExXb88=",
-    "UpdatePrimaryKey": "nt6siDnC8GDfzaIWq5GvZvLjWmYTUhcox3fk4j65DWw="
+    "SubscriptionId": "e2f361f0-3b27-4503-a9cc-21cfba380093",
+    "CreatePrimaryKey": "D9NEoMqUs/4ARYfSIWg6X9h/0UBC8fC20AXQe4yQIXA=",
+    "UpdatePrimaryKey": "PswbmKRzawE866f7GpoG5t9Vhp2ARltB6e1BOQsTj8g="
   }
 }

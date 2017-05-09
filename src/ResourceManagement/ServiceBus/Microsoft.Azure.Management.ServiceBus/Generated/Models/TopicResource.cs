@@ -14,8 +14,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Rest;
     using Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,11 +30,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the TopicResource class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="accessedAt">Last time the message was sent, or a
         /// request was received, for this topic.</param>
         /// <param name="autoDeleteOnIdle">TimeSpan idle interval after which
@@ -83,8 +79,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// topic supports ordering.</param>
         /// <param name="updatedAt">The exact time the message was
         /// updated.</param>
-        public TopicResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTime? accessedAt = default(System.DateTime?), string autoDeleteOnIdle = default(string), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), System.DateTime? createdAt = default(System.DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), string defaultMessageTimeToLive = default(string), string duplicateDetectionHistoryTimeWindow = default(string), bool? enableBatchedOperations = default(bool?), bool? enableExpress = default(bool?), bool? enablePartitioning = default(bool?), bool? enableSubscriptionPartitioning = default(bool?), bool? filteringMessagesBeforePublishing = default(bool?), bool? isAnonymousAccessible = default(bool?), bool? isExpress = default(bool?), long? maxSizeInMegabytes = default(long?), bool? requiresDuplicateDetection = default(bool?), long? sizeInBytes = default(long?), EntityStatus? status = default(EntityStatus?), int? subscriptionCount = default(int?), bool? supportOrdering = default(bool?), System.DateTime? updatedAt = default(System.DateTime?))
-            : base(location, id, name, type, tags)
+        public TopicResource(string id = default(string), string name = default(string), string type = default(string), System.DateTime? accessedAt = default(System.DateTime?), string autoDeleteOnIdle = default(string), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), System.DateTime? createdAt = default(System.DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), string defaultMessageTimeToLive = default(string), string duplicateDetectionHistoryTimeWindow = default(string), bool? enableBatchedOperations = default(bool?), bool? enableExpress = default(bool?), bool? enablePartitioning = default(bool?), bool? enableSubscriptionPartitioning = default(bool?), bool? filteringMessagesBeforePublishing = default(bool?), bool? isAnonymousAccessible = default(bool?), bool? isExpress = default(bool?), long? maxSizeInMegabytes = default(long?), bool? requiresDuplicateDetection = default(bool?), long? sizeInBytes = default(long?), EntityStatus? status = default(EntityStatus?), int? subscriptionCount = default(int?), bool? supportOrdering = default(bool?), System.DateTime? updatedAt = default(System.DateTime?))
+            : base(id, name, type)
         {
             AccessedAt = accessedAt;
             AutoDeleteOnIdle = autoDeleteOnIdle;
@@ -110,11 +106,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// Gets or sets last time the message was sent, or a request was
-        /// received, for this topic.
+        /// Gets last time the message was sent, or a request was received, for
+        /// this topic.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessedAt")]
-        public System.DateTime? AccessedAt { get; set; }
+        public System.DateTime? AccessedAt { get; protected set; }
 
         /// <summary>
         /// Gets or sets timeSpan idle interval after which the topic is
@@ -132,15 +128,15 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityAvailabilityStatus? EntityAvailabilityStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets exact time the message was created.
+        /// Gets exact time the message was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public System.DateTime? CreatedAt { get; set; }
+        public System.DateTime? CreatedAt { get; protected set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.countDetails")]
-        public MessageCountDetails CountDetails { get; set; }
+        public MessageCountDetails CountDetails { get; protected set; }
 
         /// <summary>
         /// Gets or sets default message time to live value. This is the
@@ -220,10 +216,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? RequiresDuplicateDetection { get; set; }
 
         /// <summary>
-        /// Gets or sets size of the topic, in bytes.
+        /// Gets size of the topic, in bytes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sizeInBytes")]
-        public long? SizeInBytes { get; set; }
+        public long? SizeInBytes { get; protected set; }
 
         /// <summary>
         /// Gets or sets enumerates the possible values for the status of a
@@ -235,10 +231,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityStatus? Status { get; set; }
 
         /// <summary>
-        /// Gets or sets number of subscriptions.
+        /// Gets number of subscriptions.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subscriptionCount")]
-        public int? SubscriptionCount { get; set; }
+        public int? SubscriptionCount { get; protected set; }
 
         /// <summary>
         /// Gets or sets value that indicates whether the topic supports
@@ -248,21 +244,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? SupportOrdering { get; set; }
 
         /// <summary>
-        /// Gets or sets the exact time the message was updated.
+        /// Gets the exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public System.DateTime? UpdatedAt { get; set; }
+        public System.DateTime? UpdatedAt { get; protected set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }
 
