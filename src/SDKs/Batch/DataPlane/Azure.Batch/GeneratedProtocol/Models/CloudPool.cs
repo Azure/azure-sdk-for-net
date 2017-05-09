@@ -170,8 +170,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This is the last time at which the pool level data, such as the
-        /// targetDedicated or enableAutoscale settings, changed. It does not
-        /// factor in node-level changes such as a compute node changing state.
+        /// targetDedicatedNodes or enableAutoscale settings, changed. It does
+        /// not factor in node-level changes such as a compute node changing
+        /// state.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "lastModified")]
         public System.DateTime? LastModified { get; set; }

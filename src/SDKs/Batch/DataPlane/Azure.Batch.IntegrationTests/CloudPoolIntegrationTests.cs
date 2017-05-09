@@ -1098,10 +1098,10 @@
                     finally
                     {
                         //Delete the pool
-                        batchCli.PoolOperations.DeletePool(poolId);
+                        TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
 
                         //Delete the job schedule
-                        batchCli.JobOperations.DeleteJob(jobId);
+                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                     }
                 }
             };
