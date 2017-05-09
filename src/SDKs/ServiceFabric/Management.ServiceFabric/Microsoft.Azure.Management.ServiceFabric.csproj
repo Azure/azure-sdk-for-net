@@ -4,12 +4,11 @@
     <PackageId>Management.ServiceFabric</PackageId>
     <Description>Microsoft Azure Management ServiceFabric Library</Description>
     <AssemblyName>Microsoft.Azure.Management.ServiceFabric</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <VersionPrefix>1.0.1-preview</VersionPrefix>
     <PackageTags>Microsoft Azure Management Library;ServiceFabric;ServiceFabric management</PackageTags>    
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-    <Version>1.0.1-preview</Version>
   </PropertyGroup>
 </Project>
