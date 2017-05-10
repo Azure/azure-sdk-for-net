@@ -269,5 +269,57 @@ namespace Test.Azure.Management.Logic
 
             }
         }
+
+        [Fact]
+        public void RegenerateAccessKey()
+        {
+            using (MockContext context = MockContext.Start(className: this.testClassName))
+            {
+                string workflowName = TestUtilities.GenerateName("logicwf");
+                var client = this.GetWorkflowClient(context);
+
+                // Create a workflow
+                var workflow = client.Workflows.CreateOrUpdate(
+                    resourceGroupName: this.resourceGroupName,
+                    workflowName: workflowName,
+                    workflow: new Workflow
+                    {
+                        Location = this.location,
+                        Definition = JToken.Parse(this.regenerateAccessKeyDefinition)
+                    });
+
+                // Run the trigger
+                client.Workflows.RegenerateAccessKey(this.resourceGroupName, workflowName, new RegenerateActionParameter(KeyType.Primary));
+
+                // Delete the workflow
+                client.Workflows.Delete(this.resourceGroupName, workflowName);
+            }
+        }
+
+        [Fact]
+        public void ListSwagger()
+        {
+            using (MockContext context = MockContext.Start(className: this.testClassName))
+            {
+                string workflowName = TestUtilities.GenerateName("logicwf");
+                var client = this.GetWorkflowClient(context);
+
+                // Create a workflow
+                var workflow = client.Workflows.CreateOrUpdate(
+                    resourceGroupName: this.resourceGroupName,
+                    workflowName: workflowName,
+                    workflow: new Workflow
+                    {
+                        Location = this.location,
+                        Definition = JToken.Parse(this.listSwaggerDefinition)
+                    });
+
+                // Run the trigger
+                client.Workflows.ListSwagger(this.resourceGroupName, workflowName);
+
+                // Delete the workflow
+                client.Workflows.Delete(this.resourceGroupName, workflowName);
+            }
+        }
     }
 }

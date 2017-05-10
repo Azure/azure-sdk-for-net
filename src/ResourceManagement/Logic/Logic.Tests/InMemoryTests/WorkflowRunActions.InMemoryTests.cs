@@ -51,7 +51,28 @@ namespace Test.Azure.Management.Logic
                 'algorithm':'md5',
                 'value':'BWhA5Z1Rxaz0MwuDeQBykw=='
             }
-        }
+        },
+        'retryHistory':[
+            {
+                'startTime': '2017-03-28T01:17:07.7366759Z',
+                'endTime': '2017-03-28T01:17:22.7694973Z',
+                'code': 'BadRequest',
+                'clientRequestId': '2fabdcf3-4c32-4bbd-af19-e0642c38c645',
+                'serviceRequestId': '22222222-4c32-4bbd-aaaa-e0642c38c645',
+                'error': {
+                    'error': {
+                        'code': 'BadRequest',
+                        'message': 'Http request failed: the timeout was reached.'
+                     }
+                 }
+             },
+             {
+                'startTime': '2017-03-28T01:17:38.8875713Z',
+                'endTime': '2017-03-28T01:17:39.9061247Z',
+                'code': 'ServiceUnavailable',
+                'clientRequestId': '015cece2-1149-4eba-8970-06b9286a1a30'
+             }
+         ]
     }
 }";
 
@@ -233,6 +254,53 @@ namespace Test.Azure.Management.Logic
             Assert.Equal(713, action.OutputsLink.ContentSize);
             Assert.Equal("md5", action.OutputsLink.ContentHash.Algorithm);
             Assert.Equal("BWhA5Z1Rxaz0MwuDeQBykw==", action.OutputsLink.ContentHash.Value);
+
+            Assert.NotNull(action.RetryHistory);
+            var retryHistory0 = action.RetryHistory[0];
+            var retryHistory1 = action.RetryHistory[1];
+
+            Assert.Equal(2017, retryHistory0.StartTime.Value.Year);
+            Assert.Equal(03, retryHistory0.StartTime.Value.Month);
+            Assert.Equal(28, retryHistory0.StartTime.Value.Day);
+            Assert.Equal(01, retryHistory0.StartTime.Value.Hour);
+            Assert.Equal(17, retryHistory0.StartTime.Value.Minute);
+            Assert.Equal(07, retryHistory0.StartTime.Value.Second);
+            Assert.Equal(DateTimeKind.Utc, retryHistory0.StartTime.Value.Kind);
+
+            Assert.Equal(2017, retryHistory0.EndTime.Value.Year);
+            Assert.Equal(03, retryHistory0.EndTime.Value.Month);
+            Assert.Equal(28, retryHistory0.EndTime.Value.Day);
+            Assert.Equal(01, retryHistory0.EndTime.Value.Hour);
+            Assert.Equal(17, retryHistory0.EndTime.Value.Minute);
+            Assert.Equal(22, retryHistory0.EndTime.Value.Second);
+            Assert.Equal(DateTimeKind.Utc, retryHistory0.EndTime.Value.Kind);
+
+            Assert.Equal("BadRequest", retryHistory0.Code);
+            Assert.Equal("2fabdcf3-4c32-4bbd-af19-e0642c38c645", retryHistory0.ClientRequestId);
+            Assert.Equal("22222222-4c32-4bbd-aaaa-e0642c38c645", retryHistory0.ServiceRequestId);
+            Assert.Equal("BadRequest", retryHistory0.Error.Error.Code);
+            Assert.Equal("Http request failed: the timeout was reached.", retryHistory0.Error.Error.Message);
+
+            Assert.Equal(2017, retryHistory1.StartTime.Value.Year);
+            Assert.Equal(03, retryHistory1.StartTime.Value.Month);
+            Assert.Equal(28, retryHistory1.StartTime.Value.Day);
+            Assert.Equal(01, retryHistory1.StartTime.Value.Hour);
+            Assert.Equal(17, retryHistory1.StartTime.Value.Minute);
+            Assert.Equal(38, retryHistory1.StartTime.Value.Second);
+            Assert.Equal(DateTimeKind.Utc, retryHistory1.StartTime.Value.Kind);
+
+            Assert.Equal(2017, retryHistory1.EndTime.Value.Year);
+            Assert.Equal(03, retryHistory1.EndTime.Value.Month);
+            Assert.Equal(28, retryHistory1.EndTime.Value.Day);
+            Assert.Equal(01, retryHistory1.EndTime.Value.Hour);
+            Assert.Equal(17, retryHistory1.EndTime.Value.Minute);
+            Assert.Equal(39, retryHistory1.EndTime.Value.Second);
+            Assert.Equal(DateTimeKind.Utc, retryHistory1.EndTime.Value.Kind);
+
+            Assert.Equal("ServiceUnavailable", retryHistory1.Code);
+            Assert.Equal("015cece2-1149-4eba-8970-06b9286a1a30", retryHistory1.ClientRequestId);
+            Assert.Null(retryHistory1.Error);
+
         }
 
         private void ValidateRunActionListResponse1(IPage<WorkflowRunAction> page)

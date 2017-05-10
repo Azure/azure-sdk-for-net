@@ -588,6 +588,84 @@ namespace Test.Azure.Management.Logic
 
         #endregion
 
+        #region Workflows_RegenerateAccessKey
+
+        [Fact]
+        public void Workflows_RegenerateAccessKey_Exception()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+
+            Assert.Throws<ValidationException>(() => client.Workflows.RegenerateAccessKey(null, "wfName", new RegenerateActionParameter()));
+            Assert.Throws<ValidationException>(() => client.Workflows.RegenerateAccessKey("rgName", null, new RegenerateActionParameter()));
+            Assert.Throws<CloudException>(() => client.Workflows.RegenerateAccessKey("rgName", "wfName", new RegenerateActionParameter()));
+        }
+
+        [Fact]
+        public void Workflows_RegenerateAccessKey_OK()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK
+            };
+
+            client.Workflows.RegenerateAccessKey("rgName", "wfName", new RegenerateActionParameter());
+
+            // Validates requests.
+            handler.Request.ValidateAuthorizationHeader();
+            handler.Request.ValidateAction("regenerateAccessKey");
+        }
+
+        #endregion
+
+        #region Workflows_ListSwagger
+
+        [Fact]
+        public void Workflows_ListSwagger_Exception()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.InternalServerError,
+                Content = this.Empty
+            };
+
+            Assert.Throws<ValidationException>(() => client.Workflows.ListSwagger(null, "wfName"));
+            Assert.Throws<ValidationException>(() => client.Workflows.ListSwagger("rgName", null));
+            Assert.Throws<CloudException>(() => client.Workflows.ListSwagger("rgName", "wfName"));
+        }
+
+        [Fact]
+        public void Workflows_ListSwagger_OK()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = this.Empty
+            };
+
+            client.Workflows.ListSwagger("rgName", "wfName");
+
+            // Validates requests.
+            handler.Request.ValidateAuthorizationHeader();
+            handler.Request.ValidateAction("listSwagger");
+        }
+
+        #endregion
+
         #region Workflows_Validate
 
         [Fact]
