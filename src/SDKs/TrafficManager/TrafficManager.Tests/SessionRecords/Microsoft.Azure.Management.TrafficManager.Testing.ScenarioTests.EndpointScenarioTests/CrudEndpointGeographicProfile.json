@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourcegroups/azuresdkfornetautoresttrafficmanager8860?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlZ3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjg4NjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourcegroups/azuresdkfornetautoresttrafficmanager8499?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlZ3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjg0OTk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
@@ -13,17 +13,17 @@
           "32"
         ],
         "x-ms-client-request-id": [
-          "15df1221-f562-4046-a43d-f73dc55cd92c"
+          "5cfbe6b6-eb2a-471c-a4da-88c5ed23527e"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8860\",\r\n  \"name\": \"azuresdkfornetautoresttrafficmanager8860\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8499\",\r\n  \"name\": \"azuresdkfornetautoresttrafficmanager8499\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "236"
@@ -38,7 +38,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 03 May 2017 10:39:39 GMT"
+          "Wed, 10 May 2017 17:46:55 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -47,13 +47,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "9b9234c6-b74f-4a56-8df1-186f7a0fbd2a"
+          "6be5b2a2-0356-4490-8e08-fdc041be42c9"
         ],
         "x-ms-correlation-request-id": [
-          "9b9234c6-b74f-4a56-8df1-186f7a0fbd2a"
+          "6be5b2a2-0356-4490-8e08-fdc041be42c9"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170503T103940Z:9b9234c6-b74f-4a56-8df1-186f7a0fbd2a"
+          "WESTEUROPE:20170510T174656Z:6be5b2a2-0356-4490-8e08-fdc041be42c9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,10 +62,10 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8860/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager5933?api-version=2017-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjg4NjAvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyNTkzMz9hcGktdmVyc2lvbj0yMDE3LTA1LTAx",
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8499/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager1392?api-version=2017-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjg0OTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyMTM5Mj9hcGktdmVyc2lvbj0yMDE3LTA1LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Geographic\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"azuresdkfornetautoresttrafficmanager5933\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"http\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\"\r\n    }\r\n  },\r\n  \"location\": \"global\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Geographic\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"azuresdkfornetautoresttrafficmanager1392\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"http\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\"\r\n    }\r\n  },\r\n  \"location\": \"global\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -74,17 +74,17 @@
           "350"
         ],
         "x-ms-client-request-id": [
-          "24dc8959-c2f0-41a1-a394-8665c8875801"
+          "a433acf5-e116-4e3d-a151-c0edc6672b5a"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.2.0-preview"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8860/providers/Microsoft.Network/trafficManagerProfiles/azuresdkfornetautoresttrafficmanager5933\",\r\n  \"name\": \"azuresdkfornetautoresttrafficmanager5933\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Geographic\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"azuresdkfornetautoresttrafficmanager5933\",\r\n      \"fqdn\": \"azuresdkfornetautoresttrafficmanager5933.tmpreview.watmtest.azure-test.net\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"Inactive\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\",\r\n      \"intervalInSeconds\": 30,\r\n      \"toleratedNumberOfFailures\": 3,\r\n      \"timeoutInSeconds\": 10\r\n    },\r\n    \"endpoints\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8499/providers/Microsoft.Network/trafficManagerProfiles/azuresdkfornetautoresttrafficmanager1392\",\r\n  \"name\": \"azuresdkfornetautoresttrafficmanager1392\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Geographic\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"azuresdkfornetautoresttrafficmanager1392\",\r\n      \"fqdn\": \"azuresdkfornetautoresttrafficmanager1392.tmpreview.watmtest.azure-test.net\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"Inactive\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\",\r\n      \"intervalInSeconds\": 30,\r\n      \"toleratedNumberOfFailures\": 3,\r\n      \"timeoutInSeconds\": 10\r\n    },\r\n    \"endpoints\": []\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "774"
@@ -96,7 +96,7 @@
           "private"
         ],
         "Date": [
-          "Wed, 03 May 2017 10:39:43 GMT"
+          "Wed, 10 May 2017 17:46:58 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -108,7 +108,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "24dc8959-c2f0-41a1-a394-8665c8875801"
+          "a433acf5-e116-4e3d-a151-c0edc6672b5a"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -117,20 +117,20 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "10799"
+          "10798"
         ],
         "x-ms-correlation-request-id": [
-          "b97101de-059e-4767-801f-c6c9c67ad6ac"
+          "412a0f25-0444-4ac8-842b-62fe4f25d384"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170503T103943Z:b97101de-059e-4767-801f-c6c9c67ad6ac"
+          "WESTEUROPE:20170510T174659Z:412a0f25-0444-4ac8-842b-62fe4f25d384"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8860/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager5933/ExternalEndpoints/My%20external%20endpoint?api-version=2017-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjg4NjAvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyNTkzMy9FeHRlcm5hbEVuZHBvaW50cy9NeSUyMGV4dGVybmFsJTIwZW5kcG9pbnQ/YXBpLXZlcnNpb249MjAxNy0wNS0wMQ==",
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8499/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager1392/ExternalEndpoints/My%20external%20endpoint?api-version=2017-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjg0OTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyMTM5Mi9FeHRlcm5hbEVuZHBvaW50cy9NeSUyMGV4dGVybmFsJTIwZW5kcG9pbnQ/YXBpLXZlcnNpb249MjAxNy0wNS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"name\": \"My external endpoint\",\r\n  \"type\": \"Microsoft.network/TrafficManagerProfiles/ExternalEndpoints\",\r\n  \"properties\": {\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"geoMapping\": [\r\n      \"GEO-AS\",\r\n      \"GEO-AF\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
@@ -141,17 +141,17 @@
           "268"
         ],
         "x-ms-client-request-id": [
-          "54ed8415-950a-471d-bbc0-04735c941b6d"
+          "dc542f1f-6fe6-44ec-9071-78678900d8b5"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.2.0-preview"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8860/providers/Microsoft.Network/trafficManagerProfiles/azuresdkfornetautoresttrafficmanager5933/externalEndpoints/My external endpoint\",\r\n  \"name\": \"My external endpoint\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": null,\r\n    \"geoMapping\": [\r\n      \"GEO-AS\",\r\n      \"GEO-AF\"\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8499/providers/Microsoft.Network/trafficManagerProfiles/azuresdkfornetautoresttrafficmanager1392/externalEndpoints/My external endpoint\",\r\n  \"name\": \"My external endpoint\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": null,\r\n    \"geoMapping\": [\r\n      \"GEO-AS\",\r\n      \"GEO-AF\"\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "553"
@@ -163,7 +163,7 @@
           "private"
         ],
         "Date": [
-          "Wed, 03 May 2017 10:39:44 GMT"
+          "Wed, 10 May 2017 17:46:59 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -175,7 +175,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "54ed8415-950a-471d-bbc0-04735c941b6d"
+          "dc542f1f-6fe6-44ec-9071-78678900d8b5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -184,35 +184,35 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "f0ee9a9e-5326-406e-8827-8cccfe3be894"
+          "e6f07d02-0a00-4057-a7c7-6d86c1724b73"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170503T103944Z:f0ee9a9e-5326-406e-8827-8cccfe3be894"
+          "WESTEUROPE:20170510T174700Z:e6f07d02-0a00-4057-a7c7-6d86c1724b73"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8860/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager5933/ExternalEndpoints/My%20external%20endpoint?api-version=2017-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjg4NjAvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyNTkzMy9FeHRlcm5hbEVuZHBvaW50cy9NeSUyMGV4dGVybmFsJTIwZW5kcG9pbnQ/YXBpLXZlcnNpb249MjAxNy0wNS0wMQ==",
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8499/providers/Microsoft.Network/trafficmanagerprofiles/azuresdkfornetautoresttrafficmanager1392/ExternalEndpoints/My%20external%20endpoint?api-version=2017-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2F6dXJlc2RrZm9ybmV0YXV0b3Jlc3R0cmFmZmljbWFuYWdlcjg0OTkvcHJvdmlkZXJzL01pY3Jvc29mdC5OZXR3b3JrL3RyYWZmaWNtYW5hZ2VycHJvZmlsZXMvYXp1cmVzZGtmb3JuZXRhdXRvcmVzdHRyYWZmaWNtYW5hZ2VyMTM5Mi9FeHRlcm5hbEVuZHBvaW50cy9NeSUyMGV4dGVybmFsJTIwZW5kcG9pbnQ/YXBpLXZlcnNpb249MjAxNy0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dcde5f09-ac83-42ae-9519-b381de83c5a7"
+          "c9403ca8-2c26-40f6-8b40-a0c6eae866e3"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.2.0-preview"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8860/providers/Microsoft.Network/trafficManagerProfiles/azuresdkfornetautoresttrafficmanager5933/externalEndpoints/My external endpoint\",\r\n  \"name\": \"My external endpoint\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": null,\r\n    \"geoMapping\": [\r\n      \"GEO-AS\",\r\n      \"GEO-AF\"\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azuresdkfornetautoresttrafficmanager8499/providers/Microsoft.Network/trafficManagerProfiles/azuresdkfornetautoresttrafficmanager1392/externalEndpoints/My external endpoint\",\r\n  \"name\": \"My external endpoint\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles/externalEndpoints\",\r\n  \"properties\": {\r\n    \"endpointStatus\": \"Enabled\",\r\n    \"endpointMonitorStatus\": \"CheckingEndpoint\",\r\n    \"target\": \"foobar.contoso.com\",\r\n    \"weight\": 1,\r\n    \"priority\": 1,\r\n    \"endpointLocation\": null,\r\n    \"geoMapping\": [\r\n      \"GEO-AS\",\r\n      \"GEO-AF\"\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -221,7 +221,7 @@
           "private"
         ],
         "Date": [
-          "Wed, 03 May 2017 10:39:56 GMT"
+          "Wed, 10 May 2017 17:46:59 GMT"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -239,7 +239,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "dcde5f09-ac83-42ae-9519-b381de83c5a7"
+          "c9403ca8-2c26-40f6-8b40-a0c6eae866e3"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -248,13 +248,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14980"
         ],
         "x-ms-correlation-request-id": [
-          "f2ed56b6-17a7-44c7-9f4d-3556646d3f57"
+          "03c4e6e8-02fc-4be8-ac7d-c17d806fea3e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170503T103956Z:f2ed56b6-17a7-44c7-9f4d-3556646d3f57"
+          "WESTEUROPE:20170510T174700Z:03c4e6e8-02fc-4be8-ac7d-c17d806fea3e"
         ]
       },
       "StatusCode": 200
@@ -262,8 +262,8 @@
   ],
   "Names": {
     "GenerateName": [
-      "azuresdkfornetautoresttrafficmanager8860",
-      "azuresdkfornetautoresttrafficmanager5933"
+      "azuresdkfornetautoresttrafficmanager8499",
+      "azuresdkfornetautoresttrafficmanager1392"
     ]
   },
   "Variables": {
