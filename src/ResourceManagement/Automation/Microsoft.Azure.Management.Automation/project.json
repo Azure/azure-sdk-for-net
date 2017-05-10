@@ -1,0 +1,50 @@
+{
+  "version": "0.52.0-prerelease",
+  "title": "Microsoft Azure Automation Management Library",
+  "description": "Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "tags": [ "Microsoft Azure Automation management", "asazure", "REST HTTP client", "azureofficial", "windowsazureofficial", "netcore4515" ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "requireLicenseAcceptance": true
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.5,4.0.0)",
+    "Microsoft.Rest.ClientRuntime": "[2.3.5,3.0.0)",
+    "Hyak.Common": "1.1.1",
+    "Microsoft.Azure.Common": "2.1.1",
+    "Microsoft.Azure.Common.Dependencies": "1.0.0",
+    "Microsoft.Bcl.Build": "1.0.14"
+  },
+
+  "frameworks": {
+    "net45": {
+      "frameworkAssemblies": {
+        "mscorlib": "",
+        "System.Xml.Linq": "",
+        "System.Threading": "",
+        "System.Threading.Tasks": ""
+      },
+      "dependencies": {
+      }
+    },
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.1.0",
+        "NETStandard.Library": "1.6.1"
+      }
+    }
+  }
+}
