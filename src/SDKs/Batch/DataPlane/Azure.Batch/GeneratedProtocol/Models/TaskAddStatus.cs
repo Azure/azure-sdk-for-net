@@ -20,8 +20,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "clientError")]
         ClientError,
         [System.Runtime.Serialization.EnumMember(Value = "serverError")]
-        ServerError,
-        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
-        Unmapped
+        ServerError
     }
 }

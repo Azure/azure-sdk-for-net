@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Deletes the specified task file from the compute node.
+            /// Deletes the specified file from the compute node.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Deletes the specified task file from the compute node.
+            /// Deletes the specified file from the compute node.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Returns the content of the specified task file.
+            /// Returns the content of the specified compute node file.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The ID of the compute node that contains the file.
             /// </param>
             /// <param name='filePath'>
-            /// The path to the task file that you want to get the content of.
+            /// The path to the compute node file that you want to get the content of.
             /// </param>
             /// <param name='fileGetFromComputeNodeOptions'>
             /// Additional parameters for the operation
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Returns the content of the specified task file.
+            /// Returns the content of the specified compute node file.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The ID of the compute node that contains the file.
             /// </param>
             /// <param name='filePath'>
-            /// The path to the task file that you want to get the content of.
+            /// The path to the compute node file that you want to get the content of.
             /// </param>
             /// <param name='fileGetFromComputeNodeOptions'>
             /// Additional parameters for the operation

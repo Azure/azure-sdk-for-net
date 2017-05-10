@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// schedule, and deletes that pool when the job schedule completes.
         /// Batch will also delete this pool if the user updates the auto pool
         /// specification in a way that changes this lifetime. Possible values
-        /// include: 'jobSchedule', 'job', 'unmapped'
+        /// include: 'jobSchedule', 'job'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "poolLifetimeOption")]
         public PoolLifetimeOption PoolLifetimeOption { get; set; }

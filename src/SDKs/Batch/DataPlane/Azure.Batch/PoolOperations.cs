@@ -201,29 +201,39 @@ namespace Microsoft.Azure.Batch
         /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any pool in the Batch service.
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
-        /// <param name="virtualMachineSize">The size of virtual machines in the pool.  See https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-size-specs/ for sizes.</param>
+        /// <param name="virtualMachineSize">
+        /// The size of virtual machines in the pool.  See https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/ for sizes. Batch supports all Azure cloud service VM sizes except ExtraSmall, A1V2 and A2V2.</param>
         /// <param name="cloudServiceConfiguration">The <see cref="CloudServiceConfiguration"/> for the pool.</param>
-        /// <param name="targetDedicated">The desired number of compute nodes in the pool. If omitted, you must set the <see cref="CloudPool.AutoScaleEnabled"/> property.</param>
+        /// <param name="targetDedicatedComputeNodes">
+        /// The desired number of dedicated compute nodes in the pool.
+        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted, 
+        /// you must set the <see cref="CloudPool.AutoScaleEnabled"/> and <see cref="CloudPool.AutoScaleFormula"/> properties.
+        /// </param>
+        /// <param name="targetLowPriorityComputeNodes">
+        /// The desired number of low-priority compute nodes in the pool.
+        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted, 
+        /// you must set the <see cref="CloudPool.AutoScaleEnabled"/> and <see cref="CloudPool.AutoScaleFormula"/> properties.
+        /// </param>
         /// <returns>A <see cref="CloudPool"/> representing a new pool that has not been added to the Batch service.
         /// To add the pool to the Batch account, call <see cref="CloudPool.CommitAsync"/>.</returns>
         /// <remarks>
         /// <para>For information about Azure Guest OS families, see https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/ </para>
-        /// <para>For information about available sizes of virtual machines, see https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/.
-        /// Batch supports all Azure cloud service VM sizes except ExtraSmall.</para>
         /// </remarks>
         public CloudPool CreatePool(
             string poolId,
             string virtualMachineSize,
             CloudServiceConfiguration cloudServiceConfiguration,
-            int? targetDedicated = null)
+            int? targetDedicatedComputeNodes = null,
+            int? targetLowPriorityComputeNodes = null)
         {
             CloudPool unboundPool = new CloudPool(this.ParentBatchClient, this.CustomBehaviors)
-                                    {
-                                        CloudServiceConfiguration = cloudServiceConfiguration,
-                                        Id = poolId,
-                                        VirtualMachineSize = virtualMachineSize,
-                                        TargetDedicated = targetDedicated
-                                    };
+                {
+                    CloudServiceConfiguration = cloudServiceConfiguration,
+                    Id = poolId,
+                    VirtualMachineSize = virtualMachineSize,
+                    TargetDedicatedComputeNodes = targetDedicatedComputeNodes,
+                    TargetLowPriorityComputeNodes = targetLowPriorityComputeNodes,
+                };
 
             return unboundPool;
         }
@@ -232,23 +242,36 @@ namespace Microsoft.Azure.Batch
         /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any pool in the Batch service.
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
-        /// <param name="virtualMachineSize">The size of virtual machines in the pool.  See https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-size-specs/ for sizes.</param>
+        /// <param name="virtualMachineSize">The size of virtual machines in the pool. 
+        /// See https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/ for windows sizes and https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/ for linux sizes.
+        /// </param>
         /// <param name="virtualMachineConfiguration">The <see cref="VirtualMachineConfiguration"/> for the pool.</param>
-        /// <param name="targetDedicated">The desired number of compute nodes in the pool. If omitted, you must set the <see cref="CloudPool.AutoScaleEnabled"/> property.</param>
+        /// <param name="targetDedicatedComputeNodes">
+        /// The desired number of dedicated compute nodes in the pool.
+        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted, 
+        /// you must set the <see cref="CloudPool.AutoScaleEnabled"/> and <see cref="CloudPool.AutoScaleFormula"/> properties.
+        /// </param>
+        /// <param name="targetLowPriorityComputeNodes">
+        /// The desired number of low-priority compute nodes in the pool.
+        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted, 
+        /// you must set the <see cref="CloudPool.AutoScaleEnabled"/> and <see cref="CloudPool.AutoScaleFormula"/> properties.
+        /// </param>
         /// <returns>A <see cref="CloudPool"/> representing a new pool that has not been added to the Batch service.
         /// To add the pool to the Batch account, call <see cref="CloudPool.CommitAsync"/>.</returns>
         public CloudPool CreatePool(
             string poolId,
             string virtualMachineSize,
             VirtualMachineConfiguration virtualMachineConfiguration,
-            int? targetDedicated = null)
+            int? targetDedicatedComputeNodes = null,
+            int? targetLowPriorityComputeNodes = null)
         {
             CloudPool unboundPool = new CloudPool(this.ParentBatchClient, this.CustomBehaviors)
                 {
                     Id = poolId,
                     VirtualMachineConfiguration = virtualMachineConfiguration,
                     VirtualMachineSize = virtualMachineSize,
-                    TargetDedicated = targetDedicated
+                    TargetDedicatedComputeNodes = targetDedicatedComputeNodes,
+                    TargetLowPriorityComputeNodes = targetLowPriorityComputeNodes,
                 };
 
             return unboundPool;
@@ -256,7 +279,8 @@ namespace Microsoft.Azure.Batch
 
         internal System.Threading.Tasks.Task ResizePoolAsyncImpl(
             string poolId,
-            int targetDedicated,
+            int? targetDedicatedComputeNodes,
+            int? targetLowPriorityComputeNodes,
             TimeSpan? resizeTimeout,
             Common.ComputeNodeDeallocationOption? deallocationOption,
             BehaviorManager bhMgr,
@@ -264,7 +288,8 @@ namespace Microsoft.Azure.Batch
         {
             System.Threading.Tasks.Task asyncTask = _parentBatchClient.ProtocolLayer.ResizePool(
                 poolId,
-                targetDedicated,
+                targetDedicatedComputeNodes,
+                targetLowPriorityComputeNodes,
                 resizeTimeout,
                 deallocationOption,
                 bhMgr,
@@ -277,9 +302,18 @@ namespace Microsoft.Azure.Batch
         /// Resizes the specified pool.
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
-        /// <param name="targetDedicated">The desired number of compute nodes in the pool.</param>
+        /// <param name="targetDedicatedComputeNodes">
+        /// The desired number of dedicated compute nodes in the pool.
+        /// At least one of <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> is required.
+        /// </param>
+        /// <param name="targetLowPriorityComputeNodes">
+        /// The desired number of low-priority compute nodes in the pool.
+        /// At least one of <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> is required.
+        /// </param>
         /// <param name="resizeTimeout">The timeout for allocation of compute nodes to the pool or removal of compute nodes from the pool. If the pool has not reached the target size after this time, the resize is stopped. The default is 15 minutes.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool, if the pool size is decreasing. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool, if the pool size is decreasing. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
@@ -295,7 +329,8 @@ namespace Microsoft.Azure.Batch
         /// </remarks>
         public System.Threading.Tasks.Task ResizePoolAsync(
             string poolId,
-            int targetDedicated,
+            int? targetDedicatedComputeNodes = null,
+            int? targetLowPriorityComputeNodes = null,
             TimeSpan? resizeTimeout = null,
             Common.ComputeNodeDeallocationOption? deallocationOption = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
@@ -306,7 +341,8 @@ namespace Microsoft.Azure.Batch
 
             System.Threading.Tasks.Task asyncTask = ResizePoolAsyncImpl(
                 poolId,
-                targetDedicated,
+                targetDedicatedComputeNodes,
+                targetLowPriorityComputeNodes,
                 resizeTimeout,
                 deallocationOption,
                 bhMgr,
@@ -320,9 +356,18 @@ namespace Microsoft.Azure.Batch
         /// Resizes the specified pool.
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
-        /// <param name="targetDedicated">The desired number of compute nodes in the pool.</param>
+        /// <param name="targetDedicatedComputeNodes">
+        /// The desired number of dedicated compute nodes in the pool.
+        /// At least one of <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> is required.
+        /// </param>
+        /// <param name="targetLowPriorityComputeNodes">
+        /// The desired number of low-priority compute nodes in the pool.
+        /// At least one of <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> is required.
+        /// </param>
         /// <param name="resizeTimeout">The timeout for allocation of compute nodes to the pool or removal of compute nodes from the pool. If the pool has not reached the target size after this time, the resize is stopped. The default is 15 minutes.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool, if the pool size is decreasing. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool, if the pool size is decreasing. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
         /// <para>The resize operation requests that the pool be resized.  The request puts the pool in the <see cref="Common.AllocationState.Resizing"/> allocation state.
@@ -336,12 +381,19 @@ namespace Microsoft.Azure.Batch
         /// </remarks>
         public void ResizePool(
             string poolId,
-            int targetDedicated,
+            int? targetDedicatedComputeNodes = null,
+            int? targetLowPriorityComputeNodes = null,
             TimeSpan? resizeTimeout = null,
             Common.ComputeNodeDeallocationOption? deallocationOption = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task asyncTask = ResizePoolAsync(poolId, targetDedicated, resizeTimeout, deallocationOption, additionalBehaviors);
+            Task asyncTask = ResizePoolAsync(
+                poolId,
+                targetDedicatedComputeNodes,
+                targetLowPriorityComputeNodes,
+                resizeTimeout,
+                deallocationOption,
+                additionalBehaviors);
             asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
         }
 
@@ -783,7 +835,9 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="computeNodeId">The id of the compute node to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
@@ -814,7 +868,9 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="computeNodeId">The id of the compute node to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
@@ -859,7 +915,9 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="computeNodeIds">The ids of the compute nodes to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -897,7 +955,9 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="computeNodeIds">The ids of the compute nodes to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
@@ -921,7 +981,9 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="computeNode">The <see cref="ComputeNode"/> to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
@@ -952,7 +1014,9 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="computeNode">The <see cref="ComputeNode"/> to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
@@ -1004,7 +1068,9 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="computeNodes">The <see cref="ComputeNode">compute nodes</see> to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -1042,7 +1108,9 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
         /// <param name="computeNodes">The <see cref="ComputeNode">compute nodes</see> to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>

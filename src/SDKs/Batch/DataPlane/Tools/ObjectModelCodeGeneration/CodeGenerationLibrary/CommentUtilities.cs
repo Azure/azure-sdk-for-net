@@ -28,6 +28,7 @@
         /// <returns>A formatted comment string beginning with /// that is correctly indented.</returns>
         public static string FormatTripleSlashComment(string commentString, int indentationSpaces, bool indentAndCommentFirstLine = true)
         {
+            //TODO: Consider line breaks on <para>
             const int maxLineLength = 120;
             int allowedCommentLineLength = maxLineLength - (indentationSpaces + CommentPrefix.Length);
 

@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<DateTime?> LastModifiedProperty;
             public readonly PropertyAccessor<MultiInstanceSettings> MultiInstanceSettingsProperty;
+            public readonly PropertyAccessor<IList<OutputFile>> OutputFilesProperty;
             public readonly PropertyAccessor<Common.TaskState?> PreviousStateProperty;
             public readonly PropertyAccessor<DateTime?> PreviousStateTransitionTimeProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
@@ -70,6 +71,7 @@ namespace Microsoft.Azure.Batch
                 this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
                 this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>("LastModified", BindingAccess.None);
                 this.MultiInstanceSettingsProperty = this.CreatePropertyAccessor<MultiInstanceSettings>("MultiInstanceSettings", BindingAccess.Read | BindingAccess.Write);
+                this.OutputFilesProperty = this.CreatePropertyAccessor<IList<OutputFile>>("OutputFiles", BindingAccess.Read | BindingAccess.Write);
                 this.PreviousStateProperty = this.CreatePropertyAccessor<Common.TaskState?>("PreviousState", BindingAccess.None);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("PreviousStateTransitionTime", BindingAccess.None);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
@@ -148,6 +150,10 @@ namespace Microsoft.Azure.Batch
                 this.MultiInstanceSettingsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.MultiInstanceSettings, o => new MultiInstanceSettings(o).Freeze()),
                     "MultiInstanceSettings",
+                    BindingAccess.Read);
+                this.OutputFilesProperty = this.CreatePropertyAccessor(
+                    OutputFile.ConvertFromProtocolCollectionAndFreeze(protocolObject.OutputFiles),
+                    "OutputFiles",
                     BindingAccess.Read);
                 this.PreviousStateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.TaskState, Common.TaskState>(protocolObject.PreviousState),
@@ -405,6 +411,19 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets a list of files that the Batch service will upload from the compute node after running the command 
+        /// line.
+        /// </summary>
+        public IList<OutputFile> OutputFiles
+        {
+            get { return this.propertyContainer.OutputFilesProperty.Value; }
+            set
+            {
+                this.propertyContainer.OutputFilesProperty.Value = ConcurrentChangeTrackedModifiableList<OutputFile>.TransformEnumerableToConcurrentModifiableList(value);
+            }
+        }
+
+        /// <summary>
         /// Gets the previous state of the task.
         /// </summary>
         /// <remarks>
@@ -526,6 +545,7 @@ namespace Microsoft.Azure.Batch
                 ExitConditions = UtilitiesInternal.CreateObjectWithNullCheck(this.ExitConditions, (o) => o.GetTransportObject()),
                 Id = this.Id,
                 MultiInstanceSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.MultiInstanceSettings, (o) => o.GetTransportObject()),
+                OutputFiles = UtilitiesInternal.ConvertToProtocolCollection(this.OutputFiles),
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),
                 UserIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.UserIdentity, (o) => o.GetTransportObject()),
             };

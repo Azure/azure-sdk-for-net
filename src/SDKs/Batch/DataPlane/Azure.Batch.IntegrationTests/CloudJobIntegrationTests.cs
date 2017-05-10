@@ -75,7 +75,7 @@
                                         repeat = true;
 
                                         this.testOutputHelper.WriteLine("Manual Wait Task Id: " + curTask.Id + ", state = " + curTask.State);
-                                        this.testOutputHelper.WriteLine("   poolstate: " + boundPool.State + ", currentdedicated: " + boundPool.CurrentDedicated);
+                                        this.testOutputHelper.WriteLine("   poolstate: " + boundPool.State + ", currentdedicated: " + boundPool.CurrentDedicatedComputeNodes);
                                         this.testOutputHelper.WriteLine("      compute nodes:");
 
                                         foreach (ComputeNode curComputeNode in boundPool.ListComputeNodes())
@@ -512,7 +512,8 @@
                                 {
                                     new ExitCodeRangeMapping(2, 4, new ExitOptions { JobAction = JobAction.Disable })
                                 },
-                                SchedulingError = new ExitOptions { JobAction = JobAction.Terminate },
+                                PreProcessingError = new ExitOptions { JobAction = JobAction.Terminate },
+                                FileUploadError = new ExitOptions { JobAction = JobAction.Terminate },
                                 Default = new ExitOptions { JobAction = JobAction.Terminate },
                             };
 
@@ -529,7 +530,8 @@
                             Assert.Equal(2, exitCodeRangeMappings.First().Start);
                             Assert.Equal(4, exitCodeRangeMappings.First().End);
                             Assert.Equal(JobAction.Disable, exitCodeRangeMappings.First().ExitOptions.JobAction);
-                            Assert.Equal(JobAction.Terminate, boundTask.ExitConditions.SchedulingError.JobAction);
+                            Assert.Equal(JobAction.Terminate, boundTask.ExitConditions.PreProcessingError.JobAction);
+                            Assert.Equal(JobAction.Terminate, boundTask.ExitConditions.FileUploadError.JobAction);
                             Assert.Equal(JobAction.Terminate, boundTask.ExitConditions.Default.JobAction);
                         }
                     }
@@ -627,7 +629,7 @@
                     
                     poolSpec.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily, "*");
 
-                    poolSpec.TargetDedicated = 0;
+                    poolSpec.TargetDedicatedComputeNodes = 0;
                     poolSpec.VirtualMachineSize = PoolFixture.VMSize;
                     AutoPoolSpecification autoPoolSpec = new AutoPoolSpecification();
                     string autoPoolPrefix = "UpdPIAuto_" + TestUtilities.GetMyName();
@@ -739,7 +741,7 @@
                                 {
                                     CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
                                     VirtualMachineSize = PoolFixture.VMSize,
-                                    TargetDedicated = 1
+                                    TargetDedicatedComputeNodes = 1
                                 }
                             }
                         };
@@ -855,6 +857,42 @@
             };
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task Job_CanAddJobWithJobManagerAndAllowLowPriorityTrue()
+        {
+            Func<Task> test = async () =>
+            {
+                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                {
+                    string jobId = "TestJobWithLowPriJobManager-" + TestUtilities.GetMyName();
+                    try
+                    {
+                        PoolInformation poolInfo = new PoolInformation()
+                        {
+                            PoolId = "Fake"
+                        };
+
+                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, poolInfo);
+                        unboundJob.JobManagerTask = new JobManagerTask("foo", "cmd /c echo hi")
+                        {
+                            AllowLowPriorityNode = true
+                        };
+                        await unboundJob.CommitAsync().ConfigureAwait(false);
+                        await unboundJob.RefreshAsync().ConfigureAwait(false);
+
+                        Assert.True(unboundJob.JobManagerTask.AllowLowPriorityNode);
+                    }
+                    finally
+                    {
+                        await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId);
+                    }
+                }
+            };
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
         private static async Task MutateJobAsync(string jobId, Func<CloudJob, Task> jobAction)

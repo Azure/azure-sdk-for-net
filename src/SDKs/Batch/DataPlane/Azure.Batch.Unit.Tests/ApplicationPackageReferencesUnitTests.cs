@@ -50,7 +50,7 @@
                                                  Version = version
                                             }
                                     },
-                                    CurrentDedicated = 4,
+                                    CurrentDedicatedNodes = 4,
                                     CloudServiceConfiguration = new Models.CloudServiceConfiguration() { CurrentOSVersion = "3" },
                                     Id = "pool-id"
                                 },
@@ -92,7 +92,7 @@
                         {
                             Body = new Protocol.Models.CloudPool
                             {
-                                CurrentDedicated = 4,
+                                CurrentDedicatedNodes = 4,
                                 CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily),
                                 Id = poolId
                             }

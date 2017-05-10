@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class JobSchedulingError : IPropertyMetadata
     {
-        private readonly Common.SchedulingErrorCategory category;
+        private readonly Common.ErrorCategory category;
         private readonly string code;
         private readonly IReadOnlyList<NameValuePair> details;
         private readonly string message;
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Batch
 
         internal JobSchedulingError(Models.JobSchedulingError protocolObject)
         {
-            this.category = UtilitiesInternal.MapEnum<Models.SchedulingErrorCategory, Common.SchedulingErrorCategory>(protocolObject.Category);
+            this.category = UtilitiesInternal.MapEnum<Models.ErrorCategory, Common.ErrorCategory>(protocolObject.Category);
             this.code = protocolObject.Code;
             this.details = NameValuePair.ConvertFromProtocolCollectionReadOnly(protocolObject.Details);
             this.message = protocolObject.Message;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the category of the job scheduling error.
         /// </summary>
-        public Common.SchedulingErrorCategory Category
+        public Common.ErrorCategory Category
         {
             get { return this.category; }
         }
