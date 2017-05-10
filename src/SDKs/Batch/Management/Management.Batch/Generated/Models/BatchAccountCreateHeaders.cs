@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <param name="location">The URL of the resource used to check the
         /// status of the asynchronous operation.</param>
         /// <param name="retryAfter">Suggested delay to check the status of the
-        /// asynchronous operation. The value is an integer that represents the
-        /// seconds.</param>
+        /// asynchronous operation. The value is an integer that specifies the
+        /// delay in seconds.</param>
         public BatchAccountCreateHeaders(string location = default(string), int? retryAfter = default(int?))
         {
             Location = location;
@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.Batch.Models
 
         /// <summary>
         /// Gets or sets suggested delay to check the status of the
-        /// asynchronous operation. The value is an integer that represents the
-        /// seconds.
+        /// asynchronous operation. The value is an integer that specifies the
+        /// delay in seconds.
         /// </summary>
         [JsonProperty(PropertyName = "Retry-After")]
         public int? RetryAfter { get; set; }

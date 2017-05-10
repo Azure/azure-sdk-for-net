@@ -15,18 +15,18 @@ namespace Microsoft.Azure.Management.Batch.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for an ApplicationOperations.UpdateApplication request.
+    /// Parameters for an update application request.
     /// </summary>
-    public partial class UpdateApplicationParameters
+    public partial class ApplicationUpdateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the UpdateApplicationParameters
+        /// Initializes a new instance of the ApplicationUpdateParameters
         /// class.
         /// </summary>
-        public UpdateApplicationParameters() { }
+        public ApplicationUpdateParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the UpdateApplicationParameters
+        /// Initializes a new instance of the ApplicationUpdateParameters
         /// class.
         /// </summary>
         /// <param name="allowUpdates">A value indicating whether packages
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// requests the application but does not specify a version.</param>
         /// <param name="displayName">The display name for the
         /// application.</param>
-        public UpdateApplicationParameters(bool? allowUpdates = default(bool?), string defaultVersion = default(string), string displayName = default(string))
+        public ApplicationUpdateParameters(bool? allowUpdates = default(bool?), string defaultVersion = default(string), string displayName = default(string))
         {
             AllowUpdates = allowUpdates;
             DefaultVersion = defaultVersion;

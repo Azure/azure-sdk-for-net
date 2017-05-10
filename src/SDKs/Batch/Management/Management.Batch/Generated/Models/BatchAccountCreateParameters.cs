@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         /// <param name="location">The region in which to create the
         /// account.</param>
-        /// <param name="tags">The user specified tags associated with the
+        /// <param name="tags">The user-specified tags associated with the
         /// account.</param>
-        /// <param name="autoStorage">The properties related to auto storage
-        /// account.</param>
+        /// <param name="autoStorage">The properties related to the
+        /// auto-storage account.</param>
         /// <param name="poolAllocationMode">The allocation mode to use for
         /// creating pools in the Batch account.</param>
         /// <param name="keyVaultReference">A reference to the Azure key vault
@@ -60,13 +60,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the user specified tags associated with the account.
+        /// Gets or sets the user-specified tags associated with the account.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties related to auto storage account.
+        /// Gets or sets the properties related to the auto-storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoStorage")]
         public AutoStorageBaseProperties AutoStorage { get; set; }

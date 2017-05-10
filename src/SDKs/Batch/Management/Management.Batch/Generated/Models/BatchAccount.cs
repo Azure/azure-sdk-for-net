@@ -32,13 +32,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Initializes a new instance of the BatchAccount class.
         /// </summary>
-        /// <param name="id">The ID of the resource</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource</param>
-        /// <param name="location">The location of the resource</param>
-        /// <param name="tags">The tags of the resource</param>
-        /// <param name="accountEndpoint">The endpoint used by this account to
-        /// interact with the Batch services.</param>
+        /// <param name="id">The ID of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="location">The location of the resource.</param>
+        /// <param name="tags">The tags of the resource.</param>
+        /// <param name="accountEndpoint">The account endpoint used to interact
+        /// with the Batch service.</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Invalid', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Cancelled'</param>
@@ -46,15 +46,17 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// creating pools in the Batch account.</param>
         /// <param name="keyVaultReference">A reference to the Azure key vault
         /// associated with the Batch account.</param>
-        /// <param name="autoStorage">The properties and status of any auto
-        /// storage account associated with the Batch account.</param>
-        /// <param name="coreQuota">The core quota for this Batch
-        /// account.</param>
+        /// <param name="autoStorage">The properties and status of any
+        /// auto-storage account associated with the Batch account.</param>
+        /// <param name="dedicatedCoreQuota">The dedicated core quota for this
+        /// Batch account.</param>
+        /// <param name="lowPriorityCoreQuota">The low-priority core quota for
+        /// this Batch account.</param>
         /// <param name="poolQuota">The pool quota for this Batch
         /// account.</param>
         /// <param name="activeJobAndJobScheduleQuota">The active job and job
         /// schedule quota for this Batch account.</param>
-        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), AutoStorageProperties autoStorage = default(AutoStorageProperties), int coreQuota = default(int), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int))
+        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), AutoStorageProperties autoStorage = default(AutoStorageProperties), int dedicatedCoreQuota = default(int), int lowPriorityCoreQuota = default(int), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int))
             : base(id, name, type, location, tags)
         {
             AccountEndpoint = accountEndpoint;
@@ -62,14 +64,14 @@ namespace Microsoft.Azure.Management.Batch.Models
             PoolAllocationMode = poolAllocationMode;
             KeyVaultReference = keyVaultReference;
             AutoStorage = autoStorage;
-            CoreQuota = coreQuota;
+            DedicatedCoreQuota = dedicatedCoreQuota;
+            LowPriorityCoreQuota = lowPriorityCoreQuota;
             PoolQuota = poolQuota;
             ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuota;
         }
 
         /// <summary>
-        /// Gets the endpoint used by this account to interact with the Batch
-        /// services.
+        /// Gets the account endpoint used to interact with the Batch service.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accountEndpoint")]
         public string AccountEndpoint { get; protected set; }
@@ -100,17 +102,23 @@ namespace Microsoft.Azure.Management.Batch.Models
         public KeyVaultReference KeyVaultReference { get; protected set; }
 
         /// <summary>
-        /// Gets the properties and status of any auto storage account
+        /// Gets the properties and status of any auto-storage account
         /// associated with the Batch account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoStorage")]
         public AutoStorageProperties AutoStorage { get; protected set; }
 
         /// <summary>
-        /// Gets the core quota for this Batch account.
+        /// Gets the dedicated core quota for this Batch account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.coreQuota")]
-        public int CoreQuota { get; protected set; }
+        [JsonProperty(PropertyName = "properties.dedicatedCoreQuota")]
+        public int DedicatedCoreQuota { get; protected set; }
+
+        /// <summary>
+        /// Gets the low-priority core quota for this Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lowPriorityCoreQuota")]
+        public int LowPriorityCoreQuota { get; protected set; }
 
         /// <summary>
         /// Gets the pool quota for this Batch account.
