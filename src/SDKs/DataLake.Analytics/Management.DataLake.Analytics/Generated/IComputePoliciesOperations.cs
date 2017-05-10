@@ -20,9 +20,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ComputePolicyOperations operations.
+    /// ComputePoliciesOperations operations.
     /// </summary>
-    public partial interface IComputePolicyOperations
+    public partial interface IComputePoliciesOperations
     {
         /// <summary>
         /// Creates or updates the specified compute policy. During update, the
