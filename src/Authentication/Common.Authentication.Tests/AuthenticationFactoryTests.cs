@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Common.Authentication;
+using Microsoft.Azure.Common.Authentication  ;
 using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.WindowsAzure.Commands.Test.Utilities.Common;
