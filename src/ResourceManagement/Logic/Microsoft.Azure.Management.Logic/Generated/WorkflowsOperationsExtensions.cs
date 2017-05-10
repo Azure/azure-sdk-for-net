@@ -386,6 +386,89 @@ namespace Microsoft.Azure.Management.Logic
             }
 
             /// <summary>
+            /// Gets an OpenAPI definition for the workflow.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            public static object ListSwagger(this IWorkflowsOperations operations, string resourceGroupName, string workflowName)
+            {
+                return operations.ListSwaggerAsync(resourceGroupName, workflowName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an OpenAPI definition for the workflow.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> ListSwaggerAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSwaggerWithHttpMessagesAsync(resourceGroupName, workflowName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Regenerates the callback URL access key for request triggers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='keyType'>
+            /// The access key type.
+            /// </param>
+            public static void RegenerateAccessKey(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, RegenerateActionParameter keyType)
+            {
+                operations.RegenerateAccessKeyAsync(resourceGroupName, workflowName, keyType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Regenerates the callback URL access key for request triggers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='keyType'>
+            /// The access key type.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RegenerateAccessKeyAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, RegenerateActionParameter keyType, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.RegenerateAccessKeyWithHttpMessagesAsync(resourceGroupName, workflowName, keyType, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// Validates the workflow definition.
             /// </summary>
             /// <param name='operations'>
