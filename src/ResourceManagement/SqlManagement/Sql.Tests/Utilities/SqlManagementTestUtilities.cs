@@ -25,6 +25,14 @@ namespace Sql.Tests
             }
         }
 
+        public static string DefaultCanaryLocation
+        {
+            get
+            {
+                return "East US 2 EUAP";
+            }
+        }
+
         public static SqlManagementClient GetSqlManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
             if (handler != null)

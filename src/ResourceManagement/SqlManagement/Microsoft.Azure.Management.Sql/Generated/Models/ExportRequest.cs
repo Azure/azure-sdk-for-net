@@ -32,9 +32,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ExportRequest class.
         /// </summary>
         /// <param name="storageKeyType">The type of the storage key to use.
-        /// Valid values are StorageAccessKey and SharedAccessKey. Possible
-        /// values include: 'StorageAccessKey', 'SharedAccessKey'</param>
-        /// <param name="storageKey">The storage key to use.</param>
+        /// Possible values include: 'StorageAccessKey',
+        /// 'SharedAccessKey'</param>
+        /// <param name="storageKey">The storage key to use.  If storage key
+        /// type is SharedAccessKey, it must be preceded with a "?."</param>
         /// <param name="storageUri">The storage uri to use.</param>
         /// <param name="administratorLogin">The name of the SQL
         /// administrator.</param>
@@ -59,15 +60,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of the storage key to use. Valid values are
-        /// StorageAccessKey and SharedAccessKey. Possible values include:
-        /// 'StorageAccessKey', 'SharedAccessKey'
+        /// Gets or sets the type of the storage key to use. Possible values
+        /// include: 'StorageAccessKey', 'SharedAccessKey'
         /// </summary>
         [JsonProperty(PropertyName = "storageKeyType")]
         public StorageKeyType StorageKeyType { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage key to use.
+        /// Gets or sets the storage key to use.  If storage key type is
+        /// SharedAccessKey, it must be preceded with a "?."
         /// </summary>
         [JsonProperty(PropertyName = "storageKey")]
         public string StorageKey { get; set; }

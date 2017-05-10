@@ -30,7 +30,8 @@ namespace Sql.Tests
                 var resourceClient = SqlManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var sqlClient = SqlManagementTestUtilities.GetSqlManagementClient(context, handler);
 
-                LocationCapabilities capabilities = sqlClient.Capabilities.ListByLocation(SqlManagementTestUtilities.DefaultLocation);
+                // TODO: Currently using canary location because the capabilities changes are only lit up in canary cluster
+                LocationCapabilities capabilities = sqlClient.Capabilities.ListByLocation(SqlManagementTestUtilities.DefaultCanaryLocation);
 
                 Assert.NotNull(capabilities);
 
@@ -48,6 +49,36 @@ namespace Sql.Tests
                             {
                                 Assert.NotNull(m.Limit);
                                 Assert.NotNull(m.Unit);
+                            }
+                        }
+                    }
+
+                    foreach(ElasticPoolEditionCapability e in s.SupportedElasticPoolEditions)
+                    {
+                        Assert.NotNull(e.Name);
+
+                        foreach (ElasticPoolDtuCapability d in e.SupportedElasticPoolDtus)
+                        {
+                            Assert.NotNull(d.Status);
+
+                            foreach (MaxSizeCapability m in d.SupportedPerDatabaseMaxSizes)
+                            {
+                                Assert.NotNull(m.Limit);
+                            }
+
+                            foreach (MaxSizeCapability m in d.SupportedMaxSizes)
+                            {
+                                Assert.NotNull(m.Limit);
+                            }
+
+                            foreach (ElasticPoolPerDatabaseMaxDtuCapability m in d.SupportedPerDatabaseMaxDtus)
+                            {
+                                Assert.NotNull(m.Limit);
+
+                                foreach (ElasticPoolPerDatabaseMinDtuCapability min in m.SupportedPerDatabaseMinDtus)
+                                {
+                                    Assert.NotNull(min.Limit);
+                                }
                             }
                         }
                     }

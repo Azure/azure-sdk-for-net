@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The server edition capabilities.
+    /// The database edition capabilities.
     /// </summary>
     public partial class EditionCapability
     {
@@ -33,9 +33,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the EditionCapability class.
         /// </summary>
         /// <param name="name">The edition name.</param>
-        /// <param name="status">The status of the server edition. Possible
-        /// values include: 'Visible', 'Available', 'Default',
-        /// 'Disabled'</param>
+        /// <param name="status">The status of the edition. Possible values
+        /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="supportedServiceLevelObjectives">The list of supported
         /// service objectives for the edition.</param>
         public EditionCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default(IList<ServiceObjectiveCapability>))
@@ -58,8 +57,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the status of the server edition. Possible values include:
-        /// 'Visible', 'Available', 'Default', 'Disabled'
+        /// Gets the status of the edition. Possible values include: 'Visible',
+        /// 'Available', 'Default', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public CapabilityStatus? Status { get; private set; }
