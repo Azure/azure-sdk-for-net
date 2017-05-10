@@ -16,6 +16,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Service Include="{0249eb33-a2c4-455a-8e93-2f1e1a595562}" />
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
