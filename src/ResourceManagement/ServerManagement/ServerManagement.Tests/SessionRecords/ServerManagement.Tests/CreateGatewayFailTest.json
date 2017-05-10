@@ -1,0 +1,188 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzLz9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "2"
+        ],
+        "x-ms-client-request-id": [
+          "b9fbb519-43c3-4016-9e46-2cae177f0560"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"UnsupportedResourceOperation\",\r\n    \"message\": \"The resource type 'gateways' does not support this operation.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "123"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "64c18190-79b0-4631-a836-5a8b83fb1c1f"
+        ],
+        "x-ms-correlation-request-id": [
+          "64c18190-79b0-4631-a836-5a8b83fb1c1f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160415T185629Z:64c18190-79b0-4631-a836-5a8b83fb1c1f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 Apr 2016 18:56:29 GMT"
+        ]
+      },
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/mary%20had%20a%20little%20lamb/providers/Microsoft.ServerManagement/gateways/testgateway?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL21hcnklMjBoYWQlMjBhJTIwbGl0dGxlJTIwbGFtYi9wcm92aWRlcnMvTWljcm9zb2Z0LlNlcnZlck1hbmFnZW1lbnQvZ2F0ZXdheXMvdGVzdGdhdGV3YXk/YXBpLXZlcnNpb249MjAxNS0wNy0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "2"
+        ],
+        "x-ms-client-request-id": [
+          "45892006-c8a9-4c39-a4c7-97999742be6a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationRequired\",\r\n    \"message\": \"The location property is required for this definition.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "104"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "cfc91cad-9e6a-437e-bb30-148bccfccc05"
+        ],
+        "x-ms-correlation-request-id": [
+          "cfc91cad-9e6a-437e-bb30-148bccfccc05"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160415T185630Z:cfc91cad-9e6a-437e-bb30-148bccfccc05"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 Apr 2016 18:56:29 GMT"
+        ]
+      },
+      "StatusCode": 400
+    },
+    {
+      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/testgateway?api-version=2015-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RnYXRld2F5P2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"neverneverland\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "36"
+        ],
+        "x-ms-client-request-id": [
+          "9a56b833-3c09-4fd4-8aad-18782214d259"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"LocationNotAvailableForResourceType\",\r\n    \"message\": \"The provided location 'neverneverland' is not available for resource type 'Microsoft.ServerManagement/gateways'. List of available regions for the resource type is 'centralus,eastus,northeurope,westeurope'.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "275"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "8dfbb3d1-2146-42dc-baf6-814f05eacd0b"
+        ],
+        "x-ms-correlation-request-id": [
+          "8dfbb3d1-2146-42dc-baf6-814f05eacd0b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20160415T185630Z:8dfbb3d1-2146-42dc-baf6-814f05eacd0b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 Apr 2016 18:56:29 GMT"
+        ]
+      },
+      "StatusCode": 400
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3e82a90d-d19e-42f9-bb43-9112945846ef"
+  }
+}
