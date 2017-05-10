@@ -4,9 +4,8 @@
 ::
 
 @echo off
-set autoRestVersion=1.0.0-Nightly20170209
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-consumption/2017-04-24-preview/swagger/consumption.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1141893c69c16724c1702f26d8c2c9a2da516be9/arm-consumption/2017-04-24-preview/swagger/consumption.json"
 ) else (
     set specFile="%1"
 )
@@ -14,4 +13,5 @@ set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.Consumption %autoRestVersion% %generateFolder% "MICROSOFT_MIT" "-FT 2"
+
+autorest --version=1.0.1-20170425-2300-nightly -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Consumption -Input %specFile% -outputDirectory %generateFolder% -Header MICROSOFT_MIT %~5

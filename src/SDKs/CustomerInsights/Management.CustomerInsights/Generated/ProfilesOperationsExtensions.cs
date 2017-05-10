@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.CustomerInsights
     using Rest;
     using Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -215,6 +217,56 @@ namespace Microsoft.Azure.Management.CustomerInsights
             public static async Task<IPage<ProfileResourceFormat>> ListByHubAsync(this IProfilesOperations operations, string resourceGroupName, string hubName, string localeCode = "en-us", CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByHubWithHttpMessagesAsync(resourceGroupName, hubName, localeCode, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the KPIs that enrich the profile Type identified by the supplied name.
+            /// Enrichment happens through participants of the Interaction on an
+            /// Interaction KPI and through Relationships for Profile KPIs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the hub.
+            /// </param>
+            /// <param name='profileName'>
+            /// The name of the profile.
+            /// </param>
+            public static IList<KpiDefinition> GetEnrichingKpis(this IProfilesOperations operations, string resourceGroupName, string hubName, string profileName)
+            {
+                return operations.GetEnrichingKpisAsync(resourceGroupName, hubName, profileName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the KPIs that enrich the profile Type identified by the supplied name.
+            /// Enrichment happens through participants of the Interaction on an
+            /// Interaction KPI and through Relationships for Profile KPIs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hubName'>
+            /// The name of the hub.
+            /// </param>
+            /// <param name='profileName'>
+            /// The name of the profile.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<KpiDefinition>> GetEnrichingKpisAsync(this IProfilesOperations operations, string resourceGroupName, string hubName, string profileName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEnrichingKpisWithHttpMessagesAsync(resourceGroupName, hubName, profileName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

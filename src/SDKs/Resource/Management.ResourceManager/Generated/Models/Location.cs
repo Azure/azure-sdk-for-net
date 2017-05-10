@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Location class.
         /// </summary>
-        /// <param name="id">The fully qualified Id of the location. For
+        /// <param name="id">The fully qualified ID of the location. For
         /// example,
         /// /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus.</param>
-        /// <param name="subscriptionId">The subscription Id.</param>
+        /// <param name="subscriptionId">The subscription ID.</param>
         /// <param name="name">The location name.</param>
         /// <param name="displayName">The display name of the location.</param>
         /// <param name="latitude">The latitude of the location.</param>
@@ -42,14 +42,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets the fully qualified Id of the location. For example,
+        /// Gets the fully qualified ID of the location. For example,
         /// /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the subscription Id.
+        /// Gets the subscription ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "subscriptionId")]
         public string SubscriptionId { get; private set; }

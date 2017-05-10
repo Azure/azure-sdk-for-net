@@ -22,6 +22,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CalculationWindowTypes
     {
+        [EnumMember(Value = "Lifetime")]
+        Lifetime,
         [EnumMember(Value = "Hour")]
         Hour,
         [EnumMember(Value = "Day")]

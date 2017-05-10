@@ -61,7 +61,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// include: 'Enabled', 'Disabled'</param>
         /// <param name="firewallRules">The list of firewall rules associated
         /// with this Data Lake Analytics account.</param>
-        public DataLakeAnalyticsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), TierType? newTier = default(TierType?), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>))
+        /// <param name="maxDegreeOfParallelismPerJob">the maximum supported
+        /// degree of parallelism per job for this account.</param>
+        /// <param name="minPriorityPerJob">the minimum supported priority per
+        /// job for this account.</param>
+        /// <param name="computePolicies">the list of existing compute policies
+        /// to update in this account.</param>
+        public DataLakeAnalyticsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), TierType? newTier = default(TierType?), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), int? maxDegreeOfParallelismPerJob = default(int?), int? minPriorityPerJob = default(int?), IList<ComputePolicy> computePolicies = default(IList<ComputePolicy>))
         {
             Tags = tags;
             MaxDegreeOfParallelism = maxDegreeOfParallelism;
@@ -71,6 +77,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             FirewallState = firewallState;
             FirewallAllowAzureIps = firewallAllowAzureIps;
             FirewallRules = firewallRules;
+            MaxDegreeOfParallelismPerJob = maxDegreeOfParallelismPerJob;
+            MinPriorityPerJob = minPriorityPerJob;
+            ComputePolicies = computePolicies;
             CustomInit();
         }
 
@@ -141,6 +150,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public IList<FirewallRule> FirewallRules { get; set; }
 
         /// <summary>
+        /// Gets or sets the maximum supported degree of parallelism per job
+        /// for this account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxDegreeOfParallelismPerJob")]
+        public int? MaxDegreeOfParallelismPerJob { get; set; }
+
+        /// <summary>
+        /// Gets or sets the minimum supported priority per job for this
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minPriorityPerJob")]
+        public int? MinPriorityPerJob { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of existing compute policies to update in
+        /// this account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.computePolicies")]
+        public IList<ComputePolicy> ComputePolicies { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -171,6 +201,24 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (MaxDegreeOfParallelismPerJob < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxDegreeOfParallelismPerJob", 1);
+            }
+            if (MinPriorityPerJob < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MinPriorityPerJob", 1);
+            }
+            if (ComputePolicies != null)
+            {
+                foreach (var element1 in ComputePolicies)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

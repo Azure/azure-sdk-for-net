@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// Initializes a new instance of the ConnectorResourceFormat class.
         /// </summary>
         /// <param name="connectorType">Type of connector. Possible values
-        /// include: 'CRM', 'AzureBlob', 'Salesforce'</param>
+        /// include: 'None', 'CRM', 'AzureBlob', 'Salesforce',
+        /// 'ExchangeOnline', 'Outbound'</param>
         /// <param name="connectorProperties">The connector properties.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
@@ -48,7 +49,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// 'Creating', 'Created', 'Ready', 'Expiring', 'Deleting',
         /// 'Failed'</param>
         /// <param name="tenantId">The hub name.</param>
-        public ConnectorResourceFormat(ConnectorTypes connectorType, IDictionary<string, object> connectorProperties, string id = default(string), string name = default(string), string type = default(string), int? connectorId = default(int?), string connectorName = default(string), string displayName = default(string), string description = default(string), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), ConnectorStates? state = default(ConnectorStates?), string tenantId = default(string))
+        /// <param name="isInternal">If this is an internal connector.</param>
+        public ConnectorResourceFormat(string connectorType, IDictionary<string, object> connectorProperties, string id = default(string), string name = default(string), string type = default(string), int? connectorId = default(int?), string connectorName = default(string), string displayName = default(string), string description = default(string), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), ConnectorStates? state = default(ConnectorStates?), string tenantId = default(string), bool? isInternal = default(bool?))
             : base(id, name, type)
         {
             ConnectorId = connectorId;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
             LastModified = lastModified;
             State = state;
             TenantId = tenantId;
+            IsInternal = isInternal;
         }
 
         /// <summary>
@@ -76,11 +79,11 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public string ConnectorName { get; set; }
 
         /// <summary>
-        /// Gets or sets type of connector. Possible values include: 'CRM',
-        /// 'AzureBlob', 'Salesforce'
+        /// Gets or sets type of connector. Possible values include: 'None',
+        /// 'CRM', 'AzureBlob', 'Salesforce', 'ExchangeOnline', 'Outbound'
         /// </summary>
         [JsonProperty(PropertyName = "properties.connectorType")]
-        public ConnectorTypes ConnectorType { get; set; }
+        public string ConnectorType { get; set; }
 
         /// <summary>
         /// Gets or sets display name of the connector.
@@ -126,6 +129,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public string TenantId { get; protected set; }
 
         /// <summary>
+        /// Gets or sets if this is an internal connector.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isInternal")]
+        public bool? IsInternal { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -133,6 +142,10 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (ConnectorType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectorType");
+            }
             if (ConnectorProperties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectorProperties");

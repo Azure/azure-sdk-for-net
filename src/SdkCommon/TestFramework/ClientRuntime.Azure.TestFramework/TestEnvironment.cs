@@ -2,7 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
-    using IdentityModel.Clients.ActiveDirectory;
+    using Microsoft.Rest.Azure.Authentication;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.Azure.Test.HttpRecorder;
     using Newtonsoft.Json.Linq;
     using Rest.Azure.Authentication;
@@ -103,7 +104,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             RecorderModeSettings();
         }
 
-        #region Helper Functions
+#region Helper Functions
 
         /// <summary>
         /// Initialize Token Dictionary with default value        
@@ -248,8 +249,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             2) UserName / Password combination
             3) Interactive Login (where user will be presented with prompt to login)
            */
-            #region Login
-            #region aadSettings
+#region Login
+#region aadSettings
             ActiveDirectoryServiceSettings aadServiceSettings = new ActiveDirectoryServiceSettings()
             {
                 AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
@@ -260,10 +261,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
                 TokenAudience = this.Endpoints.GraphTokenAudienceUri
             };
-            #endregion
+#endregion
 
             if ((!string.IsNullOrEmpty(spnClientId)) && (!string.IsNullOrEmpty(spnSecret)))
             {
+
                 Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await ApplicationTokenProvider
                                                                            .LoginSilentAsync(this.Tenant, spnClientId, spnSecret, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
 
@@ -271,25 +273,25 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
             else if ((!string.IsNullOrEmpty(this.UserName)) && (!string.IsNullOrEmpty(password)))
             {
-#if NET45
+#if FullNetFx
                 Task<TokenCredentials> mgmAuthResult = Task.Run(async () => (TokenCredentials)await UserTokenProvider
                                                                            .LoginSilentAsync(PowerShellClientId, this.Tenant, this.UserName, password, aadServiceSettings).ConfigureAwait(continueOnCapturedContext: false));
 
                 this.TokenInfo[TokenAudience.Management] = mgmAuthResult.Result;
 #else
-                throw new NotSupportedException("Username/Password login is supported only in NET45 projects");
+                throw new NotSupportedException("Username/Password login is supported only in NET452 and above projects");
 #endif
             }
             else
             {
-#if NET45
+#if FullNetFx
                 InteractiveLogin(this.Tenant, PowerShellClientId,
                                     aadServiceSettings, graphAADServiceSettings);
 #else
-                throw new NotSupportedException("Interactive Login is supported only in NET45 projects");
+                throw new NotSupportedException("Interactive Login is supported only in NET452 and above projects");
 #endif
             }
-            #endregion
+#endregion
         }
 
         /// <summary>
@@ -302,7 +304,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                                         ActiveDirectoryServiceSettings aadServiceSettings,
                                         ActiveDirectoryServiceSettings graphAADServiceSettings)
         {
-#if NET45   
+#if FullNetFx
             ActiveDirectoryClientSettings clientSettings = new ActiveDirectoryClientSettings()
             {
                 ClientId = PsClientId,
@@ -348,7 +350,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         private void VerifySubscription()
         {
-            #region
+#region
             string matchedSubscriptionId = string.Empty;
             StringBuilder sb = new StringBuilder();
             string callerId = string.Empty;

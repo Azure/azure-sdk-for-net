@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         public ResourceManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Delete a subscription resource tag value.
+        /// Deletes a tag value.
         /// </summary>
         /// <param name='tagName'>
         /// The name of the tag.
         /// </param>
         /// <param name='tagValue'>
-        /// The value of the tag.
+        /// The value of the tag to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -204,13 +204,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Create a subscription resource tag value.
+        /// Creates a tag value. The name of the tag must already exist.
         /// </summary>
         /// <param name='tagName'>
         /// The name of the tag.
         /// </param>
         /// <param name='tagValue'>
-        /// The value of the tag.
+        /// The value of the tag to create.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -413,10 +413,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Create a subscription resource tag.
+        /// Creates a tag in the subscription.
         /// </summary>
+        /// <remarks>
+        /// The tag name can have a maximum of 512 characters and is case insensitive.
+        /// Tag names created by Azure have prefixes of microsoft, azure, or windows.
+        /// You cannot create tags with one of these prefixes.
+        /// </remarks>
         /// <param name='tagName'>
-        /// The name of the tag.
+        /// The name of the tag to create.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -613,8 +618,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Delete a subscription resource tag.
+        /// Deletes a tag from the subscription.
         /// </summary>
+        /// <remarks>
+        /// You must remove all values from a resource tag before you can delete it.
+        /// </remarks>
         /// <param name='tagName'>
         /// The name of the tag.
         /// </param>
@@ -766,7 +774,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Get a list of subscription resource tags.
+        /// Gets the names and values of all resource tags that are defined in a
+        /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -939,7 +948,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Get a list of subscription resource tags.
+        /// Gets the names and values of all resource tags that are defined in a
+        /// subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
