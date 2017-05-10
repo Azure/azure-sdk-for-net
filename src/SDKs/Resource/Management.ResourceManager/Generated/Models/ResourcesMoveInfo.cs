@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ResourcesMoveInfo class.
         /// </summary>
-        /// <param name="resources">The ids of the resources.</param>
+        /// <param name="resources">The IDs of the resources.</param>
         /// <param name="targetResourceGroup">The target resource
         /// group.</param>
         public ResourcesMoveInfo(System.Collections.Generic.IList<string> resources = default(System.Collections.Generic.IList<string>), string targetResourceGroup = default(string))
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the ids of the resources.
+        /// Gets or sets the IDs of the resources.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "resources")]
         public System.Collections.Generic.IList<string> Resources { get; set; }

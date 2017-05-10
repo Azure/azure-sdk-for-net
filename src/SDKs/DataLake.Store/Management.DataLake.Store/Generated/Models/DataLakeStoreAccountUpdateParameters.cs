@@ -59,7 +59,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// or disallowing IPs originating within Azure through the firewall.
         /// If the firewall is disabled, this is not enforced. Possible values
         /// include: 'Enabled', 'Disabled'</param>
-        public DataLakeStoreAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), FirewallState? firewallState = default(FirewallState?), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), string defaultGroup = default(string), TierType? newTier = default(TierType?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?))
+        /// <param name="encryptionConfig">Used for rotation of user managed
+        /// Key Vault keys. Can only be used to rotate a user managed
+        /// encryption Key Vault key.</param>
+        public DataLakeStoreAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), FirewallState? firewallState = default(FirewallState?), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), string defaultGroup = default(string), TierType? newTier = default(TierType?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), UpdateEncryptionConfig encryptionConfig = default(UpdateEncryptionConfig))
         {
             Tags = tags;
             FirewallState = firewallState;
@@ -67,6 +70,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
             DefaultGroup = defaultGroup;
             NewTier = newTier;
             FirewallAllowAzureIps = firewallAllowAzureIps;
+            EncryptionConfig = encryptionConfig;
             CustomInit();
         }
 
@@ -124,6 +128,13 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewallAllowAzureIps")]
         public FirewallAllowAzureIpsState? FirewallAllowAzureIps { get; set; }
+
+        /// <summary>
+        /// Gets or sets used for rotation of user managed Key Vault keys. Can
+        /// only be used to rotate a user managed encryption Key Vault key.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryptionConfig")]
+        public UpdateEncryptionConfig EncryptionConfig { get; set; }
 
     }
 }

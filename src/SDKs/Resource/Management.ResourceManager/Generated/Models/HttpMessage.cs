@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// HTTP message.
+    /// </summary>
     public partial class HttpMessage
     {
         /// <summary>

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the Deployment class.
         /// </summary>
         /// <param name="properties">The deployment properties.</param>
-        public Deployment(DeploymentProperties properties = default(DeploymentProperties))
+        public Deployment(DeploymentProperties properties)
         {
             Properties = properties;
         }
@@ -43,6 +43,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Properties == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Properties");
+            }
             if (this.Properties != null)
             {
                 this.Properties.Validate();

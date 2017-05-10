@@ -100,7 +100,7 @@ namespace Batch.Tests.InMemoryTests
                 "resourceGroupName",
                 "acctName",
                 "appId",
-                new AddApplicationParameters
+                new ApplicationCreateParameters
                 {
                     AllowUpdates = true,
                     DisplayName = "display-name"
@@ -365,7 +365,7 @@ namespace Batch.Tests.InMemoryTests
                 "resourceGroupName",
                 "acctName",
                 "appId",
-                new UpdateApplicationParameters()
+                new ApplicationUpdateParameters
                 {
                     AllowUpdates = true,
                     DisplayName = "display-name",
@@ -401,9 +401,9 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Application.Create(null, "foo", "foo", new AddApplicationParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.Create("foo", null, "foo", new AddApplicationParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.Create("foo", "foo", null, new AddApplicationParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Create(null, "foo", "foo", new ApplicationCreateParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Create("foo", null, "foo", new ApplicationCreateParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Create("foo", "foo", null, new ApplicationCreateParameters()));
             Assert.Throws<NullReferenceException>(() => client.Application.Create("foo", "foo", "foo", null));
         }
 
@@ -456,9 +456,9 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Application.Update(null, "foo", "foo", new UpdateApplicationParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.Update("foo", null, "foo", new UpdateApplicationParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.Update("foo", "foo", null, new UpdateApplicationParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Update(null, "foo", "foo", new ApplicationUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Update("foo", null, "foo", new ApplicationUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Update("foo", "foo", null, new ApplicationUpdateParameters()));
             Assert.Throws<ValidationException>(() => client.Application.Update("foo", "foo", "foo", null));
         }
     }

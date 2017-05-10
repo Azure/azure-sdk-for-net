@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         public SubscriptionClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a list of tenants.
+        /// Gets the tenants for your account.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a list of tenants.
+        /// Gets the tenants for your account.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

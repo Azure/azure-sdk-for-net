@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Provider class.
         /// </summary>
-        /// <param name="id">The provider id.</param>
-        /// <param name="namespaceProperty">The namespace of the
+        /// <param name="id">The provider ID.</param>
+        /// <param name="namespaceProperty">The namespace of the resource
         /// provider.</param>
         /// <param name="registrationState">The registration state of the
         /// provider.</param>
@@ -39,13 +39,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets the provider id.
+        /// Gets the provider ID.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the namespace of the provider.
+        /// Gets or sets the namespace of the resource provider.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "namespace")]
         public string NamespaceProperty { get; set; }
