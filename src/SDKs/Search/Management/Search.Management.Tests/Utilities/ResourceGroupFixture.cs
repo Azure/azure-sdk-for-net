@@ -5,8 +5,8 @@
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System.Linq;
-    using Management.ResourceManager;
-    using Management.ResourceManager.Models;
+    using Management.Resources;
+    using Management.Resources.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
