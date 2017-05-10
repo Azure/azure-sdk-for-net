@@ -6,12 +6,7 @@
     <AssemblyTitle>Microsoft Azure Search Management Library</AssemblyTitle>
     <AssemblyName>Management.Search</AssemblyName>
     <VersionPrefix>1.0.2</VersionPrefix>
-    <PackageProjectUrl>https://github.com/Azure/azure-sdk-for-net</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
-    <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>This is the Azure Search Management SDK for .NET, based on version 2015-08-19 of the Azure Search Management REST API. It includes support for programmatically provisioning and managing Search services and API keys. It supports all available SKUs, including the new S3 and S3 High-Density SKUs.</PackageReleaseNotes>
-    <PackageTags>Microsoft Azure Search;Microsoft Azure Search Management</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup>
