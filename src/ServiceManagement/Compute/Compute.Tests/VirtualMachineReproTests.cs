@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+
 namespace Microsoft.WindowsAzure.Management.Compute.Testing
 {
     using Hyak.Common;
