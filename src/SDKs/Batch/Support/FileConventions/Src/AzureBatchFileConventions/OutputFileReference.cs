@@ -75,10 +75,15 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <param name="mode">Specifies how to open or create the file.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
-        /// <seealso cref="ICloudBlob.DownloadToFileAsync(string, FileMode, CancellationToken)"/>
+        /// <seealso cref="ICloudBlob.DownloadToFileAsync(string, FileMode)"/>
         public async Task DownloadToFileAsync(string path, FileMode mode, CancellationToken cancellationToken = default(CancellationToken))
         {
+#if FullNetFx
             await CloudBlob.DownloadToFileAsync(path, mode, cancellationToken);
+#elif netstandard14
+            await CloudBlob.DownloadToFileAsync(path, mode);
+#endif
+
         }
 
         /// <summary>
@@ -87,10 +92,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <param name="target">The target stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
-        /// <seealso cref="ICloudBlob.DownloadToStreamAsync(Stream, CancellationToken)"/>
+        /// <seealso cref="ICloudBlob.DownloadToStreamAsync(Stream)"/>
         public async Task DownloadToStreamAsync(Stream target, CancellationToken cancellationToken = default(CancellationToken))
         {
+#if FullNetFx
             await CloudBlob.DownloadToStreamAsync(target, cancellationToken);
+#elif netstandard14
+            await CloudBlob.DownloadToStreamAsync(target);
+#endif
         }
 
         /// <summary>
@@ -100,10 +109,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <param name="index">The starting offset in the byte array</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>The total number of bytes read into the buffer.</returns>
-        /// <seealso cref="ICloudBlob.DownloadToByteArrayAsync(byte[], int, CancellationToken)"/>
+        /// <seealso cref="ICloudBlob.DownloadToByteArrayAsync(byte[], int)"/>
         public async Task<int> DownloadToByteArrayAsync(byte[] target, int index, CancellationToken cancellationToken = default(CancellationToken))
         {
+#if FullNetFx
             return await CloudBlob.DownloadToByteArrayAsync(target, index, cancellationToken);
+#elif netstandard14
+            return await CloudBlob.DownloadToByteArrayAsync(target, index);
+#endif
         }
 
         /// <summary>
@@ -111,10 +124,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
-        /// <seealso cref="ICloudBlob.DeleteAsync(CancellationToken)"/>
+        /// <seealso cref="ICloudBlob.DeleteAsync()"/>
         public async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
+#if FullNetFx
             await CloudBlob.DeleteAsync(cancellationToken);
+#elif netstandard14
+            await CloudBlob.DeleteAsync();
+#endif
         }
 
         /// <summary>
@@ -122,10 +139,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A stream to be used for reading from the blob.</returns>
-        /// <seealso cref="ICloudBlob.OpenReadAsync(CancellationToken)"/>
+        /// <seealso cref="ICloudBlob.OpenReadAsync(WindowsAzure.Storage.AccessCondition, BlobRequestOptions, WindowsAzure.Storage.OperationContext)"/>
         public async Task<Stream> OpenReadAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
+#if FullNetFx
             return await CloudBlob.OpenReadAsync(cancellationToken);
+#elif netstandard14
+            return await CloudBlob.OpenReadAsync(null, null, null);
+#endif
         }
     }
 }
