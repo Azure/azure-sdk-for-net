@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure SQL Server Active Directory Administrator.
+    /// An server Active Directory Administrator.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ServerAzureADAdministrator : SqlSubResource
@@ -33,15 +33,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServerAzureADAdministrator class.
         /// </summary>
-        /// <param name="login">The Azure SQL Server Administrator Login
-        /// Value.</param>
-        /// <param name="sid">The Azure SQL Server Administrator Sid (Secure
-        /// ID).</param>
-        /// <param name="tenantId">The Azure SQL Server Active Directory
-        /// Administrator tenant id.</param>
+        /// <param name="login">The server administrator login value.</param>
+        /// <param name="sid">The server administrator Sid (Secure ID).</param>
+        /// <param name="tenantId">The server Active Directory Administrator
+        /// tenant id.</param>
         /// <param name="name">Resource name</param>
         /// <param name="id">Resource Id</param>
-        public ServerAzureADAdministrator(string login, string sid, string tenantId, string name = default(string), string id = default(string))
+        public ServerAzureADAdministrator(string login, System.Guid sid, System.Guid tenantId, string name = default(string), string id = default(string))
             : base(name, id)
         {
             Login = login;
@@ -63,29 +61,41 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Azure SQL Server Administrator Login Value.
+        /// Gets or sets the server administrator login value.
         /// </summary>
         [JsonProperty(PropertyName = "properties.login")]
         public string Login { get; set; }
 
         /// <summary>
-        /// Gets or sets the Azure SQL Server Administrator Sid (Secure ID).
+        /// Gets or sets the server administrator Sid (Secure ID).
         /// </summary>
         [JsonProperty(PropertyName = "properties.sid")]
-        public string Sid { get; set; }
+        public System.Guid Sid { get; set; }
 
         /// <summary>
-        /// Gets or sets the Azure SQL Server Active Directory Administrator
-        /// tenant id.
+        /// Gets or sets the server Active Directory Administrator tenant id.
         /// </summary>
         [JsonProperty(PropertyName = "properties.tenantId")]
-        public string TenantId { get; set; }
+        public System.Guid TenantId { get; set; }
 
         /// <summary>
-        /// The type of Azure SQL Server Administrator.
+        /// The type of administrator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.administratorType")]
         public static string AdministratorType { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Login == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Login");
+            }
+        }
     }
 }
