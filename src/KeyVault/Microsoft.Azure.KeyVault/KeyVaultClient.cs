@@ -34,7 +34,7 @@ namespace Microsoft.Azure.KeyVault
     /// against the Key Vault service. 
     /// Thread safety: This class is thread-safe.
     /// </summary>
-    public class KeyVaultClient
+    public class KeyVaultClient : IKeyVaultClient
     {
         /// <summary>
         /// The authentication callback delegate which is to be implemented by the client code
