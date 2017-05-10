@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
+        /// <param name="error">The details of the error.</param>
         public ErrorResponse(ErrorDetails error = default(ErrorDetails))
         {
             Error = error;
@@ -43,6 +44,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the details of the error.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public ErrorDetails Error { get; set; }

@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// Resource group export result.
+    /// </summary>
     public partial class ResourceGroupExportResult
     {
         /// <summary>

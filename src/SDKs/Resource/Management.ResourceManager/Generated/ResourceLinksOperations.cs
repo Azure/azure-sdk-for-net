@@ -8,27 +8,15 @@
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
     /// ResourceLinksOperations operations.
     /// </summary>
-    internal partial class ResourceLinksOperations : IServiceOperations<ManagementLinkClient>, IResourceLinksOperations
+    internal partial class ResourceLinksOperations : Microsoft.Rest.IServiceOperations<ManagementLinkClient>, IResourceLinksOperations
     {
         /// <summary>
         /// Initializes a new instance of the ResourceLinksOperations class.
@@ -36,14 +24,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
         internal ResourceLinksOperations(ManagementLinkClient client)
         {
             if (client == null) 
             {
-                throw new ArgumentNullException("client");
+                throw new System.ArgumentNullException("client");
             }
             this.Client = client;
         }
@@ -54,10 +42,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         public ManagementLinkClient Client { get; private set; }
 
         /// <summary>
-        /// Deletes a resource link.
+        /// Deletes a resource link with the specified ID.
         /// </summary>
         /// <param name='linkId'>
-        /// The fully qualified Id of the resource link. For example,
+        /// The fully qualified ID of the resource link. Use the format,
+        /// /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}.
+        /// For example,
         /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink
         /// </param>
         /// <param name='customHeaders'>
@@ -66,58 +56,58 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string linkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string linkId, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (linkId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "linkId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "linkId");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("linkId", linkId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{linkId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{linkId}").ToString();
             _url = _url.Replace("{linkId}", linkId);
-            List<string> _queryParameters = new List<string>();
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -150,35 +140,35 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 if (_httpResponse.Content != null) {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 }
                 else {
                     _responseContent = string.Empty;
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))
                 {
                     ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                 }
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -188,7 +178,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -197,20 +187,22 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
 
         /// <summary>
-        /// Create a resource link.
+        /// Creates or updates a resource link between the specified resources.
         /// </summary>
         /// <param name='linkId'>
-        /// The fully qualified Id of the resource link. For example,
+        /// The fully qualified ID of the resource link. Use the format,
+        /// /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}.
+        /// For example,
         /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink
         /// </param>
         /// <param name='parameters'>
-        /// Create or update resource link parameters.
+        /// Parameters for creating or updating a resource link.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -218,27 +210,27 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ResourceLink>> CreateOrUpdateWithHttpMessagesAsync(string linkId, ResourceLink parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ResourceLink>> CreateOrUpdateWithHttpMessagesAsync(string linkId, ResourceLink parameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (linkId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "linkId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "linkId");
             }
             if (parameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "parameters");
             }
             if (parameters != null)
             {
@@ -246,42 +238,42 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("linkId", linkId);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{linkId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{linkId}").ToString();
             _url = _url.Replace("{linkId}", linkId);
-            List<string> _queryParameters = new List<string>();
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -307,9 +299,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                _requestContent = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, this.Client.SerializationSettings);
+                _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Set Credentials
             if (this.Client.Credentials != null)
@@ -320,43 +312,43 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 201 && (int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))
                 {
                     ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                 }
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -366,7 +358,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ResourceLink>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<ResourceLink>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -379,16 +371,16 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ResourceLink>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<ResourceLink>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             // Deserialize Response
@@ -397,27 +389,27 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ResourceLink>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<ResourceLink>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
 
         /// <summary>
-        /// Gets a resource link.
+        /// Gets a resource link with the specified ID.
         /// </summary>
         /// <param name='linkId'>
         /// The fully qualified Id of the resource link. For example,
@@ -429,61 +421,61 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ResourceLink>> GetWithHttpMessagesAsync(string linkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ResourceLink>> GetWithHttpMessagesAsync(string linkId, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (linkId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "linkId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "linkId");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("linkId", linkId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{linkId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{linkId}").ToString();
             _url = _url.Replace("{linkId}", linkId);
-            List<string> _queryParameters = new List<string>();
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -516,43 +508,43 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))
                 {
                     ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                 }
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -562,7 +554,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ResourceLink>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<ResourceLink>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -575,27 +567,27 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ResourceLink>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<ResourceLink>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
 
         /// <summary>
-        /// Gets a list of resource links under the subscription.
+        /// Gets all the linked resources for the subscription.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -606,44 +598,44 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ResourceLink>>> ListAtSubscriptionWithHttpMessagesAsync(ODataQuery<ResourceLinkFilter> odataQuery = default(ODataQuery<ResourceLinkFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceLink>>> ListAtSubscriptionWithHttpMessagesAsync(Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (this.Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListAtSubscription", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListAtSubscription", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Resources/links").ToString();
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Resources/links").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (odataQuery != null)
             {
                 var _odataFilter = odataQuery.ToString();
@@ -654,21 +646,21 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -701,43 +693,43 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))
                 {
                     ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                 }
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -747,7 +739,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ResourceLink>>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceLink>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -760,34 +752,32 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<ResourceLink>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ResourceLink>>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
 
         /// <summary>
-        /// Gets a list of resource links at and below the specified source scope. For
-        /// example, to list resource links at and under a resource group, set the
-        /// scope to
-        /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
+        /// Gets a list of resource links at and below the specified source scope.
         /// </summary>
         /// <param name='scope'>
-        /// The fully qualified Id of the source resource scope. For example, to list
-        /// resource links at and under a resource group, set the scope to
+        /// The fully qualified ID of the scope for getting the resource links. For
+        /// example, to list resource links at and under a resource group, set the
+        /// scope to
         /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
         /// </param>
         /// <param name='odataQuery'>
@@ -799,45 +789,45 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ResourceLink>>> ListAtSourceScopeWithHttpMessagesAsync(string scope, ODataQuery<ResourceLinkFilter> odataQuery = default(ODataQuery<ResourceLinkFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceLink>>> ListAtSourceScopeWithHttpMessagesAsync(string scope, Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<ResourceLinkFilter>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (scope == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "scope");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListAtSourceScope", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListAtSourceScope", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/links").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Resources/links").ToString();
             _url = _url.Replace("{scope}", scope);
-            List<string> _queryParameters = new List<string>();
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (odataQuery != null)
             {
                 var _odataFilter = odataQuery.ToString();
@@ -848,21 +838,21 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -895,43 +885,43 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))
                 {
                     ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                 }
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -941,7 +931,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ResourceLink>>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceLink>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -954,27 +944,27 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<ResourceLink>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ResourceLink>>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
 
         /// <summary>
-        /// Gets a list of resource links under the subscription.
+        /// Gets all the linked resources for the subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -985,52 +975,52 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ResourceLink>>> ListAtSubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceLink>>> ListAtSubscriptionNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListAtSubscriptionNext", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListAtSubscriptionNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
             _url = _url.Replace("{nextLink}", nextPageLink);
-            List<string> _queryParameters = new List<string>();
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1063,43 +1053,43 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))
                 {
                     ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                 }
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -1109,7 +1099,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ResourceLink>>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceLink>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1122,30 +1112,27 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<ResourceLink>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ResourceLink>>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
 
         /// <summary>
-        /// Gets a list of resource links at and below the specified source scope. For
-        /// example, to list resource links at and under a resource group, set the
-        /// scope to
-        /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup.
+        /// Gets a list of resource links at and below the specified source scope.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1156,52 +1143,52 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ResourceLink>>> ListAtSourceScopeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceLink>>> ListAtSourceScopeNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "nextPageLink");
             }
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListAtSourceScopeNext", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListAtSourceScopeNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
             _url = _url.Replace("{nextLink}", nextPageLink);
-            List<string> _queryParameters = new List<string>();
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1234,43 +1221,43 @@ namespace Microsoft.Azure.Management.ResourceManager
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))
                 {
                     ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                 }
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -1280,7 +1267,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ResourceLink>>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<ResourceLink>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1293,21 +1280,21 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<ResourceLink>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ResourceLink>>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }

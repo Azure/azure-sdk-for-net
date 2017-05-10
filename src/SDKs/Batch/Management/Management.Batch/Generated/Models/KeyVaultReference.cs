@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         /// <param name="id">The resource ID of the Azure key vault associated
         /// with the Batch account.</param>
-        /// <param name="url">The Url of the Azure key vault associated with
+        /// <param name="url">The URL of the Azure key vault associated with
         /// the Batch account.</param>
         public KeyVaultReference(string id, string url)
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the Url of the Azure key vault associated with the
+        /// Gets or sets the URL of the Azure key vault associated with the
         /// Batch account.
         /// </summary>
         [JsonProperty(PropertyName = "url")]

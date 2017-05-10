@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </exception>
         Task<AzureOperationResponse<DataLakeStoreAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Attempts to enable a user managed key vault for encryption of the
+        /// Attempts to enable a user managed Key Vault for encryption of the
         /// specified Data Lake Store account.
         /// </summary>
         /// <param name='resourceGroupName'>

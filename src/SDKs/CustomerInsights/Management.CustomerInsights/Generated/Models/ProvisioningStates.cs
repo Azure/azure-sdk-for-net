@@ -11,23 +11,18 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
     using Azure;
     using Management;
     using CustomerInsights;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ProvisioningStates.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProvisioningStates
+    public static class ProvisioningStates
     {
-        [EnumMember(Value = "Provisioning")]
-        Provisioning,
-        [EnumMember(Value = "Succeeded")]
-        Succeeded,
-        [EnumMember(Value = "Failed")]
-        Failed
+        public const string Provisioning = "Provisioning";
+        public const string Succeeded = "Succeeded";
+        public const string Expiring = "Expiring";
+        public const string Deleting = "Deleting";
+        public const string HumanIntervention = "HumanIntervention";
+        public const string Failed = "Failed";
     }
 }
 

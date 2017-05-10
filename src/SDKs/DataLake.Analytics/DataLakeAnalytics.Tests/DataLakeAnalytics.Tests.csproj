@@ -14,13 +14,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.1.3-preview" />
     <PackageReference Include="Microsoft.Azure.Management.Storage" Version="5.0.2-preview" />
-    
-    <!--<PackageReference Include="Microsoft.Azure.Management.DataLake.Analytics" Version="2.1.1-preview" /> -->
-    
     <PackageReference Include="Microsoft.Azure.Management.DataLake.Store" Version="2.1.1-preview" />
     <ProjectReference Include="..\Management.DataLake.Analytics\Microsoft.Azure.Management.DataLake.Analytics.csproj" />
-    
-    <!--<ProjectReference Include="..\..\DataLake.Store\Management.DataLake.Store\Microsoft.Azure.Management.DataLake.Store.csproj" />-->
   </ItemGroup>
   
   <ItemGroup>

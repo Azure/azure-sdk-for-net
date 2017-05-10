@@ -154,6 +154,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='secretName'>
             /// The name of the secret to get
             /// </param>
+            [System.Obsolete()]
             public static USqlSecret GetSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
             {
                 return operations.GetSecretAsync(accountName, databaseName, secretName).GetAwaiter().GetResult();
@@ -179,6 +180,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete()]
             public static async Task<USqlSecret> GetSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false))
@@ -935,6 +937,80 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Retrieves the list of all table statistics within the specified schema from
+            /// the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the statistics.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the statistics.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlTableStatistics> ListTableStatisticsByDatabaseAndSchema(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?))
+            {
+                return operations.ListTableStatisticsByDatabaseAndSchemaAsync(accountName, databaseName, schemaName, odataQuery, select, count).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of all table statistics within the specified schema from
+            /// the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the statistics.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the statistics.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsByDatabaseAndSchemaAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTableStatisticsByDatabaseAndSchemaWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves the specified table type from the Data Lake Analytics catalog.
             /// </summary>
             /// <param name='operations'>
@@ -1055,6 +1131,132 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task<IPage<USqlTableType>> ListTableTypesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableType> odataQuery = default(ODataQuery<USqlTableType>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListTableTypesWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the specified package from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the package.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the package.
+            /// </param>
+            /// <param name='packageName'>
+            /// The name of the package.
+            /// </param>
+            public static USqlPackage GetPackage(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string packageName)
+            {
+                return operations.GetPackageAsync(accountName, databaseName, schemaName, packageName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the specified package from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the package.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the package.
+            /// </param>
+            /// <param name='packageName'>
+            /// The name of the package.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<USqlPackage> GetPackageAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string packageName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPackageWithHttpMessagesAsync(accountName, databaseName, schemaName, packageName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of packages from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the packages.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the packages.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlPackage> ListPackages(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlPackage> odataQuery = default(ODataQuery<USqlPackage>), string select = default(string), bool? count = default(bool?))
+            {
+                return operations.ListPackagesAsync(accountName, databaseName, schemaName, odataQuery, select, count).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of packages from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the packages.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the packages.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlPackage>> ListPackagesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlPackage> odataQuery = default(ODataQuery<USqlPackage>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPackagesWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1903,6 +2105,278 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Retrieves the list of all statistics in a database from the Data Lake
+            /// Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the table statistics.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlTableStatistics> ListTableStatisticsByDatabase(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?))
+            {
+                return operations.ListTableStatisticsByDatabaseAsync(accountName, databaseName, odataQuery, select, count).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of all statistics in a database from the Data Lake
+            /// Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the table statistics.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsByDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTableStatisticsByDatabaseWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of all tables in a database from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the tables.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlTable> ListTablesByDatabase(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlTable> odataQuery = default(ODataQuery<USqlTable>), string select = default(string), bool? count = default(bool?))
+            {
+                return operations.ListTablesByDatabaseAsync(accountName, databaseName, odataQuery, select, count).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of all tables in a database from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the tables.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTable>> ListTablesByDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlTable> odataQuery = default(ODataQuery<USqlTable>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTablesByDatabaseWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of all table valued functions in a database from the
+            /// Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the table valued functions.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlTableValuedFunction> ListTableValuedFunctionsByDatabase(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlTableValuedFunction> odataQuery = default(ODataQuery<USqlTableValuedFunction>), string select = default(string), bool? count = default(bool?))
+            {
+                return operations.ListTableValuedFunctionsByDatabaseAsync(accountName, databaseName, odataQuery, select, count).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of all table valued functions in a database from the
+            /// Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the table valued functions.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsByDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlTableValuedFunction> odataQuery = default(ODataQuery<USqlTableValuedFunction>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTableValuedFunctionsByDatabaseWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of all views in a database from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the views.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlView> ListViewsByDatabase(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlView> odataQuery = default(ODataQuery<USqlView>), string select = default(string), bool? count = default(bool?))
+            {
+                return operations.ListViewsByDatabaseAsync(accountName, databaseName, odataQuery, select, count).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of all views in a database from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the views.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlView>> ListViewsByDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlView> odataQuery = default(ODataQuery<USqlView>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListViewsByDatabaseWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves the specified database from the Data Lake Analytics catalog.
             /// </summary>
             /// <param name='operations'>
@@ -2143,6 +2617,42 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Retrieves the list of all table statistics within the specified schema from
+            /// the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<USqlTableStatistics> ListTableStatisticsByDatabaseAndSchemaNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListTableStatisticsByDatabaseAndSchemaNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of all table statistics within the specified schema from
+            /// the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsByDatabaseAndSchemaNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTableStatisticsByDatabaseAndSchemaNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves the list of table types from the Data Lake Analytics catalog.
             /// </summary>
             /// <param name='operations'>
@@ -2171,6 +2681,40 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task<IPage<USqlTableType>> ListTableTypesNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListTableTypesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of packages from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<USqlPackage> ListPackagesNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListPackagesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of packages from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlPackage>> ListPackagesNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPackagesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2417,6 +2961,150 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task<IPage<USqlSchema>> ListSchemasNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListSchemasNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of all statistics in a database from the Data Lake
+            /// Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<USqlTableStatistics> ListTableStatisticsByDatabaseNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListTableStatisticsByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of all statistics in a database from the Data Lake
+            /// Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsByDatabaseNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTableStatisticsByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of all tables in a database from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<USqlTable> ListTablesByDatabaseNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListTablesByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of all tables in a database from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTable>> ListTablesByDatabaseNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTablesByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of all table valued functions in a database from the
+            /// Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<USqlTableValuedFunction> ListTableValuedFunctionsByDatabaseNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListTableValuedFunctionsByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of all table valued functions in a database from the
+            /// Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsByDatabaseNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTableValuedFunctionsByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of all views in a database from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<USqlView> ListViewsByDatabaseNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListViewsByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of all views in a database from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlView>> ListViewsByDatabaseNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListViewsByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

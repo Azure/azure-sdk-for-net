@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Application>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, AddApplicationParameters parameters = default(AddApplicationParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Application>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, ApplicationCreateParameters parameters = default(ApplicationCreateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -747,7 +747,7 @@ namespace Microsoft.Azure.Management.Batch
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, UpdateApplicationParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, ApplicationUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {

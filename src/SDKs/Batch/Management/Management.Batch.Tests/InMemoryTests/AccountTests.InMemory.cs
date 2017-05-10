@@ -401,7 +401,8 @@ namespace Microsoft.Azure.Batch.Tests
                     'properties': {
                         'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
                         'provisioningState' : 'Succeeded',
-                        'coreQuota' : '20',
+                        'dedicatedCoreQuota' : '20',
+                        'lowPriorityCoreQuota' : '50',
                         'poolQuota' : '100',
                         'activeJobAndJobScheduleQuota' : '200'
                     },
@@ -427,7 +428,8 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("acctName", result.Name);
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", result.Id);
             Assert.NotEmpty(result.AccountEndpoint);
-            Assert.Equal(20, result.CoreQuota);
+            Assert.Equal(20, result.DedicatedCoreQuota);
+            Assert.Equal(50, result.LowPriorityCoreQuota);
             Assert.Equal(100, result.PoolQuota);
             Assert.Equal(200, result.ActiveJobAndJobScheduleQuota);
 
@@ -463,7 +465,8 @@ namespace Microsoft.Azure.Batch.Tests
                                     'properties': {
                                         'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
                                         'provisioningState' : 'Succeeded',
-                                        'coreQuota' : '20',
+                                        'dedicatedCoreQuota' : '20',
+                                        'lowPriorityCoreQuota' : '50',
                                         'poolQuota' : '100',
                                         'activeJobAndJobScheduleQuota' : '200'
                                     },
@@ -480,7 +483,8 @@ namespace Microsoft.Azure.Batch.Tests
                                     'properties': {
                                         'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
                                         'provisioningState' : 'Succeeded',
-                                        'coreQuota' : '20',
+                                        'dedicatedCoreQuota' : '20',
+                                        'lowPriorityCoreQuota' : '50',
                                         'poolQuota' : '100',
                                         'activeJobAndJobScheduleQuota' : '200'
                                     },
@@ -508,7 +512,8 @@ namespace Microsoft.Azure.Batch.Tests
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
-                                    'coreQuota' : '20',
+                                    'dedicatedCoreQuota' : '20',
+                                    'lowPriorityCoreQuota' : '50',
                                     'poolQuota' : '100',
                                     'activeJobAndJobScheduleQuota' : '200'
                                 },
@@ -552,7 +557,8 @@ namespace Microsoft.Azure.Batch.Tests
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
-                                    'coreQuota' : '20',
+                                    'dedicatedCoreQuota' : '20',
+                                    'lowPriorityCoreQuota' : '50',
                                     'poolQuota' : '100',
                                     'activeJobAndJobScheduleQuota' : '200'
 
@@ -570,7 +576,8 @@ namespace Microsoft.Azure.Batch.Tests
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
-                                    'coreQuota' : '20',
+                                    'dedicatedCoreQuota' : '20',
+                                    'lowPriorityCoreQuota' : '50',
                                     'poolQuota' : '100',
                                     'activeJobAndJobScheduleQuota' : '200'
                                 },
@@ -614,7 +621,8 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", account1.Id);
             Assert.Equal("/subscriptions/12345/resourceGroups/bar/providers/Microsoft.Batch/batchAccounts/acctName1", account2.Id);
             Assert.NotEmpty(account1.AccountEndpoint);
-            Assert.Equal(20, account1.CoreQuota);
+            Assert.Equal(20, account1.DedicatedCoreQuota);
+            Assert.Equal(50, account1.LowPriorityCoreQuota);
             Assert.Equal(100, account1.PoolQuota);
             Assert.Equal(200, account2.ActiveJobAndJobScheduleQuota);
 
@@ -658,7 +666,8 @@ namespace Microsoft.Azure.Batch.Tests
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
-                                    'coreQuota' : '20',
+                                    'dedicatedCoreQuota' : '20',
+                                    'lowPriorityCoreQuota' : '50',
                                     'poolQuota' : '100',
                                     'activeJobAndJobScheduleQuota' : '200'
                                 },
@@ -675,7 +684,8 @@ namespace Microsoft.Azure.Batch.Tests
                                 'properties': {
                                     'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
                                     'provisioningState' : 'Failed',
-                                    'coreQuota' : '10',
+                                    'dedicatedCoreQuota' : '10',
+                                    'lowPriorityCoreQuota' : '50',
                                     'poolQuota' : '50',
                                     'activeJobAndJobScheduleQuota' : '100'
                                 },
@@ -709,7 +719,8 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal( @"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", account1.Id);
             Assert.Equal(@"http://acctName.batch.core.windows.net/", account1.AccountEndpoint);
             Assert.Equal(ProvisioningState.Succeeded, account1.ProvisioningState);
-            Assert.Equal(20, account1.CoreQuota);
+            Assert.Equal(20, account1.DedicatedCoreQuota);
+            Assert.Equal(50, account1.LowPriorityCoreQuota);
             Assert.Equal(100, account1.PoolQuota);
             Assert.Equal(200, account1.ActiveJobAndJobScheduleQuota);
 
@@ -718,7 +729,8 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal(@"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName1", account2.Id);
             Assert.Equal(@"http://acctName1.batch.core.windows.net/", account2.AccountEndpoint);
             Assert.Equal(ProvisioningState.Failed, account2.ProvisioningState);
-            Assert.Equal(10, account2.CoreQuota);
+            Assert.Equal(10, account2.DedicatedCoreQuota);
+            Assert.Equal(50, account2.LowPriorityCoreQuota);
             Assert.Equal(50, account2.PoolQuota);
             Assert.Equal(100, account2.ActiveJobAndJobScheduleQuota);
 

@@ -18,16 +18,24 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class ManagementLocksOperationsExtensions
     {
             /// <summary>
-            /// Create or update a management lock at the resource group level.
+            /// Creates or updates a management lock at the resource group level.
             /// </summary>
+            /// <remarks>
+            /// When you apply a lock at a parent scope, all child resources inherit the
+            /// same lock. To create management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group to lock.
             /// </param>
             /// <param name='lockName'>
-            /// The lock name.
+            /// The lock name. The lock name can be a maximum of 260 characters. It cannot
+            /// contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters.
             /// </param>
             /// <param name='parameters'>
             /// The management lock parameters.
@@ -38,16 +46,24 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create or update a management lock at the resource group level.
+            /// Creates or updates a management lock at the resource group level.
             /// </summary>
+            /// <remarks>
+            /// When you apply a lock at a parent scope, all child resources inherit the
+            /// same lock. To create management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group to lock.
             /// </param>
             /// <param name='lockName'>
-            /// The lock name.
+            /// The lock name. The lock name can be a maximum of 260 characters. It cannot
+            /// contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters.
             /// </param>
             /// <param name='parameters'>
             /// The management lock parameters.
@@ -64,16 +80,22 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes the management lock of a resource group.
+            /// Deletes a management lock at the resource group level.
             /// </summary>
+            /// <remarks>
+            /// To delete management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group containing the lock.
             /// </param>
             /// <param name='lockName'>
-            /// The name of lock.
+            /// The name of lock to delete.
             /// </param>
             public static void DeleteAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, string lockName)
             {
@@ -81,16 +103,22 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes the management lock of a resource group.
+            /// Deletes a management lock at the resource group level.
             /// </summary>
+            /// <remarks>
+            /// To delete management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group containing the lock.
             /// </param>
             /// <param name='lockName'>
-            /// The name of lock.
+            /// The name of lock to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -107,10 +135,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the locked resource group.
             /// </param>
             /// <param name='lockName'>
-            /// The lock name.
+            /// The name of the lock to get.
             /// </param>
             public static ManagementLockObject GetAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, string lockName)
             {
@@ -124,10 +152,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the locked resource group.
             /// </param>
             /// <param name='lockName'>
-            /// The lock name.
+            /// The name of the lock to get.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -141,32 +169,173 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create or update a management lock at the resource level or any level
-            /// below resource.
+            /// Create or update a management lock by scope.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='parentResourcePath'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceType'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceName'>
-            /// Resource identity.
+            /// <param name='scope'>
+            /// The scope for the lock. When providing a scope for the assignment, use
+            /// '/subscriptions/{subscriptionId}' for subscriptions,
+            /// '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}' for
+            /// resource groups, and
+            /// '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}'
+            /// for resources.
             /// </param>
             /// <param name='lockName'>
             /// The name of lock.
             /// </param>
             /// <param name='parameters'>
             /// Create or update management lock parameters.
+            /// </param>
+            public static ManagementLockObject CreateOrUpdateByScope(this IManagementLocksOperations operations, string scope, string lockName, ManagementLockObject parameters)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IManagementLocksOperations)s).CreateOrUpdateByScopeAsync(scope, lockName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update a management lock by scope.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope for the lock. When providing a scope for the assignment, use
+            /// '/subscriptions/{subscriptionId}' for subscriptions,
+            /// '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}' for
+            /// resource groups, and
+            /// '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}'
+            /// for resources.
+            /// </param>
+            /// <param name='lockName'>
+            /// The name of lock.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create or update management lock parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<ManagementLockObject> CreateOrUpdateByScopeAsync(this IManagementLocksOperations operations, string scope, string lockName, ManagementLockObject parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateByScopeWithHttpMessagesAsync(scope, lockName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a management lock by scope.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope for the lock.
+            /// </param>
+            /// <param name='lockName'>
+            /// The name of lock.
+            /// </param>
+            public static void DeleteByScope(this IManagementLocksOperations operations, string scope, string lockName)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IManagementLocksOperations)s).DeleteByScopeAsync(scope, lockName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a management lock by scope.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope for the lock.
+            /// </param>
+            /// <param name='lockName'>
+            /// The name of lock.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task DeleteByScopeAsync(this IManagementLocksOperations operations, string scope, string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.DeleteByScopeWithHttpMessagesAsync(scope, lockName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Get a management lock by scope.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope for the lock.
+            /// </param>
+            /// <param name='lockName'>
+            /// The name of lock.
+            /// </param>
+            public static ManagementLockObject GetByScope(this IManagementLocksOperations operations, string scope, string lockName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IManagementLocksOperations)s).GetByScopeAsync(scope, lockName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a management lock by scope.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope for the lock.
+            /// </param>
+            /// <param name='lockName'>
+            /// The name of lock.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<ManagementLockObject> GetByScopeAsync(this IManagementLocksOperations operations, string scope, string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetByScopeWithHttpMessagesAsync(scope, lockName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates a management lock at the resource level or any level
+            /// below the resource.
+            /// </summary>
+            /// <remarks>
+            /// When you apply a lock at a parent scope, all child resources inherit the
+            /// same lock. To create management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group containing the resource to lock.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The resource provider namespace of the resource to lock.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// The parent resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// The resource type of the resource to lock.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource to lock.
+            /// </param>
+            /// <param name='lockName'>
+            /// The name of lock. The lock name can be a maximum of 260 characters. It
+            /// cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for creating or updating a  management lock.
             /// </param>
             public static ManagementLockObject CreateOrUpdateAtResourceLevel(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, ManagementLockObject parameters)
             {
@@ -174,32 +343,40 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create or update a management lock at the resource level or any level
-            /// below resource.
+            /// Creates or updates a management lock at the resource level or any level
+            /// below the resource.
             /// </summary>
+            /// <remarks>
+            /// When you apply a lock at a parent scope, all child resources inherit the
+            /// same lock. To create management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group containing the resource to lock.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
+            /// The resource provider namespace of the resource to lock.
             /// </param>
             /// <param name='parentResourcePath'>
-            /// Resource identity.
+            /// The parent resource identity.
             /// </param>
             /// <param name='resourceType'>
-            /// Resource identity.
+            /// The resource type of the resource to lock.
             /// </param>
             /// <param name='resourceName'>
-            /// Resource identity.
+            /// The name of the resource to lock.
             /// </param>
             /// <param name='lockName'>
-            /// The name of lock.
+            /// The name of lock. The lock name can be a maximum of 260 characters. It
+            /// cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters.
             /// </param>
             /// <param name='parameters'>
-            /// Create or update management lock parameters.
+            /// Parameters for creating or updating a  management lock.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -213,28 +390,35 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes the management lock of a resource or any level below resource.
+            /// Deletes the management lock of a resource or any level below the resource.
             /// </summary>
+            /// <remarks>
+            /// To delete management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group containing the resource with the lock to
+            /// delete.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
+            /// The resource provider namespace of the resource with the lock to delete.
             /// </param>
             /// <param name='parentResourcePath'>
-            /// Resource identity.
+            /// The parent resource identity.
             /// </param>
             /// <param name='resourceType'>
-            /// Resource identity.
+            /// The resource type of the resource with the lock to delete.
             /// </param>
             /// <param name='resourceName'>
-            /// Resource identity.
+            /// The name of the resource with the lock to delete.
             /// </param>
             /// <param name='lockName'>
-            /// The name of lock.
+            /// The name of the lock to delete.
             /// </param>
             public static void DeleteAtResourceLevel(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName)
             {
@@ -242,28 +426,35 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes the management lock of a resource or any level below resource.
+            /// Deletes the management lock of a resource or any level below the resource.
             /// </summary>
+            /// <remarks>
+            /// To delete management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group containing the resource with the lock to
+            /// delete.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
+            /// The resource provider namespace of the resource with the lock to delete.
             /// </param>
             /// <param name='parentResourcePath'>
-            /// Resource identity.
+            /// The parent resource identity.
             /// </param>
             /// <param name='resourceType'>
-            /// Resource identity.
+            /// The resource type of the resource with the lock to delete.
             /// </param>
             /// <param name='resourceName'>
-            /// Resource identity.
+            /// The name of the resource with the lock to delete.
             /// </param>
             /// <param name='lockName'>
-            /// The name of lock.
+            /// The name of the lock to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -274,13 +465,85 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create or update a management lock at the subscription level.
+            /// Get the management lock of a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// An extra path parameter needed in some services, like SQL Databases.
+            /// </param>
+            /// <param name='resourceType'>
+            /// The type of the resource.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource.
+            /// </param>
             /// <param name='lockName'>
             /// The name of lock.
+            /// </param>
+            public static ManagementLockObject GetAtResourceLevel(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IManagementLocksOperations)s).GetAtResourceLevelAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, lockName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the management lock of a resource or any level below resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// An extra path parameter needed in some services, like SQL Databases.
+            /// </param>
+            /// <param name='resourceType'>
+            /// The type of the resource.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the resource.
+            /// </param>
+            /// <param name='lockName'>
+            /// The name of lock.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<ManagementLockObject> GetAtResourceLevelAsync(this IManagementLocksOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetAtResourceLevelWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, lockName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates a management lock at the subscription level.
+            /// </summary>
+            /// <remarks>
+            /// When you apply a lock at a parent scope, all child resources inherit the
+            /// same lock. To create management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='lockName'>
+            /// The name of lock. The lock name can be a maximum of 260 characters. It
+            /// cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters.
             /// </param>
             /// <param name='parameters'>
             /// The management lock parameters.
@@ -291,13 +554,21 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create or update a management lock at the subscription level.
+            /// Creates or updates a management lock at the subscription level.
             /// </summary>
+            /// <remarks>
+            /// When you apply a lock at a parent scope, all child resources inherit the
+            /// same lock. To create management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
-            /// The name of lock.
+            /// The name of lock. The lock name can be a maximum of 260 characters. It
+            /// cannot contain &lt;, &gt; %, &amp;, :, \, ?, /, or any control characters.
             /// </param>
             /// <param name='parameters'>
             /// The management lock parameters.
@@ -314,13 +585,19 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes the management lock of a subscription.
+            /// Deletes the management lock at the subscription level.
             /// </summary>
+            /// <remarks>
+            /// To delete management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
-            /// The name of lock.
+            /// The name of lock to delete.
             /// </param>
             public static void DeleteAtSubscriptionLevel(this IManagementLocksOperations operations, string lockName)
             {
@@ -328,13 +605,19 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes the management lock of a subscription.
+            /// Deletes the management lock at the subscription level.
             /// </summary>
+            /// <remarks>
+            /// To delete management locks, you must have access to
+            /// Microsoft.Authorization/* or Microsoft.Authorization/locks/* actions. Of
+            /// the built-in roles, only Owner and User Access Administrator are granted
+            /// those actions.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
-            /// The name of lock.
+            /// The name of lock to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -345,47 +628,47 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets the management lock of a scope.
+            /// Gets a management lock at the subscription level.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
-            /// Name of the management lock.
+            /// The name of the lock to get.
             /// </param>
-            public static ManagementLockObject Get(this IManagementLocksOperations operations, string lockName)
+            public static ManagementLockObject GetAtSubscriptionLevel(this IManagementLocksOperations operations, string lockName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IManagementLocksOperations)s).GetAsync(lockName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IManagementLocksOperations)s).GetAtSubscriptionLevelAsync(lockName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the management lock of a scope.
+            /// Gets a management lock at the subscription level.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='lockName'>
-            /// Name of the management lock.
+            /// The name of the lock to get.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<ManagementLockObject> GetAsync(this IManagementLocksOperations operations, string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<ManagementLockObject> GetAtSubscriptionLevelAsync(this IManagementLocksOperations operations, string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(lockName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAtSubscriptionLevelWithHttpMessagesAsync(lockName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets all the management locks of a resource group.
+            /// Gets all the management locks for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// The name of the resource group containing the locks to get.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -396,13 +679,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a resource group.
+            /// Gets all the management locks for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// The name of the resource group containing the locks to get.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -419,25 +702,26 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a resource or any level below resource.
+            /// Gets all the management locks for a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group containing the locked resource. The name is
+            /// case insensitive.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
+            /// The namespace of the resource provider.
             /// </param>
             /// <param name='parentResourcePath'>
-            /// Resource identity.
+            /// The parent resource identity.
             /// </param>
             /// <param name='resourceType'>
-            /// Resource identity.
+            /// The resource type of the locked resource.
             /// </param>
             /// <param name='resourceName'>
-            /// Resource identity.
+            /// The name of the locked resource.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -448,25 +732,26 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a resource or any level below resource.
+            /// Gets all the management locks for a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
+            /// The name of the resource group containing the locked resource. The name is
+            /// case insensitive.
             /// </param>
             /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
+            /// The namespace of the resource provider.
             /// </param>
             /// <param name='parentResourcePath'>
-            /// Resource identity.
+            /// The parent resource identity.
             /// </param>
             /// <param name='resourceType'>
-            /// Resource identity.
+            /// The resource type of the locked resource.
             /// </param>
             /// <param name='resourceName'>
-            /// Resource identity.
+            /// The name of the locked resource.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -483,7 +768,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a subscription.
+            /// Gets all the management locks for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -497,7 +782,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a subscription.
+            /// Gets all the management locks for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -517,7 +802,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a resource group.
+            /// Gets all the management locks for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -531,7 +816,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a resource group.
+            /// Gets all the management locks for a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -551,7 +836,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a resource or any level below resource.
+            /// Gets all the management locks for a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -565,7 +850,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a resource or any level below resource.
+            /// Gets all the management locks for a resource or any level below resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -585,7 +870,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a subscription.
+            /// Gets all the management locks for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -599,7 +884,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the management locks of a subscription.
+            /// Gets all the management locks for a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

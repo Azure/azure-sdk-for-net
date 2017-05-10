@@ -325,6 +325,7 @@ namespace Microsoft.Azure.Management.Sql
             ElasticPools = new ElasticPoolsOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
+
             FailoverGroups = new FailoverGroupsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

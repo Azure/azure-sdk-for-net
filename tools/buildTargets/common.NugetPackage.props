@@ -1,15 +1,15 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="PackageMetaData">
     <Copyright>Copyright (c) Microsoft Corporation</Copyright>
-    <Authors>Microsoft</Authors>    
+    <Authors>Microsoft</Authors>
     <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
     <PackageProjectUrl>https://github.com/Azure/AutoRest</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>    
+    <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
     <PackageTags>$(PackageTags) $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-	<GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
@@ -18,8 +18,8 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-	<PackageTargetFallback Condition=" '$(TargetFramework)' == 'net452' ">$(PackageTargetFallback);net452;dnxcore50</PackageTargetFallback>    
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'net452' ">$(PackageTargetFallback);net452;dnxcore50</PackageTargetFallback>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.4' ">$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
-    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.4' ">1.6.1</NetStandardImplicitPackageVersion>    
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.4' ">1.6.1</NetStandardImplicitPackageVersion>
   </PropertyGroup>
 </Project>

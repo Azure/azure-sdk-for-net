@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Attempts to enable a user managed key vault for encryption of the specified
+            /// Attempts to enable a user managed Key Vault for encryption of the specified
             /// Data Lake Store account.
             /// </summary>
             /// <param name='operations'>
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Attempts to enable a user managed key vault for encryption of the specified
+            /// Attempts to enable a user managed Key Vault for encryption of the specified
             /// Data Lake Store account.
             /// </summary>
             /// <param name='operations'>

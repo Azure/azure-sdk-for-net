@@ -11,23 +11,18 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
     using Azure;
     using Management;
     using CustomerInsights;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ConnectorTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ConnectorTypes
+    public static class ConnectorTypes
     {
-        [EnumMember(Value = "CRM")]
-        CRM,
-        [EnumMember(Value = "AzureBlob")]
-        AzureBlob,
-        [EnumMember(Value = "Salesforce")]
-        Salesforce
+        public const string None = "None";
+        public const string CRM = "CRM";
+        public const string AzureBlob = "AzureBlob";
+        public const string Salesforce = "Salesforce";
+        public const string ExchangeOnline = "ExchangeOnline";
+        public const string Outbound = "Outbound";
     }
 }
 

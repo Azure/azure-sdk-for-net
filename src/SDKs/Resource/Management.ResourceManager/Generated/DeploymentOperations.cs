@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         public ResourceManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get a list of deployments operations.
+        /// Gets a deployments operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// The name of the deployment.
         /// </param>
         /// <param name='operationId'>
-        /// Operation Id.
+        /// The ID of the operation to get.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -272,16 +272,16 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a list of deployments operations.
+        /// Gets all deployments operations for a deployment.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// The name of the deployment with the operation to get.
         /// </param>
         /// <param name='top'>
-        /// Query parameters.
+        /// The number of results to return.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -501,7 +501,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets a list of deployments operations.
+        /// Gets all deployments operations for a deployment.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

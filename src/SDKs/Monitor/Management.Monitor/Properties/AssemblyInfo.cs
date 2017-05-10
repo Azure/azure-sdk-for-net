@@ -8,12 +8,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure Monitor Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Monitor operations.")]
 
-[assembly: AssemblyVersion("0.15.0.0")]
-[assembly: AssemblyFileVersion("0.15.0.0")]
-
+[assembly: AssemblyVersion("0.16.0.0")]
+[assembly: AssemblyFileVersion("0.16.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Azure .NET SDK")]
+[assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

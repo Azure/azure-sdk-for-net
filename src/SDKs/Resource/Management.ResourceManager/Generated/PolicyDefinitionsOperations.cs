@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         public PolicyClient Client { get; private set; }
 
         /// <summary>
-        /// Create or update a policy definition.
+        /// Creates or updates a policy definition.
         /// </summary>
         /// <param name='policyDefinitionName'>
-        /// The policy definition name.
+        /// The name of the policy definition to create.
         /// </param>
         /// <param name='parameters'>
         /// The policy definition properties.
@@ -238,10 +238,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Deletes the policy definition.
+        /// Deletes a policy definition.
         /// </summary>
         /// <param name='policyDefinitionName'>
-        /// The policy definition name.
+        /// The name of the policy definition to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets the policy definition.
         /// </summary>
         /// <param name='policyDefinitionName'>
-        /// The policy definition name.
+        /// The name of the policy definition to get.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -573,7 +573,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets all the policy definitions of a subscription.
+        /// Gets all the policy definitions for a subscription.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -758,7 +758,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets all the policy definitions of a subscription.
+        /// Gets all the policy definitions for a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

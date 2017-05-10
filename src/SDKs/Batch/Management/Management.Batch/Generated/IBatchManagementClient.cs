@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Batch
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// A unique identifier of a Microsoft Azure subscription. The
-        /// subscription ID forms part of the URI for every service call.
+        /// The Azure subscription ID. This is a GUID-formatted string (e.g.
+        /// 00000000-0000-0000-0000-000000000000)
         /// </summary>
         string SubscriptionId { get; set; }
 
@@ -87,6 +87,11 @@ namespace Microsoft.Azure.Management.Batch
         /// Gets the ILocationOperations.
         /// </summary>
         ILocationOperations Location { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
 
     }
 }
