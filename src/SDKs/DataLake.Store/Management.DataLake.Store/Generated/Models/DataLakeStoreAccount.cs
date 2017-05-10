@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="identity">The Key vault encryption identity, if
+        /// <param name="identity">The Key Vault encryption identity, if
         /// any.</param>
         /// <param name="provisioningState">the status of the Data Lake Store
         /// account while being provisioned. Possible values include: 'Failed',
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="encryptionProvisioningState">The current state of
         /// encryption provisioning for this Data Lake store account. Possible
         /// values include: 'Creating', 'Succeeded'</param>
-        /// <param name="encryptionConfig">The Key vault encryption
+        /// <param name="encryptionConfig">The Key Vault encryption
         /// configuration.</param>
         /// <param name="firewallState">The current state of the IP address
         /// firewall for this Data Lake store account. Possible values include:
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Key vault encryption identity, if any.
+        /// Gets or sets the Key Vault encryption identity, if any.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public EncryptionIdentity Identity { get; set; }
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public EncryptionProvisioningState? EncryptionProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Key vault encryption configuration.
+        /// Gets or sets the Key Vault encryption configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryptionConfig")]
         public EncryptionConfig EncryptionConfig { get; set; }

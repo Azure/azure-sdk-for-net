@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Batch
         /// location.
         /// </summary>
         /// <param name='locationName'>
-        /// The desired region for the quotas.
+        /// The region for which to retrieve Batch service quotas.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

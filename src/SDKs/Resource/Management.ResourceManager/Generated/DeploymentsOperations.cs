@@ -42,13 +42,27 @@ namespace Microsoft.Azure.Management.ResourceManager
         public ResourceManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Delete deployment.
+        /// Deletes a deployment from the deployment history.
         /// </summary>
+        /// <remarks>
+        /// A template deployment that is currently running cannot be deleted.
+        /// Deleting a template deployment removes the associated deployment
+        /// operations. Deleting a template deployment does not affect the state of
+        /// the resource group. This is an asynchronous operation that returns a
+        /// status of 202 until the template deployment is successfully deleted. The
+        /// Location response header contains the URI that is used to obtain the
+        /// status of the process. While the process is running, a call to the URI in
+        /// the Location header returns a status of 202. When the process finishes,
+        /// the URI in the Location header returns a status of 204 on success. If the
+        /// asynchronous request failed, the URI in the Location header returns an
+        /// error-level status code.
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group with the deployment to delete. The name is
+        /// case insensitive.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment to be deleted.
+        /// The name of the deployment to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -65,13 +79,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Checks whether deployment exists.
+        /// Checks whether the deployment exists.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to check. The name is case insensitive.
+        /// The name of the resource group with the deployment to check. The name is
+        /// case insensitive.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// The name of the deployment to check.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -266,10 +281,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Create a named template deployment using a template.
+        /// Deploys resources to a resource group.
         /// </summary>
+        /// <remarks>
+        /// You can provide the template and parameters directly in the request or
+        /// link to JSON files.
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group to deploy the resources to. The name is
+        /// case insensitive. The resource group must already exist.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -294,13 +314,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Get a deployment.
+        /// Gets a deployment.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// The name of the deployment to get.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -515,13 +535,19 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Cancel a currently running template deployment.
+        /// Cancels a currently running template deployment.
         /// </summary>
+        /// <remarks>
+        /// You can cancel a deployment only if the provisioningState is Accepted or
+        /// Running. After the deployment is canceled, the provisioningState is set
+        /// to Canceled. Canceling a template deployment stops the currently running
+        /// template deployment and leaves the resource group partially deployed.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// The name of the deployment to cancel.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -707,16 +733,18 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Validate a deployment template.
+        /// Validates whether the specified template is syntactically correct and will
+        /// be accepted by Azure Resource Manager..
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group the template will be deployed to. The name
+        /// is case insensitive.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Deployment to validate.
+        /// Parameters to validate.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -964,13 +992,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Exports a deployment template.
+        /// Exports the template used for specified deployment.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// The name of the deployment from which to get the template.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1185,10 +1213,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Get a list of deployments.
+        /// Get all the deployments for a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to filter by. The name is case insensitive.
+        /// The name of the resource group with the deployments to get. The name is
+        /// case insensitive.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -1211,7 +1240,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<DeploymentExtended>>> ListWithHttpMessagesAsync(string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<DeploymentExtended>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilter>), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1250,7 +1279,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -1394,13 +1423,27 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Delete deployment.
+        /// Deletes a deployment from the deployment history.
         /// </summary>
+        /// <remarks>
+        /// A template deployment that is currently running cannot be deleted.
+        /// Deleting a template deployment removes the associated deployment
+        /// operations. Deleting a template deployment does not affect the state of
+        /// the resource group. This is an asynchronous operation that returns a
+        /// status of 202 until the template deployment is successfully deleted. The
+        /// Location response header contains the URI that is used to obtain the
+        /// status of the process. While the process is running, a call to the URI in
+        /// the Location header returns a status of 202. When the process finishes,
+        /// the URI in the Location header returns a status of 204 on success. If the
+        /// asynchronous request failed, the URI in the Location header returns an
+        /// error-level status code.
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group with the deployment to delete. The name is
+        /// case insensitive.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment to be deleted.
+        /// The name of the deployment to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1586,10 +1629,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Create a named template deployment using a template.
+        /// Deploys resources to a resource group.
         /// </summary>
+        /// <remarks>
+        /// You can provide the template and parameters directly in the request or
+        /// link to JSON files.
+        /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group to deploy the resources to. The name is
+        /// case insensitive. The resource group must already exist.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -1843,7 +1891,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Get a list of deployments.
+        /// Get all the deployments for a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1866,7 +1914,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<DeploymentExtended>>> ListNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<DeploymentExtended>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1881,7 +1929,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroupNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";

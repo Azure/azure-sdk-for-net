@@ -31,11 +31,11 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="id">The ID of the resource</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource</param>
-        /// <param name="location">The location of the resource</param>
-        /// <param name="tags">The tags of the resource</param>
+        /// <param name="id">The ID of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="location">The location of the resource.</param>
+        /// <param name="tags">The tags of the resource.</param>
         public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
@@ -46,31 +46,31 @@ namespace Microsoft.Azure.Management.Batch.Models
         }
 
         /// <summary>
-        /// Gets the ID of the resource
+        /// Gets the ID of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; protected set; }
 
         /// <summary>
-        /// Gets the name of the resource
+        /// Gets the name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; protected set; }
 
         /// <summary>
-        /// Gets the type of the resource
+        /// Gets the type of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; protected set; }
 
         /// <summary>
-        /// Gets the location of the resource
+        /// Gets the location of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; protected set; }
 
         /// <summary>
-        /// Gets the tags of the resource
+        /// Gets the tags of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; protected set; }

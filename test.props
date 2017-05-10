@@ -11,25 +11,11 @@
     <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
-    <DefineConstants>FullNetFx</DefineConstants>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>netcoreapp11</DefineConstants>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
-  
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">  
 		<PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta1-build1309" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />		
-	</ItemGroup>  
-	
+	</ItemGroup>
 	<ItemGroup Condition=" '$(TargetFramework)'=='net452' ">
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
 		<PackageReference Include="xunit" Version="2.2.0" />
@@ -37,6 +23,5 @@
 	</ItemGroup>
    <ItemGroup> 
 	   <Compile Include="$(LibraryToolsFolder)\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" /> 
-   </ItemGroup>   
-  
+   </ItemGroup>
 </Project>

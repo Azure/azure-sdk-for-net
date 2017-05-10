@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// granted access; be carefull using wild card common names</param>
         /// <param name="certificateIssuerThumbprint">Certificate issuer
         /// thumbprint</param>
-        public ClientCertificateCommonName(bool isAdmin, string certificateCommonName, string certificateIssuerThumbprint = default(string))
+        public ClientCertificateCommonName(bool isAdmin, string certificateCommonName, string certificateIssuerThumbprint)
         {
             IsAdmin = isAdmin;
             CertificateCommonName = certificateCommonName;
@@ -79,6 +79,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             if (CertificateCommonName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CertificateCommonName");
+            }
+            if (CertificateIssuerThumbprint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CertificateIssuerThumbprint");
             }
         }
     }

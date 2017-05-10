@@ -95,7 +95,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// include: 'Enabled', 'Disabled'</param>
         /// <param name="firewallRules">The list of firewall rules associated
         /// with this Data Lake Analytics account.</param>
-        public DataLakeAnalyticsAccount(string location, string defaultDataLakeStoreAccount, IList<DataLakeStoreAccountInfo> dataLakeStoreAccounts, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), int? systemMaxDegreeOfParallelism = default(int?), int? systemMaxJobCount = default(int?), IList<StorageAccountInfo> storageAccounts = default(IList<StorageAccountInfo>), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), TierType? newTier = default(TierType?), TierType? currentTier = default(TierType?), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>))
+        /// <param name="maxDegreeOfParallelismPerJob">the maximum supported
+        /// degree of parallelism per job for this account.</param>
+        /// <param name="minPriorityPerJob">the minimum supported priority per
+        /// job for this account.</param>
+        /// <param name="computePolicies">the list of compute policies to
+        /// create in this account.</param>
+        public DataLakeAnalyticsAccount(string location, string defaultDataLakeStoreAccount, IList<DataLakeStoreAccountInfo> dataLakeStoreAccounts, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), int? systemMaxDegreeOfParallelism = default(int?), int? systemMaxJobCount = default(int?), IList<StorageAccountInfo> storageAccounts = default(IList<StorageAccountInfo>), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), TierType? newTier = default(TierType?), TierType? currentTier = default(TierType?), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), int? maxDegreeOfParallelismPerJob = default(int?), int? minPriorityPerJob = default(int?), IList<ComputePolicyAccountCreateParameters> computePolicies = default(IList<ComputePolicyAccountCreateParameters>))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -116,6 +122,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             FirewallState = firewallState;
             FirewallAllowAzureIps = firewallAllowAzureIps;
             FirewallRules = firewallRules;
+            MaxDegreeOfParallelismPerJob = maxDegreeOfParallelismPerJob;
+            MinPriorityPerJob = minPriorityPerJob;
+            ComputePolicies = computePolicies;
             CustomInit();
         }
 
@@ -262,6 +271,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public IList<FirewallRule> FirewallRules { get; set; }
 
         /// <summary>
+        /// Gets or sets the maximum supported degree of parallelism per job
+        /// for this account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxDegreeOfParallelismPerJob")]
+        public int? MaxDegreeOfParallelismPerJob { get; set; }
+
+        /// <summary>
+        /// Gets or sets the minimum supported priority per job for this
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minPriorityPerJob")]
+        public int? MinPriorityPerJob { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of compute policies to create in this
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.computePolicies")]
+        public IList<ComputePolicyAccountCreateParameters> ComputePolicies { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -321,6 +351,24 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
                     if (element2 != null)
                     {
                         element2.Validate();
+                    }
+                }
+            }
+            if (MaxDegreeOfParallelismPerJob < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxDegreeOfParallelismPerJob", 1);
+            }
+            if (MinPriorityPerJob < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MinPriorityPerJob", 1);
+            }
+            if (ComputePolicies != null)
+            {
+                foreach (var element3 in ComputePolicies)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
                     }
                 }
             }

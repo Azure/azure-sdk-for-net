@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         /// <param name="resourceType">The resource type.</param>
         /// <param name="locations">The collection of locations where this
-        /// resource type can be created in.</param>
+        /// resource type can be created.</param>
         /// <param name="aliases">The aliases that are supported by this
         /// resource type.</param>
-        /// <param name="apiVersions">The api version.</param>
+        /// <param name="apiVersions">The API version.</param>
         /// <param name="properties">The properties.</param>
         public ProviderResourceType(string resourceType = default(string), System.Collections.Generic.IList<string> locations = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<AliasType> aliases = default(System.Collections.Generic.IList<AliasType>), System.Collections.Generic.IList<string> apiVersions = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IDictionary<string, string> properties = default(System.Collections.Generic.IDictionary<string, string>))
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 
         /// <summary>
         /// Gets or sets the collection of locations where this resource type
-        /// can be created in.
+        /// can be created.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "locations")]
         public System.Collections.Generic.IList<string> Locations { get; set; }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public System.Collections.Generic.IList<AliasType> Aliases { get; set; }
 
         /// <summary>
-        /// Gets or sets the api version.
+        /// Gets or sets the API version.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "apiVersions")]
         public System.Collections.Generic.IList<string> ApiVersions { get; set; }

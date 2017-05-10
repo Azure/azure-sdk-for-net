@@ -24,18 +24,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the PolicyAssignment class.
         /// </summary>
-        /// <param name="displayName">Gets or sets the policy assignment
-        /// display name.</param>
-        /// <param name="policyDefinitionId">Gets or sets the policy
-        /// definition Id.</param>
-        /// <param name="scope">Gets or sets the scope at which the policy
-        /// assignment exists.</param>
-        /// <param name="id">Gets or sets the Id of the policy
+        /// <param name="displayName">The display name of the policy
         /// assignment.</param>
-        /// <param name="type">Gets or sets the type of the policy
-        /// assignment.</param>
-        /// <param name="name">Gets or sets the name of the policy
-        /// assignment.</param>
+        /// <param name="policyDefinitionId">The ID of the policy
+        /// definition.</param>
+        /// <param name="scope">The scope for the policy assignment.</param>
+        /// <param name="id">The ID of the policy assignment.</param>
+        /// <param name="type">The type of the policy assignment.</param>
+        /// <param name="name">The name of the policy assignment.</param>
         public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), string id = default(string), string type = default(string), string name = default(string))
         {
             DisplayName = displayName;
@@ -47,25 +43,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the policy assignment display name.
+        /// Gets or sets the display name of the policy assignment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the policy definition Id.
+        /// Gets or sets the ID of the policy definition.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the scope at which the policy assignment exists.
+        /// Gets or sets the scope for the policy assignment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.scope")]
         public string Scope { get; set; }
 
         /// <summary>
-        /// Gets or sets the Id of the policy assignment.
+        /// Gets or sets the ID of the policy assignment.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

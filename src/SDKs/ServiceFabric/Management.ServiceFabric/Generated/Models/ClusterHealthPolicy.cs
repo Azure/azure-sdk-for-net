@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Azure.Management.ServiceFabric;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,14 +36,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// percentage of unhealthy applications before reporting an error. For
         /// example, to allow 10% of applications to be unhealthy, this value
         /// would be 10. </param>
-        /// <param name="applicationHealthPolicies">Defines a map with max
-        /// percentage unhealthy applications for specific application
-        /// types,key is the name of the application type</param>
-        public ClusterHealthPolicy(int? maxPercentUnhealthyNodes = default(int?), int? maxPercentUnhealthyApplications = default(int?), IDictionary<string, ApplicationHealthPolicy> applicationHealthPolicies = default(IDictionary<string, ApplicationHealthPolicy>))
+        public ClusterHealthPolicy(int? maxPercentUnhealthyNodes = default(int?), int? maxPercentUnhealthyApplications = default(int?))
         {
             MaxPercentUnhealthyNodes = maxPercentUnhealthyNodes;
             MaxPercentUnhealthyApplications = maxPercentUnhealthyApplications;
-            ApplicationHealthPolicies = applicationHealthPolicies;
             CustomInit();
         }
 
@@ -71,14 +65,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public int? MaxPercentUnhealthyApplications { get; set; }
 
         /// <summary>
-        /// Gets or sets defines a map with max percentage unhealthy
-        /// applications for specific application types,key is the name of the
-        /// application type
-        /// </summary>
-        [JsonProperty(PropertyName = "applicationHealthPolicies")]
-        public IDictionary<string, ApplicationHealthPolicy> ApplicationHealthPolicies { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -101,16 +87,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             if (MaxPercentUnhealthyApplications < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxPercentUnhealthyApplications", 0);
-            }
-            if (ApplicationHealthPolicies != null)
-            {
-                foreach (var valueElement in ApplicationHealthPolicies.Values)
-                {
-                    if (valueElement != null)
-                    {
-                        valueElement.Validate();
-                    }
-                }
             }
         }
     }

@@ -171,8 +171,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// encryption info for this database.</param>
         /// <param name="recommendedIndex">The recommended indices for this
         /// database.</param>
-        /// <param name="failoverGroupId">The id indicating the failover group
-        /// containing this database.</param>
+        /// <param name="failoverGroupId">The resource identifier of the
+        /// failover group containing this database.</param>
         /// <param name="readScale">Conditional. If the database is a
         /// geo-secondary, readScale indicates whether read-only connections
         /// are allowed to this database or not. Not supported for
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// apply when creating this database. If createMode is not Default,
         /// this value is ignored. Not supported for DataWarehouse edition.
         /// Possible values include: 'AdventureWorksLT'</param>
-        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), System.Guid? databaseId = default(System.Guid?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), string recoveryServicesRecoveryPointResourceId = default(string), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), IList<ServiceTierAdvisor> serviceTierAdvisors = default(IList<ServiceTierAdvisor>), IList<TransparentDataEncryption> transparentDataEncryption = default(IList<TransparentDataEncryption>), IList<RecommendedIndex> recommendedIndex = default(IList<RecommendedIndex>), System.Guid? failoverGroupId = default(System.Guid?), ReadScale? readScale = default(ReadScale?), string sampleName = default(string))
+        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string collation = default(string), System.DateTime? creationDate = default(System.DateTime?), long? containmentState = default(long?), System.Guid? currentServiceObjectiveId = default(System.Guid?), System.Guid? databaseId = default(System.Guid?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string createMode = default(string), string sourceDatabaseId = default(string), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), System.DateTime? restorePointInTime = default(System.DateTime?), string recoveryServicesRecoveryPointResourceId = default(string), string edition = default(string), string maxSizeBytes = default(string), System.Guid? requestedServiceObjectiveId = default(System.Guid?), string requestedServiceObjectiveName = default(string), string serviceLevelObjective = default(string), string status = default(string), string elasticPoolName = default(string), string defaultSecondaryLocation = default(string), IList<ServiceTierAdvisor> serviceTierAdvisors = default(IList<ServiceTierAdvisor>), IList<TransparentDataEncryption> transparentDataEncryption = default(IList<TransparentDataEncryption>), IList<RecommendedIndex> recommendedIndex = default(IList<RecommendedIndex>), string failoverGroupId = default(string), ReadScale? readScale = default(ReadScale?), string sampleName = default(string))
             : base(location, id, name, type, tags)
         {
             Kind = kind;
@@ -453,10 +453,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         public IList<RecommendedIndex> RecommendedIndex { get; private set; }
 
         /// <summary>
-        /// Gets the id indicating the failover group containing this database.
+        /// Gets the resource identifier of the failover group containing this
+        /// database.
         /// </summary>
         [JsonProperty(PropertyName = "properties.failoverGroupId")]
-        public System.Guid? FailoverGroupId { get; private set; }
+        public string FailoverGroupId { get; private set; }
 
         /// <summary>
         /// Gets or sets conditional. If the database is a geo-secondary,

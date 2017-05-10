@@ -18,13 +18,18 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class SubscriptionsOperationsExtensions
     {
             /// <summary>
-            /// Gets a list of the subscription locations.
+            /// Gets all available geo-locations.
             /// </summary>
+            /// <remarks>
+            /// This operation provides all the locations that are available for resource
+            /// providers; however, each resource provider may support a subset of this
+            /// list.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriptionId'>
-            /// Id of the subscription
+            /// The ID of the target subscription.
             /// </param>
             public static System.Collections.Generic.IEnumerable<Location> ListLocations(this ISubscriptionsOperations operations, string subscriptionId)
             {
@@ -32,13 +37,18 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of the subscription locations.
+            /// Gets all available geo-locations.
             /// </summary>
+            /// <remarks>
+            /// This operation provides all the locations that are available for resource
+            /// providers; however, each resource provider may support a subset of this
+            /// list.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriptionId'>
-            /// Id of the subscription
+            /// The ID of the target subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -52,13 +62,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets details about particular subscription.
+            /// Gets details about a specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriptionId'>
-            /// Id of the subscription.
+            /// The ID of the target subscription.
             /// </param>
             public static Subscription Get(this ISubscriptionsOperations operations, string subscriptionId)
             {
@@ -66,13 +76,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets details about particular subscription.
+            /// Gets details about a specified subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='subscriptionId'>
-            /// Id of the subscription.
+            /// The ID of the target subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -86,7 +96,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of subscriptions.
+            /// Gets all subscriptions for a tenant.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -97,7 +107,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of subscriptions.
+            /// Gets all subscriptions for a tenant.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -114,7 +124,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of subscriptions.
+            /// Gets all subscriptions for a tenant.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -128,7 +138,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of subscriptions.
+            /// Gets all subscriptions for a tenant.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
