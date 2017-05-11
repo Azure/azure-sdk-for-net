@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A custom image.
     /// </summary>
     [JsonTransformation]
-    public partial class CustomImage : IResource
+    public partial class CustomImage : Resource
     {
         /// <summary>
         /// Initializes a new instance of the CustomImage class.
@@ -30,23 +30,21 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the CustomImage class.
         /// </summary>
-        public CustomImage(CustomImagePropertiesFromVm vm = default(CustomImagePropertiesFromVm), CustomImagePropertiesCustom vhd = default(CustomImagePropertiesCustom), string description = default(string), string author = default(string), DateTime? creationDate = default(DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public CustomImage(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CustomImagePropertiesFromVm vm = default(CustomImagePropertiesFromVm), CustomImagePropertiesCustom vhd = default(CustomImagePropertiesCustom), string description = default(string), string author = default(string), DateTime? creationDate = default(DateTime?), string managedImageId = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
             Vm = vm;
             Vhd = vhd;
             Description = description;
             Author = author;
             CreationDate = creationDate;
+            ManagedImageId = managedImageId;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
         }
 
         /// <summary>
+        /// The virtual machine from which the image is to be created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vm")]
         public CustomImagePropertiesFromVm Vm { get; set; }
@@ -73,7 +71,13 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// The creation date of the custom image.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationDate")]
-        public DateTime? CreationDate { get; set; }
+        public DateTime? CreationDate { get; private set; }
+
+        /// <summary>
+        /// The Managed Image Id backing the custom image.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedImageId")]
+        public string ManagedImageId { get; set; }
 
         /// <summary>
         /// The provisioning status of the resource.
@@ -88,34 +92,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string UniqueIdentifier { get; set; }
 
         /// <summary>
-        /// The identifier of the resource.
+        /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// The location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// The tags of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
+        public virtual void Validate()
+        {
+            if (this.Vhd != null)
+            {
+                this.Vhd.Validate();
+            }
+        }
     }
 }

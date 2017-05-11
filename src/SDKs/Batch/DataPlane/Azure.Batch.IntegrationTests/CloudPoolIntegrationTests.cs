@@ -1279,6 +1279,9 @@
                         //Wait for compute node allocation
                         await TestUtilities.WaitForPoolToReachStateAsync(batchCli, poolId, AllocationState.Steady, TimeSpan.FromMinutes(10)).ConfigureAwait(false);
 
+                        //Refresh pool to get latest from server
+                        await pool.RefreshAsync().ConfigureAwait(false);
+
                         Assert.Equal(targetLowPriority, pool.CurrentLowPriorityComputeNodes);
 
                         IEnumerable<ComputeNode> computeNodes = pool.ListComputeNodes();

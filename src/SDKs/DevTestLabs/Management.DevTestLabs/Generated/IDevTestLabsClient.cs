@@ -49,6 +49,11 @@ namespace Microsoft.Azure.Management.DevTestLabs
         string ApiVersion { get; }
 
         /// <summary>
+        /// The name of the resource group.
+        /// </summary>
+        string ResourceGroupName { get; set; }
+
+        /// <summary>
         /// The subscription ID.
         /// </summary>
         string SubscriptionId { get; set; }
@@ -72,64 +77,109 @@ namespace Microsoft.Azure.Management.DevTestLabs
 
 
         /// <summary>
-        /// Gets the ILabOperations.
+        /// Gets the ILabsOperations.
         /// </summary>
-        ILabOperations Lab { get; }
+        ILabsOperations Labs { get; }
 
         /// <summary>
-        /// Gets the IArtifactSourceOperations.
+        /// Gets the IGlobalSchedulesOperations.
         /// </summary>
-        IArtifactSourceOperations ArtifactSource { get; }
+        IGlobalSchedulesOperations GlobalSchedules { get; }
 
         /// <summary>
-        /// Gets the IArtifactOperations.
+        /// Gets the IArtifactSourcesOperations.
         /// </summary>
-        IArtifactOperations Artifact { get; }
+        IArtifactSourcesOperations ArtifactSources { get; }
 
         /// <summary>
-        /// Gets the ICostOperations.
+        /// Gets the IArmTemplatesOperations.
         /// </summary>
-        ICostOperations Cost { get; }
+        IArmTemplatesOperations ArmTemplates { get; }
 
         /// <summary>
-        /// Gets the ICustomImageOperations.
+        /// Gets the IArtifactsOperations.
         /// </summary>
-        ICustomImageOperations CustomImage { get; }
+        IArtifactsOperations Artifacts { get; }
 
         /// <summary>
-        /// Gets the IFormulaOperations.
+        /// Gets the ICostsOperations.
         /// </summary>
-        IFormulaOperations Formula { get; }
+        ICostsOperations Costs { get; }
 
         /// <summary>
-        /// Gets the IGalleryImageOperations.
+        /// Gets the ICustomImagesOperations.
         /// </summary>
-        IGalleryImageOperations GalleryImage { get; }
+        ICustomImagesOperations CustomImages { get; }
 
         /// <summary>
-        /// Gets the IPolicySetOperations.
+        /// Gets the IFormulasOperations.
         /// </summary>
-        IPolicySetOperations PolicySet { get; }
+        IFormulasOperations Formulas { get; }
 
         /// <summary>
-        /// Gets the IPolicyOperations.
+        /// Gets the IGalleryImagesOperations.
         /// </summary>
-        IPolicyOperations Policy { get; }
+        IGalleryImagesOperations GalleryImages { get; }
 
         /// <summary>
-        /// Gets the IScheduleOperations.
+        /// Gets the INotificationChannelsOperations.
         /// </summary>
-        IScheduleOperations Schedule { get; }
+        INotificationChannelsOperations NotificationChannels { get; }
 
         /// <summary>
-        /// Gets the IVirtualMachineOperations.
+        /// Gets the IPolicySetsOperations.
         /// </summary>
-        IVirtualMachineOperations VirtualMachine { get; }
+        IPolicySetsOperations PolicySets { get; }
 
         /// <summary>
-        /// Gets the IVirtualNetworkOperations.
+        /// Gets the IPoliciesOperations.
         /// </summary>
-        IVirtualNetworkOperations VirtualNetwork { get; }
+        IPoliciesOperations Policies { get; }
+
+        /// <summary>
+        /// Gets the ISchedulesOperations.
+        /// </summary>
+        ISchedulesOperations Schedules { get; }
+
+        /// <summary>
+        /// Gets the IServiceRunnersOperations.
+        /// </summary>
+        IServiceRunnersOperations ServiceRunners { get; }
+
+        /// <summary>
+        /// Gets the IUsersOperations.
+        /// </summary>
+        IUsersOperations Users { get; }
+
+        /// <summary>
+        /// Gets the IDisksOperations.
+        /// </summary>
+        IDisksOperations Disks { get; }
+
+        /// <summary>
+        /// Gets the IEnvironmentsOperations.
+        /// </summary>
+        IEnvironmentsOperations Environments { get; }
+
+        /// <summary>
+        /// Gets the ISecretsOperations.
+        /// </summary>
+        ISecretsOperations Secrets { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        IVirtualMachinesOperations VirtualMachines { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineSchedulesOperations.
+        /// </summary>
+        IVirtualMachineSchedulesOperations VirtualMachineSchedules { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworksOperations.
+        /// </summary>
+        IVirtualNetworksOperations VirtualNetworks { get; }
 
     }
 }
