@@ -35,8 +35,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         }
 
         /// <summary>
-        /// The state of the Windows OS. Possible values include:
-        /// 'NonSysprepped', 'SysprepRequested', 'SysprepApplied'
+        /// The state of the Windows OS (i.e. NonSysprepped, SysprepRequested,
+        /// SysprepApplied). Possible values include: 'NonSysprepped',
+        /// 'SysprepRequested', 'SysprepApplied'
         /// </summary>
         [JsonProperty(PropertyName = "windowsOsState")]
         public string WindowsOsState { get; set; }
