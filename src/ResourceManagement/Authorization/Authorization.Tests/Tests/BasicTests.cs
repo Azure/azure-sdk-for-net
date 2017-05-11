@@ -105,7 +105,7 @@ namespace Authorization.Tests
                     Properties = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = principalId
+                        PrincipalId = principalId.ToString()
                     }
                 };
 
@@ -172,7 +172,7 @@ namespace Authorization.Tests
                     Properties = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = principalId
+                        PrincipalId = principalId.ToString()
                     }
                 };
 
@@ -417,7 +417,7 @@ namespace Authorization.Tests
                     Properties = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = principalId
+                        PrincipalId = principalId.ToString()
                     }
                 };
 
@@ -499,7 +499,7 @@ namespace Authorization.Tests
                         Properties = new RoleAssignmentProperties()
                         {
                             RoleDefinitionId = roleDefinition.Id,
-                            PrincipalId = pId
+                            PrincipalId = pId.ToString()
                         }
                     };
                     var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_" + i);
@@ -525,7 +525,7 @@ namespace Authorization.Tests
                     Assert.NotNull(assignment.Properties.RoleDefinitionId);
                     Assert.NotNull(assignment.Properties.Scope);
 
-                    Assert.Equal(principalId, assignment.Properties.PrincipalId);
+                    Assert.Equal(principalId.ToString(), assignment.Properties.PrincipalId);
                 }
             }
         }
@@ -568,7 +568,7 @@ namespace Authorization.Tests
                             Properties = new RoleAssignmentProperties()
                             {
                                 RoleDefinitionId = roleDefinition.Id,
-                                PrincipalId = principalId
+                                PrincipalId = principalId.ToString()
                             }
                         };
                         var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_" + i);
@@ -690,7 +690,7 @@ namespace Authorization.Tests
                     Properties = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = Guid.Parse(groupId)
+                        PrincipalId = groupId
                     }
                 };
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_Group");
@@ -702,7 +702,7 @@ namespace Authorization.Tests
                     Properties = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = userId
+                        PrincipalId = userId.ToString()
                     }
                 };
                 

@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue3["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -483,7 +483,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue3["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -682,7 +682,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -875,7 +875,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -1074,7 +1074,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -1267,7 +1267,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -1493,7 +1493,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -1769,7 +1769,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -2013,7 +2013,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -2203,7 +2203,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -2393,7 +2393,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -2633,7 +2633,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -2823,7 +2823,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -3013,7 +3013,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
