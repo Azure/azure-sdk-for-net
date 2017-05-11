@@ -12,32 +12,33 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.NotificationHubs;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// SharedAccessAuthorizationRule properties.
+    /// Parameters supplied to the Check Name Availability for Namespace and
+    /// NotificationHubs.
     /// </summary>
-    public partial class SharedAccessAuthorizationRuleProperties
+    public partial class CheckNameAvailabilityRequestParameters
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// SharedAccessAuthorizationRuleProperties class.
+        /// CheckNameAvailabilityRequestParameters class.
         /// </summary>
-        public SharedAccessAuthorizationRuleProperties()
+        public CheckNameAvailabilityRequestParameters()
         {
           CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// SharedAccessAuthorizationRuleProperties class.
+        /// CheckNameAvailabilityRequestParameters class.
         /// </summary>
-        /// <param name="rights">The rights associated with the rule.</param>
-        public SharedAccessAuthorizationRuleProperties(IList<AccessRights?> rights = default(IList<AccessRights?>))
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
+        public CheckNameAvailabilityRequestParameters(string name, string type = default(string))
         {
-            Rights = rights;
+            Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -47,10 +48,16 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the rights associated with the rule.
+        /// Gets or sets resource name
         /// </summary>
-        [JsonProperty(PropertyName = "rights")]
-        public IList<AccessRights?> Rights { get; set; }
+        [JsonProperty(PropertyName = "Name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "Type")]
+        public string Type { get; private set; }
 
     }
 }
