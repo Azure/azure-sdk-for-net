@@ -224,9 +224,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='jobId'>
             /// job id to track.
             /// </param>
-            public static ProtectionContainer GetTrackAsyncOperation(this IReplicationProtectionContainersOperations operations, string fabricName, string protectionContainerName, string jobId)
+            public static ProtectionContainer GetOperationResults(this IReplicationProtectionContainersOperations operations, string fabricName, string protectionContainerName, string jobId)
             {
-                return Task.Factory.StartNew(s => ((IReplicationProtectionContainersOperations)s).GetTrackAsyncOperationAsync(fabricName, protectionContainerName, jobId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IReplicationProtectionContainersOperations)s).GetOperationResultsAsync(fabricName, protectionContainerName, jobId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -248,9 +248,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProtectionContainer> GetTrackAsyncOperationAsync(this IReplicationProtectionContainersOperations operations, string fabricName, string protectionContainerName, string jobId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProtectionContainer> GetOperationResultsAsync(this IReplicationProtectionContainersOperations operations, string fabricName, string protectionContainerName, string jobId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTrackAsyncOperationWithHttpMessagesAsync(fabricName, protectionContainerName, jobId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, protectionContainerName, jobId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -495,7 +495,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ProtectionContainer>> GetTrackAsyncOperationWithHttpMessagesAsync(string fabricName, string protectionContainerName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ProtectionContainer>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
@@ -536,7 +536,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                 tracingParameters.Add("protectionContainerName", protectionContainerName);
                 tracingParameters.Add("jobId", jobId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetTrackAsyncOperation", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetOperationResults", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;

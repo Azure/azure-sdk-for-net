@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ProtectionContainerMapping>> GetTrackAsyncOperationWithHttpMessagesAsync(string fabricName, string protectionContainerName, string mappingName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ProtectionContainerMapping>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string mappingName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Remove protection container mapping.
         /// </summary>

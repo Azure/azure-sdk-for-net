@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='jobName'>
             /// job name to track.
             /// </param>
-            public static VCenter GetTrackAsyncOperation(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, string jobName)
+            public static VCenter GetOperationResults(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, string jobName)
             {
-                return Task.Factory.StartNew(s => ((IReplicationvCentersOperations)s).GetTrackAsyncOperationAsync(fabricName, vCenterName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IReplicationvCentersOperations)s).GetOperationResultsAsync(fabricName, vCenterName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -58,9 +58,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VCenter> GetTrackAsyncOperationAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VCenter> GetOperationResultsAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTrackAsyncOperationWithHttpMessagesAsync(fabricName, vCenterName, jobName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, vCenterName, jobName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

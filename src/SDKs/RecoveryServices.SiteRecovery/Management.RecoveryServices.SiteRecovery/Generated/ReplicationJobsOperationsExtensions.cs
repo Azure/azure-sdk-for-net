@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='jobName'>
             /// job id to track.
             /// </param>
-            public static Job GetTrackAsyncOperation(this IReplicationJobsOperations operations, string name, string jobName)
+            public static Job GetOperationResults(this IReplicationJobsOperations operations, string name, string jobName)
             {
-                return Task.Factory.StartNew(s => ((IReplicationJobsOperations)s).GetTrackAsyncOperationAsync(name, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IReplicationJobsOperations)s).GetOperationResultsAsync(name, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -55,9 +55,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Job> GetTrackAsyncOperationAsync(this IReplicationJobsOperations operations, string name, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Job> GetOperationResultsAsync(this IReplicationJobsOperations operations, string name, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTrackAsyncOperationWithHttpMessagesAsync(name, jobName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(name, jobName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<RecoveryServicesProvider>> GetTrackAsyncOperationWithHttpMessagesAsync(string fabricName, string providerName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RecoveryServicesProvider>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string providerName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Refresh details from the recovery services provider.
         /// </summary>

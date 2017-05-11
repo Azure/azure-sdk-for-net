@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='jobId'>
             /// Job identifier.
             /// </param>
-            public static ProtectionContainerMapping GetTrackAsyncOperation(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, string jobId)
+            public static ProtectionContainerMapping GetOperationResults(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, string jobId)
             {
-                return Task.Factory.StartNew(s => ((IReplicationProtectionContainerMappingsOperations)s).GetTrackAsyncOperationAsync(fabricName, protectionContainerName, mappingName, jobId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IReplicationProtectionContainerMappingsOperations)s).GetOperationResultsAsync(fabricName, protectionContainerName, mappingName, jobId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -66,9 +66,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProtectionContainerMapping> GetTrackAsyncOperationAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, string jobId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProtectionContainerMapping> GetOperationResultsAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, string jobId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTrackAsyncOperationWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, jobId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, jobId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

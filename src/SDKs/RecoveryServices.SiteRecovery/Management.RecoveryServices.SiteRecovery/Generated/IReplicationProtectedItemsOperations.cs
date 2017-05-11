@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> GetTrackAsyncOperationWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ReplicationProtectedItem>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Change or apply recovery point.
         /// </summary>

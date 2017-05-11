@@ -127,9 +127,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='jobId'>
             /// job id to track.
             /// </param>
-            public static ReplicationProtectedItem GetTrackAsyncOperation(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, string jobId)
+            public static ReplicationProtectedItem GetOperationResults(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, string jobId)
             {
-                return Task.Factory.StartNew(s => ((IReplicationProtectedItemsOperations)s).GetTrackAsyncOperationAsync(fabricName, protectionContainerName, replicatedProtectedItemName, jobId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IReplicationProtectedItemsOperations)s).GetOperationResultsAsync(fabricName, protectionContainerName, replicatedProtectedItemName, jobId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -155,9 +155,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReplicationProtectedItem> GetTrackAsyncOperationAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, string jobId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReplicationProtectedItem> GetOperationResultsAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, string jobId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTrackAsyncOperationWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, jobId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, jobId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

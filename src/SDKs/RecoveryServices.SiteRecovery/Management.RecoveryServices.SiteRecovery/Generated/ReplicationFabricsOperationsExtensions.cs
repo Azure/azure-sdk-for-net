@@ -115,9 +115,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='jobName'>
             /// job id to track.
             /// </param>
-            public static Fabric GetTrackAsyncOperation(this IReplicationFabricsOperations operations, string fabricName, string jobName)
+            public static Fabric GetOperationResults(this IReplicationFabricsOperations operations, string fabricName, string jobName)
             {
-                return Task.Factory.StartNew(s => ((IReplicationFabricsOperations)s).GetTrackAsyncOperationAsync(fabricName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IReplicationFabricsOperations)s).GetOperationResultsAsync(fabricName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -136,9 +136,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Fabric> GetTrackAsyncOperationAsync(this IReplicationFabricsOperations operations, string fabricName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Fabric> GetOperationResultsAsync(this IReplicationFabricsOperations operations, string fabricName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTrackAsyncOperationWithHttpMessagesAsync(fabricName, jobName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, jobName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

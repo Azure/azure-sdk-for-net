@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='jobName'>
             /// Job identifier.
             /// </param>
-            public static StorageClassificationMapping GetTrackAsyncOperation(this IReplicationStorageClassificationMappingsOperations operations, string fabricName, string storageClassificationName, string storageClassificationMappingName, string jobName)
+            public static StorageClassificationMapping GetOperationResults(this IReplicationStorageClassificationMappingsOperations operations, string fabricName, string storageClassificationName, string storageClassificationMappingName, string jobName)
             {
-                return Task.Factory.StartNew(s => ((IReplicationStorageClassificationMappingsOperations)s).GetTrackAsyncOperationAsync(fabricName, storageClassificationName, storageClassificationMappingName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IReplicationStorageClassificationMappingsOperations)s).GetOperationResultsAsync(fabricName, storageClassificationName, storageClassificationMappingName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -64,9 +64,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageClassificationMapping> GetTrackAsyncOperationAsync(this IReplicationStorageClassificationMappingsOperations operations, string fabricName, string storageClassificationName, string storageClassificationMappingName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageClassificationMapping> GetOperationResultsAsync(this IReplicationStorageClassificationMappingsOperations operations, string fabricName, string storageClassificationName, string storageClassificationMappingName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTrackAsyncOperationWithHttpMessagesAsync(fabricName, storageClassificationName, storageClassificationMappingName, jobName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, storageClassificationName, storageClassificationMappingName, jobName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

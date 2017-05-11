@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<StorageClassificationMapping>> GetTrackAsyncOperationWithHttpMessagesAsync(string fabricName, string storageClassificationName, string storageClassificationMappingName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageClassificationMapping>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string storageClassificationName, string storageClassificationMappingName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the details of a storage classification mapping.
         /// </summary>

@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='jobName'>
             /// ARM name of the job.
             /// </param>
-            public static RecoveryPlan GetTrackAsyncOperation(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, string jobName)
+            public static RecoveryPlan GetOperationResults(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, string jobName)
             {
-                return Task.Factory.StartNew(s => ((IReplicationRecoveryPlansOperations)s).GetTrackAsyncOperationAsync(recoveryPlanName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IReplicationRecoveryPlansOperations)s).GetOperationResultsAsync(recoveryPlanName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecoveryPlan> GetTrackAsyncOperationAsync(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecoveryPlan> GetOperationResultsAsync(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTrackAsyncOperationWithHttpMessagesAsync(recoveryPlanName, jobName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(recoveryPlanName, jobName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VCenter>> GetTrackAsyncOperationWithHttpMessagesAsync(string fabricName, string vCenterName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VCenter>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string vCenterName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.ApiVersion == null)
             {
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                 tracingParameters.Add("vCenterName", vCenterName);
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetTrackAsyncOperation", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetOperationResults", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
