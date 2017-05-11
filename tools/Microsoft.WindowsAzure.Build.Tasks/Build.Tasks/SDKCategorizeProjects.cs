@@ -4,10 +4,12 @@ using Microsoft.Build.Framework;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-
+//using Microsoft.Build.BuildEngine;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Execution;
 using Microsoft.WindowsAzure.Build.Tasks.Utilities;
+using System.Collections.Concurrent;
+//using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Build.Tasks
 {
@@ -41,7 +43,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         private List<string> _searchedAllProjects;
         private List<string> _finalDirListForSearchingProjects;
         private List<string> _overAllIgnoreProjects;
-#endregion
+
+        ConcurrentBag<ITaskItem> net452Projs = new ConcurrentBag<ITaskItem>();
+        ConcurrentBag<ITaskItem> netStd14Projs = new ConcurrentBag<ITaskItem>();
+        ConcurrentBag<ITaskItem> testNetCore11Projs = new ConcurrentBag<ITaskItem>();
+        ConcurrentBag<ITaskItem> testNet452Projs = new ConcurrentBag<ITaskItem>();
+        ConcurrentBag<ITaskItem> unSupportedProjs = new ConcurrentBag<ITaskItem>();
+        #endregion
 
         public SDKCategorizeProjects()
         {
@@ -77,7 +85,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         {
             get
             {
-                if(string.IsNullOrEmpty(_ignoreDirNameForSearchingProjects))
+                if (string.IsNullOrEmpty(_ignoreDirNameForSearchingProjects))
                 {
                     _ignoreDirNameForSearchingProjects = KV_IGNOREDIRNAME;
                 }
@@ -89,7 +97,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 _ignoreDirNameForSearchingProjects = value;
             }
         }
-        
+
         /// <summary>
         /// List of project file extension.
         /// Currently only hard coded to .csproj files
@@ -116,6 +124,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         [Output]
         public ITaskItem[] WellKnowSDKNet452Projects { get; private set; }
 
+        [Output]
+        public ITaskItem[] UnSupportedTargetFxProjects { get; private set; }
+
         //[Output]
         //public ITaskItem[] Foo { get; private set; }
 
@@ -133,6 +144,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             List<string> testProjects = new List<string>();
             List<ITaskItem> sdkTaskItems = new List<ITaskItem>();
             List<ITaskItem> testTaskItems = new List<ITaskItem>();
+            List<ITaskItem> unsupportedTargetFxTaskItems = new List<ITaskItem>();
 
             Init();
             if (BuildScope.Equals("All", StringComparison.OrdinalIgnoreCase))
@@ -146,41 +158,204 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 testProjects = ScopedTestProjects(SourceRootDirPath, BuildScope);
             }
 
-            UpdateWellKnowProjectList();
+            ConcurrentBag<SdkProjectMetaData> projWithMetaData = new ConcurrentBag<SdkProjectMetaData>();
 
-            foreach (string testProj in testProjects)
+            projWithMetaData = GetMetaData(sdkProjects, projWithMetaData);
+            projWithMetaData = GetMetaData(testProjects, projWithMetaData);
+
+            var net452SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Sdk) select s;
+            var netStd14SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.netstandard14 && s.ProjectType == SdkProjctType.Sdk) select s;
+            var testNetCore11Projects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp11 && s.ProjectType == SdkProjctType.Test) select s;
+            var testNet452Projects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Test) select s;
+            var unSupportedProjects = from s in projWithMetaData where (s.IsTargetFxSupported = false) select s;
+
+
+            return true;
+
+            //return GetCategorization(testProjects, sdkProjects, testTaskItems, sdkTaskItems, unsupportedTargetFxTaskItems);
+        }
+
+        public ConcurrentBag<SdkProjectMetaData> GetMetaData(List<string> projectList, ConcurrentBag<SdkProjectMetaData> supportedProjectBag)
+        {
+            SdkProjctType pType = SdkProjctType.Sdk;
+            var projList = from p in projectList select new TaskItem(p);
+
+            //Parallel.ForEach<ITaskItem>(projList, (proj) =>
+            foreach (ITaskItem proj in projList)
             {
-                TaskItem ti = new TaskItem(testProj);
-                testTaskItems.Add(ti);
+                Project loadedProj = new Project(proj.ItemSpec);
+                string targetFxList = loadedProj.GetPropertyValue("TargetFrameworks");
+                if (string.IsNullOrEmpty(targetFxList))
+                {
+                    targetFxList = loadedProj.GetPropertyValue("TargetFramework");
+                }
+
+                ICollection<ProjectItem> foo = loadedProj.GetItemsByEvaluatedInclude("xunit");
+                if(foo != null)
+                {
+                    pType = SdkProjctType.Test;
+                }
+
+                var fxNames = targetFxList?.Split(';')?.ToList<string>();
+
+                foreach (string fx in fxNames)
+                {
+                    TargetFrameworkMoniker tfxMoniker = IsTargetFxSupported(fx);
+
+                    if (tfxMoniker == TargetFrameworkMoniker.net452)
+                    {
+                        SdkProjectMetaData sp = new SdkProjectMetaData(proj, TargetFrameworkMoniker.net452, proj.ItemSpec, true, pType);
+                        supportedProjectBag.Add(sp);
+                    }
+                    else if(tfxMoniker == TargetFrameworkMoniker.netstandard14)
+                    {
+                        SdkProjectMetaData sp = new SdkProjectMetaData(proj, TargetFrameworkMoniker.netstandard14, proj.ItemSpec, true, pType);
+                        supportedProjectBag.Add(sp);
+                    }
+                    else if (tfxMoniker == TargetFrameworkMoniker.netcoreapp11)
+                    {
+                        SdkProjectMetaData sp = new SdkProjectMetaData(proj, TargetFrameworkMoniker.netcoreapp11, proj.ItemSpec, true, pType);
+                        supportedProjectBag.Add(sp);
+                    }
+                    else
+                    {
+                        SdkProjectMetaData sp = new SdkProjectMetaData(proj, tfxMoniker, proj.ItemSpec, false, pType);
+                        supportedProjectBag.Add(sp);
+                    }
+                }
             }
 
-            foreach(string projPath in sdkProjects)
+            return supportedProjectBag;
+        }
+        
+        private TargetFrameworkMoniker IsTargetFxSupported(string fxMoniker)
+        {
+            string lcMoniker = fxMoniker.ToLower();
+            bool fxSupported = false;
+            TargetFrameworkMoniker validMoniker = TargetFrameworkMoniker.UnSupported;
+            switch (lcMoniker)
             {
-                TaskItem ti = new TaskItem(projPath);
+                case "net452":
+                    validMoniker = TargetFrameworkMoniker.net452;
+                    fxSupported = true;
+                    break;
 
-                //This will be enabled, once we find a good way to parse project files that are .NET SDK based.
-                //Currently the build engine unable to execute property functions and gives error. Need to find if I am using 
-                // the righ set of API's.
-                //We want to avoid parsing xml project file as much as possible.
+                case "netcoreapp1.1":
+                    validMoniker = TargetFrameworkMoniker.netcoreapp11;
+                    fxSupported = true;
+                    break;
 
-                //Dictionary<string, string> targetFxMetaData = GetMetaData(ti);
-                //foreach (KeyValuePair<string, string> kv in targetFxMetaData)
-                //{
-                //    ti.SetMetadata(kv.Key, kv.Value);
-                //}
-                
-                sdkTaskItems.Add(ti);
+                case "netstandard1.4":
+                    validMoniker = TargetFrameworkMoniker.netstandard14;
+                    fxSupported = true;
+                    break;
+
+                case "net46":
+                    validMoniker = TargetFrameworkMoniker.net46;
+                    fxSupported = false;
+                    break;
+
+                case "net461":
+                    validMoniker = TargetFrameworkMoniker.net461;
+                    fxSupported = false;
+                    break;
             }
 
-            if(sdkTaskItems.Any<ITaskItem>())
-            {
-                SDKProjectsToBuild = sdkTaskItems.ToArray<ITaskItem>();
-            }
+            return validMoniker;
+        }
 
-            if(testTaskItems.Any<ITaskItem>())
-            {
-                SDKTestProjectsToBuild = testTaskItems.ToArray<ITaskItem>();
-            }
+        private void GetCategorization(List<string> testProjects, 
+            List<string> sdkProjects, List<ITaskItem> testTaskItems, 
+            List<ITaskItem> sdkTaskItems, List<ITaskItem> unsupportedTargetFxTaskItems)
+        {
+            //UpdateWellKnowProjectList();
+
+            //foreach (string testProj in testProjects)
+            //{
+            //    TaskItem ti = new TaskItem(testProj);
+            //    testTaskItems.Add(ti);
+            //}
+
+            //foreach (string projPath in sdkProjects)
+            //{
+            //    TaskItem supportedTi = new TaskItem(projPath);
+            //    TaskItem unSupportedTi = new TaskItem(projPath);
+
+            //    Dictionary<string, SdkProjectMetaData> targetFxMetaData = GetSupportedProjectStatus(supportedTi);
+
+            //    var supportedProjs = from p in targetFxMetaData where p.Value.IsTargetFxSupported.Equals(true) select p;
+            //    var unSupportedProjs = from p in targetFxMetaData where p.Value.IsTargetFxSupported.Equals(false) select p;
+
+            //    foreach (KeyValuePair<string, SdkProjectMetaData> kv in supportedProjs)
+            //    {
+            //        supportedTi.SetMetadata(kv.Key, kv.Value.FxMoniker);
+            //        sdkTaskItems.Add(supportedTi);
+            //    }
+
+            //    foreach (KeyValuePair<string, SdkProjectMetaData> kv in unSupportedProjs)
+            //    {
+            //        unSupportedTi.SetMetadata(kv.Key, kv.Value.FxMoniker);
+            //        unsupportedTargetFxTaskItems.Add(unSupportedTi);
+            //    }
+            //}
+
+            //if (sdkTaskItems.Any<ITaskItem>())
+            //{
+            //    SDKProjectsToBuild = sdkTaskItems.ToArray<ITaskItem>();
+            //}
+
+            //if (testTaskItems.Any<ITaskItem>())
+            //{
+            //    SDKTestProjectsToBuild = testTaskItems.ToArray<ITaskItem>();
+            //}
+
+            //return true;
+        }
+
+        private bool GetOldWay()
+        {
+            //UpdateWellKnowProjectList();
+
+            //foreach (string testProj in testProjects)
+            //{
+            //    TaskItem ti = new TaskItem(testProj);
+            //    testTaskItems.Add(ti);
+            //}
+
+            //foreach (string projPath in sdkProjects)
+            //{
+            //    TaskItem supportedTi = new TaskItem(projPath);
+            //    TaskItem unSupportedTi = new TaskItem(projPath);
+
+            //    Dictionary<string, FxProjectStatus> targetFxMetaData = GetSupportedProjectStatus(supportedTi);
+
+            //    var supportedProjs = from p in targetFxMetaData where p.Value.IsTargetFxSupported.Equals(true) select p;
+            //    var unSupportedProjs = from p in targetFxMetaData where p.Value.IsTargetFxSupported.Equals(false) select p;
+
+            //    foreach (KeyValuePair<string, FxProjectStatus> kv in supportedProjs)
+            //    {
+            //        supportedTi.SetMetadata(kv.Key, kv.Value.FxMoniker);
+            //        sdkTaskItems.Add(supportedTi);
+            //    }
+
+            //    foreach (KeyValuePair<string, FxProjectStatus> kv in unSupportedProjs)
+            //    {
+            //        unSupportedTi.SetMetadata(kv.Key, kv.Value.FxMoniker);
+            //        unsupportedTargetFxTaskItems.Add(unSupportedTi);
+            //    }
+
+            //}
+
+            //if (sdkTaskItems.Any<ITaskItem>())
+            //{
+            //    SDKProjectsToBuild = sdkTaskItems.ToArray<ITaskItem>();
+            //}
+
+            //if (testTaskItems.Any<ITaskItem>())
+            //{
+            //    SDKTestProjectsToBuild = testTaskItems.ToArray<ITaskItem>();
+            //}
+
             return true;
         }
 
@@ -229,15 +404,15 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         //    return finalScopeDirs;
         //}
         #endregion
-            
+
         #region All
-            /// <summary>
-            /// This searches all the projects from the root directory sepcified
-            /// This also creates ignore list of projects
-            /// </summary>
-            /// <param name="rootSearchDirPath"></param>
-            /// <param name="projectExts"></param>
-            /// <returns></returns>
+        /// <summary>
+        /// This searches all the projects from the root directory sepcified
+        /// This also creates ignore list of projects
+        /// </summary>
+        /// <param name="rootSearchDirPath"></param>
+        /// <param name="projectExts"></param>
+        /// <returns></returns>
         private List<string> SearchAllProjectFiles(string rootSearchDirPath, string projectExts)
         {
             List<string> searchedProjects = new List<string>();
@@ -281,11 +456,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         {
             List<string> testProj = new List<string>();
             List<string> tp = new List<string>();
-            foreach(string token in _defaultTestProjTokens)
+            foreach (string token in _defaultTestProjTokens)
             {
                 var intrimTP = Directory.EnumerateFiles(rootSearchDirPath, token, SearchOption.AllDirectories)?.ToList<string>();
-               
-                if(intrimTP.Any<string>())
+
+                if (intrimTP.Any<string>())
                 {
                     tp.AddRange(intrimTP);
                 }
@@ -315,30 +490,42 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             return results;
         }
 
-        private Dictionary<string, string> GetMetaData(ITaskItem projSpec)
+        //public Dictionary<string, SdkProjectMetaData> GetSupportedProjectStatus(ITaskItem projSpec)
+        public void GetSupportedProjectStatus(ITaskItem projSpec)
         {
-            Dictionary<string, string> fxDict = new Dictionary<string, string>();
-            int monikerCount = 0;
-            string[] fxMonikers = new string[] { "TargetFx1", "TargetFx2" };
+            //Dictionary<string, SdkProjectMetaData> fxDict = new Dictionary<string, SdkProjectMetaData>();
+            //int monikerCount = 0;
+            //Project loadedProj = new Project(projSpec.ItemSpec);
 
-            var ver = ProjectCollection.GlobalProjectCollection.DefaultToolsVersion;
-            Project loadedPoj = ProjectCollection.GlobalProjectCollection.LoadProject(projSpec.ItemSpec);
+            //string targetFxList = loadedProj.GetPropertyValue("TargetFrameworks");
+            //if (string.IsNullOrEmpty(targetFxList))
+            //{
+            //    targetFxList = loadedProj.GetPropertyValue("TargetFramework");
+            //}
 
+            //if (!string.IsNullOrEmpty(targetFxList))
+            //{
+            //    var fxNames = targetFxList.Split(';').ToList<string>();
+            //    foreach (string fn in fxNames)
+            //    {
+            //        TargetFrameworkMoniker fxMoniker = GetValidFxMoniker(fn, out bool isFxValid);
+            //        SdkProjectMetaData projStatus = new SdkProjectMetaData(fxMoniker.ToString(), projSpec.ItemSpec, isFxValid);
+            //        if (isFxValid)
+            //        {
+            //            fxDict.Add(fxMoniker.ToString(), projStatus);
+            //        }
+            //        else
+            //        {
+            //            //Log.LogMessage("Detected unsupported Target Framework {0}, in project {1}", fn, projSpec.ItemSpec);
+            //        }
 
+            //        monikerCount++;
+            //    }
 
-            string targetFxList = loadedPoj.GetPropertyValue("TargetFrameworks");
-            var fxNames = targetFxList.Split(';').ToList<string>();
+            //    loadedProj = null;
+            //}
 
-            KeyValuePair<string, string> kv = new KeyValuePair<string, string>();
-
-            foreach(string fn in fxNames)
-            {
-                fxDict.Add(fxMonikers[monikerCount], fn);
-                Log.LogMessage("Adding FxMoniker {0}={1}", fxMonikers[monikerCount], fn);
-                monikerCount++;
-            }
-
-            return fxDict;
+            //return fxDict;
         }
 
         /// <summary>
@@ -360,7 +547,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             foreach (string projPath in wkSdkProjs)
             {
-                TaskItem ti = new TaskItem(projPath);                
+                TaskItem ti = new TaskItem(projPath);
                 wkTi.Add(ti);
             }
 
@@ -394,7 +581,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             if (!Directory.Exists(SourceRootDirPath))
                 throw new DirectoryNotFoundException("'{0}' does not exists. Please provide a valid directory to search for projects that needs to be build");
 
-            if((string.IsNullOrWhiteSpace(BuildScope)) || (string.IsNullOrEmpty(BuildScope)))
+            if ((string.IsNullOrWhiteSpace(BuildScope)) || (string.IsNullOrEmpty(BuildScope)))
             {
                 Log.LogMessage("Empty Scope Detected, setting BuildScope to 'All'");
                 BuildScope = _defaultBuildScope;
@@ -414,8 +601,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             // FileConventions
             // FileStaging
             string[] ignoreTokens = null;
-            
-            if(!string.IsNullOrEmpty(IgnoreDirNameForSearchingProjects))
+
+            if (!string.IsNullOrEmpty(IgnoreDirNameForSearchingProjects))
             {
                 IgnoreDirNameForSearchingProjects = IgnoreDirNameForSearchingProjects.Trim();
                 ignoreTokens = IgnoreDirNameForSearchingProjects.Split(' ');
@@ -423,10 +610,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             var allProjFiles = Directory.EnumerateFiles(sourceRootDir, _defaultFileExt, SearchOption.AllDirectories);
 
-            foreach(string tokenToIgnore in ignoreTokens)
+            foreach (string tokenToIgnore in ignoreTokens)
             {
                 var ignoredFiles = from s in allProjFiles where s.Contains(tokenToIgnore) select s;
-                if(ignoredFiles.Any<string>())
+                if (ignoredFiles.Any<string>())
                 {
                     _overAllIgnoreProjects.AddRange(ignoredFiles);
                 }
@@ -437,6 +624,81 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             return _overAllIgnoreProjects;
         }
+
+        private TargetFrameworkMoniker GetValidFxMoniker(string moniker, out bool isMonikerValid)
+        {
+            string lcMoniker = moniker.ToLower();
+            bool fxSupported = false;
+            TargetFrameworkMoniker fxMoniker = TargetFrameworkMoniker.UnSupported;
+            switch (lcMoniker)
+            {
+                case "net452":
+                    fxMoniker = TargetFrameworkMoniker.net452;
+                    fxSupported = true;
+                    break;
+
+                case "netcoreapp1.1":
+                    fxMoniker = TargetFrameworkMoniker.netcoreapp11;
+                    fxSupported = true;
+                    break;
+
+                case "netstandard1.4":
+                    fxMoniker = TargetFrameworkMoniker.netstandard14;
+                    fxSupported = true;
+                    break;
+
+                case "net46":
+                    fxMoniker = TargetFrameworkMoniker.net46;
+                    fxSupported = false;
+                    break;
+
+                case "net461":
+                    fxMoniker = TargetFrameworkMoniker.net461;
+                    fxSupported = false;
+                    break;
+            }
+
+            isMonikerValid = fxSupported;
+            return fxMoniker;
+        }
+        
+    }
+
+    public class SdkProjectMetaData
+    {
+        public TargetFrameworkMoniker FxMoniker { get; set; }
+        public string FullProjectPath { get; set; }
+        public bool IsTargetFxSupported { get; set; }
+
+        public SdkProjctType ProjectType { get; set; } 
+
+        public ITaskItem ProjectTaskItem { get; set; }
+
+        public SdkProjectMetaData(ITaskItem project, TargetFrameworkMoniker fxMoniker, string fullProjectPath, bool isTargetFxSupported, SdkProjctType projectType = SdkProjctType.Sdk)
+        {
+            ProjectTaskItem = project;
+            FxMoniker = fxMoniker;
+            FullProjectPath = fullProjectPath;
+            IsTargetFxSupported = isTargetFxSupported;
+            ProjectType = projectType;
+        }
+    }
+
+    public enum TargetFrameworkMoniker
+    {
+        net45,
+        net452,
+        net46,
+        net461,
+        netcoreapp11,
+        netstandard14,
+        UnSupported
+    }
+
+    public enum SdkProjctType
+    {
+        Sdk,
+        Test
     }
 }
 

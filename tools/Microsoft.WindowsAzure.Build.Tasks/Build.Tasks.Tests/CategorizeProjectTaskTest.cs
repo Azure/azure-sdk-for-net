@@ -7,6 +7,7 @@ using System.Reflection;
 using System.IO;
 using System.Linq;
 using Microsoft.Build.Framework;
+using Microsoft.Build.Evaluation;
 
 namespace Build.Tasks.Tests
 {
@@ -59,6 +60,18 @@ namespace Build.Tasks.Tests
             {
                 Assert.True(false);
             }
+        }
+
+        [Fact]
+        
+        public void CategorizeForTargetFramework()
+        {
+            SDKCategorizeProjects catProj = new SDKCategorizeProjects();
+            string projFile = Path.GetFullPath(@"SampleProjfiles\sdkMultiTarget.proj");
+            sdkProjectTaskItem pTskItem = new sdkProjectTaskItem(projFile);
+            
+            //Dictionary<string, string> fxInfo = catProj.GetSupportedProjectStatus(pTskItem);            
+            //Assert.NotNull(fxInfo);
         }
 
         [Fact]
@@ -211,7 +224,13 @@ namespace Build.Tasks.Tests
         private string GetSourceRootDir()
         {
             string srcRootDir = string.Empty;
-            string currDir = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
+            string currDir = Directory.GetCurrentDirectory();
+
+            if(!Directory.Exists(currDir))
+            {
+                currDir = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
+            }
+
             string dirRoot = Directory.GetDirectoryRoot(currDir);
 
             var buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
