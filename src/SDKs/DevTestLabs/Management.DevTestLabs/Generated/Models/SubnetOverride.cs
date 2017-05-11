@@ -29,16 +29,18 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the SubnetOverride class.
         /// </summary>
-        public SubnetOverride(string resourceId = default(string), string labSubnetName = default(string), string useInVmCreationPermission = default(string), string usePublicIpAddressPermission = default(string))
+        public SubnetOverride(string resourceId = default(string), string labSubnetName = default(string), string useInVmCreationPermission = default(string), string usePublicIpAddressPermission = default(string), SubnetSharedPublicIpAddressConfiguration sharedPublicIpAddressConfiguration = default(SubnetSharedPublicIpAddressConfiguration), string virtualNetworkPoolName = default(string))
         {
             ResourceId = resourceId;
             LabSubnetName = labSubnetName;
             UseInVmCreationPermission = useInVmCreationPermission;
             UsePublicIpAddressPermission = usePublicIpAddressPermission;
+            SharedPublicIpAddressConfiguration = sharedPublicIpAddressConfiguration;
+            VirtualNetworkPoolName = virtualNetworkPoolName;
         }
 
         /// <summary>
-        /// The resource identifier of the subnet.
+        /// The resource ID of the subnet.
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }
@@ -51,18 +53,31 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
 
         /// <summary>
         /// Indicates whether this subnet can be used during virtual machine
-        /// creation. Possible values include: 'Default', 'Deny', 'Allow'
+        /// creation (i.e. Allow, Deny). Possible values include: 'Default',
+        /// 'Deny', 'Allow'
         /// </summary>
         [JsonProperty(PropertyName = "useInVmCreationPermission")]
         public string UseInVmCreationPermission { get; set; }
 
         /// <summary>
         /// Indicates whether public IP addresses can be assigned to virtual
-        /// machines on this subnet. Possible values include: 'Default',
-        /// 'Deny', 'Allow'
+        /// machines on this subnet (i.e. Allow, Deny). Possible values
+        /// include: 'Default', 'Deny', 'Allow'
         /// </summary>
         [JsonProperty(PropertyName = "usePublicIpAddressPermission")]
         public string UsePublicIpAddressPermission { get; set; }
+
+        /// <summary>
+        /// Properties that virtual machines on this subnet will share.
+        /// </summary>
+        [JsonProperty(PropertyName = "sharedPublicIpAddressConfiguration")]
+        public SubnetSharedPublicIpAddressConfiguration SharedPublicIpAddressConfiguration { get; set; }
+
+        /// <summary>
+        /// The virtual network pool associated with this subnet.
+        /// </summary>
+        [JsonProperty(PropertyName = "virtualNetworkPoolName")]
+        public string VirtualNetworkPoolName { get; set; }
 
     }
 }

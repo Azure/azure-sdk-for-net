@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "leavingPool")]
         LeavingPool,
         [System.Runtime.Serialization.EnumMember(Value = "offline")]
-        Offline
+        Offline,
+        [System.Runtime.Serialization.EnumMember(Value = "preempted")]
+        Preempted
     }
 }

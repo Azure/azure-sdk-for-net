@@ -45,12 +45,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// configuration for the pool.</param>
         /// <param name="resizeTimeout">The timeout for allocation of compute
         /// nodes to the pool.</param>
-        /// <param name="resizeError">Details of any error encountered while
+        /// <param name="resizeErrors">A list of errors encountered while
         /// performing the last resize on the pool.</param>
-        /// <param name="currentDedicated">The number of compute nodes
-        /// currently in the pool.</param>
-        /// <param name="targetDedicated">The desired number of compute nodes
-        /// in the pool.</param>
+        /// <param name="currentDedicatedNodes">The number of dedicated compute
+        /// nodes currently in the pool.</param>
+        /// <param name="currentLowPriorityNodes">The number of low-priority
+        /// compute nodes currently in the pool.</param>
+        /// <param name="targetDedicatedNodes">The desired number of dedicated
+        /// compute nodes in the pool.</param>
+        /// <param name="targetLowPriorityNodes">The desired number of
+        /// low-priority compute nodes in the pool.</param>
         /// <param name="enableAutoScale">Whether the pool size should
         /// automatically adjust over time.</param>
         /// <param name="autoScaleFormula">A formula for the desired number of
@@ -70,6 +74,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// installed on each compute node in the pool.</param>
         /// <param name="applicationPackageReferences">The list of application
         /// packages to be installed on each compute node in the pool.</param>
+        /// <param name="applicationLicenses">The list of application licenses
+        /// the Batch service will make available on each compute node in the
+        /// pool.</param>
         /// <param name="maxTasksPerNode">The maximum number of tasks that can
         /// run concurrently on a single compute node in the pool.</param>
         /// <param name="taskSchedulingPolicy">How the Batch service
@@ -80,7 +87,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the pool as metadata.</param>
         /// <param name="stats">Utilization and resource usage statistics for
         /// the entire lifetime of the pool.</param>
-        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ResizeError resizeError = default(ResizeError), int? currentDedicated = default(int?), int? targetDedicated = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.Collections.Generic.IList<UserAccount> userAccounts = default(System.Collections.Generic.IList<UserAccount>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics))
+        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), System.Collections.Generic.IList<ResizeError> resizeErrors = default(System.Collections.Generic.IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), System.Collections.Generic.IList<string> applicationLicenses = default(System.Collections.Generic.IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.Collections.Generic.IList<UserAccount> userAccounts = default(System.Collections.Generic.IList<UserAccount>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics))
         {
             Id = id;
             DisplayName = displayName;
@@ -96,9 +103,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             CloudServiceConfiguration = cloudServiceConfiguration;
             VirtualMachineConfiguration = virtualMachineConfiguration;
             ResizeTimeout = resizeTimeout;
-            ResizeError = resizeError;
-            CurrentDedicated = currentDedicated;
-            TargetDedicated = targetDedicated;
+            ResizeErrors = resizeErrors;
+            CurrentDedicatedNodes = currentDedicatedNodes;
+            CurrentLowPriorityNodes = currentLowPriorityNodes;
+            TargetDedicatedNodes = targetDedicatedNodes;
+            TargetLowPriorityNodes = targetLowPriorityNodes;
             EnableAutoScale = enableAutoScale;
             AutoScaleFormula = autoScaleFormula;
             AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
@@ -108,6 +117,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             StartTask = startTask;
             CertificateReferences = certificateReferences;
             ApplicationPackageReferences = applicationPackageReferences;
+            ApplicationLicenses = applicationLicenses;
             MaxTasksPerNode = maxTasksPerNode;
             TaskSchedulingPolicy = taskSchedulingPolicy;
             UserAccounts = userAccounts;
@@ -160,8 +170,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This is the last time at which the pool level data, such as the
-        /// targetDedicated or enableAutoscale settings, changed. It does not
-        /// factor in node-level changes such as a compute node changing state.
+        /// targetDedicatedNodes or enableAutoscale settings, changed. It does
+        /// not factor in node-level changes such as a compute node changing
+        /// state.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "lastModified")]
         public System.DateTime? LastModified { get; set; }
@@ -228,9 +239,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Services pools (pools created with cloudServiceConfiguration), see
         /// Sizes for Cloud Services
         /// (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
-        /// Batch supports all Cloud Services VM sizes except ExtraSmall. For
-        /// information about available VM sizes for pools using images from
-        /// the Virtual Machines Marketplace (pools created with
+        /// Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2
+        /// and A2V2. For information about available VM sizes for pools using
+        /// images from the Virtual Machines Marketplace (pools created with
         /// virtualMachineConfiguration) see Sizes for Virtual Machines (Linux)
         /// (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/)
         /// or Sizes for Virtual Machines (Windows)
@@ -277,39 +288,57 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets details of any error encountered while performing the
-        /// last resize on the pool.
+        /// Gets or sets a list of errors encountered while performing the last
+        /// resize on the pool.
         /// </summary>
         /// <remarks>
-        /// This property is set only if an error occurred during the last pool
-        /// resize, and only when the pool allocationState is Steady.
+        /// This property is set only if one or more errors occurred during the
+        /// last pool resize, and only when the pool allocationState is Steady.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "resizeError")]
-        public ResizeError ResizeError { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resizeErrors")]
+        public System.Collections.Generic.IList<ResizeError> ResizeErrors { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of compute nodes currently in the pool.
+        /// Gets or sets the number of dedicated compute nodes currently in the
+        /// pool.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "currentDedicated")]
-        public int? CurrentDedicated { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "currentDedicatedNodes")]
+        public int? CurrentDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of compute nodes in the pool.
+        /// Gets or sets the number of low-priority compute nodes currently in
+        /// the pool.
         /// </summary>
         /// <remarks>
-        /// This property is not set if enableAutoScale is true. It is required
-        /// if enableAutoScale is false.
+        /// Low-priority compute nodes which have been preempted are included
+        /// in this count.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicated")]
-        public int? TargetDedicated { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "currentLowPriorityNodes")]
+        public int? CurrentLowPriorityNodes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desired number of dedicated compute nodes in the
+        /// pool.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicatedNodes")]
+        public int? TargetDedicatedNodes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desired number of low-priority compute nodes in
+        /// the pool.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetLowPriorityNodes")]
+        public int? TargetLowPriorityNodes { get; set; }
 
         /// <summary>
         /// Gets or sets whether the pool size should automatically adjust over
         /// time.
         /// </summary>
         /// <remarks>
-        /// If true, the autoScaleFormula property must be set. If false, the
-        /// targetDedicated property must be set.
+        /// If false, at least one of targetDedicateNodes and
+        /// targetLowPriorityNodes must be specified. If true, the
+        /// autoScaleFormula property is required and the pool automatically
+        /// resizes according to the formula. The default value is false.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "enableAutoScale")]
         public bool? EnableAutoScale { get; set; }
@@ -396,6 +425,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
         public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of application licenses the Batch service
+        /// will make available on each compute node in the pool.
+        /// </summary>
+        /// <remarks>
+        /// The list of application licenses must be a subset of available
+        /// Batch service application licenses. If a license is requested which
+        /// is not supported, pool creation will fail.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationLicenses")]
+        public System.Collections.Generic.IList<string> ApplicationLicenses { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of tasks that can run concurrently

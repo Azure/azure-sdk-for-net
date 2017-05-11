@@ -31,8 +31,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="state">The current state of the Job Preparation task
         /// on the compute node.</param>
         /// <param name="retryCount">The number of times the task has been
-        /// retried by the Batch service. Every time the task exits with a
-        /// non-zero exit code, it is deemed a task failure. The Batch service
+        /// retried by the Batch service. Task application failures (non-zero
+        /// exit code) are retried, pre-processing errors (the task could not
+        /// be run) and file upload errors are not retried. The Batch service
         /// will retry the task up to the limit specified by the
         /// constraints.</param>
         /// <param name="endTime">The time at which the Job Preparation task
@@ -44,11 +45,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the Job Preparation task on the compute node.</param>
         /// <param name="exitCode">The exit code of the program specified on
         /// the task command line.</param>
-        /// <param name="schedulingError">The error encountered by the Batch
-        /// service when starting the task.</param>
+        /// <param name="failureInfo">Information describing the task failure,
+        /// if any.</param>
         /// <param name="lastRetryTime">The most recent time at which a retry
         /// of the Job Preparation task started running.</param>
-        public JobPreparationTaskExecutionInformation(System.DateTime startTime, JobPreparationTaskState state, int retryCount, System.DateTime? endTime = default(System.DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), System.DateTime? lastRetryTime = default(System.DateTime?))
+        /// <param name="result">The result of the task execution.</param>
+        public JobPreparationTaskExecutionInformation(System.DateTime startTime, JobPreparationTaskState state, int retryCount, System.DateTime? endTime = default(System.DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), System.DateTime? lastRetryTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -56,9 +58,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             TaskRootDirectory = taskRootDirectory;
             TaskRootDirectoryUrl = taskRootDirectoryUrl;
             ExitCode = exitCode;
-            SchedulingError = schedulingError;
+            FailureInfo = failureInfo;
             RetryCount = retryCount;
             LastRetryTime = lastRetryTime;
+            Result = result;
         }
 
         /// <summary>
@@ -126,17 +129,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the error encountered by the Batch service when
-        /// starting the task.
+        /// Gets or sets information describing the task failure, if any.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingError")]
-        public TaskSchedulingError SchedulingError { get; set; }
+        /// <remarks>
+        /// This property is set only if the task is in the completed state and
+        /// encountered a failure.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "failureInfo")]
+        public TaskFailureInformation FailureInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the number of times the task has been retried by the
-        /// Batch service. Every time the task exits with a non-zero exit code,
-        /// it is deemed a task failure. The Batch service will retry the task
-        /// up to the limit specified by the constraints.
+        /// Batch service. Task application failures (non-zero exit code) are
+        /// retried, pre-processing errors (the task could not be run) and file
+        /// upload errors are not retried. The Batch service will retry the
+        /// task up to the limit specified by the constraints.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "retryCount")]
         public int RetryCount { get; set; }
@@ -157,6 +164,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.DateTime? LastRetryTime { get; set; }
 
         /// <summary>
+        /// Gets or sets the result of the task execution.
+        /// </summary>
+        /// <remarks>
+        /// If the value is 'failed', then the details of the failure can be
+        /// found in the failureInfo property. Possible values include:
+        /// 'success', 'failure'
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "result")]
+        public TaskExecutionResult? Result { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -164,9 +182,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (this.SchedulingError != null)
+            if (this.FailureInfo != null)
             {
-                this.SchedulingError.Validate();
+                this.FailureInfo.Validate();
             }
         }
     }

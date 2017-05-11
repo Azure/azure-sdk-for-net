@@ -29,10 +29,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the ArtifactInstallProperties class.
         /// </summary>
-        public ArtifactInstallProperties(string artifactId = default(string), IList<ArtifactParameterProperties> parameters = default(IList<ArtifactParameterProperties>))
+        public ArtifactInstallProperties(string artifactId = default(string), IList<ArtifactParameterProperties> parameters = default(IList<ArtifactParameterProperties>), string status = default(string), string deploymentStatusMessage = default(string), string vmExtensionStatusMessage = default(string), DateTime? installTime = default(DateTime?))
         {
             ArtifactId = artifactId;
             Parameters = parameters;
+            Status = status;
+            DeploymentStatusMessage = deploymentStatusMessage;
+            VmExtensionStatusMessage = vmExtensionStatusMessage;
+            InstallTime = installTime;
         }
 
         /// <summary>
@@ -46,6 +50,31 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IList<ArtifactParameterProperties> Parameters { get; set; }
+
+        /// <summary>
+        /// The status of the artifact.
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// The status message from the deployment.
+        /// </summary>
+        [JsonProperty(PropertyName = "deploymentStatusMessage")]
+        public string DeploymentStatusMessage { get; set; }
+
+        /// <summary>
+        /// The status message from the virtual machine extension.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmExtensionStatusMessage")]
+        public string VmExtensionStatusMessage { get; set; }
+
+        /// <summary>
+        /// The time that the artifact starts to install on the virtual
+        /// machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "installTime")]
+        public DateTime? InstallTime { get; set; }
 
     }
 }

@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='clusterName'>
         /// The name of the cluster resource
         /// </param>
-        /// <param name='clusterUpdateParameters'>
+        /// <param name='parameters'>
         /// The parameters which contains the property value and property name which
         /// used to update the cluster configuration
         /// </param>
@@ -65,10 +65,10 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdateParameters clusterUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Cluster> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, clusterUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Cluster> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='clusterName'>
         /// The name of the cluster resource
         /// </param>
-        /// <param name='clusterResource'>
+        /// <param name='parameters'>
         /// Put Request
         /// </param>
         /// <param name='customHeaders'>
@@ -281,10 +281,10 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Cluster>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster clusterResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Cluster> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, clusterResource, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Cluster> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -832,7 +832,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='clusterName'>
         /// The name of the cluster resource
         /// </param>
-        /// <param name='clusterUpdateParameters'>
+        /// <param name='parameters'>
         /// The parameters which contains the property value and property name which
         /// used to update the cluster configuration
         /// </param>
@@ -857,7 +857,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdateParameters clusterUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -871,9 +871,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (clusterUpdateParameters == null)
+            if (parameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterUpdateParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             if (Client.SubscriptionId == null)
             {
@@ -888,7 +888,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("clusterUpdateParameters", clusterUpdateParameters);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
@@ -941,9 +941,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
 
             // Serialize Request
             string _requestContent = null;
-            if(clusterUpdateParameters != null)
+            if(parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(clusterUpdateParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1038,7 +1038,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='clusterName'>
         /// The name of the cluster resource
         /// </param>
-        /// <param name='clusterResource'>
+        /// <param name='parameters'>
         /// Put Request
         /// </param>
         /// <param name='customHeaders'>
@@ -1062,7 +1062,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster clusterResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, Cluster parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1076,13 +1076,13 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (clusterResource == null)
+            if (parameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterResource");
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (clusterResource != null)
+            if (parameters != null)
             {
-                clusterResource.Validate();
+                parameters.Validate();
             }
             if (Client.SubscriptionId == null)
             {
@@ -1097,7 +1097,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("clusterResource", clusterResource);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }
@@ -1150,9 +1150,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
 
             // Serialize Request
             string _requestContent = null;
-            if(clusterResource != null)
+            if(parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(clusterResource, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

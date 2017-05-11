@@ -27,14 +27,16 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<ExitOptions> DefaultProperty;
             public readonly PropertyAccessor<IList<ExitCodeRangeMapping>> ExitCodeRangesProperty;
             public readonly PropertyAccessor<IList<ExitCodeMapping>> ExitCodesProperty;
-            public readonly PropertyAccessor<ExitOptions> SchedulingErrorProperty;
+            public readonly PropertyAccessor<ExitOptions> FileUploadErrorProperty;
+            public readonly PropertyAccessor<ExitOptions> PreProcessingErrorProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.DefaultProperty = this.CreatePropertyAccessor<ExitOptions>("Default", BindingAccess.Read | BindingAccess.Write);
                 this.ExitCodeRangesProperty = this.CreatePropertyAccessor<IList<ExitCodeRangeMapping>>("ExitCodeRanges", BindingAccess.Read | BindingAccess.Write);
                 this.ExitCodesProperty = this.CreatePropertyAccessor<IList<ExitCodeMapping>>("ExitCodes", BindingAccess.Read | BindingAccess.Write);
-                this.SchedulingErrorProperty = this.CreatePropertyAccessor<ExitOptions>("SchedulingError", BindingAccess.Read | BindingAccess.Write);
+                this.FileUploadErrorProperty = this.CreatePropertyAccessor<ExitOptions>("FileUploadError", BindingAccess.Read | BindingAccess.Write);
+                this.PreProcessingErrorProperty = this.CreatePropertyAccessor<ExitOptions>("PreProcessingError", BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.ExitConditions protocolObject) : base(BindingState.Bound)
@@ -51,9 +53,13 @@ namespace Microsoft.Azure.Batch
                     ExitCodeMapping.ConvertFromProtocolCollectionAndFreeze(protocolObject.ExitCodes),
                     "ExitCodes",
                     BindingAccess.Read);
-                this.SchedulingErrorProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new ExitOptions(o).Freeze()),
-                    "SchedulingError",
+                this.FileUploadErrorProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.FileUploadError, o => new ExitOptions(o).Freeze()),
+                    "FileUploadError",
+                    BindingAccess.Read);
+                this.PreProcessingErrorProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.PreProcessingError, o => new ExitOptions(o).Freeze()),
+                    "PreProcessingError",
                     BindingAccess.Read);
             }
         }
@@ -85,8 +91,8 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <remarks>
         /// This value is used if the task exits with any nonzero exit code not listed in the <see cref="ExitCodes"/> or 
-        /// <see cref="ExitCodeRanges"/> collection, or with a scheduling error if the <see cref="SchedulingError"/> property 
-        /// is not present.
+        /// <see cref="ExitCodeRanges"/> collection, with a preprocessing error if the <see cref="PreProcessingError"/> property 
+        /// is not present, or with a file upload failure if the <see cref="FileUploadError"/> property is not present.
         /// </remarks>
         public ExitOptions Default
         {
@@ -119,12 +125,25 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets how the Batch service should respond if the task fails with a scheduling error.
+        /// Gets or sets how the Batch service should respond if a file upload error occurs.
         /// </summary>
-        public ExitOptions SchedulingError
+        /// <remarks>
+        /// If the task exited with an exit code that was specified via <see cref="ExitCodes" /> or <see cref="ExitCodeRanges" 
+        /// />, and then encountered a file upload error, then the action specified by the exit code takes precedence.
+        /// </remarks>
+        public ExitOptions FileUploadError
         {
-            get { return this.propertyContainer.SchedulingErrorProperty.Value; }
-            set { this.propertyContainer.SchedulingErrorProperty.Value = value; }
+            get { return this.propertyContainer.FileUploadErrorProperty.Value; }
+            set { this.propertyContainer.FileUploadErrorProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets how the Batch service should respond if the task fails to start due to an error.
+        /// </summary>
+        public ExitOptions PreProcessingError
+        {
+            get { return this.propertyContainer.PreProcessingErrorProperty.Value; }
+            set { this.propertyContainer.PreProcessingErrorProperty.Value = value; }
         }
 
         #endregion // ExitConditions
@@ -156,7 +175,8 @@ namespace Microsoft.Azure.Batch
                 DefaultProperty = UtilitiesInternal.CreateObjectWithNullCheck(this.Default, (o) => o.GetTransportObject()),
                 ExitCodeRanges = UtilitiesInternal.ConvertToProtocolCollection(this.ExitCodeRanges),
                 ExitCodes = UtilitiesInternal.ConvertToProtocolCollection(this.ExitCodes),
-                SchedulingError = UtilitiesInternal.CreateObjectWithNullCheck(this.SchedulingError, (o) => o.GetTransportObject()),
+                FileUploadError = UtilitiesInternal.CreateObjectWithNullCheck(this.FileUploadError, (o) => o.GetTransportObject()),
+                PreProcessingError = UtilitiesInternal.CreateObjectWithNullCheck(this.PreProcessingError, (o) => o.GetTransportObject()),
             };
 
             return result;

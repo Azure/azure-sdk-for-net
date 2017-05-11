@@ -38,7 +38,7 @@
                                     thumbprintAlgorithm: "SHA1",
                                     storeLocation: Protocol.Models.CertificateStoreLocation.CurrentUser,
                                     storeName: "My",
-                                    visibility: new List<Protocol.Models.CertificateVisibility?>
+                                    visibility: new List<Protocol.Models.CertificateVisibility>
                                         {
                                             Protocol.Models.CertificateVisibility.Task
                                         })

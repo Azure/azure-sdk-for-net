@@ -24,6 +24,21 @@ namespace Sql.Tests
                 return "Japan East";
             }
         }
+        public static string DefaultStagePrimaryLocation
+        {
+            get
+            {
+                return "North Europe";
+            }
+        }
+
+        public static string DefaultStageSecondaryLocation
+        {
+            get
+            {
+                return "SouthEast Asia";
+            }
+        }
 
         public static SqlManagementClient GetSqlManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
@@ -234,6 +249,22 @@ namespace Sql.Tests
             Assert.NotNull(actual.Type);
         }
 
+        public static void ValidateFailoverGroup(FailoverGroup expected, FailoverGroup actual, string name)
+        {
+            Assert.NotNull(actual);
+            Assert.NotNull(actual.Id);
+            Assert.NotNull(actual.Type);
+            Assert.NotNull(actual.Location);
+
+            Assert.Equal(name, actual.Name);
+            Assert.Equal(expected.ReadOnlyEndpoint.FailoverPolicy, actual.ReadOnlyEndpoint.FailoverPolicy);
+            Assert.Equal(expected.ReadWriteEndpoint.FailoverPolicy, actual.ReadWriteEndpoint.FailoverPolicy);
+            Assert.Equal(expected.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes, actual.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes);
+
+            AssertCollection(expected.Databases, actual.Databases);
+            AssertCollection(expected.PartnerServers.Select(s => s.Id), actual.PartnerServers.Select(s => s.Id));
+        }
+
         public static void ValidateFirewallRule(FirewallRule expected, FirewallRule actual, string name)
         {
             Assert.NotNull(actual.Id);
@@ -268,7 +299,7 @@ namespace Sql.Tests
                 {
                     if (resourceGroup != null)
                     {
-                        resourceClient.ResourceGroups.Delete(resourceGroup.Name);
+                        resourceClient.ResourceGroups.BeginDelete(resourceGroup.Name);
                     }
                 }
             }
@@ -324,6 +355,26 @@ namespace Sql.Tests
 
             // Wait for all databases to be created.
             return Task.WhenAll(createDbTasks);
+        }
+
+        internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string serverPrefix, string location)
+        {
+            string login = "dummylogin";
+            string password = "Un53cuRE!";
+            string version12 = "12.0";
+            string serverName = SqlManagementTestUtilities.GenerateName(serverPrefix);
+            Dictionary<string, string> tags = new Dictionary<string, string>();
+
+            var v12Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Microsoft.Azure.Management.Sql.Models.Server()
+            {
+                AdministratorLogin = login,
+                AdministratorLoginPassword = password,
+                Version = version12,
+                Tags = tags,
+                Location = location,
+            });
+            SqlManagementTestUtilities.ValidateServer(v12Server, serverName, login, version12, tags, location);
+            return v12Server;
         }
     }
 }

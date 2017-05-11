@@ -17,7 +17,26 @@
     public partial class CloudPool : IRefreshable
     {
         #region CloudPool
-        
+
+        /// <summary>
+        /// This property is an alias for <see cref="TargetDedicatedComputeNodes"/> and is supported only for backward compatibility.
+        /// </summary>
+        [Obsolete("Obsolete after 05/2017, use TargetDedicatedComputeNodes instead.")]
+        public int? TargetDedicated
+        {
+            get { return this.TargetDedicatedComputeNodes; }
+            set { this.TargetDedicatedComputeNodes = value; }
+        }
+
+        /// <summary>
+        /// This property is an alias for <see cref="CurrentDedicatedComputeNodes"/> and is supported only for backward compatibility.
+        /// </summary>
+        [Obsolete("Obsolete after 05/2017, use CurrentDedicatedComputeNodes instead.")]
+        public int? CurrentDedicated
+        {
+            get { return this.CurrentDedicatedComputeNodes; }
+        }
+
         /// <summary>
         /// Deletes this pool.
         /// </summary>
@@ -194,9 +213,18 @@
         /// <summary>
         /// Resizes this pool.
         /// </summary>
-        /// <param name="targetDedicated">The desired number of compute nodes in the pool.</param>
+        /// <param name="targetDedicatedComputeNodes">
+        /// The desired number of dedicated compute nodes in the pool.
+        /// At least one of <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> is required.
+        /// </param>
+        /// <param name="targetLowPriorityComputeNodes">
+        /// The desired number of low-priority compute nodes in the pool.
+        /// At least one of <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> is required.
+        /// </param>
         /// <param name="resizeTimeout">The timeout for allocation of compute nodes to the pool or removal of compute nodes from the pool. If the pool has not reached the target size after this time, the resize is stopped. The default is 15 minutes.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool, if the pool size is decreasing. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool, if the pool size is decreasing. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
@@ -211,7 +239,8 @@
         /// <para>The resize operation runs asynchronously.</para>
         /// </remarks>
         public System.Threading.Tasks.Task ResizeAsync(
-            int targetDedicated,
+            int? targetDedicatedComputeNodes = null,
+            int? targetLowPriorityComputeNodes = null,
             TimeSpan? resizeTimeout = null,
             Common.ComputeNodeDeallocationOption? deallocationOption = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null,
@@ -222,10 +251,11 @@
 
             // create the behavior managaer
             BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
-            
+
             System.Threading.Tasks.Task asyncTask = this.parentBatchClient.PoolOperations.ResizePoolAsyncImpl(
                 this.Id,
-                targetDedicated,
+                targetDedicatedComputeNodes,
+                targetLowPriorityComputeNodes,
                 resizeTimeout,
                 deallocationOption,
                 bhMgr,
@@ -238,9 +268,18 @@
         /// <summary>
         /// Resizes this pool.
         /// </summary>
-        /// <param name="targetDedicated">The desired number of compute nodes in the pool.</param>
+        /// <param name="targetDedicatedComputeNodes">
+        /// The desired number of dedicated compute nodes in the pool.
+        /// At least one of <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> is required.
+        /// </param>
+        /// <param name="targetLowPriorityComputeNodes">
+        /// The desired number of low-priority compute nodes in the pool.
+        /// At least one of <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> is required.
+        /// </param>
         /// <param name="resizeTimeout">The timeout for allocation of compute nodes to the pool or removal of compute nodes from the pool. If the pool has not reached the target size after this time, the resize is stopped. The default is 15 minutes.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool, if the pool size is decreasing. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool, if the pool size is decreasing. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
         /// <para>The resize operation requests that the pool be resized.  The request puts the pool in the <see cref="Common.AllocationState.Resizing"/> allocation state.
@@ -253,12 +292,13 @@
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="ResizeAsync"/>.</para>
         /// </remarks>
         public void Resize(
-            int targetDedicated,
+            int? targetDedicatedComputeNodes = null,
+            int? targetLowPriorityComputeNodes = null,
             TimeSpan? resizeTimeout = null,
             Common.ComputeNodeDeallocationOption? deallocationOption = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
-            Task asyncTask = ResizeAsync(targetDedicated, resizeTimeout, deallocationOption, additionalBehaviors);
+            Task asyncTask = ResizeAsync(targetDedicatedComputeNodes, targetLowPriorityComputeNodes, resizeTimeout, deallocationOption, additionalBehaviors);
             asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
         }
 
@@ -513,7 +553,9 @@
         /// Removes the specified compute node from this pool.
         /// </summary>
         /// <param name="computeNodeId">The id of the compute node to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -545,7 +587,9 @@
         /// Removes the specified compute node from this pool.
         /// </summary>
         /// <param name="computeNodeId">The id of the compute node to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
@@ -568,7 +612,9 @@
         /// Removes the specified compute nodes from this pool.
         /// </summary>
         /// <param name="computeNodeIds">The ids of the compute nodes to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -599,7 +645,9 @@
         /// Removes the specified compute nodes from this pool.
         /// </summary>
         /// <param name="computeNodeIds">The ids of the compute nodes to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
@@ -659,7 +707,9 @@
         /// Removes the specified compute node from this pool.
         /// </summary>
         /// <param name="computeNode">The <see cref="ComputeNode"/> to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
@@ -669,7 +719,7 @@
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="RemoveFromPoolAsync(ComputeNode, Common.ComputeNodeDeallocationOption?, TimeSpan?, IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</para>
         /// </remarks>
         public void RemoveFromPool(
-            ComputeNode computeNode,    
+            ComputeNode computeNode,
             Common.ComputeNodeDeallocationOption? deallocationOption = null,
             TimeSpan? resizeTimeout = null,
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
@@ -682,7 +732,9 @@
         /// Removes the specified compute nodes from this pool.
         /// </summary>
         /// <param name="computeNodes">The <see cref="ComputeNode">compute nodes</see> to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -714,7 +766,9 @@
         /// Removes the specified compute nodes from this pool.
         /// </summary>
         /// <param name="computeNodes">The <see cref="ComputeNode">compute nodes</see> to remove from the pool.</param>
-        /// <param name="deallocationOption">Specifies when nodes may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">Specifies the timeout for removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes.</param>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>

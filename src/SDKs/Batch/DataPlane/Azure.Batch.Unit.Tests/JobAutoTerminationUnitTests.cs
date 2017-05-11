@@ -67,6 +67,7 @@ namespace Azure.Batch.Unit.Tests
                     Assert.Equal(DependencyAction.Satisfy.ToString(), parameters.ExitConditions.ExitCodeRanges.First().ExitOptions.DependencyAction.ToString());
                     Assert.Equal(3, parameters.ExitConditions.ExitCodes.First().Code);
                     Assert.Equal((Models.JobAction?)JobAction.None, parameters.ExitConditions.ExitCodes.First().ExitOptions.JobAction);
+                    Assert.Equal((Models.JobAction?)JobAction.Terminate, parameters.ExitConditions.FileUploadError.JobAction);
 
                     return new AzureOperationHeaderResponse<Models.TaskAddHeaders>()
                     {
@@ -91,7 +92,8 @@ namespace Azure.Batch.Unit.Tests
                     {
                         new ExitCodeMapping(3, new ExitOptions() {JobAction = JobAction.None})
                     },
-                    SchedulingError = new ExitOptions() { JobAction = JobAction.Terminate },
+                    PreProcessingError = new ExitOptions() { JobAction = JobAction.Terminate },
+                    FileUploadError = new ExitOptions() { JobAction = JobAction.Terminate }
                 };
 
                 boundJob.AddTask(cloudTask, additionalBehaviors: fakeAddTaskResponse);

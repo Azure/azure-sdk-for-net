@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Batch
         {
             public readonly PropertyAccessor<Common.AllocationState?> AllocationStateProperty;
             public readonly PropertyAccessor<DateTime?> AllocationStateTransitionTimeProperty;
+            public readonly PropertyAccessor<IList<string>> ApplicationLicensesProperty;
             public readonly PropertyAccessor<IList<ApplicationPackageReference>> ApplicationPackageReferencesProperty;
             public readonly PropertyAccessor<bool?> AutoScaleEnabledProperty;
             public readonly PropertyAccessor<TimeSpan?> AutoScaleEvaluationIntervalProperty;
@@ -34,7 +35,8 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<IList<CertificateReference>> CertificateReferencesProperty;
             public readonly PropertyAccessor<CloudServiceConfiguration> CloudServiceConfigurationProperty;
             public readonly PropertyAccessor<DateTime?> CreationTimeProperty;
-            public readonly PropertyAccessor<int?> CurrentDedicatedProperty;
+            public readonly PropertyAccessor<int?> CurrentDedicatedComputeNodesProperty;
+            public readonly PropertyAccessor<int?> CurrentLowPriorityComputeNodesProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
             public readonly PropertyAccessor<string> ETagProperty;
             public readonly PropertyAccessor<string> IdProperty;
@@ -43,13 +45,14 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<int?> MaxTasksPerComputeNodeProperty;
             public readonly PropertyAccessor<IList<MetadataItem>> MetadataProperty;
             public readonly PropertyAccessor<NetworkConfiguration> NetworkConfigurationProperty;
-            public readonly PropertyAccessor<ResizeError> ResizeErrorProperty;
+            public readonly PropertyAccessor<IReadOnlyList<ResizeError>> ResizeErrorsProperty;
             public readonly PropertyAccessor<TimeSpan?> ResizeTimeoutProperty;
             public readonly PropertyAccessor<StartTask> StartTaskProperty;
             public readonly PropertyAccessor<Common.PoolState?> StateProperty;
             public readonly PropertyAccessor<DateTime?> StateTransitionTimeProperty;
             public readonly PropertyAccessor<PoolStatistics> StatisticsProperty;
-            public readonly PropertyAccessor<int?> TargetDedicatedProperty;
+            public readonly PropertyAccessor<int?> TargetDedicatedComputeNodesProperty;
+            public readonly PropertyAccessor<int?> TargetLowPriorityComputeNodesProperty;
             public readonly PropertyAccessor<TaskSchedulingPolicy> TaskSchedulingPolicyProperty;
             public readonly PropertyAccessor<string> UrlProperty;
             public readonly PropertyAccessor<IList<UserAccount>> UserAccountsProperty;
@@ -60,6 +63,7 @@ namespace Microsoft.Azure.Batch
             {
                 this.AllocationStateProperty = this.CreatePropertyAccessor<Common.AllocationState?>("AllocationState", BindingAccess.None);
                 this.AllocationStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("AllocationStateTransitionTime", BindingAccess.None);
+                this.ApplicationLicensesProperty = this.CreatePropertyAccessor<IList<string>>("ApplicationLicenses", BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleEnabledProperty = this.CreatePropertyAccessor<bool?>("AutoScaleEnabled", BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleEvaluationIntervalProperty = this.CreatePropertyAccessor<TimeSpan?>("AutoScaleEvaluationInterval", BindingAccess.Read | BindingAccess.Write);
@@ -68,7 +72,8 @@ namespace Microsoft.Azure.Batch
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor<IList<CertificateReference>>("CertificateReferences", BindingAccess.Read | BindingAccess.Write);
                 this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor<CloudServiceConfiguration>("CloudServiceConfiguration", BindingAccess.Read | BindingAccess.Write);
                 this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>("CreationTime", BindingAccess.None);
-                this.CurrentDedicatedProperty = this.CreatePropertyAccessor<int?>("CurrentDedicated", BindingAccess.None);
+                this.CurrentDedicatedComputeNodesProperty = this.CreatePropertyAccessor<int?>("CurrentDedicatedComputeNodes", BindingAccess.None);
+                this.CurrentLowPriorityComputeNodesProperty = this.CreatePropertyAccessor<int?>("CurrentLowPriorityComputeNodes", BindingAccess.None);
                 this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
                 this.ETagProperty = this.CreatePropertyAccessor<string>("ETag", BindingAccess.None);
                 this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
@@ -77,13 +82,14 @@ namespace Microsoft.Azure.Batch
                 this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor<int?>("MaxTasksPerComputeNode", BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>("Metadata", BindingAccess.Read | BindingAccess.Write);
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor<NetworkConfiguration>("NetworkConfiguration", BindingAccess.Read | BindingAccess.Write);
-                this.ResizeErrorProperty = this.CreatePropertyAccessor<ResizeError>("ResizeError", BindingAccess.None);
+                this.ResizeErrorsProperty = this.CreatePropertyAccessor<IReadOnlyList<ResizeError>>("ResizeErrors", BindingAccess.None);
                 this.ResizeTimeoutProperty = this.CreatePropertyAccessor<TimeSpan?>("ResizeTimeout", BindingAccess.Read | BindingAccess.Write);
                 this.StartTaskProperty = this.CreatePropertyAccessor<StartTask>("StartTask", BindingAccess.Read | BindingAccess.Write);
                 this.StateProperty = this.CreatePropertyAccessor<Common.PoolState?>("State", BindingAccess.None);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("StateTransitionTime", BindingAccess.None);
                 this.StatisticsProperty = this.CreatePropertyAccessor<PoolStatistics>("Statistics", BindingAccess.None);
-                this.TargetDedicatedProperty = this.CreatePropertyAccessor<int?>("TargetDedicated", BindingAccess.Read | BindingAccess.Write);
+                this.TargetDedicatedComputeNodesProperty = this.CreatePropertyAccessor<int?>("TargetDedicatedComputeNodes", BindingAccess.Read | BindingAccess.Write);
+                this.TargetLowPriorityComputeNodesProperty = this.CreatePropertyAccessor<int?>("TargetLowPriorityComputeNodes", BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor<TaskSchedulingPolicy>("TaskSchedulingPolicy", BindingAccess.Read | BindingAccess.Write);
                 this.UrlProperty = this.CreatePropertyAccessor<string>("Url", BindingAccess.None);
                 this.UserAccountsProperty = this.CreatePropertyAccessor<IList<UserAccount>>("UserAccounts", BindingAccess.Read | BindingAccess.Write);
@@ -100,6 +106,10 @@ namespace Microsoft.Azure.Batch
                 this.AllocationStateTransitionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.AllocationStateTransitionTime,
                     "AllocationStateTransitionTime",
+                    BindingAccess.Read);
+                this.ApplicationLicensesProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CollectionToThreadSafeCollection(protocolObject.ApplicationLicenses, o => o),
+                    "ApplicationLicenses",
                     BindingAccess.Read);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollection(protocolObject.ApplicationPackageReferences),
@@ -133,9 +143,13 @@ namespace Microsoft.Azure.Batch
                     protocolObject.CreationTime,
                     "CreationTime",
                     BindingAccess.Read);
-                this.CurrentDedicatedProperty = this.CreatePropertyAccessor(
-                    protocolObject.CurrentDedicated,
-                    "CurrentDedicated",
+                this.CurrentDedicatedComputeNodesProperty = this.CreatePropertyAccessor(
+                    protocolObject.CurrentDedicatedNodes,
+                    "CurrentDedicatedComputeNodes",
+                    BindingAccess.Read);
+                this.CurrentLowPriorityComputeNodesProperty = this.CreatePropertyAccessor(
+                    protocolObject.CurrentLowPriorityNodes,
+                    "CurrentLowPriorityComputeNodes",
                     BindingAccess.Read);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
@@ -169,9 +183,9 @@ namespace Microsoft.Azure.Batch
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NetworkConfiguration, o => new NetworkConfiguration(o).Freeze()),
                     "NetworkConfiguration",
                     BindingAccess.Read);
-                this.ResizeErrorProperty = this.CreatePropertyAccessor(
-                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ResizeError, o => new ResizeError(o).Freeze()),
-                    "ResizeError",
+                this.ResizeErrorsProperty = this.CreatePropertyAccessor(
+                    ResizeError.ConvertFromProtocolCollectionReadOnly(protocolObject.ResizeErrors),
+                    "ResizeErrors",
                     BindingAccess.Read);
                 this.ResizeTimeoutProperty = this.CreatePropertyAccessor(
                     protocolObject.ResizeTimeout,
@@ -193,9 +207,13 @@ namespace Microsoft.Azure.Batch
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Stats, o => new PoolStatistics(o).Freeze()),
                     "Statistics",
                     BindingAccess.Read);
-                this.TargetDedicatedProperty = this.CreatePropertyAccessor(
-                    protocolObject.TargetDedicated,
-                    "TargetDedicated",
+                this.TargetDedicatedComputeNodesProperty = this.CreatePropertyAccessor(
+                    protocolObject.TargetDedicatedNodes,
+                    "TargetDedicatedComputeNodes",
+                    BindingAccess.Read);
+                this.TargetLowPriorityComputeNodesProperty = this.CreatePropertyAccessor(
+                    protocolObject.TargetLowPriorityNodes,
+                    "TargetLowPriorityComputeNodes",
                     BindingAccess.Read);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskSchedulingPolicy, o => new TaskSchedulingPolicy(o).Freeze()),
@@ -286,6 +304,22 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the list of application licenses the Batch service will make available on each compute node in the 
+        /// pool.
+        /// </summary>
+        /// <remarks>
+        /// The list of application licenses must be a subset of available Batch service application licenses.
+        /// </remarks>
+        public IList<string> ApplicationLicenses
+        {
+            get { return this.propertyContainer.ApplicationLicensesProperty.Value; }
+            set
+            {
+                this.propertyContainer.ApplicationLicensesProperty.Value = ConcurrentChangeTrackedList<string>.TransformEnumerableToConcurrentList(value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a list of application packages to be installed on each compute node in the pool.
         /// </summary>
         public IList<ApplicationPackageReference> ApplicationPackageReferences
@@ -301,9 +335,10 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets whether the pool size should automatically adjust according to the <see cref="AutoScaleFormula"/>.
         /// </summary>
         /// <remarks>
-        /// <para>If false, the <see cref="TargetDedicated"/> property is required, and <see cref="AutoScaleFormula"/> must 
-        /// be null.</para> <para>If true, the <see cref="AutoScaleFormula"/> property is required, and <see cref="TargetDedicated"/> 
-        /// must be null. The pool automatically resizes according to the formula.</para><para>The default value is false.</para>
+        /// <para>If true, the <see cref="AutoScaleFormula"/> property is required, the pool automatically resizes according 
+        /// to the formula, and <see cref="TargetDedicatedComputeNodes"/> and <see cref="TargetLowPriorityComputeNodes"/> 
+        /// must be null.</para> <para>If false, one of the <see cref="TargetDedicatedComputeNodes"/> or <see cref="TargetLowPriorityComputeNodes"/> 
+        /// properties is required.</para><para>The default value is false.</para>
         /// </remarks>
         public bool? AutoScaleEnabled
         {
@@ -376,11 +411,22 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the number of compute nodes currently in the pool.
+        /// Gets the number of dedicated compute nodes currently in the pool.
         /// </summary>
-        public int? CurrentDedicated
+        public int? CurrentDedicatedComputeNodes
         {
-            get { return this.propertyContainer.CurrentDedicatedProperty.Value; }
+            get { return this.propertyContainer.CurrentDedicatedComputeNodesProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets the number of low-priority compute nodes currently in the pool.
+        /// </summary>
+        /// <remarks>
+        /// Low-priority compute nodes which have been preempted are included in this count.
+        /// </remarks>
+        public int? CurrentLowPriorityComputeNodes
+        {
+            get { return this.propertyContainer.CurrentLowPriorityComputeNodesProperty.Value; }
         }
 
         /// <summary>
@@ -465,13 +511,13 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the resize error encountered while performing the last resize on the <see cref="CloudPool"/>. This error 
-        /// is returned only when the Batch service encountered an error while resizing the pool, and when the pool's <see 
-        /// cref="CloudPool.AllocationState"/> is <see cref="AllocationState">Steady</see>.
+        /// Gets a list of errors encountered while performing the last resize on the <see cref="CloudPool"/>. Errors are 
+        /// returned only when the Batch service encountered an error while resizing the pool, and when the pool's <see cref="CloudPool.AllocationState"/> 
+        /// is <see cref="AllocationState">Steady</see>.
         /// </summary>
-        public ResizeError ResizeError
+        public IReadOnlyList<ResizeError> ResizeErrors
         {
-            get { return this.propertyContainer.ResizeErrorProperty.Value; }
+            get { return this.propertyContainer.ResizeErrorsProperty.Value; }
         }
 
         /// <summary>
@@ -522,16 +568,31 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets the desired number of compute nodes in the pool.
+        /// Gets or sets the desired number of dedicated compute nodes in the pool.
         /// </summary>
         /// <remarks>
-        /// This property must be null if <see cref="AutoScaleEnabled"/> is set to true. It is required if AutoScaleEnabled 
-        /// is set to false.
+        /// This setting cannot be specified if <see cref="AutoScaleEnabled"/> is set to true. At least one of this property 
+        /// and <see cref="TargetLowPriorityComputeNodes"/> must be specified if <see cref="AutoScaleEnabled"/> is false. 
+        /// If not specified, the default is 0.
         /// </remarks>
-        public int? TargetDedicated
+        public int? TargetDedicatedComputeNodes
         {
-            get { return this.propertyContainer.TargetDedicatedProperty.Value; }
-            set { this.propertyContainer.TargetDedicatedProperty.Value = value; }
+            get { return this.propertyContainer.TargetDedicatedComputeNodesProperty.Value; }
+            set { this.propertyContainer.TargetDedicatedComputeNodesProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the desired number of low-priority compute nodes in the pool.
+        /// </summary>
+        /// <remarks>
+        /// This setting cannot be specified if <see cref="AutoScaleEnabled"/> is set to true. At least one of <see cref="TargetDedicatedComputeNodes"/> 
+        /// and this property must be specified if <see cref="AutoScaleEnabled"/> is false. If not specified, the default 
+        /// is 0.
+        /// </remarks>
+        public int? TargetLowPriorityComputeNodes
+        {
+            get { return this.propertyContainer.TargetLowPriorityComputeNodesProperty.Value; }
+            set { this.propertyContainer.TargetLowPriorityComputeNodesProperty.Value = value; }
         }
 
         /// <summary>
@@ -616,6 +677,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.PoolAddParameter result = new Models.PoolAddParameter()
             {
+                ApplicationLicenses = this.ApplicationLicenses,
                 ApplicationPackageReferences = UtilitiesInternal.ConvertToProtocolCollection(this.ApplicationPackageReferences),
                 EnableAutoScale = this.AutoScaleEnabled,
                 AutoScaleEvaluationInterval = this.AutoScaleEvaluationInterval,
@@ -630,7 +692,8 @@ namespace Microsoft.Azure.Batch
                 NetworkConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NetworkConfiguration, (o) => o.GetTransportObject()),
                 ResizeTimeout = this.ResizeTimeout,
                 StartTask = UtilitiesInternal.CreateObjectWithNullCheck(this.StartTask, (o) => o.GetTransportObject()),
-                TargetDedicated = this.TargetDedicated,
+                TargetDedicatedNodes = this.TargetDedicatedComputeNodes,
+                TargetLowPriorityNodes = this.TargetLowPriorityComputeNodes,
                 TaskSchedulingPolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.TaskSchedulingPolicy, (o) => o.GetTransportObject()),
                 UserAccounts = UtilitiesInternal.ConvertToProtocolCollection(this.UserAccounts),
                 VirtualMachineConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.VirtualMachineConfiguration, (o) => o.GetTransportObject()),

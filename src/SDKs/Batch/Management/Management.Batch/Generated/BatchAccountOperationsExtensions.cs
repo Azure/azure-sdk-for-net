@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the new Batch account.
+            /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
             /// A name for the Batch account which must be unique within the region. Batch
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the new Batch account.
+            /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
             /// A name for the Batch account which must be unique within the region. Batch
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account.
+            /// The name of the Batch account.
             /// </param>
             /// <param name='parameters'>
             /// Additional parameters for account update.
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account.
+            /// The name of the Batch account.
             /// </param>
             /// <param name='parameters'>
             /// Additional parameters for account update.
@@ -134,11 +134,10 @@ namespace Microsoft.Azure.Management.Batch
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account to be
-            /// deleted.
+            /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to be deleted.
+            /// The name of the Batch account.
             /// </param>
             public static BatchAccountDeleteHeaders Delete(this IBatchAccountOperations operations, string resourceGroupName, string accountName)
             {
@@ -152,11 +151,10 @@ namespace Microsoft.Azure.Management.Batch
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account to be
-            /// deleted.
+            /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to be deleted.
+            /// The name of the Batch account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -179,7 +177,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account.
+            /// The name of the Batch account.
             /// </param>
             public static BatchAccount Get(this IBatchAccountOperations operations, string resourceGroupName, string accountName)
             {
@@ -196,7 +194,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account.
+            /// The name of the Batch account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -238,14 +236,14 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Gets information about the Batch accounts associated within the specified
+            /// Gets information about the Batch accounts associated with the specified
             /// resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group whose Batch accounts to list.
+            /// The name of the resource group that contains the Batch account.
             /// </param>
             public static IPage<BatchAccount> ListByResourceGroup(this IBatchAccountOperations operations, string resourceGroupName)
             {
@@ -253,14 +251,14 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Gets information about the Batch accounts associated within the specified
+            /// Gets information about the Batch accounts associated with the specified
             /// resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group whose Batch accounts to list.
+            /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -274,7 +272,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Synchronizes access keys for the auto storage account configured for the
+            /// Synchronizes access keys for the auto-storage account configured for the
             /// specified Batch account.
             /// </summary>
             /// <param name='operations'>
@@ -292,7 +290,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Synchronizes access keys for the auto storage account configured for the
+            /// Synchronizes access keys for the auto-storage account configured for the
             /// specified Batch account.
             /// </summary>
             /// <param name='operations'>
@@ -322,7 +320,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account.
+            /// The name of the Batch account.
             /// </param>
             /// <param name='keyName'>
             /// The type of account key to regenerate. Possible values include: 'Primary',
@@ -343,7 +341,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account.
+            /// The name of the Batch account.
             /// </param>
             /// <param name='keyName'>
             /// The type of account key to regenerate. Possible values include: 'Primary',
@@ -377,7 +375,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account.
+            /// The name of the Batch account.
             /// </param>
             public static BatchAccountKeys GetKeys(this IBatchAccountOperations operations, string resourceGroupName, string accountName)
             {
@@ -401,7 +399,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account.
+            /// The name of the Batch account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -423,7 +421,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the new Batch account.
+            /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
             /// A name for the Batch account which must be unique within the region. Batch
@@ -450,7 +448,7 @@ namespace Microsoft.Azure.Management.Batch
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the new Batch account.
+            /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
             /// A name for the Batch account which must be unique within the region. Batch
@@ -481,11 +479,10 @@ namespace Microsoft.Azure.Management.Batch
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account to be
-            /// deleted.
+            /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to be deleted.
+            /// The name of the Batch account.
             /// </param>
             public static BatchAccountDeleteHeaders BeginDelete(this IBatchAccountOperations operations, string resourceGroupName, string accountName)
             {
@@ -499,11 +496,10 @@ namespace Microsoft.Azure.Management.Batch
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account to be
-            /// deleted.
+            /// The name of the resource group that contains the Batch account.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the account to be deleted.
+            /// The name of the Batch account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -551,7 +547,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Gets information about the Batch accounts associated within the specified
+            /// Gets information about the Batch accounts associated with the specified
             /// resource group.
             /// </summary>
             /// <param name='operations'>
@@ -566,7 +562,7 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Gets information about the Batch accounts associated within the specified
+            /// Gets information about the Batch accounts associated with the specified
             /// resource group.
             /// </summary>
             /// <param name='operations'>

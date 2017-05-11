@@ -617,7 +617,7 @@ namespace Microsoft.Azure.Batch.Common
         /// <summary>
         /// The Batch service was unable to allocate the desired number of compute nodes within the resize timeout.
         /// </summary>
-        public const string AllocationTimedout= "AllocationTimedout";
+        public const string AllocationTimedOut = "AllocationTimedout";
 
         /// <summary>
         /// An error occurred when removing compute nodes from the pool.
@@ -673,7 +673,7 @@ namespace Microsoft.Azure.Batch.Common
     /// <summary>
     /// Contains error codes specific to task scheduling errors.
     /// </summary>
-    public static class TaskSchedulingErrorCodes
+    public static class TaskFailureInformationCodes
     {
         /// <summary>
         /// An error occurred when trying to deploy a required application package.

@@ -11,7 +11,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties used to create a user on an Azure Batch node.
+    /// Properties used to create a user used to execute tasks on an Azure
+    /// Batch node.
     /// </summary>
     public partial class UserAccount
     {
@@ -27,14 +28,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="password">The password for the user account.</param>
         /// <param name="elevationLevel">The elevation level of the user
         /// account.</param>
-        /// <param name="sshPrivateKey">The SSH private key for the user
-        /// account.</param>
-        public UserAccount(string name, string password, ElevationLevel? elevationLevel = default(ElevationLevel?), string sshPrivateKey = default(string))
+        /// <param name="linuxUserConfiguration">The Linux-specific user
+        /// configuration for the user account.</param>
+        public UserAccount(string name, string password, ElevationLevel? elevationLevel = default(ElevationLevel?), LinuxUserConfiguration linuxUserConfiguration = default(LinuxUserConfiguration))
         {
             Name = name;
             Password = password;
             ElevationLevel = elevationLevel;
-            SshPrivateKey = sshPrivateKey;
+            LinuxUserConfiguration = linuxUserConfiguration;
         }
 
         /// <summary>
@@ -62,15 +63,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public ElevationLevel? ElevationLevel { get; set; }
 
         /// <summary>
-        /// Gets or sets the SSH private key for the user account.
+        /// Gets or sets the Linux-specific user configuration for the user
+        /// account.
         /// </summary>
         /// <remarks>
-        /// The SSH private key establishes password-less SSH between nodes in
-        /// a Linux pool when the pool's enableInterNodeCommunication property
-        /// is true. This property will be ignored in a Windows pool.
+        /// This property is ignored if specified on a Windows pool. If not
+        /// specified, the user is created with the default options.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "sshPrivateKey")]
-        public string SshPrivateKey { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "linuxUserConfiguration")]
+        public LinuxUserConfiguration LinuxUserConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.

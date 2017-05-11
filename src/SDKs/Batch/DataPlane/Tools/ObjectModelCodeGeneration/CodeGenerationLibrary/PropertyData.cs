@@ -181,6 +181,11 @@
         {
             string result = "ConcurrentChangeTrackedModifiableList<" + this.GenericTypeParameter + ">.TransformEnumerableToConcurrentModifiableList(value)";
 
+            if (!CodeGenerationUtilities.IsTypeComplex(GenericTypeParameter))
+            {
+                result = $"ConcurrentChangeTrackedList<{this.GenericTypeParameter}>.TransformEnumerableToConcurrentList(value)";
+            }
+
             //TODO: For now this handles the FileStaging which is the only client only property
             //TODO: Need a better way to determine if a type is an enum
             if (this.IsClientOnly || this.GenericTypeParameter.StartsWith("Common"))

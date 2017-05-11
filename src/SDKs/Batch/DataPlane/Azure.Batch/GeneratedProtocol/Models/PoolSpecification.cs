@@ -36,8 +36,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute nodes in the pool.</param>
         /// <param name="resizeTimeout">The timeout for allocation of compute
         /// nodes to the pool.</param>
-        /// <param name="targetDedicated">The desired number of compute nodes
-        /// in the pool.</param>
+        /// <param name="targetDedicatedNodes">The desired number of dedicated
+        /// compute nodes in the pool.</param>
+        /// <param name="targetLowPriorityNodes">The desired number of
+        /// low-priority compute nodes in the pool.</param>
         /// <param name="enableAutoScale">Whether the pool size should
         /// automatically adjust over time.</param>
         /// <param name="autoScaleFormula">The formula for the desired number
@@ -56,11 +58,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// installed on each compute node in the pool.</param>
         /// <param name="applicationPackageReferences">The list of application
         /// packages to be installed on each compute node in the pool.</param>
+        /// <param name="applicationLicenses">The list of application licenses
+        /// the Batch service will make available on each compute node in the
+        /// pool.</param>
         /// <param name="userAccounts">The list of user accounts to be created
         /// on each node in the pool.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the pool as metadata.</param>
-        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicated = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), System.Collections.Generic.IList<UserAccount> userAccounts = default(System.Collections.Generic.IList<UserAccount>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
+        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), System.Collections.Generic.IList<string> applicationLicenses = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<UserAccount> userAccounts = default(System.Collections.Generic.IList<UserAccount>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
             DisplayName = displayName;
             VmSize = vmSize;
@@ -69,7 +74,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             MaxTasksPerNode = maxTasksPerNode;
             TaskSchedulingPolicy = taskSchedulingPolicy;
             ResizeTimeout = resizeTimeout;
-            TargetDedicated = targetDedicated;
+            TargetDedicatedNodes = targetDedicatedNodes;
+            TargetLowPriorityNodes = targetLowPriorityNodes;
             EnableAutoScale = enableAutoScale;
             AutoScaleFormula = autoScaleFormula;
             AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
@@ -78,6 +84,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             StartTask = startTask;
             CertificateReferences = certificateReferences;
             ApplicationPackageReferences = applicationPackageReferences;
+            ApplicationLicenses = applicationLicenses;
             UserAccounts = userAccounts;
             Metadata = metadata;
         }
@@ -101,9 +108,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Services pools (pools created with cloudServiceConfiguration), see
         /// Sizes for Cloud Services
         /// (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
-        /// Batch supports all Cloud Services VM sizes except ExtraSmall. For
-        /// information about available VM sizes for pools using images from
-        /// the Virtual Machines Marketplace (pools created with
+        /// Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2
+        /// and A2V2. For information about available VM sizes for pools using
+        /// images from the Virtual Machines Marketplace (pools created with
         /// virtualMachineConfiguration) see Sizes for Virtual Machines (Linux)
         /// (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/)
         /// or Sizes for Virtual Machines (Windows)
@@ -179,21 +186,36 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of compute nodes in the pool.
+        /// Gets or sets the desired number of dedicated compute nodes in the
+        /// pool.
         /// </summary>
         /// <remarks>
         /// This property must not be specified if enableAutoScale is set to
-        /// true. It is required if enableAutoScale is set to false.
+        /// true. If enableAutoScale is set to false, then you must set either
+        /// targetDedicatedNodes, targetLowPriorityNodes, or both.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicated")]
-        public int? TargetDedicated { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicatedNodes")]
+        public int? TargetDedicatedNodes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desired number of low-priority compute nodes in
+        /// the pool.
+        /// </summary>
+        /// <remarks>
+        /// This property must not be specified if enableAutoScale is set to
+        /// true. If enableAutoScale is set to false, then you must set either
+        /// targetDedicatedNodes, targetLowPriorityNodes, or both.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetLowPriorityNodes")]
+        public int? TargetLowPriorityNodes { get; set; }
 
         /// <summary>
         /// Gets or sets whether the pool size should automatically adjust over
         /// time.
         /// </summary>
         /// <remarks>
-        /// If false, the targetDedicated element is required. If true, the
+        /// If false, at least one of targetDedicateNodes and
+        /// targetLowPriorityNodes must be specified. If true, the
         /// autoScaleFormula element is required. The pool automatically
         /// resizes according to the formula. The default value is false.
         /// </remarks>
@@ -284,6 +306,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
         public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of application licenses the Batch service
+        /// will make available on each compute node in the pool.
+        /// </summary>
+        /// <remarks>
+        /// The list of application licenses must be a subset of available
+        /// Batch service application licenses. If a license is requested which
+        /// is not supported, pool creation will fail.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationLicenses")]
+        public System.Collections.Generic.IList<string> ApplicationLicenses { get; set; }
 
         /// <summary>
         /// Gets or sets the list of user accounts to be created on each node

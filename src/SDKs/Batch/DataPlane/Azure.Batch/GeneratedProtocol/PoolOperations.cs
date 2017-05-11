@@ -3122,10 +3122,6 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "poolResizeParameter");
             }
-            if (poolResizeParameter != null)
-            {
-                poolResizeParameter.Validate();
-            }
             if (this.Client.ApiVersion == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");

@@ -51,7 +51,7 @@
             {
                 AutoPoolSpecification = new AutoPoolSpecification(poolLifetimeOption: PoolLifetimeOption.Job, pool: new PoolSpecification
                 {
-                    TargetDedicated = 0,
+                    TargetDedicatedNodes = 0,
                     ApplicationPackageReferences = new[]
                          {
                              new ApplicationPackageReference { ApplicationId = AppPackageName, Version = Version },
@@ -92,7 +92,7 @@
             {
                 AutoPoolSpecification = new AutoPoolSpecification(poolLifetimeOption: PoolLifetimeOption.Job, pool: new PoolSpecification
                 {
-                    TargetDedicated = 0,
+                    TargetDedicatedNodes = 0,
                     ApplicationPackageReferences = new[]
                         {
                             new ApplicationPackageReference { ApplicationId = AppPackageName, Version = Version },

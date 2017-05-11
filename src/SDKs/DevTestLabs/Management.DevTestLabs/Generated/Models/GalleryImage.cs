@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A gallery image.
     /// </summary>
     [JsonTransformation]
-    public partial class GalleryImage : IResource
+    public partial class GalleryImage : Resource
     {
         /// <summary>
         /// Initializes a new instance of the GalleryImage class.
@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the GalleryImage class.
         /// </summary>
-        public GalleryImage(string author = default(string), DateTime? createdDate = default(DateTime?), string description = default(string), GalleryImageReference imageReference = default(GalleryImageReference), string icon = default(string), bool? enabled = default(bool?), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public GalleryImage(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string author = default(string), DateTime? createdDate = default(DateTime?), string description = default(string), GalleryImageReference imageReference = default(GalleryImageReference), string icon = default(string), bool? enabled = default(bool?))
+            : base(id, name, type, location, tags)
         {
             Author = author;
             CreatedDate = createdDate;
@@ -38,11 +39,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             ImageReference = imageReference;
             Icon = icon;
             Enabled = enabled;
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
         }
 
         /// <summary>
@@ -55,7 +51,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// The creation date of the gallery image.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDate")]
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; private set; }
 
         /// <summary>
         /// The description of the gallery image.
@@ -80,36 +76,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }
-
-        /// <summary>
-        /// The identifier of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// The location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// The tags of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
     }
 }
