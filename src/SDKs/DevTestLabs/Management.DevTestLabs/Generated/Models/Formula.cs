@@ -17,10 +17,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A formula.
+    /// A formula for creating a VM, specifying an image base and other
+    /// parameters
     /// </summary>
     [JsonTransformation]
-    public partial class Formula : IResource
+    public partial class Formula : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Formula class.
@@ -30,7 +31,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Formula class.
         /// </summary>
-        public Formula(string description = default(string), string author = default(string), string osType = default(string), DateTime? creationDate = default(DateTime?), LabVirtualMachine formulaContent = default(LabVirtualMachine), FormulaPropertiesFromVm vm = default(FormulaPropertiesFromVm), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Formula(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string author = default(string), string osType = default(string), DateTime? creationDate = default(DateTime?), LabVirtualMachineCreationParameter formulaContent = default(LabVirtualMachineCreationParameter), FormulaPropertiesFromVm vm = default(FormulaPropertiesFromVm), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
             Description = description;
             Author = author;
@@ -40,11 +42,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             Vm = vm;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
         }
 
         /// <summary>
@@ -69,13 +66,13 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// The creation date of the formula.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationDate")]
-        public DateTime? CreationDate { get; set; }
+        public DateTime? CreationDate { get; private set; }
 
         /// <summary>
         /// The content of the formula.
         /// </summary>
         [JsonProperty(PropertyName = "properties.formulaContent")]
-        public LabVirtualMachine FormulaContent { get; set; }
+        public LabVirtualMachineCreationParameter FormulaContent { get; set; }
 
         /// <summary>
         /// Information about a VM from which a formula is to be created.
@@ -94,36 +91,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; set; }
-
-        /// <summary>
-        /// The identifier of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// The location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// The tags of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

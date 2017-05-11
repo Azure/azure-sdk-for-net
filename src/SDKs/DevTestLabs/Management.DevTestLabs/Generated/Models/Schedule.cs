@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A schedule.
     /// </summary>
     [JsonTransformation]
-    public partial class Schedule : IResource
+    public partial class Schedule : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Schedule class.
@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Schedule class.
         /// </summary>
-        public Schedule(string status = default(string), string taskType = default(string), WeekDetails weeklyRecurrence = default(WeekDetails), DayDetails dailyRecurrence = default(DayDetails), HourDetails hourlyRecurrence = default(HourDetails), string timeZoneId = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Schedule(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string status = default(string), string taskType = default(string), WeekDetails weeklyRecurrence = default(WeekDetails), DayDetails dailyRecurrence = default(DayDetails), HourDetails hourlyRecurrence = default(HourDetails), string timeZoneId = default(string), NotificationSettings notificationSettings = default(NotificationSettings), DateTime? createdDate = default(DateTime?), string targetResourceId = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
             Status = status;
             TaskType = taskType;
@@ -38,51 +39,71 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             DailyRecurrence = dailyRecurrence;
             HourlyRecurrence = hourlyRecurrence;
             TimeZoneId = timeZoneId;
+            NotificationSettings = notificationSettings;
+            CreatedDate = createdDate;
+            TargetResourceId = targetResourceId;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
         }
 
         /// <summary>
-        /// The status of the schedule. Possible values include: 'Enabled',
-        /// 'Disabled'
+        /// The status of the schedule (i.e. Enabled, Disabled). Possible
+        /// values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; set; }
 
         /// <summary>
-        /// The task type of the schedule.
+        /// The task type of the schedule (e.g. LabVmsShutdownTask,
+        /// LabVmAutoStart).
         /// </summary>
         [JsonProperty(PropertyName = "properties.taskType")]
         public string TaskType { get; set; }
 
         /// <summary>
-        /// The weekly recurrence of the schedule.
+        /// If the schedule will occur only some days of the week, specify the
+        /// weekly recurrence.
         /// </summary>
         [JsonProperty(PropertyName = "properties.weeklyRecurrence")]
         public WeekDetails WeeklyRecurrence { get; set; }
 
         /// <summary>
-        /// The daily recurrence of the schedule.
+        /// If the schedule will occur once each day of the week, specify the
+        /// daily recurrence.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dailyRecurrence")]
         public DayDetails DailyRecurrence { get; set; }
 
         /// <summary>
-        /// The hourly recurrence of the schedule.
+        /// If the schedule will occur multiple times a day, specify the
+        /// hourly recurrence.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hourlyRecurrence")]
         public HourDetails HourlyRecurrence { get; set; }
 
         /// <summary>
-        /// The time zone id.
+        /// The time zone ID (e.g. Pacific Standard time).
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeZoneId")]
         public string TimeZoneId { get; set; }
+
+        /// <summary>
+        /// Notification settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.notificationSettings")]
+        public NotificationSettings NotificationSettings { get; set; }
+
+        /// <summary>
+        /// The creation date of the schedule.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdDate")]
+        public DateTime? CreatedDate { get; private set; }
+
+        /// <summary>
+        /// The resource ID to which the schedule belongs
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetResourceId")]
+        public string TargetResourceId { get; set; }
 
         /// <summary>
         /// The provisioning status of the resource.
@@ -95,36 +116,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; set; }
-
-        /// <summary>
-        /// The identifier of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// The location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// The tags of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

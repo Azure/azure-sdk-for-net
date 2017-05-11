@@ -29,11 +29,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the GenerateArmTemplateRequest class.
         /// </summary>
-        public GenerateArmTemplateRequest(string virtualMachineName = default(string), IList<ParameterInfo> parameters = default(IList<ParameterInfo>), string location = default(string))
+        public GenerateArmTemplateRequest(string virtualMachineName = default(string), IList<ParameterInfo> parameters = default(IList<ParameterInfo>), string location = default(string), string fileUploadOptions = default(string))
         {
             VirtualMachineName = virtualMachineName;
             Parameters = parameters;
             Location = location;
+            FileUploadOptions = fileUploadOptions;
         }
 
         /// <summary>
@@ -53,6 +54,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Options for uploading the files for the artifact.
+        /// UploadFilesAndGenerateSasTokens is the default value. Possible
+        /// values include: 'UploadFilesAndGenerateSasTokens', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "fileUploadOptions")]
+        public string FileUploadOptions { get; set; }
 
     }
 }

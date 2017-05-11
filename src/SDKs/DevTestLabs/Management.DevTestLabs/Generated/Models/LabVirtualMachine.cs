@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A virtual machine.
     /// </summary>
     [JsonTransformation]
-    public partial class LabVirtualMachine : IResource
+    public partial class LabVirtualMachine : Resource
     {
         /// <summary>
         /// Initializes a new instance of the LabVirtualMachine class.
@@ -30,12 +30,15 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the LabVirtualMachine class.
         /// </summary>
-        public LabVirtualMachine(string notes = default(string), string ownerObjectId = default(string), string createdByUserId = default(string), string createdByUser = default(string), string computeId = default(string), string customImageId = default(string), string osType = default(string), string size = default(string), string userName = default(string), string password = default(string), string sshKey = default(string), bool? isAuthenticationWithSshKey = default(bool?), string fqdn = default(string), string labSubnetName = default(string), string labVirtualNetworkId = default(string), bool? disallowPublicIpAddress = default(bool?), IList<ArtifactInstallProperties> artifacts = default(IList<ArtifactInstallProperties>), ArtifactDeploymentStatusProperties artifactDeploymentStatus = default(ArtifactDeploymentStatusProperties), GalleryImageReference galleryImageReference = default(GalleryImageReference), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public LabVirtualMachine(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notes = default(string), string ownerObjectId = default(string), string ownerUserPrincipalName = default(string), string createdByUserId = default(string), string createdByUser = default(string), DateTime? createdDate = default(DateTime?), string computeId = default(string), string customImageId = default(string), string osType = default(string), string size = default(string), string userName = default(string), string password = default(string), string sshKey = default(string), bool? isAuthenticationWithSshKey = default(bool?), string fqdn = default(string), string labSubnetName = default(string), string labVirtualNetworkId = default(string), bool? disallowPublicIpAddress = default(bool?), IList<ArtifactInstallProperties> artifacts = default(IList<ArtifactInstallProperties>), ArtifactDeploymentStatusProperties artifactDeploymentStatus = default(ArtifactDeploymentStatusProperties), GalleryImageReference galleryImageReference = default(GalleryImageReference), ComputeVmProperties computeVm = default(ComputeVmProperties), NetworkInterfaceProperties networkInterface = default(NetworkInterfaceProperties), ApplicableSchedule applicableSchedule = default(ApplicableSchedule), DateTime? expirationDate = default(DateTime?), bool? allowClaim = default(bool?), string storageType = default(string), string virtualMachineCreationSource = default(string), string environmentId = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
             Notes = notes;
             OwnerObjectId = ownerObjectId;
+            OwnerUserPrincipalName = ownerUserPrincipalName;
             CreatedByUserId = createdByUserId;
             CreatedByUser = createdByUser;
+            CreatedDate = createdDate;
             ComputeId = computeId;
             CustomImageId = customImageId;
             OsType = osType;
@@ -51,13 +54,16 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             Artifacts = artifacts;
             ArtifactDeploymentStatus = artifactDeploymentStatus;
             GalleryImageReference = galleryImageReference;
+            ComputeVm = computeVm;
+            NetworkInterface = networkInterface;
+            ApplicableSchedule = applicableSchedule;
+            ExpirationDate = expirationDate;
+            AllowClaim = allowClaim;
+            StorageType = storageType;
+            VirtualMachineCreationSource = virtualMachineCreationSource;
+            EnvironmentId = environmentId;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
         }
 
         /// <summary>
@@ -73,6 +79,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string OwnerObjectId { get; set; }
 
         /// <summary>
+        /// The user principal name of the virtual machine owner.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ownerUserPrincipalName")]
+        public string OwnerUserPrincipalName { get; set; }
+
+        /// <summary>
         /// The object identifier of the creator of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdByUserId")]
@@ -85,10 +97,16 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string CreatedByUser { get; set; }
 
         /// <summary>
+        /// The creation date of the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdDate")]
+        public DateTime? CreatedDate { get; set; }
+
+        /// <summary>
         /// The resource identifier (Microsoft.Compute) of the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.computeId")]
-        public string ComputeId { get; set; }
+        public string ComputeId { get; private set; }
 
         /// <summary>
         /// The custom image identifier of the virtual machine.
@@ -127,8 +145,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string SshKey { get; set; }
 
         /// <summary>
-        /// A value indicating whether this virtual machine uses an SSH key
-        /// for authentication.
+        /// Indicates whether this virtual machine uses an SSH key for
+        /// authentication.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isAuthenticationWithSshKey")]
         public bool? IsAuthenticationWithSshKey { get; set; }
@@ -178,6 +196,58 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public GalleryImageReference GalleryImageReference { get; set; }
 
         /// <summary>
+        /// The compute virtual machine properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.computeVm")]
+        public ComputeVmProperties ComputeVm { get; set; }
+
+        /// <summary>
+        /// The network interface properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkInterface")]
+        public NetworkInterfaceProperties NetworkInterface { get; set; }
+
+        /// <summary>
+        /// The applicable schedule for the virtual machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.applicableSchedule")]
+        public ApplicableSchedule ApplicableSchedule { get; set; }
+
+        /// <summary>
+        /// The expiration date for VM.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expirationDate")]
+        public DateTime? ExpirationDate { get; set; }
+
+        /// <summary>
+        /// Indicates whether another user can take ownership of the virtual
+        /// machine
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowClaim")]
+        public bool? AllowClaim { get; set; }
+
+        /// <summary>
+        /// Storage type to use for virtual machine (i.e. Standard, Premium).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageType")]
+        public string StorageType { get; set; }
+
+        /// <summary>
+        /// Tells source of creation of lab virtual machine. Output property
+        /// only. Possible values include: 'FromCustomImage',
+        /// 'FromGalleryImage'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualMachineCreationSource")]
+        public string VirtualMachineCreationSource { get; set; }
+
+        /// <summary>
+        /// The resource ID of the environment that contains this virtual
+        /// machine, if any.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.environmentId")]
+        public string EnvironmentId { get; set; }
+
+        /// <summary>
         /// The provisioning status of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
@@ -188,36 +258,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; set; }
-
-        /// <summary>
-        /// The identifier of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// The location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// The tags of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

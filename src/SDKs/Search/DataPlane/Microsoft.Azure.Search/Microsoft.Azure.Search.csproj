@@ -5,71 +5,15 @@
     <Description>Makes it easy to develop a .NET application that uses Azure Search.</Description>
     <AssemblyTitle>Microsoft Azure Search Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Search</AssemblyName>
-    <VersionPrefix>3.0.3</VersionPrefix>
-    <PackageTags>Microsoft Azure Search;Search</PackageTags>    
+    <VersionPrefix>3.0.4</VersionPrefix>
+    <PackageTags>Microsoft Azure Search;Search</PackageTags>
+    <PackageReleaseNotes>This is the newest major version of the Azure Search .NET SDK, based on version 2016-09-01 of the Azure Search REST API. New in this version is support for indexing Azure Blob storage (including parsing of JSON blobs), indexing Azure Table storage, indexer field mappings, custom analyzers, and ETags. Also included is support for reflection-based field definitions via the FieldBuilder class, thanks to a contribution from Ian Griffiths (https://github.com/idg10). See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Spatial" Version="6.15.0" />
+    <PackageReference Include="Microsoft.Spatial" Version="7.2.0" />
   </ItemGroup>
 </Project>
-  
-  <!--
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Spatial" Version="6.15.0" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.4,4.0)" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.0.2" />
-    <PackageReference Include="System.Collections" Version="4.0.11" />
-    <PackageReference Include="System.Collections.Concurrent" Version="4.0.12" />
-    <PackageReference Include="System.Diagnostics.Debug" Version="4.0.11" />
-    <PackageReference Include="System.Diagnostics.Tools" Version="4.0.1" />
-    <PackageReference Include="System.Diagnostics.Tracing" Version="4.1.0" />
-    <PackageReference Include="System.Globalization" Version="4.0.11" />
-    <PackageReference Include="System.IO" Version="4.1.0" />
-    <PackageReference Include="System.IO.Compression" Version="4.1.0" />
-    <PackageReference Include="System.Linq" Version="4.1.0" />
-    <PackageReference Include="System.Net.Http" Version="4.1.1" />
-    <PackageReference Include="System.Net.Primitives" Version="4.0.11" />
-    <PackageReference Include="System.ObjectModel" Version="4.0.12" />
-    <PackageReference Include="System.Reflection" Version="4.1.0" />
-    <PackageReference Include="System.Reflection.Extensions" Version="4.0.1" />
-    <PackageReference Include="System.Reflection.Primitives" Version="4.0.1" />
-    <PackageReference Include="System.Resources.ResourceManager" Version="4.0.1" />
-    <PackageReference Include="System.Runtime" Version="4.1.0" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.1.0" />
-    <PackageReference Include="System.Runtime.InteropServices" Version="4.1.0" />
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.0.0" />
-    <PackageReference Include="System.Runtime.Numerics" Version="4.0.1" />
-    <PackageReference Include="System.Text.Encoding" Version="4.0.11" />
-    <PackageReference Include="System.Text.Encoding.Extensions" Version="4.0.11" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.1.0" />
-    <PackageReference Include="System.Threading" Version="4.0.11" />
-    <PackageReference Include="System.Threading.Tasks" Version="4.0.11" />
-    <PackageReference Include="System.Xml.ReaderWriter" Version="4.0.11" />
-    <PackageReference Include="System.Xml.XDocument" Version="4.0.11" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.1.1" />
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.0.11" />
-  </ItemGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
-    <DefineConstants>$(DefineConstants);PORTABLE</DefineConstants>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.1.1" />
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.0.11" />
-  </ItemGroup>
-
-</Project>
--->

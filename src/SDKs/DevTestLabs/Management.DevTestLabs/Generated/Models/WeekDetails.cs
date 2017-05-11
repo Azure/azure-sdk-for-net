@@ -36,13 +36,14 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         }
 
         /// <summary>
-        /// The days of the week.
+        /// The days of the week for which the schedule is set (e.g. Sunday,
+        /// Monday, Tuesday, etc.).
         /// </summary>
         [JsonProperty(PropertyName = "weekdays")]
         public IList<string> Weekdays { get; set; }
 
         /// <summary>
-        /// The time of the day.
+        /// The time of the day the schedule will occur.
         /// </summary>
         [JsonProperty(PropertyName = "time")]
         public string Time { get; set; }

@@ -18,9 +18,12 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     public static class PolicyFactName
     {
         public const string UserOwnedLabVmCount = "UserOwnedLabVmCount";
+        public const string UserOwnedLabPremiumVmCount = "UserOwnedLabPremiumVmCount";
         public const string LabVmCount = "LabVmCount";
+        public const string LabPremiumVmCount = "LabPremiumVmCount";
         public const string LabVmSize = "LabVmSize";
         public const string GalleryImage = "GalleryImage";
         public const string UserOwnedLabVmCountInSubnet = "UserOwnedLabVmCountInSubnet";
+        public const string LabTargetCost = "LabTargetCost";
     }
 }
