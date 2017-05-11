@@ -290,7 +290,7 @@ namespace DataLakeAnalytics.Tests
 
                 // validate compute policy CRUD
                 // add another account
-                var computePolicy = clientToUse.ComputePolicy.CreateOrUpdate(
+                var computePolicy = clientToUse.ComputePolicies.CreateOrUpdate(
                     commonData.ResourceGroupName,
                     adlaAccountName,
                     groupPolicyName,
@@ -308,7 +308,7 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(AADObjectType.Group, computePolicy.ObjectType);
 
                 // Get the compute policy
-                computePolicy = clientToUse.ComputePolicy.Get(
+                computePolicy = clientToUse.ComputePolicies.Get(
                     commonData.ResourceGroupName,
                     adlaAccountName,
                     groupPolicyName);
@@ -319,19 +319,19 @@ namespace DataLakeAnalytics.Tests
                 Assert.Equal(AADObjectType.Group, computePolicy.ObjectType);
 
                 // list all policies
-                var policyList = clientToUse.ComputePolicy.ListByAccount(
+                var policyList = clientToUse.ComputePolicies.ListByAccount(
                     commonData.ResourceGroupName,
                     adlaAccountName);
 
                 Assert.Equal(2, policyList.Count());
 
                 // Remove the new policy
-                clientToUse.ComputePolicy.Delete(
+                clientToUse.ComputePolicies.Delete(
                     commonData.ResourceGroupName,
                     adlaAccountName,
                     groupPolicyName);
 
-                policyList = clientToUse.ComputePolicy.ListByAccount(
+                policyList = clientToUse.ComputePolicies.ListByAccount(
                     commonData.ResourceGroupName,
                     adlaAccountName);
 
