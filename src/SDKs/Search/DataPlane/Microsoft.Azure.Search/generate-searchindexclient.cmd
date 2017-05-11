@@ -10,7 +10,7 @@ if  "%1" == "" (
 ) else (
     set specFile="%1"
 )
-set repoRoot=%~dp0..\..\..
+set repoRoot=%~dp0..\..\..\..\..
 set generateFolder=%~dp0GeneratedSearchIndex
 set header=MICROSOFT_MIT_NO_VERSION
 
