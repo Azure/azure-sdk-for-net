@@ -24,12 +24,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ComputePolicyOperations operations.
+    /// ComputePoliciesOperations operations.
     /// </summary>
-    internal partial class ComputePolicyOperations : IServiceOperations<DataLakeAnalyticsAccountManagementClient>, IComputePolicyOperations
+    internal partial class ComputePoliciesOperations : IServiceOperations<DataLakeAnalyticsAccountManagementClient>, IComputePoliciesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ComputePolicyOperations class.
+        /// Initializes a new instance of the ComputePoliciesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ComputePolicyOperations(DataLakeAnalyticsAccountManagementClient client)
+        internal ComputePoliciesOperations(DataLakeAnalyticsAccountManagementClient client)
         {
             if (client == null)
             {
