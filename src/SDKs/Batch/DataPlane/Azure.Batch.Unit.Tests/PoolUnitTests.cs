@@ -96,7 +96,7 @@ namespace Azure.Batch.Unit.Tests
                                                                 StoreName = "My",
                                                                 Thumbprint = string.Empty,
                                                                 ThumbprintAlgorithm = "sha1",
-                                                                Visibility = new List<Models.CertificateVisibility?>()
+                                                                Visibility = new List<Models.CertificateVisibility>()
                                                                     {
                                                                         Models.CertificateVisibility.RemoteUser,
                                                                         Models.CertificateVisibility.StartTask,
@@ -111,7 +111,7 @@ namespace Azure.Batch.Unit.Tests
                                         CurrentOSVersion = "*",
                                         TargetOSVersion = "*",
                                     },
-                                CurrentDedicated = 3,
+                                CurrentDedicatedNodes = 3,
                                 ETag = "eTag=0x8D250D98B5D78AA",
                                 EnableAutoScale = false,
                                 LastModified = currentDateTime,
@@ -119,7 +119,7 @@ namespace Azure.Batch.Unit.Tests
                                 ResizeTimeout = new TimeSpan(),
                                 State = Models.PoolState.Active,
                                 StateTransitionTime = currentDateTime,
-                                TargetDedicated = 3,
+                                TargetDedicatedNodes = 3,
                                 Url = "testbatch://batch-test.windows-int.net/pools/batch-test",
                                 TaskSchedulingPolicy = new Microsoft.Azure.Batch.Protocol.Models.TaskSchedulingPolicy { NodeFillType = Models.ComputeNodeFillType.Pack }
                             }
@@ -137,7 +137,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(dateTimeMinusAnHour, pool.AllocationStateTransitionTime);
                 Assert.Equal(dateTimeMinusAnHour, pool.CreationTime);
                 Assert.Equal("*", pool.CloudServiceConfiguration.CurrentOSVersion);
-                Assert.Equal(3, pool.CurrentDedicated);
+                Assert.Equal(3, pool.CurrentDedicatedComputeNodes);
                 Assert.Equal(false, pool.AutoScaleEnabled);
                 Assert.Equal(currentDateTime, pool.LastModified);
                 Assert.Equal(4, pool.MaxTasksPerComputeNode);
@@ -145,7 +145,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(PoolState.Active, pool.State);
                 Assert.Equal(currentDateTime, pool.StateTransitionTime);
                 Assert.Equal(ComputeNodeFillType.Pack, pool.TaskSchedulingPolicy.ComputeNodeFillType);
-                Assert.Equal(3, pool.TargetDedicated);
+                Assert.Equal(3, pool.TargetDedicatedComputeNodes);
                 Assert.Equal("*", pool.CloudServiceConfiguration.TargetOSVersion);
                 Assert.Equal("testbatch://batch-test.windows-int.net/pools/batch-test", pool.Url);
 

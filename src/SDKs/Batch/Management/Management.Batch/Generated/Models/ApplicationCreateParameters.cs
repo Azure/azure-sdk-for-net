@@ -15,24 +15,26 @@ namespace Microsoft.Azure.Management.Batch.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for an ApplicationOperations.AddApplication request.
+    /// Parameters for adding an Application.
     /// </summary>
-    public partial class AddApplicationParameters
+    public partial class ApplicationCreateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the AddApplicationParameters class.
+        /// Initializes a new instance of the ApplicationCreateParameters
+        /// class.
         /// </summary>
-        public AddApplicationParameters() { }
+        public ApplicationCreateParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the AddApplicationParameters class.
+        /// Initializes a new instance of the ApplicationCreateParameters
+        /// class.
         /// </summary>
         /// <param name="allowUpdates">A value indicating whether packages
         /// within the application may be overwritten using the same version
         /// string.</param>
         /// <param name="displayName">The display name for the
         /// application.</param>
-        public AddApplicationParameters(bool? allowUpdates = default(bool?), string displayName = default(string))
+        public ApplicationCreateParameters(bool? allowUpdates = default(bool?), string displayName = default(string))
         {
             AllowUpdates = allowUpdates;
             DisplayName = displayName;

@@ -25,10 +25,11 @@ namespace Microsoft.Azure.Batch
         private readonly ComputeNodeInformation computeNodeInformation;
         private readonly DateTime? endTime;
         private readonly int? exitCode;
+        private readonly TaskFailureInformation failureInformation;
         private readonly int? id;
         private readonly Common.SubtaskState? previousState;
         private readonly DateTime? previousStateTransitionTime;
-        private readonly TaskSchedulingError schedulingError;
+        private readonly Common.TaskExecutionResult? result;
         private readonly DateTime? startTime;
         private readonly Common.SubtaskState? state;
         private readonly DateTime? stateTransitionTime;
@@ -40,10 +41,11 @@ namespace Microsoft.Azure.Batch
             this.computeNodeInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NodeInfo, o => new ComputeNodeInformation(o).Freeze());
             this.endTime = protocolObject.EndTime;
             this.exitCode = protocolObject.ExitCode;
+            this.failureInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.FailureInfo, o => new TaskFailureInformation(o).Freeze());
             this.id = protocolObject.Id;
             this.previousState = UtilitiesInternal.MapNullableEnum<Models.SubtaskState, Common.SubtaskState>(protocolObject.PreviousState);
             this.previousStateTransitionTime = protocolObject.PreviousStateTransitionTime;
-            this.schedulingError = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new TaskSchedulingError(o).Freeze());
+            this.result = UtilitiesInternal.MapNullableEnum<Models.TaskExecutionResult, Common.TaskExecutionResult>(protocolObject.Result);
             this.startTime = protocolObject.StartTime;
             this.state = UtilitiesInternal.MapNullableEnum<Models.SubtaskState, Common.SubtaskState>(protocolObject.State);
             this.stateTransitionTime = protocolObject.StateTransitionTime;
@@ -86,6 +88,14 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets information describing the task failure, if any.
+        /// </summary>
+        public TaskFailureInformation FailureInformation
+        {
+            get { return this.failureInformation; }
+        }
+
+        /// <summary>
         /// Gets the id of the subtask.
         /// </summary>
         public int? Id
@@ -112,11 +122,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the details of any error encountered scheduling the subtask.
+        /// Gets the result of the task execution.
         /// </summary>
-        public TaskSchedulingError SchedulingError
+        /// <remarks>
+        /// If the value is <see cref="Common.TaskExecutionResult.Failure" />, then the details of the failure can be found 
+        /// in the <see cref="FailureInformation" /> property.
+        /// </remarks>
+        public Common.TaskExecutionResult? Result
         {
-            get { return this.schedulingError; }
+            get { return this.result; }
         }
 
         /// <summary>

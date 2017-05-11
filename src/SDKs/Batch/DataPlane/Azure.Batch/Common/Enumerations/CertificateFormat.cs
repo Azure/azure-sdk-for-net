@@ -22,12 +22,6 @@ namespace Microsoft.Azure.Batch.Common
         /// <summary>
         /// X.509 certificate format.
         /// </summary>
-        Cer,
-
-        /// <summary>
-        /// The service reported an option that is not recognized by this
-        /// version of the Batch client.
-        /// </summary>
-        Unmapped,
+        Cer
     }
 }

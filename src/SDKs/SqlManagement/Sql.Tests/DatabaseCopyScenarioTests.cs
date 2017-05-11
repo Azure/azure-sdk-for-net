@@ -17,7 +17,6 @@ namespace Sql.Tests
             string login = "dummylogin";
             string password = "Un53cuRE!";
             string version12 = "12.0";
-            string databaseName = "testdb";
             string testPrefix = "sqlcrudtest-";
             Dictionary<string, string> tags = new Dictionary<string, string>();
             string suiteName = this.GetType().FullName;

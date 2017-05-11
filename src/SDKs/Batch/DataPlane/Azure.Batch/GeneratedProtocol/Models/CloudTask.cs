@@ -43,6 +43,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="resourceFiles">A list of files that the Batch service
         /// will download to the compute node before running the command
         /// line.</param>
+        /// <param name="outputFiles">A list of files that the Batch service
+        /// will upload from the compute node after running the command
+        /// line.</param>
         /// <param name="environmentSettings">A list of environment variable
         /// settings for the task.</param>
         /// <param name="affinityInfo">A locality hint that can be used by the
@@ -68,7 +71,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="authenticationTokenSettings">The settings for an
         /// authentication token that the task can use to perform Batch service
         /// operations.</param>
-        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), TaskState? previousState = default(TaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), string commandLine = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), UserIdentity userIdentity = default(UserIdentity), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
+        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), TaskState? previousState = default(TaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), string commandLine = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<OutputFile> outputFiles = default(System.Collections.Generic.IList<OutputFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), UserIdentity userIdentity = default(UserIdentity), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
             Id = id;
             DisplayName = displayName;
@@ -83,6 +86,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             PreviousStateTransitionTime = previousStateTransitionTime;
             CommandLine = commandLine;
             ResourceFiles = resourceFiles;
+            OutputFiles = outputFiles;
             EnvironmentSettings = environmentSettings;
             AffinityInfo = affinityInfo;
             Constraints = constraints;
@@ -221,6 +225,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of files that the Batch service will upload
+        /// from the compute node after running the command line.
+        /// </summary>
+        /// <remarks>
+        /// For multi-instance tasks, the files will only be uploaded from the
+        /// compute node on which the primary task is executed.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "outputFiles")]
+        public System.Collections.Generic.IList<OutputFile> OutputFiles { get; set; }
+
+        /// <summary>
         /// Gets or sets a list of environment variable settings for the task.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
@@ -329,13 +344,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.EnvironmentSettings != null)
+            if (this.OutputFiles != null)
             {
-                foreach (var element1 in this.EnvironmentSettings)
+                foreach (var element1 in this.OutputFiles)
                 {
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (this.EnvironmentSettings != null)
+            {
+                foreach (var element2 in this.EnvironmentSettings)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }
@@ -357,11 +382,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             }
             if (this.ApplicationPackageReferences != null)
             {
-                foreach (var element2 in this.ApplicationPackageReferences)
+                foreach (var element3 in this.ApplicationPackageReferences)
                 {
-                    if (element2 != null)
+                    if (element3 != null)
                     {
-                        element2.Validate();
+                        element3.Validate();
                     }
                 }
             }

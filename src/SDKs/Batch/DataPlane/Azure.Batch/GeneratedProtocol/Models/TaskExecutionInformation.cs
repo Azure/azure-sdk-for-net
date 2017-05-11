@@ -33,23 +33,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="endTime">The time at which the task completed.</param>
         /// <param name="exitCode">The exit code of the program specified on
         /// the task command line.</param>
-        /// <param name="schedulingError">Details of any error encountered
-        /// scheduling the task.</param>
+        /// <param name="failureInfo">Information describing the task failure,
+        /// if any.</param>
         /// <param name="lastRetryTime">The most recent time at which a retry
         /// of the task started running.</param>
         /// <param name="lastRequeueTime">The most recent time at which the
         /// task has been requeued by the Batch service as the result of a user
         /// request.</param>
-        public TaskExecutionInformation(int retryCount, int requeueCount, System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), System.DateTime? lastRetryTime = default(System.DateTime?), System.DateTime? lastRequeueTime = default(System.DateTime?))
+        /// <param name="result">The result of the task execution.</param>
+        public TaskExecutionInformation(int retryCount, int requeueCount, System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), System.DateTime? lastRetryTime = default(System.DateTime?), System.DateTime? lastRequeueTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
             StartTime = startTime;
             EndTime = endTime;
             ExitCode = exitCode;
-            SchedulingError = schedulingError;
+            FailureInfo = failureInfo;
             RetryCount = retryCount;
             LastRetryTime = lastRetryTime;
             RequeueCount = requeueCount;
             LastRequeueTime = lastRequeueTime;
+            Result = result;
         }
 
         /// <summary>
@@ -94,21 +96,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Gets or sets details of any error encountered scheduling the task.
+        /// Gets or sets information describing the task failure, if any.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the task is in the completed state.
+        /// This property is set only if the task is in the completed state and
+        /// encountered a failure.
         /// </remarks>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingError")]
-        public TaskSchedulingError SchedulingError { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "failureInfo")]
+        public TaskFailureInformation FailureInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the number of times the task has been retried by the
         /// Batch service.
         /// </summary>
         /// <remarks>
-        /// The task is retried if it exits with a nonzero exit code, up to the
-        /// specified maxTaskRetryCount.
+        /// The number of times the task has been retried by the Batch service.
+        /// Task application failures (non-zero exit code) are retried,
+        /// pre-processing errors (the task could not be run) and file upload
+        /// errors are not retried. The Batch service will retry the task up to
+        /// the limit specified by the constraints.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "retryCount")]
         public int RetryCount { get; set; }
@@ -152,6 +158,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.DateTime? LastRequeueTime { get; set; }
 
         /// <summary>
+        /// Gets or sets the result of the task execution.
+        /// </summary>
+        /// <remarks>
+        /// If the value is 'failed', then the details of the failure can be
+        /// found in the failureInfo property. Possible values include:
+        /// 'success', 'failure'
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "result")]
+        public TaskExecutionResult? Result { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -159,9 +176,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (this.SchedulingError != null)
+            if (this.FailureInfo != null)
             {
-                this.SchedulingError.Validate();
+                this.FailureInfo.Validate();
             }
         }
     }

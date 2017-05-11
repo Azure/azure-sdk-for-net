@@ -83,5 +83,51 @@ namespace Microsoft.Azure.Batch
         }
 
         #endregion // IPropertyMetadata
+
+        #region Internal/private methods
+
+
+        /// <summary>
+        /// Converts a collection of protocol layer objects to object layer collection objects.
+        /// </summary>
+        internal static IList<ResizeError> ConvertFromProtocolCollection(IEnumerable<Models.ResizeError> protoCollection)
+        {
+            ConcurrentChangeTrackedModifiableList<ResizeError> converted = UtilitiesInternal.CollectionToThreadSafeCollectionIModifiable(
+                items: protoCollection,
+                objectCreationFunc: o => new ResizeError(o));
+
+            return converted;
+        }
+
+        /// <summary>
+        /// Converts a collection of protocol layer objects to object layer collection objects, in a frozen state.
+        /// </summary>
+        internal static IList<ResizeError> ConvertFromProtocolCollectionAndFreeze(IEnumerable<Models.ResizeError> protoCollection)
+        {
+            ConcurrentChangeTrackedModifiableList<ResizeError> converted = UtilitiesInternal.CollectionToThreadSafeCollectionIModifiable(
+                items: protoCollection,
+                objectCreationFunc: o => new ResizeError(o).Freeze());
+
+            converted = UtilitiesInternal.CreateObjectWithNullCheck(converted, o => o.Freeze());
+
+            return converted;
+        }
+
+        /// <summary>
+        /// Converts a collection of protocol layer objects to object layer collection objects, with each object marked readonly
+        /// and returned as a readonly collection.
+        /// </summary>
+        internal static IReadOnlyList<ResizeError> ConvertFromProtocolCollectionReadOnly(IEnumerable<Models.ResizeError> protoCollection)
+        {
+            IReadOnlyList<ResizeError> converted =
+                UtilitiesInternal.CreateObjectWithNullCheck(
+                    UtilitiesInternal.CollectionToNonThreadSafeCollection(
+                        items: protoCollection,
+                        objectCreationFunc: o => new ResizeError(o).Freeze()), o => o.AsReadOnly());
+
+            return converted;
+        }
+
+        #endregion // Internal/private methods
     }
 }

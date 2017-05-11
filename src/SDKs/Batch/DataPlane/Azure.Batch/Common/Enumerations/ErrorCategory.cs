@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Batch.Common
     /// <summary>
     /// The category of a task scheduling error.
     /// </summary>
-    public enum SchedulingErrorCategory
+    public enum ErrorCategory
     {
         /// <summary>
         /// The error was in the task specification provided by the user.
@@ -22,12 +22,6 @@ namespace Microsoft.Azure.Batch.Common
         /// <summary>
         /// The error occurred in the Batch service.
         /// </summary>
-        ServerError,
-
-        /// <summary>
-        /// The service reported an option that is not recognized by this
-        /// version of the Batch client.
-        /// </summary>
-        Unmapped,
+        ServerError
     }
 }

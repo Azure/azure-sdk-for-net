@@ -62,7 +62,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// installed on the compute node.</param>
         /// <param name="errors">The list of errors that are currently being
         /// encountered by the compute node.</param>
-        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), System.Collections.Generic.IList<TaskInformation> recentTasks = default(System.Collections.Generic.IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ComputeNodeError> errors = default(System.Collections.Generic.IList<ComputeNodeError>))
+        /// <param name="isDedicated">Whether this compute node is a dedicated
+        /// node. If false, the node is a low-priority node.</param>
+        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), System.Collections.Generic.IList<TaskInformation> recentTasks = default(System.Collections.Generic.IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ComputeNodeError> errors = default(System.Collections.Generic.IList<ComputeNodeError>), bool? isDedicated = default(bool?))
         {
             Id = id;
             Url = url;
@@ -82,6 +84,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             StartTaskInfo = startTaskInfo;
             CertificateReferences = certificateReferences;
             Errors = errors;
+            IsDedicated = isDedicated;
         }
 
         /// <summary>
@@ -108,7 +111,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'idle', 'rebooting', 'reimaging',
         /// 'running', 'unusable', 'creating', 'starting',
         /// 'waitingForStartTask', 'startTaskFailed', 'unknown', 'leavingPool',
-        /// 'offline'
+        /// 'offline', 'preempted'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public ComputeNodeState? State { get; set; }
@@ -178,9 +181,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Services pools (pools created with cloudServiceConfiguration), see
         /// Sizes for Cloud Services
         /// (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
-        /// Batch supports all Cloud Services VM sizes except ExtraSmall. For
-        /// information about available VM sizes for pools using images from
-        /// the Virtual Machines Marketplace (pools created with
+        /// Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2
+        /// and A2V2. For information about available VM sizes for pools using
+        /// images from the Virtual Machines Marketplace (pools created with
         /// virtualMachineConfiguration) see Sizes for Virtual Machines (Linux)
         /// (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/)
         /// or Sizes for Virtual Machines (Windows)
@@ -262,6 +265,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "errors")]
         public System.Collections.Generic.IList<ComputeNodeError> Errors { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether this compute node is a dedicated node. If
+        /// false, the node is a low-priority node.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "isDedicated")]
+        public bool? IsDedicated { get; set; }
 
         /// <summary>
         /// Validate the object.

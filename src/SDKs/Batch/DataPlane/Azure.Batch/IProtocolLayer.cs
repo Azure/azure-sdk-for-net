@@ -163,8 +163,9 @@ namespace Microsoft.Azure.Batch
         Task<AzureOperationHeaderResponse<Models.PoolDeleteHeaders>> DeletePool(string poolId, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationHeaderResponse<Models.PoolResizeHeaders>> ResizePool(
-            string poolId, 
-            int targetDedicated, 
+            string poolId,
+            int? targetDedicatedComputeNodes,
+            int? targetLowPriorityComputeNodes,
             TimeSpan? resizeTimeout, 
             Common.ComputeNodeDeallocationOption? deallocationOption, 
             BehaviorManager bhMgr, 

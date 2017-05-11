@@ -1,5 +1,23 @@
 ## Microsoft.Azure.Management.Batch release notes
 
+### Changes in 5.0.0
+#### REST API version
+- This version targets REST API version 2017-05-01.
+
+#### Features
+##### Breaking changes
+- BatchAccount `CoreQuota` renamed to `DedicatedCoreQuota`.
+- The structure of `CloudError` has changed. It now has an `Error` property, and the error information (`code`, `message`, `target`, and `details`) is inside that property.
+- The type `UpdateApplicationParameters` was renamed to `ApplicationUpdateParameters`.
+- The type `AddApplicationParameters` was renamed to `ApplicationCreateParameters`.
+
+##### Non-breaking changes
+- BatchAccount now reports the low-priority core quota as well in the property `LowPriorityCoreQuota`.
+- Added a new `Operations` API, which can be used to query the available operations.
+
+#### Packaging
+- Now targets `netstandard1.4` instead of `netstandard1.5` and `netstandard1.1`.
+
 ### Changes in 4.2.0
 - Added option to create a Batch account which allocates pool nodes in the user's subscription. This is done with `PoolAllocationMode = UserSubscription`. When using this mode, a `KeyVaultReference` must also be supplied.
 - Changed classes which appear only in responses to be immutable.
