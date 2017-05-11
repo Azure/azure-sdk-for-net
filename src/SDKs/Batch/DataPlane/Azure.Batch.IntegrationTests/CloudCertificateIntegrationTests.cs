@@ -238,7 +238,7 @@
                         poolId: poolId,
                         virtualMachineSize: PoolFixture.VMSize,
                         cloudServiceConfiguration: new CloudServiceConfiguration(PoolFixture.OSFamily),
-                        targetDedicated: 0);
+                        targetDedicatedComputeNodes: 0);
 
                     // create the pool with initial cert refs
                     unboundPool.CertificateReferences = certificateReferences;
@@ -301,7 +301,7 @@
                                     {
                                         CertificateReferences = certificateReferences,
                                         CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
-                                        TargetDedicated = 0,
+                                        TargetDedicatedComputeNodes = 0,
                                         VirtualMachineSize = PoolFixture.VMSize,
                                     },
                                 AutoPoolIdPrefix = TestUtilities.GetMyName(),
@@ -339,7 +339,7 @@
                         poolId: poolId,
                         virtualMachineSize: PoolFixture.VMSize,
                         cloudServiceConfiguration: new CloudServiceConfiguration(PoolFixture.OSFamily),
-                        targetDedicated: 0);
+                        targetDedicatedComputeNodes: 0);
                     unboundPool.CertificateReferences = certificateReferences;
 
                     await unboundPool.CommitAsync().ConfigureAwait(false);

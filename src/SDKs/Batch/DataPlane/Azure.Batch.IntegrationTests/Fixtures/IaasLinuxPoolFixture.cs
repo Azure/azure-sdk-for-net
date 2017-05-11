@@ -63,7 +63,7 @@
                     poolId: this.PoolId,
                     virtualMachineSize: VMSize,
                     virtualMachineConfiguration: virtualMachineConfiguration,
-                    targetDedicated: 1);
+                    targetDedicatedComputeNodes: 1);
 
                 currentPool.Commit();
             }

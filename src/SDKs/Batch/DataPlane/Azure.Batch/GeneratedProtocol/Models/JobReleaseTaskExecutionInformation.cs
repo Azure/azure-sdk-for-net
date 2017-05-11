@@ -40,9 +40,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the Job Release task on the compute node.</param>
         /// <param name="exitCode">The exit code of the program specified on
         /// the task command line.</param>
-        /// <param name="schedulingError">The error encountered by the Batch
-        /// service when starting the task.</param>
-        public JobReleaseTaskExecutionInformation(System.DateTime startTime, JobReleaseTaskState state, System.DateTime? endTime = default(System.DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError))
+        /// <param name="failureInfo">Information describing the task failure,
+        /// if any.</param>
+        /// <param name="result">The result of the task execution.</param>
+        public JobReleaseTaskExecutionInformation(System.DateTime startTime, JobReleaseTaskState state, System.DateTime? endTime = default(System.DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -50,7 +51,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             TaskRootDirectory = taskRootDirectory;
             TaskRootDirectoryUrl = taskRootDirectoryUrl;
             ExitCode = exitCode;
-            SchedulingError = schedulingError;
+            FailureInfo = failureInfo;
+            Result = result;
         }
 
         /// <summary>
@@ -115,11 +117,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? ExitCode { get; set; }
 
         /// <summary>
-        /// Gets or sets the error encountered by the Batch service when
-        /// starting the task.
+        /// Gets or sets information describing the task failure, if any.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingError")]
-        public TaskSchedulingError SchedulingError { get; set; }
+        /// <remarks>
+        /// This property is set only if the task is in the completed state and
+        /// encountered a failure.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "failureInfo")]
+        public TaskFailureInformation FailureInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the result of the task execution.
+        /// </summary>
+        /// <remarks>
+        /// If the value is 'failed', then the details of the failure can be
+        /// found in the failureInfo property. Possible values include:
+        /// 'success', 'failure'
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "result")]
+        public TaskExecutionResult? Result { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -129,9 +145,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (this.SchedulingError != null)
+            if (this.FailureInfo != null)
             {
-                this.SchedulingError.Validate();
+                this.FailureInfo.Validate();
             }
         }
     }

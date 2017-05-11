@@ -286,8 +286,8 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                 testOutputHelper.WriteLine(curPool.Id + ":");
                 testOutputHelper.WriteLine("    AllocationState: " + curPool.AllocationState);
                 testOutputHelper.WriteLine("    State: " + curPool.State);
-                testOutputHelper.WriteLine("    TargetDedicated: " + curPool.TargetDedicated);
-                testOutputHelper.WriteLine("    CurrentDedicated:  " + (curPool.CurrentDedicated.HasValue ? curPool.CurrentDedicated.Value.ToString() : "<no value>"));
+                testOutputHelper.WriteLine("    TargetDedicated: " + curPool.TargetDedicatedComputeNodes);
+                testOutputHelper.WriteLine("    CurrentDedicated:  " + (curPool.CurrentDedicatedComputeNodes.HasValue ? curPool.CurrentDedicatedComputeNodes.Value.ToString() : "<no value>"));
 
                 if (curPool.Statistics != null)
                 {

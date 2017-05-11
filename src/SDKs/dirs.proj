@@ -36,6 +36,8 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Relay\Management.Relay\Microsoft.Azure.Management.Relay.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Resource\Management.ResourceManager\Microsoft.Azure.Management.ResourceManager.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Scheduler\Management.Scheduler\Microsoft.Azure.Management.Scheduler.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\Management\Management.Search\Management.Search.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\DataPlane\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj" />
 		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ServerManagement\Management.ServerManagement\Microsoft.Azure.Management.ServerManagement.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ServiceBus\Management.ServiceBus\Microsoft.Azure.Management.ServiceBus.csproj" />
@@ -45,8 +47,6 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TrafficManager\Management.TrafficManager\Microsoft.Azure.Management.TrafficManager.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\Management.Websites\Microsoft.Azure.Management.Websites.csproj" /> 
 		<!--	
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\Management\Management.Search\Management.Search.csproj" />
-		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\DataPlane\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Automation\Management.Automation\Microsoft.Azure.Management.Automation.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Authorization\Management.Authorization\Microsoft.Azure.Management.Sql.csproj" />		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)\Authorization.Tests\Microsoft.Rest.ClientRuntime.Azure.csproj" />
@@ -90,7 +90,8 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Relay\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Resource\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Scheduler\**\*Tests.csproj" ProjectType="Test"/>
-		
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\Management\**\*Tests.csproj" ProjectType="Test"/>
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\DataPlane\**\*Tests.csproj" ProjectType="Test"/>
 		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ServerManagement\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ServiceBus\**\*Tests.csproj" ProjectType="Test"/>
@@ -105,8 +106,6 @@
 	<ProjectToBuild Include="$(MSBuildThisFileDirectory)DataLake.Store\**\*Tests.csproj" ProjectType="Test"/>
   	<ProjectToBuild Include="$(MSBuildThisFileDirectory)Monitor\**\*Tests.csproj" ProjectType="Test"/>
     <ProjectToBuild Include="$(MSBuildThisFileDirectory)RecoveryServices\**\*Tests.csproj" ProjectType="Test"/>
-    <ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\DataPlane\**\*Tests.csproj" ProjectType="Test"/>
-	<ProjectToBuild Include="$(MSBuildThisFileDirectory)Search\Management\**\*Tests.csproj" ProjectType="Test"/>
   -->
 
   <ItemGroup>

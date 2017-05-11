@@ -18,8 +18,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "jobSchedule")]
         JobSchedule,
         [System.Runtime.Serialization.EnumMember(Value = "job")]
-        Job,
-        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
-        Unmapped
+        Job
     }
 }

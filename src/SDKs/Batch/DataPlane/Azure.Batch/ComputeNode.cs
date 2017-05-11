@@ -168,7 +168,9 @@
         /// <summary>
         /// Begins an asynchronous call to remove the compute node from the pool.
         /// </summary>
-        /// <param name="deallocationOption">The deallocation option to use when removing the compute node from the pool.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">The maximum amount of time which the RemoveFromPool operation can take before being terminated by the Azure Batch system.</param>
         /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -192,7 +194,9 @@
         /// <summary>
         /// Blocking call to remove the compute node from the pool.
         /// </summary>
-        /// <param name="deallocationOption">The deallocation option to use when removing the compute node from the pool.</param>
+        /// <param name="deallocationOption">
+        /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool. The default is <see cref="Common.ComputeNodeDeallocationOption.Requeue"/>.
+        /// </param>
         /// <param name="resizeTimeout">The maximum amount of time which the RemoveFromPool operation can take before being terminated by the Azure Batch system.</param>
         /// <param name="additionalBehaviors">A collection of BatchClientBehavior instances that are applied after the CustomBehaviors on the current object.</param>
         public void RemoveFromPool(Common.ComputeNodeDeallocationOption? deallocationOption = null, TimeSpan? resizeTimeout = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)

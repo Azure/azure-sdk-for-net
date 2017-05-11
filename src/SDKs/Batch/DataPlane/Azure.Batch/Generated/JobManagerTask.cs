@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<bool?> AllowLowPriorityNodeProperty;
             public readonly PropertyAccessor<IList<ApplicationPackageReference>> ApplicationPackageReferencesProperty;
             public readonly PropertyAccessor<AuthenticationTokenSettings> AuthenticationTokenSettingsProperty;
             public readonly PropertyAccessor<string> CommandLineProperty;
@@ -32,12 +33,14 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<IList<EnvironmentSetting>> EnvironmentSettingsProperty;
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<bool?> KillJobOnCompletionProperty;
+            public readonly PropertyAccessor<IList<OutputFile>> OutputFilesProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
             public readonly PropertyAccessor<bool?> RunExclusiveProperty;
             public readonly PropertyAccessor<UserIdentity> UserIdentityProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
+                this.AllowLowPriorityNodeProperty = this.CreatePropertyAccessor<bool?>("AllowLowPriorityNode", BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
                 this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>("AuthenticationTokenSettings", BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
@@ -46,6 +49,7 @@ namespace Microsoft.Azure.Batch
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
                 this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
                 this.KillJobOnCompletionProperty = this.CreatePropertyAccessor<bool?>("KillJobOnCompletion", BindingAccess.Read | BindingAccess.Write);
+                this.OutputFilesProperty = this.CreatePropertyAccessor<IList<OutputFile>>("OutputFiles", BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
                 this.RunExclusiveProperty = this.CreatePropertyAccessor<bool?>("RunExclusive", BindingAccess.Read | BindingAccess.Write);
                 this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
@@ -53,6 +57,10 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer(Models.JobManagerTask protocolObject) : base(BindingState.Bound)
             {
+                this.AllowLowPriorityNodeProperty = this.CreatePropertyAccessor(
+                    protocolObject.AllowLowPriorityNode,
+                    "AllowLowPriorityNode",
+                    BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollection(protocolObject.ApplicationPackageReferences),
                     "ApplicationPackageReferences",
@@ -84,6 +92,10 @@ namespace Microsoft.Azure.Batch
                 this.KillJobOnCompletionProperty = this.CreatePropertyAccessor(
                     protocolObject.KillJobOnCompletion,
                     "KillJobOnCompletion",
+                    BindingAccess.Read | BindingAccess.Write);
+                this.OutputFilesProperty = this.CreatePropertyAccessor(
+                    OutputFile.ConvertFromProtocolCollection(protocolObject.OutputFiles),
+                    "OutputFiles",
                     BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor(
                     ResourceFile.ConvertFromProtocolCollection(protocolObject.ResourceFiles),
@@ -126,6 +138,16 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region JobManagerTask
+
+        /// <summary>
+        /// Gets or sets whether the Job Manager task may run on a low-priority compute node. If omitted, the default is 
+        /// false.
+        /// </summary>
+        public bool? AllowLowPriorityNode
+        {
+            get { return this.propertyContainer.AllowLowPriorityNodeProperty.Value; }
+            set { this.propertyContainer.AllowLowPriorityNodeProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets or sets a list of application packages that the Batch service will deploy to the compute node before running 
@@ -220,6 +242,19 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets a list of files that the Batch service will upload from the compute node after running the command 
+        /// line.
+        /// </summary>
+        public IList<OutputFile> OutputFiles
+        {
+            get { return this.propertyContainer.OutputFilesProperty.Value; }
+            set
+            {
+                this.propertyContainer.OutputFilesProperty.Value = ConcurrentChangeTrackedModifiableList<OutputFile>.TransformEnumerableToConcurrentModifiableList(value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a list of files that the Batch service will download to the compute node before running the command 
         /// line.
         /// </summary>
@@ -279,6 +314,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.JobManagerTask result = new Models.JobManagerTask()
             {
+                AllowLowPriorityNode = this.AllowLowPriorityNode,
                 ApplicationPackageReferences = UtilitiesInternal.ConvertToProtocolCollection(this.ApplicationPackageReferences),
                 AuthenticationTokenSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.AuthenticationTokenSettings, (o) => o.GetTransportObject()),
                 CommandLine = this.CommandLine,
@@ -287,6 +323,7 @@ namespace Microsoft.Azure.Batch
                 EnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.EnvironmentSettings),
                 Id = this.Id,
                 KillJobOnCompletion = this.KillJobOnCompletion,
+                OutputFiles = UtilitiesInternal.ConvertToProtocolCollection(this.OutputFiles),
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),
                 RunExclusive = this.RunExclusive,
                 UserIdentity = UtilitiesInternal.CreateObjectWithNullCheck(this.UserIdentity, (o) => o.GetTransportObject()),

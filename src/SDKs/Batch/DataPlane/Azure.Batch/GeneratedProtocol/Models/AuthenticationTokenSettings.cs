@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="access">The Batch resources to which the token grants
         /// access.</param>
-        public AuthenticationTokenSettings(System.Collections.Generic.IList<AccessScope?> access = default(System.Collections.Generic.IList<AccessScope?>))
+        public AuthenticationTokenSettings(System.Collections.Generic.IList<AccessScope> access = default(System.Collections.Generic.IList<AccessScope>))
         {
             Access = access;
         }
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// related to the job which contains the task.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "access")]
-        public System.Collections.Generic.IList<AccessScope?> Access { get; set; }
+        public System.Collections.Generic.IList<AccessScope> Access { get; set; }
 
     }
 }

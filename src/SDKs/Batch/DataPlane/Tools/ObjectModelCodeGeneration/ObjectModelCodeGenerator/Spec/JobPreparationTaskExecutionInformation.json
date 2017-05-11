@@ -50,14 +50,17 @@
         },
         {
           "Key": {
-            "Type": "TaskSchedulingError",
-            "Name": "SchedulingError",
-            "SummaryComment": "The TaskSchedulingError encountered by the service when starting the task.",
-            "RemarksComment": "This property is only returned if there was an error when scheduling the task, and it is now in the <see cref=\"Common.JobPreparationTaskState.Completed\"/> state.",
+            "Type": "TaskFailureInformation",
+            "Name": "FailureInformation",
+            "SummaryComment": "Information describing the task failure, if any.",
+            "RemarksComment": "This property is set only if the task is in the <see cref=\"Common.JobPreparationTaskState.Completed\"/> state and encountered a failure.",
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null
+          "Value": {
+            "Type": "TaskFailureInformation",
+            "Name": "FailureInfo"
+          }
         },
         {
           "Key": {
@@ -105,6 +108,20 @@
             "UnboundAccess": "none"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "Common.TaskExecutionResult?",
+            "Name": "Result",
+            "SummaryComment": "The result of the task execution.",
+            "RemarksComment": "If the value is <see cref=\"Common.TaskExecutionResult.Failure\" />, then the details of the failure can be found in the <see cref=\"FailureInformation\" /> property.",
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.TaskExecutionResult?",
+            "Name": "Result"
+          }
         }
       ]
     }

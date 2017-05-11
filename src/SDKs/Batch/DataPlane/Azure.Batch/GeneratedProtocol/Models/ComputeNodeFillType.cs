@@ -18,8 +18,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "spread")]
         Spread,
         [System.Runtime.Serialization.EnumMember(Value = "pack")]
-        Pack,
-        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
-        Unmapped
+        Pack
     }
 }

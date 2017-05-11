@@ -253,40 +253,11 @@
                     {
                         this.testOutputHelper.WriteLine("Listing OS Versions:");
 
-                        /* bug 2384616 ListOsVersions hidden for wat 8
-
-                            // test ListOSVersion
-                            foreach (OSVersion curOSV in poolMgr.ListOSVersions())
-                            {
-                                this.testOutputHelper.WriteLine("Label: " + curOSV.Label);
-                                this.testOutputHelper.WriteLine("    Version: " + curOSV.Version);
-                                this.testOutputHelper.WriteLine("    Family: " + curOSV.Family);
-                                this.testOutputHelper.WriteLine("    FamilyLabel: " + curOSV.FamilyLabel);
-                                this.testOutputHelper.WriteLine("    isDefault: " + curOSV.IsDefault);
-                                this.testOutputHelper.WriteLine("    IsActive: " + curOSV.IsActive);
-
-                                string expDate;
-
-                                if (curOSV.ExpirationDate.HasValue)
-                                {
-                                    expDate = curOSV.ExpirationDate.Value.ToString();
-                                }
-                                else
-                                {
-                                    expDate = "<null/novalue>";
-                                }
-
-                                this.testOutputHelper.WriteLine("    ExpirationDate: " + expDate);
-                            }
-
-                            */
-
                         // create pool tests
-                        
 
                         // forget to set CloudServiceConfiguration on Create, get error
                         {
-                            CloudPool noArgs = poolOperations.CreatePool("Bug1965363ButNoOSFamily-" + TestUtilities.GetMyName(), PoolFixture.VMSize, default(CloudServiceConfiguration), targetDedicated: 0);
+                            CloudPool noArgs = poolOperations.CreatePool("Bug1965363ButNoOSFamily-" + TestUtilities.GetMyName(), PoolFixture.VMSize, default(CloudServiceConfiguration), targetDedicatedComputeNodes: 0);
 
                             BatchException ex = TestUtilities.AssertThrows<BatchException>(() => noArgs.Commit());
                             string exStr = ex.ToString();
@@ -300,7 +271,7 @@
                             string poolIdHOSF = "Bug1965363HasOSF-" + TestUtilities.GetMyName();
                             try
                             {
-                                CloudPool hasOSF = poolOperations.CreatePool(poolIdHOSF, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated: 0);
+                                CloudPool hasOSF = poolOperations.CreatePool(poolIdHOSF, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicatedComputeNodes: 0);
 
                                 hasOSF.Commit();
                             }
@@ -327,7 +298,7 @@
                                     poolIdChangeOSV, 
                                     PoolFixture.VMSize,
                                     new CloudServiceConfiguration(PoolFixture.OSFamily, familyVersion0), // start with version 0
-                                    targetDedicated: 0);
+                                    targetDedicatedComputeNodes: 0);
                                 
                                 unboundPool.Commit();
 
@@ -362,7 +333,7 @@
                                     poolIdChangeOSV, 
                                     PoolFixture.VMSize,
                                     new CloudServiceConfiguration(PoolFixture.OSFamily, familyVersion0), // start with version 0
-                                    targetDedicated: 0);
+                                    targetDedicatedComputeNodes: 0);
 
                                 unboundPool.Commit();
 
@@ -405,7 +376,7 @@
                                 this.testOutputHelper.WriteLine("pus.CloudServiceConfiguration.OSFamily == " + ps.CloudServiceConfiguration.OSFamily);
 
                                 ps.VirtualMachineSize = PoolFixture.VMSize;
-                                ps.TargetDedicated = 0; // trivial size for testing purposes
+                                ps.TargetDedicatedComputeNodes = 0; // trivial size for testing purposes
 
                                 aps.PoolSpecification = ps;
                                 aps.PoolLifetimeOption = PoolLifetimeOption.Job;
@@ -458,7 +429,7 @@
                                     this.testOutputHelper.WriteLine("pus.CloudServiceConfiguration.TargetOSVersion == " + ps.CloudServiceConfiguration.TargetOSVersion);
 
                                     ps.VirtualMachineSize = PoolFixture.VMSize;
-                                    ps.TargetDedicated = 0; // trivial size for testing purposes
+                                    ps.TargetDedicatedComputeNodes = 0; // trivial size for testing purposes
 
                                     aps.PoolSpecification = ps;
                                     aps.PoolLifetimeOption = PoolLifetimeOption.Job;

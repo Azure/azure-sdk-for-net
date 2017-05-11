@@ -3,6 +3,7 @@
       "ProtocolName": "Models.ResizeError",
       "Comment": "An error that occurred when resizing a pool.",
       "IsConstructorPublic": false,
+      "IsUsedInCollections":  true,
       "Properties": [
         {
           "Key": {

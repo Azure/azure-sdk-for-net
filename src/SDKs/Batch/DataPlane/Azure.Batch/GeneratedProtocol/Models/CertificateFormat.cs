@@ -18,8 +18,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "pfx")]
         Pfx,
         [System.Runtime.Serialization.EnumMember(Value = "cer")]
-        Cer,
-        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
-        Unmapped
+        Cer
     }
 }

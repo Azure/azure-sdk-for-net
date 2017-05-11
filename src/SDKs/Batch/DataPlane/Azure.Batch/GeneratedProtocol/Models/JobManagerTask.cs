@@ -32,6 +32,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="resourceFiles">A list of files that the Batch service
         /// will download to the compute node before running the command
         /// line.</param>
+        /// <param name="outputFiles">A list of files that the Batch service
+        /// will upload from the compute node after running the command
+        /// line.</param>
         /// <param name="environmentSettings">A list of environment variable
         /// settings for the Job Manager task.</param>
         /// <param name="constraints">Constraints that apply to the Job Manager
@@ -48,12 +51,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="authenticationTokenSettings">The settings for an
         /// authentication token that the task can use to perform Batch service
         /// operations.</param>
-        public JobManagerTask(string id, string commandLine, string displayName = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
+        /// <param name="allowLowPriorityNode">Whether the Job Manager task may
+        /// run on a low-priority compute node.</param>
+        public JobManagerTask(string id, string commandLine, string displayName = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<OutputFile> outputFiles = default(System.Collections.Generic.IList<OutputFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings), bool? allowLowPriorityNode = default(bool?))
         {
             Id = id;
             DisplayName = displayName;
             CommandLine = commandLine;
             ResourceFiles = resourceFiles;
+            OutputFiles = outputFiles;
             EnvironmentSettings = environmentSettings;
             Constraints = constraints;
             KillJobOnCompletion = killJobOnCompletion;
@@ -61,6 +67,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             RunExclusive = runExclusive;
             ApplicationPackageReferences = applicationPackageReferences;
             AuthenticationTokenSettings = authenticationTokenSettings;
+            AllowLowPriorityNode = allowLowPriorityNode;
         }
 
         /// <summary>
@@ -108,6 +115,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
         public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of files that the Batch service will upload
+        /// from the compute node after running the command line.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "outputFiles")]
+        public System.Collections.Generic.IList<OutputFile> OutputFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the Job
@@ -208,6 +222,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
         /// <summary>
+        /// Gets or sets whether the Job Manager task may run on a low-priority
+        /// compute node.
+        /// </summary>
+        /// <remarks>
+        /// The default value is false.
+        /// </remarks>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "allowLowPriorityNode")]
+        public bool? AllowLowPriorityNode { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -233,9 +257,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.EnvironmentSettings != null)
+            if (this.OutputFiles != null)
             {
-                foreach (var element1 in this.EnvironmentSettings)
+                foreach (var element1 in this.OutputFiles)
                 {
                     if (element1 != null)
                     {
@@ -243,13 +267,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     }
                 }
             }
-            if (this.ApplicationPackageReferences != null)
+            if (this.EnvironmentSettings != null)
             {
-                foreach (var element2 in this.ApplicationPackageReferences)
+                foreach (var element2 in this.EnvironmentSettings)
                 {
                     if (element2 != null)
                     {
                         element2.Validate();
+                    }
+                }
+            }
+            if (this.ApplicationPackageReferences != null)
+            {
+                foreach (var element3 in this.ApplicationPackageReferences)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
                     }
                 }
             }

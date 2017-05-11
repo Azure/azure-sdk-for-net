@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// A user for a specific Azure Batch compute node.
+    /// A user account for remote access to a compute node.
     /// </summary>
     public partial class ComputeNodeUser : ITransportObjectProvider<Models.ComputeNodeUser>, IInheritedBehaviors, IPropertyMetadata
     {

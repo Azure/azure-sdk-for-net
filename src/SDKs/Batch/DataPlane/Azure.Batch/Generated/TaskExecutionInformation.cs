@@ -24,11 +24,12 @@ namespace Microsoft.Azure.Batch
     {
         private readonly DateTime? endTime;
         private readonly int? exitCode;
+        private readonly TaskFailureInformation failureInformation;
         private readonly DateTime? lastRequeueTime;
         private readonly DateTime? lastRetryTime;
         private readonly int requeueCount;
+        private readonly Common.TaskExecutionResult? result;
         private readonly int retryCount;
-        private readonly TaskSchedulingError schedulingError;
         private readonly DateTime? startTime;
 
         #region Constructors
@@ -37,11 +38,12 @@ namespace Microsoft.Azure.Batch
         {
             this.endTime = protocolObject.EndTime;
             this.exitCode = protocolObject.ExitCode;
+            this.failureInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.FailureInfo, o => new TaskFailureInformation(o).Freeze());
             this.lastRequeueTime = protocolObject.LastRequeueTime;
             this.lastRetryTime = protocolObject.LastRetryTime;
             this.requeueCount = protocolObject.RequeueCount;
+            this.result = UtilitiesInternal.MapNullableEnum<Models.TaskExecutionResult, Common.TaskExecutionResult>(protocolObject.Result);
             this.retryCount = protocolObject.RetryCount;
-            this.schedulingError = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new TaskSchedulingError(o).Freeze());
             this.startTime = protocolObject.StartTime;
         }
 
@@ -73,6 +75,18 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets information describing the task failure, if any.
+        /// </summary>
+        /// <remarks>
+        /// This property is set only if the task is in the <see cref="Common.TaskState.Completed"/> state and encountered 
+        /// a failure.
+        /// </remarks>
+        public TaskFailureInformation FailureInformation
+        {
+            get { return this.failureInformation; }
+        }
+
+        /// <summary>
         /// Gets the most recent time at which this task's execution was re-queued by the Batch service per user request.
         /// </summary>
         public DateTime? LastRequeueTime
@@ -97,21 +111,28 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets the number of times the task has been retried by the Batch service. Every time the task exits with a non-zero 
-        /// code, it is deemed as an application failure. The Batch service will retry the task up to the specified MaxTaskRetryCount.
+        /// Gets the result of the task execution.
         /// </summary>
-        public int RetryCount
+        /// <remarks>
+        /// If the value is <see cref="Common.TaskExecutionResult.Failure" />, then the details of the failure can be found 
+        /// in the <see cref="FailureInformation" /> property.
+        /// </remarks>
+        public Common.TaskExecutionResult? Result
         {
-            get { return this.retryCount; }
+            get { return this.result; }
         }
 
         /// <summary>
-        /// Gets the error encountered by the service in starting the task. This parameter is only returned if there was 
-        /// an error in scheduling the task and it is now in completed state.
+        /// Gets the number of times the task has been retried by the Batch service.
         /// </summary>
-        public TaskSchedulingError SchedulingError
+        /// <remarks>
+        /// Task application failures (non-zero exit code) are retried, pre-processing errors (the task could not be run) 
+        /// and file upload errors are not retried. The Batch service will retry the task up to the specified <see cref="TaskConstraints.MaxTaskRetryCount" 
+        /// />.
+        /// </remarks>
+        public int RetryCount
         {
-            get { return this.schedulingError; }
+            get { return this.retryCount; }
         }
 
         /// <summary>

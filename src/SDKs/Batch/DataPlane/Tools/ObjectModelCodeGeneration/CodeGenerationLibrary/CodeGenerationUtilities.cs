@@ -170,7 +170,7 @@
 
             if (omPropertyData.HasPublicSetter)
             {
-                throw new InvalidOperationException("Collection types of non-complex objects that are publically settable are not supported by the code generator");
+                return $"UtilitiesInternal.CollectionToThreadSafeCollection({protocolObjectSimpleGetter}, o => o)";
             }
 
             return "UtilitiesInternal.CreateObjectWithNullCheck(" + protocolObjectSimpleGetter + ", o => o.ToList().AsReadOnly())";

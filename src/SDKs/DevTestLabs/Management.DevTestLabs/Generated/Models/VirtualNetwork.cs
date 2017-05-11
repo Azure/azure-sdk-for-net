@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A virtual network.
     /// </summary>
     [JsonTransformation]
-    public partial class VirtualNetwork : IResource
+    public partial class VirtualNetwork : Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualNetwork class.
@@ -30,19 +30,17 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetwork class.
         /// </summary>
-        public VirtualNetwork(IList<Subnet> allowedSubnets = default(IList<Subnet>), string description = default(string), string externalProviderResourceId = default(string), IList<SubnetOverride> subnetOverrides = default(IList<SubnetOverride>), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<Subnet> allowedSubnets = default(IList<Subnet>), string description = default(string), string externalProviderResourceId = default(string), IList<ExternalSubnet> externalSubnets = default(IList<ExternalSubnet>), IList<SubnetOverride> subnetOverrides = default(IList<SubnetOverride>), DateTime? createdDate = default(DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
             AllowedSubnets = allowedSubnets;
             Description = description;
             ExternalProviderResourceId = externalProviderResourceId;
+            ExternalSubnets = externalSubnets;
             SubnetOverrides = subnetOverrides;
+            CreatedDate = createdDate;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
         }
 
         /// <summary>
@@ -64,10 +62,22 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string ExternalProviderResourceId { get; set; }
 
         /// <summary>
+        /// The external subnet properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.externalSubnets")]
+        public IList<ExternalSubnet> ExternalSubnets { get; set; }
+
+        /// <summary>
         /// The subnet overrides of the virtual network.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnetOverrides")]
         public IList<SubnetOverride> SubnetOverrides { get; set; }
+
+        /// <summary>
+        /// The creation date of the virtual network.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdDate")]
+        public DateTime? CreatedDate { get; private set; }
 
         /// <summary>
         /// The provisioning status of the resource.
@@ -80,36 +90,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; set; }
-
-        /// <summary>
-        /// The identifier of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// The location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// The tags of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
     }
 }
