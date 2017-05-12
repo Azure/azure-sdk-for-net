@@ -9,6 +9,8 @@ using Microsoft.Build.Evaluation;
 using Microsoft.Build.Execution;
 using Microsoft.WindowsAzure.Build.Tasks.Utilities;
 using System.Collections.Concurrent;
+using System.Diagnostics;
+using ThreadingTsk = System.Threading.Tasks;
 //using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Build.Tasks
@@ -108,13 +110,15 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// List of projects that needs to be built
         /// </summary>
         [Output]
-        public ITaskItem[] SDKProjectsToBuild { get; private set; }
+        public ITaskItem[] net452SdkProjectsToBuild { get; private set; }
+        //public ITaskItem[] SDKProjectsToBuild { get; private set; }
 
         /// <summary>
         /// List of Test Projects that needs to be build
         /// </summary>
         [Output]
-        public ITaskItem[] SDKTestProjectsToBuild { get; private set; }
+        public ITaskItem[] netStd14SdkProjectsToBuild { get; private set; }
+        //public ITaskItem[] SDKTestProjectsToBuild { get; private set; }
 
         /// <summary>
         /// List of .NET 452 projects that will be separated from the list of projects that 
@@ -122,10 +126,15 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// 
         /// </summary>
         [Output]
-        public ITaskItem[] WellKnowSDKNet452Projects { get; private set; }
+        public ITaskItem[] netCore11TestProjectsToBuild { get; private set; }
+        //public ITaskItem[] WellKnowSDKNet452Projects { get; private set; }
 
         [Output]
-        public ITaskItem[] UnSupportedTargetFxProjects { get; private set; }
+        public ITaskItem[] net452TestProjectsToBuild { get; private set; }
+        //public ITaskItem[] UnSupportedTargetFxProjects { get; private set; }
+
+        [Output]
+        public ITaskItem[] unSupportedProjectsToBuild { get; private set; }
 
         //[Output]
         //public ITaskItem[] Foo { get; private set; }
@@ -147,6 +156,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             List<ITaskItem> unsupportedTargetFxTaskItems = new List<ITaskItem>();
 
             Init();
+
             if (BuildScope.Equals("All", StringComparison.OrdinalIgnoreCase))
             {
                 sdkProjects = SearchOnlySdkProjects(SourceRootDirPath);
@@ -160,19 +170,30 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             ConcurrentBag<SdkProjectMetaData> projWithMetaData = new ConcurrentBag<SdkProjectMetaData>();
 
+            var sdkProjTimeBefore = DateTime.Now;
             projWithMetaData = GetMetaData(sdkProjects, projWithMetaData);
+            var sdkProjTimeAfter = DateTime.Now;
+
+            var testProjTimeBefore = DateTime.Now;
             projWithMetaData = GetMetaData(testProjects, projWithMetaData);
+            var testProjTimeAfter = DateTime.Now;
 
-            var net452SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Sdk) select s;
-            var netStd14SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.netstandard14 && s.ProjectType == SdkProjctType.Sdk) select s;
-            var testNetCore11Projects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp11 && s.ProjectType == SdkProjctType.Test) select s;
-            var testNet452Projects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Test) select s;
-            var unSupportedProjects = from s in projWithMetaData where (s.IsTargetFxSupported = false) select s;
+            Debug.WriteLine("Parsing Sdk Projects took {0}", (sdkProjTimeAfter - sdkProjTimeBefore).TotalSeconds.ToString());
+            Debug.WriteLine("Parsing Test Projects took {0}", (testProjTimeAfter - testProjTimeBefore).TotalSeconds.ToString());
 
+            var net452SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
+            var netStd14SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.netstandard14 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
+            var testNetCore11Projects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp11 && s.ProjectType == SdkProjctType.Test) select s.ProjectTaskItem;
+            var testNet452Projects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Test) select s.ProjectTaskItem;
+            var unSupportedProjects = from s in projWithMetaData where (s.IsTargetFxSupported = false) select s.ProjectTaskItem;
+
+            net452SdkProjectsToBuild = net452SdkProjects?.ToArray<ITaskItem>();
+            netStd14SdkProjectsToBuild = netStd14SdkProjects?.ToArray<ITaskItem>();
+            netCore11TestProjectsToBuild = testNetCore11Projects?.ToArray<ITaskItem>();
+            net452TestProjectsToBuild = testNet452Projects?.ToArray<ITaskItem>();
+            unSupportedProjectsToBuild = unSupportedProjects?.ToArray<ITaskItem>();
 
             return true;
-
-            //return GetCategorization(testProjects, sdkProjects, testTaskItems, sdkTaskItems, unsupportedTargetFxTaskItems);
         }
 
         public ConcurrentBag<SdkProjectMetaData> GetMetaData(List<string> projectList, ConcurrentBag<SdkProjectMetaData> supportedProjectBag)
@@ -180,50 +201,77 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             SdkProjctType pType = SdkProjctType.Sdk;
             var projList = from p in projectList select new TaskItem(p);
 
-            //Parallel.ForEach<ITaskItem>(projList, (proj) =>
-            foreach (ITaskItem proj in projList)
+            IBuildEngine be = this.BuildEngine;
+
+            ThreadingTsk.Parallel.ForEach<ITaskItem>(projList, (proj) =>
+            //foreach (ITaskItem proj in projList)
             {
-                Project loadedProj = new Project(proj.ItemSpec);
-                string targetFxList = loadedProj.GetPropertyValue("TargetFrameworks");
-                if (string.IsNullOrEmpty(targetFxList))
+                try
                 {
-                    targetFxList = loadedProj.GetPropertyValue("TargetFramework");
-                }
+                    Project loadedProj = new Project(proj.ItemSpec);
 
-                ICollection<ProjectItem> foo = loadedProj.GetItemsByEvaluatedInclude("xunit");
-                if(foo != null)
-                {
-                    pType = SdkProjctType.Test;
-                }
-
-                var fxNames = targetFxList?.Split(';')?.ToList<string>();
-
-                foreach (string fx in fxNames)
-                {
-                    TargetFrameworkMoniker tfxMoniker = IsTargetFxSupported(fx);
-
-                    if (tfxMoniker == TargetFrameworkMoniker.net452)
+                    string targetFxList = loadedProj.GetPropertyValue("TargetFrameworks");
+                    if (string.IsNullOrEmpty(targetFxList))
                     {
-                        SdkProjectMetaData sp = new SdkProjectMetaData(proj, TargetFrameworkMoniker.net452, proj.ItemSpec, true, pType);
-                        supportedProjectBag.Add(sp);
+                        targetFxList = loadedProj.GetPropertyValue("TargetFramework");
                     }
-                    else if(tfxMoniker == TargetFrameworkMoniker.netstandard14)
+
+                    ICollection<ProjectItem> pkgs = loadedProj.GetItemsIgnoringCondition("PackageReference");
+                    if (pkgs.Any<ProjectItem>())
                     {
-                        SdkProjectMetaData sp = new SdkProjectMetaData(proj, TargetFrameworkMoniker.netstandard14, proj.ItemSpec, true, pType);
-                        supportedProjectBag.Add(sp);
+                        var testReference = pkgs.Where<ProjectItem>((p) => p.EvaluatedInclude.Equals("xunit", StringComparison.OrdinalIgnoreCase));
+                        if (testReference.Any<ProjectItem>())
+                        {
+                            pType = SdkProjctType.Test;
+                        }
+                        else
+                        {
+                            pType = SdkProjctType.Sdk;
+                        }
                     }
-                    else if (tfxMoniker == TargetFrameworkMoniker.netcoreapp11)
+
+                    var fxNames = targetFxList?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)?.ToList<string>();
+
+                    foreach (string fx in fxNames)
                     {
-                        SdkProjectMetaData sp = new SdkProjectMetaData(proj, TargetFrameworkMoniker.netcoreapp11, proj.ItemSpec, true, pType);
-                        supportedProjectBag.Add(sp);
+                        TargetFrameworkMoniker tfxMoniker = IsTargetFxSupported(fx);
+
+                        if (tfxMoniker == TargetFrameworkMoniker.net452)
+                        {
+                            SdkProjectMetaData sp = new SdkProjectMetaData(project: proj, fxMoniker: TargetFrameworkMoniker.net452, fullProjectPath: proj.ItemSpec, isTargetFxSupported: true, projectType: pType);
+                            supportedProjectBag.Add(sp);
+                        }
+                        else if (tfxMoniker == TargetFrameworkMoniker.netstandard14)
+                        {
+                            SdkProjectMetaData sp = new SdkProjectMetaData(proj, TargetFrameworkMoniker.netstandard14, proj.ItemSpec, true, pType);
+                            supportedProjectBag.Add(sp);
+                        }
+                        else if (tfxMoniker == TargetFrameworkMoniker.netcoreapp11)
+                        {
+                            SdkProjectMetaData sp = new SdkProjectMetaData(proj, TargetFrameworkMoniker.netcoreapp11, proj.ItemSpec, true, pType);
+                            supportedProjectBag.Add(sp);
+                        }
+                        else
+                        {
+                            SdkProjectMetaData sp = new SdkProjectMetaData(proj, tfxMoniker, proj.ItemSpec, false, pType);
+                            supportedProjectBag.Add(sp);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (be != null)
+                    {
+                        Log.LogMessage(ex.ToString());
                     }
                     else
                     {
-                        SdkProjectMetaData sp = new SdkProjectMetaData(proj, tfxMoniker, proj.ItemSpec, false, pType);
-                        supportedProjectBag.Add(sp);
+                        Debug.WriteLine(ex.ToString());
                     }
                 }
-            }
+
+                //loadedProj = null;
+            });
 
             return supportedProjectBag;
         }
@@ -474,7 +522,26 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             return testProj;
         }
         #endregion
+        
+        private void Init()
+        {
+            if (!Directory.Exists(SourceRootDirPath))
+                throw new DirectoryNotFoundException("'{0}' does not exists. Please provide a valid directory to search for projects that needs to be build");
 
+            if ((string.IsNullOrWhiteSpace(BuildScope)) || (string.IsNullOrEmpty(BuildScope)))
+            {
+                Log.LogMessage("Empty Scope Detected, setting BuildScope to 'All'");
+                BuildScope = _defaultBuildScope;
+            }
+
+            //Get All Projects
+            SearchAllProjectFiles(SourceRootDirPath, SearchProjectFileExt);
+
+            //Get overall ignore list
+            //_overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkProj45Paths));
+            //_overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkTest45Projects));
+        }
+        
         private List<string> GetAllProjectFilesFromDirs(string projFileSearchPattern, SearchOption searchingOption, params string[] searchDirs)
         {
             List<string> results = new List<string>();
@@ -489,8 +556,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             return results;
         }
-
-        //public Dictionary<string, SdkProjectMetaData> GetSupportedProjectStatus(ITaskItem projSpec)
+        
         public void GetSupportedProjectStatus(ITaskItem projSpec)
         {
             //Dictionary<string, SdkProjectMetaData> fxDict = new Dictionary<string, SdkProjectMetaData>();
@@ -553,12 +619,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             if (wkTTi.Any<ITaskItem>())
             {
-                WellKnowTestSDKNet452Projects = wkTTi.ToArray<ITaskItem>();
+                //WellKnowTestSDKNet452Projects = wkTTi.ToArray<ITaskItem>();
             }
 
             if (wkTi.Any<ITaskItem>())
             {
-                WellKnowSDKNet452Projects = wkTi.ToArray<ITaskItem>();
+                //WellKnowSDKNet452Projects = wkTi.ToArray<ITaskItem>();
             }
         }
 
@@ -576,25 +642,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             return searchedProjects;
         }
-        private void Init()
-        {
-            if (!Directory.Exists(SourceRootDirPath))
-                throw new DirectoryNotFoundException("'{0}' does not exists. Please provide a valid directory to search for projects that needs to be build");
-
-            if ((string.IsNullOrWhiteSpace(BuildScope)) || (string.IsNullOrEmpty(BuildScope)))
-            {
-                Log.LogMessage("Empty Scope Detected, setting BuildScope to 'All'");
-                BuildScope = _defaultBuildScope;
-            }
-
-            //Get All Projects
-            SearchAllProjectFiles(SourceRootDirPath, SearchProjectFileExt);
-
-            //Get overall ignore list
-            _overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkProj45Paths));
-            _overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkTest45Projects));
-        }
-
+        
         private List<string> GetAndUpdateIgnoredProjects(string sourceRootDir)
         {
             //ClientIntegrationTesting
@@ -619,8 +667,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 }
             }
 
-            _overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkProj45Paths));
-            _overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkTest45Projects));
+            //_overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkProj45Paths));
+            //_overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkTest45Projects));
 
             return _overAllIgnoreProjects;
         }

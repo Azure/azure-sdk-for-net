@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
+    <PostBuildEvent></PostBuildEvent>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath></OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,4 +20,7 @@
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.1.1012" />
   </ItemGroup>
 
+  <Target Name="CopyTaskBinary">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="..\..\" ContinueOnError="false" />
+  </Target>
 </Project>

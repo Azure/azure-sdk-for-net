@@ -316,6 +316,42 @@
     </ItemGroup>
     
   </Target>
+  
+  <Target Name="CatProjects">
+    <Message Text="Categorizing Projects....."/>
+    <DebugTask/>
+    <SDKCategorizeProjects
+      SourceRootDirPath="$(LibrarySourceFolder)"
+      BuildScope="$(Scope)"
+      IgnoreDirNameForSearchingProjects="$(DefaultPathTokenToIgnore)"
+      >
+      <Output TaskParameter="net452SdkProjectsToBuild" ItemName="net452SDKProj" />
+      <Output TaskParameter="netStd14SdkProjectsToBuild" ItemName="netStd14SDKProj" />
+      <Output TaskParameter="netCore11TestProjectsToBuild" ItemName="netCore11TestProj" />
+      <Output TaskParameter="net452TestProjectsToBuild" ItemName="net452TestProj" />
+      <Output TaskParameter="unSupportedProjectsToBuild" ItemName="unsupportedProj" />
+    </SDKCategorizeProjects>
+    
+    <ItemGroup>
+      <TotalSdkProjects Include="@(net452SDKProj);@(netStd14SDKProj)"/>
+      <TotalTestProjects Include="@(netCore11TestProj);@(net452TestProj)"/>
+    </ItemGroup>
+    <Message Text="SDKProjects ....... @(TotalSdkProjects->Count())"/>
+    <Message Text="TestSDKProjects ....... @(TotalTestProjects->Count())"/>
+        
+    <RemoveDuplicates Inputs="@(TotalSdkProjects)">
+      <Output TaskParameter="Filtered" ItemName="FilteredSdkProjects"/>
+    </RemoveDuplicates>
+    
+    <RemoveDuplicates Inputs="@(TotalTestProjects)">
+      <Output TaskParameter="Filtered" ItemName="FilteredTestProjects"/>
+    </RemoveDuplicates>
+    
+    <Message Text="SDKProjects ....... @(FilteredSdkProjects->Count())"/>
+    <Message Text="TestSDKProjects ....... @(FilteredTestProjects->Count())"/>
+  </Target>
+
+
   <!--Do not delete-->
   <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)"/>
 </Project>
