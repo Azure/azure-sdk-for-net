@@ -112,7 +112,6 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Throws<ArgumentNullException>(
                 "credentials",
                 () => new SearchServiceClient(credentials: null, rootHandler: handler));
-            Assert.Throws<ArgumentNullException>(() => new SearchServiceClient(credentials: creds, rootHandler: null));
             Assert.Throws<ArgumentNullException>(
                 "searchServiceName", 
                 () => new SearchServiceClient(searchServiceName: null, credentials: creds, rootHandler: handler));
@@ -125,8 +124,6 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Throws<ArgumentNullException>(
                 "credentials",
                 () => new SearchServiceClient(searchServiceName, credentials: null, rootHandler: handler));
-            Assert.Throws<ArgumentNullException>(
-                () => new SearchServiceClient(searchServiceName, creds, rootHandler: null));
         }
     }
 }
