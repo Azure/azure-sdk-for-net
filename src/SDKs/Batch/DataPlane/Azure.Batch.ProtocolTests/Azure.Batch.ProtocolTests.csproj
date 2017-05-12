@@ -26,6 +26,10 @@
     <!-- <PackageReference Include="Microsoft.NETCore.App" Version="1.0.2" /> -->
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
     <!-- This is needed for discovering tests in test explorer -->
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />	
   </ItemGroup>
