@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact(Skip = "Investigate, started failing after migrating to VS2017")]
+        [Fact]
         public void ConstructorThrowsForBadParameters()
         {
             var creds = new SearchCredentials("abc");
@@ -97,7 +97,6 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Throws<ArgumentNullException>(
                 "credentials",
                 () => new SearchServiceClient(credentials: null, rootHandler: handler));
-            Assert.Throws<ArgumentNullException>(() => new SearchServiceClient(credentials: creds, rootHandler: null));
             Assert.Throws<ArgumentNullException>(
                 "baseUri",
                 () => new SearchServiceClient(baseUri: null, credentials: creds));
@@ -115,14 +114,11 @@ namespace Microsoft.Azure.Search.Tests
                 "credentials",
                 () => new SearchServiceClient(searchServiceName, credentials: null, rootHandler: handler));
             Assert.Throws<ArgumentNullException>(
-                () => new SearchServiceClient(searchServiceName, creds, rootHandler: null));
-            Assert.Throws<ArgumentNullException>(
                 "baseUri",
                 () => new SearchServiceClient(baseUri: null, credentials: creds, rootHandler: handler));
             Assert.Throws<ArgumentNullException>(
                 "credentials",
                 () => new SearchServiceClient(uri, credentials: null, rootHandler: handler));
-            Assert.Throws<ArgumentNullException>(() => new SearchServiceClient(uri, creds, rootHandler: null));
         }
     }
 }

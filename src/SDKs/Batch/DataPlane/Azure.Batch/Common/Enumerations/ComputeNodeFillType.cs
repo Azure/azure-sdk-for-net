@@ -24,12 +24,6 @@ namespace Microsoft.Azure.Batch.Common
         /// each node in the pool before any tasks are assigned to the next
         /// node in the pool.
         /// </summary>
-        Pack,
-
-        /// <summary>
-        /// The service reported an option that is not recognized by this
-        /// version of the Batch client.
-        /// </summary>
-        Unmapped,
+        Pack
     }
 }

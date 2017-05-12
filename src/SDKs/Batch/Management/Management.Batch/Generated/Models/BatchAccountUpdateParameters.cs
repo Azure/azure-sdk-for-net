@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Batch.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to the Update operation.
+    /// Parameters for updating an Azure Batch account.
     /// </summary>
     [JsonTransformation]
     public partial class BatchAccountUpdateParameters
@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Initializes a new instance of the BatchAccountUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="tags">The user specified tags associated with the
+        /// <param name="tags">The user-specified tags associated with the
         /// account.</param>
-        /// <param name="autoStorage">The properties related to auto storage
-        /// account.</param>
+        /// <param name="autoStorage">The properties related to the
+        /// auto-storage account.</param>
         public BatchAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), AutoStorageBaseProperties autoStorage = default(AutoStorageBaseProperties))
         {
             Tags = tags;
@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         }
 
         /// <summary>
-        /// Gets or sets the user specified tags associated with the account.
+        /// Gets or sets the user-specified tags associated with the account.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties related to auto storage account.
+        /// Gets or sets the properties related to the auto-storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoStorage")]
         public AutoStorageBaseProperties AutoStorage { get; set; }

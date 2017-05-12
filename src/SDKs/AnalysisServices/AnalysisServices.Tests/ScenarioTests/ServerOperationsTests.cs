@@ -164,6 +164,98 @@ namespace AnalysisServices.Tests.ScenarioTests
             }
         }
 
-        
+        [Fact]
+        public void ScaleUpTest()
+        {
+            string executingAssemblyPath = typeof(AnalysisServices.Tests.ScenarioTests.ServerOperationsTests).GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = this.GetAnalysisServicesClient(context);
+
+                AnalysisServicesServer analysisServicesServer = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
+                analysisServicesServer.Sku = new ResourceSku
+                {
+                    Name = SkuName.B1.ToString(),
+                    Tier = SkuTier.Basic.ToString()
+                };
+
+                AnalysisServicesServer resultCreate = null;
+                try
+                {
+                    // Create a test server
+                    resultCreate =
+                        client.Servers.Create(
+                            AnalysisServicesTestUtilities.DefaultResourceGroup,
+                            AnalysisServicesTestUtilities.DefaultServerName,
+                            analysisServicesServer);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
+                Assert.Equal(resultCreate.ProvisioningState, "Succeeded");
+                Assert.Equal(resultCreate.State, "Succeeded");
+
+                // get the server and ensure that all the values are properly set.
+                var resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                // validate the server creation process
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
+                Assert.NotEmpty(resultGet.ServerFullName);
+                Assert.Equal(resultGet.Sku.Name, analysisServicesServer.Sku.Name);
+                Assert.Equal(resultGet.Sku.Tier, analysisServicesServer.Sku.Tier);
+                Assert.Equal(resultGet.Tags.Count, 2);
+                Assert.True(resultGet.Tags.ContainsKey("key1"));
+                Assert.Equal(resultGet.AsAdministrators.Members.Count, 2);
+                Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
+
+                // Confirm that the server creation did succeed
+                Assert.True(resultGet.ProvisioningState == "Succeeded");
+                Assert.True(resultGet.State == "Succeeded");
+
+                // Scale up the server and verify
+                ResourceSku newSku = new ResourceSku
+                {
+                    Name = SkuName.S0.ToString(),
+                    Tier = SkuTier.Standard.ToString()
+                };
+                
+                AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
+                {
+                    Sku = newSku
+                };
+
+                var resultUpdate = client.Servers.Update(
+                    AnalysisServicesTestUtilities.DefaultResourceGroup,
+                    AnalysisServicesTestUtilities.DefaultServerName,
+                    updateParameters);
+
+                Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                Assert.Equal("Succeeded", resultUpdate.State);
+
+                // get the server and ensure that all the values are properly set.
+                resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+
+                // validate the server creation process
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
+                Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
+                Assert.NotEmpty(resultGet.ServerFullName);
+                Assert.Equal(resultGet.Sku.Name, newSku.Name);
+                Assert.Equal(resultGet.Sku.Tier, newSku.Tier);
+                Assert.Equal(resultGet.Tags.Count, 2);
+                Assert.True(resultGet.Tags.ContainsKey("key1"));
+                Assert.Equal(resultGet.AsAdministrators.Members.Count, 2);
+                Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
+
+                // delete the server with its old name, which should also succeed.
+                client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
+            }
+        }
+
+
     }
 }

@@ -18,8 +18,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "linux")]
         Linux,
         [System.Runtime.Serialization.EnumMember(Value = "windows")]
-        Windows,
-        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
-        Unmapped
+        Windows
     }
 }

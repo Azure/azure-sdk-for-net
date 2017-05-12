@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A user account on a compute node.
+    /// A user account for RDP or SSH access on a compute node.
     /// </summary>
     public partial class ComputeNodeUser
     {

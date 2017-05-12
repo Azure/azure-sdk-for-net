@@ -30,6 +30,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<IReadOnlyList<ComputeNodeError>> ErrorsProperty;
             public readonly PropertyAccessor<string> IdProperty;
             public readonly PropertyAccessor<string> IPAddressProperty;
+            public readonly PropertyAccessor<bool?> IsDedicatedProperty;
             public readonly PropertyAccessor<DateTime?> LastBootTimeProperty;
             public readonly PropertyAccessor<IReadOnlyList<TaskInformation>> RecentTasksProperty;
             public readonly PropertyAccessor<int?> RunningTasksCountProperty;
@@ -67,6 +68,10 @@ namespace Microsoft.Azure.Batch
                 this.IPAddressProperty = this.CreatePropertyAccessor(
                     protocolObject.IpAddress,
                     "IPAddress",
+                    BindingAccess.Read);
+                this.IsDedicatedProperty = this.CreatePropertyAccessor(
+                    protocolObject.IsDedicated,
+                    "IsDedicated",
                     BindingAccess.Read);
                 this.LastBootTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.LastBootTime,
@@ -210,6 +215,14 @@ namespace Microsoft.Azure.Batch
         public string IPAddress
         {
             get { return this.propertyContainer.IPAddressProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets whether this compute node is a dedicated node. If false, the node is a low-priority node.
+        /// </summary>
+        public bool? IsDedicated
+        {
+            get { return this.propertyContainer.IsDedicatedProperty.Value; }
         }
 
         /// <summary>

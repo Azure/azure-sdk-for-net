@@ -60,8 +60,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// proxy</param>
         /// <param name="nodeTypes">The list of nodetypes that make up the
         /// cluster, it will override</param>
+        /// <param name="upgradeDescription">The policy to use when upgrading
+        /// the cluster.</param>
         /// <param name="tags">Cluster update parameters</param>
-        public ClusterUpdateParameters(string reliabilityLevel = default(string), string upgradeMode = default(string), string clusterCodeVersion = default(string), CertificateDescription certificate = default(CertificateDescription), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), CertificateDescription reverseProxyCertificate = default(CertificateDescription), IList<NodeTypeDescription> nodeTypes = default(IList<NodeTypeDescription>), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ClusterUpdateParameters(string reliabilityLevel = default(string), string upgradeMode = default(string), string clusterCodeVersion = default(string), CertificateDescription certificate = default(CertificateDescription), IList<ClientCertificateThumbprint> clientCertificateThumbprints = default(IList<ClientCertificateThumbprint>), IList<ClientCertificateCommonName> clientCertificateCommonNames = default(IList<ClientCertificateCommonName>), IList<SettingsSectionDescription> fabricSettings = default(IList<SettingsSectionDescription>), CertificateDescription reverseProxyCertificate = default(CertificateDescription), IList<NodeTypeDescription> nodeTypes = default(IList<NodeTypeDescription>), ClusterUpgradePolicy upgradeDescription = default(ClusterUpgradePolicy), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             ReliabilityLevel = reliabilityLevel;
             UpgradeMode = upgradeMode;
@@ -72,6 +74,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             FabricSettings = fabricSettings;
             ReverseProxyCertificate = reverseProxyCertificate;
             NodeTypes = nodeTypes;
+            UpgradeDescription = upgradeDescription;
             Tags = tags;
             CustomInit();
         }
@@ -152,6 +155,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public IList<NodeTypeDescription> NodeTypes { get; set; }
 
         /// <summary>
+        /// Gets or sets the policy to use when upgrading the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.upgradeDescription")]
+        public ClusterUpgradePolicy UpgradeDescription { get; set; }
+
+        /// <summary>
         /// Gets or sets cluster update parameters
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
@@ -212,6 +221,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
                         element3.Validate();
                     }
                 }
+            }
+            if (UpgradeDescription != null)
+            {
+                UpgradeDescription.Validate();
             }
         }
     }

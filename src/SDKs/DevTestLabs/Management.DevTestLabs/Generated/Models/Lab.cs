@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A lab.
     /// </summary>
     [JsonTransformation]
-    public partial class Lab : IResource
+    public partial class Lab : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Lab class.
@@ -30,43 +30,55 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Lab class.
         /// </summary>
-        public Lab(string defaultStorageAccount = default(string), string artifactsStorageAccount = default(string), string vaultName = default(string), string labStorageType = default(string), DateTime? createdDate = default(DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Lab(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string defaultStorageAccount = default(string), string defaultPremiumStorageAccount = default(string), string artifactsStorageAccount = default(string), string premiumDataDiskStorageAccount = default(string), string vaultName = default(string), string labStorageType = default(string), DateTime? createdDate = default(DateTime?), string premiumDataDisks = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
             DefaultStorageAccount = defaultStorageAccount;
+            DefaultPremiumStorageAccount = defaultPremiumStorageAccount;
             ArtifactsStorageAccount = artifactsStorageAccount;
+            PremiumDataDiskStorageAccount = premiumDataDiskStorageAccount;
             VaultName = vaultName;
             LabStorageType = labStorageType;
             CreatedDate = createdDate;
+            PremiumDataDisks = premiumDataDisks;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
         }
 
         /// <summary>
         /// The lab's default storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultStorageAccount")]
-        public string DefaultStorageAccount { get; set; }
+        public string DefaultStorageAccount { get; private set; }
 
         /// <summary>
-        /// The artifact storage account of the lab.
+        /// The lab's default premium storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultPremiumStorageAccount")]
+        public string DefaultPremiumStorageAccount { get; private set; }
+
+        /// <summary>
+        /// The lab's artifact storage account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.artifactsStorageAccount")]
-        public string ArtifactsStorageAccount { get; set; }
+        public string ArtifactsStorageAccount { get; private set; }
 
         /// <summary>
-        /// The name of the key vault of the lab.
+        /// The lab's premium data disk storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.premiumDataDiskStorageAccount")]
+        public string PremiumDataDiskStorageAccount { get; private set; }
+
+        /// <summary>
+        /// The lab's Key vault.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vaultName")]
-        public string VaultName { get; set; }
+        public string VaultName { get; private set; }
 
         /// <summary>
-        /// The type of the lab storage. Possible values include: 'Standard',
-        /// 'Premium'
+        /// Type of storage used by the lab. It can be either Premium or
+        /// Standard. Default is Premium. Possible values include:
+        /// 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "properties.labStorageType")]
         public string LabStorageType { get; set; }
@@ -75,7 +87,17 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// The creation date of the lab.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDate")]
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; private set; }
+
+        /// <summary>
+        /// The setting to enable usage of premium data disks.
+        /// When its value is 'Enabled', creation of standard or premium data
+        /// disks is allowed.
+        /// When its value is 'Disabled', only creation of standard data disks
+        /// is allowed. Possible values include: 'Disabled', 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.premiumDataDisks")]
+        public string PremiumDataDisks { get; set; }
 
         /// <summary>
         /// The provisioning status of the resource.
@@ -88,36 +110,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; set; }
-
-        /// <summary>
-        /// The identifier of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// The location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// The tags of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

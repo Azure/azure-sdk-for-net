@@ -18,8 +18,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [System.Runtime.Serialization.EnumMember(Value = "currentUser")]
         CurrentUser,
         [System.Runtime.Serialization.EnumMember(Value = "localMachine")]
-        LocalMachine,
-        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
-        Unmapped
+        LocalMachine
     }
 }

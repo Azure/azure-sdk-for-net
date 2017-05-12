@@ -24,12 +24,6 @@ namespace Microsoft.Azure.Batch.Common
         /// The pool exists for the lifetime of the job to which it is
         /// dedicated.
         /// </summary>
-        Job,
-
-        /// <summary>
-        /// The service reported an option that is not recognized by this
-        /// version of the Batch client.
-        /// </summary>
-        Unmapped,
+        Job
     }
 }

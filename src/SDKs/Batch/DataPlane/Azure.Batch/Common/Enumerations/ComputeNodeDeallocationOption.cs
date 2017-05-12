@@ -1,16 +1,12 @@
 // 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 // 
 
 namespace Microsoft.Azure.Batch.Common
 {
-    using System;
-    using System.Linq;
-    
     /// <summary>
-    /// Specifies when compute nodes may be removed from a pool.
+    /// Specifies how to handle tasks already running, and when the nodes running them may be removed from the pool, if the pool size is decreasing.
     /// </summary>
     public enum ComputeNodeDeallocationOption
     {

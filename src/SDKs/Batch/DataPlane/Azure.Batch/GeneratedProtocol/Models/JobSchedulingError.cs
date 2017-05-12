@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// interface.</param>
         /// <param name="details">A list of additional error details related to
         /// the scheduling error.</param>
-        public JobSchedulingError(SchedulingErrorCategory category, string code = default(string), string message = default(string), System.Collections.Generic.IList<NameValuePair> details = default(System.Collections.Generic.IList<NameValuePair>))
+        public JobSchedulingError(ErrorCategory category, string code = default(string), string message = default(string), System.Collections.Generic.IList<NameValuePair> details = default(System.Collections.Generic.IList<NameValuePair>))
         {
             Category = category;
             Code = code;
@@ -45,10 +45,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the category of the job scheduling error.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'userError', 'serverError', 'unmapped'
+        /// Possible values include: 'userError', 'serverError'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "category")]
-        public SchedulingErrorCategory Category { get; set; }
+        public ErrorCategory Category { get; set; }
 
         /// <summary>
         /// Gets or sets an identifier for the job scheduling error. Codes are

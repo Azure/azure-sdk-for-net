@@ -3,8 +3,42 @@
 ### Upcoming changes
 These changes are planned but haven't been published yet.
 
+### Changes in 7.0.0
 #### License
 Moved source code and NuGet package from Apache 2.0 license to MIT license. This is more consistent with the other Azure SDKs as well as other open source projects from Microsoft such as .NET.
+
+#### REST API version
+This version of the Batch .NET client library targets version 2017-05-01.5.0 of the Azure Batch REST API.
+
+#### Features
+- Added support for the new low-priority node type.
+  - **[Breaking]** `TargetDedicated` and `CurrentDedicated` on `CloudPool` and `PoolSpecification` have been renamed to `TargetDedicatedComputeNodes` and `CurrentDedicatedComputeNodes`.
+  - **[Breaking]** `ResizeError` on `CloudPool` is now a collection called `ResizeErrors`.
+  - Added a new `IsDedicated` property on `ComputeNode`, which is `false` for low-priority nodes.
+  - Added a new `AllowLowPriorityNode` property to `JobManagerTask`, which if `true` allows the `JobManagerTask` to run on a low-priority compute node.
+  - `PoolOperations.ResizePool` and `ResizePoolAsync` now take two optional parameters, `targetDedicatedComputeNodes` and `targetLowPriorityComputeNodes`, instead of one required parameter `targetDedicated`. At least one of these two parameters must be specified.
+- Linux user creation improvements
+  - **[Breaking]** Moved `SshPrivateKey` on `UserAccount` to a new class `LinuxUserConfiguration`, which is now a property of `UserAccount`.
+  - Added support for specifying a `Uid` and `Gid` when creating a Linux user, also on the new `LinuxUserConfiguration` class.
+- Added support for uploading task output files to Azure Blob storage.
+  - Added support for uploading task output files to persistent storage, via the `OutputFiles` property on `CloudTask` and `JobManagerTask`.
+  - Added support for specifying actions to take based on a task's output file upload status, via the `FileUploadError` property on `ExitConditions`.
+- Task error reporting improvements
+  - **[Breaking]** Renamed `SchedulingError` on all `ExecutionInfo` classes to `FailureInformation`. `FailureInformation` is returned any time there is a task failure. This includes all previous scheduling error cases, as well as nonzero task exit codes, and file upload failures from the new output files feature.
+  - Added support for determining if a task was a success or a failure via the new `Result` property on all `ExecutionInfo` classes.
+  - **[Breaking]** Renamed `SchedulingError` on `ExitConditions` to `PreProcessingError` to more clearly clarify when the error took place in the task life-cycle.
+  - **[Breaking]** Renamed `SchedulingErrorCateogry` to `ErrorCategory`.
+- Added support for provisioning application licenses be your pool, via a new `ApplicationLicenses` property on `CloudPool` and `PoolSpecification`.
+  - Please note that this feature is in gated public preview, and you must request access to it via a support ticket.
+
+#### Bug fixes
+- **[Breaking]** Removed `Unmapped` enum state from `AddTaskStatus`, `CertificateFormat`, `CertificateVisibility`, `CertStoreLocation`, `ComputeNodeFillType`, `OSType`, and `PoolLifetimeOption` as they were not ever used.
+
+#### Documentation
+- Improved and clarified documentation.
+
+#### Packaging
+- The package now includes a `netstandard1.4` assembly instead of the previous `netstandard1.5`.
 
 ### Changes in 6.1.0
 #### REST API version

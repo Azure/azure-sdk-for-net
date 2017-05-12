@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// A Policy.
     /// </summary>
     [JsonTransformation]
-    public partial class Policy : IResource
+    public partial class Policy : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Policy class.
@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Policy class.
         /// </summary>
-        public Policy(string description = default(string), string status = default(string), string factName = default(string), string factData = default(string), string threshold = default(string), string evaluatorType = default(string), string provisioningState = default(string), string uniqueIdentifier = default(string), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Policy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string status = default(string), string factName = default(string), string factData = default(string), string threshold = default(string), string evaluatorType = default(string), DateTime? createdDate = default(DateTime?), string provisioningState = default(string), string uniqueIdentifier = default(string))
+            : base(id, name, type, location, tags)
         {
             Description = description;
             Status = status;
@@ -38,13 +39,9 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
             FactData = factData;
             Threshold = threshold;
             EvaluatorType = evaluatorType;
+            CreatedDate = createdDate;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
         }
 
         /// <summary>
@@ -61,9 +58,11 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string Status { get; set; }
 
         /// <summary>
-        /// The fact name of the policy. Possible values include:
-        /// 'UserOwnedLabVmCount', 'LabVmCount', 'LabVmSize', 'GalleryImage',
-        /// 'UserOwnedLabVmCountInSubnet'
+        /// The fact name of the policy (e.g. LabVmCount, LabVmSize,
+        /// MaxVmsAllowedPerLab, etc. Possible values include:
+        /// 'UserOwnedLabVmCount', 'UserOwnedLabPremiumVmCount',
+        /// 'LabVmCount', 'LabPremiumVmCount', 'LabVmSize', 'GalleryImage',
+        /// 'UserOwnedLabVmCountInSubnet', 'LabTargetCost'
         /// </summary>
         [JsonProperty(PropertyName = "properties.factName")]
         public string FactName { get; set; }
@@ -75,17 +74,25 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         public string FactData { get; set; }
 
         /// <summary>
-        /// The threshold of the policy.
+        /// The threshold of the policy (i.e. a number for MaxValuePolicy, and
+        /// a JSON array of values for AllowedValuesPolicy).
         /// </summary>
         [JsonProperty(PropertyName = "properties.threshold")]
         public string Threshold { get; set; }
 
         /// <summary>
-        /// The evaluator type of the policy. Possible values include:
-        /// 'AllowedValuesPolicy', 'MaxValuePolicy'
+        /// The evaluator type of the policy (i.e. AllowedValuesPolicy,
+        /// MaxValuePolicy). Possible values include: 'AllowedValuesPolicy',
+        /// 'MaxValuePolicy'
         /// </summary>
         [JsonProperty(PropertyName = "properties.evaluatorType")]
         public string EvaluatorType { get; set; }
+
+        /// <summary>
+        /// The creation date of the policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdDate")]
+        public DateTime? CreatedDate { get; private set; }
 
         /// <summary>
         /// The provisioning status of the resource.
@@ -98,36 +105,6 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.uniqueIdentifier")]
         public string UniqueIdentifier { get; set; }
-
-        /// <summary>
-        /// The identifier of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// The location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// The tags of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

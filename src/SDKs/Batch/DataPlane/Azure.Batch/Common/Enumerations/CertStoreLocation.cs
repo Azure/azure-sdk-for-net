@@ -24,12 +24,6 @@ namespace Microsoft.Azure.Batch.Common
         /// <summary>
         /// The X.509 certificate store assigned to the local machine.
         /// </summary>
-        LocalMachine,
-
-        /// <summary>
-        /// The service reported an option that is not recognized by this
-        /// version of the Batch client.
-        /// </summary>
-        Unmapped,
+        LocalMachine
     }
 }

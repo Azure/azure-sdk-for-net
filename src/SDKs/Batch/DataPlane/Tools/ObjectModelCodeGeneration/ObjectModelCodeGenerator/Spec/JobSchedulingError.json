@@ -6,7 +6,7 @@
       "Properties": [
         {
           "Key": {
-            "Type": "Common.SchedulingErrorCategory",
+            "Type": "Common.ErrorCategory",
             "Name": "Category",
             "SummaryComment": "The category of the job scheduling error.",
             "RemarksComment": null,
@@ -14,7 +14,7 @@
             "UnboundAccess": "none"
           },
           "Value": {
-            "Type": "Models.SchedulingErrorCategory",
+            "Type": "Models.ErrorCategory",
             "Name": "Category"
           }
         },
