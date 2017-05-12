@@ -16,6 +16,7 @@ binaries/
 build/
 restoredPackages/
 tools/net46/
+tools/Microsoft.WindowsAzure.Build.Tasks/packages/
 PublishedNugets/
 src/NuGet.Config
 tools/7-zip/
