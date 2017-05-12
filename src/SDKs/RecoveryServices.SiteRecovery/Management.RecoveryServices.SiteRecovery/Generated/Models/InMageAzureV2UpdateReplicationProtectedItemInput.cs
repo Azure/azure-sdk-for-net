@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the
         /// InMageAzureV2UpdateReplicationProtectedItemInput class.
         /// </summary>
-        public InMageAzureV2UpdateReplicationProtectedItemInput(string recoveryAzureV1ResourceGroupId = default(string), string recoveryAzureV2ResourceGroupId = default(string), bool? useManagedDisks = default(bool?))
+        public InMageAzureV2UpdateReplicationProtectedItemInput(string recoveryAzureV1ResourceGroupId = default(string), string recoveryAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string))
         {
             RecoveryAzureV1ResourceGroupId = recoveryAzureV1ResourceGroupId;
             RecoveryAzureV2ResourceGroupId = recoveryAzureV2ResourceGroupId;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// failover.
         /// </summary>
         [JsonProperty(PropertyName = "useManagedDisks")]
-        public bool? UseManagedDisks { get; set; }
+        public string UseManagedDisks { get; set; }
 
     }
 }

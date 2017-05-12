@@ -143,6 +143,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         IReplicationPoliciesOperations ReplicationPolicies { get; }
 
         /// <summary>
+        /// Gets the IOperationsOperations.
+        /// </summary>
+        IOperationsOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IReplicationNetworksOperations.
         /// </summary>
         IReplicationNetworksOperations ReplicationNetworks { get; }

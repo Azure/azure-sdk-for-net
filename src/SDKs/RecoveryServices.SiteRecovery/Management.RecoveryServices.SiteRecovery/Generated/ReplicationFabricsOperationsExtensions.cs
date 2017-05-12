@@ -103,48 +103,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Tracks the Site async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on the fabric
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Site name to work on.
-            /// </param>
-            /// <param name='jobName'>
-            /// job id to track.
-            /// </param>
-            public static Fabric GetOperationResults(this IReplicationFabricsOperations operations, string fabricName, string jobName)
-            {
-                return Task.Factory.StartNew(s => ((IReplicationFabricsOperations)s).GetOperationResultsAsync(fabricName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tracks the Site async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on the fabric
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Site name to work on.
-            /// </param>
-            /// <param name='jobName'>
-            /// job id to track.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Fabric> GetOperationResultsAsync(this IReplicationFabricsOperations operations, string fabricName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, jobName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Perform failover of the process server.
             /// </summary>
             /// The operation to move replications from a process server to another

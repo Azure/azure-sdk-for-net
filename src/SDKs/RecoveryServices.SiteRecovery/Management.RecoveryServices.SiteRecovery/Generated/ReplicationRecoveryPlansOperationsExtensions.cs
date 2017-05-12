@@ -19,48 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationRecoveryPlansOperationsExtensions
     {
             /// <summary>
-            /// Tracks the recovery plan async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on the recovery plan
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='recoveryPlanName'>
-            /// Recovery plan name.
-            /// </param>
-            /// <param name='jobName'>
-            /// ARM name of the job.
-            /// </param>
-            public static RecoveryPlan GetOperationResults(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, string jobName)
-            {
-                return Task.Factory.StartNew(s => ((IReplicationRecoveryPlansOperations)s).GetOperationResultsAsync(recoveryPlanName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tracks the recovery plan async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on the recovery plan
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='recoveryPlanName'>
-            /// Recovery plan name.
-            /// </param>
-            /// <param name='jobName'>
-            /// ARM name of the job.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RecoveryPlan> GetOperationResultsAsync(this IReplicationRecoveryPlansOperations operations, string recoveryPlanName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(recoveryPlanName, jobName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Execute reprotect of the recovery plan.
             /// </summary>
             /// The operation to reprotect(reverse replicate) a recovery plan.

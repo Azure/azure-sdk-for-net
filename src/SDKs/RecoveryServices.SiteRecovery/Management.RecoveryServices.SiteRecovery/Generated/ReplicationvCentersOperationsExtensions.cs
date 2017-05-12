@@ -19,54 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationvCentersOperationsExtensions
     {
             /// <summary>
-            /// Tracks the provider async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on the vCenter.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// fabric name.
-            /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name to work on.
-            /// </param>
-            /// <param name='jobName'>
-            /// job name to track.
-            /// </param>
-            public static VCenter GetOperationResults(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, string jobName)
-            {
-                return Task.Factory.StartNew(s => ((IReplicationvCentersOperations)s).GetOperationResultsAsync(fabricName, vCenterName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tracks the provider async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on the vCenter.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// fabric name.
-            /// </param>
-            /// <param name='vCenterName'>
-            /// vCenter name to work on.
-            /// </param>
-            /// <param name='jobName'>
-            /// job name to track.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VCenter> GetOperationResultsAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, vCenterName, jobName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the details of a vCenter.
             /// </summary>
             /// Gets the details of a registered vCenter server(Add vCenter server.)

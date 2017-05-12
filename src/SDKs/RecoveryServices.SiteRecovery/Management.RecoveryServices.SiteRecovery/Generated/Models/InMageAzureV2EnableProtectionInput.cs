@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the
         /// InMageAzureV2EnableProtectionInput class.
         /// </summary>
-        public InMageAzureV2EnableProtectionInput(string storageAccountId, string masterTargetId = default(string), string processServerId = default(string), string runAsAccountId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), IList<string> disksToInclude = default(IList<string>), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRDPOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), bool? useManagedDisks = default(bool?))
+        public InMageAzureV2EnableProtectionInput(string storageAccountId, string masterTargetId = default(string), string processServerId = default(string), string runAsAccountId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), IList<string> disksToInclude = default(IList<string>), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRDPOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string))
         {
             MasterTargetId = masterTargetId;
             ProcessServerId = processServerId;
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// failover.
         /// </summary>
         [JsonProperty(PropertyName = "useManagedDisks")]
-        public bool? UseManagedDisks { get; set; }
+        public string UseManagedDisks { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

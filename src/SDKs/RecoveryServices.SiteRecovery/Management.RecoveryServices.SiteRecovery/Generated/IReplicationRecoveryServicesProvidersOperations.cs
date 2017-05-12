@@ -19,27 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationRecoveryServicesProvidersOperations
     {
         /// <summary>
-        /// Tracks the provider async operation.
-        /// </summary>
-        /// Track the results of an asynchronous operation on the recovery
-        /// services provider.
-        /// <param name='fabricName'>
-        /// Fabric name.
-        /// </param>
-        /// <param name='providerName'>
-        /// Recovery services provider name.
-        /// </param>
-        /// <param name='jobName'>
-        /// ASR Job name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<RecoveryServicesProvider>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string providerName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Refresh details from the recovery services provider.
         /// </summary>
         /// The operation to refresh the information from the recovery

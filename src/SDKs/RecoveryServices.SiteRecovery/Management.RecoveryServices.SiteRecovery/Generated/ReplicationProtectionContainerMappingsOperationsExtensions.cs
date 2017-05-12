@@ -19,62 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationProtectionContainerMappingsOperationsExtensions
     {
             /// <summary>
-            /// Tracks the protection container mapping async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on a protection container
-            /// mapping.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='mappingName'>
-            /// Protection container mapping name.
-            /// </param>
-            /// <param name='jobId'>
-            /// Job identifier.
-            /// </param>
-            public static ProtectionContainerMapping GetOperationResults(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, string jobId)
-            {
-                return Task.Factory.StartNew(s => ((IReplicationProtectionContainerMappingsOperations)s).GetOperationResultsAsync(fabricName, protectionContainerName, mappingName, jobId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tracks the protection container mapping async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on a protection container
-            /// mapping.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='mappingName'>
-            /// Protection container mapping name.
-            /// </param>
-            /// <param name='jobId'>
-            /// Job identifier.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ProtectionContainerMapping> GetOperationResultsAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, string jobId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, jobId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Remove protection container mapping.
             /// </summary>
             /// The operation to delete or remove a protection container mapping.

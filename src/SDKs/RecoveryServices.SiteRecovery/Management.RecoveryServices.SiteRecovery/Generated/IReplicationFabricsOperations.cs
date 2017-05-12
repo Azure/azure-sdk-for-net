@@ -53,23 +53,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </param>
         Task<AzureOperationResponse<Fabric>> BeginRenewCertificateWithHttpMessagesAsync(string fabricName, RenewCertificateInput renewCertificate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Tracks the Site async operation.
-        /// </summary>
-        /// Track the results of an asynchronous operation on the fabric
-        /// <param name='fabricName'>
-        /// Site name to work on.
-        /// </param>
-        /// <param name='jobName'>
-        /// job id to track.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<Fabric>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Perform failover of the process server.
         /// </summary>
         /// The operation to move replications from a process server to

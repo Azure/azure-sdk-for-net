@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the UpdateRecoveryPlanInput class.
         /// </summary>
-        public UpdateRecoveryPlanInput(UpdateRecoveryPlanInputProperties properties)
+        public UpdateRecoveryPlanInput(UpdateRecoveryPlanInputProperties properties = default(UpdateRecoveryPlanInputProperties))
         {
             Properties = properties;
         }
@@ -36,15 +36,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "properties")]
         public UpdateRecoveryPlanInputProperties Properties { get; set; }
 
-        /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
-        /// </summary>
-        public virtual void Validate()
-        {
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
-        }
     }
 }

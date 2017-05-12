@@ -19,26 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationvCentersOperations
     {
         /// <summary>
-        /// Tracks the provider async operation.
-        /// </summary>
-        /// Track the results of an asynchronous operation on the vCenter.
-        /// <param name='fabricName'>
-        /// fabric name.
-        /// </param>
-        /// <param name='vCenterName'>
-        /// vCenter name to work on.
-        /// </param>
-        /// <param name='jobName'>
-        /// job name to track.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<VCenter>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string vCenterName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets the details of a vCenter.
         /// </summary>
         /// Gets the details of a registered vCenter server(Add vCenter

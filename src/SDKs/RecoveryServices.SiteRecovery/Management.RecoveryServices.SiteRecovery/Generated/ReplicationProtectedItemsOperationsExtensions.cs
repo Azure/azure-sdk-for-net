@@ -108,62 +108,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Tracks the Replication protected item async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on the replication
-            /// protected item.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='replicatedProtectedItemName'>
-            /// Replication protected item name.
-            /// </param>
-            /// <param name='jobId'>
-            /// job id to track.
-            /// </param>
-            public static ReplicationProtectedItem GetOperationResults(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, string jobId)
-            {
-                return Task.Factory.StartNew(s => ((IReplicationProtectedItemsOperations)s).GetOperationResultsAsync(fabricName, protectionContainerName, replicatedProtectedItemName, jobId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tracks the Replication protected item async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on the replication
-            /// protected item.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='replicatedProtectedItemName'>
-            /// Replication protected item name.
-            /// </param>
-            /// <param name='jobId'>
-            /// job id to track.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ReplicationProtectedItem> GetOperationResultsAsync(this IReplicationProtectedItemsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, string jobId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, jobId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Change or apply recovery point.
             /// </summary>
             /// The operation to change the recovery point of a failed over replication

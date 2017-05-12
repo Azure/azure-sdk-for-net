@@ -19,24 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationPoliciesOperations
     {
         /// <summary>
-        /// Tracks the protection profiles async operation.
-        /// </summary>
-        /// Track the results of an asynchronous operation on a replication
-        /// policy.
-        /// <param name='policyName'>
-        /// Policy Name.
-        /// </param>
-        /// <param name='jobName'>
-        /// job id to track.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<Policy>> GetOperationResultsWithHttpMessagesAsync(string policyName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets the requested policy.
         /// </summary>
         /// Gets the details of a replication policy.

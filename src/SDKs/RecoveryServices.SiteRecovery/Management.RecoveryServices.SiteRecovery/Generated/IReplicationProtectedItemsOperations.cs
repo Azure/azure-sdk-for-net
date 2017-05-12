@@ -57,30 +57,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </param>
         Task<AzureOperationResponse<IPage<ReplicationProtectedItem>>> ListWithHttpMessagesAsync(ODataQuery<ProtectedItemsQueryParameter> odataQuery = default(ODataQuery<ProtectedItemsQueryParameter>), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Tracks the Replication protected item async operation.
-        /// </summary>
-        /// Track the results of an asynchronous operation on the replication
-        /// protected item.
-        /// <param name='fabricName'>
-        /// Fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='replicatedProtectedItemName'>
-        /// Replication protected item name.
-        /// </param>
-        /// <param name='jobId'>
-        /// job id to track.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Change or apply recovery point.
         /// </summary>
         /// The operation to change the recovery point of a failed over

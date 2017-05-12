@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the TestFailoverInputProperties
         /// class.
         /// </summary>
-        public TestFailoverInputProperties(string failoverDirection = default(string), string networkType = default(string), string networkId = default(string), bool? skipTestFailoverCleanup = default(bool?), ProviderSpecificFailoverInput providerSpecificDetails = default(ProviderSpecificFailoverInput))
+        public TestFailoverInputProperties(string failoverDirection = default(string), string networkType = default(string), string networkId = default(string), string skipTestFailoverCleanup = default(string), ProviderSpecificFailoverInput providerSpecificDetails = default(ProviderSpecificFailoverInput))
         {
             FailoverDirection = failoverDirection;
             NetworkType = networkType;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// skipped.
         /// </summary>
         [JsonProperty(PropertyName = "skipTestFailoverCleanup")]
-        public bool? SkipTestFailoverCleanup { get; set; }
+        public string SkipTestFailoverCleanup { get; set; }
 
         /// <summary>
         /// Provider specific settings

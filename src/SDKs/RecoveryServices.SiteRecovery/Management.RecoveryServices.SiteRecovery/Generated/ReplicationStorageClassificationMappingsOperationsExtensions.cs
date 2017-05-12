@@ -19,60 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationStorageClassificationMappingsOperationsExtensions
     {
             /// <summary>
-            /// Tracks async operations.
-            /// </summary>
-            /// Tracks an asynchronous operation on the storage classification mapping.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='storageClassificationName'>
-            /// Storage classification name.
-            /// </param>
-            /// <param name='storageClassificationMappingName'>
-            /// Storage classification mapping object name.
-            /// </param>
-            /// <param name='jobName'>
-            /// Job identifier.
-            /// </param>
-            public static StorageClassificationMapping GetOperationResults(this IReplicationStorageClassificationMappingsOperations operations, string fabricName, string storageClassificationName, string storageClassificationMappingName, string jobName)
-            {
-                return Task.Factory.StartNew(s => ((IReplicationStorageClassificationMappingsOperations)s).GetOperationResultsAsync(fabricName, storageClassificationName, storageClassificationMappingName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tracks async operations.
-            /// </summary>
-            /// Tracks an asynchronous operation on the storage classification mapping.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='storageClassificationName'>
-            /// Storage classification name.
-            /// </param>
-            /// <param name='storageClassificationMappingName'>
-            /// Storage classification mapping object name.
-            /// </param>
-            /// <param name='jobName'>
-            /// Job identifier.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<StorageClassificationMapping> GetOperationResultsAsync(this IReplicationStorageClassificationMappingsOperations operations, string fabricName, string storageClassificationName, string storageClassificationMappingName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, storageClassificationName, storageClassificationMappingName, jobName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the details of a storage classification mapping.
             /// </summary>
             /// Gets the details of the specified storage classification mapping.

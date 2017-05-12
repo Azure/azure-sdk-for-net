@@ -19,30 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationStorageClassificationMappingsOperations
     {
         /// <summary>
-        /// Tracks async operations.
-        /// </summary>
-        /// Tracks an asynchronous operation on the storage classification
-        /// mapping.
-        /// <param name='fabricName'>
-        /// Fabric name.
-        /// </param>
-        /// <param name='storageClassificationName'>
-        /// Storage classification name.
-        /// </param>
-        /// <param name='storageClassificationMappingName'>
-        /// Storage classification mapping object name.
-        /// </param>
-        /// <param name='jobName'>
-        /// Job identifier.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<StorageClassificationMapping>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string storageClassificationName, string storageClassificationMappingName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets the details of a storage classification mapping.
         /// </summary>
         /// Gets the details of the specified storage classification mapping.

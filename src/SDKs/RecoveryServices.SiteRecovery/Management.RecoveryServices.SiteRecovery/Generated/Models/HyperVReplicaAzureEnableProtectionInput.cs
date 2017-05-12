@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the
         /// HyperVReplicaAzureEnableProtectionInput class.
         /// </summary>
-        public HyperVReplicaAzureEnableProtectionInput(string hvHostVmId = default(string), string vmName = default(string), string osType = default(string), string vhdId = default(string), string targetStorageAccountId = default(string), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRDPOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), IList<string> disksToInclude = default(IList<string>), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), bool? useManagedDisks = default(bool?))
+        public HyperVReplicaAzureEnableProtectionInput(string hvHostVmId = default(string), string vmName = default(string), string osType = default(string), string vhdId = default(string), string targetStorageAccountId = default(string), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRDPOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), IList<string> disksToInclude = default(IList<string>), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string))
         {
             HvHostVmId = hvHostVmId;
             VmName = vmName;
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// failover.
         /// </summary>
         [JsonProperty(PropertyName = "useManagedDisks")]
-        public bool? UseManagedDisks { get; set; }
+        public string UseManagedDisks { get; set; }
 
     }
 }

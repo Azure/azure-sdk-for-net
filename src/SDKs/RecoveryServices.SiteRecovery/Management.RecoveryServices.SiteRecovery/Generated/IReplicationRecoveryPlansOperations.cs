@@ -19,23 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationRecoveryPlansOperations
     {
         /// <summary>
-        /// Tracks the recovery plan async operation.
-        /// </summary>
-        /// Track the results of an asynchronous operation on the recovery plan
-        /// <param name='recoveryPlanName'>
-        /// Recovery plan name.
-        /// </param>
-        /// <param name='jobName'>
-        /// ARM name of the job.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<RecoveryPlan>> GetOperationResultsWithHttpMessagesAsync(string recoveryPlanName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Execute reprotect of the recovery plan.
         /// </summary>
         /// The operation to reprotect(reverse replicate) a recovery plan.

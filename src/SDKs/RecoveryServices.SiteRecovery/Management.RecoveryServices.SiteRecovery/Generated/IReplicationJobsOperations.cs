@@ -20,24 +20,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationJobsOperations
     {
         /// <summary>
-        /// Tracks the Site async operation.
-        /// </summary>
-        /// Track the results of an asynchronous operation on an Azure Site
-        /// Recovery job
-        /// <param name='name'>
-        /// Original Job id on which resume/restart was called.
-        /// </param>
-        /// <param name='jobName'>
-        /// job id to track.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<Job>> GetOperationResultsWithHttpMessagesAsync(string name, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Resumes the specified job.
         /// </summary>
         /// The operation to resume an Azure Site Recovery job

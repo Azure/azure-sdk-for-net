@@ -20,50 +20,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationJobsOperationsExtensions
     {
             /// <summary>
-            /// Tracks the Site async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on an Azure Site Recovery
-            /// job
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Original Job id on which resume/restart was called.
-            /// </param>
-            /// <param name='jobName'>
-            /// job id to track.
-            /// </param>
-            public static Job GetOperationResults(this IReplicationJobsOperations operations, string name, string jobName)
-            {
-                return Task.Factory.StartNew(s => ((IReplicationJobsOperations)s).GetOperationResultsAsync(name, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tracks the Site async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on an Azure Site Recovery
-            /// job
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Original Job id on which resume/restart was called.
-            /// </param>
-            /// <param name='jobName'>
-            /// job id to track.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Job> GetOperationResultsAsync(this IReplicationJobsOperations operations, string name, string jobName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(name, jobName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Resumes the specified job.
             /// </summary>
             /// The operation to resume an Azure Site Recovery job

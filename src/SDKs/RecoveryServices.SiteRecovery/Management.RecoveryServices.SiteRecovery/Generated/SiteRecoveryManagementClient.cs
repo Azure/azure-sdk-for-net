@@ -147,6 +147,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public virtual IReplicationPoliciesOperations ReplicationPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IOperationsOperations.
+        /// </summary>
+        public virtual IOperationsOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IReplicationNetworksOperations.
         /// </summary>
         public virtual IReplicationNetworksOperations ReplicationNetworks { get; private set; }
@@ -363,6 +368,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             this.ReplicationProtectionContainerMappings = new ReplicationProtectionContainerMappingsOperations(this);
             this.ReplicationProtectableItems = new ReplicationProtectableItemsOperations(this);
             this.ReplicationPolicies = new ReplicationPoliciesOperations(this);
+            this.Operations = new OperationsOperations(this);
             this.ReplicationNetworks = new ReplicationNetworksOperations(this);
             this.ReplicationLogicalNetworks = new ReplicationLogicalNetworksOperations(this);
             this.ReplicationJobs = new ReplicationJobsOperations(this);

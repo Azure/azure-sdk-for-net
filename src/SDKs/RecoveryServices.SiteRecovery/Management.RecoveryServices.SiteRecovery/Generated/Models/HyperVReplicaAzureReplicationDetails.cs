@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the
         /// HyperVReplicaAzureReplicationDetails class.
         /// </summary>
-        public HyperVReplicaAzureReplicationDetails(IList<AzureVmDiskDetails> azureVMDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), DateTime? lastReplicatedTime = default(DateTime?), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), InitialReplicationDetails initialReplicationDetails = default(InitialReplicationDetails), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string encryption = default(string), OSDetails oSDetails = default(OSDetails), int? sourceVmRAMSizeInMB = default(int?), int? sourceVmCPUCount = default(int?), string enableRDPOnTargetOption = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), bool? useManagedDisks = default(bool?), string licenseType = default(string))
+        public HyperVReplicaAzureReplicationDetails(IList<AzureVmDiskDetails> azureVMDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), DateTime? lastReplicatedTime = default(DateTime?), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), InitialReplicationDetails initialReplicationDetails = default(InitialReplicationDetails), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string encryption = default(string), OSDetails oSDetails = default(OSDetails), int? sourceVmRAMSizeInMB = default(int?), int? sourceVmCPUCount = default(int?), string enableRDPOnTargetOption = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string useManagedDisks = default(string), string licenseType = default(string))
         {
             AzureVMDiskDetails = azureVMDiskDetails;
             RecoveryAzureVMName = recoveryAzureVMName;
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// failover.
         /// </summary>
         [JsonProperty(PropertyName = "useManagedDisks")]
-        public bool? UseManagedDisks { get; set; }
+        public string UseManagedDisks { get; set; }
 
         /// <summary>
         /// License Type of the VM to be used.

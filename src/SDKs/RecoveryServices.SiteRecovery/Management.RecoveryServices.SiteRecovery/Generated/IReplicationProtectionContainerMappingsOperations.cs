@@ -19,30 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationProtectionContainerMappingsOperations
     {
         /// <summary>
-        /// Tracks the protection container mapping async operation.
-        /// </summary>
-        /// Track the results of an asynchronous operation on a protection
-        /// container mapping.
-        /// <param name='fabricName'>
-        /// Fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='mappingName'>
-        /// Protection container mapping name.
-        /// </param>
-        /// <param name='jobId'>
-        /// Job identifier.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<ProtectionContainerMapping>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string mappingName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Remove protection container mapping.
         /// </summary>
         /// The operation to delete or remove a protection container mapping.

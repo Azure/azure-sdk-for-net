@@ -101,27 +101,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string fabricName, string protectionContainerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Tracks the provider async operation.
-        /// </summary>
-        /// Track the results of an asynchronous operation on protectable
-        /// items.
-        /// <param name='fabricName'>
-        /// Fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='jobId'>
-        /// job id to track.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<ProtectionContainer>> GetOperationResultsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string jobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Adds a protectable item to the replication protection container.
         /// </summary>
         /// The operation to a add a protectable item to a protection

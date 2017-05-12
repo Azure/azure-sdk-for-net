@@ -19,56 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationRecoveryServicesProvidersOperationsExtensions
     {
             /// <summary>
-            /// Tracks the provider async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on the recovery services
-            /// provider.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='providerName'>
-            /// Recovery services provider name.
-            /// </param>
-            /// <param name='jobName'>
-            /// ASR Job name.
-            /// </param>
-            public static RecoveryServicesProvider GetOperationResults(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, string jobName)
-            {
-                return Task.Factory.StartNew(s => ((IReplicationRecoveryServicesProvidersOperations)s).GetOperationResultsAsync(fabricName, providerName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tracks the provider async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on the recovery services
-            /// provider.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='providerName'>
-            /// Recovery services provider name.
-            /// </param>
-            /// <param name='jobName'>
-            /// ASR Job name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RecoveryServicesProvider> GetOperationResultsAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, providerName, jobName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Refresh details from the recovery services provider.
             /// </summary>
             /// The operation to refresh the information from the recovery services

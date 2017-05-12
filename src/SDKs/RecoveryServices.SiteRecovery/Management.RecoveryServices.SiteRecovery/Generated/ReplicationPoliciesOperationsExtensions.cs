@@ -19,48 +19,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationPoliciesOperationsExtensions
     {
             /// <summary>
-            /// Tracks the protection profiles async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on a replication policy.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='policyName'>
-            /// Policy Name.
-            /// </param>
-            /// <param name='jobName'>
-            /// job id to track.
-            /// </param>
-            public static Policy GetOperationResults(this IReplicationPoliciesOperations operations, string policyName, string jobName)
-            {
-                return Task.Factory.StartNew(s => ((IReplicationPoliciesOperations)s).GetOperationResultsAsync(policyName, jobName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tracks the protection profiles async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on a replication policy.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='policyName'>
-            /// Policy Name.
-            /// </param>
-            /// <param name='jobName'>
-            /// job id to track.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Policy> GetOperationResultsAsync(this IReplicationPoliciesOperations operations, string policyName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(policyName, jobName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the requested policy.
             /// </summary>
             /// Gets the details of a replication policy.

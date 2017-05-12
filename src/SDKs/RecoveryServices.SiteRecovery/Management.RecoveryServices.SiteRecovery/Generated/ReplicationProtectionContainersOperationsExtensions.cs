@@ -209,54 +209,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Tracks the provider async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on protectable items.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='jobId'>
-            /// job id to track.
-            /// </param>
-            public static ProtectionContainer GetOperationResults(this IReplicationProtectionContainersOperations operations, string fabricName, string protectionContainerName, string jobId)
-            {
-                return Task.Factory.StartNew(s => ((IReplicationProtectionContainersOperations)s).GetOperationResultsAsync(fabricName, protectionContainerName, jobId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Tracks the provider async operation.
-            /// </summary>
-            /// Track the results of an asynchronous operation on protectable items.
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='jobId'>
-            /// job id to track.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ProtectionContainer> GetOperationResultsAsync(this IReplicationProtectionContainersOperations operations, string fabricName, string protectionContainerName, string jobId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetOperationResultsWithHttpMessagesAsync(fabricName, protectionContainerName, jobId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Adds a protectable item to the replication protection container.
             /// </summary>
             /// The operation to a add a protectable item to a protection container(Add
