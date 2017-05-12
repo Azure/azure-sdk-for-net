@@ -38,19 +38,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         private string KV_IGNOREDIRNAME = "Microsoft.Azure.KeyVault.Samples";
 
         private string _ignoreDirNameForSearchingProjects;
-
-        //List<string> wkProj45Paths;
-        //List<string> wkTest45Projects;
-
+        
         private List<string> _searchedAllProjects;
         private List<string> _finalDirListForSearchingProjects;
         private List<string> _overAllIgnoreProjects;
-
-        //ConcurrentBag<ITaskItem> net452Projs = new ConcurrentBag<ITaskItem>();
-        //ConcurrentBag<ITaskItem> netStd14Projs = new ConcurrentBag<ITaskItem>();
-        //ConcurrentBag<ITaskItem> testNetCore11Projs = new ConcurrentBag<ITaskItem>();
-        //ConcurrentBag<ITaskItem> testNet452Projs = new ConcurrentBag<ITaskItem>();
-        //ConcurrentBag<ITaskItem> unSupportedProjs = new ConcurrentBag<ITaskItem>();
         #endregion
 
         public SDKCategorizeProjects()
@@ -118,7 +109,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// </summary>
         [Output]
         public ITaskItem[] netStd14SdkProjectsToBuild { get; private set; }
-        //public ITaskItem[] SDKTestProjectsToBuild { get; private set; }
+
+        /// <summary>
+        /// List of Test Projects that needs to be build
+        /// </summary>
+        [Output]
+        public ITaskItem[] netCore11SdkProjectsToBuild { get; private set; }
 
         /// <summary>
         /// List of .NET 452 projects that will be separated from the list of projects that 
@@ -183,12 +179,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             var net452SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var netStd14SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.netstandard14 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
+            var netCore11SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp11 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var testNetCore11Projects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp11 && s.ProjectType == SdkProjctType.Test) select s.ProjectTaskItem;
             var testNet452Projects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Test) select s.ProjectTaskItem;
             var unSupportedProjects = from s in projWithMetaData where (s.IsTargetFxSupported = false) select s.ProjectTaskItem;
 
             net452SdkProjectsToBuild = net452SdkProjects?.ToArray<ITaskItem>();
             netStd14SdkProjectsToBuild = netStd14SdkProjects?.ToArray<ITaskItem>();
+            netCore11SdkProjectsToBuild = netCore11SdkProjects?.ToArray<ITaskItem>();
             netCore11TestProjectsToBuild = testNetCore11Projects?.ToArray<ITaskItem>();
             net452TestProjectsToBuild = testNet452Projects?.ToArray<ITaskItem>();
             unSupportedProjectsToBuild = unSupportedProjects?.ToArray<ITaskItem>();
