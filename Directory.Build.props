@@ -15,34 +15,16 @@
 		<Scope Condition=" '$(Scope)' == '' ">All</Scope>
 		<NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
     <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
+    <BuildInParallel>true</BuildInParallel>
     <NugetPackageName/>
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
     <DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples Gallery Intune FileConventions FileStaging ConfigureAwaitAnalyzer ObjectModelCodeGeneration Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests IntegrationTestCommon</DefaultPathTokenToIgnore>
-    <!--Microsoft.Azure.KeyVault.Samples 
-    ClientRuntime.Azure.TestFramework
-    Condition=" '$(IgnorePathTokens)' == '' "
-ClientRuntime.Azure.TestFramework Microsoft.Azure.Test.HttpRecorder
-    -->
 	</PropertyGroup>
   <PropertyGroup>
     <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
     <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
     <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
   </PropertyGroup>
-	
-	<PropertyGroup>
-		<BuildInParallel>true</BuildInParallel>
-	</PropertyGroup>
-
-	<ItemGroup Condition="'$(PublishTestProjects)' == 'false' Or '$(PublishTestProjects)' == ''">
-		<LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
-		<LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Exclude="$(LibrarySourceFolder)\KeyVault\Microsoft.Azure.KeyVault.Samples\Microsoft.Azure.KeyVault.Samples.sln" Condition=" '$(Scope)' == 'all'  " />
-		<LibraryFxTargetList Include="$(FxTargetList)" />
-		<AutoRestLibraryFxTargetList Include="portable;net45" />
-		<ClientRuntimeProjects Include="$(LibrarySourceFolder)\ClientRuntime\**\*.xproj"/>
-		<ClientRuntimeTests Include="$(LibrarySourceFolder)\ClientRuntime\*.Tests\*.xproj"/>
-		<ClientRuntimeRootDir Include="%(ClientRuntimeProjects.RootDir)"/>
-	</ItemGroup>
 
   <PropertyGroup Label="Well Known Properties">
     <ClientRuntimeRootDir>$(LibraryRoot)src\UpgradeVS17\SdkCommon\ClientRuntime</ClientRuntimeRootDir>

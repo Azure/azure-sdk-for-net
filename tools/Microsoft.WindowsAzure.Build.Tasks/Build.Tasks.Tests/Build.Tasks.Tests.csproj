@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="SampleProjFiles\sdkMultiTarget.proj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

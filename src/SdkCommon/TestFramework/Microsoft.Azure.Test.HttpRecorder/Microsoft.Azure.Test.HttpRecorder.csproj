@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />
+  <!-- <Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" /> -->
   <PropertyGroup>
     <Description>Microsoft.Azure.Test.HttpRecorder</Description>
     <AssemblyTitle>HttpRecorder Library for recording Clinet/Server communication in Azure</AssemblyTitle>

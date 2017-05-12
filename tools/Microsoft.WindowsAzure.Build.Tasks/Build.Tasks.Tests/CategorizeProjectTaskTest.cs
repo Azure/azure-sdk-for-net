@@ -81,12 +81,8 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() == 1);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() == 1);
-            }
-            else
-            {
-                Assert.True(false);
+                Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Equal(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>(), 1);
             }
         }
 
@@ -119,8 +115,8 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() == 1);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() == 1);
+                Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Equal(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>(), 1);
             }
         }
 
@@ -138,8 +134,8 @@ namespace Build.Tasks.Tests
                 //longer treated as regular nuget packages (targeting net452 and netStd1.4)
                 //but rather projects that are built without any targetFx
                 //
-                Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() == 3);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() == 5);
+                Assert.Equal(7, cproj.net452SdkProjectsToBuild.Count<ITaskItem>());
+                Assert.Equal(5, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
 
                 //Assert.True(cproj.WellKnowSDKNet452Projects.Count() > 0);
                 //Assert.True(cproj.WellKnowTestSDKNet452Projects.Count() > 0);
@@ -159,8 +155,9 @@ namespace Build.Tasks.Tests
                 //Since HttpRecorder and TestFramework are multi-targeting, they are no 
                 //longer treated as regular nuget packages (targeting net452 and netStd1.4)
                 //but rather projects that are build without any targetFx
-                Assert.Null(cproj.netStd14SdkProjectsToBuild);
-                Assert.True(cproj.net452TestProjectsToBuild.Count<ITaskItem>() == 2);
+                Assert.Equal(0, cproj.netStd14SdkProjectsToBuild.Count());
+                Assert.Equal(2, cproj.net452SdkProjectsToBuild.Count());
+                Assert.Equal(2, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
             }
         }
 
@@ -175,8 +172,8 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.True(cproj.netStd14SdkProjectsToBuild.Count<ITaskItem>() == 1);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() == 1);
+                Assert.Equal(1, cproj.netStd14SdkProjectsToBuild.Count<ITaskItem>());
+                Assert.Equal(1, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
             }
         }
 
@@ -191,8 +188,8 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.Null(cproj.net452SdkProjectsToBuild);
-                Assert.Null(cproj.netCore11TestProjectsToBuild);
+                Assert.Equal(0, cproj.net452SdkProjectsToBuild.Count());
+                Assert.Equal(0, cproj.netCore11TestProjectsToBuild.Count());
             }
         }
 

@@ -1,9 +1,10 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
+      <CorporateScanPaths>@(SDKProject)</CorporateScanPaths>
   </PropertyGroup>
-
-  <Target Name="PreSign" Condition=" '$(CodeSign)' == 'true' ">
+<!--Condition=" '$(CodeSign)' == 'true' "-->
+  <Target Name="PreSign" >
     <GetFrameworkSdkPath>
       <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
     </GetFrameworkSdkPath>
@@ -16,6 +17,8 @@
     <Message Importance="high" Text="Contains no files. Code sign will skip."
 				 Condition="'@(DelaySignedAssembliesToValidate)' == ''" />
 
+    <!--<CallTarget Targets="CorporateValidation" Condition=" '$(OnPremiseBuild)'=='true' " />-->
+
     <ValidateStrongNameSignatureTask
 			WindowsSdkPath="$(WindowsSdkPath)"
 			Assembly="%(DelaySignedAssembliesToValidate.Identity)"
@@ -23,7 +26,9 @@
 			ExpectedDelaySigned="true"
 			ContinueOnError="false"
 			Condition="'@(DelaySignedAssembliesToValidate)' != ''"/>
-    
+  </Target>
+
+  <Target Name="Sign">
     <CodeSigningTask
 			Description="Microsoft Azure SDK"
 			Keywords="Microsoft Azure .NET SDK"
@@ -32,19 +37,20 @@
 			SigningLogPath="$(LibraryRoot)\binaries"
 			ToolsPath="$(CIToolsPath)"
 			Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''" />
-    
-    <ValidateStrongNameSignatureTask
+  </Target>
+    <Target Name="PostSign">
+      <ValidateStrongNameSignatureTask
 			WindowsSdkPath="$(WindowsSdkPath)"
 			Assembly="%(DelaySignedAssembliesToValidate.Identity)"
 			ExpectedTokenSignature="$(StrongNameToken)"
 			ExpectedDelaySigned="false"
 			ContinueOnError="false"
-			Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''"/>    
-  </Target>
-  <Target Name="Sign"/>
-  <Target Name="PostSign"/>  
-  <Target Name="BuildMsBuildTask">
+			Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''"/>
+    </Target>
+
+  <Target Name="RunSignTargets" DependsOnTargets="PreSign;Sign;PostSign"/>
     
+  <Target Name="BuildMsBuildTask">    
     <!--<Exec Command="$(NuGetCommand) restore $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.sln -PackagesDirectory $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\packages"/>-->
     <MSBuild Projects="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
 				 Targets="Build"
