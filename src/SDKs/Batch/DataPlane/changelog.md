@@ -3,6 +3,14 @@
 ### Upcoming changes
 These changes are planned but haven't been published yet.
 
+### Changes in 7.0.1
+#### Bug fixes
+- Fixed a bug where requests using HTTP DELETE (for example, `DeletePool` and `DeleteJob`) failed with an authentication error in the netstandard package. This was due to a change made to `HttpClient` in netcore.
+  - This bug impacted the 6.1.0 release as well.
+
+#### REST API version
+This version of the Batch .NET client library targets version 2017-05-01.5.0 of the Azure Batch REST API.
+
 ### Changes in 7.0.0
 #### License
 Moved source code and NuGet package from Apache 2.0 license to MIT license. This is more consistent with the other Azure SDKs as well as other open source projects from Microsoft such as .NET.
