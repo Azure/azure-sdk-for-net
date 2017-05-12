@@ -8,8 +8,6 @@ namespace Microsoft.Azure.Search
 
     public partial class SearchServiceClient
     {
-        private const string ClientRequestIdHeaderName = "client-request-id";
-
         /// <summary>
         /// Initializes a new instance of the SearchServiceClient class.
         /// </summary>
@@ -47,20 +45,19 @@ namespace Microsoft.Azure.Search
         }
 
         /// <inheritdoc />
-        public SearchCredentials SearchCredentials
-        {
-            get { return (SearchCredentials)this.Credentials; }
-        }
+        public SearchCredentials SearchCredentials => (SearchCredentials)Credentials;
 
         private void Initialize(string searchServiceName, SearchCredentials credentials)
         {
             var validatedSearchServiceName = new SearchServiceName(searchServiceName);
-            Throw.IfArgumentNull(credentials, "credentials");
+            Throw.IfArgumentNull(credentials, nameof(credentials));
 
-            this.Credentials = credentials;
-            this.BaseUri = validatedSearchServiceName.BuildBaseUri();
+            Credentials = credentials;
 
-            this.Credentials.InitializeServiceClient(this);
+            validatedSearchServiceName.TryBuildUri();
+            SearchServiceName = validatedSearchServiceName;
+
+            Credentials.InitializeServiceClient(this);
         }
     }
 }

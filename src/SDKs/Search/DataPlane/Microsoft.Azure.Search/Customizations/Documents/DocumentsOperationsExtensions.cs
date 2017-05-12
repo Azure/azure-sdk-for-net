@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Search
             this IDocumentsOperations operations,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).CountAsync(searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.CountAsync(searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Search
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).ContinueSearchAsync(continuationToken, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.ContinueSearchAsync(continuationToken, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             where T : class
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).ContinueSearchAsync<T>(continuationToken, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.ContinueSearchAsync<T>(continuationToken, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Search
             IEnumerable<string> selectedFields = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).GetAsync(key, selectedFields, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.GetAsync(key, selectedFields, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             where T : class
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).GetAsync<T>(key, selectedFields, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.GetAsync<T>(key, selectedFields, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace Microsoft.Azure.Search
             IndexBatch batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).IndexAsync(batch, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.IndexAsync(batch, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -545,7 +545,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             where T : class
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).IndexAsync<T>(batch, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.IndexAsync<T>(batch, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -635,7 +635,7 @@ namespace Microsoft.Azure.Search
             SearchParameters searchParameters = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).SearchAsync(searchText, searchParameters, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.SearchAsync(searchText, searchParameters, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -733,7 +733,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             where T : class
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).SearchAsync<T>(searchText, searchParameters, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.SearchAsync<T>(searchText, searchParameters, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -824,7 +824,7 @@ namespace Microsoft.Azure.Search
             SuggestParameters suggestParameters = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).SuggestAsync(searchText, suggesterName, suggestParameters, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.SuggestAsync(searchText, suggesterName, suggestParameters, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -910,7 +910,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
             where T : class
         {
-            return Task.Factory.StartNew(s => ((IDocumentsOperations)s).SuggestAsync<T>(searchText, suggesterName, suggestParameters, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.SuggestAsync<T>(searchText, suggesterName, suggestParameters, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>

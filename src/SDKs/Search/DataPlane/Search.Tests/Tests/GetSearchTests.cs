@@ -88,6 +88,12 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CanSearchWithSynonyms()
+        {
+            Run(TestCanSearchWithSynonyms);
+        }
+
+        [Fact]
         public void CanSearchWithSpecialCharsInRegex()
         {
             Run(TestCanSearchWithEscapedSpecialCharsInRegex);

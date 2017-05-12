@@ -41,8 +41,23 @@ namespace Microsoft.Azure.Search.Tests
                 ISearchIndexClient indexClient = serviceClient.Indexes.GetClient("test");
 
                 Assert.Equal(serviceClient.SearchCredentials.ApiKey, indexClient.SearchCredentials.ApiKey);
-                Assert.Equal(new Uri(serviceClient.BaseUri, "/indexes('test')"), indexClient.BaseUri);
+                Assert.Equal(serviceClient.SearchServiceName, indexClient.SearchServiceName);
+                Assert.Equal(serviceClient.SearchDnsSuffix, indexClient.SearchDnsSuffix);
+                Assert.Equal("test", indexClient.IndexName);
             });
+        }
+
+        [Fact]
+        public void ConstructorSetsUrlRelatedProperties()
+        {
+            const string TestServiceName = "azs-doesnotexist";
+            const string TestApiKey = "123";
+
+            var serviceClient = new SearchServiceClient(TestServiceName, new SearchCredentials(TestApiKey));
+
+            Assert.Equal(TestServiceName, serviceClient.SearchServiceName);
+            Assert.Equal("search.windows.net", serviceClient.SearchDnsSuffix);
+            Assert.Equal(TestApiKey, serviceClient.SearchCredentials.ApiKey);
         }
 
         [Fact]
@@ -97,10 +112,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Throws<ArgumentNullException>(
                 "credentials",
                 () => new SearchServiceClient(credentials: null, rootHandler: handler));
-            Assert.Throws<ArgumentNullException>(
-                "baseUri",
-                () => new SearchServiceClient(baseUri: null, credentials: creds));
-            Assert.Throws<ArgumentNullException>("credentials", () => new SearchServiceClient(uri, credentials: null));
+            Assert.Throws<ArgumentNullException>(() => new SearchServiceClient(credentials: creds, rootHandler: null));
             Assert.Throws<ArgumentNullException>(
                 "searchServiceName", 
                 () => new SearchServiceClient(searchServiceName: null, credentials: creds, rootHandler: handler));
@@ -114,11 +126,7 @@ namespace Microsoft.Azure.Search.Tests
                 "credentials",
                 () => new SearchServiceClient(searchServiceName, credentials: null, rootHandler: handler));
             Assert.Throws<ArgumentNullException>(
-                "baseUri",
-                () => new SearchServiceClient(baseUri: null, credentials: creds, rootHandler: handler));
-            Assert.Throws<ArgumentNullException>(
-                "credentials",
-                () => new SearchServiceClient(uri, credentials: null, rootHandler: handler));
+                () => new SearchServiceClient(searchServiceName, creds, rootHandler: null));
         }
     }
 }

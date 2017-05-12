@@ -464,7 +464,19 @@ namespace Microsoft.Azure.Search
             CancellationToken cancellationToken,
             JsonSerializerSettings jsonSerializerSettings) where T : class
         {
-            if (this.Client.ApiVersion == null)
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
+            if (Client.IndexName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
+            }
+            if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
@@ -506,8 +518,11 @@ namespace Microsoft.Azure.Search
 
             string selectClause = selectedFields.ToCommaSeparatedString();
 
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "docs('{key}')").ToString();
+            var baseUrl = Client.BaseUri;
+            var url = baseUrl + (baseUrl.EndsWith("/") ? "" : "/") + "docs('{key}')";
+            url = url.Replace("{searchServiceName}", Client.SearchServiceName);
+            url = url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
+            url = url.Replace("{indexName}", Client.IndexName);
             url = url.Replace("{key}", Uri.EscapeDataString(key));
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -654,7 +669,19 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken)
         {
-            if (this.Client.ApiVersion == null)
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
+            if (Client.IndexName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
+            }
+            if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
@@ -683,9 +710,11 @@ namespace Microsoft.Azure.Search
             }
 
             // Construct URL
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url = new Uri(new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")), "docs/search.index").ToString();
-
+            var baseUrl = Client.BaseUri;
+            var url = baseUrl + (baseUrl.EndsWith("/") ? "" : "/") + "docs/search.index";
+            url = url.Replace("{searchServiceName}", Client.SearchServiceName);
+            url = url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
+            url = url.Replace("{indexName}", Client.IndexName);
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -866,7 +895,19 @@ namespace Microsoft.Azure.Search
             where TDoc : class
         {
             // Validate
-            if (this.Client.ApiVersion == null)
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
+            if (Client.IndexName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
+            }
+            if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
@@ -899,12 +940,11 @@ namespace Microsoft.Azure.Search
 
             // Construct URL
             bool useGet = Client.UseHttpGetForQueries;
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url =
-                new Uri(
-                    new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")),
-                    (useGet ? "docs" : "docs/search.post.search")).ToString();
-
+            var baseUrl = Client.BaseUri;
+            var url = baseUrl + (baseUrl.EndsWith("/") ? "" : "/") + (useGet ? "docs" : "docs/search.post.search");
+            url = url.Replace("{searchServiceName}", Client.SearchServiceName);
+            url = url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
+            url = url.Replace("{indexName}", Client.IndexName);
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
@@ -945,7 +985,19 @@ namespace Microsoft.Azure.Search
             where TDoc : class
         {
             // Validate
-            if (this.Client.ApiVersion == null)
+            if (Client.SearchServiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchServiceName");
+            }
+            if (Client.SearchDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SearchDnsSuffix");
+            }
+            if (Client.IndexName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.IndexName");
+            }
+            if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
@@ -987,12 +1039,11 @@ namespace Microsoft.Azure.Search
 
             // Construct URL
             bool useGet = Client.UseHttpGetForQueries;
-            var baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var url =
-                new Uri(
-                    new Uri(baseUrl + (baseUrl.EndsWith("/") ? "" : "/")),
-                    (useGet ? "docs/search.suggest" : "docs/search.post.suggest")).ToString();
-
+            var baseUrl = Client.BaseUri;
+            var url = baseUrl + (baseUrl.EndsWith("/") ? "" : "/") + (useGet ? "docs/search.suggest" : "docs/search.post.suggest");
+            url = url.Replace("{searchServiceName}", Client.SearchServiceName);
+            url = url.Replace("{searchDnsSuffix}", Client.SearchDnsSuffix);
+            url = url.Replace("{indexName}", Client.IndexName);
             List<string> queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
             {
