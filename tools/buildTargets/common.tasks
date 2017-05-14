@@ -1,20 +1,20 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" />
-  <UsingTask TaskName="FilterOutAutoRestLibraries" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" />
-  <UsingTask TaskName="BuildProjectTemplatesTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" />
-  <UsingTask Condition=" $(OnPremiseBuild) " TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
-	<UsingTask Condition=" $(OnPremiseBuild) " TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
-  <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll" />  
-  <UsingTask TaskName="FilterOutAutoRestLibraries" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
-  <UsingTask TaskName="BuildProjectTemplatesTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
-  <UsingTask TaskName="DebugTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
-  <UsingTask TaskName="SDKCategorizeProjects" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
-
-  <UsingTask Condition=" $(OnPremiseBuild) " TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
-  <UsingTask Condition=" $(OnPremiseBuild) " TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" />
+  <PropertyGroup>
+    <CustomTaskDirectory>$(LibraryToolsFolder)\net46</CustomTaskDirectory>
+  </PropertyGroup>
   
-  <Import Condition=" $(OnPremiseBuild) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
-  
-  
+  <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.WindowsAzure.Build.Tasks.dll" />
+  <UsingTask TaskName="FilterOutAutoRestLibraries" AssemblyFile="$(CustomTaskDirectory)\Microsoft.WindowsAzure.Build.Tasks.dll" />
+  <UsingTask TaskName="BuildProjectTemplatesTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.WindowsAzure.Build.Tasks.dll" />  
+  <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.WindowsAzure.Build.Tasks.dll" />  
+  <UsingTask TaskName="FilterOutAutoRestLibraries" AssemblyFile="$(CustomTaskDirectory)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
+  <UsingTask TaskName="BuildProjectTemplatesTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
+  <UsingTask TaskName="DebugTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
+  <UsingTask TaskName="SDKCategorizeProjects" AssemblyFile="$(CustomTaskDirectory)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
+  <UsingTask TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />
+  <UsingTask TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />
+  <UsingTask TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />
+  <UsingTask TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />
+  <Import Condition=" $(OnPremiseBuild) " Project="$(OnPremiseBuildTasks)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />  
 </Project>
 
