@@ -10,56 +10,42 @@
     <NetFx452>net452</NetFx452>
     <NetStd14>netstandard1.4</NetStd14>
     <NetCore11>netcoreapp1.1</NetCore11>
-  </PropertyGroup>  
+  </PropertyGroup>
   <PropertyGroup>
     <PreBuildStaticAnalysisTargets>
+      GetBuildEnv;
       BuildCiSign;
       BuildMsBuildTask;
       CategorizeProjects;
-      <!--CategorizeProjects;-->
-      <!--GetScopedProjects;-->
-      <!-- GetProjectReferences; -->
     </PreBuildStaticAnalysisTargets>
     <PreBuildCategorizePrjectTargets>
-      <!--CategorizeProjects;-->
       CategorizeProjects;
-      GetScopedProjects;
     </PreBuildCategorizePrjectTargets>
     <BuildTraversedProjectsDependsOn>
       PreBuildStaticAnalysis;
       RestoreLatestProjects;
       BuildLatestProjects;
-      Package;
-    </BuildTraversedProjectsDependsOn>	
-	  <RestoreTraversedProjectsDependsOn>
-      <!--CategorizeProjects;-->
+    </BuildTraversedProjectsDependsOn>
+    <RestoreTraversedProjectsDependsOn>
       CategorizeProjects;
       RestoreLatestProjects;
     </RestoreTraversedProjectsDependsOn>
     <CleanTraversedProjectsDependsOn>
-      <!--CategorizeProjects;-->
       CategorizeProjects;
       CleanLatestProjects;
       CleanSDKPackageFiles
     </CleanTraversedProjectsDependsOn>
   </PropertyGroup>
   <PropertyGroup>
-	<RunTestProjectsDependsOn>
-    PreBuildStaticAnalysis;
-    RestoreLatestProjects;
-    BuildLatestProjects;
-		Test
-	</RunTestProjectsDependsOn>
-    
+    <RunTestProjectsDependsOn>
+      $(BuildTraversedProjectsDependsOn);
+      Test
+    </RunTestProjectsDependsOn>
     <SignNugetDependsOn>
-      PreBuildStaticAnalysis;
-      RestoreLatestProjects;
-      BuildLatestProjects;
-      Test;
+      $(RunTestProjectsDependsOn);
       RunSignTargets;
       Package;
     </SignNugetDependsOn>
-
     <PublishNugetDependsOn>
       $(PackageNugetDependsOn);
       PublishingNuget
@@ -78,6 +64,16 @@
     </HelpDependsOn>
     
   </PropertyGroup>
+  
+  <Target Name="GetBuildEnv">
+    <Message Text="OnPremiseBuild .... $(OnPremiseBuild)"/>
+    <Message Text="OnPremiseBuildTasks .... $(OnPremiseBuildTasks)"/>
+    <Message Text="CIToolsPath .... $(CIToolsPath)"/>
+    <Message Text="CodeSign .... $(CodeSign)"/>
+    <Message Text="PackageOutputPath .... $(PackageOutputPath)"/>
+    <Message Text="Scope .... $(Scope)"/>
+    <Message Text="BuildInParallel .... $(BuildInParallel)"/>
+  </Target>
   
   <Target Name="CleanLatestProjects" >
     <PropertyGroup>
@@ -225,7 +221,6 @@
   </Target>
 
   <Target Name="CategorizeProjects">
-    <Message Text="Categorizing Projects....."/>
     <SDKCategorizeProjects
       SourceRootDirPath="$(LibrarySourceFolder)"
       BuildScope="$(Scope)"
@@ -239,6 +234,7 @@
       <Output TaskParameter="unSupportedProjectsToBuild" ItemName="unsupportedProj" />
     </SDKCategorizeProjects>
 
+    <Message Text="Categorizing Projects....."/>
     <ItemGroup>
       <TotalSdkProjects Include="@(net452SDKProj);@(netStd14SDKProj);@(netCore11SDKProj)"/>
       <TotalTestProjects Include="@(netCore11TestProj);@(net452TestProj)"/>
@@ -269,6 +265,8 @@
     <ItemGroup>
       <SDKProject Include="@(FilteredSdkProjects)"/>
       <SDKTestProject Include="@(FilteredTestProjects)"/>
+      <ProjectToScanDirs Include="%(FilteredSdkProjects.RootDir)%(FilteredSdkProjects.Directory)"/>
+      <ProjectToScanDirs Include="%(FilteredTestProjects.RootDir)%(FilteredTestProjects.Directory)"/>
     </ItemGroup>
   </Target>
 
@@ -286,14 +284,6 @@
     <Message Text="----- will Build Compute nuget package and run compute test" />
   </Target>
   
-  
-
-
   <!--Do not delete-->
   <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)"/>
 </Project>
-
-<!--
-<SDKProject Include="%(ScopedProjects.Identity)" Condition=" '%(ScopedProjects.ProjectType)' != 'Test' and '%(ScopedProjects.ExcludeFromBuild)' != 'true' "/>
-      <ScopedTestProjects Include="%(ScopedTestProjects.Identity)" Condition=" ('%(ScopedTestProjects.ProjectType)' == 'Test' and '%(ScopedTestProjects.ExcludeFromBuild)' != 'true') "/>
-  -->

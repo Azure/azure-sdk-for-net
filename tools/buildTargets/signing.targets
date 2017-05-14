@@ -1,7 +1,7 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
-      <CorporateScanPaths>@(SDKProject)</CorporateScanPaths>
+    <CorporateScanPaths>@(ProjectToScanDirs)</CorporateScanPaths>
   </PropertyGroup>
 <!--Condition=" '$(CodeSign)' == 'true' "-->
   <Target Name="PreSign" >
@@ -16,7 +16,7 @@
 
     <Message Importance="high" Text="Contains no files. Code sign will skip."
 				 Condition="'@(DelaySignedAssembliesToValidate)' == ''" />
-
+    
     <!--<CallTarget Targets="CorporateValidation" Condition=" '$(OnPremiseBuild)'=='true' " />-->
 
     <ValidateStrongNameSignatureTask
@@ -28,7 +28,7 @@
 			Condition="'@(DelaySignedAssembliesToValidate)' != ''"/>
   </Target>
 
-  <Target Name="Sign">
+  <Target Name="Sign" Condition=" '$(CodeSign)' == 'true' ">
     <CodeSigningTask
 			Description="Microsoft Azure SDK"
 			Keywords="Microsoft Azure .NET SDK"
@@ -38,7 +38,8 @@
 			ToolsPath="$(CIToolsPath)"
 			Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''" />
   </Target>
-    <Target Name="PostSign">
+  
+    <Target Name="PostSign" Condition=" '$(CodeSign)' == 'true' ">
       <ValidateStrongNameSignatureTask
 			WindowsSdkPath="$(WindowsSdkPath)"
 			Assembly="%(DelaySignedAssembliesToValidate.Identity)"

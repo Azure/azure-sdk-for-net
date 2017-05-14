@@ -1,4 +1,7 @@
-﻿using Microsoft.WindowsAzure.Build.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.WindowsAzure.Build.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -54,21 +57,9 @@ namespace Build.Tasks.Tests
             {
                 //Using a random number, basically if the number of projects drop below a certain, should fail this test
                 int totalSdkProjectCount = cproj.net452SdkProjectsToBuild.Count() + cproj.netStd14SdkProjectsToBuild.Count<ITaskItem>();
-                Assert.True(totalSdkProjectCount > 20);
-                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() > 20);
+                Assert.Equal(112, totalSdkProjectCount);
+                Assert.Equal(54, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
             }
-        }
-
-        [Fact]
-        
-        public void CategorizeForTargetFramework()
-        {
-            SDKCategorizeProjects catProj = new SDKCategorizeProjects();
-            string projFile = Path.GetFullPath(@"SampleProjfiles\sdkMultiTarget.proj");
-            sdkProjectTaskItem pTskItem = new sdkProjectTaskItem(projFile);
-            
-            //Dictionary<string, string> fxInfo = catProj.GetSupportedProjectStatus(pTskItem);            
-            //Assert.NotNull(fxInfo);
         }
 
         [Fact]
@@ -135,10 +126,7 @@ namespace Build.Tasks.Tests
                 //but rather projects that are built without any targetFx
                 //
                 Assert.Equal(7, cproj.net452SdkProjectsToBuild.Count<ITaskItem>());
-                Assert.Equal(5, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
-
-                //Assert.True(cproj.WellKnowSDKNet452Projects.Count() > 0);
-                //Assert.True(cproj.WellKnowTestSDKNet452Projects.Count() > 0);
+                Assert.Equal(5, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());                
             }
         }
 
@@ -180,7 +168,7 @@ namespace Build.Tasks.Tests
         [Fact]
         public void TestIgnoredTokesn()
         {
-            //Operational Insights have named their projects as test.csproj rather than tests.csproj
+            //Gallery projects are being ignored
             SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = @"SDKs\Gallery";

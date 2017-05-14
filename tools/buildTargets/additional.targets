@@ -263,16 +263,21 @@
     <NetCore11>netcoreapp1.1</NetCore11>
   </PropertyGroup>  
   $(PackageNugetDependsOn);
+  
+
+<SDKProject Include="%(ScopedProjects.Identity)" Condition=" '%(ScopedProjects.ProjectType)' != 'Test' and '%(ScopedProjects.ExcludeFromBuild)' != 'true' "/>
+      <ScopedTestProjects Include="%(ScopedTestProjects.Identity)" Condition=" ('%(ScopedTestProjects.ProjectType)' == 'Test' and '%(ScopedTestProjects.ExcludeFromBuild)' != 'true') "/>
+
 -->
 
   <Target Name="DumpDirs">
     <PropertyGroup>
-      <!--<Foo>%(net452SDKProj.RootDir)%(net452SDKProj.Directory)</Foo>-->
-      <Foo>@(net452SDKProj)</Foo>
+      <Foo>%(net452SDKProj.RootDir)%(net452SDKProj.Directory)</Foo>
+      <!--<Foo>@(net452SDKProj)</Foo>-->
     </PropertyGroup>
 
     <!--<Message Text="$(CIToolsPath)"/>-->
-    <Message Text="$(OnPremiseBuildTasks)"/>
+    <Message Text="$(Foo)"/>
     
   </Target>
 </Project>

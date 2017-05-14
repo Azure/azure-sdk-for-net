@@ -1,17 +1,16 @@
-﻿using System;
-using Microsoft.Build.Utilities;
-using Microsoft.Build.Framework;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
-//using Microsoft.Build.BuildEngine;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
 using Microsoft.Build.Evaluation;
-using Microsoft.Build.Execution;
+using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
 using Microsoft.WindowsAzure.Build.Tasks.Utilities;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using ThreadingTsk = System.Threading.Tasks;
-//using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Build.Tasks
 {
@@ -32,30 +31,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
     public class SDKCategorizeProjects : Task
     {
         #region fields
-        private string _defaultFileExt = "*.csproj";
-        private string _defaultBuildScope = "All";
-        private string[] _defaultTestProjTokens;
         private string KV_IGNOREDIRNAME = "Microsoft.Azure.KeyVault.Samples";
-
         private string _ignoreDirNameForSearchingProjects;
-        
-        private List<string> _searchedAllProjects;
-        private List<string> _finalDirListForSearchingProjects;
-        private List<string> _overAllIgnoreProjects;
         #endregion
 
         public SDKCategorizeProjects()
         {
-            _searchedAllProjects = new List<string>();
-            _finalDirListForSearchingProjects = new List<string>();
-            _overAllIgnoreProjects = new List<string>();
-
-            _defaultTestProjTokens = new string[] { "*tests.csproj", "*test.csproj", "*KeyVault.TestFramework.csproj" };
-            //wkProj45Paths = new List<string>() { "*Etw.csproj", "*Log4net.csproj", "*Azure.TestFramework.csproj", "*Test.HttpRecorder.csproj" };
-            //wkTest45Projects = new List<string>() { "*Net45Tests.csproj", "*Tracing.Tests.csproj" };
+         
         }
-
-        #region Task properties
 
         /// <summary>
         /// Source Root Dir Path to search projects
@@ -97,12 +80,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// </summary>
         private string SearchProjectFileExt { get; set; }
 
+        #region OUTPUT
         /// <summary>
         /// List of projects that needs to be built
         /// </summary>
         [Output]
         public ITaskItem[] net452SdkProjectsToBuild { get; private set; }
-        //public ITaskItem[] SDKProjectsToBuild { get; private set; }
 
         /// <summary>
         /// List of Test Projects that needs to be build
@@ -123,17 +106,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// </summary>
         [Output]
         public ITaskItem[] netCore11TestProjectsToBuild { get; private set; }
-        //public ITaskItem[] WellKnowSDKNet452Projects { get; private set; }
 
         [Output]
         public ITaskItem[] net452TestProjectsToBuild { get; private set; }
-        //public ITaskItem[] UnSupportedTargetFxProjects { get; private set; }
 
         [Output]
         public ITaskItem[] unSupportedProjectsToBuild { get; private set; }
-
-        //[Output]
-        //public ITaskItem[] Foo { get; private set; }
+        
 
         /// <summary>
         /// List of .NET 452 test projects that will be separated from the list of projects that
@@ -147,35 +126,41 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         {
             List<string> sdkProjects = new List<string>();
             List<string> testProjects = new List<string>();
-            List<ITaskItem> sdkTaskItems = new List<ITaskItem>();
-            List<ITaskItem> testTaskItems = new List<ITaskItem>();
-            List<ITaskItem> unsupportedTargetFxTaskItems = new List<ITaskItem>();
+            List<string> allProjects = new List<string>();
+            List<string> ignorePathList = new List<string>();
 
-            Init();
+            string[] ignoreTokens = IgnoreDirNameForSearchingProjects.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string igTkn in ignoreTokens)
+            {
+                ignorePathList.Add(igTkn);
+            }
 
+            if(!ignorePathList.Contains(KV_IGNOREDIRNAME))
+            {
+                ignorePathList.Add(KV_IGNOREDIRNAME);
+            }
+            ProjectSearchUtility ProjUtil = new ProjectSearchUtility(SourceRootDirPath, ignorePathList);
             if (BuildScope.Equals("All", StringComparison.OrdinalIgnoreCase))
             {
-                sdkProjects = SearchOnlySdkProjects(SourceRootDirPath);
-                testProjects = SearchOnlyTestProjects(SourceRootDirPath);
+                sdkProjects = ProjUtil.GetAllSDKProjects();
+                testProjects = ProjUtil.GetFilteredTestProjects();
             }
             else //We set default scope to All if empty/null, so safe to evaluate to Else in this case
             {
-                sdkProjects = ScopedSdkProjects(SourceRootDirPath, BuildScope);
-                testProjects = ScopedTestProjects(SourceRootDirPath, BuildScope);
+                sdkProjects = ProjUtil.GetScopedSDKProjects(BuildScope);
+                testProjects = ProjUtil.GetScopedTestProjects(BuildScope);
             }
+
+            allProjects.AddRange(sdkProjects);
+            allProjects.AddRange(testProjects);
 
             ConcurrentBag<SdkProjectMetaData> projWithMetaData = new ConcurrentBag<SdkProjectMetaData>();
 
-            var sdkProjTimeBefore = DateTime.Now;
-            projWithMetaData = GetMetaData(sdkProjects, projWithMetaData);
-            var sdkProjTimeAfter = DateTime.Now;
+            var projTimeBefore = DateTime.Now;
+            projWithMetaData = GetMetaData(allProjects, projWithMetaData);
+            var projTimeAfter = DateTime.Now;
 
-            var testProjTimeBefore = DateTime.Now;
-            projWithMetaData = GetMetaData(testProjects, projWithMetaData);
-            var testProjTimeAfter = DateTime.Now;
-
-            Debug.WriteLine("Parsing Sdk Projects took {0}", (sdkProjTimeAfter - sdkProjTimeBefore).TotalSeconds.ToString());
-            Debug.WriteLine("Parsing Test Projects took {0}", (testProjTimeAfter - testProjTimeBefore).TotalSeconds.ToString());
+            Debug.WriteLine("Parsing Projects took {0}", (projTimeAfter - projTimeBefore).TotalSeconds.ToString());
 
             var net452SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.net452 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var netStd14SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported = true && s.FxMoniker == TargetFrameworkMoniker.netstandard14 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
@@ -199,10 +184,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             SdkProjctType pType = SdkProjctType.Sdk;
             var projList = from p in projectList select new TaskItem(p);
             IBuildEngine buildEng = this.BuildEngine;
+            //Object obj = new object();
 
-            ThreadingTsk.Parallel.ForEach<ITaskItem>(projList, (proj) =>
-            //foreach (ITaskItem proj in projList)
+            //ThreadingTsk.Parallel.ForEach<ITaskItem>(projList, (proj) =>
+            foreach (ITaskItem proj in projList)
             {
+                //lock (obj)
+                //{
                 try
                 {
                     Project loadedProj = new Project(proj.ItemSpec);
@@ -212,7 +200,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     {
                         targetFxList = loadedProj.GetPropertyValue("TargetFramework");
                     }
-
                     ICollection<ProjectItem> pkgs = loadedProj.GetItemsIgnoringCondition("PackageReference");
                     if (pkgs.Any<ProjectItem>())
                     {
@@ -228,11 +215,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     }
 
                     var fxNames = targetFxList?.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries)?.ToList<string>();
-
                     foreach (string fx in fxNames)
                     {
                         bool isFxSupported = IsTargetFxSupported(fx, out TargetFrameworkMoniker tfxMoniker);
-
                         SdkProjectMetaData sp = new SdkProjectMetaData(project: proj, fxMoniker: tfxMoniker, fullProjectPath: proj.ItemSpec, isTargetFxSupported: isFxSupported, projectType: pType);
                         supportedProjectBag.Add(sp);
                     }
@@ -245,13 +230,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     }
                     else
                     {
-                        Debug.WriteLine(ex.ToString());
+                        Debug.WriteLine(ex.Message);
                     }
                 }
-
+                //}
                 //loadedProj = null;
             }
-            );
+            //);
 
             return supportedProjectBag;
         }
@@ -292,294 +277,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             targetFx = validMoniker;
             return fxSupported;
         }
-
-        #region Scoped
-        private List<string> ScopedSdkProjects(string rootSearchDirPath, string scope)
-        {
-            List<string> finalSdkProj = new List<string>();
-            string searchProjInDirPath = Path.Combine(rootSearchDirPath, scope);
-            if (Directory.Exists(searchProjInDirPath))
-            {
-                var scopedSdkProjs = SearchOnlySdkProjects(searchProjInDirPath);
-                //var stestProj = SearchOnlyTestProjects(searchProjInDirPath);
-
-                //var scopedSdkProjs = ssdkProj.Except<string>(stestProj, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-                if (scopedSdkProjs.Any<string>())
-                {
-                    finalSdkProj.AddRange(scopedSdkProjs);
-                }
-            }
-            return finalSdkProj;
-        }
-
-        private List<string> ScopedTestProjects(string rootSearchDirPath, string scope)
-        {
-            List<string> testProj = new List<string>();
-            string searchProjInDirPath = Path.Combine(rootSearchDirPath, scope);
-            if (Directory.Exists(searchProjInDirPath))
-            {
-                testProj = SearchOnlyTestProjects(searchProjInDirPath);
-            }
-            return testProj;
-        }
-
-        //private List<string> GetScopedDirs(string dirScope)
-        //{
-        //    List<string> finalScopeDirs = new List<string>();
-        //    var allDirs = Directory.EnumerateDirectories(SourceRootDirPath, "*", SearchOption.AllDirectories);
-        //    var ignoredDirs = Directory.EnumerateDirectories(SourceRootDirPath, IgnoreDirForSearchingProjects, SearchOption.AllDirectories);
-        //    var scopeDirs = allDirs.Except<String>(ignoredDirs);
-
-        //    if(scopeDirs.Any<String>())
-        //    {
-        //        finalScopeDirs = scopeDirs.ToList<string>();
-        //    }
-
-        //    return finalScopeDirs;
-        //}
-        #endregion
-
-        #region All
-        /// <summary>
-        /// This searches all the projects from the root directory sepcified
-        /// This also creates ignore list of projects
-        /// </summary>
-        /// <param name="rootSearchDirPath"></param>
-        /// <param name="projectExts"></param>
-        /// <returns></returns>
-        private List<string> SearchAllProjectFiles(string rootSearchDirPath, string projectExts)
-        {
-            List<string> searchedProjects = new List<string>();
-            if (string.IsNullOrWhiteSpace(projectExts) || string.IsNullOrEmpty(projectExts))
-            {
-                projectExts = _defaultFileExt;
-            }
-            List<string> projectExtList = projectExts.Split(';').ToList<string>();
-
-            var allProjFiles = Directory.EnumerateFiles(SourceRootDirPath, _defaultFileExt, SearchOption.AllDirectories);
-            var ignoredFiles = GetAndUpdateIgnoredProjects(SourceRootDirPath);
-
-            var finalProjects = allProjFiles.Except<string>(ignoredFiles, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-
-            if (finalProjects.Any<string>())
-                _searchedAllProjects.AddRange(finalProjects);
-
-            return _searchedAllProjects;
-        }
-
-        private List<string> SearchOnlySdkProjects(string rootSearchDirPath)
-        {
-            List<string> sdkProjFiles = new List<string>();
-            var sdkProj = Directory.EnumerateFiles(rootSearchDirPath, _defaultFileExt, SearchOption.AllDirectories)?.ToList<string>();
-            var testProj = SearchOnlyTestProjects(rootSearchDirPath);
-
-            var finalSdkProj = sdkProj.Except<string>(_overAllIgnoreProjects, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-            finalSdkProj = finalSdkProj.Except<string>(testProj, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-
-            if (finalSdkProj.Any<string>())
-            {
-                sdkProjFiles.AddRange(finalSdkProj);
-            }
-            //_sdkProjFiles = _searchedAllProjects.FindAll((pf) => ((!pf.EndsWith("test.csproj")) || (!pf.EndsWith("tests.csproj"))));
-            //}
-
-            return sdkProjFiles;
-        }
-
-        private List<string> SearchOnlyTestProjects(string rootSearchDirPath)
-        {
-            List<string> testProj = new List<string>();
-            List<string> tp = new List<string>();
-            foreach (string token in _defaultTestProjTokens)
-            {
-                var intrimTP = Directory.EnumerateFiles(rootSearchDirPath, token, SearchOption.AllDirectories)?.ToList<string>();
-
-                if (intrimTP.Any<string>())
-                {
-                    tp.AddRange(intrimTP);
-                }
-            }
-
-            var finalTp = tp.Except<string>(_overAllIgnoreProjects, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)))?.ToList<string>();
-            if (finalTp.Any<string>())
-            {
-                testProj.AddRange(finalTp);
-            }
-            return testProj;
-        }
-        #endregion
-        
-        private void Init()
-        {
-            if (!Directory.Exists(SourceRootDirPath))
-                throw new DirectoryNotFoundException("'{0}' does not exists. Please provide a valid directory to search for projects that needs to be build");
-
-            if ((string.IsNullOrWhiteSpace(BuildScope)) || (string.IsNullOrEmpty(BuildScope)))
-            {
-                Log.LogMessage("Empty Scope Detected, setting BuildScope to 'All'");
-                BuildScope = _defaultBuildScope;
-            }
-
-            //Get All Projects
-            SearchAllProjectFiles(SourceRootDirPath, SearchProjectFileExt);
-
-            //Get overall ignore list
-            //_overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkProj45Paths));
-            //_overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkTest45Projects));
-        }
-        
-        private List<string> GetAllProjectFilesFromDirs(string projFileSearchPattern, SearchOption searchingOption, params string[] searchDirs)
-        {
-            List<string> results = new List<string>();
-            foreach (string dir in searchDirs)
-            {
-                var projs = Directory.EnumerateFiles(dir, "*test*.csproj", SearchOption.AllDirectories);
-                if (projs.Any<string>())
-                {
-                    results.AddRange(projs);
-                }
-            }
-
-            return results;
-        }
-        
-        public void GetSupportedProjectStatus(ITaskItem projSpec)
-        {
-            //Dictionary<string, SdkProjectMetaData> fxDict = new Dictionary<string, SdkProjectMetaData>();
-            //int monikerCount = 0;
-            //Project loadedProj = new Project(projSpec.ItemSpec);
-
-            //string targetFxList = loadedProj.GetPropertyValue("TargetFrameworks");
-            //if (string.IsNullOrEmpty(targetFxList))
-            //{
-            //    targetFxList = loadedProj.GetPropertyValue("TargetFramework");
-            //}
-
-            //if (!string.IsNullOrEmpty(targetFxList))
-            //{
-            //    var fxNames = targetFxList.Split(';').ToList<string>();
-            //    foreach (string fn in fxNames)
-            //    {
-            //        TargetFrameworkMoniker fxMoniker = GetValidFxMoniker(fn, out bool isFxValid);
-            //        SdkProjectMetaData projStatus = new SdkProjectMetaData(fxMoniker.ToString(), projSpec.ItemSpec, isFxValid);
-            //        if (isFxValid)
-            //        {
-            //            fxDict.Add(fxMoniker.ToString(), projStatus);
-            //        }
-            //        else
-            //        {
-            //            //Log.LogMessage("Detected unsupported Target Framework {0}, in project {1}", fn, projSpec.ItemSpec);
-            //        }
-
-            //        monikerCount++;
-            //    }
-
-            //    loadedProj = null;
-            //}
-
-            //return fxDict;
-        }
-
-        /// <summary>
-        /// Potential fragmentation logic
-        /// </summary>
-        private void UpdateWellKnowProjectList()
-        {
-            ////List<string> wkSdkProjs = SearchWellKnowProjects(wkProj45Paths);
-            ////List<string> wkTestSdkProjs = SearchWellKnowProjects(wkTest45Projects);
-
-            //List<ITaskItem> wkTTi = new List<ITaskItem>();
-            //List<ITaskItem> wkTi = new List<ITaskItem>();
-
-            //foreach (string testProj in wkTestSdkProjs)
-            //{
-            //    TaskItem ti = new TaskItem(testProj);
-            //    wkTTi.Add(ti);
-            //}
-
-            //foreach (string projPath in wkSdkProjs)
-            //{
-            //    TaskItem ti = new TaskItem(projPath);
-            //    wkTi.Add(ti);
-            //}
-
-            //if (wkTTi.Any<ITaskItem>())
-            //{
-            //    //WellKnowTestSDKNet452Projects = wkTTi.ToArray<ITaskItem>();
-            //}
-
-            //if (wkTi.Any<ITaskItem>())
-            //{
-            //    //WellKnowSDKNet452Projects = wkTi.ToArray<ITaskItem>();
-            //}
-        }
-
-        
-        
-        private List<string> GetAndUpdateIgnoredProjects(string sourceRootDir)
-        {
-            string[] ignoreTokens = null;
-
-            if (!string.IsNullOrEmpty(IgnoreDirNameForSearchingProjects))
-            {
-                IgnoreDirNameForSearchingProjects = IgnoreDirNameForSearchingProjects.Trim();
-                ignoreTokens = IgnoreDirNameForSearchingProjects.Split(' ');
-            }
-
-            var allProjFiles = Directory.EnumerateFiles(sourceRootDir, _defaultFileExt, SearchOption.AllDirectories);
-
-            foreach (string tokenToIgnore in ignoreTokens)
-            {
-                var ignoredFiles = from s in allProjFiles where s.Contains(tokenToIgnore) select s;
-                if (ignoredFiles.Any<string>())
-                {
-                    _overAllIgnoreProjects.AddRange(ignoredFiles);
-                }
-            }
-
-            //_overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkProj45Paths));
-            //_overAllIgnoreProjects.AddRange(SearchWellKnowProjects(wkTest45Projects));
-
-            return _overAllIgnoreProjects;
-        }
-
-        private TargetFrameworkMoniker GetValidFxMoniker(string moniker, out bool isMonikerValid)
-        {
-            string lcMoniker = moniker.ToLower();
-            bool fxSupported = false;
-            TargetFrameworkMoniker fxMoniker = TargetFrameworkMoniker.UnSupported;
-            switch (lcMoniker)
-            {
-                case "net452":
-                    fxMoniker = TargetFrameworkMoniker.net452;
-                    fxSupported = true;
-                    break;
-
-                case "netcoreapp1.1":
-                    fxMoniker = TargetFrameworkMoniker.netcoreapp11;
-                    fxSupported = true;
-                    break;
-
-                case "netstandard1.4":
-                    fxMoniker = TargetFrameworkMoniker.netstandard14;
-                    fxSupported = true;
-                    break;
-
-                case "net46":
-                    fxMoniker = TargetFrameworkMoniker.net46;
-                    fxSupported = false;
-                    break;
-
-                case "net461":
-                    fxMoniker = TargetFrameworkMoniker.net461;
-                    fxSupported = false;
-                    break;
-            }
-
-            isMonikerValid = fxSupported;
-            return fxMoniker;
-        }
-        
     }
 
     public class SdkProjectMetaData
