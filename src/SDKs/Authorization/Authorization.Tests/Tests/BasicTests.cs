@@ -430,8 +430,7 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "Graph issue when adding user to group, needs investigation")]
-        [Fact]
+        [Fact(Skip = "Graph issue when adding user to group, needs investigation")]        
         public void RoleAssignmentListWithAssignedToFilterTest()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();

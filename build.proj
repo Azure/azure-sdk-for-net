@@ -9,6 +9,7 @@
 	<Target Name="Build" DependsOnTargets="$(BuildTraversedProjectsDependsOn)" />
 	<Target Name="Rebuild" DependsOnTargets="Clean;Build" />
 	<Target Name="PublishNuget" DependsOnTargets="$(PublishNugetDependsOn)" />
+  <Target Name="CreateNugetPackage" DependsOnTargets="$(PackageNugetDependsOn)" />
 	<Target Name="RunTests" DependsOnTargets="$(RunTestProjectsDependsOn)" />
   <Target Name="SignNuget" DependsOnTargets="$(SignNugetDependsOn)" />  
   <Target Name="Help" DependsOnTargets="$(HelpDependsOn)" />  
