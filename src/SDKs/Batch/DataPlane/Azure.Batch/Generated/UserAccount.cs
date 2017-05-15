@@ -18,23 +18,24 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Properties used to create a user on an Azure Batch node.
+    /// A user account to create on an Azure Batch node. Tasks may be configured to execute in the security context of the 
+    /// user account.
     /// </summary>
     public partial class UserAccount : ITransportObjectProvider<Models.UserAccount>, IPropertyMetadata
     {
         private class PropertyContainer : PropertyCollection
         {
             public readonly PropertyAccessor<Common.ElevationLevel?> ElevationLevelProperty;
+            public readonly PropertyAccessor<LinuxUserConfiguration> LinuxUserConfigurationProperty;
             public readonly PropertyAccessor<string> NameProperty;
             public readonly PropertyAccessor<string> PasswordProperty;
-            public readonly PropertyAccessor<string> SshPrivateKeyProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.ElevationLevelProperty = this.CreatePropertyAccessor<Common.ElevationLevel?>("ElevationLevel", BindingAccess.Read | BindingAccess.Write);
+                this.LinuxUserConfigurationProperty = this.CreatePropertyAccessor<LinuxUserConfiguration>("LinuxUserConfiguration", BindingAccess.Read | BindingAccess.Write);
                 this.NameProperty = this.CreatePropertyAccessor<string>("Name", BindingAccess.Read | BindingAccess.Write);
                 this.PasswordProperty = this.CreatePropertyAccessor<string>("Password", BindingAccess.Read | BindingAccess.Write);
-                this.SshPrivateKeyProperty = this.CreatePropertyAccessor<string>("SshPrivateKey", BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.UserAccount protocolObject) : base(BindingState.Bound)
@@ -43,6 +44,10 @@ namespace Microsoft.Azure.Batch
                     UtilitiesInternal.MapNullableEnum<Models.ElevationLevel, Common.ElevationLevel>(protocolObject.ElevationLevel),
                     "ElevationLevel",
                     BindingAccess.Read);
+                this.LinuxUserConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.LinuxUserConfiguration, o => new LinuxUserConfiguration(o).Freeze()),
+                    "LinuxUserConfiguration",
+                    BindingAccess.Read);
                 this.NameProperty = this.CreatePropertyAccessor(
                     protocolObject.Name,
                     "Name",
@@ -50,10 +55,6 @@ namespace Microsoft.Azure.Batch
                 this.PasswordProperty = this.CreatePropertyAccessor(
                     protocolObject.Password,
                     "Password",
-                    BindingAccess.Read);
-                this.SshPrivateKeyProperty = this.CreatePropertyAccessor(
-                    protocolObject.SshPrivateKey,
-                    "SshPrivateKey",
                     BindingAccess.Read);
             }
         }
@@ -68,18 +69,18 @@ namespace Microsoft.Azure.Batch
         /// <param name='name'>The name of the user account.</param>
         /// <param name='password'>The password for the user account.</param>
         /// <param name='elevationLevel'>The elevation level of the user account.</param>
-        /// <param name='sshPrivateKey'>The SSH private key for the user account.</param>
+        /// <param name='linuxUserConfiguration'>Additional properties used to create a user account on a Linux node.</param>
         public UserAccount(
             string name,
             string password,
             Common.ElevationLevel? elevationLevel = default(Common.ElevationLevel?),
-            string sshPrivateKey = default(string))
+            LinuxUserConfiguration linuxUserConfiguration = default(LinuxUserConfiguration))
         {
             this.propertyContainer = new PropertyContainer();
             this.Name = name;
             this.Password = password;
             this.ElevationLevel = elevationLevel;
-            this.SshPrivateKey = sshPrivateKey;
+            this.LinuxUserConfiguration = linuxUserConfiguration;
         }
 
         internal UserAccount(Models.UserAccount protocolObject)
@@ -104,6 +105,19 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets additional properties used to create a user account on a Linux node.
+        /// </summary>
+        /// <remarks>
+        /// This property is ignored if specified on a Windows pool. If not specified, the user is created with the default 
+        /// options.
+        /// </remarks>
+        public LinuxUserConfiguration LinuxUserConfiguration
+        {
+            get { return this.propertyContainer.LinuxUserConfigurationProperty.Value; }
+            set { this.propertyContainer.LinuxUserConfigurationProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the name of the user account.
         /// </summary>
         public string Name
@@ -119,19 +133,6 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.PasswordProperty.Value; }
             set { this.propertyContainer.PasswordProperty.Value = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the SSH private key for the user account.
-        /// </summary>
-        /// <remarks>
-        /// The SSH private key establishes password-less SSH between nodes in a Linux pool when the pool's <see cref="CloudPool.InterComputeNodeCommunicationEnabled"/> 
-        /// property is true. This property will be ignored in a Windows pool.
-        /// </remarks>
-        public string SshPrivateKey
-        {
-            get { return this.propertyContainer.SshPrivateKeyProperty.Value; }
-            set { this.propertyContainer.SshPrivateKeyProperty.Value = value; }
         }
 
         #endregion // UserAccount
@@ -161,9 +162,9 @@ namespace Microsoft.Azure.Batch
             Models.UserAccount result = new Models.UserAccount()
             {
                 ElevationLevel = UtilitiesInternal.MapNullableEnum<Common.ElevationLevel, Models.ElevationLevel>(this.ElevationLevel),
+                LinuxUserConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.LinuxUserConfiguration, (o) => o.GetTransportObject()),
                 Name = this.Name,
                 Password = this.Password,
-                SshPrivateKey = this.SshPrivateKey,
             };
 
             return result;

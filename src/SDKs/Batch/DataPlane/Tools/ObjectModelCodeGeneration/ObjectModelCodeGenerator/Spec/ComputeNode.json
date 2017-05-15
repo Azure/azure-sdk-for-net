@@ -219,6 +219,17 @@
             "UnboundAccess": "none"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "IsDedicated",
+            "SummaryComment": "Whether this compute node is a dedicated node. If false, the node is a low-priority node.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
         }
       ]
     }

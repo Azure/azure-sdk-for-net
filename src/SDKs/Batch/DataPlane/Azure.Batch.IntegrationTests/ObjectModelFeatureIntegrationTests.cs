@@ -780,7 +780,7 @@
                             //Pool Specification
                             PoolSpecification poolSpecification = new PoolSpecification()
                             {
-                                TargetDedicated = 0,
+                                TargetDedicatedComputeNodes = 0,
                                 VirtualMachineSize = PoolFixture.VMSize,
                                 CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
                                 StartTask = startTask
@@ -978,7 +978,7 @@
                     PoolSpecification poolSpec = new PoolSpecification();
 
                     poolSpec.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily, "*");
-                    poolSpec.TargetDedicated = 0;
+                    poolSpec.TargetDedicatedComputeNodes = 0;
                     poolSpec.VirtualMachineSize = PoolFixture.VMSize;
                     poolSpec.DisplayName = originalDisplayName;
 
@@ -1229,7 +1229,7 @@
                                 @"really/\bad+&*pool_^#name" + TestUtilities.GetMyName(),
                                 PoolFixture.VMSize,
                                 new CloudServiceConfiguration(PoolFixture.OSFamily),
-                                targetDedicated: 0);
+                                targetDedicatedComputeNodes: 0);
                             Bug1770942RetryPolicy retryPolicy = new Bug1770942RetryPolicy(this.testOutputHelper);
 
                             // confirm there is a default retry policy
@@ -1252,7 +1252,7 @@
                                     poolId,
                                     PoolFixture.VMSize,
                                     new CloudServiceConfiguration(PoolFixture.OSFamily),
-                                    targetDedicated: 0);
+                                    targetDedicatedComputeNodes: 0);
 
                                 unboundPool.Commit();
                             }

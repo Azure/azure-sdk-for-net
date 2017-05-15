@@ -8,7 +8,7 @@
             "Type": "bool?",
             "Name": "AutoScaleEnabled",
             "SummaryComment": "Whether the pool size should automatically adjust over time.",
-            "RemarksComment": "<para>If false, the <see cref=\"TargetDedicated\"/> property is required.</para> <para>If true, the <see cref=\"AutoScaleFormula\"/> property is required. The pool automatically resizes according to the formula.</para> <para>The default value is false.</para>",
+            "RemarksComment": "<para>If false, one of the <see cref=\"TargetDedicatedComputeNodes\"/> or <see cref=\"TargetLowPriorityComputeNodes\"/> property is required.</para> <para>If true, the <see cref=\"AutoScaleFormula\"/> property is required. The pool automatically resizes according to the formula.</para> <para>The default value is false.</para>",
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
@@ -178,13 +178,30 @@
         {
           "Key": {
             "Type": "int?",
-            "Name": "TargetDedicated",
-            "SummaryComment": "The desired number of compute nodes in the pool.",
-            "RemarksComment": "This setting cannot be specified if <see cref=\"AutoScaleEnabled\"/> is set to true. It is required if AutoScaleEnabled is set to false.",
+            "Name": "TargetDedicatedComputeNodes",
+            "SummaryComment": "The desired number of dedicated compute nodes in the pool.",
+            "RemarksComment": "This setting cannot be specified if <see cref=\"AutoScaleEnabled\"/> is set to true. At least one of this property and <see cref=\"TargetLowPriorityComputeNodes\"/> must be specified if <see cref=\"AutoScaleEnabled\"/> is false. If not specified, the default is 0.",
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
-          "Value": null
+          "Value": {
+            "Type": "int?",
+            "Name": "TargetDedicatedNodes"
+          }
+        },
+        {
+          "Key": {
+            "Type": "int?",
+            "Name": "TargetLowPriorityComputeNodes",
+            "SummaryComment": "The desired number of low-priority compute nodes in the pool.",
+            "RemarksComment": "This setting cannot be specified if <see cref=\"AutoScaleEnabled\"/> is set to true. At least one of <see cref=\"TargetDedicatedComputeNodes\"/> and this property must be specified if <see cref=\"AutoScaleEnabled\"/> is false. If not specified, the default is 0.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "int?",
+            "Name": "TargetLowPriorityNodes"
+          }
         },
         {
           "Key": {
@@ -192,7 +209,7 @@
             "Name": "UserAccounts",
             "SummaryComment": "The list of user accounts to be created on each node in the pool.",
             "RemarksComment": null,
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": {
@@ -224,6 +241,17 @@
             "Type": "string",
             "Name": "VmSize"
           }
+        },
+        {
+          "Key": {
+            "Type": "IList<string>",
+            "Name": "ApplicationLicenses",
+            "SummaryComment": "The list of application licenses the Batch service will make available on each compute node in the pool.",
+            "RemarksComment": "The list of application licenses must be a subset of available Batch service application licenses.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
         }
       ]
     }

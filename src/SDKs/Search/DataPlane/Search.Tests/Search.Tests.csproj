@@ -12,8 +12,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="1.0.2" />
-    
-    <!--<PackageReference Include="Microsoft.Azure.Search" Version="4.0.0-preview" />-->    
     <ProjectReference Include="..\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj" />
     <ProjectReference Include="..\..\Management\Search.Management.Tests\Search.Management.Tests.csproj" />
   </ItemGroup>

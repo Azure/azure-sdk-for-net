@@ -56,6 +56,11 @@ namespace Microsoft.Azure.Management.DevTestLabs
         public string ApiVersion { get; private set; }
 
         /// <summary>
+        /// The name of the resource group.
+        /// </summary>
+        public string ResourceGroupName { get; set; }
+
+        /// <summary>
         /// The subscription ID.
         /// </summary>
         public string SubscriptionId { get; set; }
@@ -78,64 +83,109 @@ namespace Microsoft.Azure.Management.DevTestLabs
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the ILabOperations.
+        /// Gets the ILabsOperations.
         /// </summary>
-        public virtual ILabOperations Lab { get; private set; }
+        public virtual ILabsOperations Labs { get; private set; }
 
         /// <summary>
-        /// Gets the IArtifactSourceOperations.
+        /// Gets the IGlobalSchedulesOperations.
         /// </summary>
-        public virtual IArtifactSourceOperations ArtifactSource { get; private set; }
+        public virtual IGlobalSchedulesOperations GlobalSchedules { get; private set; }
 
         /// <summary>
-        /// Gets the IArtifactOperations.
+        /// Gets the IArtifactSourcesOperations.
         /// </summary>
-        public virtual IArtifactOperations Artifact { get; private set; }
+        public virtual IArtifactSourcesOperations ArtifactSources { get; private set; }
 
         /// <summary>
-        /// Gets the ICostOperations.
+        /// Gets the IArmTemplatesOperations.
         /// </summary>
-        public virtual ICostOperations Cost { get; private set; }
+        public virtual IArmTemplatesOperations ArmTemplates { get; private set; }
 
         /// <summary>
-        /// Gets the ICustomImageOperations.
+        /// Gets the IArtifactsOperations.
         /// </summary>
-        public virtual ICustomImageOperations CustomImage { get; private set; }
+        public virtual IArtifactsOperations Artifacts { get; private set; }
 
         /// <summary>
-        /// Gets the IFormulaOperations.
+        /// Gets the ICostsOperations.
         /// </summary>
-        public virtual IFormulaOperations Formula { get; private set; }
+        public virtual ICostsOperations Costs { get; private set; }
 
         /// <summary>
-        /// Gets the IGalleryImageOperations.
+        /// Gets the ICustomImagesOperations.
         /// </summary>
-        public virtual IGalleryImageOperations GalleryImage { get; private set; }
+        public virtual ICustomImagesOperations CustomImages { get; private set; }
 
         /// <summary>
-        /// Gets the IPolicySetOperations.
+        /// Gets the IFormulasOperations.
         /// </summary>
-        public virtual IPolicySetOperations PolicySet { get; private set; }
+        public virtual IFormulasOperations Formulas { get; private set; }
 
         /// <summary>
-        /// Gets the IPolicyOperations.
+        /// Gets the IGalleryImagesOperations.
         /// </summary>
-        public virtual IPolicyOperations Policy { get; private set; }
+        public virtual IGalleryImagesOperations GalleryImages { get; private set; }
 
         /// <summary>
-        /// Gets the IScheduleOperations.
+        /// Gets the INotificationChannelsOperations.
         /// </summary>
-        public virtual IScheduleOperations Schedule { get; private set; }
+        public virtual INotificationChannelsOperations NotificationChannels { get; private set; }
 
         /// <summary>
-        /// Gets the IVirtualMachineOperations.
+        /// Gets the IPolicySetsOperations.
         /// </summary>
-        public virtual IVirtualMachineOperations VirtualMachine { get; private set; }
+        public virtual IPolicySetsOperations PolicySets { get; private set; }
 
         /// <summary>
-        /// Gets the IVirtualNetworkOperations.
+        /// Gets the IPoliciesOperations.
         /// </summary>
-        public virtual IVirtualNetworkOperations VirtualNetwork { get; private set; }
+        public virtual IPoliciesOperations Policies { get; private set; }
+
+        /// <summary>
+        /// Gets the ISchedulesOperations.
+        /// </summary>
+        public virtual ISchedulesOperations Schedules { get; private set; }
+
+        /// <summary>
+        /// Gets the IServiceRunnersOperations.
+        /// </summary>
+        public virtual IServiceRunnersOperations ServiceRunners { get; private set; }
+
+        /// <summary>
+        /// Gets the IUsersOperations.
+        /// </summary>
+        public virtual IUsersOperations Users { get; private set; }
+
+        /// <summary>
+        /// Gets the IDisksOperations.
+        /// </summary>
+        public virtual IDisksOperations Disks { get; private set; }
+
+        /// <summary>
+        /// Gets the IEnvironmentsOperations.
+        /// </summary>
+        public virtual IEnvironmentsOperations Environments { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecretsOperations.
+        /// </summary>
+        public virtual ISecretsOperations Secrets { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineSchedulesOperations.
+        /// </summary>
+        public virtual IVirtualMachineSchedulesOperations VirtualMachineSchedules { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworksOperations.
+        /// </summary>
+        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DevTestLabsClient class.
@@ -316,18 +366,27 @@ namespace Microsoft.Azure.Management.DevTestLabs
         /// </summary>
         private void Initialize()
         {
-            this.Lab = new LabOperations(this);
-            this.ArtifactSource = new ArtifactSourceOperations(this);
-            this.Artifact = new ArtifactOperations(this);
-            this.Cost = new CostOperations(this);
-            this.CustomImage = new CustomImageOperations(this);
-            this.Formula = new FormulaOperations(this);
-            this.GalleryImage = new GalleryImageOperations(this);
-            this.PolicySet = new PolicySetOperations(this);
-            this.Policy = new PolicyOperations(this);
-            this.Schedule = new ScheduleOperations(this);
-            this.VirtualMachine = new VirtualMachineOperations(this);
-            this.VirtualNetwork = new VirtualNetworkOperations(this);
+            this.Labs = new LabsOperations(this);
+            this.GlobalSchedules = new GlobalSchedulesOperations(this);
+            this.ArtifactSources = new ArtifactSourcesOperations(this);
+            this.ArmTemplates = new ArmTemplatesOperations(this);
+            this.Artifacts = new ArtifactsOperations(this);
+            this.Costs = new CostsOperations(this);
+            this.CustomImages = new CustomImagesOperations(this);
+            this.Formulas = new FormulasOperations(this);
+            this.GalleryImages = new GalleryImagesOperations(this);
+            this.NotificationChannels = new NotificationChannelsOperations(this);
+            this.PolicySets = new PolicySetsOperations(this);
+            this.Policies = new PoliciesOperations(this);
+            this.Schedules = new SchedulesOperations(this);
+            this.ServiceRunners = new ServiceRunnersOperations(this);
+            this.Users = new UsersOperations(this);
+            this.Disks = new DisksOperations(this);
+            this.Environments = new EnvironmentsOperations(this);
+            this.Secrets = new SecretsOperations(this);
+            this.VirtualMachines = new VirtualMachinesOperations(this);
+            this.VirtualMachineSchedules = new VirtualMachineSchedulesOperations(this);
+            this.VirtualNetworks = new VirtualNetworksOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2016-05-15";
             this.AcceptLanguage = "en-US";

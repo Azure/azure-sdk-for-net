@@ -216,56 +216,16 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestParseEmptyCertificateVisibilityList_ResultIsNone()
         {
-            List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>();
+            List<Protocol.Models.CertificateVisibility> visibilityList = new List<Protocol.Models.CertificateVisibility>();
             CertificateVisibility? visibilityEnum = UtilitiesInternal.ParseCertificateVisibility(visibilityList);
             Assert.Equal(CertificateVisibility.None, visibilityEnum);
-        }
-
-        [Fact]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public void TestParseCertificateVisibilityListWithNull_ResultIsNone()
-        {
-            List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
-                {
-                    null
-                };
-
-            CertificateVisibility? visibilityEnum = UtilitiesInternal.ParseCertificateVisibility(visibilityList);
-            Assert.Equal(CertificateVisibility.None, visibilityEnum);
-        }
-
-        [Fact]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public void TestParseUnmappedCertificateVisibilityList_UnmappedIsReturned()
-        {
-            List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
-                {
-                    Protocol.Models.CertificateVisibility.Unmapped
-                };
-            
-            CertificateVisibility? result = UtilitiesInternal.ParseCertificateVisibility(visibilityList);
-            Assert.Equal(CertificateVisibility.Unmapped, result);
-        }
-
-        [Fact]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public void TestParseNullEntriesCertificateVisibilityList_NullEntriesIgnored()
-        {
-            List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
-                {
-                    Protocol.Models.CertificateVisibility.StartTask,
-                    null
-                };
-
-            CertificateVisibility? visibilityEnum = UtilitiesInternal.ParseCertificateVisibility(visibilityList);
-            Assert.Equal(CertificateVisibility.StartTask, visibilityEnum);
         }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestParseSingleEntryCertificateVisibilityList()
         {
-            List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
+            List<Protocol.Models.CertificateVisibility> visibilityList = new List<Protocol.Models.CertificateVisibility>()
                 {
                     Protocol.Models.CertificateVisibility.StartTask
                 };
@@ -277,7 +237,7 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestParseMultiWordCertificateVisibility()
         {
-            List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
+            List<Protocol.Models.CertificateVisibility> visibilityList = new List<Protocol.Models.CertificateVisibility>()
                 {
                     Protocol.Models.CertificateVisibility.StartTask,
                     Protocol.Models.CertificateVisibility.RemoteUser,
@@ -309,17 +269,6 @@
             Assert.Equal(2, visibilityList.Count());
             Assert.Contains(Protocol.Models.CertificateVisibility.StartTask, visibilityList);
             Assert.Contains(Protocol.Models.CertificateVisibility.Task, visibilityList);
-        }
-
-        [Fact]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public void TestUnmappedCertificateVisibilityToList()
-        {
-            const CertificateVisibility visibility = CertificateVisibility.Unmapped;
-            var visibilityList = UtilitiesInternal.CertificateVisibilityToList(visibility);
-
-            Assert.Equal(1, visibilityList.Count());
-            Assert.Contains(Protocol.Models.CertificateVisibility.Unmapped, visibilityList);
         }
 
         #endregion

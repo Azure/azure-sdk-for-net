@@ -35,12 +35,6 @@ namespace Microsoft.Azure.Batch.Common
         /// The accounts under which users remotely access the node (using
         /// Remote Desktop).
         /// </summary>
-        RemoteUser = 4,
-
-        /// <summary>
-        /// The service reported an option that is not recognized by this
-        /// version of the Batch client.
-        /// </summary>
-        Unmapped = 8,
+        RemoteUser = 4
     }
 }

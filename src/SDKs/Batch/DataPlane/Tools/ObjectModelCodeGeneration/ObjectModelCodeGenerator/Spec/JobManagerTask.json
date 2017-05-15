@@ -5,6 +5,17 @@
       "Properties": [
         {
           "Key": {
+            "Type": "bool?",
+            "Name": "AllowLowPriorityNode",
+            "SummaryComment": "Whether the Job Manager task may run on a low-priority compute node. If omitted, the default is false.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
             "Type": "string",
             "Name": "Id",
             "SummaryComment": "The id of the task.",
@@ -75,6 +86,20 @@
           "Value": {
             "Type": "IList<Models.ResourceFile>",
             "Name": "ResourceFiles"
+          }
+        },
+        {
+          "Key": {
+            "Type": "IList<OutputFile>",
+            "Name": "OutputFiles",
+            "SummaryComment": "A list of files that the Batch service will upload from the compute node after running the command line.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.OutputFile>",
+            "Name": "OutputFiles"
           }
         },
         {

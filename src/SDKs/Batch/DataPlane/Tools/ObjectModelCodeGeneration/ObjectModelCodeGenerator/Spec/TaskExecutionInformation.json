@@ -39,21 +39,24 @@
         },
         {
           "Key": {
-            "Type": "TaskSchedulingError",
-            "Name": "SchedulingError",
-            "SummaryComment": "The error encountered by the service in starting the task. This parameter is only returned if there was an error in scheduling the task and it is now in completed state.",
-            "RemarksComment": null,
+            "Type": "TaskFailureInformation",
+            "Name": "FailureInformation",
+            "SummaryComment": "Information describing the task failure, if any.",
+            "RemarksComment": "This property is set only if the task is in the <see cref=\"Common.TaskState.Completed\"/> state and encountered a failure.",
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
-          "Value": null
+          "Value": {
+            "Type": "TaskFailureInformation",
+            "Name": "FailureInfo"
+          }
         },
         {
           "Key": {
             "Type": "int",
             "Name": "RetryCount",
-            "SummaryComment": "The number of times the task has been retried by the Batch service. Every time the task exits with a non-zero code, it is deemed as an application failure. The Batch service will retry the task up to the specified MaxTaskRetryCount.",
-            "RemarksComment": null,
+            "SummaryComment": "The number of times the task has been retried by the Batch service.",
+            "RemarksComment": "Task application failures (non-zero exit code) are retried, pre-processing errors (the task could not be run) and file upload errors are not retried. The Batch service will retry the task up to the specified <see cref=\"TaskConstraints.MaxTaskRetryCount\" />.",
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },
@@ -91,6 +94,20 @@
             "UnboundAccess": "none"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "Common.TaskExecutionResult?",
+            "Name": "Result",
+            "SummaryComment": "The result of the task execution.",
+            "RemarksComment": "If the value is <see cref=\"Common.TaskExecutionResult.Failure\" />, then the details of the failure can be found in the <see cref=\"FailureInformation\" /> property.",
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.TaskExecutionResult?",
+            "Name": "Result"
+          }
         }
       ]
     }

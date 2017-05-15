@@ -115,11 +115,6 @@ namespace Microsoft.Azure.Batch.Protocol
         /// The entity namespace plus dot in the end.
         /// </summary>
         public const string EntityNameSpaceDot = BatchConstants.EntityNameSpace + ".";
-
-        /// <summary>
-        /// Default unknown enum value from server.
-        /// </summary>
-        public const string UnmappedEnumValueFromServer = "Unmapped";
     }
 
     internal static class BatchHttpHeaderConstants

@@ -286,7 +286,7 @@
 
                             iaps.PoolSpecification = ps;
 
-                            ps.TargetDedicated = 1;
+                            ps.TargetDedicatedComputeNodes = 1;
                             ps.VirtualMachineSize = PoolFixture.VMSize;
                             
                             ps.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);
@@ -394,7 +394,7 @@
 
                             PoolSpecification ps = iaps.PoolSpecification;
 
-                            ps.TargetDedicated = 1;
+                            ps.TargetDedicatedComputeNodes = 1;
                             ps.VirtualMachineSize = PoolFixture.VMSize;
                             
                             ps.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily);

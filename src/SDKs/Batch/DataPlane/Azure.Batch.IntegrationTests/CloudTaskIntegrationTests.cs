@@ -46,7 +46,7 @@
                 poolId,
                 PoolFixture.VMSize,
                 new CloudServiceConfiguration(PoolFixture.OSFamily),
-                targetDedicated: 3);
+                targetDedicatedComputeNodes: 3);
 
             newPool.InterComputeNodeCommunicationEnabled = true;
 
@@ -187,9 +187,9 @@
                             Assert.True(sw.Elapsed <= checkSubtasksStateTimeout, string.Format("The subtasks state is not set to Complete after {0} seconds", checkSubtasksStateTimeout.TotalSeconds));
                             Assert.Equal(2, subtasks.Count);
                             Assert.Equal(0, subtasks[0].ExitCode);
-                            Assert.Null(subtasks[0].SchedulingError);
+                            Assert.Null(subtasks[0].FailureInformation);
                             Assert.Equal(0, subtasks[1].ExitCode);
-                            Assert.Null(subtasks[1].SchedulingError);
+                            Assert.Null(subtasks[1].FailureInformation);
                             // Shouldnot assume the subtasks have order.
                             Assert.True((subtasks[0].Id == 1 && subtasks[1].Id == 2) || (subtasks[0].Id == 2 && subtasks[1].Id == 1));
 
@@ -1034,7 +1034,6 @@
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
-
     }
 
     public class IntegrationCloudTaskTestsWithoutSharedPool

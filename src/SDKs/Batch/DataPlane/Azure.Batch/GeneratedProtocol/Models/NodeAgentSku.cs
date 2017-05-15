@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compatible with the node agent SKU.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'linux', 'windows', 'unmapped'
+        /// Possible values include: 'linux', 'windows'
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "osType")]
         public OSType? OsType { get; set; }
