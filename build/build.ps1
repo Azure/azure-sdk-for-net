@@ -213,6 +213,9 @@ try {
         CopyArtifacts
     }    
 }
+catch {
+	throw
+}
 finally {
     if ($canDeploy -and $resourceGroupName) {
         Delete-AzureResources
