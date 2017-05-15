@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static IPage<JobInformation> List(this IJobOperations operations, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?))
             {
-                return operations.ListAsync(accountName, odataQuery, select, count).GetAwaiter().GetResult();
+                return ((IJobOperations)operations).ListAsync(accountName, odataQuery, select, count).GetAwaiter().GetResult();
             }
 
             /// <summary>

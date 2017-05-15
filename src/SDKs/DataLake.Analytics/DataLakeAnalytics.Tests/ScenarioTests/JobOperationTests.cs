@@ -32,6 +32,17 @@ namespace DataLakeAnalytics.Tests
 
                 Guid jobId = TestUtilities.GenerateGuid();
                 var secondId = TestUtilities.GenerateGuid();
+
+                // job relationship information
+                var recurrenceId = TestUtilities.GenerateGuid();
+                var recurrenceName = TestUtilities.GenerateName("recurrence");
+
+                var runId01 = TestUtilities.GenerateGuid();
+                var runId02 = TestUtilities.GenerateGuid();
+
+                var pipelineId = TestUtilities.GenerateGuid();
+                var pipelineName = TestUtilities.GenerateName("jobPipeline");
+                var pipelineUri = string.Format("https://{0}.contoso.com/myJob", TestUtilities.GenerateName("pipelineuri"));
                 // Submit a job to the account
                 var jobToSubmit = new JobInformation
                 {
@@ -40,9 +51,16 @@ namespace DataLakeAnalytics.Tests
                     Type = JobType.USql,
                     Properties = new USqlJobProperties
                     {
-                        // TODO: figure out why this is no longer showing up as a property
-                        // Type = JobType.USql, 
                         Script = "DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;"
+                    },
+                    Related = new JobRelationshipProperties
+                    {
+                        PipelineId = pipelineId,
+                        PipelineName = pipelineName,
+                        PipelineUri = pipelineUri,
+                        RecurrenceId = recurrenceId,
+                        RecurrenceName = recurrenceName,
+                        RunId = runId01
                     }
                 };
 
@@ -66,6 +84,8 @@ namespace DataLakeAnalytics.Tests
                 Assert.NotEmpty(getCancelledJobResponse.ErrorMessage);
 
                 // Resubmit the job
+                // first update the runId to a new run
+                jobToSubmit.Related.RunId = runId02;
                 jobCreateResponse = clientToUse.Job.Create(commonData.SecondDataLakeAnalyticsAccountName, secondId, jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);
@@ -93,13 +113,40 @@ namespace DataLakeAnalytics.Tests
                     string.Format("Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
                         getJobResponse.JobId, getJobResponse.State, getJobResponse.Result, getJobResponse.ErrorMessage));
 
+                // validate job relationship info
+                Assert.Equal(runId02, getJobResponse.Related.RunId);
+                Assert.Equal(pipelineId, getJobResponse.Related.PipelineId);
+                Assert.Equal(pipelineName, getJobResponse.Related.PipelineName);
+                Assert.Equal(recurrenceName, getJobResponse.Related.RecurrenceName);
+                Assert.Equal(recurrenceId, getJobResponse.Related.RecurrenceId);
+                Assert.Equal(pipelineUri, getJobResponse.Related.PipelineUri);
+
                 var listJobResponse = clientToUse.Job.List(commonData.SecondDataLakeAnalyticsAccountName, null);
                 Assert.NotNull(listJobResponse);
 
                 Assert.True(listJobResponse.Any(job => job.JobId == getJobResponse.JobId));
 
-                // Just compile the job, which requires a jobId in the job object.
-                // jobToSubmit.JobId = getJobResponse.JobId;
+                // validate job relationship retrieval (get/list pipeline and get/list recurrence)
+                var getPipeline = clientToUse.Pipeline.Get(commonData.SecondDataLakeAnalyticsAccountName, pipelineId);
+                Assert.Equal(pipelineId, getPipeline.PipelineId);
+                Assert.Equal(pipelineName, getPipeline.PipelineName);
+                Assert.Equal(pipelineUri, getPipeline.PipelineUri);
+                Assert.True(getPipeline.Runs.Count() >= 2);
+
+                var listPipeline = clientToUse.Pipeline.List(commonData.SecondDataLakeAnalyticsAccountName);
+                Assert.Equal(1, listPipeline.Count());
+                Assert.True(listPipeline.Any(pipeline => pipeline.PipelineId == pipelineId));
+
+                // recurrence get/list
+                var getRecurrence = clientToUse.Recurrence.Get(commonData.SecondDataLakeAnalyticsAccountName, recurrenceId);
+                Assert.Equal(recurrenceId, getRecurrence.RecurrenceId);
+                Assert.Equal(recurrenceName, getRecurrence.RecurrenceName);
+                
+                var listRecurrence = clientToUse.Recurrence.List(commonData.SecondDataLakeAnalyticsAccountName);
+                Assert.Equal(1, listRecurrence.Count());
+                Assert.True(listRecurrence.Any(recurrence => recurrence.RecurrenceId == recurrenceId));
+
+                // Just compile the job, which requires a jobId in the job object
                 var compileResponse = clientToUse.Job.Build(commonData.SecondDataLakeAnalyticsAccountName, jobToSubmit);
                 Assert.NotNull(compileResponse);
 

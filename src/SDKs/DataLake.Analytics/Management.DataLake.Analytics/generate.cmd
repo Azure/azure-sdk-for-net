@@ -7,7 +7,7 @@
 setlocal
 
 set accountSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/12b641f181711ec1e9a50f1dcfc7861721aa3242/arm-datalake-analytics/account/2016-11-01/swagger/account.json"
-set jobSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/12b641f181711ec1e9a50f1dcfc7861721aa3242/arm-datalake-analytics/job/2016-11-01/swagger/job.json"
+set jobSpecFile="https://raw.githubusercontent.com/begoldsm/azure-rest-api-specs/job_recurrence/arm-datalake-analytics/job/2016-11-01/swagger/job.json"
 set catalogSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/12b641f181711ec1e9a50f1dcfc7861721aa3242/arm-datalake-analytics/catalog/2016-11-01/swagger/catalog.json"
 
 set repoRoot=%~dp0..\..\..\..
