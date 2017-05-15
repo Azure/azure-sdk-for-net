@@ -5,24 +5,25 @@ branches:
   - dev
 image: Visual Studio 2017
 environment:
-  ClientSecret:
+  azure-service-bus-dotnet/ClientSecret:
     secure: /8H7C81iNS+gVi7LhJCEOPUlNaa30y4KcY4nw/g2C4HGxOv6SrcroyDvMnqD+5GN
-  TenantId:
+  azure-service-bus-dotnet/TenantId:
     secure: xohonz/X8PPLOVIdT3ch2C5XeSa30RwR6NuXFh4e85svXT1mJNGGO1HQEGxCk3wp
-  AppId:
+  azure-service-bus-dotnet/AppId:
     secure: c+H140oRJfHtmFHZxSRLWocv5AU0q33X7kgMcTcXxhJvtVhk2WAk1dRQkSN+SyoA
-before_build:
-- ps: >-
-    . .\build\AppveyorBuildFunctions.ps1
+  matrix:
+    # First build
+    - DotNetRunTime: netcoreapp1.0
+      azure-service-bus-dotnet/CodeCovSecret:
+        secure: 4/S+CQQJP+gBYrAOj6c1zg3GBMbhKofjIbqq7z6GeVUIWDJCd3ATGsDRT4++bruM
+    # Second build
+    - DotNetRunTime: net46
+      azure-service-bus-dotnet/SkipCodeCoverage: true
+skip_commits:
+  files:
+    - '**/*.md'
+artifacts:
+- path: .\build\artifacts\*
 build_script:
-- ps: >-
-    Build-Solution
-before_test:
-- ps: >-
-    Deploy-AzureResources
-test_script:
-- ps: >-
-    Run-UnitTests
-on_finish:
-- ps: >-
-    Delete-AzureResources
+- ps: .\build\build.ps1
+test: off
