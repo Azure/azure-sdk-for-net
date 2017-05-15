@@ -110,7 +110,7 @@ namespace Authorization.Tests
                     }
                 };
 
-                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName");
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
 
                 var assignmentId = string.Format(
                     "{0}/providers/Microsoft.Authorization/roleAssignments/{1}",
@@ -159,7 +159,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName");
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestListGet");
 
                 var scope = "subscriptions/" + client.Credentials.SubscriptionId + "/" + ResourceGroup;
                 var principalId = testContext.Users.ElementAt(5);
@@ -407,7 +407,7 @@ namespace Authorization.Tests
 
                 var client = testContext.GetAuthorizationManagementClient();
 
-                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName");
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameCreateDeleteTest");
 
                 var scope = "subscriptions/" + client.Credentials.SubscriptionId + "/" + ResourceGroup;
                 var principalId = testContext.Users.ElementAt(3);
