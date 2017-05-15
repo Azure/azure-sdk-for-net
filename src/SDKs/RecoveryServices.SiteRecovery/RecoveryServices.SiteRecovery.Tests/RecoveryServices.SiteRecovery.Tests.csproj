@@ -10,7 +10,6 @@
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.RecoveryServices" Version="4.2.0-preview" />
     <ProjectReference Include="..\Management.RecoveryServices.SiteRecovery\Microsoft.Azure.Management.RecoveryServices.SiteRecovery.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -22,10 +21,5 @@
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="TestSettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
