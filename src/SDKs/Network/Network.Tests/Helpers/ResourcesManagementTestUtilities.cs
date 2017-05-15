@@ -25,6 +25,20 @@ namespace Microsoft.Azure.Test
             return client;
         }
 
+        /// <summary>
+        /// Default constructor for management clients, using the newest Resource Manager and the TestSupport Infrastructure.
+        /// Once all tests are moved away from depreciated version of Resource Manager, this method should be removed
+        /// and "using Microsoft.Azure.Management.Resources" should be changed to "using Microsoft.Azure.Management.ResourceManager"
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <returns>A resource management client, created from the current context (environment variables)</returns>
+        public static Management.ResourceManager.ResourceManagementClient GetResourceManagementClientWithHandler(MockContext context, RecordedDelegatingHandler handler, bool useLatestResourceManager)
+        {
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<Management.ResourceManager.ResourceManagementClient>(handlers: handler);
+            return client;
+        }
+
         /// Get a default resource location for a given resource type
         /// </summary>
         /// <param name="client">The resource management client</param>
