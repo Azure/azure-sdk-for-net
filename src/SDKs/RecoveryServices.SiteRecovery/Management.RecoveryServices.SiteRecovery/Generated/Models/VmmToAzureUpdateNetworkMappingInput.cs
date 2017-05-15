@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// Update network mappings input properties/behaviour specific to vmm to
     /// azure.
     /// </summary>
+    [JsonObject("VmmToAzure")]
     public partial class VmmToAzureUpdateNetworkMappingInput : FabricSpecificUpdateNetworkMappingInput
     {
         /// <summary>
@@ -28,14 +29,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         public VmmToAzureUpdateNetworkMappingInput() { }
 
-        /// <summary>
-        /// Initializes a new instance of the
-        /// VmmToAzureUpdateNetworkMappingInput class.
-        /// </summary>
-        public VmmToAzureUpdateNetworkMappingInput(string instanceType = default(string))
-            : base(instanceType)
-        {
-        }
 
     }
 }

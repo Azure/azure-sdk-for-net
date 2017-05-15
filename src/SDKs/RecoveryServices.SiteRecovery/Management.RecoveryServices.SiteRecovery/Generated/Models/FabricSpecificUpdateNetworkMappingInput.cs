@@ -27,20 +27,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         public FabricSpecificUpdateNetworkMappingInput() { }
 
-        /// <summary>
-        /// Initializes a new instance of the
-        /// FabricSpecificUpdateNetworkMappingInput class.
-        /// </summary>
-        public FabricSpecificUpdateNetworkMappingInput(string instanceType = default(string))
-        {
-            InstanceType = instanceType;
-        }
-
-        /// <summary>
-        /// The instance type.
-        /// </summary>
-        [JsonProperty(PropertyName = "InstanceType")]
-        public string InstanceType { get; set; }
 
     }
 }

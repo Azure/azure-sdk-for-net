@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// Updates network mappings input.
     /// </summary>
+    [JsonObject("AzureToAzure")]
     public partial class AzureToAzureUpdateNetworkMappingInput : FabricSpecificUpdateNetworkMappingInput
     {
         /// <summary>
@@ -31,8 +32,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the
         /// AzureToAzureUpdateNetworkMappingInput class.
         /// </summary>
-        public AzureToAzureUpdateNetworkMappingInput(string instanceType = default(string), string primaryNetworkId = default(string))
-            : base(instanceType)
+        public AzureToAzureUpdateNetworkMappingInput(string primaryNetworkId = default(string))
         {
             PrimaryNetworkId = primaryNetworkId;
         }

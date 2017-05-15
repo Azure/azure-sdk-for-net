@@ -426,6 +426,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<NetworkMappingFabricSpecificSettings>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FabricSpecificCreateNetworkMappingInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FabricSpecificCreateNetworkMappingInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FabricSpecificUpdateNetworkMappingInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FabricSpecificUpdateNetworkMappingInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PolicyProviderSpecificDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PolicyProviderSpecificDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PolicyProviderSpecificInput>("instanceType"));
