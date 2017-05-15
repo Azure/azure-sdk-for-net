@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
-    <NugetCommonProfileTags/>
+    <NugetCommonProfileTags />
     <PackageOutputPath>$(BuiltPackageOutputDir)</PackageOutputPath>
     <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
     <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
@@ -25,7 +25,12 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Server.WebListener" Version="1.0.2" />
     <PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta1-build1309" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170222-09" />
@@ -43,7 +48,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>
   </PropertyGroup>
 
   <!--Do not remove until VS Test Tools fixes #472-->
