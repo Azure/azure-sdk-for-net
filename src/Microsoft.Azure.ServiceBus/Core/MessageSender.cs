@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public MessageSender(
             ServiceBusConnectionStringBuilder connectionStringBuilder,
             RetryPolicy retryPolicy = null)
-            : this(connectionStringBuilder.GetNamespaceConnectionString(), connectionStringBuilder.EntityPath, retryPolicy)
+            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder.EntityPath, retryPolicy)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             string connectionString, 
             string entityPath, 
             RetryPolicy retryPolicy = null)
-            : this(entityPath, new ServiceBusNamespaceConnection(connectionString), retryPolicy)
+            : this(entityPath, null, new ServiceBusNamespaceConnection(connectionString), null, retryPolicy)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -42,18 +42,10 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             this.ownsConnection = true;
-        }
-
-        public MessageSender(
-            string entityPath,
-            ServiceBusConnection serviceBusConnection,
-            RetryPolicy retryPolicy = null)
-            : this(entityPath, null, serviceBusConnection, null, retryPolicy)
-        {
             var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(
-                serviceBusConnection.SasKeyName,
-                serviceBusConnection.SasKey);
-            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, serviceBusConnection.OperationTimeout);
+                this.ServiceBusConnection.SasKeyName,
+                this.ServiceBusConnection.SasKey);
+            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
         }
 
         internal MessageSender(
