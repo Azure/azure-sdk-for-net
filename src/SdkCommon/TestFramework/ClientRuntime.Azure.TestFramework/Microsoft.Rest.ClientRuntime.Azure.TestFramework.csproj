@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!--<Import Project="$([MSBuild]::GetPathOfFileAbove('test.props'))" />-->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('clientruntime.reference.props'))" />  
   <PropertyGroup>
     <Description>Microsoft.Rest.ClientRuntime.Azure.TestFramework</Description>
     <AssemblyTitle>Test framework for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <VersionPrefix>1.6.0</VersionPrefix>
+    <VersionPrefix>1.7.0</VersionPrefix>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.TestFramework</AssemblyName>
     <PackageId>Microsoft.Rest.ClientRuntime.Azure.TestFramework</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime REST TestFramework</PackageTags>
@@ -15,9 +14,14 @@
   </PropertyGroup>
   
   <ItemGroup>        
-    <!--<ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />--> 
+    <!--
+    <ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
     <ProjectReference Include="..\..\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
     <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+    -->
+    
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.7.0,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
   </ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">

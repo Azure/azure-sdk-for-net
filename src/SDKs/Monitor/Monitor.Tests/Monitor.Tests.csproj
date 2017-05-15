@@ -5,7 +5,7 @@
     <Description>Monitor.Tests Class library</Description>
     <PackageId>Monitor.Tests</PackageId>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
-    <TargetFrameworks>net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Management.Monitor\Microsoft.Azure.Management.Monitor.csproj" />
