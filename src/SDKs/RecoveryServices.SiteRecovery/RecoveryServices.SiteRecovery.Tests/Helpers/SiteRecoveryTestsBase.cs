@@ -15,11 +15,7 @@ namespace SiteRecovery.Tests
 {
     public class SiteRecoveryTestsBase : TestBase
     {
-        public static string MyVaultName;
-        public static string MyResourceGroupName;
-        public static string VaultKey;
-        public static string ResourceNamespace;
-        public static string ResourceType;
+        public static string VaultKey = "CIK";
 
         protected readonly RecordedDelegatingHandler CustomHttpHandler
             = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -33,7 +29,7 @@ namespace SiteRecovery.Tests
             cikTokenDetails.NotBeforeTimestamp = TimeZoneInfo.ConvertTime(currentDateTime, TimeZoneInfo.Utc);
             cikTokenDetails.NotAfterTimestamp = cikTokenDetails.NotBeforeTimestamp.AddHours(6);
             cikTokenDetails.ClientRequestId = clientRequestId;
-            cikTokenDetails.Version = new System.Version(1, 2);
+            cikTokenDetails.Version = new Version(1, 2);
             cikTokenDetails.PropertyBag = new Dictionary<string, object>();
 
             string shaInput = JsonConvert.SerializeObject(cikTokenDetails);
@@ -44,6 +40,26 @@ namespace SiteRecovery.Tests
             cikTokenDetails.HashFunction = CikSupportedHashFunctions.HMACSHA256.ToString();
 
             return JsonConvert.SerializeObject(cikTokenDetails);
+        }
+
+        public Dictionary<string, List<string>> GetRequestHeaders(bool shouldSignRequest = true)
+        {
+            Dictionary<string, List<string>> customHeaders = new Dictionary<string, List<string>>();
+
+            string clientRequestId = Guid.NewGuid().ToString() + "-" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ssZ") + "-P";
+
+            customHeaders.Add("x-ms-client-request-id", new List<string> { clientRequestId });
+
+            if (shouldSignRequest)
+            {
+                customHeaders.Add("Agent-Authentication", new List<string> { this.GenerateAgentAuthenticationHeader(clientRequestId) });
+            }
+            else
+            {
+                customHeaders.Add("Agent-Authentication", new List<string> { "" });
+            }
+
+            return customHeaders;
         }
 
         #region CIK
