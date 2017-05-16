@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     /// <summary>
     /// Defines values for SkuTier.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum SkuTier
     {
         [EnumMember(Value = "Free")]

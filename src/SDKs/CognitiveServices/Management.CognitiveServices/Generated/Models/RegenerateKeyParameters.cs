@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         /// <param name="keyName">key name to generate (Key1|Key2). Possible
         /// values include: 'Key1', 'Key2'</param>
-        public RegenerateKeyParameters(KeyName? keyName = default(KeyName?))
+        public RegenerateKeyParameters(KeyName keyName)
         {
             KeyName = keyName;
         }
@@ -39,8 +39,17 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// include: 'Key1', 'Key2'
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
-        public KeyName? KeyName { get; set; }
+        public KeyName KeyName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }
 
