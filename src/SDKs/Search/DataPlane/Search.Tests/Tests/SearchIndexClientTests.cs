@@ -33,15 +33,18 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void ConstructorCreatesCorrectUrl()
+        public void ConstructorSetsUrlRelatedProperties()
         {
-            const string ExpectedUrl = "https://azs-test.search.windows.net/indexes('test')/";
+            const string TestServiceName = "azs-doesnotexist";
+            const string TestIndexName = "test-index";
+            const string TestApiKey = "123";
 
-            var client = new SearchIndexClient("azs-test", "test", new SearchCredentials("abc"));
-            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
+            var indexClient = new SearchIndexClient(TestServiceName, TestIndexName, new SearchCredentials(TestApiKey));
 
-            client = new SearchIndexClient("azs-test", "test", new SearchCredentials("abc"), new HttpClientHandler());
-            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
+            Assert.Equal(TestServiceName, indexClient.SearchServiceName);
+            Assert.Equal(TestIndexName, indexClient.IndexName);
+            Assert.Equal("search.windows.net", indexClient.SearchDnsSuffix);
+            Assert.Equal(TestApiKey, indexClient.SearchCredentials.ApiKey);
         }
 
         [Fact]
@@ -66,37 +69,9 @@ namespace Microsoft.Azure.Search.Tests
                 serviceClient.Indexes.Create(index);
 
                 // Target the second index and make sure it works too.
-                indexClient.TargetDifferentIndex(newIndexName);
+                indexClient.IndexName = newIndexName;
                 indexClient.Documents.Count();
             });
-        }
-
-        [Fact]
-        public void CanChangeIndexAfterConstructionWithServiceName()
-        {
-            const string ExpectedUrl = "https://azs-test.search.windows.net/indexes('test2')/";
-
-            var client = new SearchIndexClient("azs-test", "test", new SearchCredentials("abc"));
-            client.TargetDifferentIndex("test2");
-            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
-
-            client = new SearchIndexClient("azs-test", "test", new SearchCredentials("abc"), new HttpClientHandler());
-            client.TargetDifferentIndex("test2");
-            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
-        }
-
-        [Fact]
-        public void CanChangeIndexWithCustomBaseUri()
-        {
-            const string ExpectedUrl = "https://localhost/indexes('test2')/";
-
-            var client = new SearchIndexClient(new SearchCredentials("abc"));
-            client.TargetDifferentIndex("test2");
-            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
-
-            client.BaseUri = new Uri("https://localhost/indexes('test')/");
-            client.TargetDifferentIndex("test2");
-            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
         }
 
         [Fact]
@@ -132,10 +107,6 @@ namespace Microsoft.Azure.Search.Tests
                 "credentials",
                 () => new SearchIndexClient(credentials: null, rootHandler: handler));
             Assert.Throws<ArgumentNullException>(
-                "baseUri",
-                () => new SearchIndexClient(baseUri: null, credentials: creds));
-            Assert.Throws<ArgumentNullException>("credentials", () => new SearchIndexClient(uri, credentials: null));
-            Assert.Throws<ArgumentNullException>(
                 "searchServiceName",
                 () => new SearchIndexClient(searchServiceName: null, indexName: indexName, credentials: creds, rootHandler: handler));
             Assert.Throws<ArgumentException>(
@@ -153,12 +124,6 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Throws<ArgumentNullException>(
                 "credentials",
                 () => new SearchIndexClient(searchServiceName, indexName, credentials: null, rootHandler: handler));
-            Assert.Throws<ArgumentNullException>(
-                "baseUri",
-                () => new SearchIndexClient(baseUri: null, credentials: creds, rootHandler: handler));
-            Assert.Throws<ArgumentNullException>(
-                "credentials",
-                () => new SearchIndexClient(uri, credentials: null, rootHandler: handler));
         }
     }
 }

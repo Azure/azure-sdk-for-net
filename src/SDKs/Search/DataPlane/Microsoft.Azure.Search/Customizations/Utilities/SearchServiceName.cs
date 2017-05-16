@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Search
             return _name ?? String.Empty;
         }
 
-        public Uri BuildBaseUri()
+        public void TryBuildUri()
         {
             Uri uri = TypeConversion.TryParseUri("https://" + this + ".search.windows.net/");
 
@@ -43,28 +43,17 @@ namespace Microsoft.Azure.Search
                 string message = String.Format(CultureInfo.InvariantCulture, InvalidSearchUriMessageFormat, _name);
                 throw new ArgumentException(message, "searchServiceName");
             }
-
-            return uri;
         }
 
-        public Uri BuildBaseUriWithIndex(IndexName indexName, string fullyQualifiedDomainName = null)
+        public void TryBuildUriWithIndex(IndexName indexName)
         {
-            fullyQualifiedDomainName = fullyQualifiedDomainName ?? "search.windows.net";
-
-            if (fullyQualifiedDomainName != String.Empty)
-            {
-                fullyQualifiedDomainName = "." + fullyQualifiedDomainName;
-            }
-
-            Uri uri = TypeConversion.TryParseUri("https://" + this + fullyQualifiedDomainName + "/indexes('" + indexName + "')/");
+            Uri uri = TypeConversion.TryParseUri("https://" + this + "search.windows.net/indexes('" + indexName + "')/");
 
             if (uri == null)
             {
                 string message = String.Format(CultureInfo.InvariantCulture, InvalidSearchOrIndexUriMessageFormat, _name, indexName);
                 throw new ArgumentException(message, "searchServiceName");
             }
-
-            return uri;
         }
     }
 }
