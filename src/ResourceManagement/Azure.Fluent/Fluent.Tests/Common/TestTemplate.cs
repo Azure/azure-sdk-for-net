@@ -85,7 +85,7 @@ namespace Azure.Tests.Common
             collection.DeleteById(resource.Id);
             try
             {
-                resourceGroups.DeleteByName(groupName);
+                resourceGroups.BeginDeleteByName(groupName);
             }
             catch
             {

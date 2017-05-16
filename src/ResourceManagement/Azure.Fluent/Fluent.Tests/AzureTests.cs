@@ -86,7 +86,7 @@ namespace Azure.Tests
 
                 try
                 {
-                    azure.ResourceGroups.DeleteByName(rgName);
+                    azure.ResourceGroups.BeginDeleteByName(rgName);
                 }
                 catch { }
             }
