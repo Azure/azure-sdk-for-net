@@ -43,7 +43,9 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// services account at the time the operation was called. Possible
         /// values include: 'Creating', 'ResolvingDNS', 'Succeeded',
         /// 'Failed'</param>
-        /// <param name="endpoint">Endpoint of the created account</param>
+        /// <param name="endpoint">Endpoint of the created account.</param>
+        /// <param name="internalId">The internal identifier.</param>
+        /// <param name="sku">The SKU of Cognitive Services account.</param>
         /// <param name="tags">Gets or sets a list of key value pairs that
         /// describe the resource. These tags can be used in viewing and
         /// grouping this resource (across resource groups). A maximum of 15
@@ -51,7 +53,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// greater than 128 characters and value no greater than 256
         /// characters.</param>
         /// <param name="type">Resource type</param>
-        public CognitiveServicesAccount(string etag = default(string), string id = default(string), string kind = default(string), string location = default(string), string name = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), string endpoint = default(string), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string))
+        public CognitiveServicesAccount(string etag = default(string), string id = default(string), string kind = default(string), string location = default(string), string name = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), string endpoint = default(string), string internalId = default(string), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string))
         {
             Etag = etag;
             Id = id;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
             Name = name;
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
+            InternalId = internalId;
             Sku = sku;
             Tags = tags;
             Type = type;
@@ -104,12 +107,19 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public ProvisioningState? ProvisioningState { get; protected set; }
 
         /// <summary>
-        /// Gets or sets endpoint of the created account
+        /// Gets or sets endpoint of the created account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpoint")]
         public string Endpoint { get; set; }
 
         /// <summary>
+        /// Gets or sets the internal identifier.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.internalId")]
+        public string InternalId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SKU of Cognitive Services account.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
