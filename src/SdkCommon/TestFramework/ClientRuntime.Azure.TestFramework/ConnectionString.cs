@@ -230,7 +230,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <param name="connString">Semicolon delimented KeyValue pair(e.g. KeyName1=value1;KeyName2=value2;KeyName3=value3)</param>
         public void Parse(string connString)
         {
-            //string keyName;
             string parseRegEx = @"(?<KeyName>[^=]+)=(?<KeyValue>.+)";
 
             if (_parseErrorSb != null) _parseErrorSb.Clear();
