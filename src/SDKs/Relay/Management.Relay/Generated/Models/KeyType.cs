@@ -11,14 +11,14 @@ namespace Microsoft.Azure.Management.Relay.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Relaytype.
+    /// Defines values for KeyType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Relaytype
+    public enum KeyType
     {
-        [EnumMember(Value = "NetTcp")]
-        NetTcp,
-        [EnumMember(Value = "Http")]
-        Http
+        [EnumMember(Value = "Primary")]
+        Primary,
+        [EnumMember(Value = "Secondary")]
+        Secondary
     }
 }

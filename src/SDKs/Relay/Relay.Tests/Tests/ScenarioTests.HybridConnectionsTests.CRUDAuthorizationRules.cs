@@ -103,7 +103,7 @@ namespace Relay.Tests.ScenarioTests
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new AuthorizationRule()
                 {
-                    Rights = new List<string>() { AccessRights.Listen, AccessRights.Send }
+                    Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
                 };
 
                 var jsonStr = RelayManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
@@ -137,7 +137,7 @@ namespace Relay.Tests.ScenarioTests
                 // Update HybridConnections authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
                 AuthorizationRule updateNamespaceAuthorizationRuleParameter = new AuthorizationRule();
-                updateNamespaceAuthorizationRuleParameter.Rights = new List<string>() { AccessRights.Listen };
+                updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
 
                 var updateNamespaceAuthorizationRuleResponse = RelayManagementClient.HybridConnections.CreateOrUpdateAuthorizationRule(resourceGroup,
                     namespaceName, hybridConnectionsName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter);
@@ -167,8 +167,8 @@ namespace Relay.Tests.ScenarioTests
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
                 // Regenerate AuthorizationRules
-                var regenerateKeysParameters = new RegenerateKeysParameters();
-                regenerateKeysParameters.PolicyKey = PolicyKey.PrimaryKey;
+                var regenerateKeysParameters = new RegenerateAccessKeyParameters();
+                regenerateKeysParameters.KeyType = KeyType.Primary;
 
                 //Primary Key
                 var regenerateKeysPrimaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, regenerateKeysParameters);
@@ -177,7 +177,7 @@ namespace Relay.Tests.ScenarioTests
                 Assert.Equal(regenerateKeysPrimaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
 
 
-                regenerateKeysParameters.PolicyKey = PolicyKey.SecondaryKey;
+                regenerateKeysParameters.KeyType = KeyType.Secondary;
 
                 //Secondary Key
                 var regenerateKeysSecondaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, regenerateKeysParameters);

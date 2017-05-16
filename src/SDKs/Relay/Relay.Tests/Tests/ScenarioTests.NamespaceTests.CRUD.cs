@@ -42,8 +42,7 @@ namespace Relay.Tests.ScenarioTests
 
                 // Create Namespace
                 var namespaceName = TestUtilities.GenerateName(RelayManagementHelper.NamespacePrefix);
-
-
+                
                 // CheckNameAvailability 
                 var checkNameAvailabilityResponse = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(new CheckNameAvailability { Name = namespaceName });
 
@@ -91,7 +90,7 @@ namespace Relay.Tests.ScenarioTests
                 Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
 
                 // Update namespace tags
-                var updateNamespaceParameter = new RelayNamespaceUpdateParameter()
+                var updateNamespaceParameter = new RelayNamespace()
                 {
                     Tags = new Dictionary<string, string>()
                         {
