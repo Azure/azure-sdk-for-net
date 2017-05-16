@@ -80,6 +80,20 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
                 endpoints: null);
         }
 
+        public static Endpoint GenerateDefaultEndpoint(string name = null)
+        {
+            return new Endpoint
+            {
+                Id = null,
+                Name = name ?? "My external endpoint",
+                Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
+                TargetResourceId = null,
+                Target = "foobar.contoso.com",
+                EndpointLocation = "North Europe",
+                EndpointStatus = "Enabled",
+            };
+        }
+
         public static string GenerateName()
         {
             return TestUtilities.GenerateName("azuresdkfornetautoresttrafficmanager");
