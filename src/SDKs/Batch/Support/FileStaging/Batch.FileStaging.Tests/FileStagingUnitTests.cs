@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-extern alias fs;
-
 namespace Batch.FileStaging.Tests
 {
     using System;
+    using Microsoft.Azure.Batch.FileStaging;
     using Xunit;
-    using fs::Microsoft.Azure.Batch.FileStaging;
 
     public class FileStagingUnitTests
     {
@@ -38,6 +36,14 @@ namespace Batch.FileStaging.Tests
         public void StagingStorageAccount_EmptyStorageAccountBlobEndpoint_ThrowsArgumentOutofRange()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => { new StagingStorageAccount(storageAccount: "account", storageAccountKey: "key", blobEndpoint: ""); });
+        }
+
+        [Fact]
+        public void ContainerName_LargeNamingFragment_DoesNotExceedMaxContainerLength()
+        {
+            const string fragment = "thisisaquitelongnamingfragmentitmightnotfit";
+            string name = FileStagingNamingHelpers.ConstructDefaultName(fragment);
+            Assert.True(name.Length <= FileStagingNamingHelpers.MaxContainerNameLength);
         }
     }
 }

@@ -13,13 +13,6 @@
 // limitations under the License.
 
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using BatchFS=Microsoft.Azure.Batch.FileStaging;
 
 namespace Microsoft.Azure.Batch.FileStaging
 {
@@ -51,7 +44,7 @@ namespace Microsoft.Azure.Batch.FileStaging
             {
                 if (null != _namingFragment)
                 {
-                    throw new ArgumentException(string.Format(BatchFS.ErrorMessages.FileStagingPropertyCanBeSetOnlyOnce, "NamingFragment"));
+                    throw new ArgumentException(string.Format(ErrorMessages.FileStagingPropertyCanBeSetOnlyOnce, "NamingFragment"));
                 }
 
                 _namingFragment = value;
