@@ -78,6 +78,19 @@ namespace Build.Tasks.Tests
         }
 
         [Fact]
+        public void UnSupportedProjects()
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"SDKs\Batch\DataPlane";
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(3, cproj.unSupportedProjectsToBuild.Count<ITaskItem>());
+            }
+        }
+
+        [Fact]
         public void IgnoredProjects()
         {
             SDKCategorizeProjects cproj = new SDKCategorizeProjects();

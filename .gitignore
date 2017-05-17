@@ -15,6 +15,7 @@ binaries/
 [Rr]elease/
 build/
 restoredPackages/
+PolicheckOutput/
 tools/net46/
 tools/Microsoft.WindowsAzure.Build.Tasks/packages/
 PublishedNugets/
