@@ -9,6 +9,7 @@
 		<AuthenticationSolution>src\Authentication\Authentication.sln</AuthenticationSolution>
 		<ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
 		<BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
+    <PoliCheckOutputDir>$(LibraryRoot)PolicheckOutput</PoliCheckOutputDir>
 		<BuiltPackageOutputDir>$(BinariesFolder)\packages</BuiltPackageOutputDir>
 		<DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
 		<CodeSign Condition=" '$(CodeSign)' == '' ">false</CodeSign>
