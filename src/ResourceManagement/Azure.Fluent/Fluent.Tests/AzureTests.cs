@@ -141,6 +141,7 @@ namespace Azure.Tests
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
+
                 new Network.LoadBalancer.InternetWithNatRule(azure.VirtualMachines)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
             }
