@@ -1,5 +1,11 @@
 ## Microsoft.Azure.Management.DataLake.Store release notes
 
+### Changes in 2.2.0
+- Marking the 2.*.*-preview changes as stable for the second official release of the Data Lake Store SDK.
+
+### Changes in 2.1.3-preview
+- Added support to rotate user defined KeyVault keys through account updates.
+
 ### Changes in 2.1.1-preview
 - Update underlying AutoRest framework to the latest. This cleans up a lot of the generated code, making it easier to read.
 - Filesystem client updates to further bring the client in line with WebHDFS standards:

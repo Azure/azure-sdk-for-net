@@ -40,7 +40,7 @@ namespace Batch.FileStaging.Tests.Fixtures
                     this.PoolId,
                     VMSize,
                     passConfiguration,
-                    targetDedicated: 1);
+                    targetDedicatedComputeNodes: 1);
 
                 StartTask st = new StartTask("cmd /c hostname");
 

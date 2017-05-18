@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-extern alias fs;  // Temporary bridge until the Batch core NuGet without file staging is published
-
 namespace Batch.FileStaging.Tests
 {
     using System;
@@ -27,9 +25,6 @@ namespace Batch.FileStaging.Tests
     using Fixtures;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.FileStaging;
-    using StagingStorageAccount = fs::Microsoft.Azure.Batch.FileStaging.StagingStorageAccount;  // Temporary bridge until the Batch core NuGet without file staging is published
-    using FileToStage = fs::Microsoft.Azure.Batch.FileStaging.FileToStage;  // Temporary bridge until the Batch core NuGet without file staging is published
-    using SequentialFileStagingArtifact = fs::Microsoft.Azure.Batch.FileStaging.SequentialFileStagingArtifact;  // Temporary bridge until the Batch core NuGet without file staging is published
     using TestResources;
     using IntegrationTestUtilities;
     using Xunit;

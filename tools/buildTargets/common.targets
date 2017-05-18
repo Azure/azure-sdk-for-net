@@ -247,6 +247,8 @@
     <Message Text=" "/>
     <Message Text="TestSDKProjects ....... @(FilteredTestProjects->Count())"/>
     <Message Text="%(FilteredTestProjects.Identity)"/>
+    <Message Text="UnSupported Projects ....... @(unSupportedProjectsToBuild->Count())"/>
+    <Message Text="%(unSupportedProjectsToBuild.Identity)"/>
 
     <ItemGroup>
       <net452SDKProjects Include="@(net452SDKProj)"/>
