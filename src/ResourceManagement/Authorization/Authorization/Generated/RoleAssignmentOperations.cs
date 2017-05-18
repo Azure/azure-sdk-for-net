@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.Authorization
     /// </summary>
     internal partial class RoleAssignmentOperations : IServiceOperations<AuthorizationManagementClient>, IRoleAssignmentOperations
     {
+        public const string APIVersion = "api-version=2015-07-01";
+
         /// <summary>
         /// Initializes a new instance of the RoleAssignmentOperations class.
         /// </summary>
@@ -113,7 +115,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/providers/Microsoft.Authorization/roleAssignments/";
             url = url + Uri.EscapeDataString(roleAssignmentName.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -258,7 +260,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue3["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -338,7 +340,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/";
             url = url + roleAssignmentId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -483,7 +485,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue3["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -561,7 +563,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/providers/Microsoft.Authorization/roleAssignments/";
             url = url + Uri.EscapeDataString(roleAssignmentName.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -682,7 +684,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -754,7 +756,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/";
             url = url + roleAssignmentId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -875,7 +877,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -953,7 +955,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/providers/Microsoft.Authorization/roleAssignments/";
             url = url + Uri.EscapeDataString(roleAssignmentName.ToString());
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1074,7 +1076,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -1146,7 +1148,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + "/";
             url = url + roleAssignmentId;
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1267,7 +1269,7 @@ namespace Microsoft.Azure.Management.Authorization
                                 JToken principalIdValue = propertiesValue["principalId"];
                                 if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                 {
-                                    Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                    string principalIdInstance = ((string)principalIdValue);
                                     propertiesInstance.PrincipalId = principalIdInstance;
                                 }
                             }
@@ -1367,7 +1369,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter3));
             }
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1493,7 +1495,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -1643,7 +1645,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter3));
             }
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1769,7 +1771,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -1887,7 +1889,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter3));
             }
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2013,7 +2015,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -2203,7 +2205,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -2393,7 +2395,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -2507,7 +2509,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 queryParameters.Add("$filter=" + string.Join(null, odataFilter3));
             }
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2633,7 +2635,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -2823,7 +2825,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
@@ -3013,7 +3015,7 @@ namespace Microsoft.Azure.Management.Authorization
                                         JToken principalIdValue = propertiesValue["principalId"];
                                         if (principalIdValue != null && principalIdValue.Type != JTokenType.Null)
                                         {
-                                            Guid principalIdInstance = Guid.Parse(((string)principalIdValue));
+                                            string principalIdInstance = ((string)principalIdValue);
                                             propertiesInstance.PrincipalId = principalIdInstance;
                                         }
                                     }
