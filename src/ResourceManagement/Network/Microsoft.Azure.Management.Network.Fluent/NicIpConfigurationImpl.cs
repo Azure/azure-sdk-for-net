@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 if (subnetToAssociate != null)
                 {
                     int idx = Inner.Subnet.Id.LastIndexOf('/');
-                    subnetInner.Id = Inner.Subnet.Id.Substring(0, idx) + subnetToAssociate;
+                    subnetInner.Id = Inner.Subnet.Id.Substring(0, idx+1) + subnetToAssociate;
                 }
                 else
                 {

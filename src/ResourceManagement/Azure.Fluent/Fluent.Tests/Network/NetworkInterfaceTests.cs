@@ -23,21 +23,35 @@ namespace Fluent.Tests.Network
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var testId = TestUtilities.GenerateName("");
+                string nicName = "nic" + testId;
+                string vnetName = "net" + testId;
+                string pipName = "pip" + testId;
+                Region region = Region.USEast;
 
                 var manager = TestHelper.CreateNetworkManager();
-                var nic = manager.NetworkInterfaces.Define("nic" + testId)
-                        .WithRegion(Region.USEast)
-                        .WithNewResourceGroup("rg" + testId)
-                        .WithNewPrimaryNetwork("10.0.0.0/28")
+
+                var network = manager.Networks.Define(vnetName)
+                    .WithRegion(region)
+                    .WithNewResourceGroup()
+                    .WithAddressSpace("10.0.0.0/28")
+                    .WithSubnet("subnet1", "10.0.0.0/29")
+                    .WithSubnet("subnet2", "10.0.0.8/29")
+                    .Create();
+
+                var nic = manager.NetworkInterfaces.Define(nicName)
+                        .WithRegion(region)
+                        .WithExistingResourceGroup(network.ResourceGroupName)
+                        .WithExistingPrimaryNetwork(network)
+                        .WithSubnet("subnet1")
                         .WithPrimaryPrivateIPAddressDynamic()
-                        .WithNewPrimaryPublicIPAddress("pipdns" + testId)
+                        .WithNewPrimaryPublicIPAddress(pipName)
                         .WithIPForwarding()
                         .Create();
 
-                // Verify NIC is properly referenced by a subnet
+                // Verifications
                 var ipConfig = nic.PrimaryIPConfiguration;
                 Assert.NotNull(ipConfig);
-                var network = nic.PrimaryIPConfiguration.GetNetwork();
+                network = ipConfig.GetNetwork();
                 Assert.NotNull(network);
                 ISubnet subnet;
                 Assert.True(network.Subnets.TryGetValue(ipConfig.SubnetName, out subnet));
@@ -48,9 +62,10 @@ namespace Fluent.Tests.Network
                 var ipConfig2 = ipConfigs.First();
                 Assert.Equal(ipConfig.Name.ToLower(), ipConfig2.Name.ToLower());
 
-                var resource = manager.NetworkInterfaces.GetByResourceGroup("rg" + testId, "nic" + testId);
+                var resource = manager.NetworkInterfaces.GetById(nic.Id);
                 resource = resource.Update()
                     .WithoutIPForwarding()
+                    .WithSubnet("subnet2")
                     .UpdateIPConfiguration(resource.PrimaryIPConfiguration.Name) // Updating the primary IP configuration
                         .WithPrivateIPAddressDynamic() // Equivalent to ..update().withPrimaryPrivateIPAddressDynamic()
                         .WithoutPublicIPAddress()      // Equivalent to ..update().withoutPrimaryPublicIPAddress()
@@ -60,7 +75,17 @@ namespace Fluent.Tests.Network
                     .Apply();
                 Assert.True(resource.Tags.ContainsKey("tag1"));
 
+                // Verifications
+                Assert.True(!resource.IsIPForwardingEnabled);
+                var primaryIpConfig = resource.PrimaryIPConfiguration;
+                Assert.NotNull(primaryIpConfig);
+                Assert.True(primaryIpConfig.IsPrimary);
+                Assert.True("subnet2" == primaryIpConfig.SubnetName.ToLower());
+                Assert.Null(primaryIpConfig.PublicIPAddressId);
+                Assert.True(resource.Tags.ContainsKey("tag1"));
+
                 manager.NetworkInterfaces.DeleteById(resource.Id);
+                resource.Manager.ResourceManager.ResourceGroups.BeginDeleteByName(resource.ResourceGroupName);
             }
         }
 
