@@ -1,190 +1,489 @@
 ﻿{
   "properties": {
-    "title": "ServiceTitle",
-    "description": "This is some service description",
-    "readOnly": "false",
-    "keys": {
-      "primary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmkKw==",
-      "secondary": "S8ayf24PAsbQqy8Nm67uGf3MbOeorYKPY8QfXen2+JsBZV5Q0NFfk9tgC7mjJ3aCsUPY8yKCFVcI/sCcOlmooo=="
+    "title": "Some title (new contract)",
+    "description": "This is some service description (new contract)",
+    "readOnly": false,
+    "exposeSampleData": false,
+    "realtimeConfiguration": {
+      "maxConcurrentCalls": 20
     },
-    "storageAccount": {
-      "name": "THIS IS FILLED IN DYNAMICALLY BY THE TEST",
-      "key": "THIS IS FILLED IN DYNAMICALLY BY THE TEST"
+    "diagnostics": {
+      "level": "None"
     },
     "commitmentPlan": {
-      "id": "THIS IS FILLED IN DYNAMICALLY BY THE TEST"
+      "id": "WILL BE FILLED IN BY THE TEST"
     },
-    "assets": {
+    "keys": {
+      "primary": "SAMPLE_KEY_1",
+      "secondary": "SAMPLE_KEY_2"
+    },
+    "storageAccount": {
+      "name": "WILL BE FILLED IN BY THE TEST",
+      "key": "WILL BE FILLED IN BY THE TEST"
+    },
+    "PayloadsInBlobStorage": false,
+    "MachineLearningWorkspace": {
+      "Id": "8b841df9d60a4d54bcebd4948b10a5db"
+    },
+    "Assets": {
       "asset1": {
-        "name": "Apply Math Operation",
-        "type": "Module",
-        "locationInfo": {
-          "uri": "aml://module/506153734175476c4f62416c57734963.6bd12c13d9c3452294d34aa44513af57.v1-default-1571"
+        "Name": "Import Data",
+        "Type": "Module",
+        "LocationInfo": {
+          "Uri": "aml://module/506153734175476c4f62416c57734963.4e1b0fe6aded4b3fa36f39b8862b9004.v1-default-1743",
+          "Credentials": ""
+        }
+      },
+      "asset2": {
+        "Name": "Join Data",
+        "Type": "Module",
+        "LocationInfo": {
+          "Uri": "aml://module/506153734175476c4f62416c57734963.124865f7e9014656adacf4cb08248099.v1-default-1712",
+          "Credentials": ""
         }
       }
     },
-    "parameters": {
-      "category": "Trigonometric",
-      "trigonometric Function": "Sin",
-      "column Set": "{\"isFilter\":true,\"rules\":[{\"ruleType\":\"ColumnTypes\",\"exclude\":false,\"columnTypes\":[\"Numeric\"],\"columnKinds\":[\"All\"]}]}",
-      "output mode": "ResultOnly"
-    },
-    "input": {
-      "title": "",
-      "description": "",
-      "type": "object",
-      "properties": {
+    "Parameters": {},
+    "Input": {
+      "Title": "",
+      "Description": "",
+      "Type": "object",
+      "Properties": {
         "input1": {
-          "title": "",
-          "description": "",
-          "type": "object",
-          "properties": {
-            "Class": {
-              "type": "Number",
-              "format": "Double",
+          "Title": "",
+          "Description": "",
+          "Type": "object",
+          "Properties": {
+            "0": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "13": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "39": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "40": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "2174": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "77516": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "State-gov": {
+              "Type": "String",
+              "Format": "",
               "x-ms-isnullable": false
             },
-            "sepal-length": {
-              "type": "Number",
-              "format": "Double",
+            "Bachelors": {
+              "Type": "String",
+              "Format": "",
               "x-ms-isnullable": false
             },
-            "sepal-width": {
-              "type": "Number",
-              "format": "Double",
+            "Never-married": {
+              "Type": "String",
+              "Format": "",
               "x-ms-isnullable": false
             },
-            "petal-length": {
-              "type": "Number",
-              "format": "Double",
+            "Adm-clerical": {
+              "Type": "String",
+              "Format": "",
               "x-ms-isnullable": false
             },
-            "petal-width": {
-              "type": "Number",
-              "format": "Double",
+            "Not-in-family": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "White": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "Male": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "United-States": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "<=50K": {
+              "Type": "String",
+              "Format": "",
               "x-ms-isnullable": false
             }
           }
         }
       }
     },
-    "output": {
-      "title": "",
-      "description": "",
-      "type": "object",
-      "properties": {
+    "Output": {
+      "Title": "",
+      "Description": "",
+      "Type": "object",
+      "Properties": {
         "output1": {
-          "title": "",
-          "description": "",
-          "type": "object",
-          "properties": {
-            "Class": {
-              "type": "Number",
-              "format": "Double",
+          "Title": "",
+          "Description": "",
+          "Type": "object",
+          "Properties": {
+            "0": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "13": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "39": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "40": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "2174": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "77516": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "State-gov": {
+              "Type": "String",
+              "Format": "",
               "x-ms-isnullable": false
             },
-            "sepal-length": {
-              "type": "Number",
-              "format": "Double",
+            "Bachelors": {
+              "Type": "String",
+              "Format": "",
               "x-ms-isnullable": false
             },
-            "sepal-width": {
-              "type": "Number",
-              "format": "Double",
+            "Never-married": {
+              "Type": "String",
+              "Format": "",
               "x-ms-isnullable": false
             },
-            "petal-length": {
-              "type": "Number",
-              "format": "Double",
+            "Adm-clerical": {
+              "Type": "String",
+              "Format": "",
               "x-ms-isnullable": false
             },
-            "petal-width": {
-              "type": "Number",
-              "format": "Double",
+            "Not-in-family": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "White": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "Male": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "United-States": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "<=50K": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "39 (2)": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "State-gov (2)": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "77516 (2)": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "Bachelors (2)": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "13 (2)": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "Never-married (2)": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "Adm-clerical (2)": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "Not-in-family (2)": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "White (2)": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "Male (2)": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "2174 (2)": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "0 (2)": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "40 (2)": {
+              "Type": "Integer",
+              "Format": "Int32",
+              "x-ms-isnullable": true
+            },
+            "United-States (2)": {
+              "Type": "String",
+              "Format": "",
+              "x-ms-isnullable": false
+            },
+            "<=50K (2)": {
+              "Type": "String",
+              "Format": "",
               "x-ms-isnullable": false
             }
           }
         }
-      }
-    },
-    "exposeSampleData": "true",
-    "exampleRequest": {
-      "inputs": {
-        "input1": [
-          [ "1", "2.3", "0.5", "4.3", "1.2" ],
-          [ "0", "0.5", "4.3", "1.2", "2.5" ],
-          [ "0", "4.3", "1.2", "6.5", "6.3" ],
-          [ "1", "7.8", "8.0", "2.3", "0.5" ],
-          [ "1", "1.3", "5.5", "2.2", "9.2" ]
-        ]
       }
     },
     "packageType": "Graph",
-    "package": {
+    "Package": {
       "Nodes": {
         "node1": {
-          "inputId": "input1"
+          "AssetId": "asset1",
+          "Parameters": {
+            "Please Specify Data Source": {
+              "Value": "AzureBlobStorage",
+              "CertificateThumbprint": ""
+            },
+            "Please Specify Authentication Type": {
+              "Value": "Account",
+              "CertificateThumbprint": ""
+            },
+            "Account Name": {
+              "Value": "bohurp",
+              "CertificateThumbprint": ""
+            },
+            "Account Key": {
+              "Value": "ENCRYPTED_VALUE_01",
+                      "CertificateThumbprint": "SOME_THUMBPRINT"
+            },
+            "Path to container or directory or blob": {
+              "Value": "uploadeddata/adult.data",
+              "CertificateThumbprint": ""
+            },
+            "Blob File format": {
+              "Value": "CSV",
+              "CertificateThumbprint": ""
+            },
+            "File has Header Row": {
+              "Value": "True",
+              "CertificateThumbprint": ""
+            }
+          }
         },
         "node2": {
-          "assetId": "asset1",
-          "parameters": {
-            "Category": "Trigonometric",
-            "Trigonometric Function": "Sin",
-            "Column Set": "{\"isFilter\":true,\"rules\":[{\"ruleType\":\"ColumnTypes\",\"exclude\":false,\"columnTypes\":[\"Numeric\"],\"columnKinds\":[\"All\"]}]}",
-            "Output mode": "ResultOnly"
+          "AssetId": "asset2",
+          "Parameters": {
+            "Comma-separated case-sensitive names of join key columns for L": {
+              "Value": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22AllColumns%22%2C%22exclude%22%3Afalse%7D%2C%7B%22ruleType%22%3A%22ColumnTypes%22%2C%22exclude%22%3Afalse%2C%22columnTypes%22%3A%5B%22All%22%5D%2C%22columnKinds%22%3A%5B%22Feature%22%5D%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+              "CertificateThumbprint": ""
+            },
+            "Comma-separated case-sensitive names of join key columns for R": {
+              "Value": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22AllColumns%22%2C%22exclude%22%3Afalse%7D%2C%7B%22ruleType%22%3A%22ColumnTypes%22%2C%22exclude%22%3Afalse%2C%22columnTypes%22%3A%5B%22All%22%5D%2C%22columnKinds%22%3A%5B%22Feature%22%5D%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+              "CertificateThumbprint": ""
+            },
+            "Match case": {
+              "Value": "True",
+              "CertificateThumbprint": ""
+            },
+            "Join type": {
+              "Value": "Inner Join",
+              "CertificateThumbprint": ""
+            },
+            "Keep right key columns in joined table": {
+              "Value": "True",
+              "CertificateThumbprint": ""
+            }
           }
         },
         "node3": {
-          "outputId": "output1"
+          "InputId": "input1"
+        },
+        "node4": {
+          "OutputId": "output1"
         }
       },
       "Edges": [
         {
-          "sourceNodeId": "node1",
-          "targetNodeId": "node2",
-          "targetPortId": "Dataset"
+          "SourceNodeId": "node1",
+          "SourcePortId": "Results dataset",
+          "TargetNodeId": "node2",
+          "TargetPortId": "Dataset1"
         },
         {
-          "sourceNodeId": "node2",
-          "sourcePortId": "Results dataset",
-          "targetNodeId": "node3"
+          "SourceNodeId": "node1",
+          "SourcePortId": "Results dataset",
+          "TargetNodeId": "node2",
+          "TargetPortId": "Dataset2"
+        },
+        {
+          "SourceNodeId": "node3",
+          "TargetNodeId": "node2",
+          "TargetPortId": "Dataset2"
+        },
+        {
+          "SourceNodeId": "node2",
+          "SourcePortId": "Results dataset",
+          "TargetNodeId": "node4"
         }
       ],
-      "GraphParameters": {
-        "Category": {
-          "description": "",
-          "Links": [
-            {
-              "NodeId": "node2",
-              "ParameterKey": "Category"
-            }
+      "GraphParameters": {}
+    },
+    "ExampleRequest": {
+      "Inputs": {
+        "input1": [
+          [
+            50,
+            "Self-emp-not-inc",
+            83311,
+            "Bachelors",
+            13,
+            "Married-civ-spouse",
+            "Exec-managerial",
+            "Husband",
+            "White",
+            "Male",
+            0,
+            0,
+            13,
+            "United-States",
+            "<=50K"
+          ],
+          [
+            38,
+            "Private",
+            215646,
+            "HS-grad",
+            9,
+            "Divorced",
+            "Handlers-cleaners",
+            "Not-in-family",
+            "White",
+            "Male",
+            0,
+            0,
+            40,
+            "United-States",
+            "<=50K"
+          ],
+          [
+            53,
+            "Private",
+            234721,
+            "11th",
+            7,
+            "Married-civ-spouse",
+            "Handlers-cleaners",
+            "Husband",
+            "Black",
+            "Male",
+            0,
+            0,
+            40,
+            "United-States",
+            "<=50K"
+          ],
+          [
+            28,
+            "Private",
+            338409,
+            "Bachelors",
+            13,
+            "Married-civ-spouse",
+            "Prof-specialty",
+            "Wife",
+            "Black",
+            "Female",
+            0,
+            0,
+            40,
+            "Cuba",
+            "<=50K"
+          ],
+          [
+            37,
+            "Private",
+            284582,
+            "Masters",
+            14,
+            "Married-civ-spouse",
+            "Exec-managerial",
+            "Wife",
+            "White",
+            "Female",
+            0,
+            0,
+            40,
+            "United-States",
+            "<=50K"
           ]
-        },
-        "Trigonometric Function": {
-          "Links": [
-            {
-              "NodeId": "node2",
-              "ParameterKey": "Trigonometric Function"
-            }
-          ]
-        },
-        "Column Set": {
-          "Links": [
-            {
-              "NodeId": "node2",
-              "ParameterKey": "Column Set"
-            }
-          ]
-        },
-        "Output mode": {
-          "Links": [
-            {
-              "NodeId": "node2",
-              "ParameterKey": "Output mode"
-            }
-          ]
-        }
-      }
+        ]
+      },
+      "GlobalParameters": null
     }
-  }
+  },
+    "location": "West Central US",
+    "tags": {}
 }

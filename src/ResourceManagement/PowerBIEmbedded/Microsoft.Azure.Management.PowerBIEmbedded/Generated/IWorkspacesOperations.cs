@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.PowerBIEmbedded
 {
@@ -16,14 +18,14 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
     public partial interface IWorkspacesOperations
     {
         /// <summary>
-        /// Retrieves all existing Power BI Workspaces in the specified
-        /// Workspace Collection.
+        /// Retrieves all existing Power BI workspaces in the specified
+        /// workspace collection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Azure resource group
         /// </param>
         /// <param name='workspaceCollectionName'>
-        /// Power BI Embedded workspace collection name
+        /// Power BI Embedded Workspace Collection name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
 {
@@ -48,7 +36,27 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
                 endpoints: endpoints);
         }
 
-        public static Profile GenerateDefaultProfile(string profileName)
+        public static Profile GenerateDefaultProfileWithExternalEndpoint(string profileName, string trafficRoutingMethod = "Performance")
+        {
+            Profile defaultProfile = GenerateDefaultEmptyProfile(profileName, trafficRoutingMethod);
+            defaultProfile.Endpoints = new[]
+            {
+                new Endpoint
+                {
+                    Id = null,
+                    Name = "My external endpoint",
+                    Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
+                    TargetResourceId = null,
+                    Target = "foobar.contoso.com",
+                    EndpointLocation = "North Europe",
+                    EndpointStatus = "Enabled"
+                }
+            };
+
+            return defaultProfile;
+        }
+
+        public static Profile GenerateDefaultEmptyProfile(string profileName, string trafficRoutingMethod = "Performance")
         {
             return TrafficManagerHelper.BuildProfile(
                 id: null,
@@ -57,31 +65,24 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
                 location: "global",
                 tags: null,
                 profileStatus: "Enabled",
-                trafficRoutingMethod: "Performance",
+                trafficRoutingMethod: trafficRoutingMethod,
                 dnsConfig: new DnsConfig
                 {
                     RelativeName = profileName,
                     Ttl = 35
-                }, 
+                },
                 monitorConfig: new MonitorConfig
                 {
                     Protocol = "http",
                     Port = 80,
                     Path = "/testpath.aspx"
-                }, 
-                endpoints: new []
-                {
-                    new Endpoint
-                    {
-                        Id = null,
-                        Name = "My external endpoint",
-                        Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
-                        TargetResourceId = null,
-                        Target = "foobar.contoso.com",
-                        EndpointLocation = "North Europe",
-                        EndpointStatus = "Enabled"
-                    } 
-                });
+                },
+                endpoints: null);
+        }
+
+        public static string GenerateName()
+        {
+            return TestUtilities.GenerateName("azuresdkfornetautoresttrafficmanager");
         }
     }
 }

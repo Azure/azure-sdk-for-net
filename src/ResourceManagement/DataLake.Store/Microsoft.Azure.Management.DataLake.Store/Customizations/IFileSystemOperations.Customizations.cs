@@ -47,5 +47,51 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// A response object containing the response body and response headers.
         /// </return>
         Task<AzureOperationResponse<bool>> PathExistsWithHttpMessagesAsync(string accountName, string getFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        void UploadFolder(
+            string accountName,
+            string sourcePath,
+            string destinationPath,
+            int perFileThreadCount = -1,
+            int concurrentFileCount = -1,
+            bool resume = false,
+            bool overwrite = false,
+            bool uploadAsBinary = false,
+            bool recurse = false,
+            IProgress<TransferFolderProgress> progressTracker = null,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        void DownloadFolder(
+            string accountName,
+            string sourcePath,
+            string destinationPath,
+            int perFileThreadCount = -1,
+            int concurrentFileCount = -1,
+            bool resume = false,
+            bool overwrite = false,
+            bool recurse = false,
+            IProgress<TransferFolderProgress> progressTracker = null,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        void UploadFile(
+            string accountName,
+            string sourcePath,
+            string destinationPath,
+            int threadCount = -1,
+            bool resume = false,
+            bool overwrite = false,
+            bool uploadAsBinary = false,
+            IProgress<TransferProgress> progressTracker = null,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        void DownloadFile(
+            string accountName,
+            string sourcePath,
+            string destinationPath,
+            int threadCount = -1,
+            bool resume = false,
+            bool overwrite = false,
+            IProgress<TransferProgress> progressTracker = null,
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -36,12 +36,12 @@ namespace Microsoft.Azure.Management.Network
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        public Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; private set; }
+        public JsonSerializerSettings SerializationSettings { get; private set; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        public Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; private set; }
+        public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
@@ -78,76 +78,6 @@ namespace Microsoft.Azure.Management.Network
         public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
 
         /// <summary>
-        /// Gets the IRouteTablesOperations.
-        /// </summary>
-        public virtual IRouteTablesOperations RouteTables { get; private set; }
-
-        /// <summary>
-        /// Gets the IRoutesOperations.
-        /// </summary>
-        public virtual IRoutesOperations Routes { get; private set; }
-
-        /// <summary>
-        /// Gets the IPublicIPAddressesOperations.
-        /// </summary>
-        public virtual IPublicIPAddressesOperations PublicIPAddresses { get; private set; }
-
-        /// <summary>
-        /// Gets the INetworkSecurityGroupsOperations.
-        /// </summary>
-        public virtual INetworkSecurityGroupsOperations NetworkSecurityGroups { get; private set; }
-
-        /// <summary>
-        /// Gets the ISecurityRulesOperations.
-        /// </summary>
-        public virtual ISecurityRulesOperations SecurityRules { get; private set; }
-
-        /// <summary>
-        /// Gets the ILoadBalancersOperations.
-        /// </summary>
-        public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworksOperations.
-        /// </summary>
-        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
-
-        /// <summary>
-        /// Gets the ISubnetsOperations.
-        /// </summary>
-        public virtual ISubnetsOperations Subnets { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkPeeringsOperations.
-        /// </summary>
-        public virtual IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; private set; }
-
-        /// <summary>
-        /// Gets the INetworkInterfacesOperations.
-        /// </summary>
-        public virtual INetworkInterfacesOperations NetworkInterfaces { get; private set; }
-
-        /// <summary>
-        /// Gets the IUsagesOperations.
-        /// </summary>
-        public virtual IUsagesOperations Usages { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkGatewaysOperations.
-        /// </summary>
-        public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkGatewayConnectionsOperations.
-        /// </summary>
-        public virtual IVirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections { get; private set; }
-
-        /// <summary>
-        /// Gets the ILocalNetworkGatewaysOperations.
-        /// </summary>
-        public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
-
-        /// <summary>
         /// Gets the IExpressRouteCircuitAuthorizationsOperations.
         /// </summary>
         public virtual IExpressRouteCircuitAuthorizationsOperations ExpressRouteCircuitAuthorizations { get; private set; }
@@ -166,6 +96,101 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IExpressRouteServiceProvidersOperations.
         /// </summary>
         public virtual IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; private set; }
+
+        /// <summary>
+        /// Gets the ILoadBalancersOperations.
+        /// </summary>
+        public virtual ILoadBalancersOperations LoadBalancers { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkInterfacesOperations.
+        /// </summary>
+        public virtual INetworkInterfacesOperations NetworkInterfaces { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkSecurityGroupsOperations.
+        /// </summary>
+        public virtual INetworkSecurityGroupsOperations NetworkSecurityGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityRulesOperations.
+        /// </summary>
+        public virtual ISecurityRulesOperations SecurityRules { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkWatchersOperations.
+        /// </summary>
+        public virtual INetworkWatchersOperations NetworkWatchers { get; private set; }
+
+        /// <summary>
+        /// Gets the IPacketCapturesOperations.
+        /// </summary>
+        public virtual IPacketCapturesOperations PacketCaptures { get; private set; }
+
+        /// <summary>
+        /// Gets the IPublicIPAddressesOperations.
+        /// </summary>
+        public virtual IPublicIPAddressesOperations PublicIPAddresses { get; private set; }
+
+        /// <summary>
+        /// Gets the IRouteFiltersOperations.
+        /// </summary>
+        public virtual IRouteFiltersOperations RouteFilters { get; private set; }
+
+        /// <summary>
+        /// Gets the IRouteFilterRulesOperations.
+        /// </summary>
+        public virtual IRouteFilterRulesOperations RouteFilterRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IRouteTablesOperations.
+        /// </summary>
+        public virtual IRouteTablesOperations RouteTables { get; private set; }
+
+        /// <summary>
+        /// Gets the IRoutesOperations.
+        /// </summary>
+        public virtual IRoutesOperations Routes { get; private set; }
+
+        /// <summary>
+        /// Gets the IBgpServiceCommunitiesOperations.
+        /// </summary>
+        public virtual IBgpServiceCommunitiesOperations BgpServiceCommunities { get; private set; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        public virtual IUsagesOperations Usages { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworksOperations.
+        /// </summary>
+        public virtual IVirtualNetworksOperations VirtualNetworks { get; private set; }
+
+        /// <summary>
+        /// Gets the ISubnetsOperations.
+        /// </summary>
+        public virtual ISubnetsOperations Subnets { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkPeeringsOperations.
+        /// </summary>
+        public virtual IVirtualNetworkPeeringsOperations VirtualNetworkPeerings { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewaysOperations.
+        /// </summary>
+        public virtual IVirtualNetworkGatewaysOperations VirtualNetworkGateways { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkGatewayConnectionsOperations.
+        /// </summary>
+        public virtual IVirtualNetworkGatewayConnectionsOperations VirtualNetworkGatewayConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the ILocalNetworkGatewaysOperations.
+        /// </summary>
+        public virtual ILocalNetworkGatewaysOperations LocalNetworkGateways { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
@@ -369,50 +394,55 @@ namespace Microsoft.Azure.Management.Network
         private void Initialize()
         {
             ApplicationGateways = new ApplicationGatewaysOperations(this);
-            RouteTables = new RouteTablesOperations(this);
-            Routes = new RoutesOperations(this);
-            PublicIPAddresses = new PublicIPAddressesOperations(this);
-            NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
-            SecurityRules = new SecurityRulesOperations(this);
-            LoadBalancers = new LoadBalancersOperations(this);
-            VirtualNetworks = new VirtualNetworksOperations(this);
-            Subnets = new SubnetsOperations(this);
-            VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
-            NetworkInterfaces = new NetworkInterfacesOperations(this);
-            Usages = new UsagesOperations(this);
-            VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
-            VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
-            LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
             ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
             ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
             ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
             ExpressRouteServiceProviders = new ExpressRouteServiceProvidersOperations(this);
+            LoadBalancers = new LoadBalancersOperations(this);
+            NetworkInterfaces = new NetworkInterfacesOperations(this);
+            NetworkSecurityGroups = new NetworkSecurityGroupsOperations(this);
+            SecurityRules = new SecurityRulesOperations(this);
+            NetworkWatchers = new NetworkWatchersOperations(this);
+            PacketCaptures = new PacketCapturesOperations(this);
+            PublicIPAddresses = new PublicIPAddressesOperations(this);
+            RouteFilters = new RouteFiltersOperations(this);
+            RouteFilterRules = new RouteFilterRulesOperations(this);
+            RouteTables = new RouteTablesOperations(this);
+            Routes = new RoutesOperations(this);
+            BgpServiceCommunities = new BgpServiceCommunitiesOperations(this);
+            Usages = new UsagesOperations(this);
+            VirtualNetworks = new VirtualNetworksOperations(this);
+            Subnets = new SubnetsOperations(this);
+            VirtualNetworkPeerings = new VirtualNetworkPeeringsOperations(this);
+            VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
+            VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
+            LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
-            SerializationSettings = new Newtonsoft.Json.JsonSerializerSettings
+            SerializationSettings = new JsonSerializerSettings
             {
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
+                Formatting = Formatting.Indented,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
+                Converters = new List<JsonConverter>
                     {
                         new Iso8601TimeSpanConverter()
                     }
             };
             SerializationSettings.Converters.Add(new TransformationJsonConverter());
-            DeserializationSettings = new Newtonsoft.Json.JsonSerializerSettings
+            DeserializationSettings = new JsonSerializerSettings
             {
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
+                Converters = new List<JsonConverter>
                     {
                         new Iso8601TimeSpanConverter()
                     }
@@ -462,7 +492,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2016-09-01";
+            string apiVersion = "2017-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -512,6 +542,8 @@ namespace Microsoft.Azure.Management.Network
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -559,7 +591,7 @@ namespace Microsoft.Azure.Management.Network
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -596,7 +628,7 @@ namespace Microsoft.Azure.Management.Network
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<DnsNameAvailabilityResult>(_responseContent, DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)

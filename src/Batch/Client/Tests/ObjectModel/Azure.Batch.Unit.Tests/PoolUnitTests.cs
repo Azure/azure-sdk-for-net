@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿
 namespace Azure.Batch.Unit.Tests
@@ -103,14 +92,14 @@ namespace Azure.Batch.Unit.Tests
                                                     {
                                                         new Models.CertificateReference
                                                             {
-                                                                StoreLocation = Models.CertificateStoreLocation.Currentuser,
+                                                                StoreLocation = Models.CertificateStoreLocation.CurrentUser,
                                                                 StoreName = "My",
                                                                 Thumbprint = string.Empty,
                                                                 ThumbprintAlgorithm = "sha1",
                                                                 Visibility = new List<Models.CertificateVisibility?>()
                                                                     {
-                                                                        Models.CertificateVisibility.Remoteuser,
-                                                                        Models.CertificateVisibility.Starttask,
+                                                                        Models.CertificateVisibility.RemoteUser,
+                                                                        Models.CertificateVisibility.StartTask,
                                                                         Models.CertificateVisibility.Task
                                                                     }
                                                             }
@@ -235,7 +224,8 @@ namespace Azure.Batch.Unit.Tests
                                     CommandLine = "-start",
                                     EnvironmentSettings = new[] { new Models.EnvironmentSetting { Name = "windows", Value = "foo" } },
                                     MaxTaskRetryCount = 3,
-                                    RunElevated = false,
+                                    UserIdentity = new Protocol.Models.UserIdentity(
+                                        autoUser: new Protocol.Models.AutoUserSpecification(elevationLevel: Protocol.Models.ElevationLevel.NonAdmin)),
                                     WaitForSuccess = false
                                 };
 
@@ -266,7 +256,7 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(pool.StartTask.EnvironmentSettings.FirstOrDefault().Name, "windows");
                 Assert.Equal(pool.StartTask.EnvironmentSettings.FirstOrDefault().Value, "foo");
                 Assert.Equal(pool.StartTask.MaxTaskRetryCount, 3);
-                Assert.Equal(pool.StartTask.RunElevated, false);
+                Assert.Equal(pool.StartTask.UserIdentity.AutoUser.ElevationLevel, ElevationLevel.NonAdmin);
                 Assert.Equal(pool.StartTask.WaitForSuccess, false);
             }
         }

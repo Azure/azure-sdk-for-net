@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
 {
@@ -30,35 +32,35 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded.Models
 
         /// <summary>
         /// Gets or sets the localized friendly form of the resource provider
-        /// name – it is expected to also include the publisher/company
-        /// responsible. It should use Title Casing and begin with
-        /// “Microsoft” for 1st party services.
+        /// name. This form is also expected to include the publisher/company
+        /// responsible. Use Title Casing. Begin with “Microsoft” for 1st
+        /// party services.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
 
         /// <summary>
         /// Gets or sets the localized friendly form of the resource type
-        /// related to this action/operation – it should match the public
-        /// documentation for the resource provider. It should use Title
-        /// Casing – for examples, please refer to the “name” section.
+        /// related to this action/operation. This form should match the
+        /// public documentation for the resource provider. Use Title Casing.
+        /// For examples, refer to the “name” section.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }
 
         /// <summary>
-        /// Gets or sets the localized friendly name for the operation, as it
-        /// should be shown to the user. It should be concise (to fit in drop
-        /// downs) but clear (i.e. self-documenting). It should use Title
-        /// Casing and include the entity/resource to which it applies.
+        /// Gets or sets the localized friendly name for the operation as
+        /// shown to the user. This name should be concise (to fit in drop
+        /// downs), but clear (self-documenting). Use Title Casing and
+        /// include the entity/resource to which it applies.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
 
         /// <summary>
-        /// Gets or sets the localized friendly description for the operation,
-        /// as it should be shown to the user. It should be thorough, yet
-        /// concise – it will be used in tool tips and detailed views.
+        /// Gets or sets the localized friendly description for the operation
+        /// as shown to the user. This description should be thorough, yet
+        /// concise. It will be used in tool-tips and detailed views.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

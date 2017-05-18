@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿
 namespace Azure.Batch.Unit.Tests
@@ -133,20 +122,37 @@ namespace Azure.Batch.Unit.Tests
                 jobSchedule.Id = jobScheduleId;
                 jobSchedule.DisplayName = displayName;
                 jobSchedule.Metadata = new List<MetadataItem> { metadataItem };
+                jobSchedule.JobSpecification = new JobSpecification
+                {
+                    OnAllTasksComplete = OnAllTasksComplete.TerminateJob,
+                    OnTaskFailure = OnTaskFailure.PerformExitOptionsJobAction
+                };
 
                 Assert.Equal(jobSchedule.Id, jobScheduleId); // can set an unbound object
                 Assert.Equal(jobSchedule.Metadata.First().Name, metadataItem.Name);
                 Assert.Equal(jobSchedule.Metadata.First().Value, metadataItem.Value);
+                Assert.Equal(jobSchedule.JobSpecification.OnAllTasksComplete, OnAllTasksComplete.TerminateJob);
+                Assert.Equal(jobSchedule.JobSpecification.OnTaskFailure, OnTaskFailure.PerformExitOptionsJobAction);
 
                 jobSchedule.Commit(additionalBehaviors: InterceptorFactory.CreateAddJobScheduleRequestInterceptor());
 
                 // writing isn't allowed for a jobSchedule that is in an read only state.
                 Assert.Throws<InvalidOperationException>(() => jobSchedule.Id = "cannot-change-id");
                 Assert.Throws<InvalidOperationException>(() => jobSchedule.DisplayName = "cannot-change-display-name");
-
+                
                 //Can still read though
                 Assert.Equal(jobScheduleId, jobSchedule.Id);
                 Assert.Equal(displayName, jobSchedule.DisplayName);
+
+                jobSchedule.Refresh(additionalBehaviors:
+                        InterceptorFactory.CreateGetJobScheduleRequestInterceptor(
+                            new Models.CloudJobSchedule()
+                                {
+                                    JobSpecification = new Models.JobSpecification()
+                                }));
+
+                jobSchedule.JobSpecification.OnAllTasksComplete = OnAllTasksComplete.NoAction;
+                jobSchedule.JobSpecification.OnTaskFailure = OnTaskFailure.NoAction;
             }
         }
 
@@ -171,7 +177,12 @@ namespace Azure.Batch.Unit.Tests
                             {
                                 new Models.MetadataItem { Name = metadataItem.Name, Value = metadataItem.Value }
                             },
-                    CreationTime = creationTime
+                    CreationTime = creationTime,
+                    JobSpecification = new Models.JobSpecification
+                            {
+                                OnAllTasksComplete = Models.OnAllTasksComplete.TerminateJob,
+                                OnTaskFailure = Models.OnTaskFailure.PerformExitOptionsJobAction
+                            }
                 };
 
                 CloudJobSchedule boundJobSchedule = client.JobScheduleOperations.GetJobSchedule(
@@ -181,9 +192,17 @@ namespace Azure.Batch.Unit.Tests
                 Assert.Equal(jobScheduleId, boundJobSchedule.Id); // reading is allowed from a jobSchedule that is returned from the server.
                 Assert.Equal(creationTime, boundJobSchedule.CreationTime);
                 Assert.Equal(displayName, boundJobSchedule.DisplayName);
+                Assert.Equal(boundJobSchedule.JobSpecification.OnAllTasksComplete, OnAllTasksComplete.TerminateJob);
+                Assert.Equal(boundJobSchedule.JobSpecification.OnTaskFailure, OnTaskFailure.PerformExitOptionsJobAction);
 
                 Assert.Throws<InvalidOperationException>(() => boundJobSchedule.DisplayName = "cannot-change-display-name");
                 Assert.Throws<InvalidOperationException>(() => boundJobSchedule.Id = "cannot-change-id");
+
+                boundJobSchedule.JobSpecification.OnAllTasksComplete = OnAllTasksComplete.TerminateJob;
+                boundJobSchedule.JobSpecification.OnTaskFailure = OnTaskFailure.NoAction;
+
+                Assert.Equal(boundJobSchedule.JobSpecification.OnAllTasksComplete, OnAllTasksComplete.TerminateJob);
+                Assert.Equal(boundJobSchedule.JobSpecification.OnTaskFailure, OnTaskFailure.NoAction);
             }
         }
 
@@ -209,7 +228,9 @@ namespace Azure.Batch.Unit.Tests
                 cloudJob.JobManagerTask = new JobManagerTask { ApplicationPackageReferences = new List<ApplicationPackageReference>
                 {
                     new ApplicationPackageReference { ApplicationId = applicationId, Version = applicationVersion }
-                }};
+                },
+                    AuthenticationTokenSettings = new AuthenticationTokenSettings() { Access = AccessScope.Job }
+                };
 
                 cloudJob.OnAllTasksComplete = OnAllTasksComplete.NoAction;
                 cloudJob.OnTaskFailure = OnTaskFailure.NoAction;
@@ -227,6 +248,9 @@ namespace Azure.Batch.Unit.Tests
                 // writing isn't allowed for a job that is in an invalid state.
                 Assert.Throws<InvalidOperationException>(() => cloudJob.Id = "cannot-change-id");
                 Assert.Throws<InvalidOperationException>(() => cloudJob.DisplayName = "cannot-change-display-name");
+
+                AuthenticationTokenSettings authenticationTokenSettings = new AuthenticationTokenSettings { Access = AccessScope.Job };
+                Assert.Throws<InvalidOperationException>(() => { cloudJob.JobManagerTask.AuthenticationTokenSettings = authenticationTokenSettings; });
             }
         }
 
@@ -285,7 +309,6 @@ namespace Azure.Batch.Unit.Tests
             }
         }
 
-
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void CloudTask_WhenReturnedFromServer_HasExpectedBoundProperties()
@@ -296,7 +319,11 @@ namespace Azure.Batch.Unit.Tests
             const int exitCodeRangeStart = 0;
             const int exitCodeRangeEnd = 4;
             Models.ExitOptions terminateExitOption = new Models.ExitOptions() { JobAction = Models.JobAction.Terminate };
-            Models.ExitOptions disableExitOption = new Models.ExitOptions() { JobAction = Models.JobAction.Disable };
+            Models.ExitOptions disableExitOption = new Models.ExitOptions()
+            {
+                JobAction = Models.JobAction.Disable,
+                DependencyAction = Models.DependencyAction.Satisfy
+            };
 
             BatchSharedKeyCredentials credentials = ClientUnitTestCommon.CreateDummySharedKeyCredential();
             using (BatchClient client = BatchClient.Open(credentials))
@@ -320,10 +347,12 @@ namespace Azure.Batch.Unit.Tests
 
 
                 Assert.Equal(taskId, boundTask.Id); // reading is allowed from a task that is returned from the server.
+                // These need to be compared as strings because they are different types but we are interested in the values being the same.
                 Assert.Equal(disableExitOption.JobAction.ToString(), boundTask.ExitConditions.Default.JobAction.ToString());
+                Assert.Equal(DependencyAction.Satisfy, boundTask.ExitConditions.Default.DependencyAction);
                 Assert.Throws<InvalidOperationException>(() => boundTask.ExitConditions = new ExitConditions());
                 Assert.Throws<InvalidOperationException>(() => boundTask.DependsOn = new TaskDependencies(new List<string>(), new List<TaskIdRange>()));
-                Assert.Throws<InvalidOperationException>(() => boundTask.RunElevated = true);
+                Assert.Throws<InvalidOperationException>(() => boundTask.UserIdentity = new UserIdentity("abc"));
                 Assert.Throws<InvalidOperationException>(() => boundTask.CommandLine = "Cannot change command line");
                 Assert.Throws<InvalidOperationException>(() => boundTask.ExitConditions.Default = new ExitOptions() { JobAction = JobAction.Terminate });
             }

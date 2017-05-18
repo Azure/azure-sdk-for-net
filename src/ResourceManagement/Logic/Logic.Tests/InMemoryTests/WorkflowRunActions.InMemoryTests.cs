@@ -14,7 +14,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest.Azure;
     using Xunit;
 
-    public class WorkflowRunActionsInMemoryTests : BaseInMemoryTests
+    public class WorkflowRunActionsInMemoryTests : InMemoryTestsBase
     {
         #region Constructor
 
@@ -198,7 +198,7 @@ namespace Test.Azure.Management.Logic
 
         private void ValidateRunAction1(WorkflowRunAction action)
         {
-            Assert.Equal("/subscriptions/66666666-6666-6666-6666-666666666666/resourceGroups/rgName/providers/Microsoft.Logic/workflows/wfName/runs/08587692861242198730/actions/actName", action.Id);
+            Assert.True(this.ValidateIdFormat(id: action.Id, entityTypeName: "workflows", entitySubtypeName: "runs", entityMicrotypeName: "actions"));
             Assert.Equal("actName", action.Name);
             Assert.Equal("Microsoft.Logic/workflows/runs/actions", action.Type);
 

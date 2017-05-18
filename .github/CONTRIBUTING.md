@@ -99,7 +99,7 @@ For more information on cleaning up the commits in a pull request, such as how t
 
 #### Breaking Changes
 
-Breaking changes should **not** be introduced into the repository without giving customers at least six months notice. For a description of breaking changes in Azure SDK for .NET, see [here](https://github.com/Azure/azure-sdk-for-net/blob/dev/Documentation/breaking-changes.md).
+Breaking changes should **not** be introduced into the repository without giving customers at least six months notice. For a description of breaking changes in Azure SDK for .NET, see [here](https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/Documentation/breaking-changes.md).
 
 #### General guidelines
 
@@ -109,7 +109,7 @@ The following guidelines must be followed in **EVERY** pull request that is open
 - There are a small number of commits that each have an informative message
 - A description of the changes the pull request makes is included, and a reference to the swagger spec pull request is included if the SDK is being regenerated
 - All files have the Microsoft copyright header
-- The pull request does not introduce [breaking changes](https://github.com/Azure/azure-sdk-for-net/blob/dev/Documentation/breaking-changes.md)
+- The pull request does not introduce [breaking changes](https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/Documentation/breaking-changes.md)
 
 #### Testing Guidelines
 

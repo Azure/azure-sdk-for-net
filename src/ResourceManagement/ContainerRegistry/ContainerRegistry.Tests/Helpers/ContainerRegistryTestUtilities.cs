@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Linq;
@@ -94,7 +82,7 @@ namespace ContainerRegistry.Tests
             var createRequest = client.StorageAccounts.Create(resourceGroup.Name, storageName, new StorageAccountCreateParameters
             {
                 Location = resourceGroup.Location,
-                Sku = new Sku { Name = SkuName.StandardLRS },
+                Sku = new Microsoft.Azure.Management.Storage.Models.Sku { Name = SkuName.StandardLRS },
                 Kind = Kind.Storage
             });
 
@@ -104,19 +92,23 @@ namespace ContainerRegistry.Tests
         public static string CreateContainerRegistry(ContainerRegistryManagementClient client, ResourceGroup resourceGroup, string storageName, string storageKey)
         {
             string registryName = TestUtilities.GenerateName("acrregistry");
-            Registry registry = GetDefaultRegistryProperties(resourceGroup, storageName, storageKey);
+            RegistryCreateParameters parameters = GetDefaultRegistryCreateParameters(resourceGroup, storageName, storageKey);
 
-            var createRequest = client.Registries.CreateOrUpdate(resourceGroup.Name, registryName, registry);
+            var createRequest = client.Registries.Create(resourceGroup.Name, registryName, parameters);
 
             return registryName;
         }
 
-        public static Registry GetDefaultRegistryProperties(ResourceGroup resourceGroup, string storageName, string storageKey)
+        public static RegistryCreateParameters GetDefaultRegistryCreateParameters(ResourceGroup resourceGroup, string storageName, string storageKey)
         {
-            Registry registry = new Registry
+            RegistryCreateParameters parameters = new RegistryCreateParameters
             {
                 Location = resourceGroup.Location,
-                StorageAccount = new StorageAccountProperties
+                Sku = new Microsoft.Azure.Management.ContainerRegistry.Models.Sku
+                {
+                    Name = "Basic"
+                },
+                StorageAccount = new StorageAccountParameters
                 {
                     Name = storageName,
                     AccessKey = storageKey
@@ -124,7 +116,7 @@ namespace ContainerRegistry.Tests
                 Tags = DefaultTags
             };
 
-            return registry;
+            return parameters;
         }
 
         public static string GetStorageAccessKey(StorageManagementClient client, ResourceGroup resourceGroup, string storageName)
@@ -138,12 +130,15 @@ namespace ContainerRegistry.Tests
             Assert.NotNull(registry.Id);
             Assert.NotNull(registry.Name);
             Assert.NotNull(registry.Location);
+            Assert.NotNull(registry.Sku);
+            Assert.Equal(registry.Sku.Name, "Basic");
+            Assert.Equal(registry.Sku.Tier, Microsoft.Azure.Management.ContainerRegistry.Models.SkuTier.Basic);
+            Assert.Equal(registry.ProvisioningState, Microsoft.Azure.Management.ContainerRegistry.Models.ProvisioningState.Succeeded);
             Assert.NotNull(registry.AdminUserEnabled);
             Assert.NotNull(registry.LoginServer);
             Assert.NotNull(registry.CreationDate);
             Assert.NotNull(registry.StorageAccount);
             Assert.NotNull(registry.StorageAccount.Name);
-            Assert.Null(registry.StorageAccount.AccessKey);
 
             Assert.Equal(registry.StorageAccount.Name, storageName);
 

@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace BatchClientIntegrationTests
 {
@@ -91,11 +80,11 @@
 
                         foreach (NodeFile curFile in myCompletedTask.ListNodeFiles())
                         {
-                            this.testOutputHelper.WriteLine("    Filename: " + curFile.Name);
+                            this.testOutputHelper.WriteLine("    Filepath: " + curFile.Path);
                             this.testOutputHelper.WriteLine("       IsDirectory: " + curFile.IsDirectory.ToString());
 
                             // turns out wd is created for each task so use it as sentinal
-                            if (curFile.Name.Equals("wd") && curFile.IsDirectory.HasValue && curFile.IsDirectory.Value)
+                            if (curFile.Path.Equals("wd") && curFile.IsDirectory.HasValue && curFile.IsDirectory.Value)
                             {
                                 foundAtLeastOneDir = true;
                             }
@@ -177,12 +166,12 @@
 
                         //Delete directory
 
-                        NodeFile directory = batchCli.JobOperations.ListNodeFiles(jobId, directoryCreationTaskId1, recursive: true).First(item => item.Name.Contains(directoryNameOne));
+                        NodeFile directory = batchCli.JobOperations.ListNodeFiles(jobId, directoryCreationTaskId1, recursive: true).First(item => item.Path.Contains(directoryNameOne));
                         Assert.True(directory.IsDirectory);
                         TestUtilities.AssertThrows<BatchException>(() => directory.Delete(recursive: false));
                         directory.Delete(recursive: true);
 
-                        Assert.Null(batchCli.JobOperations.ListNodeFiles(jobId, directoryCreationTaskId1, recursive: true).FirstOrDefault(item => item.Name.Contains(directoryNameOne)));
+                        Assert.Null(batchCli.JobOperations.ListNodeFiles(jobId, directoryCreationTaskId1, recursive: true).FirstOrDefault(item => item.Path.Contains(directoryNameOne)));
 
                         //
                         // JobScheduleOperations delete task file
@@ -195,12 +184,12 @@
                         TestUtilities.AssertThrows<BatchException>(() => batchCli.JobOperations.GetNodeFile(jobId, taskId, stdErrFileName));
 
                         //Delete directory
-                        directory = batchCli.JobOperations.ListNodeFiles(jobId, directoryCreationTaskId2, recursive: true).First(item => item.Name.Contains(directoryNameTwo));
+                        directory = batchCli.JobOperations.ListNodeFiles(jobId, directoryCreationTaskId2, recursive: true).First(item => item.Path.Contains(directoryNameTwo));
                         Assert.True(directory.IsDirectory);
                         TestUtilities.AssertThrows<BatchException>(() => batchCli.JobOperations.DeleteNodeFile(jobId, directoryCreationTaskId2, directory2PathOnNode, recursive: false));
                         batchCli.JobOperations.DeleteNodeFile(jobId, directoryCreationTaskId2, directory2PathOnNode, recursive: true);
 
-                        Assert.Null(batchCli.JobOperations.ListNodeFiles(jobId, directoryCreationTaskId2, recursive: true).FirstOrDefault(item => item.Name.Contains(directoryNameTwo)));
+                        Assert.Null(batchCli.JobOperations.ListNodeFiles(jobId, directoryCreationTaskId2, recursive: true).FirstOrDefault(item => item.Path.Contains(directoryNameTwo)));
                     }
                     finally
                     {
@@ -304,10 +293,10 @@
 
                         foreach (NodeFile f in fileListFromComputeNodeOperations)
                         {
-                            this.testOutputHelper.WriteLine("Found file: {0}", f.Name);
+                            this.testOutputHelper.WriteLine("Found file: {0}", f.Path);
                         }
                         //Check to make sure the expected folder named "Shared" exists
-                        Assert.Contains("shared", fileListFromComputeNodeOperations.Select(f => f.Name));
+                        Assert.Contains("shared", fileListFromComputeNodeOperations.Select(f => f.Path));
 
                         //
                         // List all node files from the compute node -- recursive true
@@ -315,15 +304,15 @@
                         List<NodeFile> fileListFromComputeNode = computeNode.ListNodeFiles(recursive: true).ToList();
                         foreach (NodeFile f in fileListFromComputeNodeOperations)
                         {
-                            this.testOutputHelper.WriteLine("Found file: {0}", f.Name);
+                            this.testOutputHelper.WriteLine("Found file: {0}", f.Path);
                         }
                         //Check to make sure the expected folder named "Shared" exists
-                        Assert.Contains("shared", fileListFromComputeNode.Select(f => f.Name));
+                        Assert.Contains("shared", fileListFromComputeNode.Select(f => f.Path));
 
                         //
                         // Get file from operations
                         //
-                        string filePathToGet = fileListFromComputeNode.First(f => !f.IsDirectory.Value).Name;
+                        string filePathToGet = fileListFromComputeNode.First(f => !f.IsDirectory.Value).Path;
                         this.testOutputHelper.WriteLine("Getting file: {0}", filePathToGet);
                         NodeFile computeNodeFileFromManager = batchCli.PoolOperations.GetNodeFile(this.poolFixture.PoolId, computeNodeId, filePathToGet);
                         this.testOutputHelper.WriteLine("Successfully retrieved file: {0}", filePathToGet);
@@ -354,12 +343,12 @@
 
                         //Delete directory
 
-                        NodeFile directory = batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).First(item => item.Name.Contains(directoryNameOne));
+                        NodeFile directory = batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).First(item => item.Path.Contains(directoryNameOne));
                         Assert.True(directory.IsDirectory);
                         TestUtilities.AssertThrows<BatchException>(() => directory.Delete(recursive: false));
                         directory.Delete(recursive: true);
 
-                        Assert.Null(batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).FirstOrDefault(item => item.Name.Contains(directoryNameOne)));
+                        Assert.Null(batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).FirstOrDefault(item => item.Path.Contains(directoryNameOne)));
 
                         //
                         // PoolManager delete node file
@@ -374,12 +363,12 @@
                         TestUtilities.AssertThrows<BatchException>(() => batchCli.JobOperations.GetNodeFile(jobId, taskId, stdErrFileName));
 
                         //Delete directory
-                        directory = batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).First(item => item.Name.Contains(directoryNameTwo));
+                        directory = batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).First(item => item.Path.Contains(directoryNameTwo));
                         Assert.True(directory.IsDirectory);
-                        TestUtilities.AssertThrows<BatchException>(() => batchCli.PoolOperations.DeleteNodeFile(this.poolFixture.PoolId, computeNodeId, directory.Name, recursive: false));
-                        batchCli.PoolOperations.DeleteNodeFile(this.poolFixture.PoolId, computeNodeId, directory.Name, recursive: true);
+                        TestUtilities.AssertThrows<BatchException>(() => batchCli.PoolOperations.DeleteNodeFile(this.poolFixture.PoolId, computeNodeId, directory.Path, recursive: false));
+                        batchCli.PoolOperations.DeleteNodeFile(this.poolFixture.PoolId, computeNodeId, directory.Path, recursive: true);
 
-                        Assert.Null(batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).FirstOrDefault(item => item.Name.Contains(directoryNameTwo)));
+                        Assert.Null(batchCli.PoolOperations.ListNodeFiles(this.poolFixture.PoolId, computeNodeId, recursive: true).FirstOrDefault(item => item.Path.Contains(directoryNameTwo)));
                     }
                     finally
                     {
@@ -521,7 +510,7 @@
                         List<NodeFile> files = computeNode.ListNodeFiles(recursive: true).ToList();
                         foreach (NodeFile nodeFile in files)
                         {
-                            this.testOutputHelper.WriteLine("Found file: {0}", nodeFile.Name);
+                            this.testOutputHelper.WriteLine("Found file: {0}", nodeFile.Path);
                         }
 
                         string filePathToGet = string.Format("workitems/{0}/{1}/{2}/{3}", jobId, "job-1", taskId, stdOutFileName);
@@ -630,7 +619,7 @@
             foreach (NodeFile file in listOne)
             {
                 //Find the corresponding file in the other list and ensure they are the same
-                NodeFile matchedFile = listTwo.FirstOrDefault(f => f.Name == file.Name);
+                NodeFile matchedFile = listTwo.FirstOrDefault(f => f.Path == file.Path);
                 Assert.NotNull(matchedFile);
 
                 //Ensure the files match

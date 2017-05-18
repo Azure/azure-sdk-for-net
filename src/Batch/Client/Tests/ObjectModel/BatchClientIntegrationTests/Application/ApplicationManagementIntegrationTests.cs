@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace BatchClientIntegrationTests.Application
 {
@@ -21,6 +10,7 @@
     using BatchClientIntegrationTests.Fixtures;
     using BatchClientIntegrationTests.IntegrationTestUtilities;
     using BatchTestCommon;
+    using IntegrationTestCommon;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Management.Batch;
     using Microsoft.Azure.Management.Batch.Models;
@@ -34,7 +24,7 @@
 
         public ApplicationManagementIntegrationTests()
         {
-            TestCommon.EnableAutoStorageAsync().Wait();
+            IntegrationTestCommon.EnableAutoStorageAsync().Wait();
 
             ApplicationIntegrationCommon.UploadTestApplicationPackageIfNotAlreadyUploadedAsync(ApplicationId,
                 ApplicationIntegrationCommon.Version,
@@ -53,10 +43,10 @@
                     var poolId = "app-ref-test" + Guid.NewGuid();
                     using (BatchClient client = await TestUtilities.OpenBatchClientFromEnvironmentAsync())
                     {
-                        using (var mgmtClient = TestCommon.OpenBatchManagementClient())
+                        using (var mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
                         {
                             // Give the application a display name
-                            await mgmtClient.Applications.UpdateApplicationAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId, new UpdateApplicationParameters
+                            await mgmtClient.Application.UpdateAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId, new UpdateApplicationParameters
                             {
                                 AllowUpdates = true,
                                 DefaultVersion = ApplicationIntegrationCommon.Version,
@@ -77,7 +67,7 @@
                             Assert.Equal(getApplicationSummary.Versions.Count(), applicationSummary.Versions.Count());
                             Assert.Equal(getApplicationSummary.DisplayName, applicationSummary.DisplayName);
 
-                            var appPackage = await mgmtClient.Applications.GetApplicationPackageAsync(
+                            var appPackage = await mgmtClient.ApplicationPackage.GetAsync(
                                     TestCommon.Configuration.BatchAccountResourceGroup,
                                     accountName,
                                     ApplicationId,
@@ -87,10 +77,10 @@
                             Assert.Equal(ApplicationIntegrationCommon.Version, appPackage.Version);
                             Assert.Equal(ApplicationId, appPackage.Id);
 
-                            var getApplication = await mgmtClient.Applications.GetApplicationAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId).ConfigureAwait(false);
+                            var application = await mgmtClient.Application.GetAsync(TestCommon.Configuration.BatchAccountResourceGroup, accountName, ApplicationId).ConfigureAwait(false);
 
-                            Assert.Equal(ApplicationIntegrationCommon.Version, getApplication.Application.DefaultVersion);
-                            Assert.Equal(ApplicationId, getApplication.Application.Id);
+                            Assert.Equal(ApplicationIntegrationCommon.Version, application.DefaultVersion);
+                            Assert.Equal(ApplicationId, application.Id);
 
                             await AssertPoolWasCreatedWithApplicationReferences(client, poolId, ApplicationId).ConfigureAwait(false);
                         }

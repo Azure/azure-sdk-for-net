@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿
 namespace BatchClientIntegrationTests.IntegrationTestUtilities
@@ -84,6 +73,11 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             StagingStorageAccount storageStagingCredentials = new StagingStorageAccount(storageAccountName, storageAccountKey, storageAccountBlobEndpoint);
 
             return storageStagingCredentials;
+        }
+
+        public static string GenerateRandomPassword()
+        {
+            return Guid.NewGuid().ToString();
         }
 
         #endregion
@@ -389,7 +383,6 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                     testOutputHelper.WriteLine("               CommandLine        : " + ijm.CommandLine);
                     testOutputHelper.WriteLine("               KillJobOnCompletion: " + (ijm.KillJobOnCompletion.HasValue ? ijm.KillJobOnCompletion.Value.ToString() : "<null>"));
                     testOutputHelper.WriteLine("               Id                 : " + ijm.Id);
-                    testOutputHelper.WriteLine("               RunElevated        : " + (ijm.RunElevated.HasValue ? ijm.RunElevated.Value.ToString() : "<null>"));
                     testOutputHelper.WriteLine("               RunExclusive       : " + (ijm.RunExclusive.HasValue ? ijm.RunExclusive.Value.ToString() : "<null>"));
 
                     IEnumerable<EnvironmentSetting> envSettings = ijm.EnvironmentSettings;
@@ -428,6 +421,14 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                         testOutputHelper.WriteLine("                   MaxTaskRetryCount: " + (tc.MaxTaskRetryCount.HasValue ? tc.MaxTaskRetryCount.Value.ToString() : "<null>"));
                         testOutputHelper.WriteLine("                   MaxWallClockTime: " + (tc.MaxWallClockTime.HasValue ? tc.MaxWallClockTime.Value.TotalMilliseconds.ToString() : "<null>"));
                         testOutputHelper.WriteLine("                   RetentionTime: " + (tc.RetentionTime.HasValue ? tc.RetentionTime.Value.TotalMilliseconds.ToString() : "<null>"));
+                    }
+
+                    if (ijm.UserIdentity != null)
+                    {
+                        testOutputHelper.WriteLine("               UserIdentity: ");
+                        testOutputHelper.WriteLine("                   UserName: ", ijm.UserIdentity.UserName);
+                        testOutputHelper.WriteLine("                   ElevationLevel: ", ijm.UserIdentity.AutoUser?.ElevationLevel);
+                        testOutputHelper.WriteLine("                   Scope: ", ijm.UserIdentity.AutoUser?.Scope);
                     }
                 }
             }

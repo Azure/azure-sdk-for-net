@@ -84,11 +84,14 @@ namespace Microsoft.Rest.Serialization
             }
 
             string typeName = value.GetType().Name;
-            if (value.GetType().GetTypeInfo().GetCustomAttributes<JsonObjectAttribute>().Any())
+            // check if the jsonobject attribute was inherited from basetype, if yes, we don't want to use it to serialize the object
+            var baseTypeAttribute = value.GetType().GetTypeInfo().BaseType.GetTypeInfo().GetCustomAttribute<JsonObjectAttribute>()?.Id;
+            var derivedTypeAttribute = value.GetType().GetTypeInfo().GetCustomAttribute<JsonObjectAttribute>()?.Id;
+            if (!string.IsNullOrEmpty(derivedTypeAttribute) && derivedTypeAttribute!=baseTypeAttribute)
             {
-                typeName = value.GetType().GetTypeInfo().GetCustomAttribute<JsonObjectAttribute>().Id;
+                typeName = derivedTypeAttribute;
             }
-
+            
             // Add discriminator field
             writer.WriteStartObject();
             writer.WritePropertyName(Discriminator);

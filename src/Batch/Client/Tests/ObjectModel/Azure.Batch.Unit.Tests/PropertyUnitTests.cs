@@ -1,18 +1,7 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace Azure.Batch.Unit.Tests
+namespace Azure.Batch.Unit.Tests
 {
     using System;
     using System.Collections;
@@ -131,49 +120,12 @@
                 new ComparerPropertyMapping(typeof(ImageReference), typeof(Protocol.Models.ImageReference), "SkuId", "Sku"),
 
                 new ComparerPropertyMapping(typeof(VirtualMachineConfiguration), typeof(Protocol.Models.VirtualMachineConfiguration), "NodeAgentSkuId", "NodeAgentSKUId"),
+                new ComparerPropertyMapping(typeof(VirtualMachineConfiguration), typeof(Protocol.Models.VirtualMachineConfiguration), "OSDisk", "OsDisk"),
 
                 new ComparerPropertyMapping(typeof(TaskSchedulingPolicy), typeof(Protocol.Models.TaskSchedulingPolicy), "ComputeNodeFillType", "NodeFillType"),
             };
 
             Random rand = new Random();
-
-            Func<object> certificateReferenceBuilder = () =>
-            {
-                //Build cert visibility (which is a required property)
-                IList values = Enum.GetValues(typeof(CertificateVisibility));
-                IList<object> valuesToSelect = new List<object>();
-
-                foreach (object value in values)
-                {
-                    valuesToSelect.Add(value);
-                }
-
-                int valuesToPick = rand.Next(0, values.Count);
-                CertificateVisibility? visibility = null;
-
-                // If valuesToPick is 0, we want to allow visibility to be null (since null is a valid value)
-                // so only set visibility to be None if valuesToPick > 0
-                if (valuesToPick > 0)
-                {
-                    visibility = CertificateVisibility.None;
-                    for (int i = 0; i < valuesToPick; i++)
-                    {
-                        int selectedValueIndex = rand.Next(valuesToSelect.Count);
-                        object selectedValue = valuesToSelect[selectedValueIndex];
-                        visibility |= (CertificateVisibility)selectedValue;
-
-                        valuesToSelect.RemoveAt(selectedValueIndex);
-                    }
-                }
-
-                Protocol.Models.CertificateReference reference =
-                    this.defaultObjectFactory.GenerateNew<Protocol.Models.CertificateReference>();
-
-                //Set certificate visibility since it is required
-                reference.Visibility = visibility == null ? null : UtilitiesInternal.CertificateVisibilityToList(visibility.Value);
-
-                return reference;
-            };
 
             Func<object> omTaskRangeBuilder = () =>
             {
@@ -183,9 +135,9 @@
                 return new TaskIdRange(Math.Min(rangeLimit1, rangeLimit2), Math.Max(rangeLimit1, rangeLimit2));
             };
 
-            Func<object> iFileStagingProviderBuilder = () => { return null; };
+            Func<object> iFileStagingProviderBuilder = () => null;
 
-            Func<object> batchClientBehaviorBuilder = () => { return null; };
+            Func<object> batchClientBehaviorBuilder = () => null;
 
             Func<object> taskRangeBuilder = () =>
             {
@@ -195,9 +147,13 @@
                 return new Protocol.Models.TaskIdRange(Math.Min(rangeLimit1, rangeLimit2), Math.Max(rangeLimit1, rangeLimit2));
             };
 
-            ObjectFactoryConstructionSpecification visibilitySpecification = new ObjectFactoryConstructionSpecification(
+            ObjectFactoryConstructionSpecification certificateReferenceSpecification = new ObjectFactoryConstructionSpecification(
                 typeof(Protocol.Models.CertificateReference),
-                certificateReferenceBuilder);
+                () => BuildCertificateReference(rand));
+
+            ObjectFactoryConstructionSpecification authenticationTokenSettingsSpecification = new ObjectFactoryConstructionSpecification(
+                typeof(Protocol.Models.AuthenticationTokenSettings),
+                () => BuildAuthenticationTokenSettings(rand));
 
             ObjectFactoryConstructionSpecification taskRangeSpecification = new ObjectFactoryConstructionSpecification(
                 typeof(Protocol.Models.TaskIdRange),
@@ -217,7 +173,8 @@
 
             this.customizedObjectFactory = new ObjectFactory(new List<ObjectFactoryConstructionSpecification>
                 {
-                    visibilitySpecification,
+                    certificateReferenceSpecification,
+                    authenticationTokenSettingsSpecification,
                     taskRangeSpecification,
                     omTaskRangeSpecification,
                     fileStagingProviderSpecification,
@@ -228,7 +185,7 @@
             // the object model (string in proxy, flags enum in OM
             ComparisonRule certificateReferenceComparisonRule = ComparisonRule.Create<CertificateVisibility?, List<Protocol.Models.CertificateVisibility?>>(
                 typeof(CertificateReference),
-                typeof(Protocol.Models.CertificateReference),
+                typeof(Protocol.Models.CertificateReference), // This is the type that hold the target property  
                 (visibility, proxyVisibility) =>
                 {
                     CertificateVisibility? convertedProxyVisibility = UtilitiesInternal.ParseCertificateVisibility(proxyVisibility);
@@ -241,10 +198,101 @@
                 type1PropertyName: "Visibility",
                 type2PropertyName: "Visibility");
 
+            ComparisonRule accessScopeComparisonRule = ComparisonRule.Create<AccessScope, List<Protocol.Models.AccessScope?>>(
+                typeof(AuthenticationTokenSettings),
+                typeof(Protocol.Models.AuthenticationTokenSettings),  // This is the type that hold the target property  
+                (scope, proxyVisibility) =>
+                {
+                    AccessScope convertedProxyVisibility = UtilitiesInternal.ParseAccessScope(proxyVisibility);
+
+                    //Treat null as None for the purposes of comparison:
+                    bool areEqual = convertedProxyVisibility == scope || convertedProxyVisibility == AccessScope.None;
+
+                    return areEqual ? ObjectComparer.CheckEqualityResult.True : ObjectComparer.CheckEqualityResult.False("AccessScope doesn't match");
+                },
+                type1PropertyName: "Access",
+                type2PropertyName: "Access");
+
+
             this.objectComparer = new ObjectComparer(
-                comparisonRules: new List<ComparisonRule>() { certificateReferenceComparisonRule },
+                comparisonRules: new List<ComparisonRule>() { certificateReferenceComparisonRule, accessScopeComparisonRule },
                 propertyMappings: this.proxyPropertyToObjectModelMapping,
                 shouldThrowOnPropertyReadException: e => !(e.InnerException is InvalidOperationException) || !e.InnerException.Message.Contains("while the object is in the Unbound"));
+        }
+
+        private Protocol.Models.CertificateReference BuildCertificateReference(Random rand)
+        {
+            //Build cert visibility (which is a required property)
+            IList values = Enum.GetValues(typeof(CertificateVisibility));
+            IList<object> valuesToSelect = new List<object>();
+
+            foreach (object value in values)
+            {
+                valuesToSelect.Add(value);
+            }
+
+            int valuesToPick = rand.Next(0, values.Count);
+            CertificateVisibility? visibility = null;
+
+            // If valuesToPick is 0, we want to allow visibility to be null (since null is a valid value)
+            // so only set visibility to be None if valuesToPick > 0
+            if (valuesToPick > 0)
+            {
+                visibility = CertificateVisibility.None;
+                for (int i = 0; i < valuesToPick; i++)
+                {
+                    int selectedValueIndex = rand.Next(valuesToSelect.Count);
+                    object selectedValue = valuesToSelect[selectedValueIndex];
+                    visibility |= (CertificateVisibility)selectedValue;
+
+                    valuesToSelect.RemoveAt(selectedValueIndex);
+                }
+            }
+
+            Protocol.Models.CertificateReference reference = this.defaultObjectFactory.GenerateNew<Protocol.Models.CertificateReference>();
+
+            //Set certificate visibility since it is required
+            reference.Visibility = visibility == null ? null : UtilitiesInternal.CertificateVisibilityToList(visibility.Value);
+
+            return reference;
+
+        }
+
+        private Protocol.Models.AuthenticationTokenSettings BuildAuthenticationTokenSettings(Random rand)
+        {
+            //Build access scope (which is a required property)
+            IList values = Enum.GetValues(typeof(AccessScope));
+            IList<object> valuesToSelect = new List<object>();
+
+            foreach (object value in values)
+            {
+                valuesToSelect.Add(value);
+            }
+
+            int valuesToPick = rand.Next(0, values.Count);
+            AccessScope? accessScope = null;
+
+            // If valuesToPick is 0, we want to allow access scope to be null (since null is a valid value)
+            // so only set access scope to be None if valuesToPick > 0
+            if (valuesToPick > 0)
+            {
+                accessScope = AccessScope.None;
+                for (int i = 0; i < valuesToPick; i++)
+                {
+                    int selectedValueIndex = rand.Next(valuesToSelect.Count);
+                    object selectedValue = valuesToSelect[selectedValueIndex];
+                    accessScope |= (AccessScope)selectedValue;
+
+                    valuesToSelect.RemoveAt(selectedValueIndex);
+                }
+            }
+
+            Protocol.Models.AuthenticationTokenSettings tokenSettings = this.defaultObjectFactory.GenerateNew<Protocol.Models.AuthenticationTokenSettings>();
+
+            //Set access scope since it is required
+            tokenSettings.Access = accessScope == null ? null : UtilitiesInternal.AccessScopeToList(accessScope.Value);
+
+            return tokenSettings;
         }
 
         #region Reflection based tests
@@ -390,9 +438,11 @@
             //properties of those objects.
             Type iReadOnlyType = typeof(IReadOnly);
 
-            List<Type> typesWithIReadOnlyBase = GetTypesWhichImplementInterface(iReadOnlyType.Assembly, iReadOnlyType, requirePublicConstructor: false).ToList();
+            List<Type> typesWithIReadOnlyBase = GetTypesWhichImplementInterface(iReadOnlyType.GetTypeInfo().Assembly, iReadOnlyType, requirePublicConstructor: false).ToList();
             foreach (Type type in typesWithIReadOnlyBase)
             {
+                this.testOutputHelper.WriteLine("Reading/Setting properties of type: {0}", type.ToString());
+
                 //Create an instance of that type
                 IReadOnly objectUnderTest = this.customizedObjectFactory.CreateInstance<IReadOnly>(type);
 
@@ -401,8 +451,6 @@
 
                 //Get the properties for the object under test
                 IEnumerable<PropertyInfo> properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-                this.testOutputHelper.WriteLine("Reading/Setting properties of type: {0}", type.ToString());
 
                 foreach (PropertyInfo property in properties.Where(p => p.Name != "CustomBehaviors"))
                 {
@@ -458,7 +506,7 @@
             //properties of those objects.
             Type iTransportObjectProviderType = typeof(ITransportObjectProvider<>);
 
-            IEnumerable<Type> types = GetTypesWhichImplementInterface(iTransportObjectProviderType.Assembly, iTransportObjectProviderType, requirePublicConstructor: false);
+            IEnumerable<Type> types = GetTypesWhichImplementInterface(iTransportObjectProviderType.GetTypeInfo().Assembly, iTransportObjectProviderType, requirePublicConstructor: false);
 
             foreach (Type type in types)
             {
@@ -467,9 +515,10 @@
                 {
                     object o = this.customizedObjectFactory.GenerateNew(type);
                     Type concreteInterfaceType = o.GetType().GetInterfaces().First(iFace =>
-                        iFace.IsGenericType &&
+                        iFace.GetTypeInfo().IsGenericType &&
                         iFace.GetGenericTypeDefinition() == iTransportObjectProviderType);
-                    object protocolObject = concreteInterfaceType.GetMethod("GetTransportObject").Invoke(o, BindingFlags.Instance | BindingFlags.NonPublic, null, null, null);
+                    //object protocolObject = concreteInterfaceType.GetMethod("GetTransportObject").Invoke(o, BindingFlags.Instance | BindingFlags.NonPublic, null, null, null);
+                    object protocolObject = concreteInterfaceType.GetMethod("GetTransportObject").Invoke(o, null);
 
                     ObjectComparer.CheckEqualityResult result = this.objectComparer.CheckEquality(o, protocolObject);
                     Assert.True(result.Equal, result.Message);
@@ -489,20 +538,20 @@
                 requirePublicConstructorFunc = (t => true);
             }
 
-            if (!interfaceType.IsGenericType)
+            if (!interfaceType.GetTypeInfo().IsGenericType)
             {
                 return assembly.GetTypes().Where(t =>
                     interfaceType.IsAssignableFrom(t) &&
-                    !t.IsInterface &&
-                    t.IsVisible &&
+                    !t.GetTypeInfo().IsInterface &&
+                    t.GetTypeInfo().IsVisible &&
                     requirePublicConstructorFunc(t));
             }
             else
             {
                 return assembly.GetTypes().Where(t =>
-                    t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == interfaceType) &&
-                    !t.IsInterface &&
-                    t.IsVisible &&
+                    t.GetInterfaces().Any(i => i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition() == interfaceType) &&
+                    !t.GetTypeInfo().IsInterface &&
+                    t.GetTypeInfo().IsVisible &&
                     requirePublicConstructorFunc(t));
             }
         }
@@ -549,7 +598,7 @@
             Assert.Equal(blobPath, protoFile.BlobSource);
             Assert.Equal(mode, protoFile.FileMode);
         }
-        
+
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestAutoPoolSpecificationUnboundConstraints()
@@ -604,7 +653,7 @@
             Protocol.Models.AutoPoolSpecification protoAutoPoolSpecification = new Protocol.Models.AutoPoolSpecification
             {
                 KeepAlive = true,
-                PoolLifetimeOption = Protocol.Models.PoolLifetimeOption.Jobschedule,
+                PoolLifetimeOption = Protocol.Models.PoolLifetimeOption.JobSchedule,
                 AutoPoolIdPrefix = "Matt",
                 Pool = new Protocol.Models.PoolSpecification
                 {

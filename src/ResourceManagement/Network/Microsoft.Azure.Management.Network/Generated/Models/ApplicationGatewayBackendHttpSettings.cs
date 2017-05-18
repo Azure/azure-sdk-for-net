@@ -36,11 +36,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="port">Port</param>
-        /// <param name="protocol">Protocol. Possible values are: 'Http' and
-        /// 'Https'. Possible values include: 'Http', 'Https'</param>
+        /// <param name="protocol">Protocol. Possible values include: 'Http',
+        /// 'Https'</param>
         /// <param name="cookieBasedAffinity">Cookie based affinity. Possible
-        /// values are: 'Enabled' and 'Disabled'. Possible values include:
-        /// 'Enabled', 'Disabled'</param>
+        /// values include: 'Enabled', 'Disabled'</param>
         /// <param name="requestTimeout">Request timeout in seconds.
         /// Application Gateway will fail the request if response is not
         /// received within RequestTimeout. Acceptable values are from 1 second
@@ -52,12 +51,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">Provisioning state of the backend
         /// http settings resource. Possible values are: 'Updating',
         /// 'Deleting', and 'Failed'.</param>
+        /// <param name="connectionDraining">Connection draining of the backend
+        /// http settings resource.</param>
         /// <param name="name">Name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGatewayBackendHttpSettings(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), IList<SubResource> authenticationCertificates = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayBackendHttpSettings(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), IList<SubResource> authenticationCertificates = default(IList<SubResource>), string provisioningState = default(string), ApplicationGatewayConnectionDraining connectionDraining = default(ApplicationGatewayConnectionDraining), string name = default(string), string etag = default(string))
             : base(id)
         {
             Port = port;
@@ -67,6 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Probe = probe;
             AuthenticationCertificates = authenticationCertificates;
             ProvisioningState = provisioningState;
+            ConnectionDraining = connectionDraining;
             Name = name;
             Etag = etag;
         }
@@ -78,15 +80,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? Port { get; set; }
 
         /// <summary>
-        /// Gets or sets protocol. Possible values are: 'Http' and 'Https'.
-        /// Possible values include: 'Http', 'Https'
+        /// Gets or sets protocol. Possible values include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets cookie based affinity. Possible values are: 'Enabled'
-        /// and 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// Gets or sets cookie based affinity. Possible values include:
+        /// 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.cookieBasedAffinity")]
         public string CookieBasedAffinity { get; set; }
@@ -121,6 +122,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
+        /// Gets or sets connection draining of the backend http settings
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.connectionDraining")]
+        public ApplicationGatewayConnectionDraining ConnectionDraining { get; set; }
+
+        /// <summary>
         /// Gets or sets name of the resource that is unique within a resource
         /// group. This name can be used to access the resource.
         /// </summary>
@@ -134,6 +142,19 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ConnectionDraining != null)
+            {
+                ConnectionDraining.Validate();
+            }
+        }
     }
 }
 

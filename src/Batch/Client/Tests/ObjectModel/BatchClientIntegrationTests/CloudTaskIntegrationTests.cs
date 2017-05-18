@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace BatchClientIntegrationTests
 {
@@ -65,7 +54,7 @@
 
             // used for tests of StartTask(info)
             st.ResourceFiles = new List<ResourceFile> { new ResourceFile("https://manoj123.blob.core.windows.net/mpi/MSMpiSetup.exe", "MSMpiSetup.exe") };  // TODO: remove the dependency on magic blob.  bring this into project and use filestaging or something
-            st.RunElevated = true;
+            st.UserIdentity = new UserIdentity(new AutoUserSpecification(elevationLevel: ElevationLevel.Admin));
             st.WaitForSuccess = true;
             newPool.StartTask = st;
 
@@ -188,7 +177,7 @@
                                 IPagedEnumerable<SubtaskInformation> results = myCompletedTask.ListSubtasks();
 
                                 subtasks = results.ToList();
-                                if (subtasks.All(t => t.State == TaskState.Completed))
+                                if (subtasks.All(t => t.State == SubtaskState.Completed))
                                 {
                                     break;
                                 }
@@ -283,7 +272,7 @@
                                 IPagedEnumerable<SubtaskInformation> results = batchCli.JobOperations.ListSubtasks(jobId, myCompletedTask.Id);
 
                                 subtasks = results.ToList();
-                                if (subtasks.All(t => t.State == TaskState.Completed))
+                                if (subtasks.All(t => t.State == SubtaskState.Completed))
                                 {
                                     break;
                                 }
@@ -624,9 +613,9 @@
 
                             foreach (NodeFile curFile in curTask.ListNodeFiles(recursive: true))
                             {
-                                this.testOutputHelper.WriteLine("    filename: " + curFile.Name);
+                                this.testOutputHelper.WriteLine("    filename: " + curFile.Path);
 
-                                if (curFile.Name.IndexOf("localWords.txt", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                                if (curFile.Path.IndexOf("localWords.txt", StringComparison.InvariantCultureIgnoreCase) >= 0)
                                 {
                                     Assert.False(foundLocalWords);
                                     foundLocalWords = true;
@@ -875,6 +864,93 @@
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void DependencyActionIsRoundTripped()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
+
+                    try
+                    {
+                        //Create the job
+                        CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() { PoolId = this.poolFixture.PoolId });
+                        cloudJob.OnTaskFailure = OnTaskFailure.PerformExitOptionsJobAction;
+
+                        cloudJob.UsesTaskDependencies = true;
+                        cloudJob.Commit();
+
+                        //Create a task
+                        const string taskId = "T1";
+                        CloudTask taskToAdd = new CloudTask(taskId, "cmd /c \"ping 127.0.0.1 \"");
+                        
+                        //Add the task
+                        this.testOutputHelper.WriteLine("Adding task: {0}", taskId);
+                        taskToAdd.ExitConditions = new ExitConditions { Default = new ExitOptions {JobAction = JobAction.Terminate, DependencyAction = DependencyAction.Satisfy} };
+                        batchCli.JobOperations.AddTask(jobId, taskToAdd);
+
+                        CloudTask task = batchCli.JobOperations.GetTask(jobId, taskId);
+                        TaskStateMonitor taskStateMonitor = batchCli.Utilities.CreateTaskStateMonitor();
+
+                        //Wait for the task state to complete 
+                        taskStateMonitor.WaitAll(new[] { task }, TaskState.Completed, TimeSpan.FromMinutes(2));
+
+                        task.Refresh();
+                        Assert.Equal(DependencyAction.Satisfy, task.ExitConditions.Default.DependencyAction);
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
+                    }
+                }
+            };
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
+        public void AccessScopeCanBeRoundTripped()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
+                    try
+                    {
+                        //Create the job
+                        CloudJob cloudJob = batchCli.JobOperations.CreateJob(jobId, new PoolInformation());
+                        cloudJob.PoolInformation = new PoolInformation { PoolId = this.poolFixture.PoolId };
+                        this.testOutputHelper.WriteLine("Creating job: {0}", jobId);
+                        cloudJob.Commit();
+
+                        //Create a task
+                        const string taskId = "T1";
+
+                        CloudTask taskToAdd = new CloudTask(taskId, "cmd /c \"set\"")
+                        {
+                            DisplayName = "name",
+                            AuthenticationTokenSettings = new AuthenticationTokenSettings { Access = AccessScope.Job }
+                        };
+
+                        batchCli.JobOperations.AddTask(jobId, taskToAdd);
+
+                        CloudTask task = batchCli.JobOperations.GetTask(jobId, taskId);
+
+                        Assert.Equal(AccessScope.Job, task.AuthenticationTokenSettings.Access);
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
@@ -897,6 +973,57 @@
                         CloudTask viaJob = job.GetTask(taskId);
 
                         Assert.Equal(viajobScheduleOperations.Id, viaJob.Id);
+                    }
+                    finally
+                    {
+                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void TaskRunsOnSharedUserAccount()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + Guid.NewGuid();
+                    const string adminTaskId = "adminTask";
+                    const string nonAdminTaskId = "nonAdminTask";
+                    try
+                    {
+                        CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() {PoolId = this.poolFixture.PoolId });
+                        job.Commit();
+
+                        Func<string, string, CloudTask> createTask = (taskId, userName) =>
+                        {
+                            //The magic command below will succeed on an admin account but fail for a non-admin account
+                            CloudTask task = new CloudTask(taskId, "cmd /c net session >nul 2>&1")
+                            {
+                                UserIdentity = new UserIdentity(userName)
+                            };
+                            return task;
+                        };
+
+                        var adminTask = createTask(adminTaskId, PoolFixture.AdminUserAccountName);
+                        var nonAdminTask = createTask(nonAdminTaskId, PoolFixture.NonAdminUserAccountName);
+                        batchCli.JobOperations.AddTask(jobId, new List<CloudTask> { adminTask, nonAdminTask });
+
+                        var tasks = batchCli.JobOperations.ListTasks(jobId);
+
+                        batchCli.Utilities.CreateTaskStateMonitor().WaitAll(tasks, TaskState.Completed, TimeSpan.FromMinutes(1));
+
+                        var boundAdminTask = batchCli.JobOperations.GetTask(jobId, adminTaskId);
+                        var boundNonAdminTask = batchCli.JobOperations.GetTask(jobId, nonAdminTaskId);
+
+                        Assert.Equal(0, boundAdminTask.ExecutionInformation.ExitCode);
+                        Assert.NotEqual(0, boundNonAdminTask.ExecutionInformation.ExitCode);
+
                     }
                     finally
                     {

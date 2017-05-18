@@ -261,8 +261,39 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain, ActiveDirectoryClientSettings clientSettings, 
             ActiveDirectoryServiceSettings serviceSettings, UserIdentifier userId, TokenCache cache)
         {
+            return await LoginWithPromptAsync(domain, clientSettings, serviceSettings, userId, cache, () => { return TaskScheduler.FromCurrentSynchronizationContext(); });
+        }
+
+        /// <summary>
+        /// Log in to Azure active directory with credentials provided by the user.  This call may display a credentials 
+        /// dialog, depending on the supplied client settings and the state of the token cache and user cookies.
+        /// </summary>
+        /// <param name="domain">The domain to authenticate against.</param>
+        /// <param name="clientSettings">The client settings to use for authentication. These determine when a dialog will be displayed.</param>
+        /// <param name="serviceSettings">The settings for ad service, including endpoint and token audience</param>
+        /// <param name="taskScheduler">Scheduler needed to run the task</param>
+        /// <returns></returns>
+        public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain, ActiveDirectoryClientSettings clientSettings,
+            ActiveDirectoryServiceSettings serviceSettings, Func<TaskScheduler> taskScheduler)
+        {
+            return await LoginWithPromptAsync(domain, clientSettings, serviceSettings, UserIdentifier.AnyUser, TokenCache.DefaultShared, taskScheduler);
+        }
+
+        /// <summary>
+        /// Log in to Azure active directory with credentials provided by the user.  This call may display a credentials 
+        /// dialog, depending on the supplied client settings and the state of the token cache and user cookies.
+        /// </summary>
+        /// <param name="domain">The domain to authenticate against.</param>
+        /// <param name="clientSettings">The client settings to use for authentication. These determine when a dialog will be displayed.</param>
+        /// <param name="serviceSettings">The settings for ad service, including endpoint and token audience</param>
+        /// <param name="userId">The userid of the desired credentials</param>
+        /// <param name="cache">The token cache to target during authentication.</param>
+        /// <param name="taskScheduler">Scheduler needed to run the task</param>
+        /// <returns></returns>
+        public static async Task<ServiceClientCredentials> LoginWithPromptAsync(string domain, ActiveDirectoryClientSettings clientSettings,
+            ActiveDirectoryServiceSettings serviceSettings, UserIdentifier userId, TokenCache cache, Func<TaskScheduler> taskScheduler)
+        {
             var authenticationContext = GetAuthenticationContext(domain, serviceSettings, cache);
-            TaskScheduler scheduler = TaskScheduler.FromCurrentSynchronizationContext();
             var task = new Task<AuthenticationResult>(() =>
             {
                 try
@@ -284,16 +315,16 @@ namespace Microsoft.Rest.Azure.Authentication
                 }
             });
 
-            task.Start(scheduler);
+            task.Start(taskScheduler());
             var authResult = await task.ConfigureAwait(false);
             var newUserId = new UserIdentifier(authResult.UserInfo.DisplayableId,
                 UserIdentifierType.RequiredDisplayableId);
             return new TokenCredentials(
-                new UserTokenProvider(authenticationContext, clientSettings.ClientId,serviceSettings.TokenAudience, newUserId),
+                new UserTokenProvider(authenticationContext, clientSettings.ClientId, serviceSettings.TokenAudience, newUserId),
                 authResult.TenantId,
                 authResult.UserInfo.DisplayableId);
         }
-#endif
+
         /// <summary>
         /// Log in to azure active directory in non-interactive mode using organizational id credentials and the default token cache. Default service 
         /// settings (authority, audience) for logging in to azure resource manager are used.
@@ -374,7 +405,7 @@ namespace Microsoft.Rest.Azure.Authentication
                 throw new AuthenticationException(Resources.ErrorAcquiringToken, ex);
             }
         }
-
+#endif
         // please remove this preprocessor #if whenever ADAL will go public with the new library 
 #if PORTABLE
         /// <summary>

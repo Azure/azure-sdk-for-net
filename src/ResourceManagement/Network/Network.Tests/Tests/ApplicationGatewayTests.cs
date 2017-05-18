@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System.Collections.Generic;
 using System.Net;
 using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.Network;
@@ -95,21 +98,21 @@ namespace Networks.Tests
 
             var appGw = new ApplicationGateway()
             {
-                Location = location,                
+                Location = location,
                 SslPolicy = new ApplicationGatewaySslPolicy()
-                    {
-                        DisabledSslProtocols = new List<string>()
+                {
+                    DisabledSslProtocols = new List<string>()
                         {
                             ApplicationGatewaySslProtocol.TLSv10,
                             ApplicationGatewaySslProtocol.TLSv11
                         }
-                    },
+                },
                 Sku = new ApplicationGatewaySku()
-                    {
-                        Name = ApplicationGatewaySkuName.WAFMedium,
-                        Tier = ApplicationGatewayTier.WAF,
-                        Capacity = 2
-                    },
+                {
+                    Name = ApplicationGatewaySkuName.WAFMedium,
+                    Tier = ApplicationGatewayTier.WAF,
+                    Capacity = 2
+                },
                 GatewayIPConfigurations = new List<ApplicationGatewayIPConfiguration>()
                     {
                         new ApplicationGatewayIPConfiguration()
@@ -121,8 +124,8 @@ namespace Networks.Tests
                             }
                         }
                     },
-                FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>() 
-                    { 
+                FrontendIPConfigurations = new List<ApplicationGatewayFrontendIPConfiguration>()
+                    {
                         new ApplicationGatewayFrontendIPConfiguration()
                         {
                             Name = frontendIPConfigName,
@@ -130,8 +133,8 @@ namespace Networks.Tests
                             Subnet = new SubResource()
                             {
                                 Id = subnet.Id
-                            }                          
-                        }                    
+                            }
+                        }
                     },
                 FrontendPorts = new List<ApplicationGatewayFrontendPort>
                     {
@@ -186,7 +189,7 @@ namespace Networks.Tests
                             Name = nicBackendAddressPoolName,
                         }
                     },
-                BackendHttpSettingsCollection = new List<ApplicationGatewayBackendHttpSettings> 
+                BackendHttpSettingsCollection = new List<ApplicationGatewayBackendHttpSettings>
                     {
                         new ApplicationGatewayBackendHttpSettings()
                         {
@@ -199,6 +202,11 @@ namespace Networks.Tests
                             {
                                 Id = GetChildAppGwResourceId(subscriptionId,
                                     resourceGroupName, appGwName, "probes", probeName)
+                            },
+                            ConnectionDraining = new ApplicationGatewayConnectionDraining()
+                            {
+                                Enabled = true,
+                                DrainTimeoutInSec = 42
                             }
                         },
                         new ApplicationGatewayBackendHttpSettings()
@@ -206,7 +214,7 @@ namespace Networks.Tests
                             Name = backendHttpSettings2Name,
                             Port = 443,
                             Protocol = ApplicationGatewayProtocol.Https,
-                            CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Enabled,                            
+                            CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Enabled,
                             AuthenticationCertificates =  new List<SubResource>()
                             {
                                 new SubResource()
@@ -381,16 +389,23 @@ namespace Networks.Tests
                 {
                     Enabled = true,
                     FirewallMode = ApplicationGatewayFirewallMode.Prevention,
-                },
+                    RuleSetType = "OWASP",
+                    RuleSetVersion = "2.2.9",
+                    DisabledRuleGroups = new List<ApplicationGatewayFirewallDisabledRuleGroup>()
+                    {
+                        new ApplicationGatewayFirewallDisabledRuleGroup(
+                            "crs_41_sql_injection_attacks",
+                            new List<int>() { 981318, 981320 }),
+                        new ApplicationGatewayFirewallDisabledRuleGroup("crs_35_bad_robots")
+                    }
+                }
             };
             return appGw;
         }
 
         private void CompareApplicationGateway(ApplicationGateway gw1, ApplicationGateway gw2)
         {
-            Assert.Equal(gw1.Sku.Name, gw2.Sku.Name);
-            Assert.Equal(gw1.Sku.Tier, gw2.Sku.Tier);
-            Assert.Equal(gw1.Sku.Capacity, gw2.Sku.Capacity);
+            // compare count of child resources
             Assert.Equal(gw1.GatewayIPConfigurations.Count, gw2.GatewayIPConfigurations.Count);
             Assert.Equal(gw1.FrontendIPConfigurations.Count, gw2.FrontendIPConfigurations.Count);
             Assert.Equal(gw1.FrontendPorts.Count, gw2.FrontendPorts.Count);
@@ -398,11 +413,49 @@ namespace Networks.Tests
             Assert.Equal(gw1.BackendAddressPools.Count, gw2.BackendAddressPools.Count);
             Assert.Equal(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
             Assert.Equal(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
-            Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);            
+            Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);
             Assert.Equal(gw1.SslPolicy.DisabledSslProtocols.Count, gw2.SslPolicy.DisabledSslProtocols.Count);
             Assert.Equal(gw1.AuthenticationCertificates.Count, gw2.AuthenticationCertificates.Count);
+
+            // compare sku
+            Assert.Equal(gw1.Sku.Name, gw2.Sku.Name);
+            Assert.Equal(gw1.Sku.Tier, gw2.Sku.Tier);
+            Assert.Equal(gw1.Sku.Capacity, gw2.Sku.Capacity);
+
+            // compare connectionDraining
+            for (int i = 0; i < gw1.BackendHttpSettingsCollection.Count; i++)
+            {
+                if(gw1.BackendHttpSettingsCollection[i].ConnectionDraining != null)
+                {
+                    Assert.NotNull(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
+                    Assert.Equal(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.Enabled); 
+                    Assert.Equal(gw1.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec, gw2.BackendHttpSettingsCollection[i].ConnectionDraining.DrainTimeoutInSec); 
+                } 
+                else
+                {
+                    Assert.Null(gw2.BackendHttpSettingsCollection[i].ConnectionDraining);
+                }
+            }
+
+            //compare WAF
             Assert.Equal(gw1.WebApplicationFirewallConfiguration.Enabled, gw2.WebApplicationFirewallConfiguration.Enabled);
             Assert.Equal(gw1.WebApplicationFirewallConfiguration.FirewallMode, gw2.WebApplicationFirewallConfiguration.FirewallMode);
+            Assert.Equal(gw1.WebApplicationFirewallConfiguration.RuleSetType, gw2.WebApplicationFirewallConfiguration.RuleSetType);
+            Assert.Equal(gw1.WebApplicationFirewallConfiguration.RuleSetVersion, gw2.WebApplicationFirewallConfiguration.RuleSetVersion);
+            if (gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups != null)
+            {
+                Assert.NotNull(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups);
+                Assert.Equal(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count, gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count);
+                for(int i = 0; i < gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups.Count; i++)
+                {
+                    Assert.Equal(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName, gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].RuleGroupName);
+                    Assert.Equal(gw1.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules, gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups[i].Rules);
+                }
+            }
+            else
+            {
+                Assert.Empty(gw2.WebApplicationFirewallConfiguration.DisabledRuleGroups);
+            }
         }
 
         [Fact]
@@ -418,6 +471,9 @@ namespace Networks.Tests
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
                 var location = "West US";
+
+                var a = HttpMockServer.Mode;
+
 
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
@@ -482,10 +538,23 @@ namespace Networks.Tests
                 Assert.Equal(appGwName, getGateway.Name);
                 CompareApplicationGateway(appGw, getGateway);
 
-                //Get AppGw backend health
+                // Get AppGw backend health
                 var backendHealth = networkManagementClient.ApplicationGateways.BackendHealth(resourceGroupName, appGwName);
                 Assert.Equal(1, backendHealth.BackendAddressPools.Count);
                 Assert.Equal(2, backendHealth.BackendAddressPools[0].BackendHttpSettingsCollection.Count);
+
+                // Get available WAF rule sets (validate first result set/group)
+                var availableWAFRuleSets = networkManagementClient.ApplicationGateways.ListAvailableWafRuleSets();
+                Assert.NotNull(availableWAFRuleSets);
+                Assert.NotEmpty(availableWAFRuleSets.Value);
+                Assert.NotNull(availableWAFRuleSets.Value[0].Name);
+                Assert.NotNull(availableWAFRuleSets.Value[0].RuleSetType);
+                Assert.NotNull(availableWAFRuleSets.Value[0].RuleSetVersion);
+                Assert.NotEmpty(availableWAFRuleSets.Value[0].RuleGroups);
+                Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].RuleGroupName);
+                Assert.NotEmpty(availableWAFRuleSets.Value[0].RuleGroups[0].Rules);
+                Assert.NotNull(availableWAFRuleSets.Value[0].RuleGroups[0].Rules[0].RuleId);
+
 
                 // Create Nics
                 string nic1name = TestUtilities.GenerateName();

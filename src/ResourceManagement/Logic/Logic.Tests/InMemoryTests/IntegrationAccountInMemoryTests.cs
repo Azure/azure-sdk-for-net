@@ -2,28 +2,25 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System.IO;
-
 namespace Test.Azure.Management.Logic
 {
-    using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using Microsoft.Azure.Management.Logic.Models;
+    using Microsoft.Azure.Management.Logic;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Xunit;
-    using Microsoft.Azure.Management.Logic.Models;
-    using Microsoft.Azure.Management.Logic;
-    using Test.Azure.Management.Logic;    
 
-    public class IntegrationAccountInMemoryTests : BaseInMemoryTests
+    public class IntegrationAccountInMemoryTests : InMemoryTestsBase
     {
         public IntegrationAccountInMemoryTests()
         {
             var content = File.ReadAllText(@"TestData/IntegrationAccountResponseContent.json");
-            var callbackUrlContent = File.ReadAllText(@"TestData/IntegrationAccountCallbackUrlResponseContent.json");            
+            var callbackUrlContent = File.ReadAllText(@"TestData/IntegrationAccountCallbackUrlResponseContent.json");
 
             this.IntegrationAccountsList =
                 new StringContent(string.Format(Constants.ListFormat,
@@ -400,9 +397,9 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListCallbackUrl(null, "IntegrationAccountName"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListCallbackUrl(ResourceGroupName, null));            
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.ListCallbackUrl(ResourceGroupName, "IntegrationAccountName"));
+            Assert.Throws<ValidationException>(() => client.IntegrationAccounts.GetCallbackUrl(null, "IntegrationAccountName", new GetCallbackUrlParameters()));
+            Assert.Throws<ValidationException>(() => client.IntegrationAccounts.GetCallbackUrl(ResourceGroupName, null, new GetCallbackUrlParameters()));
+            Assert.Throws<CloudException>(() => client.IntegrationAccounts.GetCallbackUrl(ResourceGroupName, "IntegrationAccountName", new GetCallbackUrlParameters()));
         }
 
         [Fact]
@@ -417,7 +414,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.IntegrationAccountCallbackUrl
             };
 
-            var result = client.IntegrationAccounts.ListCallbackUrl(ResourceGroupName, "IntegrationAccountName" );
+            var result = client.IntegrationAccounts.GetCallbackUrl(ResourceGroupName, "IntegrationAccountName", new GetCallbackUrlParameters());
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();

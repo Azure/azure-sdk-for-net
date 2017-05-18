@@ -14,15 +14,15 @@
                      "trimLeadingAndTrailingSpacesAndZeroes":false,
                      "trailingSeparatorPolicy":"NotAllowed"
                   },
-                  "framingSettings":{
-                     "dataElementSeparator":42,
-                     "componentSeparator":58,
-                     "replaceSeparatorsInPayload":false,
-                     "replaceCharacter":36,
-                     "segmentTerminator":126,
-                     "characterSet":"UTF8",
-                     "segmentTerminatorSuffix":"None"
-                  },
+                "framingSettings": {
+                    "dataElementSeparator": 42,
+                    "componentSeparator": 58,
+                    "replaceSeparatorsInPayload": false,
+                    "replaceCharacter": 36,
+                    "segmentTerminator": 126,
+                    "characterSet": "UTF8",
+                    "segmentTerminatorSuffix": "None"
+                },
                   "envelopeSettings":{
                      "controlStandardsId":85,
                      "useControlStandardsIdAsRepetitionCharacter":false,
@@ -101,15 +101,15 @@
                      "trimLeadingAndTrailingSpacesAndZeroes":false,
                      "trailingSeparatorPolicy":"NotAllowed"
                   },
-                  "framingSettings":{
-                     "dataElementSeparator":42,
-                     "componentSeparator":58,
-                     "replaceSeparatorsInPayload":false,
-                     "replaceCharacter":36,
-                     "segmentTerminator":126,
-                     "characterSet":"UTF8",
-                     "segmentTerminatorSuffix":"None"
-                  },
+                "framingSettings": {
+                  "dataElementSeparator": 42,
+                  "componentSeparator": 58,
+                  "replaceSeparatorsInPayload": false,
+                  "replaceCharacter": 36,
+                  "segmentTerminator": 126,
+                  "characterSet": "UTF8",
+                  "segmentTerminatorSuffix": "None"
+                },
                   "envelopeSettings":{
                      "controlStandardsId":100,
                      "useControlStandardsIdAsRepetitionCharacter":true,

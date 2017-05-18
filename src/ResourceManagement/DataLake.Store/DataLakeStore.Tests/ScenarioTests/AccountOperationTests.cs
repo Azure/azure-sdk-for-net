@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.DataLake.Store.Models;
@@ -179,7 +167,7 @@ namespace DataLakeStore.Tests
                 var trustedIdName = TestUtilities.GenerateName("trustedrule1");
 
                 var adlsAccountName = TestUtilities.GenerateName("adlsacct");
-                
+
                 var responseCreate =
                     clientToUse.Account.Create(resourceGroupName: commonData.ResourceGroupName, name: adlsAccountName,
                         parameters: new DataLakeStoreAccount
@@ -192,9 +180,10 @@ namespace DataLakeStore.Tests
                             TrustedIdProviders = new List<TrustedIdProvider>
                             {
                                 new TrustedIdProvider(trustedUrl, name: trustedIdName)
-                            },    
+                            },
                             FirewallState = FirewallState.Enabled,
                             TrustedIdProviderState = TrustedIdProviderState.Enabled,
+                            FirewallAllowAzureIps = FirewallAllowAzureIpsState.Enabled
                             
                         });
 
@@ -219,6 +208,9 @@ namespace DataLakeStore.Tests
                 Assert.Equal(firewallStart, responseGet.FirewallRules[0].StartIpAddress);
                 Assert.Equal(firewallEnd, responseGet.FirewallRules[0].EndIpAddress);
                 Assert.Equal(firewallRuleName1, responseGet.FirewallRules[0].Name);
+                
+                // TODO: re-enable this once we support this in the server again.
+                // Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
 
                 // validate trusted identity provider state
                 Assert.Equal(TrustedIdProviderState.Enabled, responseGet.TrustedIdProviderState);
@@ -244,6 +236,20 @@ namespace DataLakeStore.Tests
                 Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
                 Assert.Equal(firewallRuleName1, firewallRule.Name);
 
+                // just update the firewall rule start IP
+                firewallRule = clientToUse.FirewallRules.Update(
+                    commonData.ResourceGroupName,
+                    adlsAccountName,
+                    firewallRuleName1,
+                    new UpdateFirewallRuleParameters
+                    {
+                        StartIpAddress = firewallStart
+                    });
+
+                Assert.Equal(firewallStart, firewallRule.StartIpAddress);
+                Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
+                Assert.Equal(firewallRuleName1, firewallRule.Name);
+
                 // Remove the firewall rule and verify it is gone.
                 clientToUse.FirewallRules.Delete(commonData.ResourceGroupName, adlsAccountName, firewallRuleName1);
 
@@ -266,9 +272,22 @@ namespace DataLakeStore.Tests
                 var updatedIdUrl = string.Format("https://sts.windows.net/{0}", TestUtilities.GenerateGuid().ToString());
                 trustedIdProvider.IdProvider = updatedIdUrl;
 
-                // Update the firewall rule to change the start/end ip addresses
+                // Update the trusted id provider
                 trustedIdProvider = clientToUse.TrustedIdProviders.CreateOrUpdate(commonData.ResourceGroupName, adlsAccountName, trustedIdName, trustedIdProvider);
                 Assert.Equal(updatedIdUrl, trustedIdProvider.IdProvider);
+                Assert.Equal(trustedIdName, trustedIdProvider.Name);
+
+                // update it with a patch
+                trustedIdProvider = clientToUse.TrustedIdProviders.Update(
+                    commonData.ResourceGroupName,
+                    adlsAccountName,
+                    trustedIdName,
+                    new UpdateTrustedIdProviderParameters
+                    {
+                        IdProvider = trustedUrl
+                    });
+
+                Assert.Equal(trustedUrl, trustedIdProvider.IdProvider);
                 Assert.Equal(trustedIdName, trustedIdProvider.Name);
 
                 // Remove the firewall rule and verify it is gone.

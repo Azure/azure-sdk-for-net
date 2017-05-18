@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0-preview",
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk",
+    "compile": "../../../../tools/DisableTestRunParallel.cs"
+  },
+
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [ "dnxcore50", "portable-net45+win8" ],
+      "dependencies": {
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
+    "Microsoft.Azure.Test.HttpRecorder": "[1.6.8,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.5.2,2.0.0)",
+    "Microsoft.Rest.ClientRuntime": "2.3.3",
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.Azure.Management.Sql": "1.0.0-preview",
+    "Microsoft.Rest.ClientRuntime.Azure": "3.3.3",
+    "Microsoft.Azure.ResourceManager": "1.0.0-preview"
+  }
+}

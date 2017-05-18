@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿
 namespace Azure.Batch.Unit.Tests
@@ -57,7 +46,7 @@ namespace Azure.Batch.Unit.Tests
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
-        public async Task CreateTaskWithExitConditionsTest()
+        public async Task ExitConditionsAreSentOnTask()
         {
             const string jobId = "id-123";
             const string taskId = "id-001";
@@ -74,6 +63,8 @@ namespace Azure.Batch.Unit.Tests
                     Assert.Equal(0, parameters.ExitConditions.ExitCodeRanges.First().Start);
                     Assert.Equal(4, parameters.ExitConditions.ExitCodeRanges.First().End);
                     Assert.Equal((Models.JobAction?)JobAction.Disable, parameters.ExitConditions.ExitCodeRanges.First().ExitOptions.JobAction);
+                    // These need to be compared as strings because they are different types but we are interested in the values being the same.
+                    Assert.Equal(DependencyAction.Satisfy.ToString(), parameters.ExitConditions.ExitCodeRanges.First().ExitOptions.DependencyAction.ToString());
                     Assert.Equal(3, parameters.ExitConditions.ExitCodes.First().Code);
                     Assert.Equal((Models.JobAction?)JobAction.None, parameters.ExitConditions.ExitCodes.First().ExitOptions.JobAction);
 
@@ -87,9 +78,6 @@ namespace Azure.Batch.Unit.Tests
 
                 boundJob.OnAllTasksComplete = OnAllTasksComplete.TerminateJob;
 
-                // Cannot change OnTaskFailure on a bound job
-                Assert.Throws<InvalidOperationException>(() => boundJob.OnTaskFailure = OnTaskFailure.NoAction);
-
                 CloudTask cloudTask = new CloudTask(taskId, "cmd /c echo hello world");
 
                 cloudTask.ExitConditions = new ExitConditions()
@@ -97,7 +85,7 @@ namespace Azure.Batch.Unit.Tests
                     Default = new ExitOptions() { JobAction = JobAction.Terminate },
                     ExitCodeRanges = new List<ExitCodeRangeMapping>()
                     {
-                        new ExitCodeRangeMapping(0, 4, new ExitOptions() { JobAction = JobAction.Disable })
+                        new ExitCodeRangeMapping(0, 4, new ExitOptions() { DependencyAction = DependencyAction.Satisfy, JobAction = JobAction.Disable, })
                     },
                     ExitCodes = new List<ExitCodeMapping>()
                     {

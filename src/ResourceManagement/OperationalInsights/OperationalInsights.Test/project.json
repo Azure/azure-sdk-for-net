@@ -1,0 +1,45 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "OperationalInsights.Tests Class Library",
+  "authors": [ "Microsoft Corporation" ],
+
+  "packOptions": {
+    "summary": "OperationalInsights.Tests Tests.",
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": ""
+  },
+  
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk",
+    "compile": "../../../../tools/DisableTestRunParallel.cs", 
+    "xmlDoc": true
+  },
+
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": ["dnxcore50", "portable-net45+win8"],
+      "dependencies": {
+        "System.Diagnostics.Tracing": "4.3.0"
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    },
+    "Microsoft.Azure.Management.OperationalInsights": {
+      "target": "project",
+      "type": "build"
+    },
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.6.0,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.3,4.0.0)",
+    "Microsoft.Azure.ResourceManager": "1.0.0-preview",
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029"
+  }
+}

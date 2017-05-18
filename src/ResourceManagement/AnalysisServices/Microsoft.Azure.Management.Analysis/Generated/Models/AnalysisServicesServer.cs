@@ -43,16 +43,18 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// 'Updating', 'Suspending', 'Pausing', 'Resuming', 'Preparing',
         /// 'Scaling'</param>
         /// <param name="provisioningState">The current deployment state of
-        /// Analysis Services resource. Possible values include: 'Deleting',
-        /// 'Succeeded', 'Failed', 'Paused', 'Suspended', 'Provisioning',
-        /// 'Updating', 'Suspending', 'Pausing', 'Resuming', 'Preparing',
-        /// 'Scaling'</param>
+        /// Analysis Services resource. The provisioningState is to indicate
+        /// states for resource provisioning. Possible values include:
+        /// 'Deleting', 'Succeeded', 'Failed', 'Paused', 'Suspended',
+        /// 'Provisioning', 'Updating', 'Suspending', 'Pausing', 'Resuming',
+        /// 'Preparing', 'Scaling'</param>
         /// <param name="serverFullName">The full name of the Analysis
         /// Services resource.</param>
-        public AnalysisServicesServer(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), string state = default(string), string provisioningState = default(string), string serverFullName = default(string))
+        public AnalysisServicesServer(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), BackupConfiguration backupConfiguration = default(BackupConfiguration), string state = default(string), string provisioningState = default(string), string serverFullName = default(string))
             : base(location, sku, id, name, type, tags)
         {
             AsAdministrators = asAdministrators;
+            BackupConfiguration = backupConfiguration;
             State = state;
             ProvisioningState = provisioningState;
             ServerFullName = serverFullName;
@@ -62,6 +64,11 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.asAdministrators")]
         public ServerAdministrators AsAdministrators { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backupConfiguration")]
+        public BackupConfiguration BackupConfiguration { get; set; }
 
         /// <summary>
         /// Gets the current state of Analysis Services resource. The state is
@@ -75,9 +82,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
 
         /// <summary>
         /// Gets the current deployment state of Analysis Services resource.
-        /// Possible values include: 'Deleting', 'Succeeded', 'Failed',
-        /// 'Paused', 'Suspended', 'Provisioning', 'Updating', 'Suspending',
-        /// 'Pausing', 'Resuming', 'Preparing', 'Scaling'
+        /// The provisioningState is to indicate states for resource
+        /// provisioning. Possible values include: 'Deleting', 'Succeeded',
+        /// 'Failed', 'Paused', 'Suspended', 'Provisioning', 'Updating',
+        /// 'Suspending', 'Pausing', 'Resuming', 'Preparing', 'Scaling'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -97,6 +105,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.BackupConfiguration != null)
+            {
+                this.BackupConfiguration.Validate();
+            }
         }
     }
 }

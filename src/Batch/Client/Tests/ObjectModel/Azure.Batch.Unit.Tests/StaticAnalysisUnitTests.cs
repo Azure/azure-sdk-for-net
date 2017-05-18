@@ -1,21 +1,11 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace Azure.Batch.Unit.Tests
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.IO;
     using BatchTestCommon;
     using TestUtilities;
     using Xunit;
@@ -35,8 +25,8 @@
         {
             this.testOutputHelper = testOutputHelper;
 
-            this.sourceLocation = @"..\..\..\..\..\src";
-            this.proxySourceLocation = @"..\..\..\..\..\src\" + GeneratedProtocolFolder;
+            this.sourceLocation = @"..\..\..\src\Azure.Batch";
+            this.proxySourceLocation = Path.Combine(this.sourceLocation, GeneratedProtocolFolder);
         }
 
         [Fact]
@@ -71,12 +61,13 @@
                 this.testOutputHelper.WriteLine("{0}", exceptionType);
             }
 
-            IReadOnlyCollection<string> expectedExceptions = new List<string>()
-                                                             {
-                                                                 "ArgumentNullException",
-                                                                 "ValidationException",
-                                                                 "SerializationException"
-                                                             };
+            IEnumerable<string> expectedExceptions = new List<string>()
+            {
+                "ArgumentNullException",
+                "ValidationException",
+                "SerializationException"
+            };
+
             Assert.Equal(expectedExceptions, exceptionSet);
         }
 
@@ -122,7 +113,6 @@
                      "ArgumentOutOfRangeException",
                      "InvalidOperationException",
                      "ArgumentException",
-                     "FileNotFoundException",
                      "ParallelOperationsException",
                  };
 

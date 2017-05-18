@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace Azure.Batch.Unit.Tests
 {
@@ -264,7 +253,7 @@
         {
             List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
                 {
-                    Protocol.Models.CertificateVisibility.Starttask,
+                    Protocol.Models.CertificateVisibility.StartTask,
                     null
                 };
 
@@ -278,7 +267,7 @@
         {
             List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
                 {
-                    Protocol.Models.CertificateVisibility.Starttask
+                    Protocol.Models.CertificateVisibility.StartTask
                 };
             CertificateVisibility? visibilityEnum = UtilitiesInternal.ParseCertificateVisibility(visibilityList);
             Assert.Equal(CertificateVisibility.StartTask, visibilityEnum);
@@ -290,12 +279,12 @@
         {
             List<Protocol.Models.CertificateVisibility?> visibilityList = new List<Protocol.Models.CertificateVisibility?>()
                 {
-                    Protocol.Models.CertificateVisibility.Starttask,
-                    Protocol.Models.CertificateVisibility.Remoteuser,
+                    Protocol.Models.CertificateVisibility.StartTask,
+                    Protocol.Models.CertificateVisibility.RemoteUser,
                     Protocol.Models.CertificateVisibility.Task,
                 };
             CertificateVisibility? visibilityEnum = UtilitiesInternal.ParseCertificateVisibility(visibilityList);
-            
+
             Assert.NotNull(visibilityEnum);
             Assert.True(visibilityEnum.Value.HasFlag(CertificateVisibility.StartTask));
             Assert.True(visibilityEnum.Value.HasFlag(CertificateVisibility.RemoteUser));
@@ -318,7 +307,7 @@
             const CertificateVisibility visibility = CertificateVisibility.StartTask | CertificateVisibility.Task;
             var visibilityList = UtilitiesInternal.CertificateVisibilityToList(visibility);
             Assert.Equal(2, visibilityList.Count());
-            Assert.Contains(Protocol.Models.CertificateVisibility.Starttask, visibilityList);
+            Assert.Contains(Protocol.Models.CertificateVisibility.StartTask, visibilityList);
             Assert.Contains(Protocol.Models.CertificateVisibility.Task, visibilityList);
         }
 

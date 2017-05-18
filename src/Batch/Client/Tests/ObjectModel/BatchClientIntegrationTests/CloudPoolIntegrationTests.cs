@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace BatchClientIntegrationTests
 {
@@ -785,6 +774,93 @@
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void TestPoolCreatedWithUserAccountsSucceeds()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
+                {
+                    string poolId = "TestPoolCreatedWithUserAccounts" + TestUtilities.GetMyName();
+                    const int targetDedicated = 0;
+                    try
+                    {
+                        var nodeUserPassword = TestUtilities.GenerateRandomPassword();
+                        //Create a pool
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), targetDedicated);
+                        pool.UserAccounts = new List<UserAccount>()
+                        {
+                            new UserAccount("test1", nodeUserPassword),
+                            new UserAccount("test2", nodeUserPassword, ElevationLevel.NonAdmin),
+                            new UserAccount("test3", nodeUserPassword, ElevationLevel.Admin),
+                            new UserAccount("test4", nodeUserPassword, sshPrivateKey: "AAAA=="),
+                        };
+                        pool.Commit();
+
+                        CloudPool boundPool = batchCli.PoolOperations.GetPool(poolId);
+
+                        Assert.Equal(pool.UserAccounts.Count, boundPool.UserAccounts.Count);
+                        var results = pool.UserAccounts.Zip(boundPool.UserAccounts, (expected, actual) => new { Submitted = expected, Returned = actual });
+                        foreach (var result in results)
+                        {
+                            Assert.Equal(result.Submitted.Name, result.Returned.Name);
+                            Assert.Null(result.Returned.Password);
+                            Assert.Equal(result.Submitted.ElevationLevel ?? ElevationLevel.NonAdmin, result.Returned.ElevationLevel);
+                            Assert.Null(result.Returned.SshPrivateKey);
+                        }
+                    }
+                    finally
+                    {
+                        //Delete the pool
+                        TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void TestPoolCreatedOSDiskFailsWithExpectedError()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
+                {
+                    string poolId = "TestPoolCreatedWithOSDisk" + TestUtilities.GetMyName();
+                    const int targetDedicated = 0;
+                    try
+                    {
+                        var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+                        var imageUris = new List<string> { "https://example.test" };
+
+                        //Create a pool
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(
+                            poolId,
+                            PoolFixture.VMSize,
+                            new VirtualMachineConfiguration(
+                                imageDetails.NodeAgentSku.Id,
+                                osDisk: new OSDisk(imageUris)),
+                            targetDedicated);
+                        var exception = Assert.Throws<BatchException>(() => pool.Commit());
+                        Assert.Equal(BatchErrorCodeStrings.InvalidPropertyValue, exception.RequestInformation.BatchError.Code);
+                        Assert.Equal(
+                            "Property osDisk is allowed only for Batch accounts created with poolAllocationMode of BatchService",
+                            exception.RequestInformation.BatchError.Values[1].Value);
+                    }
+                    finally
+                    {
+                        //Delete the pool
+                        TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
         #region Test helpers
 
         /// <summary>
@@ -796,15 +872,15 @@
             internal IList<Protocol.Models.PoolUsageMetrics> _poolUsageMetricsList;
 
             // returns our response... the fake
-            private Task<AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListPoolUsageMetricsHeaders>> NewFunc(CancellationToken token)
+            private Task<AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListUsageMetricsHeaders>> NewFunc(CancellationToken token)
             {
-                var response = new AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListPoolUsageMetricsHeaders>()
+                var response = new AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListUsageMetricsHeaders>()
                     {
 
                         Body = new FakePage<Protocol.Models.PoolUsageMetrics>(_poolUsageMetricsList)
                     };
 
-                return System.Threading.Tasks.Task.FromResult<AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListPoolUsageMetricsHeaders>>(response);
+                return System.Threading.Tasks.Task.FromResult(response);
             }
 
             // replaces the func with our own func

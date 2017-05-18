@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace BatchProxyIntegrationTests
 {
@@ -21,6 +10,7 @@
     using System.IO.Compression;
     using System.Text;
     using BatchTestCommon;
+    using IntegrationTestCommon;
     using Microsoft.Azure.Management.Batch;
     using Microsoft.Azure.Management.Batch.Models;
     using Microsoft.WindowsAzure.Storage.Blob;
@@ -33,11 +23,11 @@
             string accountName = TestCommon.Configuration.BatchAccountName;
             string resourceGroupName = TestCommon.Configuration.BatchAccountResourceGroup;
 
-            BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient();
+            BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient();
 
             if (hasDefaultVersion)
             {
-                await mgmtClient.Applications.UpdateApplicationAsync(
+                await mgmtClient.Application.UpdateAsync(
                         resourceGroupName,
                         accountName,
                         applicationId,
@@ -45,7 +35,7 @@
             }
             else
             {
-                await mgmtClient.Applications.UpdateApplicationAsync(
+                await mgmtClient.Application.UpdateAsync(
                         resourceGroupName,
                         accountName,
                         applicationId,
@@ -58,11 +48,11 @@
             string accountName = TestCommon.Configuration.BatchAccountName;
             string resourceGroupName = TestCommon.Configuration.BatchAccountResourceGroup;
 
-            using (BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient())
+            using (BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
             {
-                ListApplicationsResponse applicationSummaries = await mgmtClient.Applications.ListAsync(resourceGroupName, accountName, new ListApplicationsParameters());
+                var applicationSummaries = await mgmtClient.Application.ListAsync(resourceGroupName, accountName);
 
-                bool testPackageAlreadyUploaded = applicationSummaries.Applications.Any(a =>
+                bool testPackageAlreadyUploaded = applicationSummaries.Any(a =>
                         string.Equals(appPackageName, a.Id, StringComparison.OrdinalIgnoreCase) &&
                         string.Equals(applicationVersion, a.DefaultVersion, StringComparison.OrdinalIgnoreCase));
 
@@ -77,15 +67,15 @@
         {
             const string format = "zip";
 
-            using (BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient())
+            using (BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
             {
-                var addResponse = await mgmtClient.Applications.AddApplicationPackageAsync(resourceGroupName, accountName, appPackageName, applicationVersion).ConfigureAwait(false);
+                var addResponse = await mgmtClient.ApplicationPackage.CreateAsync(resourceGroupName, accountName, appPackageName, applicationVersion).ConfigureAwait(false);
 
                 var storageUrl = addResponse.StorageUrl;
 
-                await TestCommon.UploadTestApplicationAsync(storageUrl).ConfigureAwait(false);
+                await IntegrationTestCommon.UploadTestApplicationAsync(storageUrl).ConfigureAwait(false);
 
-                await mgmtClient.Applications.ActivateApplicationPackageAsync(resourceGroupName, accountName, appPackageName, applicationVersion, new ActivateApplicationPackageParameters { Format = format }).ConfigureAwait(false);
+                await mgmtClient.ApplicationPackage.ActivateAsync(resourceGroupName, accountName, appPackageName, applicationVersion, format).ConfigureAwait(false);
             }
         }
     }

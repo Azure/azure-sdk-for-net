@@ -36,6 +36,10 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
+        /// Gets or sets the name of the char filter. It must only contain
+        /// letters, digits, spaces, dashes or underscores, can only start
+        /// and end with alphanumeric characters, and is limited to 128
+        /// characters.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

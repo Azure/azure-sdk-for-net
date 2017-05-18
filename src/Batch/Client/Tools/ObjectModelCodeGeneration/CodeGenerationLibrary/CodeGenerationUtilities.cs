@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace CodeGenerationLibrary
 {
@@ -57,7 +46,7 @@
 
             if (omPropertyData.IsTypeCollection)
             {
-                return GetProtocolCollectionToObjectModelCollectionString(protocolObjectSimpleGetter, omPropertyData);
+                return GetProtocolCollectionToObjectModelCollectionString(protocolObjectSimpleGetter, omPropertyData, protocolPropertyData);
             }
 
             if (IsTypeComplex(omPropertyData.Type))
@@ -85,7 +74,7 @@
 
             if (omPropertyData.IsTypeCollection)
             {
-                return GetObjectModelToProtocolCollectionString(propertyValueAccessor, omPropertyData);
+                return GetObjectModelToProtocolCollectionString(propertyValueAccessor, omPropertyData, protocolPropertyData);
             }
 
             if (IsTypeComplex(omPropertyData.Type))
@@ -103,8 +92,13 @@
         /// <returns>True if the two properties are a "paired" enum, false otherwise</returns>
         public static bool IsMappedEnumPair(PropertyData omPropertyData, PropertyData protocolPropertyData)
         {
+            return IsMappedEnumPair(omPropertyData?.Type, protocolPropertyData?.Type);
+        }
+
+        private static bool IsMappedEnumPair(string omPropertyName, string protocolPropertyName)
+        {
             //TODO: This is super hacky, do a better way
-            return (omPropertyData.Type.StartsWith("Common.") && protocolPropertyData.Type.StartsWith("Models."));
+            return omPropertyName.StartsWith("Common.") && protocolPropertyName.StartsWith("Models.");
         }
 
         public static string GetProtocolPropertyName(PropertyData omPropertyData, PropertyData protocolPropertyData)
@@ -149,8 +143,16 @@
             return result;
         }
 
-        private static string GetProtocolCollectionToObjectModelCollectionString(string protocolObjectSimpleGetter, PropertyData omPropertyData)
+        private static string GetProtocolCollectionToObjectModelCollectionString(string protocolObjectSimpleGetter, PropertyData omPropertyData, PropertyData protocolPropertyData)
         {
+            if (IsMappedEnumPair(omPropertyData?.GenericTypeParameter, protocolPropertyData?.GenericTypeParameter))
+            {
+                string omType = StripNullable(omPropertyData.GenericTypeParameter);
+                string protocolType = StripNullable(protocolPropertyData.GenericTypeParameter);
+
+                return "UtilitiesInternal.ConvertEnumCollection<" + protocolType + ", " + omType + ">(" + protocolObjectSimpleGetter + ")";
+            }
+
             if (IsTypeComplex(omPropertyData.GenericTypeParameter))
             {
                 if (omPropertyData.HasPublicSetter)
@@ -174,8 +176,15 @@
             return "UtilitiesInternal.CreateObjectWithNullCheck(" + protocolObjectSimpleGetter + ", o => o.ToList().AsReadOnly())";
         }
 
-        private static string GetObjectModelToProtocolCollectionString(string propertyValueAccessor, PropertyData omPropertyData)
+        private static string GetObjectModelToProtocolCollectionString(string propertyValueAccessor, PropertyData omPropertyData, PropertyData protocolPropertyData)
         {
+            if (IsMappedEnumPair(omPropertyData?.GenericTypeParameter, protocolPropertyData?.GenericTypeParameter))
+            {
+                string omType = StripNullable(omPropertyData.GenericTypeParameter);
+                string protocolType = StripNullable(protocolPropertyData.GenericTypeParameter);
+                return "UtilitiesInternal.ConvertEnumCollection<" + omType + ", " + protocolType + ">(" + propertyValueAccessor + ")";
+            }
+
             if (IsTypeComplex(omPropertyData.GenericTypeParameter))
             {
                 return "UtilitiesInternal.ConvertToProtocolCollection(" + propertyValueAccessor + ")";
@@ -214,6 +223,13 @@
             {
                 return string.Format("UtilitiesInternal.MapEnum<{0}, {1}>({2})", rhsEnum.Type, lhsEnum.Type, rhsGetter);
             }
+        }
+
+        private static string StripNullable(string type)
+        {
+            return type.Last() == '?'
+                ? RemoveNullableQuestionmark(type)
+                : type;
         }
 
     }

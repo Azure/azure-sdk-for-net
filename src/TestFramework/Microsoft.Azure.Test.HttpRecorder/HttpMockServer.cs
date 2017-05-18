@@ -1,16 +1,5 @@
-﻿// ----------------------------------------------------------------------------------
-//
-// Copyright Microsoft Corporation
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// ----------------------------------------------------------------------------------
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -86,9 +75,12 @@ namespace Microsoft.Azure.Test.HttpRecorder
                 else
                 { 
                     RecordEntryPack pack = RecordEntryPack.Deserialize(fileName);
-                    foreach (var entry in pack.Entries)
+                    lock (records)
                     {
-                        records.Enqueue(entry);
+                        foreach (var entry in pack.Entries)
+                        {
+                            records.Enqueue(entry);
+                        }
                     }
                     foreach (var func in pack.Names.Keys)
                     {
@@ -123,22 +115,31 @@ namespace Microsoft.Azure.Test.HttpRecorder
             if (Mode == HttpRecorderMode.Playback)
             {
                 // Will throw KeyNotFoundException if the request is not recorded
-                var result = records[Matcher.GetMatchingKey(request)].Dequeue().GetResponse();
-                result.RequestMessage = request;
-                return Task.FromResult(result);
+                lock (records)
+                {
+                    var result = records[Matcher.GetMatchingKey(request)].Dequeue().GetResponse();
+                    result.RequestMessage = request;
+                    return Task.FromResult(result);
+                }
             }
             else
             {
-                return base.SendAsync(request, cancellationToken).ContinueWith<HttpResponseMessage>(response =>
+                lock (this)
                 {
-                    HttpResponseMessage result = response.Result;
-                    if (Mode == HttpRecorderMode.Record)
+                    return base.SendAsync(request, cancellationToken).ContinueWith<HttpResponseMessage>(response =>
                     {
-                        records.Enqueue(new RecordEntry(result));
-                    }
+                        HttpResponseMessage result = response.Result;
+                        if (Mode == HttpRecorderMode.Record)
+                        {
+                            lock (records)
+                            {
+                                records.Enqueue(new RecordEntry(result));
+                            }
+                        }
 
-                    return result;
-                });
+                        return result;
+                    });
+                }
             }
         }
 
@@ -237,7 +238,10 @@ namespace Microsoft.Azure.Test.HttpRecorder
         {
             if (Mode == HttpRecorderMode.Playback)
             {
-                records.Enqueue(record);
+                lock (records)
+                {
+                    records.Enqueue(record);
+                }
             }
         }
 
@@ -247,11 +251,14 @@ namespace Microsoft.Azure.Test.HttpRecorder
             {
                 RecordEntryPack pack = new RecordEntryPack();
 
-                foreach (RecordEntry recordEntry in records.GetAllEntities())
+                lock (records)
                 {
-                    recordEntry.RequestHeaders.Remove("Authorization");
-                    recordEntry.RequestUri = new Uri(recordEntry.RequestUri).PathAndQuery;
-                    pack.Entries.Add(recordEntry);
+                    foreach (RecordEntry recordEntry in records.GetAllEntities())
+                    {
+                        recordEntry.RequestHeaders.Remove("Authorization");
+                        recordEntry.RequestUri = new Uri(recordEntry.RequestUri).PathAndQuery;
+                        pack.Entries.Add(recordEntry);
+                    }
                 }
 
                 pack.Variables = Variables;

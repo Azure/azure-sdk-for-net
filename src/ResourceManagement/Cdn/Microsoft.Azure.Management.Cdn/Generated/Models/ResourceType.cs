@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// <summary>
     /// Defines values for ResourceType.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ResourceType
     {
         [EnumMember(Value = "Microsoft.Cdn/Profiles/Endpoints")]

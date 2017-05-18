@@ -1,0 +1,40 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Batch.FileStaging", "Src\AzureBatchFileStaging\Batch.FileStaging.csproj", "{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Batch.FileStaging.Tests", "Tests\Batch.FileStaging.Tests\Batch.FileStaging.Tests.csproj", "{C809285A-784D-48E4-9D7A-F5685A19F595}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigureAwaitAnalyzer", "..\ClientIntegrationTesting\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj", "{48215D6D-DB21-48B8-AB03-1297A94DF696}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Net45-Debug|Any CPU = Net45-Debug|Any CPU
+		Net45-Release|Any CPU = Net45-Release|Any CPU
+		Portable-Debug|Any CPU = Portable-Debug|Any CPU
+		Portable-Release|Any CPU = Portable-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{A7B9CD95-7EC3-4CCF-B20F-951FD2D028F1}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{C809285A-784D-48E4-9D7A-F5685A19F595}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{C809285A-784D-48E4-9D7A-F5685A19F595}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{C809285A-784D-48E4-9D7A-F5685A19F595}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{C809285A-784D-48E4-9D7A-F5685A19F595}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{C809285A-784D-48E4-9D7A-F5685A19F595}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{48215D6D-DB21-48B8-AB03-1297A94DF696}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

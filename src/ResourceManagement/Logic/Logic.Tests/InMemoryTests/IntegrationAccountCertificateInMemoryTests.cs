@@ -12,10 +12,10 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest.Azure;
     using Xunit;
     using Microsoft.Azure.Management.Logic.Models;
-    using Microsoft.Azure.Management.Logic;    
+    using Microsoft.Azure.Management.Logic;
     using System.IO;
 
-    public class IntegrationAccountCertificateInMemoryTests : BaseInMemoryTests
+    public class IntegrationAccountCertificateInMemoryTests : InMemoryTestsBase
     {
         public IntegrationAccountCertificateInMemoryTests()
         {
@@ -43,8 +43,8 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(
-                () => client.IntegrationAccountCertificates.List(null, "IntegrationAccount",null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.List(ResourceGroupName, "IntegrationAccount"));
+                () => client.Certificates.ListByIntegrationAccounts(null, "IntegrationAccount",null));
+            Assert.Throws<CloudException>(() => client.Certificates.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount"));
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.CertificateList
             };
 
-            var result = client.IntegrationAccountCertificates.List(ResourceGroupName, "IntegrationAccount");
+            var result = client.Certificates.ListByIntegrationAccounts(ResourceGroupName, "IntegrationAccount");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -81,8 +81,8 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.ListNext(null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.ListNext(Constants.NextPageLink));
+            Assert.Throws<ValidationException>(() => client.Certificates.ListByIntegrationAccountsNext(null));
+            Assert.Throws<CloudException>(() => client.Certificates.ListByIntegrationAccountsNext(Constants.NextPageLink));
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.CertificateList
             };
 
-            var result = client.IntegrationAccountCertificates.ListNext(Constants.NextPageLink);
+            var result = client.Certificates.ListByIntegrationAccountsNext(Constants.NextPageLink);
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -119,11 +119,11 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.CreateOrUpdate(null, "IntegrationAccountName", "IntegrationAccountCertificate", new IntegrationAccountCertificate()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.CreateOrUpdate(ResourceGroupName, null, "IntegrationAccountCertificate", new IntegrationAccountCertificate()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", null, new IntegrationAccountCertificate()));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate", new IntegrationAccountCertificate()));
+            Assert.Throws<ValidationException>(() => client.Certificates.CreateOrUpdate(null, "IntegrationAccountName", "IntegrationAccountCertificate", new IntegrationAccountCertificate()));
+            Assert.Throws<ValidationException>(() => client.Certificates.CreateOrUpdate(ResourceGroupName, null, "IntegrationAccountCertificate", new IntegrationAccountCertificate()));
+            Assert.Throws<ValidationException>(() => client.Certificates.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", null, new IntegrationAccountCertificate()));
+            Assert.Throws<ValidationException>(() => client.Certificates.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate", null));
+            Assert.Throws<CloudException>(() => client.Certificates.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate", new IntegrationAccountCertificate()));
         }
 
         [Fact]
@@ -138,7 +138,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Certificate
             };
 
-            var result = client.IntegrationAccountCertificates.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate", new IntegrationAccountCertificate());
+            var result = client.Certificates.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate", new IntegrationAccountCertificate());
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -160,7 +160,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Certificate
             };
 
-            var result = client.IntegrationAccountCertificates.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate", new IntegrationAccountCertificate());
+            var result = client.Certificates.CreateOrUpdate(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate", new IntegrationAccountCertificate());
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -181,10 +181,10 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.NotFound
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Delete(null, "IntegrationAccountName", "IntegrationAccountCertificate"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Delete(ResourceGroupName, null, "IntegrationAccountCertificate"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Delete(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.Delete(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate"));
+            Assert.Throws<ValidationException>(() => client.Certificates.Delete(null, "IntegrationAccountName", "IntegrationAccountCertificate"));
+            Assert.Throws<ValidationException>(() => client.Certificates.Delete(ResourceGroupName, null, "IntegrationAccountCertificate"));
+            Assert.Throws<ValidationException>(() => client.Certificates.Delete(ResourceGroupName, "IntegrationAccountName", null));
+            Assert.Throws<CloudException>(() => client.Certificates.Delete(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate"));
         }
 
         [Fact]
@@ -198,7 +198,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.OK
             };
 
-            client.IntegrationAccountCertificates.Delete(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate");
+            client.Certificates.Delete(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -216,7 +216,7 @@ namespace Test.Azure.Management.Logic
                 StatusCode = HttpStatusCode.NoContent
             };
 
-            client.IntegrationAccountCertificates.Delete(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate");
+            client.Certificates.Delete(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -235,10 +235,10 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Get(null, "IntegrationAccountName", "IntegrationAccountCertificate"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Get(ResourceGroupName, null, "IntegrationAccountCertificate"));
-            Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Get(ResourceGroupName, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.Get(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate"));
+            Assert.Throws<ValidationException>(() => client.Certificates.Get(null, "IntegrationAccountName", "IntegrationAccountCertificate"));
+            Assert.Throws<ValidationException>(() => client.Certificates.Get(ResourceGroupName, null, "IntegrationAccountCertificate"));
+            Assert.Throws<ValidationException>(() => client.Certificates.Get(ResourceGroupName, "IntegrationAccountName", null));
+            Assert.Throws<CloudException>(() => client.Certificates.Get(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate"));
         }
 
         [Fact]
@@ -253,7 +253,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.Certificate
             };
 
-            var result = client.IntegrationAccountCertificates.Get(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate");
+            var result = client.Certificates.Get(ResourceGroupName, "IntegrationAccountName", "IntegrationAccountCertificate");
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
@@ -277,7 +277,7 @@ namespace Test.Azure.Management.Logic
             Assert.Equal("Microsoft.Logic/integrationAccounts/certificates", certificate.Type);
 
             Assert.Equal("PRIVATEKEY", certificate.Key.KeyName);
-            Assert.Equal("2f08fc1455374280912e7fa24258ecdb", certificate.Key.KeyVersion);            
+            Assert.Equal("2f08fc1455374280912e7fa24258ecdb", certificate.Key.KeyVersion);
             Assert.Equal("/subscriptions/f34b22a3-2202-4fb1-b040-1332bd928c84/resourcegroups/IntegrationAccountSdkTest/providers/microsoft.keyvault/vaults/IntegrationAccountVault", certificate.Key.KeyVault.Id);
             Assert.Equal("IntegrationAccountVault", certificate.Key.KeyVault.Name);
             Assert.Equal("Microsoft.KeyVault/vaults", certificate.Key.KeyVault.Type);

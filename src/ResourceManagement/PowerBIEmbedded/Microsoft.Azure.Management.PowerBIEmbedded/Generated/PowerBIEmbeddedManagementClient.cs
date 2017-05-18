@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Management.PowerBIEmbedded
 {
@@ -19,7 +21,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
     using Models;
 
     /// <summary>
-    /// Client to manage your Power BI embedded workspace collections and
+    /// Client to manage your Power BI Embedded workspace collections and
     /// retrieve workspaces.
     /// </summary>
     public partial class PowerBIEmbeddedManagementClient : ServiceClient<PowerBIEmbeddedManagementClient>, IPowerBIEmbeddedManagementClient, IAzureClient
@@ -45,7 +47,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft Azure
+        /// Gets subscription credentials which uniquely identify a Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
         /// </summary>
@@ -282,7 +284,7 @@ namespace Microsoft.Azure.Management.PowerBIEmbedded
         {
             this.WorkspaceCollections = new WorkspaceCollectionsOperations(this);
             this.Workspaces = new WorkspacesOperations(this);
-            this.BaseUri = new Uri("http://management.azure.com");
+            this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2016-01-29";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;

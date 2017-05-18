@@ -1,22 +1,17 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace Azure.Batch.Unit.Tests
+namespace Azure.Batch.Unit.Tests
 {
     using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
     using BatchTestCommon;
     using Microsoft.Azure.Batch;
+    using Microsoft.Azure.Batch.Protocol;
+    using Microsoft.Rest;
     using Xunit;
 
     public class BatchClientUnitTest
@@ -33,6 +28,79 @@
             }
 
             TestBatchClientIsClosed(batchCli);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public async Task BatchAuthTokenIsSentToTheService_ClientCreatedWithFuncToken()
+        {
+            var tokenCredentials = new TokenCredentials(new BatchTokenProvider(() => Task.FromResult("foo")));
+
+            HttpRequestMessage capturedRequest = null;
+
+            var fakeHttpClientHandler = new FakeHttpClientHandler(req =>
+            {
+                capturedRequest = req;
+                return new HttpResponseMessage(HttpStatusCode.Accepted);
+            });
+
+            using (var restClient = new BatchServiceClient(tokenCredentials, fakeHttpClientHandler))
+            {
+                using (var client = BatchClient.Open(restClient))
+                {
+                    await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
+                }
+            }
+
+            Assert.Equal(capturedRequest.Headers.Authorization.Parameter, "foo");
+            Assert.Equal(capturedRequest.Headers.Authorization.Scheme, "Bearer");
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public async Task AuthTokenIsBeingSentOnEveryCallToTheService()
+        {
+            int count = 0;
+            var tokenCredentials = new TokenCredentials(new BatchTokenProvider(() =>
+            {
+                count++;
+                return Task.FromResult("foo");
+            }));
+
+            using (var restClient = new BatchServiceClient(tokenCredentials, new FakeHttpClientHandler(req => new HttpResponseMessage(HttpStatusCode.Accepted))))
+            {
+                var client = BatchClient.Open(restClient);
+
+                await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
+                Assert.Equal(count, 1);
+                await client.PoolOperations.DeletePoolAsync("bar", new List<BatchClientBehavior>());
+                Assert.Equal(count, 2);
+            }
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public async Task BatchAuthTokenIsSentToTheService_ClientCreatedWithToken()
+        {
+            var tokenCredentials = new TokenCredentials("foo");
+            HttpRequestMessage capturedRequest = null;
+
+            var fakeHttpClientHandler = new FakeHttpClientHandler(req => 
+            {
+                capturedRequest = req;
+                return new HttpResponseMessage(HttpStatusCode.Accepted);
+            });
+
+            using (var restClient = new BatchServiceClient(tokenCredentials, fakeHttpClientHandler))
+            {
+                using (var client = BatchClient.Open(restClient))
+                {
+                    await client.PoolOperations.DeletePoolAsync("bar");
+                }
+            }
+
+            Assert.Equal(capturedRequest.Headers.Authorization.Parameter, "foo");
+            Assert.Equal(capturedRequest.Headers.Authorization.Scheme, "Bearer");
         }
 
         [Fact]

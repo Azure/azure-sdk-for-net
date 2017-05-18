@@ -1,3 +1,6 @@
+# License notes
+The Azure Batch C# client is now under the MIT license. Prior to March 10 2017 it was under the Apache 2.0 license.
+
 # Azure Batch client developer guide
 Batch.sln is your one stop shop for all things related to the Azure Batch C# client library. This solution file contains all of the projects affiliated with the Azure Batch client (including testing and tooling).
 

@@ -20,13 +20,14 @@ using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Tests
 {
     public class RecoveryServicesTestBase : TestBase, IDisposable
     {
-        private const string resourceGroup = "RecoveryServicesTestRg";
+        private string resourceGroup = "SDKTestRg";
         private const string location = "westus";
 
         public RecoveryServicesClient VaultClient { get; private set; }
@@ -36,44 +37,43 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
             VaultClient = this.GetManagementClient(context);
             ResourceManagementClient resourcesClient = this.GetResourcesClient(context);
 
+            CreateResourceGroup(resourcesClient);
+        }
+
+        private void CreateResourceGroup(ResourceManagementClient resourcesClient)
+        {
+            bool resourceGroupExists = true;
             try
             {
-                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroup,
-                new ResourceGroup
-                {
-                    Location = location
-                });
-
+                resourcesClient.ResourceGroups.Get(resourceGroup);
             }
             catch (CloudException ex)
             {
-                if (ex.Response.StatusCode != HttpStatusCode.Conflict) throw;
+                // Doesn't exist
+                resourceGroupExists = false;
+            }
+
+            if (!resourceGroupExists)
+            {
+                try
+                {
+                    resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroup,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+                }
+                catch (CloudException ex)
+                {
+                    if (ex.Response.StatusCode != HttpStatusCode.Conflict) throw;
+                }
             }
         }
 
+        #region Vault
         public List<Vault> ListVaults()
         {
-            var vaults = new List<Vault>();
-            string nextLink = null;
-
-            var pagedVaults = VaultClient.Vaults.ListByResourceGroup(resourceGroup);
-
-            foreach (var pagedVault in pagedVaults)
-            {
-                vaults.Add(pagedVault);
-            }
-
-            while (!string.IsNullOrEmpty(nextLink))
-            {
-                nextLink = pagedVaults.NextPageLink;
-
-                foreach (var pagedVault in VaultClient.Vaults.ListByResourceGroupNext(nextLink))
-                {
-                    vaults.Add(pagedVault);
-                }
-            }
-
-            return vaults;
+            return VaultClient.Vaults.ListByResourceGroup(resourceGroup).ToList();
         }
 
         public void DeleteVault(string vaultName)
@@ -95,9 +95,81 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
                 {
                     Name = SkuName.Standard,
                 },
-                Properties = new VaultProperties(),
+                Properties = new VaultProperties()
             };
             VaultClient.Vaults.CreateOrUpdate(resourceGroup, vaultName, vault);
+        }
+        #endregion
+
+        #region Vault Extended Info
+        public VaultExtendedInfoResource CreateVaultExtendedInfo(Vault vault)
+        {
+            VaultExtendedInfoResource extInfo = new VaultExtendedInfoResource()
+            {
+                Algorithm = "None",
+                IntegrityKey = TestUtilities.GenerateRandomKey(128)
+            };
+
+            return VaultClient.VaultExtendedInfo.CreateOrUpdate(resourceGroup, vault.Name, extInfo);
+        }
+
+        public VaultExtendedInfoResource UpdateVaultExtendedInfo(Vault vault)
+        {
+            VaultExtendedInfoResource extInfo = new VaultExtendedInfoResource()
+            {
+                Algorithm = "None",
+                IntegrityKey = TestUtilities.GenerateRandomKey(128)
+            };
+
+            return VaultClient.VaultExtendedInfo.CreateOrUpdate(resourceGroup, vault.Name, extInfo);
+        }
+
+        public VaultExtendedInfoResource GetVaultExtendedInfo(Vault vault)
+        {
+            return VaultClient.VaultExtendedInfo.Get(resourceGroup, vault.Name);
+        }
+        #endregion
+
+        #region VaultUsages
+
+        /// <summary>
+        /// List vault usages.
+        /// </summary>
+        /// <returns>List of vault usages.</returns>
+        public List<VaultUsage> ListVaultUsages(string vaultName)
+        {
+            return VaultClient.Usages.ListByVaults(resourceGroup, vaultName).ToList();
+        }
+
+        public List<ReplicationUsage> ListReplicationUsages(string vaultName)
+        {
+            return VaultClient.ReplicationUsages.List(resourceGroup, vaultName).ToList();
+        }
+
+        #endregion VaultUsages
+
+        #region Vault Config
+
+        public BackupVaultConfig GetVaultConfig(string vaultName)
+        {
+            return VaultClient.BackupVaultConfigs.Get(resourceGroup, vaultName);
+        }
+
+        public BackupVaultConfig UpdateVaultConfig(string vaultName, BackupVaultConfig backupVaultConfig)
+        {
+            return VaultClient.BackupVaultConfigs.Update(resourceGroup, vaultName, backupVaultConfig);
+        }
+
+        #endregion
+
+        public BackupStorageConfig GetStorageConfig(string vaultName)
+        {
+            return VaultClient.BackupStorageConfigs.Get(resourceGroup, vaultName);
+        }
+
+        public void UpdateStorageConfig(string vaultName, BackupStorageConfig backupStorageConfig)
+        {
+            VaultClient.BackupStorageConfigs.Update(resourceGroup, vaultName, backupStorageConfig);
         }
 
         public void DisposeVaults()

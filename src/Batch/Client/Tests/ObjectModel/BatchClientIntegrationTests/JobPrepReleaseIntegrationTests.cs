@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace BatchClientIntegrationTests
 {
@@ -44,7 +33,7 @@
         private static readonly EnvironmentSetting JobPrepEnvSettingOM = new EnvironmentSetting(name: "JobPrepEnvSetting00", value: "JobPrepEnvSetting00Value");
         private const string JobPrepId = "AddJobPrepOM";
         private const bool JobPrepRerunOnComputeNodeRebootAfterSuccess = true;
-        private const bool JobPrepRunElevated = true;
+        private static readonly AutoUserSpecification JobPrepUserSpec = new AutoUserSpecification(scope:AutoUserScope.Task, elevationLevel: ElevationLevel.Admin);
         private static readonly TaskConstraints JobPrepTaskConstraintsOM = new TaskConstraints(maxTaskRetryCount: 4, maxWallClockTime: TimeSpan.FromHours(1.0), retentionTime: TimeSpan.FromHours(2.0));
         private const bool JobPrepWaitForSuccessCreate = false;  // true is the default so try false even though its crazy
         private const bool JobPrepWaitForSuccessUpdate = false;  // we need WfS so we can test the exeinfo.state
@@ -53,7 +42,7 @@
         private static readonly TimeSpan JobRelMaxWallClockTime = TimeSpan.FromMinutes(5.0);
         private const string JobRelId = "AddJobReleaseOM";
         private static readonly TimeSpan JobRelRetentionTime = TimeSpan.FromMinutes(10.0);
-        private const bool JobRelRunElevated = true;
+        private static readonly AutoUserSpecification JobRelUserSpec = new AutoUserSpecification(scope: AutoUserScope.Task, elevationLevel: ElevationLevel.Admin);
         private static readonly EnvironmentSetting JobCommonEnvSettingOM = new EnvironmentSetting(name: "JobCommenEnv00Name", value: "JobCommonEnv00Value");
 
         #endregion
@@ -133,7 +122,7 @@
                                     }
                                     */
 
-                                prep.RunElevated = JobPrepRunElevated;
+                                prep.UserIdentity = new UserIdentity(JobPrepUserSpec);
                                 prep.Constraints = JobPrepTaskConstraintsOM;
                                 prep.WaitForSuccess = JobPrepWaitForSuccessCreate;
                             }
@@ -162,7 +151,7 @@
                                 }
 
                                 relTask.RetentionTime = JobRelRetentionTime;
-                                relTask.RunElevated = JobRelRunElevated;
+                                relTask.UserIdentity = new UserIdentity(JobRelUserSpec);
                             }
 
                             // set JobCommonEnvSettings
@@ -594,9 +583,9 @@
                     foreach (NodeFile curTF in victimComputeNodeRunningPrepAndRelease.ListNodeFiles(recursive: true))
                     {
                         // filter on the jsId since we only run one job per job in this test.
-                        if (curTF.Name.IndexOf(boundJobSchedule.Id, StringComparison.InvariantCultureIgnoreCase) >= 0)
+                        if (curTF.Path.IndexOf(boundJobSchedule.Id, StringComparison.InvariantCultureIgnoreCase) >= 0)
                         {
-                            this.testOutputHelper.WriteLine("    name:" + curTF.Name + ", size: " + ((curTF.IsDirectory.HasValue && curTF.IsDirectory.Value) ? "<dir>" : curTF.Properties.ContentLength.ToString()));
+                            this.testOutputHelper.WriteLine("    name:" + curTF.Path + ", size: " + ((curTF.IsDirectory.HasValue && curTF.IsDirectory.Value) ? "<dir>" : curTF.Properties.ContentLength.ToString()));
 
                             filteredListJobPrep.Add(curTF);
                         }
@@ -610,7 +599,7 @@
                         foreach (NodeFile curTF in filteredListJobPrep)
                         {
                             // look for the resfile filepath in the taskfile name
-                            found |= curTF.Name.IndexOf(curCorrectRF.FilePath, StringComparison.InvariantCultureIgnoreCase) >= 0;
+                            found |= curTF.Path.IndexOf(curCorrectRF.FilePath, StringComparison.InvariantCultureIgnoreCase) >= 0;
                         }
                         Assert.True(found, "Looking for resourcefile: " + curCorrectRF.FilePath);
                     }
@@ -730,7 +719,8 @@
 
             Assert.Equal(JobPrepId, jobPrep.Id);
             Assert.Equal(JobPrepRerunOnComputeNodeRebootAfterSuccess, jobPrep.RerunOnComputeNodeRebootAfterSuccess);
-            Assert.Equal(JobPrepRunElevated, jobPrep.RunElevated);
+            Assert.Equal(JobPrepUserSpec.ElevationLevel, jobPrep.UserIdentity.AutoUser.ElevationLevel);
+            Assert.Equal(JobPrepUserSpec.Scope, jobPrep.UserIdentity.AutoUser.Scope);
 
             Assert.Equal(JobPrepTaskConstraintsOM.MaxTaskRetryCount, jobPrep.Constraints.MaxTaskRetryCount);
             Assert.Equal(JobPrepTaskConstraintsOM.MaxWallClockTime, jobPrep.Constraints.MaxWallClockTime);
@@ -753,7 +743,8 @@
             Assert.Equal(JobRelMaxWallClockTime, jobRelease.MaxWallClockTime);
             Assert.Equal(JobRelId, jobRelease.Id);
             Assert.Equal(JobRelRetentionTime, jobRelease.RetentionTime);
-            Assert.Equal(JobRelRunElevated, jobRelease.RunElevated);
+            Assert.Equal(JobRelUserSpec.ElevationLevel, jobRelease.UserIdentity.AutoUser.ElevationLevel);
+            Assert.Equal(JobRelUserSpec.Scope, jobRelease.UserIdentity.AutoUser.Scope);
         }
 
         private static void AssertGoodCommonEnvSettingsOM(IList<EnvironmentSetting> jobCommonEnvSettings)

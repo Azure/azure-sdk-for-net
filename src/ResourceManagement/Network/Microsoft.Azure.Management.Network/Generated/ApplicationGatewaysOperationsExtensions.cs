@@ -331,6 +331,34 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Lists all available web application firewall rule sets.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static ApplicationGatewayAvailableWafRuleSetsResult ListAvailableWafRuleSets(this IApplicationGatewaysOperations operations)
+            {
+                return operations.ListAvailableWafRuleSetsAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all available web application firewall rule sets.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationGatewayAvailableWafRuleSetsResult> ListAvailableWafRuleSetsAsync(this IApplicationGatewaysOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAvailableWafRuleSetsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified application gateway.
             /// </summary>
             /// <param name='operations'>

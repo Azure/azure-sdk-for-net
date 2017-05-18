@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace Azure.Batch.Unit.Tests.TestUtilities
 {
@@ -102,15 +91,15 @@
                 }
             }
             //Deal with collections
-            else if (o1 is IEnumerable<object>)
+            else if (o1 is IEnumerable)
             {
-                if (!(o2 is IEnumerable<object>))
+                if (!(o2 is IEnumerable))
                 {
-                    return CheckEqualityResult.False("o2 was not IEnumerable<object>");
+                    return CheckEqualityResult.False("o2 was not IEnumerable");
                 }
 
-                IEnumerable<object> o1Enumerable = o1 as IEnumerable<object>;
-                IEnumerable<object> o2Enumerable = o2 as IEnumerable<object>;
+                IEnumerable o1Enumerable = (IEnumerable)o1;
+                IEnumerable o2Enumerable = (IEnumerable)o2;
 
                 return this.CompareEnumerables(o1Enumerable, o2Enumerable);
             }
@@ -190,11 +179,11 @@
             return CheckEqualityResult.True;
         }
 
-        private CheckEqualityResult CompareEnumerables(IEnumerable<object> enumerable1, IEnumerable<object> enumerable2)
+        private CheckEqualityResult CompareEnumerables(IEnumerable enumerable1, IEnumerable enumerable2)
         {
             //Order doesn't matter but should be preserved
-            List<object> list1 = enumerable1.ToList();
-            List<object> list2 = enumerable2.ToList();
+            List<object> list1 = enumerable1.Cast<object>().ToList();
+            List<object> list2 = enumerable2.Cast<object>().ToList();
 
             if (list2.Count != list1.Count)
             {

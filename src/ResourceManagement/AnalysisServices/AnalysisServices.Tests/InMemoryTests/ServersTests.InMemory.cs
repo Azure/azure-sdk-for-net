@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -114,6 +102,8 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.ProvisioningState, "Succeeded");
             Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal(result.BackupConfiguration.StorageAccount, AnalysisServicesTestUtilities.DefaultBakcupStorageAccount);
+            Assert.Equal(result.BackupConfiguration.BlobContainer, AnalysisServicesTestUtilities.DefaultBackupBlobContainer);
         }
 
         [Fact]
@@ -147,7 +137,8 @@ namespace AnalysisServices.Tests.InMemoryTests
             {
                 Sku = AnalysisServicesTestUtilities.DefaultSku,
                 Tags = AnalysisServicesTestUtilities.DefaultTags,
-                AsAdministrators = new ServerAdministrators(AnalysisServicesTestUtilities.DefaultAdministrators)
+                AsAdministrators = new ServerAdministrators(AnalysisServicesTestUtilities.DefaultAdministrators),
+                BackupConfiguration = AnalysisServicesTestUtilities.DefaultBackupConfiguration
             };
 
             var result = client.Servers.Update(
@@ -166,6 +157,8 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.ProvisioningState, "Succeeded");
             Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal(result.BackupConfiguration.StorageAccount, AnalysisServicesTestUtilities.DefaultBakcupStorageAccount);
+            Assert.Equal(result.BackupConfiguration.BlobContainer, AnalysisServicesTestUtilities.DefaultBackupBlobContainer);
         }
 
         [Fact]
@@ -296,6 +289,11 @@ namespace AnalysisServices.Tests.InMemoryTests
                                                 'aztest0@stabletest.ccsctp.net',
                                                 'aspaasteam@microsoft.com'
                                             ]
+                                        },
+                                        'backupConfiguration' : {
+                                            'storageAccount' : 'FT_Permanent_Group_A/stabletestbackupsa',
+                                            'blobContainer' : 'backups',
+                                            'accessKey' : 'dummyaccesskey'
                                         }
                                     }
                                 },
@@ -321,6 +319,11 @@ namespace AnalysisServices.Tests.InMemoryTests
                                                 'aztest0@stabletest.ccsctp.net',
                                                 'aspaasteam@microsoft.com'
                                             ]
+                                        },
+                                        'backupConfiguration' : {
+                                            'storageAccount' : 'FT_Permanent_Group_A/stabletestbackupsa',
+                                            'blobContainer' : 'backups',
+                                            'accessKey' : 'dummyaccesskey'
                                         }
                                     }
                                 }
@@ -387,6 +390,11 @@ namespace AnalysisServices.Tests.InMemoryTests
                                                 'aztest0@stabletest.ccsctp.net',
                                                 'aspaasteam@microsoft.com'
                                             ]
+                                        },
+                                        'backupConfiguration' : {
+                                            'storageAccount' : 'FT_Permanent_Group_A/stabletestbackupsa',
+                                            'blobContainer' : 'backups',
+                                            'accessKey' : 'dummyaccesskey'
                                         }
                                     }
                                 },
@@ -412,6 +420,11 @@ namespace AnalysisServices.Tests.InMemoryTests
                                                 'aztest0@stabletest.ccsctp.net',
                                                 'aspaasteam@microsoft.com'
                                             ]
+                                        },
+                                        'backupConfiguration' : {
+                                            'storageAccount' : 'FT_Permanent_Group_A/stabletestbackupsa',
+                                            'blobContainer' : 'backups',
+                                            'accessKey' : 'dummyaccesskey'
                                         }
                                     }
                                 }

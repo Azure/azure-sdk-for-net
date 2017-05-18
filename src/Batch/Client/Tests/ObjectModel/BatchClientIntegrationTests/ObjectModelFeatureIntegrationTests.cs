@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace BatchClientIntegrationTests
 {
@@ -428,7 +417,7 @@
                             NodeFile stdoutFile = null;
 
                             // find stdout
-                            listStd.ForEach(x => { if (x.Name.IndexOf("stdout", StringComparison.InvariantCultureIgnoreCase) >= 0) { stdoutFile = x; } });
+                            listStd.ForEach(x => { if (x.Path.IndexOf("stdout", StringComparison.InvariantCultureIgnoreCase) >= 0) { stdoutFile = x; } });
 
                             // save pre-refresh props
                             FileProperties saveFilProps = stdoutFile.Properties;
@@ -438,7 +427,7 @@
 
                             NodeFile againViaList = null;
 
-                            new List<NodeFile>(task.ListNodeFiles()).ForEach(x => { if (x.Name.IndexOf("stdout", StringComparison.InvariantCultureIgnoreCase) >= 0) { againViaList = x; } });
+                            new List<NodeFile>(task.ListNodeFiles()).ForEach(x => { if (x.Path.IndexOf("stdout", StringComparison.InvariantCultureIgnoreCase) >= 0) { againViaList = x; } });
 
                             //"Bug1719609ODATADetailLevel: sometimes this can fail.  check out CreateTime"
                             //This fails due to different time formats used in the header vs in the body of a request.  Since we expect that this will basically never pass

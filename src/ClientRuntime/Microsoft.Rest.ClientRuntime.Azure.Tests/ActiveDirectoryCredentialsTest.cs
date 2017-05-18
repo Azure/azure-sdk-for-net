@@ -106,7 +106,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             response = client.SendAsync(request).ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
       }
-#endif
 
         [EnvironmentDependentFact]
         public void OrgIdCredentialWorksWithoutDialog()
@@ -142,7 +141,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.NotNull(exception.InnerException);
             Assert.Equal(typeof(AdalServiceException), exception.InnerException.GetType());
         }
-
+#endif
 #if !PORTABLE
         [EnvironmentDependentFact]
         public void CredentialsConstructorThrowsForInvalidValues()
@@ -169,7 +168,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.ThrowsAsync<AuthenticationException>(() => UserTokenProvider.LoginSilentAsync("1950a258-227b-4e31-a9cf-717495945fc2", 
                 "microsoft.onmicrosoft.com", this._username, string.Empty, cache));
         }
-#endif
+
 
         [EnvironmentDependentFact]
         public void UserTokenProviderRefreshWorks()
@@ -186,7 +185,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var response = client.SendAsync(request).ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
-
+#endif
         [EnvironmentDependentFact]
         public void ValidApplicationCredentialsAuthenticateCorrectly()
         {

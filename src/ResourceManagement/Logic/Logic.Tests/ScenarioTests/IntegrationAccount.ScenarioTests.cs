@@ -2,38 +2,30 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-
 namespace Test.Azure.Management.Logic
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Xunit;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
-    using System;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Newtonsoft.Json.Linq;
+    using Xunit;
 
     /// <summary>
     /// Scenario tests for the integration accounts.
     /// </summary>
     [Collection("IntegrationAccountScenarioTests")]
-    public class IntegrationAccountScenarioTests : BaseScenarioTests
+    public class IntegrationAccountScenarioTests : ScenarioTestsBase
     {
-        /// <summary>
-        /// Name of the test class.
-        /// </summary>
-        private const string TestClass = "Test.Azure.Management.Logic.IntegrationAccountScenarioTests";
-
         /// <summary>
         /// Tests the create and delete operations of the integration account.
         /// </summary>
         [Fact]
         public void CreateAndDeleteIntegrationAccount()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -57,8 +49,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndUpdateIntegrationAccount()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -80,10 +71,9 @@ namespace Test.Azure.Management.Logic
                         Location = Constants.DefaultLocation,
                         Sku = new IntegrationAccountSku()
                         {
-                            Name = SkuName.Free
+                            Name = IntegrationAccountSkuName.Standard
                         },
-                        Properties = new JObject(),
-                        Name = integrationAccountName
+                        Properties = new JObject()
                     });
 
                 Assert.NotNull(updatedAccount);
@@ -99,8 +89,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndGetIntegrationAccountByName()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -127,8 +116,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListIntegrationAccountBySubscription()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -155,8 +143,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListIntegrationAccountByResourceGroup()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -183,8 +170,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void UpdateIntegrationAccount()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -223,8 +209,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListIntegrationAccountCallbackUrl()
         {
-            using (
-                MockContext context = MockContext.Start(TestClass))
+            using (MockContext context = MockContext.Start(this.testClassName))
             {
                 string integrationAccountName = TestUtilities.GenerateName(Constants.IntegrationAccountPrefix);
                 var client = context.GetServiceClient<LogicManagementClient>();
@@ -235,19 +220,33 @@ namespace Test.Azure.Management.Logic
                     CreateIntegrationAccountInstance(integrationAccountName));
 
                 // Get the IntegrationAccount and verify the content
-                var callbackUrl1 = client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup,
-                    integrationAccountName);
+                var callbackUrl1 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
+                    integrationAccountName, new GetCallbackUrlParameters());
 
                 Assert.NotNull(callbackUrl1);
 
-                var callbackUrl2 = client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup,
-                    integrationAccountName);
+                var callbackUrl2 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
+                    integrationAccountName, new GetCallbackUrlParameters());
 
                 Assert.NotNull(callbackUrl2);
 
+                var callbackUrl3 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
+                integrationAccountName, new GetCallbackUrlParameters(DateTime.Today.AddDays(10),KeyType.Primary));
+
+                Assert.NotNull(callbackUrl3);
+
+                var callbackUrl4= client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
+                integrationAccountName, new GetCallbackUrlParameters(keyType: KeyType.Primary));
+
+                Assert.NotNull(callbackUrl4);
+
+                var callbackUrl5 = client.IntegrationAccounts.GetCallbackUrl(Constants.DefaultResourceGroup,
+                integrationAccountName, new GetCallbackUrlParameters(notAfter: DateTime.Today.AddDays(10)));
+
+                Assert.NotNull(callbackUrl5);
+
                 // Delete the IntegrationAccount
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-
             }
         }
 

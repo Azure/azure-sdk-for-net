@@ -17,6 +17,9 @@ using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using Xunit;
+using System;
+using System.Net;
+using Microsoft.Azure.Management.RecoveryServices.Models;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Tests
 {
@@ -48,6 +51,73 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
                     {
                         _testFixture.GetVault(vaultName2);
                     });
+                }
+            }
+        }
+
+        [Fact]
+        public void CanCreateGetListDeleteVaultExtendedInfoTest()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                using (RecoveryServicesTestBase _testFixture = new RecoveryServicesTestBase(context))
+                {
+                    string vaultName = VaultDefinition.TestCrud.VaultName;
+
+                    _testFixture.CreateVault(vaultName);
+                    var vault = _testFixture.GetVault(vaultName);
+                    Assert.NotNull(vault);
+
+                    Models.VaultExtendedInfoResource extendedInfo = null;
+                    try
+                    {
+                        extendedInfo = _testFixture.GetVaultExtendedInfo(vault);
+                    }
+                    catch (CloudException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound)
+                        {
+                            throw;
+                        }
+                    }
+
+                    if (extendedInfo == null)
+                    {
+                        extendedInfo = _testFixture.CreateVaultExtendedInfo(vault);
+                    }
+
+                    Assert.NotNull(extendedInfo.IntegrityKey);
+                }
+            }
+        }
+
+        [Fact]
+        public void GetAndUpdateBackupVaultAndStorageConfigTest()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                using (RecoveryServicesTestBase _testFixture = new RecoveryServicesTestBase(context))
+                {
+                    string vaultName = VaultDefinition.TestCrud.VaultName;
+
+                    _testFixture.CreateVault(vaultName);
+                    var vault = _testFixture.GetVault(vaultName);
+                    Assert.NotNull(vault);
+
+                    var vaultConfig = _testFixture.GetVaultConfig(vaultName);
+
+                    vaultConfig.EnhancedSecurityState = EnhancedSecurityState.Disabled;
+                    Assert.Throws<CloudException>(() =>
+                    {
+                        var vaultConfig2 = _testFixture.UpdateVaultConfig(vaultName, vaultConfig);
+                    });
+
+                    var storageConfig = _testFixture.GetStorageConfig(vaultName);
+                    storageConfig.StorageModelType = StorageModelType.LocallyRedundant;
+                    _testFixture.UpdateStorageConfig(vaultName, storageConfig);
+
+                    var storageConfig2 = _testFixture.GetStorageConfig(vaultName);
+                    Assert.Equal(storageConfig2.StorageModelType, StorageModelType.LocallyRedundant);
                 }
             }
         }

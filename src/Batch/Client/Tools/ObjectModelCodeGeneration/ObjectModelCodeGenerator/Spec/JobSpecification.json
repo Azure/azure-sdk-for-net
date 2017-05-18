@@ -122,6 +122,33 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
-        }
+        },
+        {
+          "Key": {
+            "Type": "Common.OnAllTasksComplete?",
+            "Name": "OnAllTasksComplete",
+            "SummaryComment": "The action the Batch service should take when all tasks in the job are in the <see cref=\"Common.JobState.Completed\"/> state.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.OnAllTasksComplete?",
+            "Name": "OnAllTasksComplete",
+          }
+        },
+        {
+          "Key": {
+            "Type": "Common.OnTaskFailure?",
+            "Name": "OnTaskFailure",
+            "SummaryComment": "The action the Batch service should take when any task in the job fails.",
+            "RemarksComment": "A task is considered to have failed if it completes with a non-zero exit code and has exhausted its retry count, or if it had a scheduling error.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.OnTaskFailure?",
+            "Name": "OnTaskFailure",
+          }
+        },
       ]
     }

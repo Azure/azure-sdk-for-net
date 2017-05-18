@@ -1,17 +1,5 @@
-﻿//
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.Linq;
@@ -39,7 +27,7 @@ namespace DataLakeAnalytics.Tests
                 commonData.HostUrl =
                     commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
                         commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
-                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
+                
                 commonData.DataLakeAnalyticsManagementHelper.CreateCatalog(commonData.ResourceGroupName,
                     commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.TableName, commonData.TvfName, commonData.ViewName, commonData.ProcName);
                 using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient(context))
@@ -172,7 +160,7 @@ namespace DataLakeAnalytics.Tests
                 commonData.HostUrl =
                     commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
                         commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
-                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
+                
                 commonData.DataLakeAnalyticsManagementHelper.CreateCatalog(commonData.ResourceGroupName,
                     commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.TableName, commonData.TvfName, commonData.ViewName, commonData.ProcName);
                 using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient(context))
@@ -273,7 +261,7 @@ namespace DataLakeAnalytics.Tests
         }
 
         [Fact]
-        public void SecretAndCredentialCRUDTest()
+        public void SecretCRUDTest()
         {
             // NOTE: This is deprecated and will be removed in a future release
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -282,7 +270,7 @@ namespace DataLakeAnalytics.Tests
                 commonData.HostUrl =
                     commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
                         commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
-                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
+                
                 commonData.DataLakeAnalyticsManagementHelper.CreateCatalog(commonData.ResourceGroupName,
                     commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.TableName, commonData.TvfName, commonData.ViewName, commonData.ProcName);
                 using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient(context))
@@ -320,6 +308,7 @@ namespace DataLakeAnalytics.Tests
                             Password = commonData.SecretPwd,
                             Uri = "https://adlasecrettest.contoso.com:443"
                         });
+
                         // Get the secret and ensure the response contains a date.
                         var secretGetResponse = clientToUse.Catalog.GetSecret(
                             commonData.SecondDataLakeAnalyticsAccountName,
@@ -327,38 +316,6 @@ namespace DataLakeAnalytics.Tests
 
                         Assert.NotNull(secretGetResponse);
                         Assert.NotNull(secretGetResponse.CreationTime);
-
-                        // Create a credential with the secret
-                        var credentialCreationScript =
-                            string.Format(
-                                @"USE {0}; CREATE CREDENTIAL {1} WITH USER_NAME = ""scope@rkm4grspxa"", IDENTITY = ""{2}"";",
-                                commonData.DatabaseName, commonData.CredentialName, commonData.SecretName);
-                        commonData.DataLakeAnalyticsManagementHelper.RunJobToCompletion(jobClient, 
-                            commonData.SecondDataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(),
-                            credentialCreationScript);
-
-                        // Get the Credential list
-                        var credListResponse = clientToUse.Catalog.ListCredentials(
-                            commonData.SecondDataLakeAnalyticsAccountName,
-                            commonData.DatabaseName);
-                        Assert.True(credListResponse.Count() >= 1);
-
-                        // look for the credential we created
-                        Assert.True(credListResponse.Any(cred => cred.Name.Equals(commonData.CredentialName)));
-
-                        // Get the specific credential as well
-                        var credGetResponse = clientToUse.Catalog.GetCredential(
-                            commonData.SecondDataLakeAnalyticsAccountName,
-                            commonData.DatabaseName, commonData.CredentialName);
-                        Assert.Equal(commonData.CredentialName, credGetResponse.Name);
-
-                        // Drop the credential (to enable secret deletion)
-                        var credentialDropScript =
-                            string.Format(
-                                @"USE {0}; DROP CREDENTIAL {1};", commonData.DatabaseName, commonData.CredentialName);
-                        commonData.DataLakeAnalyticsManagementHelper.RunJobToCompletion(jobClient, 
-                            commonData.SecondDataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(),
-                            credentialDropScript);
 
                         // Delete the secret
                         clientToUse.Catalog.DeleteSecret(

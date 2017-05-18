@@ -1,16 +1,5 @@
-// Copyright (c) Microsoft and contributors.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 ﻿namespace BatchProxyIntegrationTests
 {
@@ -21,6 +10,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using BatchTestCommon;
+    using IntegrationTestCommon;
     using Microsoft.Azure.Batch.Protocol;
     using Microsoft.Azure.Batch.Protocol.Models;
     using Microsoft.Azure.Management.Batch;
@@ -43,7 +33,7 @@
         {
             this.output = output;
 
-            TestCommon.EnableAutoStorageAsync().Wait();
+            IntegrationTestCommon.EnableAutoStorageAsync().Wait();
 
             ApplicationPackageCommon.UploadTestApplicationPackageIfNotAlreadyUploadedAsync(AppPackageName, Version).Wait();
             ApplicationPackageCommon.UpdateApplicationPackageAsync(AppPackageName, Version, "My First App", false).Wait();
@@ -183,14 +173,14 @@
 
         public void Dispose()
         {
-            BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient();
+            BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient();
             string accountName = TestCommon.Configuration.BatchAccountName;
             string resourceGroupName = TestCommon.Configuration.BatchAccountResourceGroup;
 
             Func<Task> cleanupTask = async () =>
                 {
-                    await mgmtClient.Applications.DeleteApplicationPackageAsync(resourceGroupName, accountName, AppPackageName, Version);
-                    await mgmtClient.Applications.DeleteApplicationAsync(resourceGroupName, accountName, AppPackageName);
+                    await mgmtClient.ApplicationPackage.DeleteAsync(resourceGroupName, accountName, AppPackageName, Version);
+                    await mgmtClient.Application.DeleteAsync(resourceGroupName, accountName, AppPackageName);
                 };
 
             Task.Run(cleanupTask).GetAwaiter().GetResult();

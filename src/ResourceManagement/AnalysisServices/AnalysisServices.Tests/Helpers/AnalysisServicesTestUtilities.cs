@@ -1,17 +1,5 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Analysis;
@@ -69,6 +57,12 @@ namespace AnalysisServices.Tests.Helpers
             "aztest1@stabletest.ccsctp.net"
         };
 
+        public static string DefaultBakcupStorageAccount = "FT_Permanent_Group_A/stabletestbackupsa";
+
+        public static string DefaultBackupBlobContainer = "backups";
+
+        public static BackupConfiguration DefaultBackupConfiguration = new BackupConfiguration("FT_Permanent_Group_A/stabletestbackupsa", "backups", Environment.GetEnvironmentVariable("AAS_DEFAULT_BACKUP_STORAGE_ACCESS_KEY"));
+
         public static string GetDefaultCreatedResponse(string provisioningState, string state)
         {
             string responseFormat = @"{{
@@ -86,6 +80,10 @@ namespace AnalysisServices.Tests.Helpers
                                 'serverFullName':'asazure://wcus.asazure-int.windows.net/{2}',
                                 'asAdministrators':{{
                                 'members':{8}
+                                }},
+                                'backupConfiguration':{{
+                                'storageAccount':'{9}',
+                                'blobContainer':'{10}'
                                 }}
                             }}
                             }}";
@@ -102,7 +100,9 @@ namespace AnalysisServices.Tests.Helpers
                 tags,
                 provisioningState,
                 state,
-                admins);
+                admins,
+                DefaultBakcupStorageAccount,
+                DefaultBackupBlobContainer);
         }
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
@@ -119,7 +119,8 @@ namespace AnalysisServices.Tests.Helpers
                 Location = DefaultLocation,
                 Tags = DefaultTags,
                 Sku = DefaultSku,
-                AsAdministrators = new ServerAdministrators(DefaultAdministrators)
+                AsAdministrators = new ServerAdministrators(DefaultAdministrators),
+                BackupConfiguration = DefaultBackupConfiguration
             };
 
             return defaultServer;

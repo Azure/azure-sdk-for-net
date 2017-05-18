@@ -1,17 +1,5 @@
-﻿// 
-// Copyright (c) Microsoft.  All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -167,5 +155,47 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
             await operations.RemoveWebServiceWitProperRequestIdAsync(resourceGroupName, webServiceName, null, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Create web service properties for a specific region.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
+        /// <param name='region'>
+        /// The new region of Azure ML web service properties.
+        /// </param>
+        public static void CreateRegionalPropertiesWithRequestId(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region)
+        {
+            Task.Factory.StartNew(s => ((IWebServicesOperations)s).CreateRegionalPropertiesWithRequestIdAsync(resourceGroupName, webServiceName, region), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Create web service properties for a specific region.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group.
+        /// </param>
+        /// <param name='webServiceName'>
+        /// The Azure ML web service name which you want to reach.
+        /// </param>
+        /// <param name='region'>
+        /// The new region of Azure ML web service properties.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task CreateRegionalPropertiesWithRequestIdAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await operations.CreateRegionalPropertiesWithProperRequestIdAsync(resourceGroupName, webServiceName, region, null, cancellationToken).ConfigureAwait(false);
+        }
     }
 }

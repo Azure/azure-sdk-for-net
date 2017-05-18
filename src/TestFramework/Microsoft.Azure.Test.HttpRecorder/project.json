@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.6.7-preview",
+  "version": "1.7.0",
   "copyright": "Copyright (c) Microsoft Corporation",
   "title": "HttpRecorder Library for recording Clinet/Server communication in Azure",
   "description": "Microsoft.Azure.Test.HttpRecorder",
@@ -10,8 +10,8 @@
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
   	"projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   	"licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "tags": [ "Microsoft AutoRest ClientRuntime HttpRecorder REST" ],
-    "requireLicenseAcceptance":  true,
+    "tags": [ "Microsoft AutoRest ClientRuntime HttpRecorder REST", "netCore451511" ],
+    "requireLicenseAcceptance":  true
   },
 
   "buildOptions": {
@@ -33,10 +33,14 @@
       }
     },
     "netstandard1.5": {
-      "buildOptions": { "define": [ "PORTABLE" ] },
-      "imports": ["dnxcore50"],
+      "buildOptions": {
+        "define": [ "NETSTANDARD15", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "imports": [ "dnxcore50" ],
       "dependencies": {
-        "NETStandard.Library": "1.6.0",
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0",
         "Newtonsoft.Json": "[9.0.1,10.0)",
         "System.AppDomain": "2.0.11"
       }
