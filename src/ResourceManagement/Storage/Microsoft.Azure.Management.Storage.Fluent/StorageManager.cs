@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             return Authenticate(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 

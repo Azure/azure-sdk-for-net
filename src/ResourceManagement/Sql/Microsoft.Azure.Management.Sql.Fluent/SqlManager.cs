@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             return new SqlManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 

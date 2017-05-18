@@ -40,10 +40,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 SubscriptionId = subscriptionId
             })
         {
-            keyVaultManager = KeyVault.Fluent.KeyVaultManager.Authenticate(RestClient.Configure()
-                .WithBaseUri(restClient.BaseUri)
-                .WithCredentials(restClient.Credentials)
-                .Build(), subscriptionId, tenantId);
+            keyVaultManager = KeyVault.Fluent.KeyVaultManager.Authenticate(restClient, subscriptionId, tenantId);
             storageManager = Storage.Fluent.StorageManager.Authenticate(restClient, subscriptionId);
             this.tenantId = tenantId;
             this.restClient = restClient;
@@ -58,6 +55,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return new AppServiceManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId, credentials.TenantId);
         }
 

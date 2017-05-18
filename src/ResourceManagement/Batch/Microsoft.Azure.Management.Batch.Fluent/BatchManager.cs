@@ -33,6 +33,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             return new BatchManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 

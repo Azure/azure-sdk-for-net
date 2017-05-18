@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return new RedisManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
         
