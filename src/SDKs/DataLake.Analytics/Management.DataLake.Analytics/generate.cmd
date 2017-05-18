@@ -6,9 +6,9 @@
 @echo off
 setlocal
 
-set accountSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0ade6547eff89bab427eb400ebc5da870f2c5bd0/arm-datalake-analytics/account/2016-11-01/swagger/account.json"
-set jobSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0ade6547eff89bab427eb400ebc5da870f2c5bd0/arm-datalake-analytics/job/2016-11-01/swagger/job.json"
-set catalogSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0ade6547eff89bab427eb400ebc5da870f2c5bd0/arm-datalake-analytics/catalog/2016-11-01/swagger/catalog.json"
+set accountSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/12a6c2299296b6877fa1e5a03ed42752445877dc/arm-datalake-analytics/account/2016-11-01/swagger/account.json"
+set jobSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/12a6c2299296b6877fa1e5a03ed42752445877dc/arm-datalake-analytics/job/2016-11-01/swagger/job.json"
+set catalogSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/12a6c2299296b6877fa1e5a03ed42752445877dc/arm-datalake-analytics/catalog/2016-11-01/swagger/catalog.json"
 
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated

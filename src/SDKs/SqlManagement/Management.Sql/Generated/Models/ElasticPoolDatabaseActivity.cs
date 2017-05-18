@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="startTime">The time the operation started (ISO8601
         /// format).</param>
         /// <param name="state">The current state of the operation.</param>
-        public ElasticPoolDatabaseActivity(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string databaseName = default(string), System.DateTime? endTime = default(System.DateTime?), int? errorCode = default(int?), string errorMessage = default(string), int? errorSeverity = default(int?), string operation = default(string), System.Guid? operationId = default(System.Guid?), int? percentComplete = default(int?), string requestedElasticPoolName = default(string), string currentElasticPoolName = default(string), string currentServiceObjective = default(string), string requestedServiceObjective = default(string), string serverName = default(string), System.DateTime? startTime = default(System.DateTime?), string state = default(string))
+        public ElasticPoolDatabaseActivity(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string databaseName = default(string), System.DateTime? endTime = default(System.DateTime?), int? errorCode = default(int?), string errorMessage = default(string), int? errorSeverity = default(int?), string operation = default(string), System.Guid operationId = default(System.Guid), int? percentComplete = default(int?), string requestedElasticPoolName = default(string), string currentElasticPoolName = default(string), string currentServiceObjective = default(string), string requestedServiceObjective = default(string), string serverName = default(string), System.DateTime? startTime = default(System.DateTime?), string state = default(string))
             : base(id, name, type)
         {
             Location = location;
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets the unique operation ID.
         /// </summary>
         [JsonProperty(PropertyName = "properties.operationId")]
-        public System.Guid? OperationId { get; private set; }
+        public System.Guid OperationId { get; private set; }
 
         /// <summary>
         /// Gets the percentage complete if available.

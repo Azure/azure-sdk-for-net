@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 }
                 catch (AggregateException ex)
                 {
-                    if (ex.InnerExceptions.Count != 1)
+                    if (ex.InnerExceptions == null || ex.InnerExceptions.Count != 1)
                     {
                         TracingHelper.LogError(ex);
 
@@ -249,7 +249,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                     }
 
                     var cloudEx = ex.InnerExceptions[0] as AdlsErrorException;
-                    if (cloudEx != null && (cloudEx.Response.StatusCode == HttpStatusCode.NotFound || cloudEx.Body.RemoteException is AdlsFileNotFoundException))
+                    if ((cloudEx != null && cloudEx.Response != null && cloudEx.Response.StatusCode == HttpStatusCode.NotFound) || 
+                        (cloudEx.Body != null && cloudEx.Body.RemoteException != null && cloudEx.Body.RemoteException is AdlsFileNotFoundException))
                     {
                         return false;
                     }
@@ -260,7 +261,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 }
                 catch (AdlsErrorException cloudEx)
                 {
-                    if (cloudEx.Response.StatusCode == HttpStatusCode.NotFound || cloudEx.Body.RemoteException is AdlsFileNotFoundException)
+                    if ((cloudEx.Response != null && cloudEx.Response.StatusCode == HttpStatusCode.NotFound) || 
+                        (cloudEx.Body != null && cloudEx.Body.RemoteException != null && cloudEx.Body.RemoteException is AdlsFileNotFoundException))
                     {
                         return false;
                     }

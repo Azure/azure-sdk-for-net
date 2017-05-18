@@ -14,10 +14,6 @@ namespace Microsoft.Azure.Management.Sql
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// The Azure SQL Database management API provides a RESTful set of web
@@ -71,6 +67,11 @@ namespace Microsoft.Azure.Management.Sql
 
 
         /// <summary>
+        /// Gets the IDatabasesOperations.
+        /// </summary>
+        IDatabasesOperations Databases { get; }
+
+        /// <summary>
         /// Gets the ICapabilitiesOperations.
         /// </summary>
         ICapabilitiesOperations Capabilities { get; }
@@ -81,9 +82,9 @@ namespace Microsoft.Azure.Management.Sql
         IFirewallRulesOperations FirewallRules { get; }
 
         /// <summary>
-        /// Gets the IDatabasesOperations.
+        /// Gets the IOperations.
         /// </summary>
-        IDatabasesOperations Databases { get; }
+        IOperations Operations { get; }
 
         /// <summary>
         /// Gets the IServersOperations.
@@ -99,17 +100,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IRecommendedElasticPoolsOperations.
         /// </summary>
         IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
-
-        /// <summary>
-        /// Lists all of the available SQL Rest API operations.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<OperationListResult>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

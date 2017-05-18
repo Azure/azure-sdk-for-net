@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-#if!NET45
-using System.Reflection;
-#endif
+//#if!NET45
+//using System.Reflection;
+//#endif
 
 
 namespace Microsoft.Rest.Serialization

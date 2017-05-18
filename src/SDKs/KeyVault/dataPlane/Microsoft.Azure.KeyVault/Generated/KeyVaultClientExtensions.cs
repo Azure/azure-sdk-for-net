@@ -254,6 +254,7 @@ namespace Microsoft.Azure.KeyVault
 
             /// <summary>
             /// Requests that a backup of the specified key be downloaded to the client.
+            /// Authorization: Requires the keys/backup permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -276,7 +277,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Restores a backed up key to a vault.
+            /// Restores a backed up key to a vault. Authorization: Requires the
+            /// keys/restore permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -300,7 +302,7 @@ namespace Microsoft.Azure.KeyVault
 
             /// <summary>
             /// Encrypts an arbitrary sequence of bytes using an encryption key that is
-            /// stored in a key vault.
+            /// stored in a key vault. Authorization: requires the keys/encrypt permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -332,7 +334,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Decrypts a single block of encrypted data.
+            /// Decrypts a single block of encrypted data, using the specified key.
+            /// Authorization: requires the keys/decrypt permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -364,7 +367,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Creates a signature from a digest using the specified key.
+            /// Creates a signature from a digest using the specified key. Authorization:
+            /// Requires the keys/sign permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -397,7 +401,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Verifies a signature using a specified key.
+            /// Verifies a signature using a specified key. Authorization: Requires the
+            /// keys/verify permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -434,7 +439,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Wraps a symmetric key using a specified key.
+            /// Wraps a symmetric key using a specified key. Authorization: Requires the
+            /// keys/wrapKey permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -467,7 +473,7 @@ namespace Microsoft.Azure.KeyVault
 
             /// <summary>
             /// Unwraps a symmetric key using the specified key that was initially used for
-            /// wrapping that key.
+            /// wrapping that key. Authorization: Requires the keys/unwrapKey permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -499,7 +505,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List deleted keys in the specified vault
+            /// List deleted keys in the specified vault. Authorization: Requires the
+            /// keys/list permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -523,7 +530,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Retrieves the deleted key information plus its attributes
+            /// Retrieves the deleted key information plus its attributes. Authorization:
+            /// Requires the keys/get permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -546,7 +554,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Permanently deletes the specified key. aka purges the key.
+            /// Permanently deletes the specified key. aka purges the key. Authorization:
+            /// Requires the keys/purge permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -566,7 +575,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Recovers the deleted key back to its current version under /keys
+            /// Recovers the deleted key back to its current version under /keys.
+            /// Authorization: Requires the keys/recover permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -589,7 +599,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Sets a secret in a specified key vault.
+            /// Sets a secret in a specified key vault. Authorization: requires the
+            /// secrets/set permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -624,7 +635,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Deletes a secret from a specified key vault.
+            /// Deletes a secret from a specified key vault. Authorization: requires the
+            /// secrets/delete permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -648,7 +660,7 @@ namespace Microsoft.Azure.KeyVault
 
             /// <summary>
             /// Updates the attributes associated with a specified secret in a given key
-            /// vault.
+            /// vault.  Authorization: requires the secrets/set permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -683,7 +695,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Get a specified secret from a given key vault.
+            /// Get a specified secret from a given key vault. Authorization: requires the
+            /// secrets/get permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -709,7 +722,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List secrets in a specified key vault
+            /// List secrets in a specified key vault.  Authorization: requires the
+            /// secrets/list permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -733,7 +747,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List the versions of the specified secret.
+            /// List the versions of the specified secret. Authorization: requires the
+            /// secrets/list permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -760,7 +775,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List deleted secrets in the specified vault
+            /// List deleted secrets in the specified vault. Authorization: requires the
+            /// secrets/list permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -784,7 +800,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Retrieves the deleted secret information plus its attributes
+            /// Retrieves the deleted secret information plus its attributes.
+            /// Authorization: requires the secrets/get permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -808,6 +825,7 @@ namespace Microsoft.Azure.KeyVault
 
             /// <summary>
             /// Permanently deletes the specified secret. aka purges the secret.
+            /// Authorization: requires the secrets/purge permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -827,7 +845,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Recovers the deleted secret back to its current version under /secrets
+            /// Recovers the deleted secret back to its current version under /secrets.
+            /// Authorization: requires the secrets/recover permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -851,6 +870,7 @@ namespace Microsoft.Azure.KeyVault
 
             /// <summary>
             /// Requests that a backup of the specified secret be downloaded to the client.
+            /// Authorization: requires the secrets/backup permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -873,7 +893,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Restores a backed up secret to a vault.
+            /// Restores a backed up secret to a vault. Authorization: requires the
+            /// secrets/restore permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -896,7 +917,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List certificates in a specified key vault
+            /// List certificates in a specified key vault. Authorization: requires the
+            /// certificates/list permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -920,7 +942,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Deletes a certificate from a specified key vault.
+            /// Deletes a certificate from a specified key vault. Authorization: requires
+            /// the certificates/delete permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -934,7 +957,7 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateBundle> DeleteCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeletedCertificateBundle> DeleteCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -943,7 +966,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Sets the certificate contacts for the specified key vault.
+            /// Sets the certificate contacts for the specified key vault. Authorization:
+            /// requires the certificates/managecontacts permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -966,7 +990,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Lists the certificate contacts for a specified key vault.
+            /// Lists the certificate contacts for a specified key vault. Authorization:
+            /// requires the certificates/managecontacts permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -986,7 +1011,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Deletes the certificate contacts for a specified key vault.
+            /// Deletes the certificate contacts for a specified key vault certificate.
+            /// Authorization: requires the certificates/managecontacts permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1006,7 +1032,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List certificate issuers for a specified key vault.
+            /// List certificate issuers for a specified key vault. Authorization: requires
+            /// the certificates/listIssuers permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1030,7 +1057,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Sets the specified certificate issuer.
+            /// Sets the specified certificate issuer. Authorization: requires the
+            /// certificates/setIssuers permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1065,7 +1093,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Updates the specified certificate issuer.
+            /// Updates the specified certificate issuer. Authorization: requires the
+            /// certificates/setIssuers permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1100,7 +1129,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Lists the specified certificate issuer.
+            /// Lists the specified certificate issuer. Authorization: requires the
+            /// certificates/getIssuers permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1123,7 +1153,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Deletes the specified certificate issuer.
+            /// Deletes the specified certificate issuer. Authorization: requires the
+            /// certificates/deleteIssuers permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1147,7 +1178,8 @@ namespace Microsoft.Azure.KeyVault
 
             /// <summary>
             /// Creates a new certificate. If this is the first version, the certificate
-            /// resource is created.
+            /// resource is created. Authorization: requires the certificates/create
+            /// permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1179,7 +1211,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Imports a certificate into a specified key vault.
+            /// Imports a certificate into a specified key vault. Authorization: requires
+            /// the certificates/import permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1219,7 +1252,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List the versions of a certificate.
+            /// List the versions of a certificate. Authorization: requires the
+            /// certificates/get permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1246,7 +1280,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Lists the policy for a certificate.
+            /// Lists the policy for a certificate. Authorization: requires the
+            /// certificates/get permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1270,7 +1305,8 @@ namespace Microsoft.Azure.KeyVault
 
             /// <summary>
             /// Updates the policy for a certificate. Set specified members in the
-            /// certificate policy. Leave others as null.
+            /// certificate policy. Leave others as null. Authorization: requires the
+            /// certificates/update permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1297,6 +1333,7 @@ namespace Microsoft.Azure.KeyVault
 
             /// <summary>
             /// Updates the specified attributes associated with the given certificate.
+            /// Authorization: requires the certificates/update permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1331,7 +1368,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Gets information about a specified certificate.
+            /// Gets information about a specified certificate. Authorization: requires the
+            /// certificates/get permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1357,7 +1395,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Updates a certificate operation.
+            /// Updates a certificate operation. Authorization: requires the
+            /// certificates/update permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1383,7 +1422,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Gets the operation associated with a specified certificate.
+            /// Gets the operation associated with a specified certificate. Authorization:
+            /// requires the certificates/get permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1406,7 +1446,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// Deletes the operation for a specified certificate.
+            /// Deletes the operation for a specified certificate. Authorization: requires
+            /// the certificates/update permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1430,7 +1471,7 @@ namespace Microsoft.Azure.KeyVault
 
             /// <summary>
             /// Merges a certificate or a certificate chain with a key pair existing on the
-            /// server.
+            /// server. Authorization: requires the certificates/update permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1456,6 +1497,100 @@ namespace Microsoft.Azure.KeyVault
             public static async Task<CertificateBundle> MergeCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, IList<byte[]> x509Certificates, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.MergeCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, x509Certificates, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List deleted certificates in the specified vault. Authorization: requires
+            /// the certificates/list permission.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='maxresults'>
+            /// Maximum number of results to return in a page. If not specified the service
+            /// will return up to 25 results.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeletedCertificateItem>> GetDeletedCertificatesAsync(this IKeyVaultClient operations, string vaultBaseUrl, int? maxresults = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedCertificatesWithHttpMessagesAsync(vaultBaseUrl, maxresults, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the deleted certificate information plus its attributes.
+            /// Authorization: requires the certificates/get permission.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeletedCertificateBundle> GetDeletedCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Permanently deletes the specified certificate. aka purges the certificate.
+            /// Authorization: requires the certificates/purge permission.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PurgeDeletedCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.PurgeDeletedCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Recovers the deleted certificate back to its current version under
+            /// /certificates. Authorization: requires the certificates/recover permission.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the deleted certificate
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateBundle> RecoverDeletedCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RecoverDeletedCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1504,7 +1639,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List deleted keys in the specified vault
+            /// List deleted keys in the specified vault. Authorization: Requires the
+            /// keys/list permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1524,7 +1660,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List secrets in a specified key vault
+            /// List secrets in a specified key vault.  Authorization: requires the
+            /// secrets/list permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1544,7 +1681,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List the versions of the specified secret.
+            /// List the versions of the specified secret. Authorization: requires the
+            /// secrets/list permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1564,7 +1702,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List deleted secrets in the specified vault
+            /// List deleted secrets in the specified vault. Authorization: requires the
+            /// secrets/list permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1584,7 +1723,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List certificates in a specified key vault
+            /// List certificates in a specified key vault. Authorization: requires the
+            /// certificates/list permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1604,7 +1744,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List certificate issuers for a specified key vault.
+            /// List certificate issuers for a specified key vault. Authorization: requires
+            /// the certificates/listIssuers permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1624,7 +1765,8 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
-            /// List the versions of a certificate.
+            /// List the versions of a certificate. Authorization: requires the
+            /// certificates/get permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1638,6 +1780,27 @@ namespace Microsoft.Azure.KeyVault
             public static async Task<IPage<CertificateItem>> GetCertificateVersionsNextAsync(this IKeyVaultClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCertificateVersionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List deleted certificates in the specified vault. Authorization: requires
+            /// the certificates/list permission.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeletedCertificateItem>> GetDeletedCertificatesNextAsync(this IKeyVaultClient operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedCertificatesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

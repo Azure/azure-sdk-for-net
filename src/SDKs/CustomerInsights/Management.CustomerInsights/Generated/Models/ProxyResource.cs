@@ -11,13 +11,15 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
     using Azure;
     using Management;
     using CustomerInsights;
+    using Rest;
+    using Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Common properties of proxy resource.
     /// </summary>
-    public partial class ProxyResource
+    public partial class ProxyResource : IResource
     {
         /// <summary>
         /// Initializes a new instance of the ProxyResource class.

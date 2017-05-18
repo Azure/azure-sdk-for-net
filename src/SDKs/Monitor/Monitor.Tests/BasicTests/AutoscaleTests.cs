@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Management.Insights;
-using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.Azure.Management.Monitor.Management;
+using Microsoft.Azure.Management.Monitor.Management.Models;
 using Xunit;
 
 namespace Monitor.Tests.BasicTests
@@ -23,6 +23,7 @@ namespace Monitor.Tests.BasicTests
             var handler = new RecordedDelegatingHandler();
             var insightsClient = GetMonitorManagementClient(handler);
             var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expResponse.Name + "\",\"id\":\"" + expResponse.Id + "\",");
             var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(serializedObject)
@@ -42,6 +43,7 @@ namespace Monitor.Tests.BasicTests
             var handler = new RecordedDelegatingHandler();
             var insightsClient = GetMonitorManagementClient(handler);
             var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expResponse.Name + "\",\"id\":\"" + expResponse.Id + "\",");
             var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(serializedObject)
@@ -105,32 +107,31 @@ namespace Monitor.Tests.BasicTests
                 }
             };
 
-            AutoscaleSettingResource setting = new AutoscaleSettingResource
+            var profiles = new AutoscaleProfile[]
             {
-                Name = "setting1",
+                new AutoscaleProfile()
+                {
+                    Name = "Profile1",
+                    Capacity = capacity,
+                    FixedDate = fixedDate,
+                    Recurrence = null,
+                    Rules = rules
+                },
+                new AutoscaleProfile()
+                {
+                    Name = "Profile2",
+                    Capacity = capacity,
+                    FixedDate = null,
+                    Recurrence = recurrence,
+                    Rules = rules
+                }
+            };
+
+            AutoscaleSettingResource setting = new AutoscaleSettingResource(location: "", profiles: profiles, name: "setting1")
+            {
                 AutoscaleSettingResourceName = "setting1",
                 TargetResourceUri = resourceUri,
                 Enabled = true,
-                Profiles = new AutoscaleProfile[]
-                {
-                    new AutoscaleProfile()
-                    {
-                        Name = "Profile1",
-                        Capacity = capacity,
-                        FixedDate = fixedDate,
-                        Recurrence = null,
-                        Rules = rules
-                    },
-                    new AutoscaleProfile()
-                    {
-                        Name = "Profile2",
-                        Capacity = capacity,
-                        FixedDate = null,
-                        Recurrence = recurrence,
-                        Rules = rules
-                    }
-                },
-                Location = "",
                 Tags = null,
                 Notifications = null
             };

@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Microsoft.Azure.Test.HttpRecorder
 {
@@ -68,12 +69,15 @@ namespace Microsoft.Azure.Test.HttpRecorder
             foreach(Assembly asm in asmCollection)
             {
                 if(asm.GetType(CallerIdentity) != null)
-                {
-                    string location = Path.GetDirectoryName(asm.Location);
+                {   
+#if FullNetFx
+                    string location = asm.Location;
+#else
+                    string location = AppContext.BaseDirectory;
+#endif
                     RecordsDirectory = Path.Combine(location, RecordsDirectory);
                 }
             }
-            
 
             if (Mode == HttpRecorderMode.Playback)
             {

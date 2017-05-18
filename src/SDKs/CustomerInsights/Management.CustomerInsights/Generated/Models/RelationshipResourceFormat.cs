@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// <param name="fields">The properties of the Relationship.</param>
         /// <param name="lookupMappings">Optional property to be used to map
         /// fields in profile to their strong ids in related profile.</param>
-        /// <param name="provisioningState">Provisioning state.</param>
+        /// <param name="provisioningState">Provisioning state. Possible values
+        /// include: 'Provisioning', 'Succeeded', 'Expiring', 'Deleting',
+        /// 'HumanIntervention', 'Failed'</param>
         /// <param name="relationshipName">The Relationship name.</param>
         /// <param name="relationshipGuidId">The relationship guid id.</param>
         /// <param name="tenantId">The hub name.</param>
@@ -115,7 +117,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public string ProfileType { get; set; }
 
         /// <summary>
-        /// Gets provisioning state.
+        /// Gets provisioning state. Possible values include: 'Provisioning',
+        /// 'Succeeded', 'Expiring', 'Deleting', 'HumanIntervention', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; protected set; }

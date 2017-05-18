@@ -76,6 +76,11 @@ namespace Microsoft.Azure.Management.ServiceBus
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         public virtual INamespacesOperations Namespaces { get; private set; }
@@ -296,6 +301,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </summary>
         private void Initialize()
         {
+            Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
             Queues = new QueuesOperations(this);
             Topics = new TopicsOperations(this);

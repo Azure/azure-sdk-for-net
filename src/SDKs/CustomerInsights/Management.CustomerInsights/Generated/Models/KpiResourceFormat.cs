@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// include: 'None', 'Profile', 'Interaction', 'Relationship'</param>
         /// <param name="entityTypeName">The mapping entity name.</param>
         /// <param name="calculationWindow">The calculation window. Possible
-        /// values include: 'Hour', 'Day', 'Week', 'Month'</param>
+        /// values include: 'Lifetime', 'Hour', 'Day', 'Week', 'Month'</param>
         /// <param name="function">The computation function for the KPI.
         /// Possible values include: 'Sum', 'Avg', 'Min', 'Max', 'Last',
-        /// 'Count', 'None'</param>
+        /// 'Count', 'None', 'CountDistinct'</param>
         /// <param name="expression">The computation expression for the
         /// KPI.</param>
         /// <param name="id">Resource ID.</param>
@@ -51,17 +51,21 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         /// KPI.</param>
         /// <param name="description">Localized description for the
         /// KPI.</param>
+        /// <param name="calculationWindowFieldName">Name of calculation window
+        /// field.</param>
         /// <param name="unit">The unit of measurement for the KPI.</param>
         /// <param name="filter">The filter expression for the KPI.</param>
         /// <param name="groupBy">the group by properties for the KPI.</param>
         /// <param name="groupByMetadata">The KPI GroupByMetadata.</param>
         /// <param name="participantProfilesMetadata">The participant
         /// profiles.</param>
-        /// <param name="provisioningState">The provisioning state.</param>
+        /// <param name="provisioningState">Provisioning state. Possible values
+        /// include: 'Provisioning', 'Succeeded', 'Expiring', 'Deleting',
+        /// 'HumanIntervention', 'Failed'</param>
         /// <param name="thresHolds">The KPI thresholds.</param>
         /// <param name="aliases">The aliases.</param>
         /// <param name="extracts">The KPI extracts.</param>
-        public KpiResourceFormat(EntityTypes entityType, string entityTypeName, CalculationWindowTypes calculationWindow, KpiFunctions function, string expression, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string kpiName = default(string), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, string> description = default(IDictionary<string, string>), string unit = default(string), string filter = default(string), IList<string> groupBy = default(IList<string>), IList<KpiGroupByMetadata> groupByMetadata = default(IList<KpiGroupByMetadata>), IList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default(IList<KpiParticipantProfilesMetadata>), string provisioningState = default(string), KpiThresholds thresHolds = default(KpiThresholds), IList<KpiAlias> aliases = default(IList<KpiAlias>), IList<KpiExtract> extracts = default(IList<KpiExtract>))
+        public KpiResourceFormat(EntityTypes entityType, string entityTypeName, CalculationWindowTypes calculationWindow, KpiFunctions function, string expression, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string kpiName = default(string), IDictionary<string, string> displayName = default(IDictionary<string, string>), IDictionary<string, string> description = default(IDictionary<string, string>), string calculationWindowFieldName = default(string), string unit = default(string), string filter = default(string), IList<string> groupBy = default(IList<string>), IList<KpiGroupByMetadata> groupByMetadata = default(IList<KpiGroupByMetadata>), IList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default(IList<KpiParticipantProfilesMetadata>), string provisioningState = default(string), KpiThresholds thresHolds = default(KpiThresholds), IList<KpiAlias> aliases = default(IList<KpiAlias>), IList<KpiExtract> extracts = default(IList<KpiExtract>))
             : base(id, name, type)
         {
             EntityType = entityType;
@@ -71,6 +75,7 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
             DisplayName = displayName;
             Description = description;
             CalculationWindow = calculationWindow;
+            CalculationWindowFieldName = calculationWindowFieldName;
             Function = function;
             Expression = expression;
             Unit = unit;
@@ -123,14 +128,21 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
 
         /// <summary>
         /// Gets or sets the calculation window. Possible values include:
-        /// 'Hour', 'Day', 'Week', 'Month'
+        /// 'Lifetime', 'Hour', 'Day', 'Week', 'Month'
         /// </summary>
         [JsonProperty(PropertyName = "properties.calculationWindow")]
         public CalculationWindowTypes CalculationWindow { get; set; }
 
         /// <summary>
+        /// Gets or sets name of calculation window field.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.calculationWindowFieldName")]
+        public string CalculationWindowFieldName { get; set; }
+
+        /// <summary>
         /// Gets or sets the computation function for the KPI. Possible values
-        /// include: 'Sum', 'Avg', 'Min', 'Max', 'Last', 'Count', 'None'
+        /// include: 'Sum', 'Avg', 'Min', 'Max', 'Last', 'Count', 'None',
+        /// 'CountDistinct'
         /// </summary>
         [JsonProperty(PropertyName = "properties.function")]
         public KpiFunctions Function { get; set; }
@@ -172,7 +184,8 @@ namespace Microsoft.Azure.Management.CustomerInsights.Models
         public IList<KpiParticipantProfilesMetadata> ParticipantProfilesMetadata { get; protected set; }
 
         /// <summary>
-        /// Gets the provisioning state.
+        /// Gets provisioning state. Possible values include: 'Provisioning',
+        /// 'Succeeded', 'Expiring', 'Deleting', 'HumanIntervention', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; protected set; }
