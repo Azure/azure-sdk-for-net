@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         private string _principalId;
         
         /// <summary>
-        /// Optional. Gets or sets principal Id, change from GUID to string for the Azure Stack.
+        /// Optional. Gets or sets principal Id, change from GUID to string for the PAS Azure Stack.
         /// </summary>
         public string PrincipalId
         {
