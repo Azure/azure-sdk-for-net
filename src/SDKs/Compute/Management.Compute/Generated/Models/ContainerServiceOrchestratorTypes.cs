@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ContainerServiceOchestratorTypes.
+    /// Defines values for ContainerServiceOrchestratorTypes.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum ContainerServiceOchestratorTypes
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ContainerServiceOrchestratorTypes
     {
         [EnumMember(Value = "Swarm")]
         Swarm,

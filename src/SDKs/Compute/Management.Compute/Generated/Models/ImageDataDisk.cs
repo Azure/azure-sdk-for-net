@@ -36,7 +36,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="diskSizeGB">The initial disk size in GB for blank data
         /// disks, and the new desired size for existing OS and Data
         /// disks.</param>
-        public ImageDataDisk(int lun, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?))
+        /// <param name="storageAccountType">The Storage Account type. Possible
+        /// values include: 'Standard_LRS', 'Premium_LRS'</param>
+        public ImageDataDisk(int lun, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), StorageAccountTypes? storageAccountType = default(StorageAccountTypes?))
         {
             Lun = lun;
             Snapshot = snapshot;
@@ -44,6 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             BlobUri = blobUri;
             Caching = caching;
             DiskSizeGB = diskSizeGB;
+            StorageAccountType = storageAccountType;
         }
 
         /// <summary>
@@ -83,6 +86,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Storage Account type. Possible values include:
+        /// 'Standard_LRS', 'Premium_LRS'
+        /// </summary>
+        [JsonProperty(PropertyName = "storageAccountType")]
+        public StorageAccountTypes? StorageAccountType { get; set; }
 
         /// <summary>
         /// Validate the object.
