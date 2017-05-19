@@ -13,27 +13,28 @@ namespace Microsoft.Azure.Management.Authorization.Models
     using System.Linq;
 
     /// <summary>
-    /// Role definition permissions.
+    /// Permissions information.
     /// </summary>
-    public partial class Permission
+    public partial class PermissionGetResult
     {
         /// <summary>
-        /// Initializes a new instance of the Permission class.
+        /// Initializes a new instance of the PermissionGetResult class.
         /// </summary>
-        public Permission()
+        public PermissionGetResult()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Permission class.
+        /// Initializes a new instance of the PermissionGetResult class.
         /// </summary>
-        /// <param name="actions">Allowed actions.</param>
-        /// <param name="notActions">Denied actions.</param>
-        public Permission(IList<string> actions = default(IList<string>), IList<string> notActions = default(IList<string>))
+        /// <param name="value">An array of permissions.</param>
+        /// <param name="nextLink">The URL to use for getting the next set of
+        /// results.</param>
+        public PermissionGetResult(IList<Permission> value = default(IList<Permission>), string nextLink = default(string))
         {
-            Actions = actions;
-            NotActions = notActions;
+            Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -43,16 +44,16 @@ namespace Microsoft.Azure.Management.Authorization.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets allowed actions.
+        /// Gets or sets an array of permissions.
         /// </summary>
-        [JsonProperty(PropertyName = "actions")]
-        public IList<string> Actions { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Permission> Value { get; set; }
 
         /// <summary>
-        /// Gets or sets denied actions.
+        /// Gets or sets the URL to use for getting the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "notActions")]
-        public IList<string> NotActions { get; set; }
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
     }
 }
