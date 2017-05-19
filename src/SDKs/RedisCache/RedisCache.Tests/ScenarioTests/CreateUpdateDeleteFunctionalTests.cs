@@ -26,6 +26,7 @@ namespace AzureRedisCache.Tests
             fixture = data;
         }
         
+        /*
         [Fact(Skip = "Missing cleanup.json file")]
         public void CreateUpdateDeleteTest()
         {
@@ -93,5 +94,6 @@ namespace AzureRedisCache.Tests
                 _client.Redis.Delete(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
             }
         }
+        */
     }
 }

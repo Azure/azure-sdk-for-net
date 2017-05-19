@@ -60,16 +60,7 @@ namespace TestFramework.Tests.TestEnvironment
             connStr.Parse(missingKeyValue);            
             Assert.True(string.IsNullOrEmpty(connStr.ParseErrors));
         }
-
-        [Fact]
-        public void InvalidKeyValuePairString()
-        {
-            // invalid KeyValue Connection string
-            string legalConnStrWithInvalidKeyNames = @"foo=bar;hello=world";
-            connStr.Parse(legalConnStrWithInvalidKeyNames);
-            Assert.False(string.IsNullOrEmpty(connStr.ParseErrors));
-        }
-                
+        
         [Fact]
         public void MalformedString()
         {
@@ -119,6 +110,29 @@ namespace TestFramework.Tests.TestEnvironment
 
             //As userId is non-empty, we cannot assume password is ServicePrincipalSecretKey and so will not be updated
             Assert.Equal(string.Empty, connStr.KeyValuePairs["ServicePrincipalSecret".ToLower()]);
+        }
+
+        [Fact]
+        public void CustomKeyValuesInConnStr()
+        {
+            // This test will test if custome Key-Value pairs are honored.
+            // Also if there are duplicate keys, it will pick the last occurance of the key, 
+            // and will overwrite earlier instances of the same key
+
+            string clientIdButNoSPN = @"MyKey=MyValue;MyKey=NewValue;CustomKey=CustomValue;AADClientId=alsdkfjalakdsjflasdj;UserId=Hello@world.com";
+            connStr.Parse(clientIdButNoSPN);
+            Assert.Equal(string.Empty, connStr.ParseErrors);
+
+            //ServicePrincipal will be updated with AADClientId
+            Assert.NotEqual(string.Empty, connStr.KeyValuePairs["ServicePrincipal"]);
+
+            // Earlier instance of the same key will be overwritten
+            Assert.NotEqual("MyValue", connStr.KeyValuePairs["MyKey"]);
+
+            // last instance of the same key is retained
+            Assert.Equal("NewValue", connStr.KeyValuePairs["MyKey"]);
+            
+            Assert.Equal("CustomValue", connStr.KeyValuePairs["CustomKey"]);
         }
 
         private string CreateConnStrWithAllPossibleValues()

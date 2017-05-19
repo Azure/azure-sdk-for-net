@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</PackageId>
+    <Description>Provides developers with libraries for the updated recovery services site recovery feature under Azure Resource manager.</Description>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</AssemblyName>
+    <PackageTags>Microsoft Azure resource management</PackageTags>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Customizations\**" />
+    <EmbeddedResource Remove="Customizations\**" />
+    <None Remove="Customizations\**" />
+  </ItemGroup>
+</Project>

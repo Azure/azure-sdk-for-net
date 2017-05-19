@@ -2,88 +2,81 @@
   <Import Project="common.tasks"/>
   <Import Project="signing.targets"/>
   <Import Project="additional.targets"/>
-  
-  <!--<ItemGroup>
-	  <TargetFx Include="net452;netstandard1.4" />
-	</ItemGroup>-->
+
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
     <NetStd14>netstandard1.4</NetStd14>
-  </PropertyGroup>  
+    <NetCore11>netcoreapp1.1</NetCore11>
+  </PropertyGroup>
   <PropertyGroup>
     <PreBuildStaticAnalysisTargets>
+      GetBuildEnv;
       BuildCiSign;
       BuildMsBuildTask;
-      CPP;
-      <!--CategorizeProjects;-->
-      <!--GetScopedProjects;-->
-      <!-- GetProjectReferences; -->
+      CategorizeProjects;
     </PreBuildStaticAnalysisTargets>
     <PreBuildCategorizePrjectTargets>
-      <!--CategorizeProjects;-->
-      CPP;
-      GetScopedProjects;
+      CategorizeProjects;
     </PreBuildCategorizePrjectTargets>
+    <RestoreTraversedProjectsDependsOn>
+      CategorizeProjects;
+      RestoreLatestProjects;
+    </RestoreTraversedProjectsDependsOn>
+    <CleanTraversedProjectsDependsOn>
+      CategorizeProjects;
+      CleanLatestProjects;
+      CleanSDKPackageFiles
+    </CleanTraversedProjectsDependsOn>
     <BuildTraversedProjectsDependsOn>
       PreBuildStaticAnalysis;
       RestoreLatestProjects;
       BuildLatestProjects;
-      Package;
-    </BuildTraversedProjectsDependsOn>	
-	  <RestoreTraversedProjectsDependsOn>
-      <!--CategorizeProjects;-->
-      CPP;
-		  RestoreLatestProjects;
-	  </RestoreTraversedProjectsDependsOn>
-    <CleanTraversedProjectsDependsOn>
-      <!--CategorizeProjects;-->
-      CPP;
-      CleanLatestProjects;
-      CleanSDKPackageFiles
-    </CleanTraversedProjectsDependsOn>
+    </BuildTraversedProjectsDependsOn>
   </PropertyGroup>
   <PropertyGroup>
-	<RunTestProjectsDependsOn>
-    PreBuildStaticAnalysis;
-    RestoreLatestProjects;
-    BuildLatestProjects;
-		Test
-	</RunTestProjectsDependsOn>
-    
+    <RunTestProjectsDependsOn>
+      $(BuildTraversedProjectsDependsOn);
+      Test
+    </RunTestProjectsDependsOn>
     <SignNugetDependsOn>
-      PreBuildStaticAnalysis;
-      RestoreLatestProjects;
-      BuildLatestProjects;
-      Test;
-      PreSign;
+      $(RunTestProjectsDependsOn);
+      RunSignTargets;
       Package;
     </SignNugetDependsOn>
-
+    <PackageNugetDependsOn>
+      $(RunTestProjectsDependsOn);
+      RunSignTargets;
+      Package
+    </PackageNugetDependsOn>
     <PublishNugetDependsOn>
-      PreBuildStaticAnalysis;
-      RestoreLatestProjects;
-      BuildLatestProjects;
-      Test;
-      PreSign;
-      Package;
+      $(PackageNugetDependsOn);
       PublishingNuget
     </PublishNugetDependsOn>
-
     <HelpDependsOn>
       DisplayHelp
     </HelpDependsOn>
-    
   </PropertyGroup>
-  
+
+  <Target Name="GetBuildEnv">
+    <Message Text="OnPremiseBuild .... $(OnPremiseBuild)"/>
+    <!--<Message Text="OnPremiseBuildTasks .... $(OnPremiseBuildTasks)"/>-->
+    <Message Text="CIToolsPath .... $(CIToolsPath)"/>
+    <Message Text="CodeSign .... $(CodeSign)"/>
+    <Message Text="PackageOutputPath .... $(PackageOutputPath)"/>
+    <Message Text="Scope .... $(Scope)"/>
+    <Message Text="BuildInParallel .... $(BuildInParallel)"/>
+  </Target>
+
   <Target Name="CleanLatestProjects" >
     <PropertyGroup>
       <LatestProjectDefaultCleanTarget Condition=" '$(LatestProjectDefaultCleanTarget)' == '' ">Clean</LatestProjectDefaultCleanTarget>
     </PropertyGroup>
     <Message Text="Cleaning Initiated....." />
     <MSBuild Targets="$(LatestProjectDefaultCleanTarget)"
-         Projects="@(SDKProject);@(SDKTestProject)"
-             Properties="PackageOutputPath=$(PackageOutputPath)"
-         ContinueOnError="ErrorAndStop" />
+        Projects="@(SDKProject);@(SDKTestProject)"
+        Properties="PackageOutputPath=$(PackageOutputPath)"
+        BuildInParallel="$(BuildInParallel)"
+        ContinueOnError="ErrorAndStop" />
   </Target>
 
   <Target Name="CleanSDKPackageFiles">
@@ -95,96 +88,98 @@
     <Delete Files="@(_SDKPackageFilesToDelete)" Condition=" '@(_SDKPackageFilesToDelete)' != '' " ContinueOnError="true"/>
   </Target>
 
-  <Target Name="RestoreLatestProjects">
+  <Target Name="RestoreLatestProjects" Condition=" '$(SkipRestore)' != 'true' ">
     <PropertyGroup>
       <LatestProjectDefaultRestoreTarget Condition=" '$(LatestProjectDefaultRestoreTarget)' == '' ">Restore</LatestProjectDefaultRestoreTarget>
-    </PropertyGroup>	
-	  <Message Text="Now Restoring @(SDKProject);@(SDKTestProject);@(Net452SdkProj);@(Net452TestSdkProj)" />
+    </PropertyGroup>
+    <Message Text="Now Restoring @(SDKProject);@(SDKTestProject)" />
 
     <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
-         Projects="@(SDKProject);@(SDKTestProject);@(Net452SdkProj);@(Net452TestSdkProj)"
-         ContinueOnError="ErrorAndStop" />
-         
-<!--
-    <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
-     Projects="@(SDKProject);@(SDKTestProject)"
-     ContinueOnError="ErrorAndStop" Condition="$(Scope) != 'All'" />
-     -->
+            Projects="@(SDKProject);@(SDKTestProject)"
+            BuildInParallel="$(BuildInParallel)"
+            ContinueOnError="ErrorAndStop" />
   </Target>
-  
-  <Target Name="BuildLatestProjects">  
+
+  <Target Name="BuildLatestProjects" Condition=" '$(SkipBuild)' != 'true' ">
     <Message Text="IsBuildingInVS: $(AddProjectReferenceForDebuggingPurpose)"/>
     <Message Text="IsCIBuild: $(AddNugetReferenceForCIandCmdlineBuild)"/>
     <PropertyGroup>
       <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
     </PropertyGroup>
-    
-    <!--
-          <SDKProject Include="@(SDKProj)"/>
-      <SDKTestProject Include="@(TestSDKProj)"/>
-      <Net452SDKProj Include="@(Net452SdkProj)"/>
-      <TestNet452SDKProj Include="@(Net452TestSdkProj)"/>
-    -->
- <Message Text="Building SDK Projects ..... @(SDKProject)" />
-    
-    <MSBuild Targets="Build"
-             Projects="@(SDKProject)"
+
+    <Message Text="Building SDK Projects ..... @(net452SDKProj)" />
+
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+             Projects="@(net452SDKProj)"
              Properties="TargetFramework=$(NetFx452)"
              BuildInParallel="$(BuildInParallel)"
              ContinueOnError="ErrorAndStop">
       <Output TaskParameter="TargetOutputs" ItemName="net452Assemblies" />
     </MSBuild>
 
-    <Message Text="Building SDK Projects ..... @(SDKProject)" />
-     <MSBuild Targets="Build"  
-              Projects="@(SDKProject)"  
-              Properties="TargetFramework=$(NetStd14)" 
-              BuildInParallel="$(BuildInParallel)"  
-              ContinueOnError="ErrorAndStop"> 
-       <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" /> 
-     </MSBuild> 
-    
-      <Message Text="Building Non-Multi Targeted projects ..... @(Net452SDKProj)"/>
-      <MSBuild Targets="Build"  
-              Projects="@(Net452SDKProj)"
-              BuildInParallel="$(BuildInParallel)"
-              ContinueOnError="ErrorAndStop"> 
-       <Output TaskParameter="TargetOutputs" ItemName="Net452SDKAssemblies" /> 
-     </MSBuild>
-    
-    <ItemGroup>
-      <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies);@(Net452SDKAssemblies)" />
-    </ItemGroup>
-    
-    <Message Text="Building SDKTest Projects ....... %(SDKTestProject.Identity)" />
-    <Message Text="Building net452Test Projects ....... %(TestNet452SDKProj.Identity)" />
+    <Message Text="Building SDK Projects ..... @(netStd14SDKProj)" />
+    <MSBuild Targets="Build"
+             Projects="@(netStd14SDKProj)"
+             Properties="TargetFramework=$(NetStd14)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="netStd14Assemblies" />
+    </MSBuild>
+
+    <Message Text="Building SDK Projects ..... @(netCore11SDKProjects)" />
+    <MSBuild Targets="Build"
+             Projects="@(netCore11SDKProjects)"
+             Properties="TargetFramework=$(NetCore11)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="netCore11Assemblies" />
+    </MSBuild>
+
+    <!--Test Project-->
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
-         Projects="@(SDKTestProject);@(TestNet452SDKProj)"
-         Condition=" '$(SkipBuildingTestProjects)' != 'false' "
-         ContinueOnError="ErrorAndStop">
-    </MSBuild>         
-  </Target>
-  
-  <Target Name="Test">
-    <Message Text="Executing Tests......"/>
-    
-      
+             Projects="@(netCore11TestProj)"
+             Properties="TargetFramework=$(NetCore11)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="true">
+    </MSBuild>
+
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+              Projects="@(net452TestProj)"
+              Properties="TargetFramework=$(NetFx452)"
+              BuildInParallel="$(BuildInParallel)"
+              ContinueOnError="true">
+    </MSBuild>
+
+    <!--UnSupported Projects-->
+
+    <Message Text="Building UnSupported projects ..... @(unsupportedProj)"/>
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+            Projects="@(unsupportedProj)"
+            BuildInParallel="$(BuildInParallel)"
+            ContinueOnError="ErrorAndStop">
+    </MSBuild>
+
     <ItemGroup>
-      <FinalTestsToRun Include="@(SDKTestProject)" />
-      <FinalTestsToRun Remove="@(DoNotRunTests)" />
+      <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies);@(netCore11Assemblies)" />
     </ItemGroup>
-    
-    <Message Text="Final Tests to run.... @(FinalTestsToRun)" />    
-    <Exec Command="dotnet test %(FinalTestsToRun.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\%(FinalTestsToRun.Filename).trx " Condition="@(FinalTestsToRun) != ''" ContinueOnError="false" WorkingDirectory="%(FinalTestsToRun.RootDir)%(FinalTestsToRun.Directory)" />
   </Target>
-  
+
+  <Target Name="Test" Condition=" '$(SkipTests)' != 'true' ">
+    <Message Text="Executing Tests......"/>
+    <Message Text="Running .NET Core 1.1 Tests .... @(netCore11TestProj)" Condition=" '@(netCore11TestProj)' != '' " />
+    <Exec Command="dotnet test -f $(NetCore11) %(netCore11TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\netCore11\%(netCore11TestProj.Filename).trx " Condition="@(netCore11TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore11TestProj.RootDir)%(netCore11TestProj.Directory)" />
+
+    <Message Text="Running .NET 4.5.2 Tests .... @(net452TestProj)" Condition=" '@(net452TestProj)' != '' " />
+    <Exec Command="dotnet test -f $(NetFx452) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\net452\%(net452TestProj.Filename).trx " Condition="@(net452TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net452TestProj.RootDir)%(net452TestProj.Directory)" />
+  </Target>
+
   <Target Name="Package">
-    <Message Text="Packaging..... @(SDKProject);@(UniTargetSDKProject)"/>
+    <Message Text="Packaging..... @(net452SDKProj);@(netStd14SDKProj)" />
     <ItemGroup>
-      <ProjectsToPackage Include="@(SDKProject);@(UniTargetSDKProject)"/>
+      <ProjectsToPackage Include="@(SDKProject)" />
     </ItemGroup>
     <MSBuild
-        Projects="@(SDKProject)"
+        Projects="@(ProjectsToPackage)"
         Targets="Pack"
         Properties="Configuration=$(Configuration);
         VisualStudioVersion=$(VisualStudioVersion); 
@@ -215,112 +210,77 @@
 
     <Message Importance="high" Text="Publishing main and symbols packages to the cloud at $(NuGetPublishingSource)" />
     <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputPath)\*$(NugetPackageName)*.nupkg&quot; $(NuGetKey)$(PublishDestination)"
-			  IgnoreExitCode="true" />    
-			  <!--Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />-->
+			  IgnoreExitCode="true" />
+    <!--Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />-->
   </Target>
-  
+
   <Target Name="CategorizeProjects">
-    <Message Text="Categorizing...."/>
-    <ItemGroup>
-      <ProductProjects Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' != 'Test' and '%(ProjectToBuild.ExcludeFromBuild)' != 'true' "/>      
-      <TestProjects Include="%(ProjectToBuild.Identity)" Condition=" ('%(ProjectToBuild.ProjectType)' == 'Test' and '%(ProjectToBuild.ExcludeFromBuild)' != 'true') "/>
-    </ItemGroup>    
-      <ItemGroup Condition=" '$(Scope)' == 'All'">
-        <SDKProject Include="@(ProductProjects)" />
-        <SDKTestProject Include="@(TestProjects)" />
-      </ItemGroup>
-	<ItemGroup>
-		<KVSamples Include="$(LibrarySourceFolder)\SDKs\KeyVault\dataPlane\Microsoft.Azure.KeyVault.Samples\**\*.*csproj"/>
-	</ItemGroup>
-    
-    <ItemGroup Condition=" '$(Scope)' != 'All'">
-      <ScopedProjects Include="$(LibrarySourceFolder)\$(Scope)\**\*.csproj" Exclude="$(LibrarySourceFolder)\$(Scope)\*Tests*\*.Test*.csproj" />	    
-      <ScopedTestProjects Include="$(LibrarySourceFolder)\$(Scope)\*Test*\*.Test*.csproj" />
-    </ItemGroup>
-    <ItemGroup Condition=" '$(Scope)' != 'All'">
-      <SDKProject Include="%(ScopedProjects.Identity)" />
-      <SDKTestProject Include="%(ScopedTestProjects.Identity)" />
-    </ItemGroup>
-
-		<Message Text="Categorized SDK Scoped Projects ..... @(ScopedProjects)" Condition=" '$(Scope)' != 'All'" />
-	  <Message Text="Categorized Test Scoped Projects ..... @(ScopedTestProjects)" Condition=" '$(Scope)' != 'All'" />
-    <Message Text="Categorized SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' == 'All'" />
-    <Message Text="Categorized Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' == 'All'" />
-    <Message Text="SDKProjects ....... @(SDKProject->Count())"/>
-    <Message Text="TestSDKProjects ....... @(SDKTestProject->Count())"/>
-    
-    <!--
-    <ScopedProjects Remove="@(KVSamples)"/>
-    -->
-    
-  </Target>
-  
-  <Target Name="FilterUniTargetProjects">
-    <ItemGroup>
-      <SDKProject Remove="@(UniTargetSDKProject)"/>
-    </ItemGroup>
-  </Target>
-    
-  <Target Name="DisplayHelp">
-    <Message Text="msbuild build.proj /t:Build"/>
-    <Message Text="---- will build and create nuget pacakge for the entire repo"/>
-  
-    <Message Text="msbuild build.proj /t:Build /p:Scope=SDKs\Compute" />
-    <Message Text="---- will build Microsoft.Azure.Management.Compute and Compute.Tests project and create nuget pacakge for Compute"/>
-  
-  <Message Text="msbuild build.proj /t:RunTests" />
-  <Message Text="----- will Build and Run tests for the entire repo" />
-  
-  <Message Text="msbuild build.proj /t:RunTests /p:Scope=SDKs\Compute" />
-  <Message Text="----- will Build Compute nuget package and run compute test" />
-  </Target>
-    
-  <Target Name="GetScopedProjects" Condition=" '$(Scope)' != 'All'">
-    <ItemGroup>
-      <SDKProject Include="@(ScopedProjects)" />
-      <SDKTestProject Include="@(ScopedTestProjects)" />
-    </ItemGroup>
-    <Message Text="Scoped SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' != 'All'" />
-    <Message Text="Scoped Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' != 'All'" />
-  </Target>
-
-  <Target Name="CPP">
-    <!--<Message Text="Ignored Project Tokens ...... $(DefaultPathTokenToIgnore)"/>-->
-    <Message Text="Categorizing Projects....."/>
     <SDKCategorizeProjects
       SourceRootDirPath="$(LibrarySourceFolder)"
       BuildScope="$(Scope)"
       IgnoreDirNameForSearchingProjects="$(DefaultPathTokenToIgnore)"
       >
-      <Output TaskParameter="SDKProjectsToBuild" ItemName="SDKProj" />
-      <Output TaskParameter="SDKTestProjectsToBuild" ItemName="TestSDKProj" />
-      <Output TaskParameter="WellKnowSDKNet452Projects" ItemName="Net452SdkProj" />
-      <Output TaskParameter="WellKnowTestSDKNet452Projects" ItemName="Net452TestSdkProj" />
+      <Output TaskParameter="net452SdkProjectsToBuild" ItemName="net452SDKProj" />
+      <Output TaskParameter="netStd14SdkProjectsToBuild" ItemName="netStd14SDKProj" />
+      <Output TaskParameter="netCore11SdkProjectsToBuild" ItemName="netCore11SDKProj" />
+      <Output TaskParameter="netCore11TestProjectsToBuild" ItemName="netCore11TestProj" />
+      <Output TaskParameter="net452TestProjectsToBuild" ItemName="net452TestProj" />
+      <Output TaskParameter="unSupportedProjectsToBuild" ItemName="unsupportedProj" />
     </SDKCategorizeProjects>
 
-    <Message Text="SDKProjects ....... @(SDKProj->Count())"/>
-    <Message Text="TestSDKProjects ....... @(TestSDKProj->Count())"/>
+    <Message Text="Categorizing Projects....."/>
+    <ItemGroup>
+      <TotalSdkProjects Include="@(net452SDKProj);@(netStd14SDKProj);@(netCore11SDKProj)"/>
+      <TotalTestProjects Include="@(netCore11TestProj);@(net452TestProj)"/>
+    </ItemGroup>
 
-    <Message Text="Net45SDK ....... @(Net452SdkProj->Count())"/>
-    <Message Text="Net45TestSDK ....... @(Net452TestSdkProj->Count())"/>
+    <RemoveDuplicates Inputs="@(TotalSdkProjects)">
+      <Output TaskParameter="Filtered" ItemName="FilteredSdkProjects"/>
+    </RemoveDuplicates>
 
-    <Message Text="SDKProjects...... %(SDKProj.Identity)"/>
-    <Message Text="Test SDKProjects.... %(TestSDKProj.Identity)"/>
+    <RemoveDuplicates Inputs="@(TotalTestProjects)">
+      <Output TaskParameter="Filtered" ItemName="FilteredTestProjects"/>
+    </RemoveDuplicates>
+
+    <Message Text="SDKProjects ....... @(FilteredSdkProjects->Count())"/>
+    <Message Text="%(FilteredSdkProjects.Identity)"/>
+    <Message Text=" "/>
+    <Message Text="TestSDKProjects ....... @(FilteredTestProjects->Count())"/>
+    <Message Text="%(FilteredTestProjects.Identity)"/>
+    <Message Text="UnSupported Projects ....... @(unSupportedProjectsToBuild->Count())"/>
+    <Message Text="%(unSupportedProjectsToBuild.Identity)"/>
 
     <ItemGroup>
-      <SDKProject Include="@(SDKProj)"/>
-      <SDKTestProject Include="@(TestSDKProj)"/>
-      <Net452SDKProj Include="@(Net452SdkProj)"/>
-      <TestNet452SDKProj Include="@(Net452TestSdkProj)"/>
-    
+      <net452SDKProjects Include="@(net452SDKProj)"/>
+      <netStd14SDKProjects Include="@(netStd14SDKProj)"/>
+      <netCore11SDKProjects Include="@(netCore11SDKProj)"/>
+      <netCore11TestProjects Include="@(netCore11TestProj)"/>
+      <net452TestProjects Include="@(net452TestProj)"/>
+      <unSupportedProject Include="@(unsupportedProj)"/>
     </ItemGroup>
-    
+
+    <ItemGroup>
+      <SDKProject Include="@(FilteredSdkProjects)"/>
+      <SDKTestProject Include="@(FilteredTestProjects)"/>
+      <ProjectToScanDirs Include="%(FilteredSdkProjects.RootDir)%(FilteredSdkProjects.Directory)"/>
+      <ProjectToScanDirs Include="%(FilteredTestProjects.RootDir)%(FilteredTestProjects.Directory)"/>
+    </ItemGroup>
   </Target>
+
+  <Target Name="DisplayHelp">
+    <Message Text="msbuild build.proj /t:Build"/>
+    <Message Text="---- will build and create nuget pacakge for the entire repo"/>
+
+    <Message Text="msbuild build.proj /t:Build /p:Scope=SDKs\Compute" />
+    <Message Text="---- will build Microsoft.Azure.Management.Compute and Compute.Tests project and create nuget pacakge for Compute"/>
+
+    <Message Text="msbuild build.proj /t:RunTests" />
+    <Message Text="----- will Build and Run tests for the entire repo" />
+
+    <Message Text="msbuild build.proj /t:RunTests /p:Scope=SDKs\Compute" />
+    <Message Text="----- will Build Compute nuget package and run compute test" />
+  </Target>
+
   <!--Do not delete-->
   <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)"/>
 </Project>
-
-<!--
-<SDKProject Include="%(ScopedProjects.Identity)" Condition=" '%(ScopedProjects.ProjectType)' != 'Test' and '%(ScopedProjects.ExcludeFromBuild)' != 'true' "/>
-      <ScopedTestProjects Include="%(ScopedTestProjects.Identity)" Condition=" ('%(ScopedTestProjects.ProjectType)' == 'Test' and '%(ScopedTestProjects.ExcludeFromBuild)' != 'true') "/>
-  -->

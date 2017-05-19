@@ -62,7 +62,7 @@ namespace Microsoft.Rest.ClientRuntime.Tracing.Tests
             string actual = File.ReadAllText(logFileName);
             Assert.Equal(expected, actual);
         }
-
+        
         [Fact]
         public void LogsResponse()
         {
@@ -180,49 +180,6 @@ namespace Microsoft.Rest.ClientRuntime.Tracing.Tests
             logger.ExitMethod(invocationId, returnValue);
             string actual = File.ReadAllText(logFileName);
             Assert.Equal(expected, actual);
-        }
-    }
-
-    public class Log4NetTracingInterceptor
-    {
-        public Log4NetTracingInterceptor(string foo)
-        {
-
-        }
-
-        internal void Configuration(object p1, object p2, object p3)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void EnterMethod(string invocationId, object instance, string method, IDictionary<string, object> parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void ExitMethod(string invocationId, string returnValue)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void Information(string infoMessage)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void ReceiveResponse(string invocationId, HttpResponseMessage response)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void SendRequest(string invocationId, HttpRequestMessage request)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void TraceError(string invocationId, HttpOperationException exception)
-        {
-            throw new NotImplementedException();
         }
     }
 }

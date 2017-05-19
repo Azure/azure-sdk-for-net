@@ -74,24 +74,27 @@ namespace Microsoft.Azure.Batch.Protocol
             signature.Append(httpRequest.Content != null && httpRequest.Content.Headers.Contains("Content-Language") ? httpRequest.Content.Headers.GetValues("Content-Language").FirstOrDefault() : string.Empty).Append('\n');
 
             // Handle content length
-            if (httpRequest.Content != null)
+            long? contentLength = httpRequest.Content?.Headers?.ContentLength;
+
+            if (contentLength == null)
             {
-                signature.Append(httpRequest.Content.Headers.ContentLength.HasValue ? httpRequest.Content.Headers.ContentLength.ToString() : string.Empty).Append('\n');
-            }
-            else
-            {
-                // Because C# httpRequest adds a content-length = 0 header for POST and DELETE even if there is no body, we have to
-                // sign the request knowing that there will be content-length set.  For all other methods that have no body, there will be
-                // no content length set and thus we append \n with no 0.
-                if ((httpRequest.Method == HttpMethod.Delete) || (httpRequest.Method == HttpMethod.Post))
+                // Because C# httpRequest adds a content-length = 0 header for DELETE, PATCH, and OPTIONS even if there is no body (but only in netframework), we have to
+                // sign the request knowing that there will be content-length set.
+#if FullNetFx
+                if (httpRequest.Method == HttpMethod.Delete || httpRequest.Method == new HttpMethod("PATCH") || httpRequest.Method == HttpMethod.Options)
                 {
-                    signature.Append("0\n");
+                    contentLength = 0;
                 }
-                else
+#endif
+
+                // Because C# httpRequest adds a content-length = 0 header for POST even if there is no body, we have to
+                // sign the request knowing that there will be content-length set.
+                if (httpRequest.Method == HttpMethod.Post)
                 {
-                    signature.Append('\n');
+                    contentLength = 0;
                 }
             }
+            signature.Append(contentLength).Append('\n');
 
             signature.Append(httpRequest.Content != null && httpRequest.Content.Headers.Contains("Content-MD5") ? httpRequest.Content.Headers.GetValues("Content-MD5").FirstOrDefault() : string.Empty).Append('\n');
             signature.Append(httpRequest.Content != null && httpRequest.Content.Headers.Contains("Content-Type") ? httpRequest.Content.Headers.GetValues("Content-Type").FirstOrDefault() : string.Empty).Append('\n');

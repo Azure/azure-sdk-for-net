@@ -230,7 +230,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <param name="connString">Semicolon delimented KeyValue pair(e.g. KeyName1=value1;KeyName2=value2;KeyName3=value3)</param>
         public void Parse(string connString)
         {
-            string keyName;
             string parseRegEx = @"(?<KeyName>[^=]+)=(?<KeyValue>.+)";
 
             if (_parseErrorSb != null) _parseErrorSb.Clear();
@@ -257,14 +256,22 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
                     if (m.Groups.Count > 2)
                     {
-                        keyName = m.Groups["KeyName"].Value.ToLower();
+                        string keyName = m.Groups["KeyName"].Value;
+                        string newValue = m.Groups["KeyValue"].Value;
+
                         if (KeyValuePairs.ContainsKey(keyName))
                         {
-                            KeyValuePairs[keyName] = m.Groups["KeyValue"].Value;
+                            string existingValue = KeyValuePairs[keyName];
+                            // Replace if the existing value do not match.
+                            // We allow existing key values to be overwritten (this is especially true for endpoints)
+                            if (!existingValue.Equals(newValue, StringComparison.OrdinalIgnoreCase))
+                            {
+                                KeyValuePairs[keyName] = newValue;
+                            }
                         }
                         else
                         {
-                            ParseErrors = string.Format("'{0}' invalid keyname", keyName);
+                            KeyValuePairs[keyName] = newValue;
                         }
                     }
                     else
