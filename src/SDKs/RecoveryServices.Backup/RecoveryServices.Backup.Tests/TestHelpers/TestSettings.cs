@@ -21,6 +21,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
         public string RestoreStorageAccountResourceGroupName { get; set; }
 
+		public string AzureSqlContainerName { get; set; }
+
+		public string AzureSqlItemName { get; set; }
+
+		public string AzureSqlPolicyName { get; set; }
+        
+        public string DpmDataSourceName { get; set; }
+
+        public string DpmProductionServerName { get; set; }
+
+        public string DpmBackupEngineName { get; set; }
+
+
         public TestSettings Initialize()
         {
             string content = File.ReadAllText(@"TestSettings.json");
@@ -33,6 +46,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             VirtualMachineType = testSettings.VirtualMachineType;
             RestoreStorageAccountName = testSettings.RestoreStorageAccountName;
             RestoreStorageAccountResourceGroupName = testSettings.RestoreStorageAccountResourceGroupName;
+			AzureSqlContainerName = testSettings.AzureSqlContainerName;
+			AzureSqlItemName = testSettings.AzureSqlItemName;
+            AzureSqlPolicyName = testSettings.AzureSqlPolicyName;            
+            DpmDataSourceName = testSettings.DpmDataSourceName;
+            DpmProductionServerName = testSettings.DpmProductionServerName;
+            DpmBackupEngineName = testSettings.DpmBackupEngineName;
+
             return this;
         }
 

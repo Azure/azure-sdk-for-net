@@ -1,0 +1,550 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourcegroups/SDKTestDPMRg?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlZ3JvdXBzL1NES1Rlc3REUE1SZz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "3ff2c8e3-e698-434c-a3b4-cef92f88b4f8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.1.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg\",\r\n  \"name\": \"SDKTestDPMRg\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 May 2017 05:00:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "44bf88f4-ac94-4da1-9a38-87fe8755071b"
+        ],
+        "x-ms-correlation-request-id": [
+          "44bf88f4-ac94-4da1-9a38-87fe8755071b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170505T050028Z:44bf88f4-ac94-4da1-9a38-87fe8755071b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault?api-version=2016-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3REUE1SZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3REUE1WYXVsdD9hcGktdmVyc2lvbj0yMDE2LTA2LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "91"
+        ],
+        "x-ms-client-request-id": [
+          "92e91110-113e-4708-9978-2476c66ce962"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westus\",\r\n  \"name\": \"SDKTestDPMVault\",\r\n  \"etag\": \"W/\\\"datetime'2017-05-05T05%3A00%3A31.7564646Z'\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 May 2017 05:00:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "096e26f3-7b8f-4302-89d0-f5f896917454"
+        ],
+        "x-ms-client-request-id": [
+          "92e91110-113e-4708-9978-2476c66ce962"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "096e26f3-7b8f-4302-89d0-f5f896917454"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170505T050031Z:096e26f3-7b8f-4302-89d0-f5f896917454"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupEngines/VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM?api-version=2016-12-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3REUE1SZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3REUE1WYXVsdC9iYWNrdXBFbmdpbmVzL1Zpbm9WZW51cy5EUE1ET00wMi5TRUxGSE9TVC5DT1JQLk1JQ1JPU09GVC5DT00/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "31ea22fd-5bd1-40e3-80f6-578125b2aeed"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/1.3.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupEngines/VINOVENUS.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n  \"name\": \"VINOVENUS.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/backupEngines\",\r\n  \"properties\": {\r\n    \"friendlyName\": \"VINOVENUS.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n    \"backupManagementType\": \"AzureBackupServer\",\r\n    \"registrationStatus\": \"Registered\",\r\n    \"backupEngineState\": \"Active\",\r\n    \"healthStatus\": \"Healthy\",\r\n    \"backupEngineType\": \"AzureBackupServerEngine\",\r\n    \"canReRegister\": true,\r\n    \"backupEngineId\": \"677954\",\r\n    \"dpmVersion\": \"11.0.137.0\",\r\n    \"azureBackupAgentVersion\": \"2.0.9328.0\",\r\n    \"isAzureBackupAgentUpgradeAvailable\": false,\r\n    \"isDPMUpgradeAvailable\": false\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 May 2017 05:00:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "5c963d9a-9e88-4df7-aa34-a5f4256fcfd3"
+        ],
+        "x-ms-client-request-id": [
+          "31ea22fd-5bd1-40e3-80f6-578125b2aeed",
+          "31ea22fd-5bd1-40e3-80f6-578125b2aeed"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14946"
+        ],
+        "x-ms-correlation-request-id": [
+          "5c963d9a-9e88-4df7-aa34-a5f4256fcfd3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170505T050033Z:5c963d9a-9e88-4df7-aa34-a5f4256fcfd3"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupEngines?$filter=backupManagementType%20eq%20'AzureBackupServer'&api-version=2016-12-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3REUE1SZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3REUE1WYXVsdC9iYWNrdXBFbmdpbmVzPyRmaWx0ZXI9YmFja3VwTWFuYWdlbWVudFR5cGUlMjBlcSUyMCdBenVyZUJhY2t1cFNlcnZlcicmYXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6471f7ae-eb9a-4e80-99c0-3ea2451f119a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/1.3.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupEngines/changvenus.fareast.corp.microsoft.com\",\r\n      \"name\": \"changvenus.fareast.corp.microsoft.com\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupEngines\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"CHANGVENUS.FAREAST.CORP.MICROSOFT.COM\",\r\n        \"backupManagementType\": \"AzureBackupServer\",\r\n        \"registrationStatus\": \"Registered\",\r\n        \"backupEngineState\": \"Active\",\r\n        \"healthStatus\": \"Healthy\",\r\n        \"backupEngineType\": \"AzureBackupServerEngine\",\r\n        \"canReRegister\": true,\r\n        \"backupEngineId\": \"677953\",\r\n        \"isAzureBackupAgentUpgradeAvailable\": false,\r\n        \"isDPMUpgradeAvailable\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupEngines/vinovenus.dpmdom02.selfhost.corp.microsoft.com\",\r\n      \"name\": \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupEngines\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"VINOVENUS.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"backupManagementType\": \"AzureBackupServer\",\r\n        \"registrationStatus\": \"Registered\",\r\n        \"backupEngineState\": \"Active\",\r\n        \"healthStatus\": \"Healthy\",\r\n        \"backupEngineType\": \"AzureBackupServerEngine\",\r\n        \"canReRegister\": true,\r\n        \"backupEngineId\": \"677954\",\r\n        \"dpmVersion\": \"11.0.137.0\",\r\n        \"azureBackupAgentVersion\": \"2.0.9328.0\",\r\n        \"isAzureBackupAgentUpgradeAvailable\": false,\r\n        \"isDPMUpgradeAvailable\": false\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 May 2017 05:00:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "124bd02e-2ce8-4491-ac55-c562d72b1c91"
+        ],
+        "x-ms-client-request-id": [
+          "6471f7ae-eb9a-4e80-99c0-3ea2451f119a",
+          "6471f7ae-eb9a-4e80-99c0-3ea2451f119a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14945"
+        ],
+        "x-ms-correlation-request-id": [
+          "124bd02e-2ce8-4491-ac55-c562d72b1c91"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170505T050034Z:124bd02e-2ce8-4491-ac55-c562d72b1c91"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/Azure/protectionContainers/Windows%3BVinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM/protectedItems/SystemState%3BSystem%20Protectiond52df287-f0eb-46db-9729-819878c5f132?api-version=2016-12-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3REUE1SZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3REUE1WYXVsdC9iYWNrdXBGYWJyaWNzL0F6dXJlL3Byb3RlY3Rpb25Db250YWluZXJzL1dpbmRvd3MlM0JWaW5vVmVudXMuRFBNRE9NMDIuU0VMRkhPU1QuQ09SUC5NSUNST1NPRlQuQ09NL3Byb3RlY3RlZEl0ZW1zL1N5c3RlbVN0YXRlJTNCU3lzdGVtJTIwUHJvdGVjdGlvbmQ1MmRmMjg3LWYwZWItNDZkYi05NzI5LTgxOTg3OGM1ZjEzMj9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cead5d6b-0866-4069-be25-c59ea49fd772"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/1.3.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/ActiveDirectory/protectionContainers/Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM/protectedItems/SystemState;System%20Protectiond52df287-f0eb-46db-9729-819878c5f132\",\r\n  \"name\": \"System Protectiond52df287-f0eb-46db-9729-819878c5f132\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems\",\r\n  \"properties\": {\r\n    \"friendlyName\": \"System Protection\",\r\n    \"backupEngineName\": \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\",\r\n    \"protectionState\": \"Protected\",\r\n    \"isScheduledForDeferredDelete\": false,\r\n    \"protectedItemType\": \"DPMProtectedItem\",\r\n    \"backupManagementType\": \"AzureBackupServer\",\r\n    \"workloadType\": \"SystemState\",\r\n    \"containerName\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n    \"policyName\": \"Protection Group 2\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 May 2017 05:00:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "202c9fcb-87b4-469c-a116-accb0084e3f5"
+        ],
+        "x-ms-client-request-id": [
+          "cead5d6b-0866-4069-be25-c59ea49fd772",
+          "cead5d6b-0866-4069-be25-c59ea49fd772"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14944"
+        ],
+        "x-ms-correlation-request-id": [
+          "202c9fcb-87b4-469c-a116-accb0084e3f5"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170505T050035Z:202c9fcb-87b4-469c-a116-accb0084e3f5"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupProtectedItems?$filter=backupManagementType%20eq%20'AzureBackupServer'&api-version=2016-12-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3REUE1SZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3REUE1WYXVsdC9iYWNrdXBQcm90ZWN0ZWRJdGVtcz8kZmlsdGVyPWJhY2t1cE1hbmFnZW1lbnRUeXBlJTIwZXElMjAnQXp1cmVCYWNrdXBTZXJ2ZXInJmFwaS12ZXJzaW9uPTIwMTYtMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e6c2cfc7-55c7-40ae-b9de-09949b186507"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/1.3.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/ActiveDirectory/protectionContainers/Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM/protectedItems/FileFolder;C%5Ecol%5Ebs5cf24dfd-c885-446f-94ed-cd5f7657c3fa\",\r\n      \"name\": \"C:\\\\5cf24dfd-c885-446f-94ed-cd5f7657c3fa\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"C:\\\\\",\r\n        \"backupEngineName\": \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\",\r\n        \"protectionState\": \"Invalid\",\r\n        \"isScheduledForDeferredDelete\": false,\r\n        \"protectedItemType\": \"DPMProtectedItem\",\r\n        \"backupManagementType\": \"AzureBackupServer\",\r\n        \"workloadType\": \"FileFolder\",\r\n        \"containerName\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"policyName\": \"\",\r\n        \"lastRecoveryPoint\": \"2017-03-05T18:00:04Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/ActiveDirectory/protectionContainers/Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM/protectedItems/SQLDB;VINOVENUS%5EbsMSDPMINSTANCE%5EbsDPMDB1ec79881-e553-4529-b7d3-dce32697a204\",\r\n      \"name\": \"VINOVENUS\\\\MSDPMINSTANCE\\\\DPMDB1ec79881-e553-4529-b7d3-dce32697a204\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"VINOVENUS\\\\MSDPMINSTANCE\\\\DPMDB\",\r\n        \"backupEngineName\": \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\",\r\n        \"protectionState\": \"Protected\",\r\n        \"isScheduledForDeferredDelete\": false,\r\n        \"protectedItemType\": \"DPMProtectedItem\",\r\n        \"backupManagementType\": \"AzureBackupServer\",\r\n        \"workloadType\": \"SQLDB\",\r\n        \"containerName\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"policyName\": \"Protection Group new\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/ActiveDirectory/protectionContainers/Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM/protectedItems/SQLDB;VINOVENUS%5EbsMSDPMINSTANCE%5Ebsmodel2cc22281-a9ee-4315-9025-31a6a9e3b102\",\r\n      \"name\": \"VINOVENUS\\\\MSDPMINSTANCE\\\\model2cc22281-a9ee-4315-9025-31a6a9e3b102\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"VINOVENUS\\\\MSDPMINSTANCE\\\\model\",\r\n        \"backupEngineName\": \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\",\r\n        \"protectionState\": \"Protected\",\r\n        \"isScheduledForDeferredDelete\": false,\r\n        \"protectedItemType\": \"DPMProtectedItem\",\r\n        \"backupManagementType\": \"AzureBackupServer\",\r\n        \"workloadType\": \"SQLDB\",\r\n        \"containerName\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"policyName\": \"Protection Group new\",\r\n        \"lastRecoveryPoint\": \"2017-05-04T20:30:01Z\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/ActiveDirectory/protectionContainers/Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM/protectedItems/SQLDB;VINOVENUS%5EbsMSDPMINSTANCE%5EbsReportServer$MSDPMINSTANCE6906b939-4556-48be-aef8-6474b898fa3c\",\r\n      \"name\": \"VINOVENUS\\\\MSDPMINSTANCE\\\\ReportServer$MSDPMINSTANCE6906b939-4556-48be-aef8-6474b898fa3c\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"VINOVENUS\\\\MSDPMINSTANCE\\\\ReportServer$MSDPMINSTANCE\",\r\n        \"backupEngineName\": \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\",\r\n        \"protectionState\": \"Invalid\",\r\n        \"isScheduledForDeferredDelete\": false,\r\n        \"protectedItemType\": \"DPMProtectedItem\",\r\n        \"backupManagementType\": \"AzureBackupServer\",\r\n        \"workloadType\": \"SQLDB\",\r\n        \"containerName\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"policyName\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/ActiveDirectory/protectionContainers/Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM/protectedItems/SQLDB;VINOVENUS%5EbsMSDPMINSTANCE%5Ebsmsdbd0ed15ac-ce94-4cfe-b735-d249f4a42924\",\r\n      \"name\": \"VINOVENUS\\\\MSDPMINSTANCE\\\\msdbd0ed15ac-ce94-4cfe-b735-d249f4a42924\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"VINOVENUS\\\\MSDPMINSTANCE\\\\msdb\",\r\n        \"backupEngineName\": \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\",\r\n        \"protectionState\": \"Invalid\",\r\n        \"isScheduledForDeferredDelete\": false,\r\n        \"protectedItemType\": \"DPMProtectedItem\",\r\n        \"backupManagementType\": \"AzureBackupServer\",\r\n        \"workloadType\": \"SQLDB\",\r\n        \"containerName\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"policyName\": \"\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/ActiveDirectory/protectionContainers/Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM/protectedItems/SQLDB;VINOVENUS%5EbsMSDPMINSTANCE%5Ebsmasterf538c35b-e36c-48f5-878e-a7e7f9a9f980\",\r\n      \"name\": \"VINOVENUS\\\\MSDPMINSTANCE\\\\masterf538c35b-e36c-48f5-878e-a7e7f9a9f980\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"VINOVENUS\\\\MSDPMINSTANCE\\\\master\",\r\n        \"backupEngineName\": \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\",\r\n        \"protectionState\": \"Protected\",\r\n        \"isScheduledForDeferredDelete\": false,\r\n        \"protectedItemType\": \"DPMProtectedItem\",\r\n        \"backupManagementType\": \"AzureBackupServer\",\r\n        \"workloadType\": \"SQLDB\",\r\n        \"containerName\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"policyName\": \"Protection Group new\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/ActiveDirectory/protectionContainers/Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM/protectedItems/SystemState;System%20Protectiond52df287-f0eb-46db-9729-819878c5f132\",\r\n      \"name\": \"System Protectiond52df287-f0eb-46db-9729-819878c5f132\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems\",\r\n      \"properties\": {\r\n        \"friendlyName\": \"System Protection\",\r\n        \"backupEngineName\": \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\",\r\n        \"protectionState\": \"Protected\",\r\n        \"isScheduledForDeferredDelete\": false,\r\n        \"protectedItemType\": \"DPMProtectedItem\",\r\n        \"backupManagementType\": \"AzureBackupServer\",\r\n        \"workloadType\": \"SystemState\",\r\n        \"containerName\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"policyName\": \"Protection Group 2\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 May 2017 05:00:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "81e39177-50e1-4aa0-aa6e-5947234f3ec3"
+        ],
+        "x-ms-client-request-id": [
+          "e6c2cfc7-55c7-40ae-b9de-09949b186507",
+          "e6c2cfc7-55c7-40ae-b9de-09949b186507"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14943"
+        ],
+        "x-ms-correlation-request-id": [
+          "81e39177-50e1-4aa0-aa6e-5947234f3ec3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170505T050035Z:81e39177-50e1-4aa0-aa6e-5947234f3ec3"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/Azure/protectionContainers/Windows%3BVinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM?api-version=2016-12-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3REUE1SZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3REUE1WYXVsdC9iYWNrdXBGYWJyaWNzL0F6dXJlL3Byb3RlY3Rpb25Db250YWluZXJzL1dpbmRvd3MlM0JWaW5vVmVudXMuRFBNRE9NMDIuU0VMRkhPU1QuQ09SUC5NSUNST1NPRlQuQ09NP2FwaS12ZXJzaW9uPTIwMTYtMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "727a5c29-405b-4e9b-9740-e0869f7cefa0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/1.3.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/ActiveDirectory/protectionContainers/Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n  \"name\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers\",\r\n  \"properties\": {\r\n    \"canReRegister\": true,\r\n    \"containerId\": \"8db7ad5d-2dc4-408c-b9d6-f540e5b5ba7e\",\r\n    \"protectedItemCount\": 7,\r\n    \"dpmAgentVersion\": \"11.0.137.0\",\r\n    \"DPMServers\": [\r\n      \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\"\r\n    ],\r\n    \"UpgradeAvailable\": false,\r\n    \"extendedInfo\": {\r\n      \"lastRefreshedAt\": \"2017-05-05T04:52:28.832Z\"\r\n    },\r\n    \"friendlyName\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n    \"backupManagementType\": \"AzureBackupServer\",\r\n    \"registrationStatus\": \"\",\r\n    \"healthStatus\": \"\",\r\n    \"containerType\": \"AzureBackupServerContainer\",\r\n    \"protectableObjectType\": \"AzureBackupServerContainer\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 May 2017 05:00:35 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "c0bb9f41-ae73-4730-b75f-e2262aa8549c"
+        ],
+        "x-ms-client-request-id": [
+          "727a5c29-405b-4e9b-9740-e0869f7cefa0",
+          "727a5c29-405b-4e9b-9740-e0869f7cefa0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14942"
+        ],
+        "x-ms-correlation-request-id": [
+          "c0bb9f41-ae73-4730-b75f-e2262aa8549c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170505T050036Z:c0bb9f41-ae73-4730-b75f-e2262aa8549c"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupProtectionContainers?$filter=backupManagementType%20eq%20'AzureBackupServer'&api-version=2016-12-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3REUE1SZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3REUE1WYXVsdC9iYWNrdXBQcm90ZWN0aW9uQ29udGFpbmVycz8kZmlsdGVyPWJhY2t1cE1hbmFnZW1lbnRUeXBlJTIwZXElMjAnQXp1cmVCYWNrdXBTZXJ2ZXInJmFwaS12ZXJzaW9uPTIwMTYtMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d1d3cdef-2e85-4de4-b7a4-bb91a92a7023"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/1.3.0-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestDPMRg/providers/Microsoft.RecoveryServices/vaults/SDKTestDPMVault/backupFabrics/ActiveDirectory/protectionContainers/Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n      \"name\": \"Windows;VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers\",\r\n      \"properties\": {\r\n        \"canReRegister\": true,\r\n        \"containerId\": \"8db7ad5d-2dc4-408c-b9d6-f540e5b5ba7e\",\r\n        \"protectedItemCount\": 7,\r\n        \"dpmAgentVersion\": \"11.0.137.0\",\r\n        \"DPMServers\": [\r\n          \"vinovenus.dpmdom02.selfhost.corp.microsoft.com\"\r\n        ],\r\n        \"UpgradeAvailable\": false,\r\n        \"friendlyName\": \"VinoVenus.DPMDOM02.SELFHOST.CORP.MICROSOFT.COM\",\r\n        \"backupManagementType\": \"AzureBackupServer\",\r\n        \"registrationStatus\": \"\",\r\n        \"healthStatus\": \"\",\r\n        \"containerType\": \"AzureBackupServerContainer\",\r\n        \"protectableObjectType\": \"AzureBackupServerContainer\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 May 2017 05:00:36 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "6dc60d9b-9399-46f5-af0e-392ea84ca93b"
+        ],
+        "x-ms-client-request-id": [
+          "d1d3cdef-2e85-4de4-b7a4-bb91a92a7023",
+          "d1d3cdef-2e85-4de4-b7a4-bb91a92a7023"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14941"
+        ],
+        "x-ms-correlation-request-id": [
+          "6dc60d9b-9399-46f5-af0e-392ea84ca93b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170505T050036Z:6dc60d9b-9399-46f5-af0e-392ea84ca93b"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f7424430-103b-4ba3-bd9e-b6f0986f848a"
+  }
+}
