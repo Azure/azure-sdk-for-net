@@ -17,27 +17,30 @@ namespace Microsoft.Azure.Management.Authorization.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Role definition permissions.
+    /// Provider operations metadata list
     /// </summary>
-    public partial class Permission
+    public partial class ProviderOperationsMetadataListResult
     {
         /// <summary>
-        /// Initializes a new instance of the Permission class.
+        /// Initializes a new instance of the
+        /// ProviderOperationsMetadataListResult class.
         /// </summary>
-        public Permission()
+        public ProviderOperationsMetadataListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Permission class.
+        /// Initializes a new instance of the
+        /// ProviderOperationsMetadataListResult class.
         /// </summary>
-        /// <param name="actions">Allowed actions.</param>
-        /// <param name="notActions">Denied actions.</param>
-        public Permission(IList<string> actions = default(IList<string>), IList<string> notActions = default(IList<string>))
+        /// <param name="value">The list of providers.</param>
+        /// <param name="nextLink">The URL to use for getting the next set of
+        /// results.</param>
+        public ProviderOperationsMetadataListResult(IList<ProviderOperationsMetadata> value = default(IList<ProviderOperationsMetadata>), string nextLink = default(string))
         {
-            Actions = actions;
-            NotActions = notActions;
+            Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -47,16 +50,16 @@ namespace Microsoft.Azure.Management.Authorization.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets allowed actions.
+        /// Gets or sets the list of providers.
         /// </summary>
-        [JsonProperty(PropertyName = "actions")]
-        public IList<string> Actions { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<ProviderOperationsMetadata> Value { get; set; }
 
         /// <summary>
-        /// Gets or sets denied actions.
+        /// Gets or sets the URL to use for getting the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "notActions")]
-        public IList<string> NotActions { get; set; }
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
     }
 }

@@ -8,7 +8,6 @@
 
 namespace Microsoft.Azure.Management.Authorization
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
@@ -23,12 +22,12 @@ namespace Microsoft.Azure.Management.Authorization
     using Newtonsoft.Json;
 
     /// <summary>
-    /// ProviderOperationsMetadataOperations operations.
+    /// Permissions operations.
     /// </summary>
-    public partial class ProviderOperationsMetadataOperations : IServiceOperations<AuthorizationManagementClient>, IProviderOperationsMetadataOperations
+    public partial class Permissions : IServiceOperations<AuthorizationManagementClient>, IPermissions
     {
         /// <summary>
-        /// Initializes a new instance of the ProviderOperationsMetadataOperations class.
+        /// Initializes a new instance of the Permissions class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,11 +35,11 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public ProviderOperationsMetadataOperations(AuthorizationManagementClient client)
+        public Permissions(AuthorizationManagementClient client)
         {
             if (client == null)
             {
-                throw new ArgumentNullException("client");
+                throw new System.ArgumentNullException("client");
             }
             Client = client;
         }
@@ -51,16 +50,11 @@ namespace Microsoft.Azure.Management.Authorization
         public AuthorizationManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets provider operations metadata for the specified resource provider.
+        /// Gets all permissions the caller has for a resource group.
         /// </summary>
-        /// <param name='resourceProviderNamespace'>
-        /// The namespace of the resource provider.
-        /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to use for the operation.
-        /// </param>
-        /// <param name='expand'>
-        /// Specifies whether to expand the values.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to get the permissions for. The name is case
+        /// insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -77,21 +71,25 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ProviderOperationsMetadata>> GetWithHttpMessagesAsync(string resourceProviderNamespace, string apiVersion, string expand = "resourceTypes", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PermissionGetResult>> ListForResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (resourceProviderNamespace == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceProviderNamespace");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (apiVersion == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -100,34 +98,29 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceProviderNamespace", resourceProviderNamespace);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListForResourceGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}").ToString();
-            _url = _url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
                 _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
 
 
@@ -190,7 +183,7 @@ namespace Microsoft.Azure.Management.Authorization
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<ProviderOperationsMetadata>();
+            var _result = new HttpOperationResponse<PermissionGetResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -199,7 +192,7 @@ namespace Microsoft.Azure.Management.Authorization
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ProviderOperationsMetadata>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PermissionGetResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -219,13 +212,23 @@ namespace Microsoft.Azure.Management.Authorization
         }
 
         /// <summary>
-        /// Gets provider operations metadata for all resource providers.
+        /// Gets all permissions the caller has for a resource.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the resource. The name is case
+        /// insensitive.
         /// </param>
-        /// <param name='expand'>
-        /// Specifies whether to expand the values.
+        /// <param name='resourceProviderNamespace'>
+        /// The namespace of the resource provider.
+        /// </param>
+        /// <param name='parentResourcePath'>
+        /// The parent resource identity.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The resource type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the resource to get the permissions for.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -242,17 +245,41 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ProviderOperationsMetadataListResult>> ListWithHttpMessagesAsync(string apiVersion, string expand = "resourceTypes", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PermissionGetResult>> ListForResourceWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (apiVersion == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceProviderNamespace == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceProviderNamespace");
+            }
+            if (parentResourcePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parentResourcePath");
+            }
+            if (resourceType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceType");
+            }
+            if (resourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -261,32 +288,37 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceProviderNamespace", resourceProviderNamespace);
+                tracingParameters.Add("parentResourcePath", parentResourcePath);
+                tracingParameters.Add("resourceType", resourceType);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListForResource", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Authorization/providerOperations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{resourceProviderNamespace}", System.Uri.EscapeDataString(resourceProviderNamespace));
+            _url = _url.Replace("{parentResourcePath}", parentResourcePath);
+            _url = _url.Replace("{resourceType}", resourceType);
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
                 _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
 
 
@@ -349,7 +381,7 @@ namespace Microsoft.Azure.Management.Authorization
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<ProviderOperationsMetadataListResult>();
+            var _result = new HttpOperationResponse<PermissionGetResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -358,7 +390,7 @@ namespace Microsoft.Azure.Management.Authorization
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ProviderOperationsMetadataListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PermissionGetResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

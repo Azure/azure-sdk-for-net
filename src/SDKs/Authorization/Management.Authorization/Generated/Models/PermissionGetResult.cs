@@ -8,6 +8,8 @@
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
@@ -15,30 +17,28 @@ namespace Microsoft.Azure.Management.Authorization.Models
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Classic Administrator properties.
+    /// Permissions information.
     /// </summary>
-    public partial class ClassicAdministratorProperties
+    public partial class PermissionGetResult
     {
         /// <summary>
-        /// Initializes a new instance of the ClassicAdministratorProperties
-        /// class.
+        /// Initializes a new instance of the PermissionGetResult class.
         /// </summary>
-        public ClassicAdministratorProperties()
+        public PermissionGetResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ClassicAdministratorProperties
-        /// class.
+        /// Initializes a new instance of the PermissionGetResult class.
         /// </summary>
-        /// <param name="emailAddress">The email address of the
-        /// administrator.</param>
-        /// <param name="role">The role of the administrator.</param>
-        public ClassicAdministratorProperties(string emailAddress = default(string), string role = default(string))
+        /// <param name="value">An array of permissions.</param>
+        /// <param name="nextLink">The URL to use for getting the next set of
+        /// results.</param>
+        public PermissionGetResult(IList<Permission> value = default(IList<Permission>), string nextLink = default(string))
         {
-            EmailAddress = emailAddress;
-            Role = role;
+            Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -48,16 +48,16 @@ namespace Microsoft.Azure.Management.Authorization.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the email address of the administrator.
+        /// Gets or sets an array of permissions.
         /// </summary>
-        [JsonProperty(PropertyName = "emailAddress")]
-        public string EmailAddress { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Permission> Value { get; set; }
 
         /// <summary>
-        /// Gets or sets the role of the administrator.
+        /// Gets or sets the URL to use for getting the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "role")]
-        public string Role { get; set; }
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
     }
 }
