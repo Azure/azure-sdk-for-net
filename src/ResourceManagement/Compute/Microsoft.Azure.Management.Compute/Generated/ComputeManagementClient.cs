@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.Compute
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        public Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; private set; }
+        public JsonSerializerSettings SerializationSettings { get; private set; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        public Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; private set; }
+        public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
@@ -69,6 +69,11 @@ namespace Microsoft.Azure.Management.Compute
         /// included in each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IContainerServicesOperations.
+        /// </summary>
+        public virtual IContainerServicesOperations ContainerServices { get; private set; }
 
         /// <summary>
         /// Gets the IAvailabilitySetsOperations.
@@ -106,6 +111,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IImagesOperations Images { get; private set; }
 
         /// <summary>
+        /// Gets the IResourceSkusOperations.
+        /// </summary>
+        public virtual IResourceSkusOperations ResourceSkus { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachinesOperations.
         /// </summary>
         public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
@@ -116,14 +126,14 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetExtensionsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetVMsOperations.
         /// </summary>
         public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
-
-        /// <summary>
-        /// Gets the IContainerServicesOperations.
-        /// </summary>
-        public virtual IContainerServicesOperations ContainerServices { get; private set; }
 
         /// <summary>
         /// Gets the IDisksOperations.
@@ -134,6 +144,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ISnapshotsOperations.
         /// </summary>
         public virtual ISnapshotsOperations Snapshots { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineRunCommandsOperations.
+        /// </summary>
+        public virtual IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ComputeManagementClient class.
@@ -336,6 +351,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         private void Initialize()
         {
+            ContainerServices = new ContainerServicesOperations(this);
             AvailabilitySets = new AvailabilitySetsOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
@@ -343,38 +359,40 @@ namespace Microsoft.Azure.Management.Compute
             Usage = new UsageOperations(this);
             VirtualMachineSizes = new VirtualMachineSizesOperations(this);
             Images = new ImagesOperations(this);
+            ResourceSkus = new ResourceSkusOperations(this);
             VirtualMachines = new VirtualMachinesOperations(this);
             VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
+            VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
-            ContainerServices = new ContainerServicesOperations(this);
             Disks = new DisksOperations(this);
             Snapshots = new SnapshotsOperations(this);
+            VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
-            SerializationSettings = new Newtonsoft.Json.JsonSerializerSettings
+            SerializationSettings = new JsonSerializerSettings
             {
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
+                Formatting = Formatting.Indented,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
+                Converters = new List<JsonConverter>
                     {
                         new Iso8601TimeSpanConverter()
                     }
             };
             SerializationSettings.Converters.Add(new TransformationJsonConverter());
-            DeserializationSettings = new Newtonsoft.Json.JsonSerializerSettings
+            DeserializationSettings = new JsonSerializerSettings
             {
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
+                Converters = new List<JsonConverter>
                     {
                         new Iso8601TimeSpanConverter()
                     }

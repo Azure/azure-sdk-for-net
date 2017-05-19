@@ -130,6 +130,10 @@ namespace Compute.Tests
                         {
                             return;
                         }
+                        else if (ex.Message.Equals("Long running operation failed with status 'Failed'."))
+                        {
+                            return;
+                        }
                         throw;
                     }
 

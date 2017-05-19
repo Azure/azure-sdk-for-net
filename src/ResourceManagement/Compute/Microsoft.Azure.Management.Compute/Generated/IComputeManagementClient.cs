@@ -28,12 +28,12 @@ namespace Microsoft.Azure.Management.Compute
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; }
+        JsonSerializerSettings SerializationSettings { get; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
+        JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
@@ -64,6 +64,11 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
+
+        /// <summary>
+        /// Gets the IContainerServicesOperations.
+        /// </summary>
+        IContainerServicesOperations ContainerServices { get; }
 
         /// <summary>
         /// Gets the IAvailabilitySetsOperations.
@@ -101,6 +106,11 @@ namespace Microsoft.Azure.Management.Compute
         IImagesOperations Images { get; }
 
         /// <summary>
+        /// Gets the IResourceSkusOperations.
+        /// </summary>
+        IResourceSkusOperations ResourceSkus { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachinesOperations.
         /// </summary>
         IVirtualMachinesOperations VirtualMachines { get; }
@@ -111,14 +121,14 @@ namespace Microsoft.Azure.Management.Compute
         IVirtualMachineScaleSetsOperations VirtualMachineScaleSets { get; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetExtensionsOperations.
+        /// </summary>
+        IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetVMsOperations.
         /// </summary>
         IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
-
-        /// <summary>
-        /// Gets the IContainerServicesOperations.
-        /// </summary>
-        IContainerServicesOperations ContainerServices { get; }
 
         /// <summary>
         /// Gets the IDisksOperations.
@@ -129,6 +139,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ISnapshotsOperations.
         /// </summary>
         ISnapshotsOperations Snapshots { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineRunCommandsOperations.
+        /// </summary>
+        IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; }
 
     }
 }
