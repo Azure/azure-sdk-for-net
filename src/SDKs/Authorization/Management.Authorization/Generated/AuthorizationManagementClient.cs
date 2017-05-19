@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        public System.Uri BaseUri { get; set; }
+        public Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -140,14 +140,14 @@ namespace Microsoft.Azure.Management.Authorization
 		/// <param name='handlers'>
 		/// Optional. The delegating handlers to add to the http client pipeline.
 		/// </param>
-		/// <exception cref="System.ArgumentNullException">
+		/// <exception cref="ArgumentNullException">
 		/// Thrown when a required parameter is null
 		/// </exception>
-		protected AuthorizationManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+		protected AuthorizationManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
-                throw new System.ArgumentNullException("baseUri");
+                throw new ArgumentNullException("baseUri");
             }
 			this.BaseUri = baseUri;
         }
@@ -164,14 +164,14 @@ namespace Microsoft.Azure.Management.Authorization
 		/// <param name='handlers'>
 		/// Optional. The delegating handlers to add to the http client pipeline.
 		/// </param>
-		/// <exception cref="System.ArgumentNullException">
+		/// <exception cref="ArgumentNullException">
 		/// Thrown when a required parameter is null
 		/// </exception>
-		protected AuthorizationManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+		protected AuthorizationManagementClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
-                throw new System.ArgumentNullException("baseUri");
+                throw new ArgumentNullException("baseUri");
             }
 			this.BaseUri = baseUri;
         }
@@ -185,14 +185,14 @@ namespace Microsoft.Azure.Management.Authorization
 		/// <param name='handlers'>
 		/// Optional. The delegating handlers to add to the http client pipeline.
 		/// </param>
-		/// <exception cref="System.ArgumentNullException">
+		/// <exception cref="ArgumentNullException">
 		/// Thrown when a required parameter is null
 		/// </exception>
 		public AuthorizationManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
 		{
 			if (credentials == null)
 			{
-				throw new System.ArgumentNullException("credentials");
+				throw new ArgumentNullException("credentials");
 			}
 			this.Credentials = credentials;
 			if (this.Credentials != null)
@@ -213,14 +213,14 @@ namespace Microsoft.Azure.Management.Authorization
 		/// <param name='handlers'>
 		/// Optional. The delegating handlers to add to the http client pipeline.
 		/// </param>
-		/// <exception cref="System.ArgumentNullException">
+		/// <exception cref="ArgumentNullException">
 		/// Thrown when a required parameter is null
 		/// </exception>
 		public AuthorizationManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
 		{
 			if (credentials == null)
 			{
-				throw new System.ArgumentNullException("credentials");
+				throw new ArgumentNullException("credentials");
 			}
 			this.Credentials = credentials;
 			if (this.Credentials != null)
@@ -241,18 +241,18 @@ namespace Microsoft.Azure.Management.Authorization
 		/// <param name='handlers'>
 		/// Optional. The delegating handlers to add to the http client pipeline.
 		/// </param>
-		/// <exception cref="System.ArgumentNullException">
+		/// <exception cref="ArgumentNullException">
 		/// Thrown when a required parameter is null
 		/// </exception>
-		public AuthorizationManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+		public AuthorizationManagementClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
 		{
 			if (baseUri == null)
 			{
-				throw new System.ArgumentNullException("baseUri");
+				throw new ArgumentNullException("baseUri");
 			}
 			if (credentials == null)
 			{
-				throw new System.ArgumentNullException("credentials");
+				throw new ArgumentNullException("credentials");
 			}
 			this.BaseUri = baseUri;
 			this.Credentials = credentials;
@@ -277,18 +277,18 @@ namespace Microsoft.Azure.Management.Authorization
 		/// <param name='handlers'>
 		/// Optional. The delegating handlers to add to the http client pipeline.
 		/// </param>
-		/// <exception cref="System.ArgumentNullException">
+		/// <exception cref="ArgumentNullException">
 		/// Thrown when a required parameter is null
 		/// </exception>
-		public AuthorizationManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+		public AuthorizationManagementClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
 		{
 			if (baseUri == null)
 			{
-				throw new System.ArgumentNullException("baseUri");
+				throw new ArgumentNullException("baseUri");
 			}
 			if (credentials == null)
 			{
-				throw new System.ArgumentNullException("credentials");
+				throw new ArgumentNullException("credentials");
 			}
 			this.BaseUri = baseUri;
 			this.Credentials = credentials;
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Authorization
             ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
             RoleAssignments = new RoleAssignmentsOperations(this);
             RoleDefinitions = new RoleDefinitionsOperations(this);
-            BaseUri = new System.Uri("https://management.azure.com");
+            BaseUri = new Uri("https://management.azure.com");
 			ApiVersion = "2015-07-01";
 			AcceptLanguage = "en-US";
 			LongRunningOperationRetryTimeout = 30;

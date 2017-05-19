@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Authorization
     /// performed on resources. A role assignment grants access to Azure Active
     /// Directory users.
     /// </summary>
-    public partial interface IAuthorizationManagementClient : System.IDisposable
+    public partial interface IAuthorizationManagementClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        System.Uri BaseUri { get; set; }
+        Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.

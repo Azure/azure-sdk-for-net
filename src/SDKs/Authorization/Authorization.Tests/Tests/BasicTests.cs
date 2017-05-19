@@ -17,7 +17,6 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure.OData;
 using System.Reflection;
-using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
 
 namespace Authorization.Tests

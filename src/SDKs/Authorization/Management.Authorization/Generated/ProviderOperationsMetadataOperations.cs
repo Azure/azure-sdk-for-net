@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
         public ProviderOperationsMetadataOperations(AuthorizationManagementClient client)
         {
             if (client == null)
             {
-                throw new System.ArgumentNullException("client");
+                throw new ArgumentNullException("client");
             }
             Client = client;
         }
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
@@ -115,17 +115,17 @@ namespace Microsoft.Azure.Management.Authorization
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}").ToString();
-            _url = _url.Replace("{resourceProviderNamespace}", System.Uri.EscapeDataString(resourceProviderNamespace));
-			_url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}").ToString();
+            _url = _url.Replace("{resourceProviderNamespace}", Uri.EscapeDataString(resourceProviderNamespace));
+			_url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
 			List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (expand != null)
             {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Authorization
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
+            _httpRequest.RequestUri = new Uri(_url);
 			// Set Headers
 			if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
 			{
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
@@ -304,16 +304,16 @@ namespace Microsoft.Azure.Management.Authorization
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Authorization/providerOperations").ToString();
-			_url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Authorization/providerOperations").ToString();
+			_url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
 			List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(apiVersion)));
             }
             if (expand != null)
             {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+                _queryParameters.Add(string.Format("$expand={0}", Uri.EscapeDataString(expand)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Authorization
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
+            _httpRequest.RequestUri = new Uri(_url);
 			// Set Headers
 			if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
 			{
