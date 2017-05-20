@@ -18,7 +18,7 @@ that take advantage of scalable cloud computing resources.
 Directory structure has been simplified and consolidated in fewer directories
 All Management and Data plane SDKs are now under
 src\SDKs
-e.g.
+e.g.:
 src\SDKs\AnalysisService
 src\SDKs\Compute
 
