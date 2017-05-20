@@ -1,6 +1,6 @@
 
 # Microsoft Azure SDK for .NET
- ----------
+ -----------
 The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.
 
