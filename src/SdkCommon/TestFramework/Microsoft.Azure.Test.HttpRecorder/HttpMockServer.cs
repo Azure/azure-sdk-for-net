@@ -10,7 +10,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Reflection;
-using Microsoft.Extensions.DependencyModel;
 
 namespace Microsoft.Azure.Test.HttpRecorder
 {
@@ -65,7 +64,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
             records = new Records(Matcher);
             Variables = new Dictionary<string, string>();
 
-            var asmCollection = GetAssemblies();
+            var asmCollection = AppDomain.CurrentDomain.GetAssemblies();
 
             foreach(Assembly asm in asmCollection)
             {
@@ -115,18 +114,6 @@ namespace Microsoft.Azure.Test.HttpRecorder
             initialized = true;
         }
 
-        private static Assembly[] GetAssemblies()
-        {
-            var assemblies = new List<Assembly>();
-            var dependencies = DependencyContext.Default.RuntimeLibraries;
-            foreach (var library in dependencies)
-            {
-                var assembly = Assembly.Load(new AssemblyName(library.Name));
-                assemblies.Add(assembly);
-            }
-            return assemblies.ToArray();
-        }
-        
         public static HttpMockServer CreateInstance()
         {
             if (!initialized)
