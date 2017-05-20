@@ -4,7 +4,7 @@
     <Description>Infrastructure for error handling, tracing, and HttpClient pipeline configuration. Required by client libraries generated using AutoRest.</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime</AssemblyName>
     <AssemblyTitle>Client Runtime Library for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <VersionPrefix>2.3.7</VersionPrefix>
+    <VersionPrefix>2.3.8</VersionPrefix>
     <PackageId>Microsoft.Rest.ClientRuntime</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
   </PropertyGroup>
@@ -23,6 +23,6 @@
     <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.Serialization" />
 
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
   </ItemGroup>  
 </Project>
