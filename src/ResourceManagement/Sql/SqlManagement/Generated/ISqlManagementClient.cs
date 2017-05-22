@@ -167,6 +167,17 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for Azure SQL Data Sync. Contains
+        /// operations to: Create, Retrieve, Update, and Delete sync groups,
+        /// sync members and sync agents, and also includes the ability to get
+        /// the synchronization logs.
+        /// </summary>
+        IDataSyncOperations DataSync
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for managing Advisors for Azure SQL
         /// Elastic Database Pool. Contains operations to retrieve Advisors
         /// and update auto execute status of an Advisor.
