@@ -119,7 +119,9 @@ Before a pull request will be considered by the Azure SDK team, the following re
   - Identity of QA responsible for feature testing (can be conducted post-merging of the pull request).
   - Short description of the payload of pull request.
 - After the pull request is submitted:
-  - Send an email to the Azure SDK Code Review (azsdkcode@microsoft.com) alias.
+  - Our SLA is 48 hours. When your PR is submitted someone on our team will be auto assigned the PR for review. No need to email us
+  - MS internal folks, please reach out to us via our slack channel or
+  - Send an email to the Azure DevEx .Net team (azdevxdotnet@microsoft.com) alias.
     - Include all interested parties from your team as well.
     - In the message, make sure to acknowledge that the legal signoff process is complete.
 
