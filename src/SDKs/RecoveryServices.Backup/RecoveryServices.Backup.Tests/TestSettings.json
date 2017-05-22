@@ -3,5 +3,8 @@
   "VirtualMachineResourceGroupName": "sdktestrg",
   "VirtualMachineType": "Compute",
   "RestoreStorageAccountName": "sdktestrg",
-  "RestoreStorageAccountResourceGroupName": "sdktestrg"
+  "RestoreStorageAccountResourceGroupName": "sdktestrg",
+  "AzureSqlItemName": "dsName;satyay-sea-d1-fc1-catalog-2016-11-11-17-20;661f0942-d5b7-486a-b3cb-68f97d325a3c",
+  "AzureSqlPolicyName": "sqlpaaspolicy",
+  "AzureSqlContainerName": "AzureSqlContainer;Sql;sqlpaasrg;sqlpaasserver"
 }
