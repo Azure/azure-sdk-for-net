@@ -11,6 +11,7 @@
     <Compile Include="Helpers\BasicDelegatingHandler.cs" />
     <Compile Include="Helpers\SqlConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenarioTests\Sql2.DataSyncScenarioTest.cs" />
     <Compile Include="ScenarioTests\Sql2.RecommendedActionScenarioTest.cs" />
     <Compile Include="ScenarioTests\Sql2.AdvisorScenarioTest.cs" />
     <Compile Include="ScenarioTests\Sql2.BlobAuditScenarioTest.cs" />
@@ -80,6 +81,15 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BackupScenarioTest\GeoBackupPolicyTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2DataSyncScenarioTests\SyncAgentCRUDTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2DataSyncScenarioTests\SyncGroupCRUDTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2DataSyncScenarioTests\SyncMemberCRUDTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ImportExportScenarioTests\ExportDatabaseTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -143,10 +153,10 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ElasticPoolScenarioTests\ElasticPoolDatabaseOperations.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2FailoverGroupScenarioTests\FailoverGroupCrud.json">
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2FailoverGroupScenarioTests\FailoverGroupCrud.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2FailoverGroupScenarioTests\FailoverGroupDatabaseOperations.json">
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2FailoverGroupScenarioTests\FailoverGroupDatabaseOperations.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2JobAccountScenarioTest\JobAccountCRUDTest.json">
@@ -221,10 +231,10 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\TransparentDataEncryptionCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\ServerKeyCRUDTest.json">
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\ServerKeyCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-	<None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\TransparentDataEncryptionProtectorCRUDTest.json">
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ScenarioTest\TransparentDataEncryptionProtectorCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2SecureConnectionScenarioTest\SecureConnectionPolicyLifecycleTest.json">
