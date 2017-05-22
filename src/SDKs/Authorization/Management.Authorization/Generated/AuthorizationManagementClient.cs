@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Authorization
                         new Iso8601TimeSpanConverter()
                     }
             };
-            CustomInitialize()
+            CustomInitialize();
 			DeserializationSettings.Converters.Add(new ResourceJsonConverter());
 			DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
