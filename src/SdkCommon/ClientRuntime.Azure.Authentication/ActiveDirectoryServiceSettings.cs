@@ -16,7 +16,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         private static readonly ActiveDirectoryServiceSettings AzureSettings = new ActiveDirectoryServiceSettings
         {
-            AuthenticationEndpoint= new Uri("https://login.windows.net/"), 
+            AuthenticationEndpoint= new Uri("https://login.microsoftonline.com/"), 
             TokenAudience = new Uri("https://management.core.windows.net/"),
             ValidateAuthority = true
         };
@@ -25,6 +25,20 @@ namespace Microsoft.Rest.Azure.Authentication
         {
             AuthenticationEndpoint= new Uri("https://login.chinacloudapi.cn/"), 
             TokenAudience = new Uri("https://management.core.chinacloudapi.cn/"),
+            ValidateAuthority = true
+        };
+
+        private static readonly ActiveDirectoryServiceSettings AzureUSGovernmentSettings = new ActiveDirectoryServiceSettings
+        {
+            AuthenticationEndpoint = new Uri("https://login.microsoftonline.com/"),
+            TokenAudience = new Uri("https://management.core.usgovcloudapi.net/"),
+            ValidateAuthority = true
+        };
+ 
+        private static readonly ActiveDirectoryServiceSettings AzureGermanCloudSettings = new ActiveDirectoryServiceSettings
+        {
+            AuthenticationEndpoint = new Uri("https://login.microsoftonline.de/"),
+            TokenAudience = new Uri("https://management.core.cloudapi.de/"),
             ValidateAuthority = true
         };
 
@@ -37,6 +51,16 @@ namespace Microsoft.Rest.Azure.Authentication
         /// Gets the serviceSettings for authentication with Azure China
         /// </summary>
         public static ActiveDirectoryServiceSettings AzureChina { get { return AzureChinaSettings; } }
+
+        /// <summary>
+        /// Gets the serviceSettings for authentication with Azure US Government
+        /// </summary>
+        public static ActiveDirectoryServiceSettings AzureUSGovernment { get { return AzureUSGovernmentSettings; } }
+ 
+        /// <summary>
+        /// Gets the serviceSettings for authentication with Azure Germany
+        /// </summary>
+        public static ActiveDirectoryServiceSettings AzureGermany { get { return AzureGermanCloudSettings; } }
 
         /// <summary>
         /// Gets or sets the ActiveDirectory Endpoint for the Azure Environment

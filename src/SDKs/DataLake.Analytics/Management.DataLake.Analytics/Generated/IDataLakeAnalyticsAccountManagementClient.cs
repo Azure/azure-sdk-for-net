@@ -72,9 +72,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
 
         /// <summary>
-        /// Gets the IComputePolicyOperations.
+        /// Gets the IComputePoliciesOperations.
         /// </summary>
-        IComputePolicyOperations ComputePolicy { get; }
+        IComputePoliciesOperations ComputePolicies { get; }
 
         /// <summary>
         /// Gets the IFirewallRulesOperations.

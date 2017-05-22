@@ -172,4 +172,112 @@
 				 Targets="PublishNetCorePackage" Condition=" %(NetCore_AutoRestLibraries.PackageName) != '' " />
   </Target>
 
+
+<!--
+  <Target Name="CategorizeProjects">
+    <Message Text="Categorizing...."/>
+    <ItemGroup>
+      <ProductProjects Include="%(ProjectToBuild.Identity)" Condition=" '%(ProjectToBuild.ProjectType)' != 'Test' and '%(ProjectToBuild.ExcludeFromBuild)' != 'true' "/>
+      <TestProjects Include="%(ProjectToBuild.Identity)" Condition=" ('%(ProjectToBuild.ProjectType)' == 'Test' and '%(ProjectToBuild.ExcludeFromBuild)' != 'true') "/>
+    </ItemGroup>
+    <ItemGroup Condition=" '$(Scope)' == 'All'">
+      <SDKProject Include="@(ProductProjects)" />
+      <SDKTestProject Include="@(TestProjects)" />
+    </ItemGroup>
+    <ItemGroup>
+      <KVSamples Include="$(LibrarySourceFolder)\SDKs\KeyVault\dataPlane\Microsoft.Azure.KeyVault.Samples\**\*.*csproj"/>
+    </ItemGroup>
+
+    <ItemGroup Condition=" '$(Scope)' != 'All'">
+      <ScopedProjects Include="$(LibrarySourceFolder)\$(Scope)\**\*.csproj" Exclude="$(LibrarySourceFolder)\$(Scope)\*Tests*\*.Test*.csproj" />
+      <ScopedTestProjects Include="$(LibrarySourceFolder)\$(Scope)\*Test*\*.Test*.csproj" />
+    </ItemGroup>
+    <ItemGroup Condition=" '$(Scope)' != 'All'">
+      <SDKProject Include="%(ScopedProjects.Identity)" />
+      <SDKTestProject Include="%(ScopedTestProjects.Identity)" />
+    </ItemGroup>
+
+    <Message Text="Categorized SDK Scoped Projects ..... @(ScopedProjects)" Condition=" '$(Scope)' != 'All'" />
+    <Message Text="Categorized Test Scoped Projects ..... @(ScopedTestProjects)" Condition=" '$(Scope)' != 'All'" />
+    <Message Text="Categorized SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' == 'All'" />
+    <Message Text="Categorized Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' == 'All'" />
+    <Message Text="SDKProjects ....... @(SDKProject->Count())"/>
+    <Message Text="TestSDKProjects ....... @(SDKTestProject->Count())"/>
+
+
+
+  </Target>
+
+  <Target Name="FilterUniTargetProjects">
+    <ItemGroup>
+      <SDKProject Remove="@(UniTargetSDKProject)"/>
+    </ItemGroup>
+  </Target>
+
+
+
+  <Target Name="GetScopedProjects" Condition=" '$(Scope)' != 'All'">
+    <ItemGroup>
+      <SDKProject Include="@(ScopedProjects)" />
+      <SDKTestProject Include="@(ScopedTestProjects)" />
+    </ItemGroup>
+    <Message Text="Scoped SDK Projects ..... @(SDKProject)" Condition=" '$(Scope)' != 'All'" />
+    <Message Text="Scoped Test Projects ..... @(SDKTestProject)" Condition=" '$(Scope)' != 'All'" />
+  </Target>
+
+  <Target Name="CPP">
+    
+    <Message Text="Categorizing Projects....."/>
+    <SDKCategorizeProjects
+      SourceRootDirPath="$(LibrarySourceFolder)"
+      BuildScope="$(Scope)"
+      IgnoreDirNameForSearchingProjects="$(DefaultPathTokenToIgnore)"
+      >
+      <Output TaskParameter="SDKProjectsToBuild" ItemName="SDKProj" />
+      <Output TaskParameter="SDKTestProjectsToBuild" ItemName="TestSDKProj" />
+      <Output TaskParameter="WellKnowSDKNet452Projects" ItemName="Net452SdkProj" />
+      <Output TaskParameter="WellKnowTestSDKNet452Projects" ItemName="Net452TestSdkProj" />
+    </SDKCategorizeProjects>
+
+    <Message Text="SDKProjects ....... @(SDKProj->Count())"/>
+    <Message Text="TestSDKProjects ....... @(TestSDKProj->Count())"/>
+
+    <Message Text="Net45SDK ....... @(Net452SdkProj->Count())"/>
+    <Message Text="Net45TestSDK ....... @(Net452TestSdkProj->Count())"/>
+
+    <Message Text="SDKProjects...... %(SDKProj.Identity)"/>
+    <Message Text="Test SDKProjects.... %(TestSDKProj.Identity)"/>
+
+    <ItemGroup>
+      <SDKProject Include="@(SDKProj)"/>
+      <SDKTestProject Include="@(TestSDKProj)"/>
+      <Net452SDKProj Include="@(Net452SdkProj)"/>
+      <TestNet452SDKProj Include="@(Net452TestSdkProj)"/>
+
+    </ItemGroup>
+
+  </Target>
+  <PropertyGroup>
+    <NetFx452>net452</NetFx452>
+    <NetStd14>netstandard1.4</NetStd14>
+    <NetCore11>netcoreapp1.1</NetCore11>
+  </PropertyGroup>  
+  $(PackageNugetDependsOn);
+  
+
+<SDKProject Include="%(ScopedProjects.Identity)" Condition=" '%(ScopedProjects.ProjectType)' != 'Test' and '%(ScopedProjects.ExcludeFromBuild)' != 'true' "/>
+      <ScopedTestProjects Include="%(ScopedTestProjects.Identity)" Condition=" ('%(ScopedTestProjects.ProjectType)' == 'Test' and '%(ScopedTestProjects.ExcludeFromBuild)' != 'true') "/>
+
+-->
+
+  <Target Name="DumpDirs">
+    <PropertyGroup>
+      <Foo>%(net452SDKProj.RootDir)%(net452SDKProj.Directory)</Foo>
+      <!--<Foo>@(net452SDKProj)</Foo>-->
+    </PropertyGroup>
+
+    <!--<Message Text="$(CIToolsPath)"/>-->
+    <Message Text="$(Foo)"/>
+    
+  </Target>
 </Project>
