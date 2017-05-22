@@ -8,13 +8,11 @@
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+	using System.Linq;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Authorization;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Role definition.
@@ -24,33 +22,46 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Initializes a new instance of the RoleDefinition class.
         /// </summary>
-        public RoleDefinition() { }
+        public RoleDefinition()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RoleDefinition class.
         /// </summary>
+        /// <param name="id">The role definition ID.</param>
+        /// <param name="name">The role definition name.</param>
+        /// <param name="type">The role definition type.</param>
+        /// <param name="properties">Role definition properties.</param>
         public RoleDefinition(string id = default(string), string name = default(string), string type = default(string), RoleDefinitionProperties properties = default(RoleDefinitionProperties))
         {
             Id = id;
             Name = name;
             Type = type;
             Properties = properties;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets role definition id.
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the role definition ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets role definition name.
+        /// Gets or sets the role definition name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets role definition type.
+        /// Gets or sets the role definition type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
