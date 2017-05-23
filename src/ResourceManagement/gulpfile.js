@@ -103,13 +103,13 @@ var mappings = {
     'containerregistry': {
         'dir': 'ContainerRegistry/Microsoft.Azure.Management.ContainerRegistry.Fluent',
         'source': 'arm-containerregistry/2017-03-01/swagger/containerregistry.json',
-        'package': 'Microsoft.Azure.Management.Fluent.ContainerRegistry',
+        'package': 'Microsoft.Azure.Management.ContainerRegistry.Fluent',
         'args': '-FT 1',
     },
     'documentdb': {
         'dir': 'DocumentDB/Microsoft.Azure.Management.DocumentDB.Fluent',
         'source': 'arm-documentdb/2015-04-08/swagger/documentdb.json',
-        'package': 'Microsoft.Azure.Management.Fluent.DocumentDB',
+        'package': 'Microsoft.Azure.Management.DocumentDB.Fluent',
         'args': '-FT 1',
     }
 };

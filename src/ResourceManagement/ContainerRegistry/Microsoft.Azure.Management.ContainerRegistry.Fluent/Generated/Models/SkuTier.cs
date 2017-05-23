@@ -6,12 +6,12 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Fluent.ContainerRegistry.Models
+namespace Microsoft.Azure.Management.ContainerRegistry.Fluent.Models
 {
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
-    using Microsoft.Azure.Management.Fluent;
-    using Microsoft.Azure.Management.Fluent.ContainerRegistry;
+    using Microsoft.Azure.Management.ContainerRegistry;
+    using Microsoft.Azure.Management.ContainerRegistry.Fluent;
 
     /// <summary>
     /// Defines values for SkuTier.

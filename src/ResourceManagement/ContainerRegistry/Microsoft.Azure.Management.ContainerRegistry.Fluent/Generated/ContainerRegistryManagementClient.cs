@@ -6,11 +6,11 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Fluent.ContainerRegistry
+namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
 {
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
-    using Microsoft.Azure.Management.Fluent;
+    using Microsoft.Azure.Management.ContainerRegistry;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;

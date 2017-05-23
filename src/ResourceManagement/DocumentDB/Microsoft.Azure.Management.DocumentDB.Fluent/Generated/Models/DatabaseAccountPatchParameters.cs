@@ -6,12 +6,12 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Fluent.DocumentDB.Models
+namespace Microsoft.Azure.Management.DocumentDB.Fluent.Models
 {
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
-    using Microsoft.Azure.Management.Fluent;
-    using Microsoft.Azure.Management.Fluent.DocumentDB;
+    using Microsoft.Azure.Management.DocumentDB;
+    using Microsoft.Azure.Management.DocumentDB.Fluent;
     using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
