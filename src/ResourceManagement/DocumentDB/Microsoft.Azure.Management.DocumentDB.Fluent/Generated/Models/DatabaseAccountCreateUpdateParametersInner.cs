@@ -6,12 +6,12 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace com.microsoft.azure.management.DocumentDB.Models
+namespace Microsoft.Azure.Management.Fluent.DocumentDB.Models
 {
-    using com.microsoft;
-    using com.microsoft.azure;
-    using com.microsoft.azure.management;
-    using com.microsoft.azure.management.DocumentDB;
+    using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Fluent;
+    using Microsoft.Azure.Management.Fluent.DocumentDB;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
@@ -23,7 +23,7 @@ namespace com.microsoft.azure.management.DocumentDB.Models
     /// <summary>
     /// Parameters to create and update DocumentDB database accounts.
     /// </summary>
-    [JsonTransformation]
+    [Rest.Serialization.JsonTransformation]
     public partial class DatabaseAccountCreateUpdateParametersInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>

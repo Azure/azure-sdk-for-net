@@ -6,11 +6,11 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace com.microsoft.azure.management.DocumentDB
+namespace Microsoft.Azure.Management.Fluent.DocumentDB
 {
-    using com.microsoft;
-    using com.microsoft.azure;
-    using com.microsoft.azure.management;
+    using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Fluent;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;

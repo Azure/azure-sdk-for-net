@@ -109,7 +109,7 @@ var mappings = {
     'documentdb': {
         'dir': 'DocumentDB/Microsoft.Azure.Management.DocumentDB.Fluent',
         'source': 'arm-documentdb/2015-04-08/swagger/documentdb.json',
-        'package': 'com.microsoft.azure.management.DocumentDB',
+        'package': 'Microsoft.Azure.Management.Fluent.DocumentDB',
         'args': '-FT 1',
     }
 };
