@@ -108,7 +108,7 @@ namespace HDInsight.Tests
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient, "East US 2");
 
                 var cluster = GetClusterSpecHelpers.GetAdJoinedCreateParametersIaas();
-                const string dnsname = "HdiSdk-AdJoinedIaasCluster";
+                const string dnsname = "hdisdkadjoinediaascluster";
 
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
                 Assert.Equal(cluster.Location, createresponse.Cluster.Location);
@@ -423,5 +423,67 @@ namespace HDInsight.Tests
                 Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
         }       
+        
+        [Fact]
+        public void TestCreateKafkaCluster()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetCustomCreateParametersKafkaIaas();
+                cluster.ClusterTier = Tier.Standard;
+                const string dnsname = "hdisdk-KafkaCluster";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+
+                client.Clusters.Get(resourceGroup, dnsname);
+                Assert.NotNull(createresponse.Cluster.Properties.ClusterDefinition.ComponentVersion);
+
+                HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+            }
+        }
+
+        [Fact]
+        public void TestCreateKafkaClusterWithManagedDisks()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
+
+                var cluster = GetClusterSpecHelpers.GetCustomCreateParametersKafkaIaasWithManagedDisks();
+                cluster.ClusterTier = Tier.Standard;
+                const string dnsname = "hdisdk-KafkaTestclusterWithManagedDisks";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(dnsname, createresponse.Cluster.Name);
+
+                client.Clusters.Get(resourceGroup, dnsname);
+                Assert.NotNull(createresponse.Cluster.Properties.ClusterDefinition.ComponentVersion);
+
+                HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
+                var getresult = client.Clusters.Get(resourceGroup, dnsname);
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                
+            }
+        }
     }
 }

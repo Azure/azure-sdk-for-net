@@ -32,6 +32,17 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     /// </summary>
     public partial class Role
     {
+        private IList<DataDisksGroupProperties> _dataDisksGroups;
+        
+        /// <summary>
+        /// Optional. Gets or sets the data disks groups for the role.
+        /// </summary>
+        public IList<DataDisksGroupProperties> DataDisksGroups
+        {
+            get { return this._dataDisksGroups; }
+            set { this._dataDisksGroups = value; }
+        }
+        
         private HardwareProfile _hardwareProfile;
         
         /// <summary>
@@ -103,6 +114,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         public Role()
         {
+            this.DataDisksGroups = new LazyList<DataDisksGroupProperties>();
             this.ScriptActions = new LazyList<ScriptAction>();
         }
     }
