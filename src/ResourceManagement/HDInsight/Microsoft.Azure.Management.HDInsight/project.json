@@ -1,5 +1,5 @@
 {
-    "version": "2.0.6",
+    "version": "2.0.7",
     "title": "Microsoft Azure HDInsight Management Library",
     "description": "The generally available HDInsight Management NuGet package. This NuGet package allows you to create and manage Azure HDInsight clusters using Azure Resource Manager (ARM).",
     "authors": [ "Microsoft" ],

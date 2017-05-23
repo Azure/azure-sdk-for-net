@@ -92,5 +92,25 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The constant for cluster identity configs.
         /// </summary>
         public const string ClusterIdentity = "clusterIdentity";
+		
+		/// <summary>
+        /// The constant for Spark-Defaults configs.
+        /// </summary>
+        public const string SparkDefaults = "spark-defaults";
+
+        /// <summary>
+        /// The constant for Spark-Thrift-SparkConf configs.
+        /// </summary>
+        public const string SparkThriftConf = "spark-thrift-sparkconf";
+
+        /// <summary>
+        /// The constant for Spark2-Defaults configs.
+        /// </summary>
+        public const string Spark2Defaults = "spark2-defaults";
+
+        /// <summary>
+        /// The constant for Spark2-Thrift-SparkConf configs.
+        /// </summary>
+        public const string Spark2ThriftConf = "spark2-thrift-sparkconf";
     }
 }
