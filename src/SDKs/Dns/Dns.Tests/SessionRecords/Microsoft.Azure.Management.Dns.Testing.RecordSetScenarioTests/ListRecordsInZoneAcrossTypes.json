@@ -7,16 +7,17 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "80b6d258-94fc-4fb4-bfe4-845d0df2dedb"
+          "4cbafa81-0d58-4274-af00-99262af48f17"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.1.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/providers/microsoft.network\",\r\n  \"namespace\": \"microsoft.network\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"2cf9eb86-36b5-49dc-86ae-9a63135dfa8c\",\r\n    \"roleDefinitionId\": \"13ba9ab4-19f0-4804-adc4-14ece36cc7a1\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"trafficmanagerprofiles\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-11-01\",\r\n        \"2015-04-28-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"dnsOperationResults\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnsOperationStatuses\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/A\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/AAAA\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/CNAME\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/PTR\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/MX\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/TXT\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/SRV\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\",\r\n        \"2015-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworks\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"publicIPAddresses\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"networkInterfaces\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"loadBalancers\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"networkSecurityGroups\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"routeTables\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/CheckDnsNameAvailability\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkTrafficManagerNameAvailability\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2015-11-01\",\r\n        \"2015-04-28-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    },\r\n    {\r\n      \"resourceType\": \"localNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    },\r\n    {\r\n      \"resourceType\": \"connections\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    },\r\n    {\r\n      \"resourceType\": \"applicationGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    },\r\n    {\r\n      \"resourceType\": \"expressRouteCircuits\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    },\r\n    {\r\n      \"resourceType\": \"expressRouteServiceProviders\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/providers/microsoft.network\",\r\n  \"namespace\": \"microsoft.network\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"2cf9eb86-36b5-49dc-86ae-9a63135dfa8c\",\r\n    \"roleDefinitionId\": \"13ba9ab4-19f0-4804-adc4-14ece36cc7a1\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"trafficmanagerprofiles\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-05-01\",\r\n        \"2017-03-01\",\r\n        \"2015-11-01\",\r\n        \"2015-04-28-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"dnsOperationResults\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnsOperationStatuses\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/A\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/AAAA\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/CNAME\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/PTR\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/MX\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/TXT\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/SRV\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\",\r\n        \"2015-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/SOA\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\",\r\n        \"2015-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"dnszones/NS\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-07-01\",\r\n        \"2016-04-01\",\r\n        \"2015-05-04-preview\",\r\n        \"2015-04-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworks\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"publicIPAddresses\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"networkInterfaces\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"loadBalancers\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"networkSecurityGroups\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"routeTables\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/CheckDnsNameAvailability\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/usages\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkTrafficManagerNameAvailability\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-05-01\",\r\n        \"2017-03-01\",\r\n        \"2015-11-01\",\r\n        \"2015-04-28-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"trafficManagerGeographicHierarchies\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-05-01\",\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"networkWatchers\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"virtualNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"localNetworkGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"connections\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"applicationGateways\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    },\r\n    {\r\n      \"resourceType\": \"expressRouteCircuits\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    },\r\n    {\r\n      \"resourceType\": \"expressRouteServiceProviders\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\",\r\n        \"2016-11-01\",\r\n        \"2016-10-01\",\r\n        \"2016-09-01\",\r\n        \"2016-08-01\",\r\n        \"2016-07-01\",\r\n        \"2016-06-01\",\r\n        \"2016-03-30\",\r\n        \"2015-06-15\",\r\n        \"2015-05-01-preview\",\r\n        \"2014-12-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"applicationGatewayAvailableWafRuleSets\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"bgpServiceCommunities\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2016-12-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"routeFilters\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"East US 2\",\r\n        \"North Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2017-03-01\",\r\n        \"2016-12-01\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:36 GMT"
+          "Fri, 12 May 2017 02:48:21 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -37,16 +38,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14998"
         ],
         "x-ms-request-id": [
-          "53ce6106-97f6-490b-a63d-557142bb0767"
+          "37d61395-cbc4-436e-a00f-7b2dba07f95f"
         ],
         "x-ms-correlation-request-id": [
-          "53ce6106-97f6-490b-a63d-557142bb0767"
+          "37d61395-cbc4-436e-a00f-7b2dba07f95f"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000936Z:53ce6106-97f6-490b-a63d-557142bb0767"
+          "NORTHEUROPE:20170512T024822Z:37d61395-cbc4-436e-a00f-7b2dba07f95f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -55,8 +56,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourcegroups/hydratestdnsrg6970?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlZ3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MD9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourcegroups/hydratestdnsrg9836?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlZ3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNj9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
@@ -67,16 +68,17 @@
           "32"
         ],
         "x-ms-client-request-id": [
-          "2524a56a-8515-4e10-8409-fedced7df6b3"
+          "26a3134c-910a-4142-9c2a-4b4b9ab20b4c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.1.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970\",\r\n  \"name\": \"hydratestdnsrg6970\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836\",\r\n  \"name\": \"hydratestdnsrg9836\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "192"
@@ -91,22 +93,22 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:37 GMT"
+          "Fri, 12 May 2017 02:48:23 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1191"
+          "1197"
         ],
         "x-ms-request-id": [
-          "5bb60f3a-29a9-4234-a0c2-5000dc9f3d7b"
+          "c57b4a6f-0155-4b47-b2ec-f168092b6bd2"
         ],
         "x-ms-correlation-request-id": [
-          "5bb60f3a-29a9-4234-a0c2-5000dc9f3d7b"
+          "c57b4a6f-0155-4b47-b2ec-f168092b6bd2"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000937Z:5bb60f3a-29a9-4234-a0c2-5000dc9f3d7b"
+          "NORTHEUROPE:20170512T024824Z:c57b4a6f-0155-4b47-b2ec-f168092b6bd2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -115,8 +117,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zem9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNzg5Nj9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com2228?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tMjIyOD9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"global\"\r\n}",
       "RequestHeaders": {
@@ -127,19 +129,20 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "297bdd49-bc8c-4458-931d-38c562d2d342"
+          "dcce7f1b-b369-47e4-ba29-27be74e78c49"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.7.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896\",\r\n  \"name\": \"hydratest.dnszone.com7896\",\r\n  \"type\": \"Microsoft.Network/dnszones\",\r\n  \"etag\": \"00000002-0000-0000-0ae4-dd0d63bcd101\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"maxNumberOfRecordSets\": 5000,\r\n    \"nameServers\": [\r\n      \"ns1-02.daily.azure-dns.com.\",\r\n      \"ns2-02.daily.azure-dns.net.\",\r\n      \"ns3-02.daily.azure-dns.org.\",\r\n      \"ns4-02.daily.azure-dns.info.\"\r\n    ],\r\n    \"numberOfRecordSets\": 2\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnszones/hydratest.dnszone.com2228\",\r\n  \"name\": \"hydratest.dnszone.com2228\",\r\n  \"type\": \"Microsoft.Network/dnszones\",\r\n  \"etag\": \"00000002-0000-0000-91a0-983acacad201\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"maxNumberOfRecordSets\": 10000000,\r\n    \"nameServers\": [\r\n      \"ns1-04.daily.azure-dns.com.\",\r\n      \"ns2-04.daily.azure-dns.net.\",\r\n      \"ns3-04.daily.azure-dns.org.\",\r\n      \"ns4-04.daily.azure-dns.info.\"\r\n    ],\r\n    \"numberOfRecordSets\": 2\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "517"
+          "521"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -148,10 +151,10 @@
           "private"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:40 GMT"
+          "Fri, 12 May 2017 02:48:27 GMT"
         ],
         "ETag": [
-          "00000002-0000-0000-0ae4-dd0d63bcd101"
+          "00000002-0000-0000-91a0-983acacad201"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -163,7 +166,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "297bdd49-bc8c-4458-931d-38c562d2d342"
+          "dcce7f1b-b369-47e4-ba29-27be74e78c49"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -172,22 +175,22 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "11992"
+          "5999"
         ],
         "x-ms-correlation-request-id": [
-          "5d92ea60-1cd9-4e11-af84-f1e58ca792a7"
+          "4b418907-7b47-455e-878f-9680b44bf504"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000941Z:5d92ea60-1cd9-4e11-af84-f1e58ca792a7"
+          "NORTHEUROPE:20170512T024827Z:4b418907-7b47-455e-878f-9680b44bf504"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/TXT/hydratestrec4525?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zem9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNzg5Ni9UWFQvaHlkcmF0ZXN0cmVjNDUyNT9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com2228/TXT/hydratestrec3508?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tMjIyOC9UWFQvaHlkcmF0ZXN0cmVjMzUwOD9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"hydratestrec4525\",\r\n  \"properties\": {\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"text1\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"hydratestrec3508\",\r\n  \"properties\": {\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"text1\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -196,19 +199,20 @@
           "171"
         ],
         "x-ms-client-request-id": [
-          "1bd8cf42-8d40-4c4a-a6e6-7c32d501177c"
+          "6fa6fa51-75b7-4abc-a7e9-83bb5b4a28a5"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.7.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/TXT/hydratestrec4525\",\r\n  \"name\": \"hydratestrec4525\",\r\n  \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n  \"etag\": \"db142bec-6cc8-49cf-966b-7837c22ad4f2\",\r\n  \"properties\": {\r\n    \"metadata\": null,\r\n    \"fqdn\": \"hydratestrec4525.hydratest.dnszone.com7896.\",\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"text1\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnszones/hydratest.dnszone.com2228/TXT/hydratestrec3508\",\r\n  \"name\": \"hydratestrec3508\",\r\n  \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n  \"etag\": \"b44ccc03-b02f-4f5c-bc0e-6b333cbc3a92\",\r\n  \"properties\": {\r\n    \"fqdn\": \"hydratestrec3508.hydratest.dnszone.com2228.\",\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"text1\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "430"
+          "414"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -217,10 +221,10 @@
           "private"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:42 GMT"
+          "Fri, 12 May 2017 02:48:28 GMT"
         ],
         "ETag": [
-          "db142bec-6cc8-49cf-966b-7837c22ad4f2"
+          "b44ccc03-b02f-4f5c-bc0e-6b333cbc3a92"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -232,7 +236,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1bd8cf42-8d40-4c4a-a6e6-7c32d501177c"
+          "6fa6fa51-75b7-4abc-a7e9-83bb5b4a28a5"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -241,22 +245,22 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "11999"
+          "5999"
         ],
         "x-ms-correlation-request-id": [
-          "04a975d3-113e-4e60-9111-8918d10857cc"
+          "f2a92f26-d19f-4c47-8e64-f3314d32133a"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000942Z:04a975d3-113e-4e60-9111-8918d10857cc"
+          "NORTHEUROPE:20170512T024829Z:f2a92f26-d19f-4c47-8e64-f3314d32133a"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/TXT/hydratestrec2322?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zem9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNzg5Ni9UWFQvaHlkcmF0ZXN0cmVjMjMyMj9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com2228/TXT/hydratestrec1287?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tMjIyOC9UWFQvaHlkcmF0ZXN0cmVjMTI4Nz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"hydratestrec2322\",\r\n  \"properties\": {\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"text1\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"hydratestrec1287\",\r\n  \"properties\": {\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"text1\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -265,19 +269,20 @@
           "171"
         ],
         "x-ms-client-request-id": [
-          "f815fe7c-a05c-417c-911b-c0d47c826546"
+          "b62b977f-c277-4775-956d-55653362a05b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.7.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/TXT/hydratestrec2322\",\r\n  \"name\": \"hydratestrec2322\",\r\n  \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n  \"etag\": \"bc7a1507-0aa4-46c7-85e3-ddb7251c87d4\",\r\n  \"properties\": {\r\n    \"metadata\": null,\r\n    \"fqdn\": \"hydratestrec2322.hydratest.dnszone.com7896.\",\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"text1\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnszones/hydratest.dnszone.com2228/TXT/hydratestrec1287\",\r\n  \"name\": \"hydratestrec1287\",\r\n  \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n  \"etag\": \"d8933a69-0c8f-42a4-b79a-12410e60b142\",\r\n  \"properties\": {\r\n    \"fqdn\": \"hydratestrec1287.hydratest.dnszone.com2228.\",\r\n    \"TTL\": 42,\r\n    \"TXTRecords\": [\r\n      {\r\n        \"value\": [\r\n          \"text1\"\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "430"
+          "414"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -286,10 +291,10 @@
           "private"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:42 GMT"
+          "Fri, 12 May 2017 02:48:29 GMT"
         ],
         "ETag": [
-          "bc7a1507-0aa4-46c7-85e3-ddb7251c87d4"
+          "d8933a69-0c8f-42a4-b79a-12410e60b142"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -301,7 +306,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f815fe7c-a05c-417c-911b-c0d47c826546"
+          "b62b977f-c277-4775-956d-55653362a05b"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -310,22 +315,22 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "11998"
+          "5998"
         ],
         "x-ms-correlation-request-id": [
-          "9565236e-4ae7-4b3e-bfc6-c1c6c204d849"
+          "33fa4e84-68a3-4736-9091-e717a32fe7e6"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000943Z:9565236e-4ae7-4b3e-bfc6-c1c6c204d849"
+          "NORTHEUROPE:20170512T024829Z:33fa4e84-68a3-4736-9091-e717a32fe7e6"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/AAAA/hydratestrec5692?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zem9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNzg5Ni9BQUFBL2h5ZHJhdGVzdHJlYzU2OTI/YXBpLXZlcnNpb249MjAxNi0wNC0wMQ==",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com2228/AAAA/hydratestrec9044?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tMjIyOC9BQUFBL2h5ZHJhdGVzdHJlYzkwNDQ/YXBpLXZlcnNpb249MjAxNi0wNC0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"hydratestrec5692\",\r\n  \"properties\": {\r\n    \"TTL\": 42,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"123::45\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"hydratestrec9044\",\r\n  \"properties\": {\r\n    \"TTL\": 42,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"123::45\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -334,19 +339,20 @@
           "156"
         ],
         "x-ms-client-request-id": [
-          "aad6d8ea-200d-4e70-88a0-2b53b2ad1cf3"
+          "474a8df6-751c-49fc-81f9-28b4938f9730"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.7.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/AAAA/hydratestrec5692\",\r\n  \"name\": \"hydratestrec5692\",\r\n  \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n  \"etag\": \"67efd95c-38ff-4649-90bc-556e02654ca7\",\r\n  \"properties\": {\r\n    \"metadata\": null,\r\n    \"fqdn\": \"hydratestrec5692.hydratest.dnszone.com7896.\",\r\n    \"TTL\": 42,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"123::45\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnszones/hydratest.dnszone.com2228/AAAA/hydratestrec9044\",\r\n  \"name\": \"hydratestrec9044\",\r\n  \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n  \"etag\": \"8f882a70-b5e2-4c05-a8ed-07f6a3682df4\",\r\n  \"properties\": {\r\n    \"fqdn\": \"hydratestrec9044.hydratest.dnszone.com2228.\",\r\n    \"TTL\": 42,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"123::45\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "439"
+          "423"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -355,10 +361,10 @@
           "private"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:44 GMT"
+          "Fri, 12 May 2017 02:48:30 GMT"
         ],
         "ETag": [
-          "67efd95c-38ff-4649-90bc-556e02654ca7"
+          "8f882a70-b5e2-4c05-a8ed-07f6a3682df4"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -370,7 +376,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "aad6d8ea-200d-4e70-88a0-2b53b2ad1cf3"
+          "474a8df6-751c-49fc-81f9-28b4938f9730"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -379,34 +385,35 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "11999"
+          "5999"
         ],
         "x-ms-correlation-request-id": [
-          "381d2ec9-fa3e-4e23-87a0-c8c79fc3cea1"
+          "8fe6a1cc-b034-4ebf-b35d-7a26ec877fb6"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000944Z:381d2ec9-fa3e-4e23-87a0-c8c79fc3cea1"
+          "NORTHEUROPE:20170512T024831Z:8fe6a1cc-b034-4ebf-b35d-7a26ec877fb6"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/recordsets?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zem9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNzg5Ni9yZWNvcmRzZXRzP2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com2228/recordsets?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tMjIyOC9yZWNvcmRzZXRzP2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e6aea485-2624-4e9f-a7dd-a23bfbb38ab3"
+          "2d56d79f-3704-4b66-a470-3e8363056170"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.7.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/NS/@\",\r\n      \"name\": \"@\",\r\n      \"type\": \"Microsoft.Network/dnszones/NS\",\r\n      \"etag\": \"7eaff236-7da1-469f-86b1-f37f19690ad8\",\r\n      \"properties\": {\r\n        \"metadata\": null,\r\n        \"fqdn\": \"hydratest.dnszone.com7896.\",\r\n        \"TTL\": 172800,\r\n        \"NSRecords\": [\r\n          {\r\n            \"nsdname\": \"ns1-02.daily.azure-dns.com.\"\r\n          },\r\n          {\r\n            \"nsdname\": \"ns2-02.daily.azure-dns.net.\"\r\n          },\r\n          {\r\n            \"nsdname\": \"ns3-02.daily.azure-dns.org.\"\r\n          },\r\n          {\r\n            \"nsdname\": \"ns4-02.daily.azure-dns.info.\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/SOA/@\",\r\n      \"name\": \"@\",\r\n      \"type\": \"Microsoft.Network/dnszones/SOA\",\r\n      \"etag\": \"22e8014f-9555-4a8c-83bc-e2e03abb8517\",\r\n      \"properties\": {\r\n        \"metadata\": null,\r\n        \"fqdn\": \"hydratest.dnszone.com7896.\",\r\n        \"TTL\": 3600,\r\n        \"SOARecord\": {\r\n          \"email\": \"azuredns-hostmaster.microsoft.com\",\r\n          \"expireTime\": 2419200,\r\n          \"host\": \"ns1-02.daily.azure-dns.com.\",\r\n          \"minimumTTL\": 300,\r\n          \"refreshTime\": 3600,\r\n          \"retryTime\": 300,\r\n          \"serialNumber\": 1\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/TXT/hydratestrec2322\",\r\n      \"name\": \"hydratestrec2322\",\r\n      \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n      \"etag\": \"bc7a1507-0aa4-46c7-85e3-ddb7251c87d4\",\r\n      \"properties\": {\r\n        \"metadata\": null,\r\n        \"fqdn\": \"hydratestrec2322.hydratest.dnszone.com7896.\",\r\n        \"TTL\": 42,\r\n        \"TXTRecords\": [\r\n          {\r\n            \"value\": [\r\n              \"text1\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/TXT/hydratestrec4525\",\r\n      \"name\": \"hydratestrec4525\",\r\n      \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n      \"etag\": \"db142bec-6cc8-49cf-966b-7837c22ad4f2\",\r\n      \"properties\": {\r\n        \"metadata\": null,\r\n        \"fqdn\": \"hydratestrec4525.hydratest.dnszone.com7896.\",\r\n        \"TTL\": 42,\r\n        \"TXTRecords\": [\r\n          {\r\n            \"value\": [\r\n              \"text1\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/AAAA/hydratestrec5692\",\r\n      \"name\": \"hydratestrec5692\",\r\n      \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n      \"etag\": \"67efd95c-38ff-4649-90bc-556e02654ca7\",\r\n      \"properties\": {\r\n        \"metadata\": null,\r\n        \"fqdn\": \"hydratestrec5692.hydratest.dnszone.com7896.\",\r\n        \"TTL\": 42,\r\n        \"AAAARecords\": [\r\n          {\r\n            \"ipv6Address\": \"123::45\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnszones/hydratest.dnszone.com2228/NS/@\",\r\n      \"name\": \"@\",\r\n      \"type\": \"Microsoft.Network/dnszones/NS\",\r\n      \"etag\": \"abd9a0c9-daab-43f7-b328-8c90868804c2\",\r\n      \"properties\": {\r\n        \"fqdn\": \"hydratest.dnszone.com2228.\",\r\n        \"TTL\": 172800,\r\n        \"NSRecords\": [\r\n          {\r\n            \"nsdname\": \"ns1-04.daily.azure-dns.com.\"\r\n          },\r\n          {\r\n            \"nsdname\": \"ns2-04.daily.azure-dns.net.\"\r\n          },\r\n          {\r\n            \"nsdname\": \"ns3-04.daily.azure-dns.org.\"\r\n          },\r\n          {\r\n            \"nsdname\": \"ns4-04.daily.azure-dns.info.\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnszones/hydratest.dnszone.com2228/SOA/@\",\r\n      \"name\": \"@\",\r\n      \"type\": \"Microsoft.Network/dnszones/SOA\",\r\n      \"etag\": \"355971a1-90c1-4052-b25b-020be3aa6fbd\",\r\n      \"properties\": {\r\n        \"fqdn\": \"hydratest.dnszone.com2228.\",\r\n        \"TTL\": 3600,\r\n        \"SOARecord\": {\r\n          \"email\": \"azuredns-hostmaster.microsoft.com\",\r\n          \"expireTime\": 2419200,\r\n          \"host\": \"ns1-04.daily.azure-dns.com.\",\r\n          \"minimumTTL\": 300,\r\n          \"refreshTime\": 3600,\r\n          \"retryTime\": 300,\r\n          \"serialNumber\": 1\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnszones/hydratest.dnszone.com2228/TXT/hydratestrec1287\",\r\n      \"name\": \"hydratestrec1287\",\r\n      \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n      \"etag\": \"d8933a69-0c8f-42a4-b79a-12410e60b142\",\r\n      \"properties\": {\r\n        \"fqdn\": \"hydratestrec1287.hydratest.dnszone.com2228.\",\r\n        \"TTL\": 42,\r\n        \"TXTRecords\": [\r\n          {\r\n            \"value\": [\r\n              \"text1\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnszones/hydratest.dnszone.com2228/TXT/hydratestrec3508\",\r\n      \"name\": \"hydratestrec3508\",\r\n      \"type\": \"Microsoft.Network/dnszones/TXT\",\r\n      \"etag\": \"b44ccc03-b02f-4f5c-bc0e-6b333cbc3a92\",\r\n      \"properties\": {\r\n        \"fqdn\": \"hydratestrec3508.hydratest.dnszone.com2228.\",\r\n        \"TTL\": 42,\r\n        \"TXTRecords\": [\r\n          {\r\n            \"value\": [\r\n              \"text1\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnszones/hydratest.dnszone.com2228/AAAA/hydratestrec9044\",\r\n      \"name\": \"hydratestrec9044\",\r\n      \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n      \"etag\": \"8f882a70-b5e2-4c05-a8ed-07f6a3682df4\",\r\n      \"properties\": {\r\n        \"fqdn\": \"hydratestrec9044.hydratest.dnszone.com2228.\",\r\n        \"TTL\": 42,\r\n        \"AAAARecords\": [\r\n          {\r\n            \"ipv6Address\": \"123::45\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -415,7 +422,7 @@
           "private"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:44 GMT"
+          "Fri, 12 May 2017 02:48:31 GMT"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -433,7 +440,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "e6aea485-2624-4e9f-a7dd-a23bfbb38ab3"
+          "2d56d79f-3704-4b66-a470-3e8363056170"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -442,31 +449,32 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "a3f359eb-4d8d-4afa-b469-bdd60d2399b3"
+          "25b89a49-fadf-48d8-ab40-ad39d43ed551"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000945Z:a3f359eb-4d8d-4afa-b469-bdd60d2399b3"
+          "NORTHEUROPE:20170512T024832Z:25b89a49-fadf-48d8-ab40-ad39d43ed551"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/TXT/hydratestrec4525?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zem9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNzg5Ni9UWFQvaHlkcmF0ZXN0cmVjNDUyNT9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com2228/TXT/hydratestrec3508?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tMjIyOC9UWFQvaHlkcmF0ZXN0cmVjMzUwOD9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0df655bb-b829-4976-aa68-182f439a0092"
+          "c02e776e-84d6-4165-a0bc-1a3c6b56c48d"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.7.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -478,7 +486,7 @@
           "private"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:45 GMT"
+          "Fri, 12 May 2017 02:48:32 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -490,7 +498,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "0df655bb-b829-4976-aa68-182f439a0092"
+          "c02e776e-84d6-4165-a0bc-1a3c6b56c48d"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -499,31 +507,32 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "11999"
+          "5999"
         ],
         "x-ms-correlation-request-id": [
-          "a39e08ca-144f-4d9a-a05c-37a2b647c6bf"
+          "0e04d890-3300-42dd-8b8b-dd82bccf9d8e"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000945Z:a39e08ca-144f-4d9a-a05c-37a2b647c6bf"
+          "NORTHEUROPE:20170512T024833Z:0e04d890-3300-42dd-8b8b-dd82bccf9d8e"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/TXT/hydratestrec2322?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zem9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNzg5Ni9UWFQvaHlkcmF0ZXN0cmVjMjMyMj9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com2228/TXT/hydratestrec1287?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tMjIyOC9UWFQvaHlkcmF0ZXN0cmVjMTI4Nz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "12cbc772-1ec9-4113-bb67-a1fe51e58730"
+          "bf7059db-e7dc-475a-af31-6827316595ea"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.7.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -535,7 +544,7 @@
           "private"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:45 GMT"
+          "Fri, 12 May 2017 02:48:33 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -547,7 +556,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "12cbc772-1ec9-4113-bb67-a1fe51e58730"
+          "bf7059db-e7dc-475a-af31-6827316595ea"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -556,31 +565,32 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "11998"
+          "5998"
         ],
         "x-ms-correlation-request-id": [
-          "befafe6c-50b0-45d4-8d87-1fef84a8d4f2"
+          "8e527651-ed73-4991-9f45-073b5170996a"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000946Z:befafe6c-50b0-45d4-8d87-1fef84a8d4f2"
+          "NORTHEUROPE:20170512T024833Z:8e527651-ed73-4991-9f45-073b5170996a"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896/AAAA/hydratestrec5692?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zem9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNzg5Ni9BQUFBL2h5ZHJhdGVzdHJlYzU2OTI/YXBpLXZlcnNpb249MjAxNi0wNC0wMQ==",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com2228/AAAA/hydratestrec9044?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tMjIyOC9BQUFBL2h5ZHJhdGVzdHJlYzkwNDQ/YXBpLXZlcnNpb249MjAxNi0wNC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fb55e76c-c044-426c-bc50-15d82e5a6666"
+          "ad8f6757-2139-4ea9-b1e1-35d74bbcb825"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.7.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -592,7 +602,7 @@
           "private"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:46 GMT"
+          "Fri, 12 May 2017 02:48:33 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -604,7 +614,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "fb55e76c-c044-426c-bc50-15d82e5a6666"
+          "ad8f6757-2139-4ea9-b1e1-35d74bbcb825"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -613,31 +623,32 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "11999"
+          "5999"
         ],
         "x-ms-correlation-request-id": [
-          "559df010-0549-481f-a0f3-6e2a75a5b4a4"
+          "8ba1e990-5e21-45e0-a599-075c9b6b619e"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000947Z:559df010-0549-481f-a0f3-6e2a75a5b4a4"
+          "NORTHEUROPE:20170512T024834Z:8ba1e990-5e21-45e0-a599-075c9b6b619e"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnszones/hydratest.dnszone.com7896?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zem9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tNzg5Nj9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsZones/hydratest.dnszone.com2228?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zWm9uZXMvaHlkcmF0ZXN0LmRuc3pvbmUuY29tMjIyOD9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "98941d9d-cf28-44cd-947d-d59442d928e5"
+          "9c0e0b6c-e8d1-4299-aa1a-11718fe5ddfe"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.7.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -649,10 +660,13 @@
           "private"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:09:47 GMT"
+          "Fri, 12 May 2017 02:48:34 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnsOperationResults/delzone6360042298750948835867cd19?api-version=2016-04-01"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsOperationResults/delzone63630154114765620479a576f3?api-version=2016-04-01"
+        ],
+        "Retry-After": [
+          "3"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -664,10 +678,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net:443/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnsOperationStatuses/delzone6360042298750948835867cd19?api-version=2016-04-01"
+          "https://api-dogfood.resources.windows-int.net:443/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsOperationStatuses/delzone63630154114765620479a576f3?api-version=2016-04-01"
         ],
         "x-ms-request-id": [
-          "98941d9d-cf28-44cd-947d-d59442d928e5"
+          "9c0e0b6c-e8d1-4299-aa1a-11718fe5ddfe"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -676,25 +690,26 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "11993"
+          "5999"
         ],
         "x-ms-correlation-request-id": [
-          "2bbaf664-2a76-4cfc-a2eb-e04d47a5365c"
+          "a7a0b046-8d78-45ee-90cf-f054768f9f81"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T000948Z:2bbaf664-2a76-4cfc-a2eb-e04d47a5365c"
+          "NORTHEUROPE:20170512T024835Z:a7a0b046-8d78-45ee-90cf-f054768f9f81"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg6970/providers/Microsoft.Network/dnsOperationStatuses/delzone6360042298750948835867cd19?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnNjk3MC9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zT3BlcmF0aW9uU3RhdHVzZXMvZGVsem9uZTYzNjAwNDIyOTg3NTA5NDg4MzU4NjdjZDE5P2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestUri": "/subscriptions/3cfb1b34-e5a9-4f98-bf9c-e4d69a6b170c/resourceGroups/hydratestdnsrg9836/providers/Microsoft.Network/dnsOperationStatuses/delzone63630154114765620479a576f3?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2NmYjFiMzQtZTVhOS00Zjk4LWJmOWMtZTRkNjlhNmIxNzBjL3Jlc291cmNlR3JvdXBzL2h5ZHJhdGVzdGRuc3JnOTgzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvZG5zT3BlcmF0aW9uU3RhdHVzZXMvZGVsem9uZTYzNjMwMTU0MTE0NzY1NjIwNDc5YTU3NmYzP2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.7.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Dns.DnsManagementClient/1.8.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
@@ -706,7 +721,7 @@
           "private"
         ],
         "Date": [
-          "Thu, 02 Jun 2016 00:10:19 GMT"
+          "Fri, 12 May 2017 02:49:05 GMT"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -724,7 +739,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "b5b31a35-bad5-4209-837a-ce64157db396"
+          "73fd8cc2-cb30-4b1c-8f3c-25ac601b3790"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -733,13 +748,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "11995"
+          "5999"
         ],
         "x-ms-correlation-request-id": [
-          "5f3697d6-f536-4948-92d3-b5f953048e72"
+          "4b50d197-25cc-4f20-85cf-35f6e7e0d4c3"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160602T001019Z:5f3697d6-f536-4948-92d3-b5f953048e72"
+          "NORTHEUROPE:20170512T024906Z:4b50d197-25cc-4f20-85cf-35f6e7e0d4c3"
         ]
       },
       "StatusCode": 200
@@ -747,16 +762,16 @@
   ],
   "Names": {
     "SetupSingleRecordSetTest": [
-      "hydratest.dnszone.com7896",
-      "hydratestdnsrec4212"
+      "hydratest.dnszone.com2228",
+      "hydratestdnsrec3453"
     ],
     "CreateResourceGroup": [
-      "hydratestdnsrg6970"
+      "hydratestdnsrg9836"
     ],
     "ListRecordsInZone": [
-      "hydratestrec4525",
-      "hydratestrec2322",
-      "hydratestrec5692"
+      "hydratestrec3508",
+      "hydratestrec1287",
+      "hydratestrec9044"
     ]
   },
   "Variables": {
