@@ -51,6 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return Authenticate(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 

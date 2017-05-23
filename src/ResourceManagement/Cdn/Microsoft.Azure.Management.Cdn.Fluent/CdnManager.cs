@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return new CdnManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 

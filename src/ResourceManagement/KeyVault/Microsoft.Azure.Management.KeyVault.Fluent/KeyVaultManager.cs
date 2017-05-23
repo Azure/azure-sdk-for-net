@@ -52,6 +52,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
             return new KeyVaultManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId, credentials.TenantId);
         }
 

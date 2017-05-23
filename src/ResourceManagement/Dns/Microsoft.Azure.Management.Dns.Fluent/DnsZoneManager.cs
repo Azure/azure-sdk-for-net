@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return new DnsZoneManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 
