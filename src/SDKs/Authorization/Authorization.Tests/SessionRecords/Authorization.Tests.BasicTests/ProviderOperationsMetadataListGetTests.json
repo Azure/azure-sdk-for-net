@@ -1,0 +1,110 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Authorization/providerOperations?api-version=2015-07-01&$expand=resourceTypes",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wcm92aWRlck9wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxNS0wNy0wMSYkZXhwYW5kPXJlc291cmNlVHlwZXM=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"displayName\": \"Microsoft Domains\",\r\n      \"operations\": [\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/generateSsoRequest/Action\",\r\n          \"displayName\": \"Generate Domain Control Center Single Sign On Request\",\r\n          \"description\": \"Generate a request for signing into domain control center.\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        },\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/validateDomainRegistrationInformation/Action\",\r\n          \"displayName\": \"Domain Purchase Info Validation\",\r\n          \"description\": \"Validate domain purchase object without submitting it\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        },\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/checkDomainAvailability/Action\",\r\n          \"displayName\": \"Check Domain Availablity\",\r\n          \"description\": \"Check if a domain is available for purchase\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        },\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/listDomainRecommendations/Action\",\r\n          \"displayName\": \"Retrieve Domain Recommendations\",\r\n          \"description\": \"Retrieve the list domain recommendations based on keywords\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        },\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/register/action\",\r\n          \"displayName\": \"Register Microsoft Domains resource provider\",\r\n          \"description\": \"Register the Microsoft Domains resource provider for the subscription\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        }\r\n      ],\r\n      \"resourceTypes\": [\r\n        {\r\n          \"name\": \"domains\",\r\n          \"displayName\": \"Domain\",\r\n          \"operations\": [\r\n            {\r\n              \"name\": \"Microsoft.DomainRegistration/domains/Read\",\r\n              \"displayName\": \"Get Domains\",\r\n              \"description\": \"Get the list of domains\",\r\n              \"origin\": \"user,system\",\r\n              \"properties\": null\r\n            },\r\n            {\r\n              \"name\": \"Microsoft.DomainRegistration/domains/Write\",\r\n              \"displayName\": \"Add or Update Domain\",\r\n              \"description\": \"Add a new Domain or update an existing one\",\r\n              \"origin\": \"user,system\",\r\n              \"properties\": null\r\n            },\r\n            {\r\n              \"name\": \"Microsoft.DomainRegistration/domains/Delete\",\r\n              \"displayName\": \"Delete Domain\",\r\n              \"description\": \"Delete an existing domain.\",\r\n              \"origin\": \"user,system\",\r\n              \"properties\": null\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"domains/operationresults\",\r\n          \"displayName\": \"Domain operation\",\r\n          \"operations\": [\r\n            {\r\n              \"name\": \"Microsoft.DomainRegistration/domains/operationresults/Read\",\r\n              \"displayName\": \"Get Domain Operation\",\r\n              \"description\": \"Get a domain operation\",\r\n              \"origin\": \"user,system\",\r\n              \"properties\": null\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"id\": \"/providers/Microsoft.Authorization/providerOperations/Microsoft.DomainRegistration\",\r\n      \"type\": \"Microsoft.Authorization/providerOperations\",\r\n      \"name\": \"Microsoft.DomainRegistration\"\r\n    },\r\n{\r\n      \"displayName\": \"Microsoft\",\r\n      \"operations\": [\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/checkDomainAvailability/Action\",\r\n          \"displayName\": \"Check Domain Availablity\",\r\n          \"description\": \"Check if a domain is available for purchase\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        },\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/listDomainRecommendations/Action\",\r\n          \"displayName\": \"Retrieve Domain Recommendations\",\r\n          \"description\": \"Retrieve the list domain recommendations based on keywords\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        },\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/register/action\",\r\n          \"displayName\": \"Register Microsoft Domains resource provider\",\r\n          \"description\": \"Register the Microsoft Domains resource provider for the subscription\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        }\r\n      ],\r\n      \"resourceTypes\": [\r\n        {\r\n          \"name\": \"domains\",\r\n          \"displayName\": \"Domain\",\r\n          \"operations\": [\r\n            {\r\n              \"name\": \"Microsoft.DomainRegistration/domains/Delete\",\r\n              \"displayName\": \"Delete Domain\",\r\n              \"description\": \"Delete an existing domain.\",\r\n              \"origin\": \"user,system\",\r\n              \"properties\": null\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"domains/operationresults\",\r\n          \"displayName\": \"Domain operation\",\r\n          \"operations\": [\r\n            {\r\n              \"name\": \"Microsoft.DomainRegistration/domains/operationresults/Read\",\r\n              \"displayName\": \"Get Domain Operation\",\r\n              \"description\": \"Get a domain operation\",\r\n              \"origin\": \"user,system\",\r\n              \"properties\": null\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"id\": \"/providers/Microsoft.Authorization/providerOperations/Microsoft\",\r\n      \"type\": \"Microsoft.Authorization/providerOperations\",\r\n      \"name\": \"Microsoft\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3310"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:e7940351-dcf0-4b35-92d2-06b3ac98b499"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "83a3c1d5-f597-4082-bb0b-bf0bdf110783"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151130T065106Z:83a3c1d5-f597-4082-bb0b-bf0bdf110783"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 30 Nov 2015 06:51:05 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Authorization/providerOperations/4004a9fd-d58e-48dc-aeb2-4a4aec58606f?api-version=2015-07-01&$expand=resourceTypes",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wcm92aWRlck9wZXJhdGlvbnMvNDAwNGE5ZmQtZDU4ZS00OGRjLWFlYjItNGE0YWVjNTg2MDZmP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEmJGV4cGFuZD1yZXNvdXJjZVR5cGVz",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n      \"displayName\": \"Microsoft Domains\",\r\n      \"operations\": [\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/generateSsoRequest/Action\",\r\n          \"displayName\": \"Generate Domain Control Center Single Sign On Request\",\r\n          \"description\": \"Generate a request for signing into domain control center.\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        },\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/validateDomainRegistrationInformation/Action\",\r\n          \"displayName\": \"Domain Purchase Info Validation\",\r\n          \"description\": \"Validate domain purchase object without submitting it\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        },\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/checkDomainAvailability/Action\",\r\n          \"displayName\": \"Check Domain Availablity\",\r\n          \"description\": \"Check if a domain is available for purchase\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        },\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/listDomainRecommendations/Action\",\r\n          \"displayName\": \"Retrieve Domain Recommendations\",\r\n          \"description\": \"Retrieve the list domain recommendations based on keywords\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        },\r\n        {\r\n          \"name\": \"Microsoft.DomainRegistration/register/action\",\r\n          \"displayName\": \"Register Microsoft Domains resource provider\",\r\n          \"description\": \"Register the Microsoft Domains resource provider for the subscription\",\r\n          \"origin\": \"user,system\",\r\n          \"properties\": null\r\n        }\r\n      ],\r\n      \"resourceTypes\": [\r\n        {\r\n          \"name\": \"domains\",\r\n          \"displayName\": \"Domain\",\r\n          \"operations\": [\r\n            {\r\n              \"name\": \"Microsoft.DomainRegistration/domains/Read\",\r\n              \"displayName\": \"Get Domains\",\r\n              \"description\": \"Get the list of domains\",\r\n              \"origin\": \"user,system\",\r\n              \"properties\": null\r\n            },\r\n            {\r\n              \"name\": \"Microsoft.DomainRegistration/domains/Write\",\r\n              \"displayName\": \"Add or Update Domain\",\r\n              \"description\": \"Add a new Domain or update an existing one\",\r\n              \"origin\": \"user,system\",\r\n              \"properties\": null\r\n            },\r\n            {\r\n              \"name\": \"Microsoft.DomainRegistration/domains/Delete\",\r\n              \"displayName\": \"Delete Domain\",\r\n              \"description\": \"Delete an existing domain.\",\r\n              \"origin\": \"user,system\",\r\n              \"properties\": null\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"name\": \"domains/operationresults\",\r\n          \"displayName\": \"Domain operation\",\r\n          \"operations\": [\r\n            {\r\n              \"name\": \"Microsoft.DomainRegistration/domains/operationresults/Read\",\r\n              \"displayName\": \"Get Domain Operation\",\r\n              \"description\": \"Get a domain operation\",\r\n              \"origin\": \"user,system\",\r\n              \"properties\": null\r\n            }\r\n          ]\r\n        }\r\n      ],\r\n      \"id\": \"/providers/Microsoft.Authorization/providerOperations/Microsoft.DomainRegistration\",\r\n      \"type\": \"Microsoft.Authorization/providerOperations\",\r\n      \"name\": \"Microsoft.DomainRegistration\"\r\n    }",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3310"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus:e7940351-dcf0-4b35-92d2-06b3ac98b499"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "83a3c1d5-f597-4082-bb0b-bf0bdf110783"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20151130T065106Z:83a3c1d5-f597-4082-bb0b-bf0bdf110783"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 30 Nov 2015 06:51:05 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4004a9fd-d58e-48dc-aeb2-4a4aec58606f"
+  }
+}

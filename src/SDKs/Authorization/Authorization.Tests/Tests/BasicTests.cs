@@ -920,7 +920,43 @@ namespace Authorization.Tests
             }
         }
 
-        private static T GetValueFromTestContext<T>(Func<T> constructor, Func<string, T> parser, string mockName)
+		[Fact]
+		public void ProviderOperationsMetadataListGetTests()
+		{
+			using (MockContext context = MockContext.Start(this.GetType().FullName))
+			{
+				var client = testContext.GetAuthorizationManagementClient(context);
+
+				Assert.NotNull(client);
+				Assert.NotNull(client.HttpClient);
+				var allProviderOperationsMetadatas = client.ProviderOperationsMetadata.List("2015-07-01");
+
+				Assert.NotNull(allProviderOperationsMetadatas);
+
+				foreach (var operationsMetadata in allProviderOperationsMetadatas)
+				{
+					Assert.NotNull(operationsMetadata);
+					Assert.NotNull(operationsMetadata.DisplayName);
+					Assert.NotNull(operationsMetadata.Id);
+					Assert.NotNull(operationsMetadata.Name);
+					Assert.NotNull(operationsMetadata.Operations);
+					Assert.NotNull(operationsMetadata.ResourceTypes);
+					Assert.NotNull(operationsMetadata.Type);
+				}
+
+				var providerOperationsMetadata = client.ProviderOperationsMetadata.Get(client.SubscriptionId, "2015-07-01");
+				Assert.NotNull(providerOperationsMetadata);
+				Assert.NotNull(providerOperationsMetadata.DisplayName);
+				Assert.NotNull(providerOperationsMetadata.Id);
+				Assert.NotNull(providerOperationsMetadata.Name);
+				Assert.NotNull(providerOperationsMetadata.Operations);
+				Assert.NotNull(providerOperationsMetadata.ResourceTypes);
+				Assert.NotNull(providerOperationsMetadata.Type);
+
+			}
+		}
+
+		private static T GetValueFromTestContext<T>(Func<T> constructor, Func<string, T> parser, string mockName)
         {
             T retValue = default(T);
 
