@@ -36,7 +36,7 @@ namespace EventHub.Tests.ScenarioTests
                 // Create a namespace
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
                 var createNamespaceResponse = EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new EHNamespace()
                     {
                         Location = location,
                     });
@@ -54,13 +54,12 @@ namespace EventHub.Tests.ScenarioTests
                 getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Create a namespace AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(EventHubManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
-                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
+                var createAutorizationRuleParameter = new AuthorizationRule()
                 {
                     Name = authorizationRuleName,
                     Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
@@ -103,7 +102,7 @@ namespace EventHub.Tests.ScenarioTests
 
                 // Update namespace authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
-                SharedAccessAuthorizationRuleCreateOrUpdateParameters updateNamespaceAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
+                AuthorizationRule updateNamespaceAuthorizationRuleParameter = new AuthorizationRule();
                 updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
 
                 var updateNamespaceAuthorizationRuleResponse = EventHubManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup,

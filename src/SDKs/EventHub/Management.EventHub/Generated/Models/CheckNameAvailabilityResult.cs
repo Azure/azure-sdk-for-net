@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// Initializes a new instance of the CheckNameAvailabilityResult
         /// class.
         /// </summary>
+        /// <param name="message">The detailed info regarding the reason
+        /// associated with the Namespace.</param>
         /// <param name="nameAvailable">Value indicating Namespace is
         /// availability, true if the Namespace is available; otherwise,
         /// false.</param>
@@ -36,14 +38,19 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// Possible values include: 'None', 'InvalidName',
         /// 'SubscriptionIsDisabled', 'NameInUse', 'NameInLockdown',
         /// 'TooManyNamespaceInCurrentSubscription'</param>
-        /// <param name="message">The detailed info regarding the reason
-        /// associated with the Namespace.</param>
-        public CheckNameAvailabilityResult(bool? nameAvailable = default(bool?), UnavailableReason? reason = default(UnavailableReason?), string message = default(string))
+        public CheckNameAvailabilityResult(string message = default(string), bool? nameAvailable = default(bool?), UnavailableReason? reason = default(UnavailableReason?))
         {
+            Message = message;
             NameAvailable = nameAvailable;
             Reason = reason;
-            Message = message;
         }
+
+        /// <summary>
+        /// Gets the detailed info regarding the reason associated with the
+        /// Namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; protected set; }
 
         /// <summary>
         /// Gets or sets value indicating Namespace is availability, true if
@@ -60,13 +67,6 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "reason")]
         public UnavailableReason? Reason { get; set; }
-
-        /// <summary>
-        /// Gets the detailed info regarding the reason associated with the
-        /// Namespace.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; protected set; }
 
     }
 }

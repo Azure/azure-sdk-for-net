@@ -34,13 +34,13 @@ namespace EventHub.Tests.ScenarioTests
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new EHNamespace()
                     {
                         Location = location,
                         Sku = new Sku
                         {
-                            Name = "Standard",
-                            Tier = "Standard"
+                            Name = SkuName.Standard,
+                            Tier = SkuTier.Standard
                         }
                     });
 
@@ -53,10 +53,7 @@ namespace EventHub.Tests.ScenarioTests
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);
 
                 var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
-                new EventHubCreateOrUpdateParameters()
-                {
-                    Location = location
-                });
+                new EventHubModel());
 
                 Assert.NotNull(createEventHubResponse);
                 Assert.Equal(createEventHubResponse.Name, eventhubName);                
@@ -68,14 +65,13 @@ namespace EventHub.Tests.ScenarioTests
 
 
                 // Get all Event Hubs for a given NameSpace
-                var getListEventHubResponse = EventHubManagementClient.EventHubs.ListAll(resourceGroup, namespaceName);
+                var getListEventHubResponse = EventHubManagementClient.EventHubs.ListByNamespace(resourceGroup, namespaceName);
                 Assert.NotNull(getListEventHubResponse);
-                Assert.True(getListEventHubResponse.Count<EventHubResource>() >= 1 );
+                Assert.True(getListEventHubResponse.Count<EventHubModel>() >= 1 );
 
                 // Update the EventHub
-                EventHubCreateOrUpdateParameters updateEventHubProperties = new EventHubCreateOrUpdateParameters()
+                EventHubModel updateEventHubProperties = new EventHubModel()
                 {
-                    Location = location,
                     Name = eventhubName
                 };
 

@@ -34,13 +34,13 @@ namespace EventHub.Tests.ScenarioTests
 
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new EHNamespace()
                     {
                         Location = location,
                         Sku = new Sku
                         {
-                            Name = "Standard",
-                            Tier = "Standard"
+                            Name = SkuName.Standard,
+                            Tier = SkuTier.Standard
                         }
                     });
 
@@ -53,11 +53,7 @@ namespace EventHub.Tests.ScenarioTests
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);
 
                 var createEventhubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
-                new EventHubCreateOrUpdateParameters()
-                {
-                    Location = location
-                }
-                 );
+                new EventHubModel());
 
                 Assert.NotNull(createEventhubResponse);
                 Assert.Equal(createEventhubResponse.Name, eventhubName);
@@ -70,11 +66,7 @@ namespace EventHub.Tests.ScenarioTests
 
                 // Create ConsumerGroup.
                 var consumergroupName = TestUtilities.GenerateName(EventHubManagementHelper.ConsumerGroupPrefix);
-                var createSubscriptionResponse = EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, consumergroupName, new ConsumerGroupCreateOrUpdateParameters()
-                {
-                    Location = location               
-                }
-                );
+                var createSubscriptionResponse = EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, consumergroupName, new ConsumerGroup());
                 Assert.NotNull(createSubscriptionResponse);
                 Assert.Equal(createSubscriptionResponse.Name, consumergroupName);
 
@@ -84,7 +76,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.Equal(getConsumergroupGetResponse.Name, consumergroupName);
 
                 // Get all ConsumerGroup   
-                var getSubscriptionsListAllResponse = EventHubManagementClient.ConsumerGroups.ListAll(resourceGroup, namespaceName,eventhubName);
+                var getSubscriptionsListAllResponse = EventHubManagementClient.ConsumerGroups.ListByEventHub(resourceGroup, namespaceName,eventhubName);
                 Assert.NotNull(getSubscriptionsListAllResponse);              
                 Assert.True(getSubscriptionsListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 

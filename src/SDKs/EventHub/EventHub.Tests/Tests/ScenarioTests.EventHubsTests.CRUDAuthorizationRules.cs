@@ -37,13 +37,13 @@ namespace EventHub.Tests.ScenarioTests
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new EHNamespace()
                     {
                         Location = location,                        
                         Sku = new Sku
                         {
-                            Name = "Standard",
-                            Tier = "Standard"
+                            Name = SkuName.Standard,
+                            Tier = SkuTier.Standard
                         }
                     });
 
@@ -60,16 +60,12 @@ namespace EventHub.Tests.ScenarioTests
                 getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Create Eventhub
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);                
                 var createEventhubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
-                new EventHubCreateOrUpdateParameters()
-                {
-                    Location = location
-                });
+                new EventHubModel());
 
                 Assert.NotNull(createEventhubResponse);
                 Assert.Equal(createEventhubResponse.Name, eventhubName);
@@ -83,7 +79,7 @@ namespace EventHub.Tests.ScenarioTests
                 // Create a EventHub AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(EventHubManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
-                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
+                var createAutorizationRuleParameter = new AuthorizationRule()
                 {
                     Name = authorizationRuleName,
                     Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
@@ -117,7 +113,7 @@ namespace EventHub.Tests.ScenarioTests
 
                 // Update Eventhub authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
-                SharedAccessAuthorizationRuleCreateOrUpdateParameters updateEventhubAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
+                AuthorizationRule updateEventhubAuthorizationRuleParameter = new AuthorizationRule();
                 updateEventhubAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
 
                 var updateEventhubAuthorizationRuleResponse = EventHubManagementClient.EventHubs.CreateOrUpdateAuthorizationRule(resourceGroup,

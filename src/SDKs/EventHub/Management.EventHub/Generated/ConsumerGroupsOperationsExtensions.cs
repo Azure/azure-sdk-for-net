@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='parameters'>
             /// Parameters supplied to create or update a consumer group resource.
             /// </param>
-            public static ConsumerGroupResource CreateOrUpdate(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupCreateOrUpdateParameters parameters)
+            public static ConsumerGroup CreateOrUpdate(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroup parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, parameters).GetAwaiter().GetResult();
             }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ConsumerGroupResource> CreateOrUpdateAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConsumerGroup> CreateOrUpdateAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='consumerGroupName'>
             /// The consumer group name
             /// </param>
-            public static ConsumerGroupResource Get(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName)
+            public static ConsumerGroup Get(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName)
             {
                 return operations.GetAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName).GetAwaiter().GetResult();
             }
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ConsumerGroupResource> GetAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConsumerGroup> GetAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -205,9 +205,9 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='eventHubName'>
             /// The Event Hub name
             /// </param>
-            public static IPage<ConsumerGroupResource> ListAll(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
+            public static IPage<ConsumerGroup> ListByEventHub(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
             {
-                return operations.ListAllAsync(resourceGroupName, namespaceName, eventHubName).GetAwaiter().GetResult();
+                return operations.ListByEventHubAsync(resourceGroupName, namespaceName, eventHubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -230,9 +230,9 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ConsumerGroupResource>> ListAllAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ConsumerGroup>> ListByEventHubAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByEventHubWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -249,9 +249,9 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ConsumerGroupResource> ListAllNext(this IConsumerGroupsOperations operations, string nextPageLink)
+            public static IPage<ConsumerGroup> ListByEventHubNext(this IConsumerGroupsOperations operations, string nextPageLink)
             {
-                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByEventHubNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -268,9 +268,9 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ConsumerGroupResource>> ListAllNextAsync(this IConsumerGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ConsumerGroup>> ListByEventHubNextAsync(this IConsumerGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByEventHubNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

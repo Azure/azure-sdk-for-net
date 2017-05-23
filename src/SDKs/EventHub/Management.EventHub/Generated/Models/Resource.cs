@@ -40,22 +40,22 @@ namespace Microsoft.Azure.Management.EventHub.Models
         }
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets or sets resource Id
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
+        public string Id { get; set; }
 
         /// <summary>
-        /// Gets resource name
+        /// Gets or sets resource name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; protected set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets resource type
+        /// Gets or sets resource type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; protected set; }
+        public string Type { get; set; }
 
     }
 }
