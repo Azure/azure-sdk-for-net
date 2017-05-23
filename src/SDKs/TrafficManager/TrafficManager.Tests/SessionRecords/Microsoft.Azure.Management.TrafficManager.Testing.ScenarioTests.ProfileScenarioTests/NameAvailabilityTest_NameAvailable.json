@@ -4,7 +4,7 @@
       "RequestUri": "/providers/Microsoft.Network/checkTrafficManagerNameAvailability?api-version=2017-05-01",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9jaGVja1RyYWZmaWNNYW5hZ2VyTmFtZUF2YWlsYWJpbGl0eT9hcGktdmVyc2lvbj0yMDE3LTA1LTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet9546\",\r\n  \"type\": \"microsoft.network/trafficmanagerprofiles\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet5403\",\r\n  \"type\": \"microsoft.network/trafficmanagerprofiles\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -13,7 +13,7 @@
           "84"
         ],
         "x-ms-client-request-id": [
-          "9f4be217-031c-4a17-9e4e-c8173ca72b45"
+          "0079eee3-119d-459e-9423-9510de84effc"
         ],
         "accept-language": [
           "en-US"
@@ -23,7 +23,7 @@
           "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"azsmnet9546\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"nameAvailable\": true,\r\n  \"reason\": null,\r\n  \"message\": null\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"azsmnet5403\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"nameAvailable\": true,\r\n  \"reason\": null,\r\n  \"message\": null\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,7 +32,7 @@
           "private"
         ],
         "Date": [
-          "Tue, 16 May 2017 14:25:15 GMT"
+          "Tue, 23 May 2017 09:03:26 GMT"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -50,7 +50,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "9f4be217-031c-4a17-9e4e-c8173ca72b45"
+          "0079eee3-119d-459e-9423-9510de84effc"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -62,10 +62,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "244fd438-9cf8-44db-a2e8-d9ef003a8065"
+          "b404cf8e-1286-4488-9353-6a722ace5fb7"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20170516T142515Z:244fd438-9cf8-44db-a2e8-d9ef003a8065"
+          "CENTRALUS:20170523T090326Z:b404cf8e-1286-4488-9353-6a722ace5fb7"
         ]
       },
       "StatusCode": 200
@@ -73,7 +73,7 @@
   ],
   "Names": {
     "NameAvailabilityTest_NameAvailable": [
-      "azsmnet9546"
+      "azsmnet5403"
     ]
   },
   "Variables": {

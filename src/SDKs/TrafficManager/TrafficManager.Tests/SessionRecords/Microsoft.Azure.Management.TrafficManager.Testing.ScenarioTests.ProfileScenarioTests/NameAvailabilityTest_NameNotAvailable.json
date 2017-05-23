@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourcegroups/azsmnet2591?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQyNTkxP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourcegroups/azsmnet1719?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQxNzE5P2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
@@ -13,17 +13,17 @@
           "32"
         ],
         "x-ms-client-request-id": [
-          "4474d99f-c7c5-49d1-9bd3-463e8d428a68"
+          "fd83cf6d-37de-4ea9-9eb8-95fcf7f93106"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azsmnet2591\",\r\n  \"name\": \"azsmnet2591\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azsmnet1719\",\r\n  \"name\": \"azsmnet1719\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "178"
@@ -38,22 +38,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 May 2017 14:29:01 GMT"
+          "Tue, 23 May 2017 08:55:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1198"
         ],
         "x-ms-request-id": [
-          "ed644c5a-61e5-4237-9ca2-e36225fd48b9"
+          "3ee0b462-86a1-44c7-879c-644e25ebfc65"
         ],
         "x-ms-correlation-request-id": [
-          "ed644c5a-61e5-4237-9ca2-e36225fd48b9"
+          "3ee0b462-86a1-44c7-879c-644e25ebfc65"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20170516T142902Z:ed644c5a-61e5-4237-9ca2-e36225fd48b9"
+          "CENTRALUS:20170523T085531Z:3ee0b462-86a1-44c7-879c-644e25ebfc65"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,10 +62,10 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azsmnet2591/providers/Microsoft.Network/trafficmanagerprofiles/azsmnet8837?api-version=2017-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2F6c21uZXQyNTkxL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL2F6c21uZXQ4ODM3P2FwaS12ZXJzaW9uPTIwMTctMDUtMDE=",
+      "RequestUri": "/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azsmnet1719/providers/Microsoft.Network/trafficmanagerprofiles/azsmnet5183?api-version=2017-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTY4ZDQxNDUtYzlhZS00NjY3LTkyNWQtYzUxYzhkODhhZDczL3Jlc291cmNlR3JvdXBzL2F6c21uZXQxNzE5L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljbWFuYWdlcnByb2ZpbGVzL2F6c21uZXQ1MTgzP2FwaS12ZXJzaW9uPTIwMTctMDUtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"azsmnet4736\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"http\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\"\r\n    }\r\n  },\r\n  \"location\": \"global\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"azsmnet4696\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"protocol\": \"http\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\"\r\n    }\r\n  },\r\n  \"location\": \"global\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -74,7 +74,7 @@
           "322"
         ],
         "x-ms-client-request-id": [
-          "273ffc39-6995-43a7-91ad-f1b35c913b41"
+          "d8296810-607e-48c9-a88f-5f706204048d"
         ],
         "accept-language": [
           "en-US"
@@ -84,7 +84,7 @@
           "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azsmnet2591/providers/Microsoft.Network/trafficManagerProfiles/azsmnet8837\",\r\n  \"name\": \"azsmnet8837\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"azsmnet4736\",\r\n      \"fqdn\": \"azsmnet4736.tmpreview.watmtest.azure-test.net\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"Inactive\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\",\r\n      \"intervalInSeconds\": 30,\r\n      \"toleratedNumberOfFailures\": 3,\r\n      \"timeoutInSeconds\": 10\r\n    },\r\n    \"endpoints\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e68d4145-c9ae-4667-925d-c51c8d88ad73/resourceGroups/azsmnet1719/providers/Microsoft.Network/trafficManagerProfiles/azsmnet5183\",\r\n  \"name\": \"azsmnet5183\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"location\": \"global\",\r\n  \"properties\": {\r\n    \"profileStatus\": \"Enabled\",\r\n    \"trafficRoutingMethod\": \"Performance\",\r\n    \"dnsConfig\": {\r\n      \"relativeName\": \"azsmnet4696\",\r\n      \"fqdn\": \"azsmnet4696.tmpreview.watmtest.azure-test.net\",\r\n      \"ttl\": 35\r\n    },\r\n    \"monitorConfig\": {\r\n      \"profileMonitorStatus\": \"Inactive\",\r\n      \"protocol\": \"HTTP\",\r\n      \"port\": 80,\r\n      \"path\": \"/testpath.aspx\",\r\n      \"intervalInSeconds\": 30,\r\n      \"toleratedNumberOfFailures\": 3,\r\n      \"timeoutInSeconds\": 10\r\n    },\r\n    \"endpoints\": []\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "630"
@@ -96,7 +96,7 @@
           "private"
         ],
         "Date": [
-          "Tue, 16 May 2017 14:29:05 GMT"
+          "Tue, 23 May 2017 08:55:33 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -108,7 +108,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "273ffc39-6995-43a7-91ad-f1b35c913b41"
+          "d8296810-607e-48c9-a88f-5f706204048d"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -120,10 +120,10 @@
           "10799"
         ],
         "x-ms-correlation-request-id": [
-          "beb0dcd6-239f-40ad-a131-041ee1ecbc19"
+          "7ec1eab9-8793-4efc-8fdd-4325b52a5914"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20170516T142905Z:beb0dcd6-239f-40ad-a131-041ee1ecbc19"
+          "CENTRALUS:20170523T085533Z:7ec1eab9-8793-4efc-8fdd-4325b52a5914"
         ]
       },
       "StatusCode": 201
@@ -132,7 +132,7 @@
       "RequestUri": "/providers/Microsoft.Network/checkTrafficManagerNameAvailability?api-version=2017-05-01",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9jaGVja1RyYWZmaWNNYW5hZ2VyTmFtZUF2YWlsYWJpbGl0eT9hcGktdmVyc2lvbj0yMDE3LTA1LTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet4736\",\r\n  \"type\": \"microsoft.network/trafficmanagerprofiles\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet4696\",\r\n  \"type\": \"microsoft.network/trafficmanagerprofiles\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -141,7 +141,7 @@
           "84"
         ],
         "x-ms-client-request-id": [
-          "71b0373e-2372-451e-a477-2f84d62dcb90"
+          "edffa4f5-6f0a-40bd-928b-54623278772c"
         ],
         "accept-language": [
           "en-US"
@@ -151,7 +151,7 @@
           "Microsoft.Azure.Management.TrafficManager.TrafficManagerManagementClient/2.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"azsmnet4736\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"AlreadyExists\",\r\n  \"message\": \"Domain name azsmnet4736.tmpreview.watmtest.azure-test.net already exists. Please choose a different DNS prefix.\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"azsmnet4696\",\r\n  \"type\": \"Microsoft.Network/trafficManagerProfiles\",\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"AlreadyExists\",\r\n  \"message\": \"Domain name azsmnet4696.tmpreview.watmtest.azure-test.net already exists. Please choose a different DNS prefix.\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -160,7 +160,7 @@
           "private"
         ],
         "Date": [
-          "Tue, 16 May 2017 14:29:06 GMT"
+          "Tue, 23 May 2017 08:55:33 GMT"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -178,7 +178,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "71b0373e-2372-451e-a477-2f84d62dcb90"
+          "edffa4f5-6f0a-40bd-928b-54623278772c"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -190,10 +190,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "dab83a71-3451-45ee-ad65-7e0491c4c160"
+          "b2e8a9ca-59c9-467c-9322-33111097dc5d"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20170516T142906Z:dab83a71-3451-45ee-ad65-7e0491c4c160"
+          "CENTRALUS:20170523T085534Z:b2e8a9ca-59c9-467c-9322-33111097dc5d"
         ]
       },
       "StatusCode": 200
@@ -201,9 +201,9 @@
   ],
   "Names": {
     "NameAvailabilityTest_NameNotAvailable": [
-      "azsmnet4736",
-      "azsmnet8837",
-      "azsmnet2591"
+      "azsmnet4696",
+      "azsmnet5183",
+      "azsmnet1719"
     ]
   },
   "Variables": {
