@@ -100,6 +100,18 @@ var mappings = {
         'package': 'Microsoft.Azure.Management.Fluent.ServiceBus',
         'args': '-FT 1'
     },
+    'containerregistry': {
+        'dir': 'ContainerRegistry/Microsoft.Azure.Management.ContainerRegistry.Fluent',
+        'source': 'arm-containerregistry/2017-03-01/swagger/containerregistry.json',
+        'package': 'Microsoft.Azure.Management.Fluent.ContainerRegistry',
+        'args': '-FT 1',
+    },
+    'documentdb': {
+        'dir': 'DocumentDB/Microsoft.Azure.Management.DocumentDB.Fluent',
+        'source': 'arm-documentdb/2015-04-08/swagger/documentdb.json',
+        'package': 'com.microsoft.azure.management.DocumentDB',
+        'args': '-FT 1',
+    }
 };
 
 gulp.task('default', function() {
