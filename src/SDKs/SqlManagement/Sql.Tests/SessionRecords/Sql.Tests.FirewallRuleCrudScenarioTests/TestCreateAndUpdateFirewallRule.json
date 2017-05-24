@@ -20,7 +20,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/resourceGroups/firewallrulecrudtest-706\",\r\n  \"name\": \"firewallrulecrudtest-706\",\r\n  \"location\": \"japaneast\",\r\n  \"tags\": {\r\n    \"firewallrulecrudtest-706\": \"2017-02-24 19:35:10Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
@@ -279,7 +279,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -331,7 +331,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -383,7 +383,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -435,7 +435,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -487,7 +487,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "",

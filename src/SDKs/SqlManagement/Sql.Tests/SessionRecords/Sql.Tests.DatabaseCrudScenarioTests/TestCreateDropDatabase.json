@@ -20,7 +20,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/resourceGroups/sqlcrudtest-5281\",\r\n  \"name\": \"sqlcrudtest-5281\",\r\n  \"location\": \"japaneast\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-5281\": \"2017-02-24 18:29:31Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
@@ -1551,7 +1551,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -1603,7 +1603,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -1655,7 +1655,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -1707,7 +1707,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -1759,7 +1759,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.0.0-preview"
         ]
       },
       "ResponseBody": "",

@@ -12,6 +12,9 @@
     <!--<PackageReference Include="Microsoft.Azure.Management.Sql" Version="1.2.0-preview" />-->    
     <ProjectReference Include="..\Management.Sql\Microsoft.Azure.Management.Sql.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
+  </ItemGroup>
   
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">

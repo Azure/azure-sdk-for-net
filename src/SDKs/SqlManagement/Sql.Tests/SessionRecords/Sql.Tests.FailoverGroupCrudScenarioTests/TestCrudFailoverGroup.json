@@ -20,7 +20,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.1.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d12ac2e1-f408-45de-9848-9c62b21a0800/resourceGroups/sqlcrudtest-6978\",\r\n  \"name\": \"sqlcrudtest-6978\",\r\n  \"location\": \"japaneast\",\r\n  \"tags\": {\r\n    \"sqlcrudtest-6978\": \"2017-05-03 17:10:23Z\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
@@ -1881,7 +1881,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.1.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.0-preview"
         ]
       },
       "ResponseBody": "",
