@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Redis.JsonRpc;
+using System.Reflection;
 
 namespace AzureRedisCache.Tests.ScenarioTests
 {
@@ -21,7 +23,9 @@ namespace AzureRedisCache.Tests.ScenarioTests
         /// <returns>A redis cache management client, created from the current context (environment variables)</returns>
         public static RedisManagementClient GetRedisManagementClient(this TestBase testBase, MockContext context)
         {
-            return context.GetServiceClient<RedisManagementClient>();
+            // return context.GetServiceClient<RedisManagementClient>();
+            // return context.GetServiceClient<RedisManagementClientMock>();            
+            return ServiceFactory.CreateService<RedisManagementClient>();
         }
 
         /// <summary>
