@@ -19,7 +19,7 @@ namespace Authorization.Tests
     {
         const string RESOURCE_TEST_LOCATION = "westus"; 
         const string WEBSITE_RP_VERSION = "2014-04-01";
-
+		const string ResourceGroupName = "AzureAuthzSDK";
         public static ResourceManagementClient GetResourceManagementClient(MockContext context)
         {
             var client = context.GetServiceClient<ResourceManagementClient>(); 
@@ -52,7 +52,8 @@ namespace Authorization.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                string groupName = TestUtilities.GenerateName("csmrg");
+				// csmrg group creation fails when running with SPN auth method in Record mode,change the group to ResourceGroupName
+				string groupName = TestUtilities.GenerateName("csmrg");
                 var resourceClient = GetResourceManagementClient(context);
                 var authzClient = GetAuthorizationManagementClient(context);
 
@@ -92,7 +93,8 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact]
+		// Test fails when running with SPN auth method in Record mode
+		[Fact]
         public void GetResourcePermissions()
         {
             // NEXT environment variables used to record the mock

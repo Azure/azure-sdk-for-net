@@ -23,7 +23,7 @@ namespace Authorization.Tests
 
         private const string DefaultTenantId = "1273adef-00a3-4086-a51a-dbcce1857d36";
         
-        private const string GraphApiVersion = "1.42-previewInternal";
+        private const string GraphApiVersion = "1.6";
 
         private const string GraphUriFormatter = @"{0}{1}/{2}?api-version={3}";
 
@@ -248,11 +248,12 @@ namespace Authorization.Tests
 
             if (this.testEnvironment != null && this.testEnvironment.TokenInfo != null)
             {
-                // Not Supported in current code
-                // var tokenCredentials = (TokenCredentials)this.testEnvironment.Credentials;
-                // httpRequest.Headers.Authorization = new AuthenticationHeaderValue(
-                //                                this.testEnvironment.AccessTokenType,
-                //                                this.testEnvironment.AuthorizationContext.AccessToken);
+				// Not Supported in current code
+				// var tokenCredentials = (TokenCredentials)this.testEnvironment.Credentials;
+				httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer",
+					"Put the access token for graph here for the tests to work in record mode");
+            //                                    this.testEnvironment.AccessTokenType,
+            //                                    this.testEnvironment.AuthorizationContext.AccessToken);
             }
 
             if(body != null)
