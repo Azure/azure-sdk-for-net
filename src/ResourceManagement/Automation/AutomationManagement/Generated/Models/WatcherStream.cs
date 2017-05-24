@@ -21,30 +21,42 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// Definition of the watcher stream.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public partial class WatcherStream
     {
-        public const string Script = "Script";
+        private string _id;
         
-        public const string Graph = "Graph";
+        /// <summary>
+        /// Optional. Gets or sets the id of the resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
+        private WatcherStreamProperties _properties;
         
-        public const string PowerShell = "PowerShell";
+        /// <summary>
+        /// Optional. Gets or sets the id of the watcher stream.
+        /// </summary>
+        public WatcherStreamProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
         
-        public const string GraphPowerShellWorkflow = "GraphPowerShellWorkflow";
-        
-        public const string GraphPowerShell = "GraphPowerShell";
-        
-        public const string Python2 = "Python2";
-        
-        public const string Python3 = "Python3";
-        
-        public const string Bash = "Bash";
+        /// <summary>
+        /// Initializes a new instance of the WatcherStream class.
+        /// </summary>
+        public WatcherStream()
+        {
+        }
     }
 }

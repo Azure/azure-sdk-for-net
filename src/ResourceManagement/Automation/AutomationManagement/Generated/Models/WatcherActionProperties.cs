@@ -20,54 +20,57 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of Dsc Compilation job properties.
+    /// Definition of the watcher action properties.
     /// </summary>
-    public partial class DscCompilationJobProperties : JobPropertiesBase
+    public partial class WatcherActionProperties : ResourceCommonPropertiesBase
     {
-        private DscConfigurationAssociationProperty _configuration;
+        private IDictionary<string, string> _actionProperties;
         
         /// <summary>
-        /// Optional. Gets or sets the configuration.
+        /// Optional. Gets or sets the properties of the watcher action.
         /// </summary>
-        public DscConfigurationAssociationProperty Configuration
+        public IDictionary<string, string> ActionProperties
         {
-            get { return this._configuration; }
-            set { this._configuration = value; }
+            get { return this._actionProperties; }
+            set { this._actionProperties = value; }
         }
         
-        private string _runOn;
+        private string _type;
         
         /// <summary>
-        /// Optional. Gets or sets the hybrid worker group name for the job.
+        /// Optional. Gets or sets the watcher action type.
         /// </summary>
-        public string RunOn
+        public string Type
         {
-            get { return this._runOn; }
-            set { this._runOn = value; }
+            get { return this._type; }
+            set { this._type = value; }
         }
         
-        private string _startedBy;
+        private string _watcherName;
         
         /// <summary>
-        /// Optional. Gets or sets the compilation job started by.
+        /// Optional. Gets or sets the watcher name.
         /// </summary>
-        public string StartedBy
+        public string WatcherName
         {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._watcherName; }
+            set { this._watcherName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DscCompilationJobProperties class.
+        /// Initializes a new instance of the WatcherActionProperties class.
         /// </summary>
-        public DscCompilationJobProperties()
+        public WatcherActionProperties()
         {
+            this.ActionProperties = new LazyDictionary<string, string>();
         }
     }
 }

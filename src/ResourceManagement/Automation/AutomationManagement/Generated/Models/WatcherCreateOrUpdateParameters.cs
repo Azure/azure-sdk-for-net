@@ -26,26 +26,14 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The parameters supplied to the create or update schedule operation.
+    /// The parameters supplied to the create or update watcher operation.
     /// </summary>
-    public partial class ScheduleCreateOrUpdateParameters
+    public partial class WatcherCreateOrUpdateParameters
     {
-        private bool _convertTimesFromTimeZone;
-        
-        /// <summary>
-        /// Optional. True if times provided are specified in the provided time
-        /// zone. False if times are in UTC.
-        /// </summary>
-        public bool ConvertTimesFromTimeZone
-        {
-            get { return this._convertTimesFromTimeZone; }
-            set { this._convertTimesFromTimeZone = value; }
-        }
-        
         private string _name;
         
         /// <summary>
-        /// Required. Gets or sets the name of the schedule.
+        /// Required. Gets or sets the name of the watcher.
         /// </summary>
         public string Name
         {
@@ -53,30 +41,30 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
-        private ScheduleCreateOrUpdateProperties _properties;
+        private WatcherCreateOrUpdateProperties _properties;
         
         /// <summary>
-        /// Required. Gets or sets the list of schedule properties.
+        /// Required. Gets or sets the properties of the watcher.
         /// </summary>
-        public ScheduleCreateOrUpdateProperties Properties
+        public WatcherCreateOrUpdateProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ScheduleCreateOrUpdateParameters
+        /// Initializes a new instance of the WatcherCreateOrUpdateParameters
         /// class.
         /// </summary>
-        public ScheduleCreateOrUpdateParameters()
+        public WatcherCreateOrUpdateParameters()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the ScheduleCreateOrUpdateParameters
+        /// Initializes a new instance of the WatcherCreateOrUpdateParameters
         /// class with required arguments.
         /// </summary>
-        public ScheduleCreateOrUpdateParameters(string name, ScheduleCreateOrUpdateProperties properties)
+        public WatcherCreateOrUpdateParameters(string name, WatcherCreateOrUpdateProperties properties)
             : this()
         {
             if (name == null)

@@ -21,40 +21,30 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of hybrid runbook worker.
+    /// Definition of the watcher action type.
     /// </summary>
-    public partial class HybridRunbookWorker
+    public partial class WatcherAction
     {
-        private string _ipAddress;
+        private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the assigned machine IP address.
+        /// Optional. Gets or sets the id of the resource.
         /// </summary>
-        public string IpAddress
+        public string Id
         {
-            get { return this._ipAddress; }
-            set { this._ipAddress = value; }
-        }
-        
-        private DateTimeOffset _lastSeenDateTime;
-        
-        /// <summary>
-        /// Optional. Gets or sets the last seen time of the worker machine.
-        /// </summary>
-        public DateTimeOffset LastSeenDateTime
-        {
-            get { return this._lastSeenDateTime; }
-            set { this._lastSeenDateTime = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the worker machine name.
+        /// Optional. Gets or sets the name of the watcher.
         /// </summary>
         public string Name
         {
@@ -62,21 +52,21 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
-        private DateTimeOffset _registrationDateTime;
+        private WatcherActionProperties _properties;
         
         /// <summary>
-        /// Optional. Gets or sets the registration time of the worker machine.
+        /// Optional. Gets or sets the watcher properties.
         /// </summary>
-        public DateTimeOffset RegistrationDateTime
+        public WatcherActionProperties Properties
         {
-            get { return this._registrationDateTime; }
-            set { this._registrationDateTime = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the HybridRunbookWorker class.
+        /// Initializes a new instance of the WatcherAction class.
         /// </summary>
-        public HybridRunbookWorker()
+        public WatcherAction()
         {
         }
     }

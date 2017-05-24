@@ -34,18 +34,19 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Automation
 {
     /// <summary>
-    /// Service operation for automation usages.  (see
-    /// http://aka.ms/azureautomationsdk/usageoperations for more information)
+    /// Service operation for automation linked workspace.  (see
+    /// http://aka.ms/azureautomationsdk/linkedworkspaceoperations for more
+    /// information)
     /// </summary>
-    internal partial class UsageOperations : IServiceOperations<AutomationManagementClient>, IUsageOperations
+    internal partial class LinkedWorkspaceOperations : IServiceOperations<AutomationManagementClient>, ILinkedWorkspaceOperations
     {
         /// <summary>
-        /// Initializes a new instance of the UsageOperations class.
+        /// Initializes a new instance of the LinkedWorkspaceOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal UsageOperations(AutomationManagementClient client)
+        internal LinkedWorkspaceOperations(AutomationManagementClient client)
         {
             this._client = client;
         }
@@ -62,9 +63,9 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
-        /// Retrieve the usage for the account id.  (see
-        /// http://aka.ms/azureautomationsdk/usageoperations for more
-        /// information)
+        /// Retrieve the linked workspace for the account id.  (see
+        /// http://aka.ms/azureautomationsdk/linkedworkspaceoperations for
+        /// more information)
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group
@@ -76,9 +77,9 @@ namespace Microsoft.Azure.Management.Automation
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response model for the get usage operation.
+        /// The response model for the get linked workspace operation.
         /// </returns>
-        public async Task<UsageListResponse> ListAsync(string resourceGroupName, string automationAccount, CancellationToken cancellationToken)
+        public async Task<LinkedWorkspaceGetResponse> GetAsync(string resourceGroupName, string automationAccount, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -99,7 +100,7 @@ namespace Microsoft.Azure.Management.Automation
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccount", automationAccount);
-                TracingAdapter.Enter(invocationId, this, "ListAsync", tracingParameters);
+                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
@@ -118,7 +119,7 @@ namespace Microsoft.Azure.Management.Automation
             }
             url = url + "/automationAccounts/";
             url = url + Uri.EscapeDataString(automationAccount);
-            url = url + "/usages";
+            url = url + "/linkedWorkspace";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-10-31");
             if (queryParameters.Count > 0)
@@ -181,13 +182,13 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     
                     // Create Result
-                    UsageListResponse result = null;
+                    LinkedWorkspaceGetResponse result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new UsageListResponse();
+                        result = new LinkedWorkspaceGetResponse();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -196,70 +197,14 @@ namespace Microsoft.Azure.Management.Automation
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
+                            WorkspaceInformation workspaceInformationInstance = new WorkspaceInformation();
+                            result.WorkspaceInformation = workspaceInformationInstance;
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    Usage usageInstance = new Usage();
-                                    result.Usage.Add(usageInstance);
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        usageInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken nameValue = valueValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        UsageCounterName nameInstance = new UsageCounterName();
-                                        usageInstance.Name = nameInstance;
-                                        
-                                        JToken valueValue2 = nameValue["value"];
-                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
-                                        {
-                                            string valueInstance = ((string)valueValue2);
-                                            nameInstance.Value = valueInstance;
-                                        }
-                                        
-                                        JToken localizedValueValue = nameValue["localizedValue"];
-                                        if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
-                                        {
-                                            string localizedValueInstance = ((string)localizedValueValue);
-                                            nameInstance.LocalizedValue = localizedValueInstance;
-                                        }
-                                    }
-                                    
-                                    JToken unitValue = valueValue["unit"];
-                                    if (unitValue != null && unitValue.Type != JTokenType.Null)
-                                    {
-                                        string unitInstance = ((string)unitValue);
-                                        usageInstance.Unit = unitInstance;
-                                    }
-                                    
-                                    JToken currentValueValue = valueValue["currentValue"];
-                                    if (currentValueValue != null && currentValueValue.Type != JTokenType.Null)
-                                    {
-                                        double currentValueInstance = ((double)currentValueValue);
-                                        usageInstance.CurrentValue = currentValueInstance;
-                                    }
-                                    
-                                    JToken limitValue = valueValue["limit"];
-                                    if (limitValue != null && limitValue.Type != JTokenType.Null)
-                                    {
-                                        long limitInstance = ((long)limitValue);
-                                        usageInstance.Limit = limitInstance;
-                                    }
-                                    
-                                    JToken throttleStatusValue = valueValue["throttleStatus"];
-                                    if (throttleStatusValue != null && throttleStatusValue.Type != JTokenType.Null)
-                                    {
-                                        string throttleStatusInstance = ((string)throttleStatusValue);
-                                        usageInstance.ThrottleStatus = throttleStatusInstance;
-                                    }
-                                }
+                                string idInstance = ((string)idValue);
+                                workspaceInformationInstance.Id = idInstance;
                             }
                         }
                         

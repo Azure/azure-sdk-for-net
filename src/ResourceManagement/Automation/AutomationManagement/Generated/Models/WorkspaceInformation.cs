@@ -25,26 +25,26 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// Definition of Workspace information.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public partial class WorkspaceInformation
     {
-        public const string Script = "Script";
+        private string _id;
         
-        public const string Graph = "Graph";
+        /// <summary>
+        /// Optional. Gets or sets the id of the resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
-        
-        public const string PowerShell = "PowerShell";
-        
-        public const string GraphPowerShellWorkflow = "GraphPowerShellWorkflow";
-        
-        public const string GraphPowerShell = "GraphPowerShell";
-        
-        public const string Python2 = "Python2";
-        
-        public const string Python3 = "Python3";
-        
-        public const string Bash = "Bash";
+        /// <summary>
+        /// Initializes a new instance of the WorkspaceInformation class.
+        /// </summary>
+        public WorkspaceInformation()
+        {
+        }
     }
 }

@@ -20,31 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// The response model for the list watcher operation.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public partial class WatcherListResponse : OperationResponseWithSkipToken
     {
-        public const string Script = "Script";
+        private IList<Watcher> _watchers;
         
-        public const string Graph = "Graph";
+        /// <summary>
+        /// Optional. Gets or sets a list of watchers.
+        /// </summary>
+        public IList<Watcher> Watchers
+        {
+            get { return this._watchers; }
+            set { this._watchers = value; }
+        }
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
-        
-        public const string PowerShell = "PowerShell";
-        
-        public const string GraphPowerShellWorkflow = "GraphPowerShellWorkflow";
-        
-        public const string GraphPowerShell = "GraphPowerShell";
-        
-        public const string Python2 = "Python2";
-        
-        public const string Python3 = "Python3";
-        
-        public const string Bash = "Bash";
+        /// <summary>
+        /// Initializes a new instance of the WatcherListResponse class.
+        /// </summary>
+        public WatcherListResponse()
+        {
+            this.Watchers = new LazyList<Watcher>();
+        }
     }
 }

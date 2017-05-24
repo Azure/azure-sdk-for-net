@@ -243,6 +243,16 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation linked workspace.  (see
+        /// http://aka.ms/azureautomationsdk/linkedworkspaceoperations for
+        /// more information)
+        /// </summary>
+        ILinkedWorkspaceOperations LinkedWorkspace
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation modules.  (see
         /// http://aka.ms/azureautomationsdk/moduleoperations for more
         /// information)
@@ -338,6 +348,36 @@ namespace Microsoft.Azure.Management.Automation
         /// information)
         /// </summary>
         IVariableOperations Variables
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation watcher actions.  (see
+        /// http://aka.ms/azureautomationsdk/watcheractionoperations for more
+        /// information)
+        /// </summary>
+        IWatcherActionOperations WatcherActions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation watchers.  (see
+        /// http://aka.ms/azureautomationsdk/watcheroperations for more
+        /// information)
+        /// </summary>
+        IWatcherOperations Watchers
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation watcher streams.  (see
+        /// http://aka.ms/azureautomationsdk/watcherstreamoperations for more
+        /// information)
+        /// </summary>
+        IWatcherStreamOperations WatcherStreams
         {
             get; 
         }

@@ -21,30 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// The response model for the get linked workspace operation.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public partial class LinkedWorkspaceGetResponse : AzureOperationResponse
     {
-        public const string Script = "Script";
+        private WorkspaceInformation _workspaceInformation;
         
-        public const string Graph = "Graph";
+        /// <summary>
+        /// Optional. Gets or sets a workspace.
+        /// </summary>
+        public WorkspaceInformation WorkspaceInformation
+        {
+            get { return this._workspaceInformation; }
+            set { this._workspaceInformation = value; }
+        }
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
-        
-        public const string PowerShell = "PowerShell";
-        
-        public const string GraphPowerShellWorkflow = "GraphPowerShellWorkflow";
-        
-        public const string GraphPowerShell = "GraphPowerShell";
-        
-        public const string Python2 = "Python2";
-        
-        public const string Python3 = "Python3";
-        
-        public const string Bash = "Bash";
+        /// <summary>
+        /// Initializes a new instance of the LinkedWorkspaceGetResponse class.
+        /// </summary>
+        public LinkedWorkspaceGetResponse()
+        {
+        }
     }
 }

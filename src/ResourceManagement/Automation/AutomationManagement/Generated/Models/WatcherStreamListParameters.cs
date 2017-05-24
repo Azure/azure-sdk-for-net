@@ -26,47 +26,40 @@ using Microsoft.Azure.Management.Automation.Models;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of Dsc Compilation job properties.
+    /// The parameters supplied to the list watcher stream's stream items
+    /// operation.
     /// </summary>
-    public partial class DscCompilationJobProperties : JobPropertiesBase
+    public partial class WatcherStreamListParameters : ParametersWithSkipToken
     {
-        private DscConfigurationAssociationProperty _configuration;
+        private string _streamType;
         
         /// <summary>
-        /// Optional. Gets or sets the configuration.
+        /// Optional. The type of the watcher stream.
         /// </summary>
-        public DscConfigurationAssociationProperty Configuration
+        public string StreamType
         {
-            get { return this._configuration; }
-            set { this._configuration = value; }
+            get { return this._streamType; }
+            set { this._streamType = value; }
         }
         
-        private string _runOn;
+        private string _time;
         
         /// <summary>
-        /// Optional. Gets or sets the hybrid worker group name for the job.
+        /// Optional. Use the time filter to retrieve stream records created
+        /// after this time. The value should be a datetime string in UTC
+        /// format as defined in ISO 8601. For example,
+        /// 2014-09-25T17:49:17.2252204Z
         /// </summary>
-        public string RunOn
+        public string Time
         {
-            get { return this._runOn; }
-            set { this._runOn = value; }
-        }
-        
-        private string _startedBy;
-        
-        /// <summary>
-        /// Optional. Gets or sets the compilation job started by.
-        /// </summary>
-        public string StartedBy
-        {
-            get { return this._startedBy; }
-            set { this._startedBy = value; }
+            get { return this._time; }
+            set { this._time = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DscCompilationJobProperties class.
+        /// Initializes a new instance of the WatcherStreamListParameters class.
         /// </summary>
-        public DscCompilationJobProperties()
+        public WatcherStreamListParameters()
         {
         }
     }

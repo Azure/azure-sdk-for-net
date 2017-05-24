@@ -74,6 +74,17 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._name = value; }
         }
         
+        private string _throttleStatus;
+        
+        /// <summary>
+        /// Optional. Gets or sets the throttle status.
+        /// </summary>
+        public string ThrottleStatus
+        {
+            get { return this._throttleStatus; }
+            set { this._throttleStatus = value; }
+        }
+        
         private string _unit;
         
         /// <summary>

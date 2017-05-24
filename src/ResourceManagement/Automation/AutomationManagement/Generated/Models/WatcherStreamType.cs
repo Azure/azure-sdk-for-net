@@ -25,26 +25,22 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// The watcher stream type.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public static partial class WatcherStreamType
     {
-        public const string Script = "Script";
+        public const string Progress = "Progress";
         
-        public const string Graph = "Graph";
+        public const string Output = "Output";
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
+        public const string Warning = "Warning";
         
-        public const string PowerShell = "PowerShell";
+        public const string Error = "Error";
         
-        public const string GraphPowerShellWorkflow = "GraphPowerShellWorkflow";
+        public const string Debug = "Debug";
         
-        public const string GraphPowerShell = "GraphPowerShell";
+        public const string Verbose = "Verbose";
         
-        public const string Python2 = "Python2";
-        
-        public const string Python3 = "Python3";
-        
-        public const string Bash = "Bash";
+        public const string Any = "Any";
     }
 }

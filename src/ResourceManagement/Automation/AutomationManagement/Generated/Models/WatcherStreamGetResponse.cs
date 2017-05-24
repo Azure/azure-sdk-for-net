@@ -21,30 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// The type of runbook.
+    /// The response model for the get watcher stream operation.
     /// </summary>
-    public static partial class RunbookTypeEnum
+    public partial class WatcherStreamGetResponse : AzureOperationResponse
     {
-        public const string Script = "Script";
+        private WatcherStream _watcherStream;
         
-        public const string Graph = "Graph";
+        /// <summary>
+        /// Optional. A watcher stream.
+        /// </summary>
+        public WatcherStream WatcherStream
+        {
+            get { return this._watcherStream; }
+            set { this._watcherStream = value; }
+        }
         
-        public const string PowerShellWorkflow = "PowerShellWorkflow";
-        
-        public const string PowerShell = "PowerShell";
-        
-        public const string GraphPowerShellWorkflow = "GraphPowerShellWorkflow";
-        
-        public const string GraphPowerShell = "GraphPowerShell";
-        
-        public const string Python2 = "Python2";
-        
-        public const string Python3 = "Python3";
-        
-        public const string Bash = "Bash";
+        /// <summary>
+        /// Initializes a new instance of the WatcherStreamGetResponse class.
+        /// </summary>
+        public WatcherStreamGetResponse()
+        {
+        }
     }
 }
