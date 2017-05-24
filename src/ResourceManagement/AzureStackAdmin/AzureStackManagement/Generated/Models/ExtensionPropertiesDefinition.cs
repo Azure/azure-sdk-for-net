@@ -25,36 +25,37 @@ using System.Linq;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// The resource provider extension.
+    /// The extension properties definition.
     /// </summary>
-    public partial class Extension
+    public partial class ExtensionPropertiesDefinition
     {
-        private string _name;
+        private string _quotaCreateBladeName;
         
         /// <summary>
-        /// Optional. Gets or sets the name.
+        /// Optional. Gets or sets the quota create blade name.
         /// </summary>
-        public string Name
+        public string QuotaCreateBladeName
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._quotaCreateBladeName; }
+            set { this._quotaCreateBladeName = value; }
         }
         
-        private string _uri;
+        private string _resourceProviderDashboardBladeName;
         
         /// <summary>
-        /// Optional. Gets or sets the Uri.
+        /// Optional. Gets or sets the resource provider dashboard blade name.
         /// </summary>
-        public string Uri
+        public string ResourceProviderDashboardBladeName
         {
-            get { return this._uri; }
-            set { this._uri = value; }
+            get { return this._resourceProviderDashboardBladeName; }
+            set { this._resourceProviderDashboardBladeName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Extension class.
+        /// Initializes a new instance of the ExtensionPropertiesDefinition
+        /// class.
         /// </summary>
-        public Extension()
+        public ExtensionPropertiesDefinition()
         {
         }
     }

@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.Authorization
     /// </summary>
     internal partial class PermissionOperations : IServiceOperations<AuthorizationManagementClient>, IPermissionOperations
     {
+        public const string APIVersion = "api-version=2015-07-01";
+
         /// <summary>
         /// Initializes a new instance of the PermissionOperations class.
         /// </summary>
@@ -136,7 +138,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + Uri.EscapeDataString(identity.ResourceName);
             url = url + "/providers/Microsoft.Authorization/permissions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -312,7 +314,7 @@ namespace Microsoft.Azure.Management.Authorization
             url = url + Uri.EscapeDataString(resourceGroupName);
             url = url + "/providers/Microsoft.Authorization/permissions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-07-01");
+            queryParameters.Add(APIVersion);
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

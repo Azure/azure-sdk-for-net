@@ -128,7 +128,7 @@ namespace Authorization.Tests
         {
             for (int i = 0; i < number; i++)
             {
-                var objectId = this.GraphClient.CreateUser("testUser" + i);
+                var objectId = this.GraphClient.CreateUser("testUser" + i + Guid.NewGuid());
                 this.createdUsers.Add(objectId);
             }
         }
@@ -137,7 +137,7 @@ namespace Authorization.Tests
         {
             for (int i = 0; i < number; i++)
             {
-                var objectId = this.GraphClient.CreateGroup("testGroup" + i);
+                var objectId = this.GraphClient.CreateGroup("testGroup" + i + Guid.NewGuid());
                 this.createdGroups.Add(objectId);
             }
         }
@@ -177,9 +177,12 @@ namespace Authorization.Tests
                 (SubscriptionCloudCredentials)this.TestEnvironment.Credentials, 
                 this.TestEnvironment.BaseUri);
 
-            foreach(var assignment in authorizationClient.RoleAssignments.List(null).RoleAssignments)
+            foreach (var assignment in authorizationClient.RoleAssignments.List(null).RoleAssignments)
             {
-                authorizationClient.RoleAssignments.DeleteById(assignment.Id);
+                if (assignment.Id.Contains(BasicTests.ResourceGroup))
+                {
+                    authorizationClient.RoleAssignments.DeleteById(assignment.Id);
+                }              
             }
         }
     }

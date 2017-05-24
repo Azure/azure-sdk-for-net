@@ -42,18 +42,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._error = value; }
         }
         
-        private FailoverGroup _failoverGroup;
-        
-        /// <summary>
-        /// Optional. Gets or sets Failover Group object that represents the
-        /// Azure Sql Database Failover Group.
-        /// </summary>
-        public FailoverGroup FailoverGroup
-        {
-            get { return this._failoverGroup; }
-            set { this._failoverGroup = value; }
-        }
-        
         private string _operationStatusLink;
         
         /// <summary>

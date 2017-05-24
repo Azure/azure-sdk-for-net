@@ -21,8 +21,11 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.Sql;
+using Microsoft.Azure.Management.Sql.Models;
 
 namespace Microsoft.Azure.Management.Sql
 {
@@ -203,6 +206,16 @@ namespace Microsoft.Azure.Management.Sql
         /// recommended action and update its state.
         /// </summary>
         IElasticPoolRecommendedActionOperations ElasticPoolRecommendedActions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// Failover Group.  Contains operations to: Create, Retrieve, Update,
+        /// and Delete.
+        /// </summary>
+        IFailoverGroupOperations FailoverGroups
         {
             get; 
         }
@@ -393,5 +406,21 @@ namespace Microsoft.Azure.Management.Sql
         {
             get; 
         }
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Database Failover Group Force
+        /// Failover operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql Database Failover Group
+        /// operation.
+        /// </returns>
+        Task<FailoverGroupForceFailoverResponse> GetFailoverGroupForceFailoverAllowDataLossOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
     }
 }

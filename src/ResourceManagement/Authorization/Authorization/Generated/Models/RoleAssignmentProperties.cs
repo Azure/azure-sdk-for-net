@@ -29,12 +29,12 @@ namespace Microsoft.Azure.Management.Authorization.Models
     /// </summary>
     public partial class RoleAssignmentProperties
     {
-        private Guid _principalId;
+        private string _principalId;
         
         /// <summary>
-        /// Optional. Gets or sets principal Id.
+        /// Optional. Gets or sets principal Id, change from GUID to string for the PAS Azure Stack.
         /// </summary>
-        public Guid PrincipalId
+        public string PrincipalId
         {
             get { return this._principalId; }
             set { this._principalId = value; }

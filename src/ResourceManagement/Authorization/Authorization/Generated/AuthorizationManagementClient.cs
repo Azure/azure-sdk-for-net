@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Authorization
     public partial class AuthorizationManagementClient : ServiceClient<AuthorizationManagementClient>, IAuthorizationManagementClient
     {
         private string _apiVersion;
-        
+        public const string APIVersion = "2015-07-01";
+
         /// <summary>
         /// Gets the API version.
         /// </summary>
@@ -137,7 +138,7 @@ namespace Microsoft.Azure.Management.Authorization
             this._permissions = new PermissionOperations(this);
             this._roleAssignments = new RoleAssignmentOperations(this);
             this._roleDefinitions = new RoleDefinitionOperations(this);
-            this._apiVersion = "2015-07-01";
+            this._apiVersion = APIVersion;
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -209,7 +210,7 @@ namespace Microsoft.Azure.Management.Authorization
             this._permissions = new PermissionOperations(this);
             this._roleAssignments = new RoleAssignmentOperations(this);
             this._roleDefinitions = new RoleDefinitionOperations(this);
-            this._apiVersion = "2015-07-01";
+            this._apiVersion = APIVersion;
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
