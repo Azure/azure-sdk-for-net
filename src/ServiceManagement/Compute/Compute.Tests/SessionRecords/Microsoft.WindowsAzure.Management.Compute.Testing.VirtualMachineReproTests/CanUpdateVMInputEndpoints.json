@@ -3812,7 +3812,7 @@
           "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/5.0.0.0"
         ]
       },
-      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo8646</Url>\r\n  <StorageServiceKeys>\r\n    <Primary>HT+g+dFuqqT/vLq1rEcMtQ2XUqC8X921PhqCePG5ODFs+2Mz9ZiZG2kzBBwVtZtCtQEAawEgkSfuDIE5QTk76w==</Primary>\r\n    <Secondary>fnXbF+KU7wh6z12EFwQQRVYh36gJtKBo3tZHvkt1G0zwkstwQXcyKFrzHegEYELJq67jTW4eI/Ar7shhdaPtzQ==</Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
+      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo8646</Url>\r\n  <StorageServiceKeys>\r\n    <Primary></Primary>\r\n    <Secondary></Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
       "ResponseHeaders": {
         "Content-Length": [
           "516"
@@ -3853,7 +3853,7 @@
           "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/5.0.0.0"
         ]
       },
-      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo8646</Url>\r\n  <StorageServiceKeys>\r\n    <Primary>HT+g+dFuqqT/vLq1rEcMtQ2XUqC8X921PhqCePG5ODFs+2Mz9ZiZG2kzBBwVtZtCtQEAawEgkSfuDIE5QTk76w==</Primary>\r\n    <Secondary>fnXbF+KU7wh6z12EFwQQRVYh36gJtKBo3tZHvkt1G0zwkstwQXcyKFrzHegEYELJq67jTW4eI/Ar7shhdaPtzQ==</Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
+      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo8646</Url>\r\n  <StorageServiceKeys>\r\n    <Primary></Primary>\r\n    <Secondary></Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
       "ResponseHeaders": {
         "Content-Length": [
           "516"
@@ -3894,7 +3894,7 @@
           "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/5.0.0.0"
         ]
       },
-      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo8646</Url>\r\n  <StorageServiceKeys>\r\n    <Primary>HT+g+dFuqqT/vLq1rEcMtQ2XUqC8X921PhqCePG5ODFs+2Mz9ZiZG2kzBBwVtZtCtQEAawEgkSfuDIE5QTk76w==</Primary>\r\n    <Secondary>fnXbF+KU7wh6z12EFwQQRVYh36gJtKBo3tZHvkt1G0zwkstwQXcyKFrzHegEYELJq67jTW4eI/Ar7shhdaPtzQ==</Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
+      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo8646</Url>\r\n  <StorageServiceKeys>\r\n    <Primary></Primary>\r\n    <Secondary></Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
       "ResponseHeaders": {
         "Content-Length": [
           "516"
@@ -3935,7 +3935,7 @@
           "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/5.0.0.0"
         ]
       },
-      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo8646</Url>\r\n  <StorageServiceKeys>\r\n    <Primary>HT+g+dFuqqT/vLq1rEcMtQ2XUqC8X921PhqCePG5ODFs+2Mz9ZiZG2kzBBwVtZtCtQEAawEgkSfuDIE5QTk76w==</Primary>\r\n    <Secondary>fnXbF+KU7wh6z12EFwQQRVYh36gJtKBo3tZHvkt1G0zwkstwQXcyKFrzHegEYELJq67jTW4eI/Ar7shhdaPtzQ==</Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
+      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo8646</Url>\r\n  <StorageServiceKeys>\r\n    <Primary></Primary>\r\n    <Secondary></Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
       "ResponseHeaders": {
         "Content-Length": [
           "516"
@@ -3976,7 +3976,7 @@
           "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/5.0.0.0"
         ]
       },
-      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo8646</Url>\r\n  <StorageServiceKeys>\r\n    <Primary>HT+g+dFuqqT/vLq1rEcMtQ2XUqC8X921PhqCePG5ODFs+2Mz9ZiZG2kzBBwVtZtCtQEAawEgkSfuDIE5QTk76w==</Primary>\r\n    <Secondary>fnXbF+KU7wh6z12EFwQQRVYh36gJtKBo3tZHvkt1G0zwkstwQXcyKFrzHegEYELJq67jTW4eI/Ar7shhdaPtzQ==</Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
+      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo8646</Url>\r\n  <StorageServiceKeys>\r\n    <Primary></Primary>\r\n    <Secondary></Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
       "ResponseHeaders": {
         "Content-Length": [
           "516"

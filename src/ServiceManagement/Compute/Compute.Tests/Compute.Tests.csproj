@@ -76,31 +76,31 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.IntegrationTests\CanCreateHostedService.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.IntegrationTests\CanCreateHostedServiceWithReverseDns.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.IntegrationTests\CanCreateStorageAccount.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.IntegrationTests\CanGetHostedServiceList.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.IntegrationTests\CanListHostedServiceWithReverseDns.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.IntegrationTests\CanServicesBeDeployed.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.IntegrationTests\CanUpdateHostedServiceWithReverseDns.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.IntegrationTests\CanUpdateStatusByDeploymentName.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.IntegrationTests\DeploymentHasExtensionConfiguration.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.IntegrationTests\DeploymentUpgradeWithUninstallExtension.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -136,7 +136,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanInitiateMaintenanceOnVM.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Microsoft.WindowsAzure.Management.Compute.Testing.VirtualMachineReproTests\CanRedployVM.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
