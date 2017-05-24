@@ -110,7 +110,7 @@ namespace Authorization.Tests
         {
             for (int i = 0; i < number; i++)
             {
-                var objectId = this.GraphClient.CreateUser("testUser" + i);
+                var objectId = this.GraphClient.CreateUser("testUser" + i + Guid.NewGuid());
                 this.createdUsers.Add(objectId);
             }
         }
@@ -119,7 +119,7 @@ namespace Authorization.Tests
         {
             for (int i = 0; i < number; i++)
             {
-                var objectId = this.GraphClient.CreateGroup("testGroup" + i);
+                var objectId = this.GraphClient.CreateGroup("testGroup" + i + Guid.NewGuid());
                 this.createdGroups.Add(objectId);
             }
         }
@@ -140,7 +140,7 @@ namespace Authorization.Tests
 
             foreach (var group in this.createdGroups)
             {
-                this.GraphClient.DeleteGroup(group);
+				this.GraphClient.DeleteGroup(group);
             }
 
             createdGroups.Clear();
@@ -162,7 +162,10 @@ namespace Authorization.Tests
                 cred);
             foreach (var assignment in authorizationClient.RoleAssignments.List(null))
             {
-                authorizationClient.RoleAssignments.DeleteById(assignment.Id);
+				if (assignment.Id.Contains(BasicTests.ResourceGroup))
+				{
+					authorizationClient.RoleAssignments.DeleteById(assignment.Id);
+				}
             }
         }
     }
