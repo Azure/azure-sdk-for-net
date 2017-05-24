@@ -71,5 +71,21 @@ namespace TestFramework.Tests.TestEnvironment
             Assert.Equal<string>("https://brazilus.management.azure.com/", SvcMgrUri);
             Assert.Equal<string>("https://portal.azure.com/", ibizaUri);
         }
+
+        [Theory(Skip = "Interactive Test")]
+        [InlineData("SubscriptionId=<subId>;RawToken=<rawToken.by2BGzn_-fzC4K-JWNRdG56MEBQtb1dGwxIeYY5jn_YgetUkkBR-jn8xjZQr_8-qAJ1ZwOlPdFAgvYsiw72Be7iBzo_9NTyJTUw4cGgSFI9Rtqx4IYGvJ_CcPpQWU4c1YFMqkUopU8I9eAOxtmcCpTx82Zq1uiWaVL62gdzBBC9I6WjOONSPoLVnK0LU5VmuZuS86efmdEpVhJ95llwAqAgoeFHeCx4ZJmj5y1ncOaSeQWHTfj5ovfPTMKGsWGWlbkbYDAzF0LBFo7Cau2wfkZf9nFmc9mcH05SPOnmQUwijpZSQ2CAXqK4f0EJnXI2ZenoNGfDYXQ>")]
+        //[InlineData("SubscriptionId=<subId>;AADTenant=<tenantId>;UserId=<uid.onmicrosoft.com;Password=<pwd>")]
+        public void LoginUsingRawToken(string connStr)
+        {
+            // Use the commented out InlineData to get RawToken by first logging in using the username/password. Once you get the RawToken, then use the other
+            // Inline data connection string to inject your raw token to run this test.
+            // We use the subscription Id to verify if the RawToken can get the subscription information and hence verifies if the RawToken can be used for Auth purpose
+
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connStr);
+            HttpMockServer.Mode = HttpRecorderMode.Record;
+            TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
+            string subscriptionId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.SubscriptionIdKey];
+            Assert.False(string.IsNullOrEmpty(subscriptionId));
+        }
     }
 }
