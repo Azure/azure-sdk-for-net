@@ -30,6 +30,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class AzureBgpPeering
     {
+        private string _advertisedCommunities;
+        
+        /// <summary>
+        /// Optional. Specifies the communities that will be advertised by the
+        /// peer over this BGP peering. Specific to Microsoft type of peering.
+        /// </summary>
+        public string AdvertisedCommunities
+        {
+            get { return this._advertisedCommunities; }
+            set { this._advertisedCommunities = value; }
+        }
+        
         private string _advertisedPublicPrefixes;
         
         /// <summary>
@@ -79,6 +91,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._customerAutonomousSystemNumber; }
             set { this._customerAutonomousSystemNumber = value; }
+        }
+        
+        private uint _legacyMode;
+        
+        /// <summary>
+        /// Optional. Specifies the legacy mode. Specific to Microsoft type of
+        /// peering.
+        /// </summary>
+        public uint LegacyMode
+        {
+            get { return this._legacyMode; }
+            set { this._legacyMode = value; }
         }
         
         private uint _peerAsn;
