@@ -24,6 +24,15 @@ namespace Sql.Tests
                 return "Japan East";
             }
         }
+
+        public static string DefaultSecondaryLocation
+        {
+            get
+            {
+                return "Central US";
+            }
+        }
+
         public static string DefaultStagePrimaryLocation
         {
             get

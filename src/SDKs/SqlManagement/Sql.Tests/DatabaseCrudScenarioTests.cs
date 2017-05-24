@@ -298,13 +298,14 @@ namespace Sql.Tests
                 Assert.NotNull(db1);
 
                 // Get TDE config
+                // Recently changed to be enabled by default
                 var config = sqlClient.Databases.GetTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName);
-                Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
+                Assert.Equal(TransparentDataEncryptionStatus.Enabled, config.Status);
 
                 // Update TDE config
-                config.Status = TransparentDataEncryptionStatus.Enabled;
+                config.Status = TransparentDataEncryptionStatus.Disabled;
                 config = sqlClient.Databases.CreateOrUpdateTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName, config);
-                Assert.Equal(TransparentDataEncryptionStatus.Enabled, config.Status);
+                Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
             });
         }
     }
