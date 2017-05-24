@@ -27,7 +27,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccount class.
         /// </summary>
-        public StorageAccount() { }
+        public StorageAccount()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the StorageAccount class.

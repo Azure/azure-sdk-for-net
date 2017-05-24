@@ -30,13 +30,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="principalId">The principal ID of resource
         /// identity.</param>
         /// <param name="tenantId">The tenant ID of resource.</param>
-        /// <param name="type">The identity type. Possible values include:
-        /// 'SystemAssigned'</param>
-        public Identity(string principalId = default(string), string tenantId = default(string), IdentityType? type = default(IdentityType?))
+        public Identity(string principalId = default(string), string tenantId = default(string))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
-            Type = type;
+        }
+        /// <summary>
+        /// Static constructor for Identity class.
+        /// </summary>
+        static Identity()
+        {
+            Type = "SystemAssigned";
         }
 
         /// <summary>
@@ -52,11 +56,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string TenantId { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the identity type. Possible values include:
-        /// 'SystemAssigned'
+        /// The identity type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public IdentityType? Type { get; set; }
+        public static string Type { get; private set; }
 
     }
 }

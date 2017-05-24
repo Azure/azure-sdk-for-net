@@ -11,19 +11,14 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Azure;
     using Management;
     using Storage;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for IdentityType.
+    /// Defines values for KeySource.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum IdentityType
+    public static class KeySource
     {
-        [EnumMember(Value = "SystemAssigned")]
-        SystemAssigned
+        public const string MicrosoftStorage = "Microsoft.Storage";
+        public const string MicrosoftKeyVault = "Microsoft.KeyVault";
     }
 }
 

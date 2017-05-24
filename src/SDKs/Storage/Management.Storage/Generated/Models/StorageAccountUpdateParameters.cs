@@ -29,7 +29,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the StorageAccountUpdateParameters
         /// class.
         /// </summary>
-        public StorageAccountUpdateParameters() { }
+        public StorageAccountUpdateParameters()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the StorageAccountUpdateParameters
