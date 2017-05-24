@@ -34,8 +34,8 @@ namespace Storage.Tests.Helpers
         private static Uri testUri = null;
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "EastUS2EUAP";
-        public static string DefaultRGLocation = IsTestTenant ? null : "EastUS2EUAP";
+        public static string DefaultLocation = IsTestTenant ? null : "eastus2euap";
+        public static string DefaultRGLocation = IsTestTenant ? null : "eastus2euap";
         public static SkuName DefaultSkuName = SkuName.StandardGRS;
         public static Kind DefaultKind = Kind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string> 
@@ -56,6 +56,23 @@ namespace Storage.Tests.Helpers
                 ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
                 return resourcesClient;
             }
+        }
+
+        public static Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient GetKeyVaultManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient keyVaultMgmtClient;
+            if (IsTestTenant)
+            {
+                keyVaultMgmtClient = new Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient(new TokenCredentials("xyz"), GetHandler());
+                keyVaultMgmtClient.SubscriptionId = testSubscription;
+                keyVaultMgmtClient.BaseUri = testUri;
+            }
+            else
+            {
+                handler.IsPassThrough = true;
+                keyVaultMgmtClient = context.GetServiceClient<Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient>(handlers: handler);
+            }
+            return keyVaultMgmtClient;
         }
 
         public static StorageManagementClient GetStorageManagementClient(MockContext context, RecordedDelegatingHandler handler)

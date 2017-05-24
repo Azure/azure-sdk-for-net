@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     public static class KeySource
     {
         public const string MicrosoftStorage = "Microsoft.Storage";
-        public const string MicrosoftKeyVault = "Microsoft.KeyVault";
+        public const string MicrosoftKeyvault = "Microsoft.Keyvault";
     }
 }
 

@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="keySource">The encryption keySource (provider).
         /// Possible values (case-insensitive):  Microsoft.Storage,
-        /// Microsoft.KeyVault. Possible values include: 'Microsoft.Storage',
-        /// 'Microsoft.KeyVault'</param>
+        /// Microsoft.Keyvault. Possible values include: 'Microsoft.Storage',
+        /// 'Microsoft.Keyvault'</param>
         /// <param name="services">List of services which support
         /// encryption.</param>
         /// <param name="keyVaultProperties">Properties provided by key
@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets the encryption keySource (provider). Possible values
-        /// (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault.
-        /// Possible values include: 'Microsoft.Storage', 'Microsoft.KeyVault'
+        /// (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault.
+        /// Possible values include: 'Microsoft.Storage', 'Microsoft.Keyvault'
         /// </summary>
         [JsonProperty(PropertyName = "keySource")]
         public string KeySource { get; set; }

@@ -13,6 +13,7 @@ using Storage.Tests.Helpers;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.KeyVault;
 
 namespace Storage.Tests
 {
@@ -73,6 +74,7 @@ namespace Storage.Tests
                 parameters.Encryption = new Encryption
                 {
                     Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                    KeySource = KeySource.MicrosoftStorage
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, true);
@@ -358,6 +360,7 @@ namespace Storage.Tests
                 parameters.Encryption = new Encryption()
                 {
                     Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                    KeySource = KeySource.MicrosoftStorage
                 };
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
@@ -590,7 +593,8 @@ namespace Storage.Tests
                     Kind = Kind.Storage,
                     Encryption = new Encryption()
                     {
-                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                        KeySource = KeySource.MicrosoftStorage
                     }
                 };
                 account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
@@ -1282,6 +1286,101 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
                 Assert.False(account.EnableHttpsTrafficOnly);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountCMKTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var keyVaultMgmtClient = StorageManagementTestUtilities.GetKeyVaultManagementClient(context, handler);
+
+                // Create storage account with hot
+                string accountName = TestUtilities.GenerateName("sto");
+                var rgname = "testcmk3";
+                string keyName = "testkey3";
+                string vaultName = "testkeyvaultcmk3";
+
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Identity = new Identity {};
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.NotNull(account.Identity);
+
+                var keyVault = keyVaultMgmtClient.Vaults.Get(rgname, vaultName);
+
+                keyVault.Properties.AccessPolicies.Add(new Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry
+                {
+                    TenantId = System.Guid.Parse(account.Identity.TenantId),
+                    ObjectId = account.Identity.PrincipalId,
+                    Permissions = new Microsoft.Azure.Management.KeyVault.Models.Permissions(new List<string> { "wrapkey", "unwrapkey" })
+                });
+
+                keyVault = keyVaultMgmtClient.Vaults.CreateOrUpdate(rgname, vaultName, parameters: new Microsoft.Azure.Management.KeyVault.Models.VaultCreateOrUpdateParameters
+                {
+                    Location = keyVault.Location,
+                    Properties = keyVault.Properties
+                });
+
+                // Enable encryption.
+                var updateParameters = new StorageAccountUpdateParameters
+                {
+                    Encryption = new Encryption
+                    {
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                        KeySource = "Microsoft.Keyvault",
+                        KeyVaultProperties =
+                            new KeyVaultProperties
+                            {
+                                KeyName = keyName,
+                                KeyVaultUri = keyVault.Properties.VaultUri,
+                                KeyVersion = "dccda185f55f4c34bcd2b86cc1bfff78"
+                            }
+                    }
+                };
+
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.NotNull(account.Encryption);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
+                Assert.Equal("Microsoft.Keyvault", account.Encryption.KeySource);
+
+                // Disable Encryption.
+                updateParameters = new StorageAccountUpdateParameters
+                {
+                    Encryption = new Encryption
+                    {
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                        KeySource = "Microsoft.Storage"
+                    }
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.NotNull(account.Encryption);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
+                Assert.Equal("Microsoft.Storage", account.Encryption.KeySource);
+
+
+                updateParameters = new StorageAccountUpdateParameters
+                {
+                    Encryption = new Encryption
+                    {
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = false }, File = new EncryptionService { Enabled = false } },
+                    }
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.Null(account.Encryption);
+
+                storageMgmtClient.StorageAccounts.Delete(rgname, accountName);
             }
         }
     }
