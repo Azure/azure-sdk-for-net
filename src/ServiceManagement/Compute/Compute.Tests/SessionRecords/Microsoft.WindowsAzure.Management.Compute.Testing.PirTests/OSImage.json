@@ -183,7 +183,7 @@
           "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management-preview.core.windows-int.net/30b701a7-a992-42ac-934c-bf08643902a7/services/storageservices/rdfepir6224</Url>\r\n  <StorageServiceKeys>\r\n    <Primary>X9ua9t2VKY/SWzdYXqoTxo8u8LUNRXdsqpI+NCZSwuy7IdsRuQWpErn0wTNh0XW45IDTcL6fjk1utTEc6873zw==</Primary>\r\n    <Secondary>7l8mNkOLtKSecTECD5W5HcFR1B2ANUsXTanYWj4/r7JEPSIIDeN729NedlQjb4pi3AVFWma5W/0PeBW/wm6CMQ==</Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
+      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management-preview.core.windows-int.net/30b701a7-a992-42ac-934c-bf08643902a7/services/storageservices/rdfepir6224</Url>\r\n  <StorageServiceKeys>\r\n    <Primary></Primary>\r\n    <Secondary></Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
       "ResponseHeaders": {
         "Content-Length": [
           "526"
