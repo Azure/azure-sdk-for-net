@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:9EF4A08D221595621FDCAFD7FD09AFE2:CEAEE81352B41505EB71BF5E42D2A3B6
         public VirtualMachineScaleSetSkuTypes SkuType()
         {
-            return new VirtualMachineScaleSetSkuTypes(Inner.Sku);
+            return VirtualMachineScaleSetSkuTypes.FromSku(Inner.Sku);
         }
 
         ///GENMHASH:F0B439C5B2A4923B3B36B77503386DA7:CBF9CEA159340D17669C03B84D2988B4

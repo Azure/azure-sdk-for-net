@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         {
             get
             {
-                return ValuesByName.Values;
+                return (ValuesByName != null) ? ValuesByName.Values : null;
             }
         }
 
@@ -59,7 +59,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         public static DiskSkuTypes FromStorageAccountType(StorageAccountTypes value)
         {
             DiskSkuTypes result;
-            if(ValuesByName.TryGetValue(value.ToString().ToLower(), out result))
+            if (ValuesByName == null)
+            {
+                return new DiskSkuTypes(value);
+            }
+            else if(ValuesByName.TryGetValue(value.ToString().ToLower(), out result))
             {
                 return result;
             }
