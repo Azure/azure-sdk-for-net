@@ -21,6 +21,45 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         void Stop();
 
         /// <summary>
+        /// Content types to be compressed.
+        /// </summary>
+        System.Collections.Generic.ISet<string> ContentTypesToCompress { get; }
+
+
+        /// <summary>
+        /// Forcibly purges the content of the CDN endpoint asynchronously.
+        /// </summary>
+        /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task PurgeContentAsync(ISet<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Forcibly purges the content of the CDN endpoint.
+        /// </summary>
+        /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
+        void PurgeContent(ISet<string> contentPaths);
+
+        /// <summary>
+        /// Forcibly preloads the content of the CDN endpoint.
+        /// Note: this is supported for Verizon profiles only.
+        /// </summary>
+        /// <param name="contentPaths">The file paths to the content to be loaded.</param>
+        void LoadContent(ISet<string> contentPaths);
+
+        /// <summary>
+        /// Forcibly preloads the content of the CDN endpoint asynchronously.
+        /// Note: this is supported for Verizon profiles only.
+        /// </summary>
+        /// <param name="contentPaths">The file paths to the content to be loaded.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task LoadContentAsync(ISet<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Custom domains associated with this endpoint.
+        /// </summary>
+        System.Collections.Generic.ISet<string> CustomDomains { get; }
+
+        /// <summary>
         /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS for current endpoint.
         /// </summary>
         /// <param name="hostName">The host name, which must be a domain name, of the custom domain.</param>

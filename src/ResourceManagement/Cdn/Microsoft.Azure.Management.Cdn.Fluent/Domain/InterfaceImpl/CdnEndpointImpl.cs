@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Forcibly purges the content of the CDN endpoint.
         /// </summary>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.PurgeContent(IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.PurgeContent(ISet<string> contentPaths)
         {
  
             this.PurgeContentAsync(contentPaths).GetAwaiter().GetResult();
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Note: this is supported for Verizon profiles only.
         /// </summary>
         /// <param name="contentPaths">The file paths to the content to be loaded.</param>
-        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.LoadContent(IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.LoadContent(ISet<string> contentPaths)
         {
             this.LoadContentAsync(contentPaths).GetAwaiter().GetResult(); 
         }
@@ -239,11 +239,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Gets list of content types to be compressed.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.ContentTypesToCompress
+        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.ContentTypesToCompress
         {
             get
             {
-                return this.ContentTypesToCompress() as System.Collections.Generic.IReadOnlyList<string>;
+                return this.ContentTypesToCompress() as System.Collections.Generic.ISet<string>;
             }
         }
 
@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.PurgeContentAsync(ISet<string> contentPaths, CancellationToken cancellationToken)
         {
  
             await this.PurgeContentAsync(contentPaths, cancellationToken);
@@ -282,11 +282,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <summary>
         /// Gets list of custom domains associated with this endpoint.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.CustomDomains
+        System.Collections.Generic.ISet<string> Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.CustomDomains
         {
             get
             {
-                return this.CustomDomains() as System.Collections.Generic.IReadOnlyList<string>;
+                return this.CustomDomains() as System.Collections.Generic.ISet<string>;
             }
         }
 
@@ -318,9 +318,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="contentPaths">The file paths to the content to be loaded.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpointBeta.LoadContentAsync(IList<string> contentPaths, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint.LoadContentAsync(ISet<string> contentPaths, CancellationToken cancellationToken)
         {
- 
             await this.LoadContentAsync(contentPaths, cancellationToken);
         }
 
@@ -392,7 +391,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="geoFilters">The Geo filters list to set.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttachBeta<CdnProfile.Update.IUpdate>.WithGeoFilters(IList<Models.GeoFilter> geoFilters)
+        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>.WithGeoFilters(ICollection<Models.GeoFilter> geoFilters)
         {
             return this.WithGeoFilters(geoFilters) as CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>;
         }
@@ -432,7 +431,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttachBeta<CdnProfile.Update.IUpdate>.WithContentTypesToCompress(IList<string> contentTypesToCompress)
+        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>.WithContentTypesToCompress(ISet<string> contentTypesToCompress)
         {
             return this.WithContentTypesToCompress(contentTypesToCompress) as CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>;
         }
@@ -506,7 +505,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="action">An action.</param>
         /// <param name="countryCodes">A list of ISO 2 letter country codes.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttachBeta<CdnProfile.Update.IUpdate>.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
+        CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate> CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>.WithGeoFilter(string relativePath, GeoFilterActions action, ICollection<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
         {
             return this.WithGeoFilter(relativePath, action, countryCodes) as CdnEndpoint.UpdateDefinition.IWithStandardAttach<CdnProfile.Update.IUpdate>;
         }
@@ -585,7 +584,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="geoFilters">A geo filters list.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpointBeta.WithGeoFilters(IList<Models.GeoFilter> geoFilters)
+        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint.WithGeoFilters(ICollection<Models.GeoFilter> geoFilters)
         {
             return this.WithGeoFilters(geoFilters) as CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint;
         }
@@ -634,7 +633,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpointBeta.WithContentTypesToCompress(IList<string> contentTypesToCompress)
+        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint.WithContentTypesToCompress(ISet<string> contentTypesToCompress)
         {
             return this.WithContentTypesToCompress(contentTypesToCompress) as CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint;
         }
@@ -727,7 +726,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="action">An action.</param>
         /// <param name="countryCodes">A list of ISO 2 letter country codes.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpointBeta.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
+        CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint.WithGeoFilter(string relativePath, GeoFilterActions action, ICollection<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
         {
             return this.WithGeoFilter(relativePath, action, countryCodes) as CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint;
         }
@@ -1008,7 +1007,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="geoFilters">The Geo filters list to set.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttachBeta<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilters(IList<Models.GeoFilter> geoFilters)
+        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilters(ICollection<Models.GeoFilter> geoFilters)
         {
             return this.WithGeoFilters(geoFilters) as CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>;
         }
@@ -1048,7 +1047,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttachBeta<CdnProfile.Definition.IWithStandardCreate>.WithContentTypesToCompress(IList<string> contentTypesToCompress)
+        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>.WithContentTypesToCompress(ISet<string> contentTypesToCompress)
         {
             return this.WithContentTypesToCompress(contentTypesToCompress) as CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>;
         }
@@ -1122,7 +1121,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="action">An action value.</param>
         /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
         /// <return>The next stage of the definition.</return>
-        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttachBeta<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
+        CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate> CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>.WithGeoFilter(string relativePath, GeoFilterActions action, ICollection<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
         {
             return this.WithGeoFilter(relativePath, action, countryCodes) as CdnEndpoint.Definition.IWithStandardAttach<CdnProfile.Definition.IWithStandardCreate>;
         }
