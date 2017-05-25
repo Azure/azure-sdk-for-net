@@ -83,7 +83,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var replyTo = Guid.NewGuid().ToString();
             var replyToSessionId = Guid.NewGuid().ToString();
             var publisher = Guid.NewGuid().ToString();
-            var deadLetterSource = Guid.NewGuid().ToString();
 
             var sbMessage = new Message(messageBody)
             {
@@ -97,7 +96,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 ReplyTo = replyTo,
                 ReplyToSessionId = replyToSessionId,
                 Publisher = publisher,
-                DeadLetterSource = deadLetterSource,
             };
             sbMessage.UserProperties.Add("UserProperty", "SomeUserProperty");
 
@@ -116,7 +114,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal(replyTo, convertedSbMessage.ReplyTo);
             Assert.Equal(replyToSessionId, convertedSbMessage.ReplyToSessionId);
             Assert.Equal(publisher, convertedSbMessage.Publisher);
-            Assert.Equal(deadLetterSource, convertedSbMessage.DeadLetterSource);
         }
     }
 }

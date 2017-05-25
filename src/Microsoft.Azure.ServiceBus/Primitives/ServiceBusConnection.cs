@@ -5,13 +5,11 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Threading.Tasks;
-    using Amqp;
-    using Azure.Amqp;
-    using Azure.Amqp.Transport;
-    using Core;
-    using Primitives;
+    using Microsoft.Azure.Amqp;
+    using Microsoft.Azure.Amqp.Transport;
+    using Microsoft.Azure.ServiceBus.Amqp;
 
-    public abstract class ServiceBusConnection
+    internal abstract class ServiceBusConnection
     {
         static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
 

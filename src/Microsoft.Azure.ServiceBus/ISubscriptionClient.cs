@@ -7,10 +7,19 @@ namespace Microsoft.Azure.ServiceBus
     using Core;
     using Filters;
 
+    /// <summary>
+    /// An interface used to describe the <see cref="SubscriptionClient"/>.
+    /// </summary>
     public interface ISubscriptionClient : IReceiverClient
     {
+        /// <summary>
+        /// Gets the path of the topic, for this subscription.
+        /// </summary>
         string TopicPath { get; }
 
+        /// <summary>
+        /// Gets the name of subscription.
+        /// </summary>
         string SubscriptionName { get; }
 
         /// <summary>

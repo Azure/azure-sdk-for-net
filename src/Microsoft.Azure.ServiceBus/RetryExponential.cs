@@ -11,6 +11,12 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public sealed class RetryExponential : RetryPolicy
     {
+        /// <summary>
+        /// Returns a new RetryExponential retry policy object.
+        /// </summary>
+        /// <param name="minimumBackoff">Minimum backoff interval.</param>
+        /// <param name="maximumBackoff">Maximum backoff interval.</param>
+        /// <param name="maximumRetryCount">Maximum retry count.</param>
         public RetryExponential(TimeSpan minimumBackoff, TimeSpan maximumBackoff, int maximumRetryCount)
             : this(minimumBackoff, maximumBackoff, Constants.DefaultRetryDeltaBackoff, maximumRetryCount)
         {
@@ -64,6 +70,13 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The maximum number of allowed retries.</value>
         public int MaxRetryCount { get; }
 
+        /// <summary>
+        /// Called to see if a retry should be performed.
+        /// </summary>
+        /// <param name="remainingTime">The remaining time before the timeout expires.</param>
+        /// <param name="currentRetryCount">The number of attempts that have been processed.</param>
+        /// <param name="retryInterval">The amount of time to delay before retry.</param>
+        /// <returns></returns>
         protected override bool OnShouldRetry(TimeSpan remainingTime, int currentRetryCount, out TimeSpan retryInterval)
         {
             if (currentRetryCount > this.MaxRetryCount)

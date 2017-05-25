@@ -8,6 +8,10 @@ namespace Microsoft.Azure.ServiceBus
     using System.Threading;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Represents an abstraction for retrying messaging operations. Users should not 
+    /// implement this class, and instead should use one of the provided implementations.
+    /// </summary>
     public abstract class RetryPolicy
     {
         internal static readonly TimeSpan ServerBusyBaseSleepTime = TimeSpan.FromSeconds(10);
@@ -22,17 +26,33 @@ namespace Microsoft.Azure.ServiceBus
         // This is a volatile copy of IsServerBusy. IsServerBusy is synchronized with a lock, whereas encounteredServerBusy is kept volatile for performance reasons.
         volatile bool encounteredServerBusy;
 
+        /// <summary></summary>
         protected RetryPolicy()
         {
             this.serverBusyResetTimer = new Timer(OnTimerCallback, this, TimeSpan.FromMilliseconds(-1), TimeSpan.FromMilliseconds(-1));
         }
 
+        /// <summary>
+        /// Returns the default retry policy, <see cref="RetryExponential"/>.
+        /// </summary>
         public static RetryPolicy Default => new RetryExponential(DefaultRetryMinBackoff, DefaultRetryMaxBackoff, DefaultRetryMaxCount);
 
+        /// <summary>
+        /// Determines whether or not the server returned a busy error.
+        /// </summary>
         public bool IsServerBusy { get; protected set; }
 
+        /// <summary>
+        /// Gets the exception message when a server busy error is returned.
+        /// </summary>
         public string ServerBusyExceptionMessage { get; protected set; }
 
+        /// <summary>
+        /// Runs a <see cref="Func{T, TResult}"/>, using the current RetryPolicy.
+        /// </summary>
+        /// <param name="operation">A <see cref="Func{T, TResult}"/> to be executed.</param>
+        /// <param name="operationTimeout">The timeout for the entire operation.</param>
+        /// <returns></returns>
         public async Task RunOperation(Func<Task> operation, TimeSpan operationTimeout)
         {
             int currentRetryCount = 0;
@@ -87,11 +107,16 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        /// <summary>
+        /// Determines whether or not the exception can be retried.
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns>A bool indicating whether or not the operation can be retried.</returns>
         public virtual bool IsRetryableException(Exception exception)
         {
             if (exception == null)
             {
-                throw Fx.Exception.ArgumentNull("lastException");
+                throw Fx.Exception.ArgumentNull(nameof(exception));
             }
 
             ServiceBusException serviceBusException = exception as ServiceBusException;
@@ -166,6 +191,11 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        /// <summary></summary>
+        /// <param name="remainingTime"></param>
+        /// <param name="currentRetryCount"></param>
+        /// <param name="retryInterval"></param>
+        /// <returns></returns>
         protected abstract bool OnShouldRetry(TimeSpan remainingTime, int currentRetryCount, out TimeSpan retryInterval);
 
         static void OnTimerCallback(object state)

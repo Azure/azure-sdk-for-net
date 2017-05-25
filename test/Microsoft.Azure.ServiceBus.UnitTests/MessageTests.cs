@@ -25,7 +25,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var replyTo = Guid.NewGuid().ToString();
             var replyToSessionId = Guid.NewGuid().ToString();
             var publisher = Guid.NewGuid().ToString();
-            var deadLetterSource = Guid.NewGuid().ToString();
             var properties = Guid.NewGuid().ToString();
 
             var brokeredMessage = new Message(messageBody)
@@ -40,7 +39,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 ReplyTo = replyTo,
                 ReplyToSessionId = replyToSessionId,
                 Publisher = publisher,
-                DeadLetterSource = deadLetterSource,
             };
             brokeredMessage.UserProperties.Add("UserProperty", "SomeUserProperty");
 
@@ -60,7 +58,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal(replyTo, clone.ReplyTo);
             Assert.Equal(replyToSessionId, clone.ReplyToSessionId);
             Assert.Equal(publisher, clone.Publisher);
-            Assert.Equal(deadLetterSource, clone.DeadLetterSource);
         }
 
         public class WhenQueryingIsReceivedProperty

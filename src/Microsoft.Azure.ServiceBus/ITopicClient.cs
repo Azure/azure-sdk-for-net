@@ -30,6 +30,9 @@ namespace Microsoft.Azure.ServiceBus
     /// </example>
     public interface ITopicClient : ISenderClient
     {
+        /// <summary>
+        /// Gets the name of the topic.
+        /// </summary>
         string TopicName { get; }
     }
 }

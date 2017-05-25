@@ -5,7 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using Microsoft.Azure.Amqp;
 
-    public class AmqpRequestResponseLinkCreator : AmqpLinkCreator
+    internal class AmqpRequestResponseLinkCreator : AmqpLinkCreator
     {
         readonly string entityPath;
 

@@ -31,7 +31,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new object[] { new MessagingEntityNotFoundException(string.Empty), 0, false },
             new object[] { new MessageLockLostException(string.Empty), 0, false },
             new object[] { new MessagingEntityDisabledException(string.Empty), 0, false },
-            new object[] { new ReceiverDisconnectedException(string.Empty), 0, false },
             new object[] { new SessionLockLostException(string.Empty), 0, false }
         };
 

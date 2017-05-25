@@ -9,10 +9,6 @@ namespace Microsoft.Azure.ServiceBus
     using System.Diagnostics.Tracing;
     using Microsoft.Azure.Amqp;
 
-    [SuppressMessage(
-        "Microsoft.StyleCop.CSharp.OrderingRules",
-        "SA1202:ElementsMustBeOrderedByAccess",
-        Justification = "Following this rule here will mix up the EventIds and make it confusing")]
     [EventSource(Name = "Microsoft-Azure-ServiceBus")]
     internal sealed class MessagingEventSource : EventSource
     {

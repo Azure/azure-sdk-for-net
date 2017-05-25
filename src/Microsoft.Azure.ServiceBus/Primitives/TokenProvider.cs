@@ -16,19 +16,26 @@ namespace Microsoft.Azure.ServiceBus
         internal static readonly Func<string, byte[]> MessagingTokenProviderKeyEncoder = Encoding.UTF8.GetBytes;
         const TokenScope DefaultTokenScope = TokenScope.Entity;
 
+        /// <summary></summary>
         protected TokenProvider()
             : this(TokenProvider.DefaultTokenScope)
         {
         }
 
+        /// <summary></summary>
+        /// <param name="tokenScope"></param>
         protected TokenProvider(TokenScope tokenScope)
         {
             this.TokenScope = tokenScope;
             this.ThisLock = new object();
         }
 
+        /// <summary>
+        /// Gets the scope or permissions associated with the token.
+        /// </summary>
         public TokenScope TokenScope { get; }
 
+        /// <summary></summary>
         protected object ThisLock { get; }
 
         /// <summary>
@@ -42,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Construct a TokenProvider based on the provided Key Name & Shared Access Key.
+        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
@@ -58,7 +65,7 @@ namespace Microsoft.Azure.ServiceBus
         ////}
 
         /// <summary>
-        /// Construct a TokenProvider based on the provided Key Name & Shared Access Key.
+        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
@@ -70,7 +77,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Construct a TokenProvider based on the provided Key Name & Shared Access Key.
+        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
@@ -82,7 +89,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Construct a TokenProvider based on the provided Key Name & Shared Access Key.
+        /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
@@ -94,6 +101,13 @@ namespace Microsoft.Azure.ServiceBus
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenTimeToLive, tokenScope);
         }
 
+        /// <summary>
+        /// Gets a <see cref="SecurityToken"/> for the given audience and duration.
+        /// </summary>
+        /// <param name="appliesTo">The URI which the access token applies to</param>
+        /// <param name="action">The request action</param>
+        /// <param name="timeout">The time span that specifies the timeout value for the message that gets the security token</param>
+        /// <returns></returns>
         public Task<SecurityToken> GetTokenAsync(string appliesTo, string action, TimeSpan timeout)
         {
             TimeoutHelper.ThrowIfNegativeArgument(timeout);
@@ -101,8 +115,16 @@ namespace Microsoft.Azure.ServiceBus
             return this.OnGetTokenAsync(appliesTo, action, timeout);
         }
 
+        /// <summary></summary>
+        /// <param name="appliesTo"></param>
+        /// <param name="action"></param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
         protected abstract Task<SecurityToken> OnGetTokenAsync(string appliesTo, string action, TimeSpan timeout);
 
+        /// <summary></summary>
+        /// <param name="appliesTo"></param>
+        /// <returns></returns>
         protected virtual string NormalizeAppliesTo(string appliesTo)
         {
             return ServiceBusUriHelper.NormalizeUri(appliesTo, "http", true, stripPath: this.TokenScope == TokenScope.Namespace, ensureTrailingSlash: true);

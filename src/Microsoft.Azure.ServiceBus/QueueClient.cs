@@ -13,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus
     using Primitives;
 
     /// <summary>
-    /// Anchor class - all Queue client operations start here.
+    /// Used for all basic interactions with a Service Bus queue.
     /// </summary>
     public class QueueClient : ClientEntity, IQueueClient
     {
@@ -71,10 +71,19 @@ namespace Microsoft.Azure.ServiceBus
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, serviceBusConnection.OperationTimeout);
         }
 
+        /// <summary>
+        /// Gets the name of the queue.
+        /// </summary>
         public string QueueName { get; }
 
+        /// <summary>
+        /// Gets the <see cref="ReceiveMode.ReceiveMode"/> for the QueueClient.
+        /// </summary>
         public ReceiveMode ReceiveMode { get; }
 
+        /// <summary>
+        /// Gets the name of the queue.
+        /// </summary>
         public string Path => this.QueueName;
 
         /// <summary>
@@ -203,6 +212,8 @@ namespace Microsoft.Azure.ServiceBus
 
         TokenProvider TokenProvider { get; }
 
+        /// <summary></summary>
+        /// <returns></returns>
         protected override async Task OnClosingAsync()
         {
             if (this.innerSender != null)
@@ -224,31 +235,54 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Send <see cref="Message"/> to Queue.
-        /// <see cref="SendAsync(Message)"/> sends the <see cref="Message"/> to a Service Gateway, which in-turn will forward the Message to the queue.
+        /// Sends a message to Service Bus.
         /// </summary>
-        /// <param name="message">the <see cref="Message"/> to be sent.</param>
-        /// <returns>A Task that completes when the send operations is done.</returns>
+        /// <param name="message">The <see cref="Message"/></param>
+        /// <returns>An asynchronous operation</returns>
         public Task SendAsync(Message message)
         {
             return this.SendAsync(new[] { message });
         }
 
+        /// <summary>
+        /// Sends a list of messages to Service Bus.
+        /// </summary>
+        /// <param name="messageList">The list of messages</param>
+        /// <returns>An asynchronous operation</returns>
         public Task SendAsync(IList<Message> messageList)
         {
             return this.InnerSender.SendAsync(messageList);
         }
 
+        /// <summary>
+        /// Completes a <see cref="Message"/> using a lock token.
+        /// </summary>
+        /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.</remarks>
+        /// <returns>The asynchronous operation.</returns>
         public Task CompleteAsync(string lockToken)
         {
             return this.InnerReceiver.CompleteAsync(lockToken);
         }
 
+        /// <summary>
+        /// Abandons a <see cref="Message"/> using a lock token. This will make the message available again for processing.
+        /// </summary>
+        /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.</remarks>
+        /// <returns>The asynchronous operation.</returns>
         public Task AbandonAsync(string lockToken)
         {
             return this.InnerReceiver.AbandonAsync(lockToken);
         }
 
+        /// <summary>
+        /// Moves a message to the deadletter queue.
+        /// </summary>
+        /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>. 
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path. You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.</remarks>
+        /// <returns>The asynchronous operation.</returns>
         public Task DeadLetterAsync(string lockToken)
         {
             return this.InnerReceiver.DeadLetterAsync(lockToken);

@@ -10,6 +10,9 @@ namespace Microsoft.Azure.ServiceBus
     using Microsoft.Azure.ServiceBus.Core;
     using Microsoft.Azure.ServiceBus.Primitives;
 
+    /// <summary>
+    /// Used for all basic interactions with a Service Bus topic.
+    /// </summary>
     public class TopicClient : ClientEntity, ITopicClient
     {
         readonly bool ownsConnection;
@@ -59,8 +62,14 @@ namespace Microsoft.Azure.ServiceBus
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, serviceBusConnection.OperationTimeout);
         }
 
+        /// <summary>
+        /// Gets the name of the topic.
+        /// </summary>
         public string TopicName { get; }
 
+        /// <summary>
+        /// Gets the name of the topic.
+        /// </summary>
         public string Path => this.TopicName;
 
         internal MessageSender InnerSender
@@ -93,6 +102,8 @@ namespace Microsoft.Azure.ServiceBus
 
         TokenProvider TokenProvider { get; }
 
+        /// <summary></summary>
+        /// <returns></returns>
         protected override async Task OnClosingAsync()
         {
             if (this.innerSender != null)
@@ -107,16 +118,20 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Send <see cref="Message"/> to Queue.
-        /// <see cref="SendAsync(Message)"/> sends the <see cref="Message"/> to a Service Gateway, which in-turn will forward the Message to the queue.
+        /// Sends a message to Service Bus.
         /// </summary>
-        /// <param name="message">the <see cref="Message"/> to be sent.</param>
-        /// <returns>A Task that completes when the send operations is done.</returns>
+        /// <param name="message">The <see cref="Message"/></param>
+        /// <returns>An asynchronous operation</returns>
         public Task SendAsync(Message message)
         {
             return this.SendAsync(new[] { message });
         }
 
+        /// <summary>
+        /// Sends a list of messages to Service Bus.
+        /// </summary>
+        /// <param name="messageList">The list of messages</param>
+        /// <returns>An asynchronous operation</returns>
         public Task SendAsync(IList<Message> messageList)
         {
             return this.InnerSender.SendAsync(messageList);

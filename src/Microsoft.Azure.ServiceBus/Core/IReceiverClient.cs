@@ -7,20 +7,57 @@ namespace Microsoft.Azure.ServiceBus.Core
     using System.Threading;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// An interface used to describe common functionality for receiving messages from queues and subscriptions.
+    /// </summary>
     public interface IReceiverClient : IClientEntity
     {
+        /// <summary>
+        /// Gets the path of the <see cref="IReceiverClient"/>. This is either the name of the queue, or the full path of the subscription.
+        /// </summary>
         string Path { get; }
 
+        /// <summary>
+        /// Gets the <see cref="ReceiveMode.ReceiveMode"/> of the current receiver.
+        /// </summary>
         ReceiveMode ReceiveMode { get; }
 
+        /// <summary>
+        /// Registers a message handler and begins a new thread to receive messages.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{T1, T2, TResult}"/> that processes messages.</param>
         void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler);
 
+        /// <summary>
+        /// Registers a message handler and begins a new thread to receive messages.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{T1, T2, TResult}"/> that processes messages.</param>
+        /// <param name="registerHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to register a message handler.</param>
         void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions registerHandlerOptions);
 
+        /// <summary>
+        /// Completes a <see cref="Message"/> using a lock token.
+        /// </summary>
+        /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.</remarks>
+        /// <returns>The asynchronous operation.</returns>
         Task CompleteAsync(string lockToken);
 
+        /// <summary>
+        /// Abandons a <see cref="Message"/> using a lock token. This will make the message available again for processing.
+        /// </summary>
+        /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.</remarks>
+        /// <returns>The asynchronous operation.</returns>
         Task AbandonAsync(string lockToken);
 
+        /// <summary>
+        /// Moves a message to the deadletter queue.
+        /// </summary>
+        /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>. 
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path. You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.</remarks>
+        /// <returns>The asynchronous operation.</returns>
         Task DeadLetterAsync(string lockToken);
     }
 }

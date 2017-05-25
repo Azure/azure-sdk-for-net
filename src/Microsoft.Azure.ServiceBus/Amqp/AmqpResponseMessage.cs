@@ -10,7 +10,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Azure.Amqp.Encoding;
     using Azure.Amqp.Framing;
 
-    public sealed class AmqpResponseMessage
+    internal sealed class AmqpResponseMessage
     {
         readonly AmqpMessage responseMessage;
 

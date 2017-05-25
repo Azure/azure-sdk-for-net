@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Framing;
 
-    public abstract class AmqpLinkCreator
+    internal abstract class AmqpLinkCreator
     {
         readonly string entityPath;
         readonly ServiceBusConnection serviceBusConnection;

@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp.Sasl;
     using Microsoft.Azure.Amqp.Transport;
 
-    public class AmqpConnectionHelper
+    internal class AmqpConnectionHelper
     {
         const string CbsSaslMechanismName = "MSSBCBS";
 

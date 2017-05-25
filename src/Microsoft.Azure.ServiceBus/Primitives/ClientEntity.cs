@@ -16,6 +16,9 @@ namespace Microsoft.Azure.ServiceBus
         static int nextId;
         readonly object syncLock;
 
+        /// <summary></summary>
+        /// <param name="clientId"></param>
+        /// <param name="retryPolicy"></param>
         protected ClientEntity(string clientId, RetryPolicy retryPolicy)
         {
             if (retryPolicy == null)
@@ -28,16 +31,29 @@ namespace Microsoft.Azure.ServiceBus
             this.syncLock = new object();
         }
 
+        /// <summary>
+        /// Gets or sets the state of closing.
+        /// </summary>
         public bool IsClosedOrClosing
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets the client ID.
+        /// </summary>
         public string ClientId { get; private set; }
 
+        /// <summary>
+        /// Gets the <see cref="RetryPolicy.RetryPolicy"/> for the ClientEntity.
+        /// </summary>
         public RetryPolicy RetryPolicy { get; private set; }
 
+        /// <summary>
+        /// Closes the ClientEntity.
+        /// </summary>
+        /// <returns>The asynchronous operation</returns>
         public async Task CloseAsync()
         {
             bool callClose = false;
@@ -56,8 +72,12 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        /// <summary></summary>
+        /// <returns></returns>
         protected abstract Task OnClosingAsync();
 
+        /// <summary></summary>
+        /// <returns></returns>
         protected static long GetNextId()
         {
             return Interlocked.Increment(ref nextId);

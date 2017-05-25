@@ -3,9 +3,19 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
+    /// <summary>
+    /// A enum representing the scope of the <see cref="SecurityToken"/>.
+    /// </summary>
     public enum TokenScope
     {
+        /// <summary>
+        /// The namespace.
+        /// </summary>
         Namespace = 0,
+
+        /// <summary>
+        /// The entity.
+        /// </summary>
         Entity = 1
     }
 }

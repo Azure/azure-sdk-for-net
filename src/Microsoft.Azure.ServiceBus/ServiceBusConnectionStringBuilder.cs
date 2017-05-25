@@ -6,6 +6,9 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Text;
 
+    /// <summary>
+    /// Used to generate Service Bus connection strings.
+    /// </summary>
     public class ServiceBusConnectionStringBuilder
     {
         const char KeyValueSeparator = '=';
@@ -62,6 +65,9 @@ namespace Microsoft.Azure.ServiceBus
             this.SasKey = sharedAccessKey;
         }
 
+        /// <summary>
+        /// Gets or sets the Service Bus endpoint.
+        /// </summary>
         public Uri Endpoint { get; set; }
 
         /// <summary>

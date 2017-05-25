@@ -5,7 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
 
-    public class ServiceBusNamespaceConnection : ServiceBusConnection
+    internal class ServiceBusNamespaceConnection : ServiceBusConnection
     {
         public ServiceBusNamespaceConnection(string namespaceConnectionString)
             : this(namespaceConnectionString, Constants.DefaultOperationTimeout, RetryPolicy.Default)

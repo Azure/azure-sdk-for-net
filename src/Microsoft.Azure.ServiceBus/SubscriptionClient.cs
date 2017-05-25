@@ -6,14 +6,20 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Amqp;
-    using Core;
-    using Filters;
     using Microsoft.Azure.Amqp;
-    using Primitives;
+    using Microsoft.Azure.ServiceBus.Amqp;
+    using Microsoft.Azure.ServiceBus.Core;
+    using Microsoft.Azure.ServiceBus.Filters;
+    using Microsoft.Azure.ServiceBus.Primitives;
 
+    /// <summary>
+    /// Used for all basic interactions with a Service Bus subscription.
+    /// </summary>
     public class SubscriptionClient : ClientEntity, ISubscriptionClient
     {
+        /// <summary>
+        /// Gets the name of the default rule on the subscription.
+        /// </summary>
         public const string DefaultRule = "$Default";
         int prefetchCount;
         readonly object syncLock;
@@ -76,12 +82,24 @@ namespace Microsoft.Azure.ServiceBus
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, serviceBusConnection.OperationTimeout);
         }
 
+        /// <summary>
+        /// Gets the path of the corresponding topic.
+        /// </summary>
         public string TopicPath { get; }
 
+        /// <summary>
+        /// Gets the path of the subscription client.
+        /// </summary>
         public string Path { get; }
 
+        /// <summary>
+        /// Gets the name of the subscription.
+        /// </summary>
         public string SubscriptionName { get; }
 
+        /// <summary>
+        /// Gets the <see cref="ReceiveMode.ReceiveMode"/> for the SubscriptionClient.
+        /// </summary>
         public ReceiveMode ReceiveMode { get; }
 
         /// <summary>
@@ -182,6 +200,8 @@ namespace Microsoft.Azure.ServiceBus
 
         TokenProvider TokenProvider { get; }
 
+        /// <summary></summary>
+        /// <returns></returns>
         protected override async Task OnClosingAsync()
         {
             if (this.innerSubscriptionClient != null)
@@ -197,16 +217,35 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        /// <summary>
+        /// Completes a <see cref="Message"/> using a lock token.
+        /// </summary>
+        /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.</remarks>
+        /// <returns>The asynchronous operation.</returns>
         public Task CompleteAsync(string lockToken)
         {
             return this.InnerSubscriptionClient.InnerReceiver.CompleteAsync(lockToken);
         }
 
+        /// <summary>
+        /// Abandons a <see cref="Message"/> using a lock token. This will make the message available again for processing.
+        /// </summary>
+        /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.</remarks>
+        /// <returns>The asynchronous operation.</returns>
         public Task AbandonAsync(string lockToken)
         {
             return this.InnerSubscriptionClient.InnerReceiver.AbandonAsync(lockToken);
         }
 
+        /// <summary>
+        /// Moves a message to the deadletter queue.
+        /// </summary>
+        /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>. 
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path. You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.</remarks>
+        /// <returns>The asynchronous operation.</returns>
         public Task DeadLetterAsync(string lockToken)
         {
             return this.InnerSubscriptionClient.InnerReceiver.DeadLetterAsync(lockToken);
