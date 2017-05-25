@@ -40,19 +40,19 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets the name of KeyVault key.
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
+        [JsonProperty(PropertyName = "keyname")]
         public string KeyName { get; set; }
 
         /// <summary>
         /// Gets or sets the version of KeyVault key.
         /// </summary>
-        [JsonProperty(PropertyName = "keyVersion")]
+        [JsonProperty(PropertyName = "keyversion")]
         public string KeyVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the Uri of KeyVault.
         /// </summary>
-        [JsonProperty(PropertyName = "keyVaultUri")]
+        [JsonProperty(PropertyName = "keyvaulturi")]
         public string KeyVaultUri { get; set; }
 
     }

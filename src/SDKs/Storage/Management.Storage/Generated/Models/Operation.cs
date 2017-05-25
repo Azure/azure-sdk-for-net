@@ -11,12 +11,15 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Azure;
     using Management;
     using Storage;
+    using Rest;
+    using Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Storage REST API operation definition.
     /// </summary>
+    [JsonTransformation]
     public partial class Operation
     {
         /// <summary>
@@ -31,10 +34,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// {provider}/{resource}/{operation}</param>
         /// <param name="display">Display metadata associated with the
         /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="origin">The origin of operations.</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), ServiceSpecification serviceSpecification = default(ServiceSpecification))
         {
             Name = name;
             Display = display;
+            Origin = origin;
+            ServiceSpecification = serviceSpecification;
         }
 
         /// <summary>
@@ -48,6 +54,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
+
+        /// <summary>
+        /// Gets or sets the origin of operations.
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.serviceSpecification")]
+        public ServiceSpecification ServiceSpecification { get; set; }
 
     }
 }

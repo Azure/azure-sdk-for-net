@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets properties provided by key vault.
         /// </summary>
-        [JsonProperty(PropertyName = "keyVaultProperties")]
+        [JsonProperty(PropertyName = "keyvaultproperties")]
         public KeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary>
