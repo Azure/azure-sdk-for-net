@@ -14,4 +14,4 @@ set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.EventHub %autoRestVersion% %generateFolder% 
+call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.EventHub %autoRestVersion% %generateFolder%  "MICROSOFT_MIT"

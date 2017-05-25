@@ -109,21 +109,21 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (MessageRetentionInDays > 1)
+            if (MessageRetentionInDays > 7)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MessageRetentionInDays", 1);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MessageRetentionInDays", 7);
             }
-            if (MessageRetentionInDays < 7)
+            if (MessageRetentionInDays < 1)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MessageRetentionInDays", 7);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MessageRetentionInDays", 1);
             }
-            if (PartitionCount > 1)
+            if (PartitionCount > 32)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "PartitionCount", 1);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "PartitionCount", 32);
             }
-            if (PartitionCount < 32)
+            if (PartitionCount < 1)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "PartitionCount", 32);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "PartitionCount", 1);
             }
         }
     }

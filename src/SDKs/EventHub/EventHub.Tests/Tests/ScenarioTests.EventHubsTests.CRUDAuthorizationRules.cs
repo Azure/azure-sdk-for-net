@@ -44,6 +44,11 @@ namespace EventHub.Tests.ScenarioTests
                         {
                             Name = SkuName.Standard,
                             Tier = SkuTier.Standard
+                        },
+                        Tags = new Dictionary<string, string>()
+                        {
+                            {"tag1", "value1"},
+                            {"tag2", "value2"}
                         }
                     });
 
@@ -65,7 +70,7 @@ namespace EventHub.Tests.ScenarioTests
                 // Create Eventhub
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);                
                 var createEventhubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
-                new EventHubModel());
+                new EventHubModel() { MessageRetentionInDays = 5 });
 
                 Assert.NotNull(createEventhubResponse);
                 Assert.Equal(createEventhubResponse.Name, eventhubName);
@@ -81,8 +86,7 @@ namespace EventHub.Tests.ScenarioTests
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new AuthorizationRule()
                 {
-                    Name = authorizationRuleName,
-                    Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
+                    Rights = new List<string>() { AccessRights.Listen, AccessRights.Send }
                 };
 
                 var jsonStr = EventHubManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
@@ -114,7 +118,7 @@ namespace EventHub.Tests.ScenarioTests
                 // Update Eventhub authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
                 AuthorizationRule updateEventhubAuthorizationRuleParameter = new AuthorizationRule();
-                updateEventhubAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
+                updateEventhubAuthorizationRuleParameter.Rights = new List<string>() { AccessRights.Listen };
 
                 var updateEventhubAuthorizationRuleResponse = EventHubManagementClient.EventHubs.CreateOrUpdateAuthorizationRule(resourceGroup,
                     namespaceName,eventhubName, authorizationRuleName, updateEventhubAuthorizationRuleParameter);
@@ -143,6 +147,18 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.NotNull(listKeysResponse);
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
+
+                //New connection string 
+                var regenerateConnection_primary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.PrimaryKey));
+                Assert.NotNull(regenerateConnection_primary);
+                Assert.NotEqual(listKeysResponse.PrimaryConnectionString, regenerateConnection_primary.PrimaryConnectionString);
+                Assert.Equal(listKeysResponse.SecondaryConnectionString, regenerateConnection_primary.SecondaryConnectionString);
+
+                var regenerateConnection_Secondary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.SecondaryKey));
+                Assert.NotNull(regenerateConnection_Secondary);
+                Assert.NotEqual(listKeysResponse.SecondaryConnectionString, regenerateConnection_Secondary.SecondaryConnectionString);
+                Assert.Equal(regenerateConnection_primary.PrimaryConnectionString, regenerateConnection_Secondary.PrimaryConnectionString);
+
 
                 // Delete Eventhub authorizationRule
                 EventHubManagementClient.EventHubs.DeleteAuthorizationRule(resourceGroup, namespaceName, eventhubName, authorizationRuleName);

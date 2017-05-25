@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="rights">The rights associated with the rule.</param>
-        public AuthorizationRule(string id = default(string), string name = default(string), string type = default(string), IList<AccessRights?> rights = default(IList<AccessRights?>))
+        public AuthorizationRule(string id = default(string), string name = default(string), string type = default(string), IList<string> rights = default(IList<string>))
             : base(id, name, type)
         {
             Rights = rights;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// Gets or sets the rights associated with the rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.rights")]
-        public IList<AccessRights?> Rights { get; set; }
+        public IList<string> Rights { get; set; }
 
     }
 }

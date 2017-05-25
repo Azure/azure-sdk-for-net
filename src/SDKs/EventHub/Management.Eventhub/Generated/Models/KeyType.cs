@@ -22,10 +22,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum KeyType
     {
-        [EnumMember(Value = "Primary")]
-        Primary,
-        [EnumMember(Value = "Secondary")]
-        Secondary
+        [EnumMember(Value = "PrimaryKey")]
+        PrimaryKey,
+        [EnumMember(Value = "SecondaryKey")]
+        SecondaryKey
     }
 }
 

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// Possible values include: 'Basic', 'Standard'</param>
         /// <param name="capacity">The Event Hubs throughput units, vaule
         /// should be 1 to 20 throughput units.</param>
-        public Sku(SkuName name, SkuTier? tier = default(SkuTier?), int? capacity = default(int?))
+        public Sku(string name, string tier = default(string), int? capacity = default(int?))
         {
             Name = name;
             Tier = tier;
@@ -46,14 +46,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public SkuName Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the billing tier of this particular SKU. Possible
         /// values include: 'Basic', 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public SkuTier? Tier { get; set; }
+        public string Tier { get; set; }
 
         /// <summary>
         /// Gets or sets the Event Hubs throughput units, vaule should be 1 to
@@ -70,13 +70,17 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Capacity > 1)
+            if (Name == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Capacity", 1);
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (Capacity < 20)
+            if (Capacity > 20)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Capacity", 20);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Capacity", 20);
+            }
+            if (Capacity < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Capacity", 1);
             }
         }
     }

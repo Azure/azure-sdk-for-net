@@ -125,13 +125,13 @@ namespace Microsoft.Azure.Management.EventHub.Models
             {
                 Sku.Validate();
             }
-            if (MaximumThroughputUnits > 1)
+            if (MaximumThroughputUnits > 20)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaximumThroughputUnits", 1);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaximumThroughputUnits", 20);
             }
-            if (MaximumThroughputUnits < 20)
+            if (MaximumThroughputUnits < 1)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaximumThroughputUnits", 20);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaximumThroughputUnits", 1);
             }
         }
     }

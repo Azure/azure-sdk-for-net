@@ -11,21 +11,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using Azure;
     using Management;
     using EventHub;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SkuTier.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum SkuTier
+    public static class SkuTier
     {
-        [EnumMember(Value = "Basic")]
-        Basic,
-        [EnumMember(Value = "Standard")]
-        Standard
+        public const string Basic = "Basic";
+        public const string Standard = "Standard";
     }
 }
 

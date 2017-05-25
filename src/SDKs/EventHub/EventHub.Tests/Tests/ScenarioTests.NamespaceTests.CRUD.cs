@@ -39,6 +39,11 @@ namespace EventHub.Tests.ScenarioTests
                         {
                             Name = SkuName.Standard,
                             Tier = SkuTier.Standard
+                        },
+                        Tags = new Dictionary<string, string>()
+                        {
+                            {"tag1", "value1"},
+                            {"tag2", "value2"}
                         }
                     });
 
@@ -76,15 +81,13 @@ namespace EventHub.Tests.ScenarioTests
                     Location = location,
                     Tags = new Dictionary<string, string>()
                         {
-                            {"tag1", "value1"},
-                            {"tag2", "value2"},
                             {"tag3", "value3"},
                             {"tag4", "value4"}
                         }
                 };
 
                 // Will uncomment the assertions once the service is deployed
-                var updateNamespaceResponse = EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, updateNamespaceParameter);
+                var updateNamespaceResponse = EventHubManagementClient.Namespaces.Update(resourceGroup, namespaceName, updateNamespaceParameter);
                 //Assert.NotNull(updateNamespaceResponse);
                 //Assert.True(updateNamespaceResponse.ProvisioningState.Equals("Active", StringComparison.CurrentCultureIgnoreCase) || 
                 //    updateNamespaceResponse.ProvisioningState.Equals("Succeeded", StringComparison.CurrentCultureIgnoreCase));
@@ -95,7 +98,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(namespaceName, getNamespaceResponse.Name);
-                Assert.Equal(getNamespaceResponse.Tags.Count, 4);
+                Assert.Equal(getNamespaceResponse.Tags.Count, 2);
                 foreach (var tag in updateNamespaceParameter.Tags)
                 {
                     Assert.True(getNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
