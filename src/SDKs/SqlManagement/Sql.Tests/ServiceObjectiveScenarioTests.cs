@@ -14,7 +14,6 @@ namespace Sql.Tests
         {
             string testPrefix = "sqlcrudtest-";
             string suiteName = this.GetType().FullName;
-            string serverName = SqlManagementTestUtilities.GenerateName(testPrefix);
 
             SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetListServiceObjectives", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
