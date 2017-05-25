@@ -3,6 +3,9 @@ branches:
   only:
   - master
   - dev
+skip_tags: true
+matrix:
+  fast_finish: true 
 image: Visual Studio 2017
 environment:
   azure-service-bus-dotnet/ClientSecret:
