@@ -945,7 +945,6 @@ namespace Authorization.Tests
 				foreach (var operationsMetadata in allProviderOperationsMetadatas)
 				{
 					Assert.NotNull(operationsMetadata);
-					Assert.NotNull(operationsMetadata.DisplayName);
 					Assert.NotNull(operationsMetadata.Id);
 					Assert.NotNull(operationsMetadata.Name);
 					Assert.NotNull(operationsMetadata.Operations);
@@ -953,7 +952,7 @@ namespace Authorization.Tests
 					Assert.NotNull(operationsMetadata.Type);
 				}
 
-				var providerOperationsMetadata = client.ProviderOperationsMetadata.Get(client.SubscriptionId, "2015-07-01");
+				var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("Microsoft.Web", "2015-07-01");
 				Assert.NotNull(providerOperationsMetadata);
 				Assert.NotNull(providerOperationsMetadata.DisplayName);
 				Assert.NotNull(providerOperationsMetadata.Id);
