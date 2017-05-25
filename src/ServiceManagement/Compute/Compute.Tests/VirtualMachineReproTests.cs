@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
     public class VirtualMachineReproTests : TestBase, IUseFixture<TestFixtureData>
     {
         private TestFixtureData fixture;
-        private const string PLACEHOLDER = "PLACEHOLDER1@";
+        private const string PLACEHOLDER = "PLACEHOLDER";
 
         public void SetFixture(TestFixtureData data)
         {
@@ -320,7 +320,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                                                         new ComponentSetting
                                                                         {
                                                                             SettingName = "AutoLogon",
-                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>PLACEHOLDER</Value><PlainText>true</PlainText></Password></AutoLogon>",
                                                                         }
                                                                     }
                                                                 }
@@ -480,7 +480,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                                                 new ComponentSetting
                                                                 {
                                                                     SettingName = "AutoLogon",
-                                                                    Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                    Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>PLACEHOLDER</Value><PlainText>true</PlainText></Password></AutoLogon>",
                                                                 }
                                                             }
                                                         }
@@ -1259,7 +1259,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                                                         new ComponentSetting
                                                                         {
                                                                             SettingName = "AutoLogon",
-                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>PLACEHOLDER</Value><PlainText>true</PlainText></Password></AutoLogon>",
                                                                         }
                                                                     }
                                                                 }
@@ -1433,7 +1433,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                                                         new ComponentSetting
                                                                         {
                                                                             SettingName = "AutoLogon",
-                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>BaR@123pslibtest1269</Value><PlainText>true</PlainText></Password></AutoLogon>",
+                                                                            Content = "<AutoLogon><Enabled>true</Enabled><LogonCount>5</LogonCount><Username>Foo12</Username><Password><Value>PLACEHOLDER</Value><PlainText>true</PlainText></Password></AutoLogon>",
                                                                         }
                                                                     }
                                                                 }
@@ -2505,7 +2505,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                             },
                         });
 
-                    System.Threading.Thread.Sleep(600000);  // Need to wait for certain amount of time after the deployment is created in order to see the MaintenanceState field. 
+                    //System.Threading.Thread.Sleep(600000);  // Need to wait for certain amount of time after the deployment is created in order to see the MaintenanceState field.
                     var debugBlobUri = string.Format("http://{0}.blob.core.windows.net/bootdiagnostics", storageAccountName);
                     var dep = compute.Deployments.GetByName(serviceName, deploymentName);
                     Assert.NotNull(dep.RoleInstances[0].MaintenanceStatus); 

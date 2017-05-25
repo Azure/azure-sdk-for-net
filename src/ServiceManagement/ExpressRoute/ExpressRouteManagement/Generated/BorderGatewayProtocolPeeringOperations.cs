@@ -229,6 +229,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 vlanIdElement.Value = parameters.VirtualLanId.ToString();
                 createBgpPeeringElement.Add(vlanIdElement);
                 
+                XElement legacyModeElement = new XElement(XName.Get("LegacyMode", "http://schemas.microsoft.com/windowsazure"));
+                legacyModeElement.Value = parameters.LegacyMode.ToString();
+                createBgpPeeringElement.Add(legacyModeElement);
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
@@ -840,6 +844,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             AzureBgpPeering bgpPeeringInstance = new AzureBgpPeering();
                             result.BgpPeering = bgpPeeringInstance;
                             
+                            XElement advertisedCommunitiesElement = bgpPeeringElement.Element(XName.Get("AdvertisedCommunities", "http://schemas.microsoft.com/windowsazure"));
+                            if (advertisedCommunitiesElement != null)
+                            {
+                                string advertisedCommunitiesInstance = advertisedCommunitiesElement.Value;
+                                bgpPeeringInstance.AdvertisedCommunities = advertisedCommunitiesInstance;
+                            }
+                            
                             XElement advertisedPublicPrefixesElement = bgpPeeringElement.Element(XName.Get("AdvertisedPublicPrefixes", "http://schemas.microsoft.com/windowsazure"));
                             if (advertisedPublicPrefixesElement != null)
                             {
@@ -866,6 +877,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             {
                                 uint customerAsnInstance = uint.Parse(customerAsnElement.Value, CultureInfo.InvariantCulture);
                                 bgpPeeringInstance.CustomerAutonomousSystemNumber = customerAsnInstance;
+                            }
+                            
+                            XElement legacyModeElement = bgpPeeringElement.Element(XName.Get("LegacyMode", "http://schemas.microsoft.com/windowsazure"));
+                            if (legacyModeElement != null)
+                            {
+                                uint legacyModeInstance = uint.Parse(legacyModeElement.Value, CultureInfo.InvariantCulture);
+                                bgpPeeringInstance.LegacyMode = legacyModeInstance;
                             }
                             
                             XElement peerAsnElement = bgpPeeringElement.Element(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));

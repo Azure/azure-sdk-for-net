@@ -339,7 +339,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                         PublicConfiguration =
                             "<?xml version=\"1.0\" encoding=\"UTF-8\"?><PublicConfig><UserName>WilliamGatesIII</UserName><Expiration>2020-11-20</Expiration></PublicConfig>",
                         PrivateConfiguration =
-                            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><PrivateConfig><Password>WindowsAzure1277!</Password></PrivateConfig>",
+                            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><PrivateConfig><Password>PLACEHOLDER</Password></PrivateConfig>",
                         Version = "*"
                     });
                 ExtensionConfiguration extensionConfig = new ExtensionConfiguration();

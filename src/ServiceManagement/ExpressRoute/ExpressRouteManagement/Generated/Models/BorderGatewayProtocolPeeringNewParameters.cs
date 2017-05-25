@@ -53,6 +53,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._customerAutonomousSystemNumber = value; }
         }
         
+        private uint _legacyMode;
+        
+        /// <summary>
+        /// Optional. Specifies the legacy mode. Specific to Microsoft type of
+        /// peering.
+        /// </summary>
+        public uint LegacyMode
+        {
+            get { return this._legacyMode; }
+            set { this._legacyMode = value; }
+        }
+        
         private uint _peerAutonomousSystemNumber;
         
         /// <summary>

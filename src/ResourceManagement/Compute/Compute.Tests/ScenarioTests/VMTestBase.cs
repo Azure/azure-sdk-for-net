@@ -433,7 +433,7 @@ namespace Compute.Tests
                 OSProfile = new OSProfile
                 {
                     AdminUsername = "Foo12",
-                    AdminPassword = "BaR@123" + rgName,
+                    AdminPassword = "PLACEHOLDER",
                     ComputerName = "test"
                 }
             };
