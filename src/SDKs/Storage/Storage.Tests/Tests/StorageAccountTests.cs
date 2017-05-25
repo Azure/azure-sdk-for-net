@@ -1400,7 +1400,8 @@ namespace Storage.Tests
 
                 var ops = storageMgmtClient.Operations.List();
 
-                Assert.NotNull(ops.Value);
+                Assert.NotNull(ops);
+                Assert.NotNull(ops.GetEnumerator());
             }
         }
     }

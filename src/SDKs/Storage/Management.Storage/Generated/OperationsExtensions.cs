@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Storage
     using Rest;
     using Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -27,7 +29,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static OperationListResult List(this IOperations operations)
+            public static IEnumerable<Operation> List(this IOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -41,7 +43,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationListResult> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Operation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
