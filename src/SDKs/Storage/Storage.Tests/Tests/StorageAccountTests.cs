@@ -1383,5 +1383,25 @@ namespace Storage.Tests
                 storageMgmtClient.StorageAccounts.Delete(rgname, accountName);
             }
         }
+        [Fact]
+        public void StorageAccountOperationsTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var keyVaultMgmtClient = StorageManagementTestUtilities.GetKeyVaultManagementClient(context, handler);
+
+                // Create storage account with hot
+                string accountName = TestUtilities.GenerateName("sto");
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                var ops = storageMgmtClient.Operations.List();
+
+                Assert.NotNull(ops.Value);
+            }
+        }
     }
 }

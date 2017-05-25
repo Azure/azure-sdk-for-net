@@ -76,6 +76,11 @@ namespace Microsoft.Azure.Management.Storage
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IStorageAccountsOperations.
         /// </summary>
         public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
@@ -286,6 +291,7 @@ namespace Microsoft.Azure.Management.Storage
         /// </summary>
         private void Initialize()
         {
+            Operations = new Operations(this);
             StorageAccounts = new StorageAccountsOperations(this);
             Usage = new UsageOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

@@ -27,6 +27,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the KeyVaultProperties class.
         /// </summary>
+        /// <param name="keyName">The name of KeyVault key.</param>
+        /// <param name="keyVersion">The version of KeyVault key.</param>
+        /// <param name="keyVaultUri">The Uri of KeyVault.</param>
         public KeyVaultProperties(string keyName = default(string), string keyVersion = default(string), string keyVaultUri = default(string))
         {
             KeyName = keyName;
@@ -35,16 +38,19 @@ namespace Microsoft.Azure.Management.Storage.Models
         }
 
         /// <summary>
+        /// Gets or sets the name of KeyVault key.
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
         public string KeyName { get; set; }
 
         /// <summary>
+        /// Gets or sets the version of KeyVault key.
         /// </summary>
         [JsonProperty(PropertyName = "keyVersion")]
         public string KeyVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets the Uri of KeyVault.
         /// </summary>
         [JsonProperty(PropertyName = "keyVaultUri")]
         public string KeyVaultUri { get; set; }
