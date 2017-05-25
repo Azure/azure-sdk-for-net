@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Authorization
                         propertiesValue2["roleDefinitionId"] = parameters.Properties.RoleDefinitionId;
                     }
                     
-                    propertiesValue2["principalId"] = parameters.Properties.PrincipalId.ToString();
+                    propertiesValue2["principalId"] = parameters.Properties.PrincipalId;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.Authorization
                         propertiesValue2["roleDefinitionId"] = parameters.Properties.RoleDefinitionId;
                     }
                     
-                    propertiesValue2["principalId"] = parameters.Properties.PrincipalId.ToString();
+                    propertiesValue2["principalId"] = parameters.Properties.PrincipalId;
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -1354,7 +1354,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> odataFilter2 = new List<string>();
             if (parameters != null && parameters.PrincipalId != null)
             {
-                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'");
+                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId) + "'");
             }
             if (odataFilter2.Count > 0)
             {
@@ -1363,7 +1363,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> odataFilter3 = new List<string>();
             if (parameters != null && parameters.AssignedToPrincipalId != null)
             {
-                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId.Value.ToString()) + "')");
+                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId) + "')");
             }
             if (odataFilter3.Count > 0)
             {
@@ -1630,7 +1630,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> odataFilter2 = new List<string>();
             if (parameters != null && parameters.PrincipalId != null)
             {
-                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'");
+                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId) + "'");
             }
             if (odataFilter2.Count > 0)
             {
@@ -1639,7 +1639,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> odataFilter3 = new List<string>();
             if (parameters != null && parameters.AssignedToPrincipalId != null)
             {
-                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId.Value.ToString()) + "')");
+                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId) + "')");
             }
             if (odataFilter3.Count > 0)
             {
@@ -1874,7 +1874,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> odataFilter2 = new List<string>();
             if (parameters != null && parameters.PrincipalId != null)
             {
-                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'");
+                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId) + "'");
             }
             if (odataFilter2.Count > 0)
             {
@@ -1883,7 +1883,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> odataFilter3 = new List<string>();
             if (parameters != null && parameters.AssignedToPrincipalId != null)
             {
-                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId.Value.ToString()) + "')");
+                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId) + "')");
             }
             if (odataFilter3.Count > 0)
             {
@@ -2494,7 +2494,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> odataFilter2 = new List<string>();
             if (parameters != null && parameters.PrincipalId != null)
             {
-                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId.Value.ToString()) + "'");
+                odataFilter2.Add("principalId eq '" + Uri.EscapeDataString(parameters.PrincipalId) + "'");
             }
             if (odataFilter2.Count > 0)
             {
@@ -2503,7 +2503,7 @@ namespace Microsoft.Azure.Management.Authorization
             List<string> odataFilter3 = new List<string>();
             if (parameters != null && parameters.AssignedToPrincipalId != null)
             {
-                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId.Value.ToString()) + "')");
+                odataFilter3.Add("assignedTo('" + Uri.EscapeDataString(parameters.AssignedToPrincipalId) + "')");
             }
             if (odataFilter3.Count > 0)
             {

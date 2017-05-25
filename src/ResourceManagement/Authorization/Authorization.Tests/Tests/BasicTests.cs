@@ -512,7 +512,7 @@ namespace Authorization.Tests
 
                 var allRoleAssignments = client.RoleAssignments.List(new ListAssignmentsFilterParameters
                     {
-                        PrincipalId = principalId
+                        PrincipalId = principalId.ToString()
                     });
 
                 Assert.NotNull(allRoleAssignments);
@@ -716,7 +716,7 @@ namespace Authorization.Tests
                 // List role assignments with AssignedTo filter = user id
                 var allRoleAssignments = client.RoleAssignments.List(new ListAssignmentsFilterParameters
                 {
-                    AssignedToPrincipalId = userId
+                    AssignedToPrincipalId = userId.ToString()
                 });
 
                 Assert.NotNull(allRoleAssignments);
