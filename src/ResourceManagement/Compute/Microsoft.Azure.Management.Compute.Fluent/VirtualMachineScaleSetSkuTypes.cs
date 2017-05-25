@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Fluent.Models;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
@@ -10,6 +11,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     public partial class VirtualMachineScaleSetSkuTypes 
     {
+        private static IDictionary<string, VirtualMachineScaleSetSkuTypes> ValuesByName;
+
         /** Static value Standard_A0 for VirtualMachineScaleSetSkuTypes. */
         public static readonly VirtualMachineScaleSetSkuTypes StandardA0 = new VirtualMachineScaleSetSkuTypes("Standard_A0", "Standard");
 
@@ -201,10 +204,85 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="sku">sku the sku</param>
         public  VirtualMachineScaleSetSkuTypes (Sku sku)
         {
-            this.sku = sku;
-            this.value = this.sku.Name;
-            if (this.sku.Tier != null) {
-                this.value = this.value + "_" + this.sku.Tier;
+            this.sku = CreateCopy(sku);
+            value = this.sku.Name;
+            if (this.sku.Tier != null)
+            {
+                value = value + "_" + this.sku.Tier;
+            }
+            if (ValuesByName == null)
+            {
+                ValuesByName = new Dictionary<string, VirtualMachineScaleSetSkuTypes>();
+            }
+            ValuesByName[value.ToLower()] = this;
+        }
+
+        /// <summary>
+        /// Parses a SKU into a VMSS SKU type and creates a new VirtualMachineScaleSetSkuType instance if not found among the existing ones.
+        /// </summary>
+        /// <param name="sku">a VMSS SKU</param>
+        public static VirtualMachineScaleSetSkuTypes FromSku(Sku sku)
+        {
+            if (sku == null)
+            {
+                return null;
+            }
+
+            string nameToLookFor = sku.Name;
+            if (sku.Tier != null)
+            {
+                nameToLookFor += '_' + sku.Tier;
+            }
+
+            VirtualMachineScaleSetSkuTypes result;
+            if (ValuesByName == null)
+            {
+                return new VirtualMachineScaleSetSkuTypes(sku);
+            }
+            else if (ValuesByName.TryGetValue(nameToLookFor.ToLower(), out result))
+            {
+                return result;
+            }
+            else
+            {
+                return new VirtualMachineScaleSetSkuTypes(sku);
+            }
+        }
+
+        /// <summary>
+        /// Parses into a VMSS SKU type and creates a new VMSS SKU type instance if not found among the existing ones.
+        /// </summary>
+        /// <param name="skuName">a SKU name</param>
+        /// <param name="skuTier">a SKU tier</param>
+        /// <returns>a VMSS SKU type</returns>
+        public static VirtualMachineScaleSetSkuTypes FromSkuNameAndTier(string skuName, string skuTier)
+        {
+            return FromSku(new Sku()
+            {
+                Name = skuName,
+                Tier = skuTier
+            });
+        }
+
+        // Creates a copy of the given SKU
+        private static Sku CreateCopy(Sku sku)
+        {
+            return new Sku()
+            {
+                Name = sku.Name,
+                Tier = sku.Tier,
+                Capacity = sku.Capacity
+            };
+        }
+
+        /// <summary>
+        /// Known virtuak machine scale set SKU types.
+        /// </summary>
+        public IEnumerable<VirtualMachineScaleSetSkuTypes> Values
+        {
+            get
+            {
+                return (ValuesByName != null) ? ValuesByName.Values : null;
             }
         }
 
@@ -216,6 +294,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 return this.sku;
             }
         }
+
 
         public override string ToString()
         {

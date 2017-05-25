@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             if (Inner.AccountType != null && Inner.AccountType.HasValue)
             {
-                return new DiskSkuTypes(Inner.AccountType.Value);
+                return DiskSkuTypes.FromStorageAccountType(Inner.AccountType.Value);
             }
             return null;
         }

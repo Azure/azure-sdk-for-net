@@ -87,6 +87,11 @@ namespace Fluent.Tests.ResourceManager
                     .WithApiVersion("2015-08-01")
                     .WithProperties(JsonConvert.DeserializeObject("{\"SiteMode\":\"Limited\",\"ComputeMode\":\"Dynamic\"}"))
                     .Apply();
+
+                Assert.Equal(newRgName, resource.ResourceGroupName);
+
+                resourceManager.ResourceGroups.BeginDeleteByName(newRgName);
+                resourceManager.ResourceGroups.BeginDeleteByName(rgName);
             }
         }
     }
