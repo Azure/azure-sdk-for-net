@@ -38,6 +38,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public static readonly PowerState Stopped = Parse("PowerState/stopped");
 
         /// <summary>
+        /// Static value PowerState/stopping for PowerState.
+        /// </summary>
+        public static readonly PowerState Stopping = Parse("PowerState/stopping");
+
+        /// <summary>
         /// Static value PowerState/unknown for PowerState.
         /// </summary>
         public static readonly PowerState Unknown = Parse("PowerState/unknown");
