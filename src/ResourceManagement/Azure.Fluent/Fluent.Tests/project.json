@@ -76,6 +76,8 @@
       "target": "project",
       "type": "build"
     },
-    "SSH.NET": "2016.0.0"
+    "SSH.NET": "2016.0.0",
+    "WindowsAzure.Storage": "8.1.1",
+    "System.Net.Http": "4.3.2"
   }
 }
