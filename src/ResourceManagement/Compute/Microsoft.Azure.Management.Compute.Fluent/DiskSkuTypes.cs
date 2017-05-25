@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
+
 namespace Microsoft.Azure.Management.Compute.Fluent.Models
 {
     /// <summary>
@@ -8,6 +10,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// </summary>
     public class DiskSkuTypes
     {
+        private static IDictionary<string, DiskSkuTypes> ValuesByName;
+
+        /// <summary>
+        /// Known disk SKU types.
+        /// </summary>
+        /// <returns></returns>
+
+        public static IEnumerable<DiskSkuTypes> Values
+        {
+            get
+            {
+                return ValuesByName.Values;
+            }
+        }
+
         /// <summary>
         /// Static value StandardLRS for DiskSkuTypes.
         /// </summary>
@@ -25,8 +42,31 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// <param name="value">the custom value</param>
         public DiskSkuTypes(StorageAccountTypes value)
         {
+            if (ValuesByName == null)
+            {
+                ValuesByName = new Dictionary<string, DiskSkuTypes>();
+            }
+
+            ValuesByName[value.ToString().ToLower()] = this;
             this.value = value;
-            
+        }
+
+        /// <summary>
+        /// Parses a disk SKU type from a storage account type.
+        /// </summary>
+        /// <param name="value">a storage account type</param>
+        /// <returns>a disk SKU type</returns>
+        public static DiskSkuTypes FromStorageAccountType(StorageAccountTypes value)
+        {
+            DiskSkuTypes result;
+            if(ValuesByName.TryGetValue(value.ToString().ToLower(), out result))
+            {
+                return result;
+            }
+            else
+            {
+                return new DiskSkuTypes(value);
+            }
         }
 
         public StorageAccountTypes AccountType
