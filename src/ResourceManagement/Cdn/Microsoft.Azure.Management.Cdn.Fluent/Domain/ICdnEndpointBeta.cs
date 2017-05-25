@@ -21,14 +21,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         Task<Microsoft.Azure.Management.Cdn.Fluent.CustomDomainValidationResult> ValidateCustomDomainAsync(string hostName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Forcibly preloads the content of the CDN endpoint asynchronously.
-        /// Note: this is supported for Verizon profiles only.
-        /// </summary>
-        /// <param name="contentPaths">The file paths to the content to be loaded.</param>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task LoadContentAsync(IList<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// Starts the CDN endpoint asynchronously, if it is stopped.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
@@ -39,35 +31,5 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
         Task StopAsync(CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Gets list of content types to be compressed.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> ContentTypesToCompress { get; }
-
-        /// <summary>
-        /// Forcibly purges the content of the CDN endpoint asynchronously.
-        /// </summary>
-        /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        /// <return>A representation of the deferred computation of this call.</return>
-        Task PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Gets list of custom domains associated with this endpoint.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> CustomDomains { get; }
-
-        /// <summary>
-        /// Forcibly purges the content of the CDN endpoint.
-        /// </summary>
-        /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        void PurgeContent(IList<string> contentPaths);
-
-        /// <summary>
-        /// Forcibly preloads the content of the CDN endpoint.
-        /// Note: this is supported for Verizon profiles only.
-        /// </summary>
-        /// <param name="contentPaths">The file paths to the content to be loaded.</param>
-        void LoadContent(IList<string> contentPaths);
     }
 }

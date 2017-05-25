@@ -209,10 +209,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:84C320030DC557769AE852230C16E745:0450D3EE7EB5FBD3AA9977432B475274
         public async Task LoadEndpointContentAsync(
             string endpointName, 
-            IList<string> contentPaths, 
+            ISet<string> contentPaths, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Manager.Inner.Endpoints.LoadContentAsync(ResourceGroupName, Name, endpointName, contentPaths, cancellationToken);
+            await Manager.Inner.Endpoints.LoadContentAsync(ResourceGroupName, Name, endpointName, contentPaths?.ToList(), cancellationToken);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:99295E9723E2B8FABFB8C4111423E7B2
@@ -268,10 +268,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:9CC05EB059EED242274D2BB7528C30E4:654DDC68AFFED4F57BCF13C5DD9C95AD
         public async Task PurgeEndpointContentAsync(
             string endpointName, 
-            IList<string> contentPaths, 
+            ISet<string> contentPaths, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Manager.Inner.Endpoints.PurgeContentAsync(ResourceGroupName, Name, endpointName, contentPaths,cancellationToken);
+            await Manager.Inner.Endpoints.PurgeContentAsync(ResourceGroupName, Name, endpointName, contentPaths?.ToList() ,cancellationToken);
         }		
     }
 }
