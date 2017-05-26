@@ -218,12 +218,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return listener;
         }
 
-        ///GENMHASH:140689F6718EC0DE59ED2724FEF8B493:FFD69AF34CCA85347AFB30F010027480
-        public ApplicationGatewaySslPolicy SslPolicy()
-        {
-            return Inner.SslPolicy;
-        }
-
         ///GENMHASH:CD498C02D42C73AD0C1FF12493E2A9B8:CD5E24B4D8E0D679C5291E15ABECB279
         public int InstanceCount()
         {

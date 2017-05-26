@@ -431,17 +431,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the SSL policy for the application gateway.
-        /// </summary>
-        Models.ApplicationGatewaySslPolicy Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.SslPolicy
-        {
-            get
-            {
-                return this.SslPolicy() as Models.ApplicationGatewaySslPolicy;
-            }
-        }
-
-        /// <summary>
         /// Gets the frontend IP configuration associated with a public IP address, if any, that frontend listeners and request routing rules can reference implicitly.
         /// </summary>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.DefaultPublicFrontend

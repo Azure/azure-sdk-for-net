@@ -86,7 +86,6 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tTags: ").Append(resource.Tags.ToString())
                     .Append("\n\tSKU: ").Append(resource.Sku.ToString())
                     .Append("\n\tOperational state: ").Append(resource.OperationalState)
-                    .Append("\n\tSSL policy: ").Append(resource.SslPolicy)
                     .Append("\n\tInternet-facing? ").Append(resource.IsPublic)
                     .Append("\n\tInternal? ").Append(resource.IsPrivate)
                     .Append("\n\tDefault private IP address: ").Append(resource.PrivateIPAddress)
