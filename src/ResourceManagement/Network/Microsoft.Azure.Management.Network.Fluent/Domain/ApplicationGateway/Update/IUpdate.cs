@@ -158,7 +158,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     /// <summary>
     /// The template for an application gateway update operation, containing all the settings that
     /// can be modified.
-    /// Call  apply() to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
@@ -362,7 +361,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     {
         /// <summary>
         /// Enables a private (internal) default frontend in the subnet containing the application gateway.
-        /// A frontend with the name "default" will be created if needed.
+        /// A frontend with an automatically generated name will be created if none exists.
         /// </summary>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IUpdate WithPrivateFrontend();

@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     {
         /// <summary>
         /// Enables a private (internal) default frontend in the subnet containing the application gateway.
-        /// A frontend with the name "default" will be created if needed.
+        /// A frontend with an automatically generated name will be created if none exists.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithPrivateFrontend();
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
 
     /// <summary>
     /// The stage of an application gateway definition containing all the required inputs for
-    /// the resource to be created (via  WithCreate.create()), but also allowing
+    /// the resource to be created but also allowing
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :

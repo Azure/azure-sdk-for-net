@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Gets the IP configuration named "default" if it exists, or the one existing IP configuration if only one exists, else null.
+        /// The existing IP configuration if only one exists, else null.
         /// </summary>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration DefaultIPConfiguration { get; }
 
