@@ -29,14 +29,14 @@ namespace Microsoft.Azure.Management.Authorization
     /// </summary>
     public partial class ListAssignmentsFilterParameters
     {
-        private System.Guid? _assignedToPrincipalId;
+        private string _assignedToPrincipalId;
         
         /// <summary>
         /// Optional. Returns role assignments directly assigned to the
         /// principal as well as assignments to the principal's groups
         /// (transitive). Currenly supported only for User Principals
         /// </summary>
-        public System.Guid? AssignedToPrincipalId
+        public string AssignedToPrincipalId
         {
             get { return this._assignedToPrincipalId; }
             set { this._assignedToPrincipalId = value; }
@@ -53,12 +53,12 @@ namespace Microsoft.Azure.Management.Authorization
             set { this._atScope = value; }
         }
         
-        private System.Guid? _principalId;
+        private string _principalId;
         
         /// <summary>
         /// Optional. Returns role assignment of the specific principal.
         /// </summary>
-        public System.Guid? PrincipalId
+        public string PrincipalId
         {
             get { return this._principalId; }
             set { this._principalId = value; }
