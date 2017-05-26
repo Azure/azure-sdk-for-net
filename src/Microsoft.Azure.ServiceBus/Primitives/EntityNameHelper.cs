@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Microsoft.Azure.ServiceBus
@@ -13,6 +13,8 @@ namespace Microsoft.Azure.ServiceBus
         private const string SubQueuePrefix = "$";
         private const string DeadLetterQueueSuffix = "DeadLetterQueue";
         private const string DeadLetterQueueName = SubQueuePrefix + DeadLetterQueueSuffix;
+        private const string Transfer = "Transfer";
+        private const string TransferDeadLetterQueueName = SubQueuePrefix + Transfer + PathDelimiter + DeadLetterQueueName;
 
         /// <summary>
         /// Formats the dead letter path for either a queue, or a subscription.
@@ -44,6 +46,14 @@ namespace Microsoft.Azure.ServiceBus
         public static string FormatSubscriptionPath(string topicPath, string subscriptionName)
         {
             return string.Concat(topicPath, PathDelimiter, Subscriptions, PathDelimiter, subscriptionName);
+        }
+
+        /// <summary>
+        /// Utility method that creates the name for the transfer dead letter receiver, specified by <paramref name="entityPath"/>
+        /// </summary>
+        public static string Format​Transfer​Dead​Letter​Path(string entityPath)
+        {
+            return string.Concat(entityPath, PathDelimiter, TransferDeadLetterQueueName);
         }
     }
 }
