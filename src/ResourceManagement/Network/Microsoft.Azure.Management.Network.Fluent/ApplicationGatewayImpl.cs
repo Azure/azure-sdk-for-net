@@ -1280,6 +1280,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
             // Reset and update backend HTTP settings configs
             Inner.BackendHttpSettingsCollection = InnersFromWrappers<ApplicationGatewayBackendHttpSettingsInner, IApplicationGatewayBackendHttpConfiguration>(backendHttpConfigs.Values);
+            foreach (var config in backendHttpConfigs.Values)
+            {
+                // Clear deleted probe references  
+                SubResource configRef;                
+                configRef = config.Inner.Probe;
+                if (configRef != null && !Probes().ContainsKey(ResourceUtils.NameFromResourceId(configRef.Id))) {
+                    config.Inner.Probe = null;
+                }
+            }
 
             // Reset and update HTTP listeners
             Inner.HttpListeners = InnersFromWrappers<ApplicationGatewayHttpListenerInner, IApplicationGatewayListener>(listeners.Values);

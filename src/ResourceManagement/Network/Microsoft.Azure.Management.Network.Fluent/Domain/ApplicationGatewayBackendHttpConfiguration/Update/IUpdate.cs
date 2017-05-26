@@ -2,11 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update
 {
-    using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
-    using Microsoft.Azure.Management.Network.Fluent.HasPort.Update;
-    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The stage of an application gateway backend HTTP configuration allowing to specify the request timeout.
@@ -19,6 +15,27 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
         /// <param name="seconds">A number of seconds.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IUpdate WithRequestTimeout(int seconds);
+    }
+
+    /// <summary>
+    /// The stage of an application gateway backend HTTP configuration allowing to associate it with an existing probe.
+    /// </summary>
+    public interface IWithProbeBeta : IBeta
+    {
+        /// <summary>
+        /// Specifies an existing probe on this application gateway to associate with this backend.
+        /// If the probe with the specified name does not yet exist, it must be defined separately in the optional part
+        /// of the application gateway definition. This only adds a reference to the probe by its name.
+        /// </summary>
+        /// <param name="name">name the name of an existing probe</param>
+        /// <returns>the next stage of the update</returns>
+        IUpdate WithProbe(string name);
+
+        /// <summary>
+        /// Removes the association with a probe.
+        /// </summary>
+        /// <returns>the next stage of the update</returns>
+        IUpdate WithoutProbe();
     }
 
     /// <summary>
@@ -63,7 +80,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithPort,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithAffinity,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithProtocol,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithRequestTimeout
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithRequestTimeout,
+        IWithProbeBeta
     {
     }
 }

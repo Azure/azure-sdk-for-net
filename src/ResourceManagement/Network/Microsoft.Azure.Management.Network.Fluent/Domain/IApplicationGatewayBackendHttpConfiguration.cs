@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// An immutable client-side representation of an application gateway's backend HTTP configuration.
     /// </summary>
-    public interface IApplicationGatewayBackendHttpConfiguration  :
-        IBeta,
+    public interface IApplicationGatewayBackendHttpConfiguration :
+        IApplicationGatewayBackendHttpConfigurationBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayBackendHttpSettingsInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         Microsoft.Azure.Management.Network.Fluent.IHasProtocol<Models.ApplicationGatewayProtocol>,

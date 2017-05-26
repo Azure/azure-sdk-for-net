@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using ApplicationGatewayBackendHttpConfiguration.Definition;
     using ApplicationGatewayBackendHttpConfiguration.UpdateDefinition;
     using Models;
+    using ResourceManager.Fluent;
     using ResourceManager.Fluent.Core;
     using ResourceManager.Fluent.Core.ChildResourceActions;
 
@@ -25,6 +26,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         #region Accessors
+
+        internal IApplicationGatewayProbe Probe()
+        {
+            if (Parent.Probes() != null && Inner.Probe != null)
+            {
+                IApplicationGatewayProbe probe;
+                if (Parent.Probes().TryGetValue(ResourceUtils.NameFromResourceId(Inner.Probe.Id), out probe))
+                {
+                    return probe;
+                }
+            }
+            return null;
+        }
 
         ///GENMHASH:D319F463FBCA0E7C5434F8E5BDE378E5:71EB18EE608CA38D9128AA7F38378AC1
         public int RequestTimeout()
@@ -79,8 +93,31 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         #region Withers
 
+        internal ApplicationGatewayBackendHttpConfigurationImpl WithProbe(string name)
+        {
+            if (name == null)
+            {
+                return WithoutProbe();
+            }
+            else
+            {
+                SubResource probeRef = new SubResource()
+                {
+                    Id = Parent.FutureResourceId() + "/probes/" + name
+                };
+                Inner.Probe = probeRef;
+                return this;
+            }
+        }
+
+        internal ApplicationGatewayBackendHttpConfigurationImpl WithoutProbe()
+        {
+            Inner.Probe = null;
+            return this;
+        }
+
         ///GENMHASH:1B3DD32E4CACEF2636F8CF7212EEF52E:9E143B49CA62E36912E10621B5CA8F8C
-        public ApplicationGatewayBackendHttpConfigurationImpl WithRequestTimeout(int seconds)
+        internal ApplicationGatewayBackendHttpConfigurationImpl WithRequestTimeout(int seconds)
         {
             Inner.RequestTimeout = seconds;
             return this;

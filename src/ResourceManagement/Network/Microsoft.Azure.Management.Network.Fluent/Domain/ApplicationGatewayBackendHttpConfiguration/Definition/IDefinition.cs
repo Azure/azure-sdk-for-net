@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPort.Definition;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The entirety of an application gateway backend HTTP configuration definition.
@@ -15,6 +16,22 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IBlank<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ParentT>
     {
+    }
+
+    /// <summary>
+    /// The stage of an application gateway backend HTTP configuration allowing to associate it with an existing probe.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
+    public interface IWithProbeBeta<ParentT> : IBeta
+    {
+        /// <summary>
+        /// Specifies an existing probe on this application gateway to associate with this backend.
+        /// If the probe with the specified name does not yet exist, it must be defined separately in the optional part
+        /// of the application gateway definition. This only adds a reference to the probe by its name.
+        /// </summary>
+        /// <param name="name">name the name of an existing probe</param>
+        /// <returns>the next stage of the definition</returns>
+        IWithAttach<ParentT> WithProbe(string name);
     }
 
     /// <summary>
@@ -41,7 +58,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithPort<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithAffinity<ParentT>,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithProtocol<ParentT>,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithRequestTimeout<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition.IWithRequestTimeout<ParentT>,
+        IWithProbeBeta<ParentT>
     {
     }
 
