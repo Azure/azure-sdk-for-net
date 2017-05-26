@@ -81,7 +81,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-3745/providers/Microsoft.Sql/servers/sqlcrudtest-8621\",\r\n  \"name\": \"sqlcrudtest-8621\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-8621.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
@@ -148,7 +148,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operation\": \"CreateLogicalDatabase\",\r\n  \"startTime\": \"2017-05-24T10:31:01.661-07:00\"\r\n}",
@@ -212,7 +212,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operationId\": \"9613fdb0-285a-4045-a144-7e65c31e2a99\",\r\n  \"status\": \"InProgress\",\r\n  \"error\": null\r\n}",
@@ -270,7 +270,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operationId\": \"9613fdb0-285a-4045-a144-7e65c31e2a99\",\r\n  \"status\": \"Succeeded\",\r\n  \"error\": null\r\n}",
@@ -328,7 +328,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-3745/providers/Microsoft.Sql/servers/sqlcrudtest-8621/databases/testdb\",\r\n  \"name\": \"testdb\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0,user\",\r\n  \"properties\": {\r\n    \"databaseId\": \"bce96964-99b2-434a-93d4-8626ff60fddc\",\r\n    \"edition\": \"Standard\",\r\n    \"status\": \"Online\",\r\n    \"serviceLevelObjective\": \"S0\",\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": \"268435456000\",\r\n    \"creationDate\": \"2017-05-24T17:31:01.897Z\",\r\n    \"currentServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveName\": \"S0\",\r\n    \"sampleName\": null,\r\n    \"defaultSecondaryLocation\": \"Japan West\",\r\n    \"earliestRestoreDate\": \"2017-05-24T17:41:40.693Z\",\r\n    \"elasticPoolName\": null,\r\n    \"containmentState\": 2,\r\n    \"readScale\": \"Disabled\",\r\n    \"failoverGroupId\": null\r\n  }\r\n}",
@@ -395,7 +395,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"tags\": {},\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-3745/providers/Microsoft.Sql/servers/sqlcrudtest-9087\",\r\n  \"name\": \"sqlcrudtest-9087\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-9087.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
@@ -462,7 +462,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operation\": \"CreateDatabaseAsCopy\",\r\n  \"startTime\": \"2017-05-24T10:32:36.077-07:00\"\r\n}",
@@ -526,7 +526,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operationId\": \"d8a22a08-dbcc-4a65-812a-e276b66ce356\",\r\n  \"status\": \"InProgress\",\r\n  \"error\": null\r\n}",
@@ -584,7 +584,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operationId\": \"d8a22a08-dbcc-4a65-812a-e276b66ce356\",\r\n  \"status\": \"InProgress\",\r\n  \"error\": null\r\n}",
@@ -642,7 +642,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operationId\": \"d8a22a08-dbcc-4a65-812a-e276b66ce356\",\r\n  \"status\": \"Succeeded\",\r\n  \"error\": null\r\n}",
@@ -700,7 +700,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-3745/providers/Microsoft.Sql/servers/sqlcrudtest-9087/databases/testdb\",\r\n  \"name\": \"testdb\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0,user\",\r\n  \"properties\": {\r\n    \"databaseId\": \"89cf8fc0-8ed1-4508-9c82-5ae149fc8dc8\",\r\n    \"edition\": \"Standard\",\r\n    \"status\": \"Online\",\r\n    \"serviceLevelObjective\": \"S0\",\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": \"268435456000\",\r\n    \"creationDate\": \"2017-05-24T17:32:38.877Z\",\r\n    \"currentServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveName\": \"S0\",\r\n    \"sampleName\": null,\r\n    \"defaultSecondaryLocation\": \"Japan West\",\r\n    \"earliestRestoreDate\": \"2017-05-24T17:43:51.623Z\",\r\n    \"elasticPoolName\": null,\r\n    \"containmentState\": 2,\r\n    \"readScale\": \"Disabled\",\r\n    \"failoverGroupId\": null\r\n  }\r\n}",
@@ -761,7 +761,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-3745/providers/Microsoft.Sql/servers/sqlcrudtest-9087/databases/testdb/replicationLinks/8bc689e0-2950-4460-ba83-2c3b02babd8b\",\r\n      \"name\": \"8bc689e0-2950-4460-ba83-2c3b02babd8b\",\r\n      \"type\": \"Microsoft.Sql/servers/databases/replicationLinks\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"partnerServer\": \"sqlcrudtest-8621\",\r\n        \"partnerDatabase\": \"testdb\",\r\n        \"partnerLocation\": \"Japan East\",\r\n        \"role\": \"Secondary\",\r\n        \"partnerRole\": \"Primary\",\r\n        \"replicationMode\": \"ASYNC\",\r\n        \"startTime\": \"2017-05-24T17:33:19.36\",\r\n        \"percentComplete\": 100,\r\n        \"replicationState\": \"CATCH_UP\",\r\n        \"isTerminationAllowed\": true\r\n      }\r\n    }\r\n  ]\r\n}",
@@ -822,7 +822,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -883,7 +883,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -944,7 +944,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "",

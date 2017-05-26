@@ -81,7 +81,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-8545/providers/Microsoft.Sql/servers/sqlcrudtest-2086\",\r\n  \"name\": \"sqlcrudtest-2086\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-2086.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
@@ -148,7 +148,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-8545/providers/Microsoft.Sql/servers/sqlcrudtest-1940\",\r\n  \"name\": \"sqlcrudtest-1940\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-1940.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
@@ -209,7 +209,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-8545/providers/Microsoft.Sql/servers/sqlcrudtest-2086\",\r\n  \"name\": \"sqlcrudtest-2086\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-2086.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": null,\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
@@ -270,7 +270,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-8545/providers/Microsoft.Sql/servers/sqlcrudtest-1940\",\r\n  \"name\": \"sqlcrudtest-1940\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-1940.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": null,\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
@@ -331,7 +331,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-8545/providers/Microsoft.Sql/servers/sqlcrudtest-1940\",\r\n      \"name\": \"sqlcrudtest-1940\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"location\": \"Japan East\",\r\n      \"kind\": \"v12.0\",\r\n      \"properties\": {\r\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-1940.database.windows.net\",\r\n        \"administratorLogin\": \"dummylogin\",\r\n        \"administratorLoginPassword\": null,\r\n        \"externalAdministratorLogin\": null,\r\n        \"externalAdministratorSid\": null,\r\n        \"version\": \"12.0\",\r\n        \"state\": \"Ready\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-8545/providers/Microsoft.Sql/servers/sqlcrudtest-2086\",\r\n      \"name\": \"sqlcrudtest-2086\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"location\": \"Japan East\",\r\n      \"kind\": \"v12.0\",\r\n      \"properties\": {\r\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-2086.database.windows.net\",\r\n        \"administratorLogin\": \"dummylogin\",\r\n        \"administratorLoginPassword\": null,\r\n        \"externalAdministratorLogin\": null,\r\n        \"externalAdministratorSid\": null,\r\n        \"version\": \"12.0\",\r\n        \"state\": \"Ready\"\r\n      }\r\n    }\r\n  ]\r\n}",
@@ -392,7 +392,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-8545/providers/Microsoft.Sql/servers/sqlcrudtest-1940\",\r\n      \"name\": \"sqlcrudtest-1940\",\r\n      \"type\": \"Microsoft.Sql/servers\",\r\n      \"location\": \"Japan East\",\r\n      \"kind\": \"v12.0\",\r\n      \"properties\": {\r\n        \"fullyQualifiedDomainName\": \"sqlcrudtest-1940.database.windows.net\",\r\n        \"administratorLogin\": \"dummylogin\",\r\n        \"administratorLoginPassword\": null,\r\n        \"externalAdministratorLogin\": null,\r\n        \"externalAdministratorSid\": null,\r\n        \"version\": \"12.0\",\r\n        \"state\": \"Ready\"\r\n      }\r\n    }\r\n  ]\r\n}",
@@ -453,7 +453,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "",

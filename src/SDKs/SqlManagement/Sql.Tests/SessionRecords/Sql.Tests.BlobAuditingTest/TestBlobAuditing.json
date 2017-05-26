@@ -81,7 +81,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/server-blob-auditing-test-6267/providers/Microsoft.Sql/servers/server-blob-auditing-test-5705\",\r\n  \"name\": \"server-blob-auditing-test-5705\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"server-blob-auditing-test-5705.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
@@ -148,7 +148,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operation\": \"CreateLogicalDatabase\",\r\n  \"startTime\": \"2017-05-24T11:08:06.596-07:00\"\r\n}",
@@ -224,7 +224,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operation\": \"CreateLogicalDatabase\",\r\n  \"startTime\": \"2017-05-24T11:08:06.94-07:00\"\r\n}",
@@ -288,7 +288,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operationId\": \"3f174309-8aa6-4226-8da3-820f617215cf\",\r\n  \"status\": \"InProgress\",\r\n  \"error\": null\r\n}",
@@ -346,7 +346,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operationId\": \"3f174309-8aa6-4226-8da3-820f617215cf\",\r\n  \"status\": \"Succeeded\",\r\n  \"error\": null\r\n}",
@@ -404,7 +404,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operationId\": \"d7fb499b-cfe7-4232-b106-c8d68019486d\",\r\n  \"status\": \"InProgress\",\r\n  \"error\": null\r\n}",
@@ -462,7 +462,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operationId\": \"d7fb499b-cfe7-4232-b106-c8d68019486d\",\r\n  \"status\": \"Succeeded\",\r\n  \"error\": null\r\n}",
@@ -520,7 +520,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/server-blob-auditing-test-6267/providers/Microsoft.Sql/servers/server-blob-auditing-test-5705/databases/server-blob-auditing-test-1030\",\r\n  \"name\": \"server-blob-auditing-test-1030\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0,user\",\r\n  \"properties\": {\r\n    \"databaseId\": \"e5f1d624-270d-494c-96a7-1a81b1bad50c\",\r\n    \"edition\": \"Standard\",\r\n    \"status\": \"Online\",\r\n    \"serviceLevelObjective\": \"S0\",\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": \"268435456000\",\r\n    \"creationDate\": \"2017-05-24T18:08:06.94Z\",\r\n    \"currentServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveName\": \"S0\",\r\n    \"sampleName\": null,\r\n    \"defaultSecondaryLocation\": \"Japan West\",\r\n    \"earliestRestoreDate\": \"2017-05-24T18:18:48.847Z\",\r\n    \"elasticPoolName\": null,\r\n    \"containmentState\": 2,\r\n    \"readScale\": \"Disabled\",\r\n    \"failoverGroupId\": null\r\n  }\r\n}",
@@ -575,7 +575,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/server-blob-auditing-test-6267/providers/Microsoft.Sql/servers/server-blob-auditing-test-5705/databases/server-blob-auditing-test-2182\",\r\n  \"name\": \"server-blob-auditing-test-2182\",\r\n  \"type\": \"Microsoft.Sql/servers/databases\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0,user\",\r\n  \"properties\": {\r\n    \"databaseId\": \"e34491d6-5039-4f9f-9a3f-aba479c92f0f\",\r\n    \"edition\": \"Standard\",\r\n    \"status\": \"Online\",\r\n    \"serviceLevelObjective\": \"S0\",\r\n    \"collation\": \"SQL_Latin1_General_CP1_CI_AS\",\r\n    \"maxSizeBytes\": \"268435456000\",\r\n    \"creationDate\": \"2017-05-24T18:08:07.363Z\",\r\n    \"currentServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveId\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n    \"requestedServiceObjectiveName\": \"S0\",\r\n    \"sampleName\": null,\r\n    \"defaultSecondaryLocation\": \"Japan West\",\r\n    \"earliestRestoreDate\": \"2017-05-24T18:18:48.037Z\",\r\n    \"elasticPoolName\": null,\r\n    \"containmentState\": 2,\r\n    \"readScale\": \"Disabled\",\r\n    \"failoverGroupId\": null\r\n  }\r\n}",
@@ -636,7 +636,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/server-blob-auditing-test-6267/providers/Microsoft.Sql/servers/server-blob-auditing-test-5705/databases/server-blob-auditing-test-2182/auditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/databases/auditingSettings\",\r\n  \"kind\": \"\",\r\n  \"properties\": {\r\n    \"state\": \"Disabled\",\r\n    \"storageEndpoint\": \"\",\r\n    \"storageAccountAccessKey\": \"\",\r\n    \"retentionDays\": 0,\r\n    \"auditActionsAndGroups\": [],\r\n    \"storageAccountSubscriptionId\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false\r\n  }\r\n}",
@@ -697,7 +697,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/server-blob-auditing-test-6267/providers/Microsoft.Sql/servers/server-blob-auditing-test-5705/databases/server-blob-auditing-test-2182/auditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/databases/auditingSettings\",\r\n  \"kind\": \"\",\r\n  \"properties\": {\r\n    \"state\": \"Disabled\",\r\n    \"storageEndpoint\": \"https://MyAccount.blob.core.windows.net/\",\r\n    \"storageAccountAccessKey\": \"\",\r\n    \"retentionDays\": 5,\r\n    \"auditActionsAndGroups\": [\r\n      \"SCHEMA_OBJECT_ACCESS_GROUP\",\r\n      \"UPDATE on database::testdb by public\"\r\n    ],\r\n    \"storageAccountSubscriptionId\": \"00000000-1234-0000-5678-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false\r\n  }\r\n}",
@@ -764,7 +764,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/server-blob-auditing-test-6267/providers/Microsoft.Sql/servers/server-blob-auditing-test-5705/databases/server-blob-auditing-test-2182/auditingSettings/Default\",\r\n  \"name\": \"Default\",\r\n  \"type\": \"Microsoft.Sql/servers/databases/auditingSettings\",\r\n  \"kind\": \"\",\r\n  \"properties\": {\r\n    \"state\": \"Disabled\",\r\n    \"storageEndpoint\": \"https://MyAccount.blob.core.windows.net/\",\r\n    \"storageAccountAccessKey\": \"\",\r\n    \"retentionDays\": 5,\r\n    \"auditActionsAndGroups\": [\r\n      \"SCHEMA_OBJECT_ACCESS_GROUP\",\r\n      \"UPDATE on database::testdb by public\"\r\n    ],\r\n    \"storageAccountSubscriptionId\": \"00000000-1234-0000-5678-000000000000\",\r\n    \"isStorageSecondaryKeyInUse\": false\r\n  }\r\n}",

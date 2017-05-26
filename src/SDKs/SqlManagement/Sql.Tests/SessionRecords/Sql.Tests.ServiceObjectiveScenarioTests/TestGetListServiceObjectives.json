@@ -81,7 +81,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163\",\r\n  \"name\": \"sqlcrudtest-2163\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-2163.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
@@ -142,7 +142,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/26e021db-f1f9-4c98-84c6-92af8ef433d7\",\r\n      \"name\": \"26e021db-f1f9-4c98-84c6-92af8ef433d7\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"System\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": true,\r\n        \"description\": null,\r\n        \"enabled\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/29dd7459-4a7c-4e56-be22-f0adda49440d\",\r\n      \"name\": \"29dd7459-4a7c-4e56-be22-f0adda49440d\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"System0\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": true,\r\n        \"description\": null,\r\n        \"enabled\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/c99ac918-dbea-463f-a475-16ec020fdc12\",\r\n      \"name\": \"c99ac918-dbea-463f-a475-16ec020fdc12\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"System1\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": true,\r\n        \"description\": null,\r\n        \"enabled\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/620323bf-2879-4807-b30d-c2e6d7b3b3aa\",\r\n      \"name\": \"620323bf-2879-4807-b30d-c2e6d7b3b3aa\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"System2\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": true,\r\n        \"description\": null,\r\n        \"enabled\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/33d0db1f-6893-4210-99f9-463fb9b496a4\",\r\n      \"name\": \"33d0db1f-6893-4210-99f9-463fb9b496a4\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"System3\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": true,\r\n        \"description\": null,\r\n        \"enabled\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/da24338c-a6c9-46c2-a4bf-4ac95b496ae4\",\r\n      \"name\": \"da24338c-a6c9-46c2-a4bf-4ac95b496ae4\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"System4\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": true,\r\n        \"description\": null,\r\n        \"enabled\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/53f7fa1b-b0d0-43d6-bc29-c5f059fb36e9\",\r\n      \"name\": \"53f7fa1b-b0d0-43d6-bc29-c5f059fb36e9\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"System2L\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": true,\r\n        \"description\": null,\r\n        \"enabled\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/e79cd55c-689f-48d9-bffa-0dd12c772248\",\r\n      \"name\": \"e79cd55c-689f-48d9-bffa-0dd12c772248\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"System3L\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": true,\r\n        \"description\": null,\r\n        \"enabled\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/4b37bb6d-e004-47ac-8f7a-be56ac9fb490\",\r\n      \"name\": \"4b37bb6d-e004-47ac-8f7a-be56ac9fb490\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"System4L\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": true,\r\n        \"description\": null,\r\n        \"enabled\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/6aa3bb3e-7f50-40d6-95ef-5497c30d99d8\",\r\n      \"name\": \"6aa3bb3e-7f50-40d6-95ef-5497c30d99d8\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"Free\",\r\n        \"isDefault\": true,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/dd6d99bb-f193-4ec1-86f2-43d3bccbc49c\",\r\n      \"name\": \"dd6d99bb-f193-4ec1-86f2-43d3bccbc49c\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"Basic\",\r\n        \"isDefault\": true,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n      \"name\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"S0\",\r\n        \"isDefault\": true,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/1b1ebd4d-d903-4baa-97f9-4ea675f5e928\",\r\n      \"name\": \"1b1ebd4d-d903-4baa-97f9-4ea675f5e928\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"S1\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/455330e1-00cd-488b-b5fa-177c226f28b7\",\r\n      \"name\": \"455330e1-00cd-488b-b5fa-177c226f28b7\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"S2\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/789681b8-ca10-4eb0-bdf2-e0b050601b40\",\r\n      \"name\": \"789681b8-ca10-4eb0-bdf2-e0b050601b40\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"S3\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/7203483a-c4fb-4304-9e9f-17c71c904f5d\",\r\n      \"name\": \"7203483a-c4fb-4304-9e9f-17c71c904f5d\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"P1\",\r\n        \"isDefault\": true,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/a7d1b92d-c987-4375-b54d-2b1d0e0f5bb0\",\r\n      \"name\": \"a7d1b92d-c987-4375-b54d-2b1d0e0f5bb0\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"P2\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/afe1eee1-1f12-4e5f-9ad6-2de9c12cb4dc\",\r\n      \"name\": \"afe1eee1-1f12-4e5f-9ad6-2de9c12cb4dc\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"P4\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/43940481-9191-475a-9dba-6b505615b9aa\",\r\n      \"name\": \"43940481-9191-475a-9dba-6b505615b9aa\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"P6\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/dd00d544-bbc0-4f61-ba60-cdce0c410288\",\r\n      \"name\": \"dd00d544-bbc0-4f61-ba60-cdce0c410288\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"P11\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/5bc86cca-9a96-4a94-90ef-bbdfcfbf2d71\",\r\n      \"name\": \"5bc86cca-9a96-4a94-90ef-bbdfcfbf2d71\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"P15\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/dfdc102c-ed02-4349-9756-e227f0e43bb8\",\r\n      \"name\": \"dfdc102c-ed02-4349-9756-e227f0e43bb8\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"PRS1\",\r\n        \"isDefault\": true,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/a089506e-b47a-4f42-8a32-cc19af4c86fb\",\r\n      \"name\": \"a089506e-b47a-4f42-8a32-cc19af4c86fb\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"PRS2\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/39cb8faf-cba8-4b1b-b580-1e1202f2a024\",\r\n      \"name\": \"39cb8faf-cba8-4b1b-b580-1e1202f2a024\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"PRS4\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/1e8da92e-efcd-4682-9140-bf6582120d1f\",\r\n      \"name\": \"1e8da92e-efcd-4682-9140-bf6582120d1f\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"PRS6\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/4e63cb0e-91b9-46fd-b05c-51fdd2367618\",\r\n      \"name\": \"4e63cb0e-91b9-46fd-b05c-51fdd2367618\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW100\",\r\n        \"isDefault\": true,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/99e78a92-d724-4e1b-857b-2be661f3d153\",\r\n      \"name\": \"99e78a92-d724-4e1b-857b-2be661f3d153\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW200\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/284f1aff-fee7-4d3b-a211-5b8ebdd28fea\",\r\n      \"name\": \"284f1aff-fee7-4d3b-a211-5b8ebdd28fea\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW300\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/3bdaeefe-8a9d-41d3-91c4-46ef896b19af\",\r\n      \"name\": \"3bdaeefe-8a9d-41d3-91c4-46ef896b19af\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW400\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/5f759b78-8ec0-4dfb-97cc-c1455a3b5b4d\",\r\n      \"name\": \"5f759b78-8ec0-4dfb-97cc-c1455a3b5b4d\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW500\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/efd65c5b-af7b-4389-9109-f6a69d6a3885\",\r\n      \"name\": \"efd65c5b-af7b-4389-9109-f6a69d6a3885\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW600\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/b89b9c6a-4ec2-4eb8-99db-6d2807e6aabb\",\r\n      \"name\": \"b89b9c6a-4ec2-4eb8-99db-6d2807e6aabb\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW1000\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/9a7a374e-b95c-4fd5-a68e-131d60796c47\",\r\n      \"name\": \"9a7a374e-b95c-4fd5-a68e-131d60796c47\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW1200\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/b930f58e-86b5-43e0-a2da-d8bf8769c557\",\r\n      \"name\": \"b930f58e-86b5-43e0-a2da-d8bf8769c557\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW1500\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/99165ede-a5ab-4b52-b317-e391d92ec370\",\r\n      \"name\": \"99165ede-a5ab-4b52-b317-e391d92ec370\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW2000\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/8e28c923-5cf2-43cb-bd25-28c8c69b30ff\",\r\n      \"name\": \"8e28c923-5cf2-43cb-bd25-28c8c69b30ff\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW3000\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/ee1df062-4f3c-42ad-91bf-58b2a7c351e4\",\r\n      \"name\": \"ee1df062-4f3c-42ad-91bf-58b2a7c351e4\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DW6000\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/9cfc850f-d57f-4760-b5a6-bb640d268bf0\",\r\n      \"name\": \"9cfc850f-d57f-4760-b5a6-bb640d268bf0\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DS100\",\r\n        \"isDefault\": true,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/053407ef-f01c-46f4-b829-96e01a14f449\",\r\n      \"name\": \"053407ef-f01c-46f4-b829-96e01a14f449\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DS200\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/013a9e10-cafc-45a8-8fcf-93095655d2ce\",\r\n      \"name\": \"013a9e10-cafc-45a8-8fcf-93095655d2ce\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DS300\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/79f61db4-8c10-46ba-a93a-d7d02dddd61c\",\r\n      \"name\": \"79f61db4-8c10-46ba-a93a-d7d02dddd61c\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DS400\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/44eaac33-df00-4ef4-a2bb-f7ff87899eea\",\r\n      \"name\": \"44eaac33-df00-4ef4-a2bb-f7ff87899eea\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DS500\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/f8e0f3a6-888b-459c-a9dd-d74d8b2b0e72\",\r\n      \"name\": \"f8e0f3a6-888b-459c-a9dd-d74d8b2b0e72\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DS600\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/b9ed8f51-a414-42dc-8348-e4a1de25e12b\",\r\n      \"name\": \"b9ed8f51-a414-42dc-8348-e4a1de25e12b\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DS1000\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/07479569-6d70-47a5-8db6-0af55d34f2c1\",\r\n      \"name\": \"07479569-6d70-47a5-8db6-0af55d34f2c1\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DS1200\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/2d79baec-2879-46d5-9f5d-fb70eb004c4e\",\r\n      \"name\": \"2d79baec-2879-46d5-9f5d-fb70eb004c4e\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DS1500\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/7fb5389f-6d15-4e0b-9540-fe5ecdfdbeee\",\r\n      \"name\": \"7fb5389f-6d15-4e0b-9540-fe5ecdfdbeee\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"DS2000\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/d1737d22-a8ea-4de7-9bd0-33395d2a7419\",\r\n      \"name\": \"d1737d22-a8ea-4de7-9bd0-33395d2a7419\",\r\n      \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"serviceObjectiveName\": \"ElasticPool\",\r\n        \"isDefault\": false,\r\n        \"isSystem\": false,\r\n        \"description\": null,\r\n        \"enabled\": true\r\n      }\r\n    }\r\n  ]\r\n}",
@@ -203,7 +203,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/26e021db-f1f9-4c98-84c6-92af8ef433d7\",\r\n  \"name\": \"26e021db-f1f9-4c98-84c6-92af8ef433d7\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"System\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": true,\r\n    \"description\": null,\r\n    \"enabled\": false\r\n  }\r\n}",
@@ -264,7 +264,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/29dd7459-4a7c-4e56-be22-f0adda49440d\",\r\n  \"name\": \"29dd7459-4a7c-4e56-be22-f0adda49440d\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"System0\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": true,\r\n    \"description\": null,\r\n    \"enabled\": false\r\n  }\r\n}",
@@ -325,7 +325,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/c99ac918-dbea-463f-a475-16ec020fdc12\",\r\n  \"name\": \"c99ac918-dbea-463f-a475-16ec020fdc12\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"System1\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": true,\r\n    \"description\": null,\r\n    \"enabled\": false\r\n  }\r\n}",
@@ -386,7 +386,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/620323bf-2879-4807-b30d-c2e6d7b3b3aa\",\r\n  \"name\": \"620323bf-2879-4807-b30d-c2e6d7b3b3aa\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"System2\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": true,\r\n    \"description\": null,\r\n    \"enabled\": false\r\n  }\r\n}",
@@ -447,7 +447,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/33d0db1f-6893-4210-99f9-463fb9b496a4\",\r\n  \"name\": \"33d0db1f-6893-4210-99f9-463fb9b496a4\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"System3\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": true,\r\n    \"description\": null,\r\n    \"enabled\": false\r\n  }\r\n}",
@@ -508,7 +508,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/da24338c-a6c9-46c2-a4bf-4ac95b496ae4\",\r\n  \"name\": \"da24338c-a6c9-46c2-a4bf-4ac95b496ae4\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"System4\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": true,\r\n    \"description\": null,\r\n    \"enabled\": false\r\n  }\r\n}",
@@ -569,7 +569,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/53f7fa1b-b0d0-43d6-bc29-c5f059fb36e9\",\r\n  \"name\": \"53f7fa1b-b0d0-43d6-bc29-c5f059fb36e9\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"System2L\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": true,\r\n    \"description\": null,\r\n    \"enabled\": false\r\n  }\r\n}",
@@ -630,7 +630,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/e79cd55c-689f-48d9-bffa-0dd12c772248\",\r\n  \"name\": \"e79cd55c-689f-48d9-bffa-0dd12c772248\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"System3L\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": true,\r\n    \"description\": null,\r\n    \"enabled\": false\r\n  }\r\n}",
@@ -691,7 +691,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/4b37bb6d-e004-47ac-8f7a-be56ac9fb490\",\r\n  \"name\": \"4b37bb6d-e004-47ac-8f7a-be56ac9fb490\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"System4L\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": true,\r\n    \"description\": null,\r\n    \"enabled\": false\r\n  }\r\n}",
@@ -752,7 +752,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/6aa3bb3e-7f50-40d6-95ef-5497c30d99d8\",\r\n  \"name\": \"6aa3bb3e-7f50-40d6-95ef-5497c30d99d8\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"Free\",\r\n    \"isDefault\": true,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -813,7 +813,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/dd6d99bb-f193-4ec1-86f2-43d3bccbc49c\",\r\n  \"name\": \"dd6d99bb-f193-4ec1-86f2-43d3bccbc49c\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"Basic\",\r\n    \"isDefault\": true,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -874,7 +874,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n  \"name\": \"f1173c43-91bd-4aaa-973c-54e79e15235b\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"S0\",\r\n    \"isDefault\": true,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -935,7 +935,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/1b1ebd4d-d903-4baa-97f9-4ea675f5e928\",\r\n  \"name\": \"1b1ebd4d-d903-4baa-97f9-4ea675f5e928\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"S1\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -996,7 +996,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/455330e1-00cd-488b-b5fa-177c226f28b7\",\r\n  \"name\": \"455330e1-00cd-488b-b5fa-177c226f28b7\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"S2\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1057,7 +1057,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/789681b8-ca10-4eb0-bdf2-e0b050601b40\",\r\n  \"name\": \"789681b8-ca10-4eb0-bdf2-e0b050601b40\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"S3\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1118,7 +1118,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/7203483a-c4fb-4304-9e9f-17c71c904f5d\",\r\n  \"name\": \"7203483a-c4fb-4304-9e9f-17c71c904f5d\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"P1\",\r\n    \"isDefault\": true,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1179,7 +1179,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/a7d1b92d-c987-4375-b54d-2b1d0e0f5bb0\",\r\n  \"name\": \"a7d1b92d-c987-4375-b54d-2b1d0e0f5bb0\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"P2\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1240,7 +1240,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/afe1eee1-1f12-4e5f-9ad6-2de9c12cb4dc\",\r\n  \"name\": \"afe1eee1-1f12-4e5f-9ad6-2de9c12cb4dc\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"P4\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1301,7 +1301,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/43940481-9191-475a-9dba-6b505615b9aa\",\r\n  \"name\": \"43940481-9191-475a-9dba-6b505615b9aa\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"P6\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1362,7 +1362,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/dd00d544-bbc0-4f61-ba60-cdce0c410288\",\r\n  \"name\": \"dd00d544-bbc0-4f61-ba60-cdce0c410288\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"P11\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1423,7 +1423,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/5bc86cca-9a96-4a94-90ef-bbdfcfbf2d71\",\r\n  \"name\": \"5bc86cca-9a96-4a94-90ef-bbdfcfbf2d71\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"P15\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1484,7 +1484,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/dfdc102c-ed02-4349-9756-e227f0e43bb8\",\r\n  \"name\": \"dfdc102c-ed02-4349-9756-e227f0e43bb8\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"PRS1\",\r\n    \"isDefault\": true,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1545,7 +1545,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/a089506e-b47a-4f42-8a32-cc19af4c86fb\",\r\n  \"name\": \"a089506e-b47a-4f42-8a32-cc19af4c86fb\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"PRS2\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1606,7 +1606,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/39cb8faf-cba8-4b1b-b580-1e1202f2a024\",\r\n  \"name\": \"39cb8faf-cba8-4b1b-b580-1e1202f2a024\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"PRS4\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1667,7 +1667,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/1e8da92e-efcd-4682-9140-bf6582120d1f\",\r\n  \"name\": \"1e8da92e-efcd-4682-9140-bf6582120d1f\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"PRS6\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1728,7 +1728,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/4e63cb0e-91b9-46fd-b05c-51fdd2367618\",\r\n  \"name\": \"4e63cb0e-91b9-46fd-b05c-51fdd2367618\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW100\",\r\n    \"isDefault\": true,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1789,7 +1789,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/99e78a92-d724-4e1b-857b-2be661f3d153\",\r\n  \"name\": \"99e78a92-d724-4e1b-857b-2be661f3d153\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW200\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1850,7 +1850,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/284f1aff-fee7-4d3b-a211-5b8ebdd28fea\",\r\n  \"name\": \"284f1aff-fee7-4d3b-a211-5b8ebdd28fea\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW300\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1911,7 +1911,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/3bdaeefe-8a9d-41d3-91c4-46ef896b19af\",\r\n  \"name\": \"3bdaeefe-8a9d-41d3-91c4-46ef896b19af\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW400\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -1972,7 +1972,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/5f759b78-8ec0-4dfb-97cc-c1455a3b5b4d\",\r\n  \"name\": \"5f759b78-8ec0-4dfb-97cc-c1455a3b5b4d\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW500\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2033,7 +2033,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/efd65c5b-af7b-4389-9109-f6a69d6a3885\",\r\n  \"name\": \"efd65c5b-af7b-4389-9109-f6a69d6a3885\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW600\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2094,7 +2094,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/b89b9c6a-4ec2-4eb8-99db-6d2807e6aabb\",\r\n  \"name\": \"b89b9c6a-4ec2-4eb8-99db-6d2807e6aabb\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW1000\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2155,7 +2155,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/9a7a374e-b95c-4fd5-a68e-131d60796c47\",\r\n  \"name\": \"9a7a374e-b95c-4fd5-a68e-131d60796c47\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW1200\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2216,7 +2216,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/b930f58e-86b5-43e0-a2da-d8bf8769c557\",\r\n  \"name\": \"b930f58e-86b5-43e0-a2da-d8bf8769c557\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW1500\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2277,7 +2277,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/99165ede-a5ab-4b52-b317-e391d92ec370\",\r\n  \"name\": \"99165ede-a5ab-4b52-b317-e391d92ec370\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW2000\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2338,7 +2338,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/8e28c923-5cf2-43cb-bd25-28c8c69b30ff\",\r\n  \"name\": \"8e28c923-5cf2-43cb-bd25-28c8c69b30ff\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW3000\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2399,7 +2399,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/ee1df062-4f3c-42ad-91bf-58b2a7c351e4\",\r\n  \"name\": \"ee1df062-4f3c-42ad-91bf-58b2a7c351e4\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DW6000\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2460,7 +2460,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/9cfc850f-d57f-4760-b5a6-bb640d268bf0\",\r\n  \"name\": \"9cfc850f-d57f-4760-b5a6-bb640d268bf0\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DS100\",\r\n    \"isDefault\": true,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2521,7 +2521,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/053407ef-f01c-46f4-b829-96e01a14f449\",\r\n  \"name\": \"053407ef-f01c-46f4-b829-96e01a14f449\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DS200\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2582,7 +2582,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/013a9e10-cafc-45a8-8fcf-93095655d2ce\",\r\n  \"name\": \"013a9e10-cafc-45a8-8fcf-93095655d2ce\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DS300\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2643,7 +2643,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/79f61db4-8c10-46ba-a93a-d7d02dddd61c\",\r\n  \"name\": \"79f61db4-8c10-46ba-a93a-d7d02dddd61c\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DS400\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2704,7 +2704,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/44eaac33-df00-4ef4-a2bb-f7ff87899eea\",\r\n  \"name\": \"44eaac33-df00-4ef4-a2bb-f7ff87899eea\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DS500\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2765,7 +2765,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/f8e0f3a6-888b-459c-a9dd-d74d8b2b0e72\",\r\n  \"name\": \"f8e0f3a6-888b-459c-a9dd-d74d8b2b0e72\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DS600\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2826,7 +2826,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/b9ed8f51-a414-42dc-8348-e4a1de25e12b\",\r\n  \"name\": \"b9ed8f51-a414-42dc-8348-e4a1de25e12b\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DS1000\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2887,7 +2887,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/07479569-6d70-47a5-8db6-0af55d34f2c1\",\r\n  \"name\": \"07479569-6d70-47a5-8db6-0af55d34f2c1\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DS1200\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -2948,7 +2948,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/2d79baec-2879-46d5-9f5d-fb70eb004c4e\",\r\n  \"name\": \"2d79baec-2879-46d5-9f5d-fb70eb004c4e\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DS1500\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -3009,7 +3009,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/7fb5389f-6d15-4e0b-9540-fe5ecdfdbeee\",\r\n  \"name\": \"7fb5389f-6d15-4e0b-9540-fe5ecdfdbeee\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"DS2000\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -3070,7 +3070,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-9493/providers/Microsoft.Sql/servers/sqlcrudtest-2163/serviceObjectives/d1737d22-a8ea-4de7-9bd0-33395d2a7419\",\r\n  \"name\": \"d1737d22-a8ea-4de7-9bd0-33395d2a7419\",\r\n  \"type\": \"Microsoft.Sql/servers/serviceObjectives\",\r\n  \"location\": \"Japan East\",\r\n  \"properties\": {\r\n    \"serviceObjectiveName\": \"ElasticPool\",\r\n    \"isDefault\": false,\r\n    \"isSystem\": false,\r\n    \"description\": null,\r\n    \"enabled\": true\r\n  }\r\n}",

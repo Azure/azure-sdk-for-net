@@ -81,7 +81,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-5920/providers/Microsoft.Sql/servers/sqlcrudtest-1935\",\r\n  \"name\": \"sqlcrudtest-1935\",\r\n  \"type\": \"Microsoft.Sql/servers\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": \"v12.0\",\r\n  \"properties\": {\r\n    \"fullyQualifiedDomainName\": \"sqlcrudtest-1935.database.windows.net\",\r\n    \"administratorLogin\": \"dummylogin\",\r\n    \"administratorLoginPassword\": \"Un53cuRE!\",\r\n    \"externalAdministratorLogin\": null,\r\n    \"externalAdministratorSid\": null,\r\n    \"version\": \"12.0\",\r\n    \"state\": \"Ready\"\r\n  }\r\n}",
@@ -148,7 +148,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"operation\": \"CREATE\",\r\n  \"startTime\": \"2017-05-24T11:16:30.009-07:00\"\r\n}",
@@ -209,7 +209,7 @@
       "RequestHeaders": {
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"tags\": {\r\n    \"tagKey1\": \"TagValue1\"\r\n  },\r\n  \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-5920/providers/Microsoft.Sql/servers/sqlcrudtest-1935/elasticPools/3600\",\r\n  \"name\": \"3600\",\r\n  \"type\": \"Microsoft.Sql/servers/elasticPools\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"creationDate\": \"2017-05-24T18:16:30.15Z\",\r\n    \"edition\": \"Basic\",\r\n    \"state\": \"Ready\",\r\n    \"dtu\": 100,\r\n    \"databaseDtuMin\": 0,\r\n    \"databaseDtuMax\": 5,\r\n    \"storageMB\": 10000\r\n  }\r\n}",
@@ -267,7 +267,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.1"
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/resourceGroups/sqlcrudtest-5920/providers/Microsoft.Sql/servers/sqlcrudtest-1935/elasticPools/3600/elasticPoolActivity/21a8784f-c537-41f6-a0b3-68af9828a181\",\r\n      \"name\": \"21a8784f-c537-41f6-a0b3-68af9828a181\",\r\n      \"type\": \"Microsoft.Sql/servers/elasticPools/elasticPoolActivity\",\r\n      \"location\": \"Japan East\",\r\n      \"properties\": {\r\n        \"operationId\": \"21a8784f-c537-41f6-a0b3-68af9828a181\",\r\n        \"serverName\": \"sqlcrudtest-1935\",\r\n        \"elasticPoolName\": \"3600\",\r\n        \"state\": \"COMPLETED\",\r\n        \"operation\": \"CREATE\",\r\n        \"errorCode\": null,\r\n        \"errorMessage\": null,\r\n        \"errorSeverity\": null,\r\n        \"startTime\": \"2017-05-24T18:16:29.993Z\",\r\n        \"endTime\": \"2017-05-24T18:16:56.483Z\",\r\n        \"percentComplete\": 100,\r\n        \"requestedElasticPoolName\": null,\r\n        \"requestedDtuGuarantee\": 100,\r\n        \"requestedDatabaseDtuCap\": 5,\r\n        \"requestedDatabaseDtuGuarantee\": 0,\r\n        \"requestedStorageLimitInGB\": 9,\r\n        \"requestedStorageLimitInMB\": 10000\r\n      }\r\n    }\r\n  ]\r\n}",
