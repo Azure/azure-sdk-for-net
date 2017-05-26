@@ -1399,9 +1399,45 @@ namespace Storage.Tests
                 var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 var ops = storageMgmtClient.Operations.List();
-
+                var op1 = new Operation
+                {
+                    Name = "Microsoft.Storage/storageAccounts/write",
+                    Display = new OperationDisplay
+                    {
+                        Provider = "Microsoft Storage",
+                        Resource = "Storage Accounts",
+                        Operation = "Create/Update Storage Account"
+                    }
+                };
+                var op2 = new Operation
+                {
+                    Name = "Microsoft.Storage/storageAccounts/delete",
+                    Display = new OperationDisplay
+                    {
+                        Provider = "Microsoft Storage",
+                        Resource = "Storage Accounts",
+                        Operation = "Delete Storage Account"
+                    }
+                };
+                bool exists1 = false;
+                bool exists2 = false;
                 Assert.NotNull(ops);
                 Assert.NotNull(ops.GetEnumerator());
+                var operation = ops.GetEnumerator();
+
+                while (operation.MoveNext())
+                {
+                    if (operation.Current.ToString().Equals(op1.ToString()))
+                    {
+                        exists1 = true;
+                    }
+                    if (operation.Current.ToString().Equals(op2.ToString()))
+                        {
+                        exists2 = true;
+                    }
+                }
+                Assert.True(exists1);
+                Assert.True(exists2);
             }
         }
     }
