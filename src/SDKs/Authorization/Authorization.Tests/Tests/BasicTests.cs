@@ -24,8 +24,8 @@ namespace Authorization.Tests
 {
     public class BasicTests : TestBase, IClassFixture<TestExecutionContext>
     {
-		public const string ResourceGroup = "resourcegroups/AzureAuthzSDK";
-		private readonly ITestOutputHelper _output;
+        public const string ResourceGroup = "resourcegroups/AzureAuthzSDK";
+        private readonly ITestOutputHelper _output;
         private TestExecutionContext testContext;
         private const int RoleAssignmentPageSize = 20;
         private const string RESOURCE_TEST_LOCATION = "westus";
@@ -159,19 +159,19 @@ namespace Authorization.Tests
 
                 foreach (var assignment in allRoleAssignments)
                 {
-					if (assignment.Properties.Scope.Contains(ResourceGroup))
-					{
-						var singleAssignment = client.RoleAssignments.Get(assignment.Properties.Scope, assignment.Name);
+                    if (assignment.Properties.Scope.Contains(ResourceGroup))
+                    {
+                        var singleAssignment = client.RoleAssignments.Get(assignment.Properties.Scope, assignment.Name);
 
-						Assert.NotNull(singleAssignment);
-						Assert.NotNull(singleAssignment.Id);
-						Assert.NotNull(singleAssignment.Name);
-						Assert.NotNull(singleAssignment.Type);
-						Assert.NotNull(singleAssignment.Properties);
-						Assert.NotNull(singleAssignment.Properties.PrincipalId);
-						Assert.NotNull(singleAssignment.Properties.RoleDefinitionId);
-						Assert.NotNull(singleAssignment.Properties.Scope);
-					}
+                        Assert.NotNull(singleAssignment);
+                        Assert.NotNull(singleAssignment.Id);
+                        Assert.NotNull(singleAssignment.Name);
+                        Assert.NotNull(singleAssignment.Type);
+                        Assert.NotNull(singleAssignment.Properties);
+                        Assert.NotNull(singleAssignment.Properties.PrincipalId);
+                        Assert.NotNull(singleAssignment.Properties.RoleDefinitionId);
+                        Assert.NotNull(singleAssignment.Properties.Scope);
+                    }
                 }
 
                 var deleteResult = client.RoleAssignments.Delete(scope, assignmentName.ToString());
@@ -446,7 +446,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
-				var roleDefinition = client.RoleDefinitions.List(scope).First();
+                var roleDefinition = client.RoleDefinitions.List(scope).First();
                 
                 // Get user and group and add the user to the group
                 var userId = testContext.Users.First();
@@ -521,7 +521,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
-				var allRoleDefinitions = client.RoleDefinitions.List(scope);
+                var allRoleDefinitions = client.RoleDefinitions.List(scope);
                 
                 Assert.NotNull(allRoleDefinitions);
 
@@ -738,21 +738,21 @@ namespace Authorization.Tests
 
                 Guid newRoleId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2"); 
                 string resourceGroupScope = currentSubscriptionId;
-				
-				// create resource group,This works only if logged in using Username/Password method
-				var resourceClient = PermissionsTests.GetResourceManagementClient(context);
-				try
-				{
-					resourceClient.ResourceGroups.CreateOrUpdate(
-						"AzureAuthzSDK1",
-						new ResourceGroup
-						{ Location = "westus" });
-				}
-				catch
-				{ }
+                
+                // create resource group,This works only if logged in using Username/Password method
+                var resourceClient = PermissionsTests.GetResourceManagementClient(context);
+                try
+                {
+                    resourceClient.ResourceGroups.CreateOrUpdate(
+                        "AzureAuthzSDK1",
+                        new ResourceGroup
+                        { Location = "westus" });
+                }
+                catch
+                { }
 
-				// Create a custom role definition
-				try
+                // Create a custom role definition
+                try
                 {
                     createOrUpdateParams = new RoleDefinition()
                         {
@@ -787,7 +787,7 @@ namespace Authorization.Tests
                     Assert.NotEmpty(roleDefinition.Properties.Permissions);
                     Assert.Equal("Microsoft.Authorization/*/Read", roleDefinition.Properties.Permissions.Single().Actions.Single());
 
-					createOrUpdateParams.Properties.AssignableScopes = new List<string> { resourceGroupScope };
+                    createOrUpdateParams.Properties.AssignableScopes = new List<string> { resourceGroupScope };
                     createOrUpdateParams.Properties.RoleName = "NewRoleName_" + newRoleId.ToString();
 
                     roleDefinition = client.RoleDefinitions.CreateOrUpdate(

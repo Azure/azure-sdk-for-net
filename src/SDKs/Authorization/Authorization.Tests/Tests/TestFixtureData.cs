@@ -140,7 +140,7 @@ namespace Authorization.Tests
 
             foreach (var group in this.createdGroups)
             {
-				this.GraphClient.DeleteGroup(group);
+                this.GraphClient.DeleteGroup(group);
             }
 
             createdGroups.Clear();
@@ -162,10 +162,10 @@ namespace Authorization.Tests
                 cred);
             foreach (var assignment in authorizationClient.RoleAssignments.List(null))
             {
-				if (assignment.Id.Contains(BasicTests.ResourceGroup))
-				{
-					authorizationClient.RoleAssignments.DeleteById(assignment.Id);
-				}
+                if (assignment.Id.Contains(BasicTests.ResourceGroup))
+                {
+                    authorizationClient.RoleAssignments.DeleteById(assignment.Id);
+                }
             }
         }
     }
