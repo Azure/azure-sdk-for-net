@@ -1,4 +1,4 @@
-# THIS BRNACH IS CLOSED, all new PRs should be opened against vs17Dev branch.
+# THIS BRNACH IS CLOSED, all new PRs should be opened against psSdkJson6 branch.
 
 
 ## Microsoft Azure SDK for .NET
