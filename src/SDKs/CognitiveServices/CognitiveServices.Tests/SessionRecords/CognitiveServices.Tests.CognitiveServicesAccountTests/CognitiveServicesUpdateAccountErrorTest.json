@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourcegroups/res7954?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlZ3JvdXBzL3Jlczc5NTQ/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourcegroups/res3763?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlZ3JvdXBzL3JlczM3NjM/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
@@ -13,17 +13,17 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "d00e6d98-d559-4209-9a7e-4fdf3bc4e857"
+          "9b568ae5-3a17-46b8-b9dc-1150fc9267c7"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7954\",\r\n  \"name\": \"res7954\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res3763\",\r\n  \"name\": \"res3763\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "167"
@@ -38,22 +38,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 May 2017 06:54:08 GMT"
+          "Fri, 26 May 2017 11:12:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1188"
+          "1182"
         ],
         "x-ms-request-id": [
-          "3b8fd4e7-bae7-4752-a791-f76ec98d901c"
+          "41cc9752-b543-4637-be89-dd09c0cad842"
         ],
         "x-ms-correlation-request-id": [
-          "3b8fd4e7-bae7-4752-a791-f76ec98d901c"
+          "41cc9752-b543-4637-be89-dd09c0cad842"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20170516T065408Z:3b8fd4e7-bae7-4752-a791-f76ec98d901c"
+          "JAPANEAST:20170526T111240Z:41cc9752-b543-4637-be89-dd09c0cad842"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,8 +62,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7954/providers/Microsoft.CognitiveServices/accounts/csa845?api-version=2017-04-18",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczc5NTQvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E4NDU/YXBpLXZlcnNpb249MjAxNy0wNC0xOA==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res3763/providers/Microsoft.CognitiveServices/accounts/csa2144?api-version=2017-04-18",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3JlczM3NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2EyMTQ0P2FwaS12ZXJzaW9uPTIwMTctMDQtMTg=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"S2\"\r\n  },\r\n  \"kind\": \"Recommendations\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {}\r\n}",
       "RequestHeaders": {
@@ -74,20 +74,20 @@
           "115"
         ],
         "x-ms-client-request-id": [
-          "ec27a017-fb0d-4d4c-9901-0f7b44b30fa8"
+          "1ad75df2-bbba-4a8f-b406-dc988073e601"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/0.3.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7954/providers/Microsoft.CognitiveServices/accounts/csa845\",\r\n  \"name\": \"csa845\",\r\n  \"type\": \"Microsoft.CognitiveServices/accounts\",\r\n  \"location\": \"westus\",\r\n  \"sku\": {\r\n    \"name\": \"S2\"\r\n  },\r\n  \"kind\": \"Recommendations\",\r\n  \"etag\": \"W/\\\"datetime'2017-05-16T06%3A54%3A11.8161697Z'\\\"\",\r\n  \"properties\": {\r\n    \"endpoint\": \"https://westus.api.cognitive.microsoft.com/recommendations/v4.0\",\r\n    \"skuChangeInfo\": null,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"internalId\": \"bc6c42a40fa647779ae820a107329978\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res3763/providers/Microsoft.CognitiveServices/accounts/csa2144\",\r\n  \"name\": \"csa2144\",\r\n  \"type\": \"Microsoft.CognitiveServices/accounts\",\r\n  \"location\": \"westus\",\r\n  \"sku\": {\r\n    \"name\": \"S2\"\r\n  },\r\n  \"kind\": \"Recommendations\",\r\n  \"etag\": \"W/\\\"datetime'2017-05-26T11%3A12%3A42.4945034Z'\\\"\",\r\n  \"properties\": {\r\n    \"endpoint\": \"https://westus.api.cognitive.microsoft.com/recommendations/v4.0\",\r\n    \"skuChangeInfo\": null,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"internalId\": \"b543daa3a91c448fbdb9444e0b388616\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "515"
+          "517"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,13 +99,13 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 May 2017 06:54:11 GMT"
+          "Fri, 26 May 2017 11:12:42 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"datetime'2017-05-16T06%3A54%3A11.8161697Z'\""
+          "W/\"datetime'2017-05-26T11%3A12%3A42.4945034Z'\""
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -120,16 +120,16 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1187"
+          "1181"
         ],
         "x-ms-request-id": [
-          "93f0e303-02eb-4512-860c-08748d11696e"
+          "1da4c150-30dd-4c03-823e-c01b43bd8ad0"
         ],
         "x-ms-correlation-request-id": [
-          "93f0e303-02eb-4512-860c-08748d11696e"
+          "1da4c150-30dd-4c03-823e-c01b43bd8ad0"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20170516T065411Z:93f0e303-02eb-4512-860c-08748d11696e"
+          "JAPANEAST:20170526T111243Z:1da4c150-30dd-4c03-823e-c01b43bd8ad0"
         ]
       },
       "StatusCode": 201
@@ -147,14 +147,14 @@
           "2"
         ],
         "x-ms-client-request-id": [
-          "7f84f342-df97-4dbc-8738-c10264540f1a"
+          "adf5ca98-e7bb-40ad-b8ff-fe58047cc4c6"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/0.3.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'NotExistedRG' could not be found.\"\r\n  }\r\n}",
@@ -172,7 +172,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 May 2017 06:54:13 GMT"
+          "Fri, 26 May 2017 11:12:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -181,13 +181,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "176a09eb-51fc-4e95-9910-b792ad61e7b5"
+          "b43795e7-d715-44ff-8174-f2b6a6f6cb98"
         ],
         "x-ms-correlation-request-id": [
-          "176a09eb-51fc-4e95-9910-b792ad61e7b5"
+          "b43795e7-d715-44ff-8174-f2b6a6f6cb98"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20170516T065413Z:176a09eb-51fc-4e95-9910-b792ad61e7b5"
+          "JAPANEAST:20170526T111243Z:b43795e7-d715-44ff-8174-f2b6a6f6cb98"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -196,8 +196,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7954/providers/Microsoft.CognitiveServices/accounts/nonExistedAccountName?api-version=2017-04-18",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczc5NTQvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9ub25FeGlzdGVkQWNjb3VudE5hbWU/YXBpLXZlcnNpb249MjAxNy0wNC0xOA==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res3763/providers/Microsoft.CognitiveServices/accounts/nonExistedAccountName?api-version=2017-04-18",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3JlczM3NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9ub25FeGlzdGVkQWNjb3VudE5hbWU/YXBpLXZlcnNpb249MjAxNy0wNC0xOA==",
       "RequestMethod": "PATCH",
       "RequestBody": "{}",
       "RequestHeaders": {
@@ -208,17 +208,17 @@
           "2"
         ],
         "x-ms-client-request-id": [
-          "f599ecf7-3ea9-4fa5-8226-7e6f1f76804b"
+          "759b9f94-60cd-4be2-a405-b401931b156c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/0.3.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.CognitiveServices/accounts/nonExistedAccountName' under resource group 'res7954' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.CognitiveServices/accounts/nonExistedAccountName' under resource group 'res3763' was not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "169"
@@ -233,7 +233,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 May 2017 06:54:14 GMT"
+          "Fri, 26 May 2017 11:12:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -242,13 +242,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "bcc5cfc7-14a8-4d2e-99a9-c2c103605455"
+          "f1edc893-9bf2-44e6-b78d-2970b6f4c047"
         ],
         "x-ms-correlation-request-id": [
-          "bcc5cfc7-14a8-4d2e-99a9-c2c103605455"
+          "f1edc893-9bf2-44e6-b78d-2970b6f4c047"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20170516T065414Z:bcc5cfc7-14a8-4d2e-99a9-c2c103605455"
+          "JAPANEAST:20170526T111243Z:f1edc893-9bf2-44e6-b78d-2970b6f4c047"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -257,8 +257,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7954/providers/Microsoft.CognitiveServices/accounts/csa845?api-version=2017-04-18",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczc5NTQvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E4NDU/YXBpLXZlcnNpb249MjAxNy0wNC0xOA==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res3763/providers/Microsoft.CognitiveServices/accounts/csa2144?api-version=2017-04-18",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3JlczM3NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2EyMTQ0P2FwaS12ZXJzaW9uPTIwMTctMDQtMTg=",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"S0\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -269,14 +269,14 @@
           "39"
         ],
         "x-ms-client-request-id": [
-          "6a0f77ce-2299-4368-b043-45c70d5800f5"
+          "5479e1ce-4328-4d9c-a6e4-a2e227ccaa91"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/0.3.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidSkuId\",\r\n    \"message\": \"The SKU name 'S0' in account type 'Recommendations' is invalid.\"\r\n  }\r\n}",
@@ -294,7 +294,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 May 2017 06:54:15 GMT"
+          "Fri, 26 May 2017 11:12:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -312,16 +312,16 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1184"
+          "1178"
         ],
         "x-ms-request-id": [
-          "9caca6a2-23b6-4f46-bdd7-431190e0db24"
+          "53331323-8080-4c9c-8354-4679515eaf13"
         ],
         "x-ms-correlation-request-id": [
-          "9caca6a2-23b6-4f46-bdd7-431190e0db24"
+          "53331323-8080-4c9c-8354-4679515eaf13"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20170516T065416Z:9caca6a2-23b6-4f46-bdd7-431190e0db24"
+          "JAPANEAST:20170526T111244Z:53331323-8080-4c9c-8354-4679515eaf13"
         ]
       },
       "StatusCode": 400
@@ -329,10 +329,10 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "res7954"
+      "res3763"
     ],
     "CreateAndValidateAccountWithOnlyRequiredParameters": [
-      "csa845"
+      "csa2144"
     ]
   },
   "Variables": {

@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourcegroups/res3923?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlZ3JvdXBzL3JlczM5MjM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourcegroups/res7462?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlZ3JvdXBzL3Jlczc0NjI/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
@@ -13,17 +13,17 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "21295d4e-bd0f-4e8a-9994-0ffd7130a267"
+          "d970eb97-b482-4fbb-a4ee-d88eaa999a09"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res3923\",\r\n  \"name\": \"res3923\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7462\",\r\n  \"name\": \"res7462\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "167"
@@ -38,7 +38,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 May 2017 06:43:08 GMT"
+          "Fri, 26 May 2017 11:16:47 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -47,13 +47,13 @@
           "1195"
         ],
         "x-ms-request-id": [
-          "0b27d6c3-b81e-4aae-8d37-2ebd4eaf6348"
+          "d2663185-b0db-4313-9a06-b91b5e4322bb"
         ],
         "x-ms-correlation-request-id": [
-          "0b27d6c3-b81e-4aae-8d37-2ebd4eaf6348"
+          "d2663185-b0db-4313-9a06-b91b5e4322bb"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20170516T064309Z:0b27d6c3-b81e-4aae-8d37-2ebd4eaf6348"
+          "JAPANEAST:20170526T111648Z:d2663185-b0db-4313-9a06-b91b5e4322bb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,8 +62,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res3923/providers/Microsoft.CognitiveServices/accounts/csa4686?api-version=2017-04-18",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3JlczM5MjMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E0Njg2P2FwaS12ZXJzaW9uPTIwMTctMDQtMTg=",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7462/providers/Microsoft.CognitiveServices/accounts/csa4502?api-version=2017-04-18",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczc0NjIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E0NTAyP2FwaS12ZXJzaW9uPTIwMTctMDQtMTg=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"NonExistAPI\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {}\r\n}",
       "RequestHeaders": {
@@ -74,14 +74,14 @@
           "111"
         ],
         "x-ms-client-request-id": [
-          "e0b2b753-350a-4261-9bb6-c0f4e3506394"
+          "05f7f2a0-4522-4a86-ba70-e0df9fb7f4bd"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/0.3.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidApiSetId\",\r\n    \"message\": \"The account type 'NonExistAPI' is invalid.\"\r\n  }\r\n}",
@@ -99,7 +99,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 May 2017 06:43:09 GMT"
+          "Fri, 26 May 2017 11:16:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -120,20 +120,20 @@
           "1194"
         ],
         "x-ms-request-id": [
-          "0ab972d4-9a2d-4c58-8957-d9569a7d2bd7"
+          "f1df525a-de45-4320-bdd4-d834ce733b37"
         ],
         "x-ms-correlation-request-id": [
-          "0ab972d4-9a2d-4c58-8957-d9569a7d2bd7"
+          "f1df525a-de45-4320-bdd4-d834ce733b37"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20170516T064310Z:0ab972d4-9a2d-4c58-8957-d9569a7d2bd7"
+          "JAPANEAST:20170526T111651Z:f1df525a-de45-4320-bdd4-d834ce733b37"
         ]
       },
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res3923/providers/Microsoft.CognitiveServices/accounts/csa4686?api-version=2017-04-18",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3JlczM5MjMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E0Njg2P2FwaS12ZXJzaW9uPTIwMTctMDQtMTg=",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7462/providers/Microsoft.CognitiveServices/accounts/csa4502?api-version=2017-04-18",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczc0NjIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E0NTAyP2FwaS12ZXJzaW9uPTIwMTctMDQtMTg=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"N0\"\r\n  },\r\n  \"kind\": \"Academic\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {}\r\n}",
       "RequestHeaders": {
@@ -144,14 +144,14 @@
           "108"
         ],
         "x-ms-client-request-id": [
-          "44dacedf-f8aa-4b82-bf3d-264e0e011253"
+          "abc772a9-ea53-4867-8b03-bb143059baa3"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/0.3.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidSkuId\",\r\n    \"message\": \"The SKU name 'N0' in account type 'Academic' is invalid.\"\r\n  }\r\n}",
@@ -169,7 +169,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 16 May 2017 06:43:11 GMT"
+          "Fri, 26 May 2017 11:16:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -190,13 +190,13 @@
           "1193"
         ],
         "x-ms-request-id": [
-          "26b6c782-e8a8-4611-9c2b-fca203deb7a5"
+          "a89c154c-626d-4e26-8dd0-2d0b19ccf36a"
         ],
         "x-ms-correlation-request-id": [
-          "26b6c782-e8a8-4611-9c2b-fca203deb7a5"
+          "a89c154c-626d-4e26-8dd0-2d0b19ccf36a"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20170516T064311Z:26b6c782-e8a8-4611-9c2b-fca203deb7a5"
+          "JAPANEAST:20170526T111652Z:a89c154c-626d-4e26-8dd0-2d0b19ccf36a"
         ]
       },
       "StatusCode": 400
@@ -204,10 +204,10 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "res3923"
+      "res7462"
     ],
     "CognitiveServicesCreateAccountErrorTest2": [
-      "csa4686"
+      "csa4502"
     ]
   },
   "Variables": {
