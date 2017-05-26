@@ -59,9 +59,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the cognitive services account within the specified resource
-        /// group. Cognitive Services account names must be between 3 and 24 characters
-        /// in length and use numbers and lower-case letters only.
+        /// The name of Cognitive Services account.
         /// </param>
         /// <param name='parameters'>
         /// The parameters to provide for the created account.
@@ -99,13 +97,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
             }
             if (accountName != null)
             {
-                if (accountName.Length > 24)
+                if (accountName.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 24);
+                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 64);
                 }
-                if (accountName.Length < 3)
+                if (accountName.Length < 2)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "accountName", 2);
                 }
                 if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
                 {
@@ -174,6 +172,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CognitiveServicesAccount>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CognitiveServicesAccount>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -301,11 +301,10 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the cognitive services account within the specified resource
-        /// group. Cognitive Services account names must be between 3 and 24 characters
-        /// in length and use numbers and lower-case letters only.
+        /// The name of Cognitive Services account.
         /// </param>
         /// <param name='sku'>
+        /// Gets or sets the SKU of the resource.
         /// </param>
         /// <param name='tags'>
         /// Gets or sets a list of key value pairs that describe the resource. These
@@ -347,13 +346,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
             }
             if (accountName != null)
             {
-                if (accountName.Length > 24)
+                if (accountName.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 24);
+                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 64);
                 }
-                if (accountName.Length < 3)
+                if (accountName.Length < 2)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "accountName", 2);
                 }
                 if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
                 {
@@ -372,11 +371,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 sku.Validate();
             }
-            CognitiveServicesAccountUpdateParameters body = new CognitiveServicesAccountUpdateParameters();
+            CognitiveServicesAccountUpdateParameters parameters = new CognitiveServicesAccountUpdateParameters();
             if (sku != null || tags != null)
             {
-                body.Sku = sku;
-                body.Tags = tags;
+                parameters.Sku = sku;
+                parameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -387,7 +386,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
@@ -424,6 +423,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -438,9 +439,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
+            if(parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -476,7 +477,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -509,7 +510,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CognitiveServicesAccount>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -533,9 +534,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the cognitive services account within the specified resource
-        /// group. Cognitive Services account names must be between 3 and 24 characters
-        /// in length and use numbers and lower-case letters only.
+        /// The name of Cognitive Services account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -567,13 +566,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
             }
             if (accountName != null)
             {
-                if (accountName.Length > 24)
+                if (accountName.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 24);
+                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 64);
                 }
-                if (accountName.Length < 3)
+                if (accountName.Length < 2)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "accountName", 2);
                 }
                 if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
                 {
@@ -633,6 +632,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -679,7 +680,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -718,9 +719,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the cognitive services account within the specified resource
-        /// group. Cognitive Services account names must be between 3 and 24 characters
-        /// in length and use numbers and lower-case letters only.
+        /// The name of Cognitive Services account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -755,13 +754,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
             }
             if (accountName != null)
             {
-                if (accountName.Length > 24)
+                if (accountName.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 24);
+                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 64);
                 }
-                if (accountName.Length < 3)
+                if (accountName.Length < 2)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "accountName", 2);
                 }
                 if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
                 {
@@ -821,6 +820,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -867,7 +868,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -900,359 +901,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CognitiveServicesAccount>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a resource
-        /// group
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<CognitiveServicesAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (Newtonsoft.Json.JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<CognitiveServicesAccount>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<CognitiveServicesAccount>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (Newtonsoft.Json.JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<CognitiveServicesAccount>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new System.Net.Http.HttpRequestMessage();
-            System.Net.Http.HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (Newtonsoft.Json.JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<CognitiveServicesAccount>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<CognitiveServicesAccount>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -1276,9 +925,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the cognitive services account within the specified resource
-        /// group. Congitive Services account names must be between 3 and 24 characters
-        /// in length and use numbers and lower-case letters only.
+        /// The name of Cognitive Services account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1313,13 +960,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
             }
             if (accountName != null)
             {
-                if (accountName.Length > 24)
+                if (accountName.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 24);
+                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 64);
                 }
-                if (accountName.Length < 3)
+                if (accountName.Length < 2)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "accountName", 2);
                 }
                 if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
                 {
@@ -1379,6 +1026,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -1425,7 +1074,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -1458,7 +1107,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CognitiveServicesAccountKeys>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -1483,9 +1132,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the cognitive services account within the specified resource
-        /// group. Cognitive Services account names must be between 3 and 24 characters
-        /// in length and use numbers and lower-case letters only.
+        /// The name of Cognitive Services account.
         /// </param>
         /// <param name='keyName'>
         /// key name to generate (Key1|Key2). Possible values include: 'Key1', 'Key2'
@@ -1511,7 +1158,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CognitiveServicesAccountKeys>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, KeyName? keyName = default(KeyName?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CognitiveServicesAccountKeys>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, KeyName keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1523,13 +1170,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
             }
             if (accountName != null)
             {
-                if (accountName.Length > 24)
+                if (accountName.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 24);
+                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 64);
                 }
-                if (accountName.Length < 3)
+                if (accountName.Length < 2)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "accountName", 2);
                 }
                 if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
                 {
@@ -1544,11 +1191,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            RegenerateKeyParameters body = new RegenerateKeyParameters();
-            if (keyName != null)
-            {
-                body.KeyName = keyName;
-            }
+            RegenerateKeyParameters parameters = new RegenerateKeyParameters();
+            parameters.KeyName = keyName;
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1558,7 +1202,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RegenerateKey", tracingParameters);
             }
@@ -1595,6 +1239,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -1609,9 +1255,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
+            if(parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1647,7 +1293,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -1680,7 +1326,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CognitiveServicesAccountKeys>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -1704,9 +1350,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the cognitive services account within the specified resource
-        /// group. Cognitive Services account names must be between 3 and 24 characters
-        /// in length and use numbers and lower-case letters only.
+        /// The name of Cognitive Services account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1741,13 +1385,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
             }
             if (accountName != null)
             {
-                if (accountName.Length > 24)
+                if (accountName.Length > 64)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 24);
+                    throw new ValidationException(ValidationRules.MaxLength, "accountName", 64);
                 }
-                if (accountName.Length < 3)
+                if (accountName.Length < 2)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "accountName", 2);
                 }
                 if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$"))
                 {
@@ -1807,6 +1451,8 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -1853,7 +1499,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -1886,7 +1532,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CognitiveServicesAccountEnumerateSkusResult>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)

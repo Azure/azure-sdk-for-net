@@ -28,12 +28,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; }
+        JsonSerializerSettings SerializationSettings { get; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
+        JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
@@ -47,9 +47,14 @@ namespace Microsoft.Azure.Management.CognitiveServices
 
         /// <summary>
         /// Version of the API to be used with the client request. Current
-        /// version is 2016-02-01-preview
+        /// version is 2017-04-18
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// Resource location.
+        /// </summary>
+        string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -73,6 +78,21 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// Gets the ICognitiveServicesAccountsOperations.
         /// </summary>
         ICognitiveServicesAccountsOperations CognitiveServicesAccounts { get; }
+
+        /// <summary>
+        /// Gets the IAccountsOperations.
+        /// </summary>
+        IAccountsOperations Accounts { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the ICheckSkuAvailabilityOperations.
+        /// </summary>
+        ICheckSkuAvailabilityOperations CheckSkuAvailability { get; }
 
     }
 }

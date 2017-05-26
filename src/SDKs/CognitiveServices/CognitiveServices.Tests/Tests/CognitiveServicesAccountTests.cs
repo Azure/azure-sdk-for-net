@@ -1,27 +1,25 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using CognitiveServices.Tests.Helpers;
+using Microsoft.Azure.Management.CognitiveServices;
+using Microsoft.Azure.Management.CognitiveServices.Models;
+using Microsoft.Azure.Management.Resources;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using ResourceGroups.Tests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.CognitiveServices;
-using Microsoft.Azure.Management.CognitiveServices.Models;
-using ResourceGroups.Tests;
-using CognitiveServices.Tests.Helpers;
 using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Rest.Azure;
 
 namespace CognitiveServices.Tests
 {
     public class CognitiveServicesAccountTests
     {
-        private const string c_apiVersion = "2016-02-01-preview";
         private const string c_resourceNamespace = "Microsoft.CognitiveServices";
+        private const string c_resourceType = "accounts";
 
-       
         [Fact]
         public void CognitiveServicesAccountCreateTest()
         {
@@ -56,7 +54,7 @@ namespace CognitiveServices.Tests
         }
 
         [Fact]
-        public void CognitiveServicsAccountCreateAllApisTest()
+        public void CognitiveServicesAccountCreateAllApisTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -73,14 +71,13 @@ namespace CognitiveServices.Tests
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.BingSearch, "global");
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.BingSpeech, "global");
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.BingSpellCheck, "global");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.ComputerVision, "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.ComputerVision, "westus");
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.ContentModerator, "westus");
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.Emotion, "westus");
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.Face, "westus");
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.LUIS, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.Recommendations,  "westus");
+                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.Recommendations, "westus");
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.SpeakerRecognition, "westus");
-                CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S0, Kind.Speech, "westus");
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.SpeechTranslation, "global");
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.TextAnalytics, "westus");
                 CognitiveServicesManagementTestUtilities.CreateAndValidateAccountWithOnlyRequiredParameters(cognitiveServicesMgmtClient, rgname, SkuName.S1, Kind.TextTranslation, "global");
@@ -156,14 +153,14 @@ namespace CognitiveServices.Tests
                 // Create resource group
                 var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                var accounts = cognitiveServicesMgmtClient.CognitiveServicesAccounts.ListByResourceGroup(rgname);
+                var accounts = cognitiveServicesMgmtClient.Accounts.ListByResourceGroup(rgname);
                 Assert.Empty(accounts);
 
                 // Create cognitive services accounts
                 string accountName1 = CognitiveServicesManagementTestUtilities.CreateCognitiveServicesAccount(cognitiveServicesMgmtClient, rgname);
                 string accountName2 = CognitiveServicesManagementTestUtilities.CreateCognitiveServicesAccount(cognitiveServicesMgmtClient, rgname);
 
-                accounts = cognitiveServicesMgmtClient.CognitiveServicesAccounts.ListByResourceGroup(rgname);
+                accounts = cognitiveServicesMgmtClient.Accounts.ListByResourceGroup(rgname);
                 Assert.Equal(2, accounts.Count());
 
                 CognitiveServicesManagementTestUtilities.VerifyAccountProperties(accounts.First(), true);
@@ -190,7 +187,7 @@ namespace CognitiveServices.Tests
                 var rgname2 = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
                 string accountName2 = CognitiveServicesManagementTestUtilities.CreateCognitiveServicesAccount(cognitiveServicesMgmtClient, rgname2);
 
-                var accounts = cognitiveServicesMgmtClient.CognitiveServicesAccounts.List();
+                var accounts = cognitiveServicesMgmtClient.Accounts.List();
 
                 Assert.True(accounts.Count() >= 2);
 
@@ -333,7 +330,7 @@ namespace CognitiveServices.Tests
 
                 Assert.Equal(1, skuList.Value.Select(x => x.ResourceType).Distinct().Count());
 
-                Assert.Equal("Microsoft.CognitiveServices/accounts", skuList.Value.Select(x => x.ResourceType).First());
+                Assert.Equal($"{c_resourceNamespace}/{c_resourceType}", skuList.Value.Select(x => x.ResourceType).First());
 
                 Assert.Collection(skuList.Value.Select(x => x.Sku),
                     (sku) => { Assert.Equal(SkuName.F0, sku.Name); Assert.Equal(SkuTier.Free, sku.Tier); },
@@ -441,7 +438,7 @@ namespace CognitiveServices.Tests
                     "ResourceNotFound");
 
                 CognitiveServicesManagementTestUtilities.ValidateExpectedException(
-                    () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.ListByResourceGroup("NotExistedRG"),
+                    () => cognitiveServicesMgmtClient.Accounts.ListByResourceGroup("NotExistedRG"),
                     "ResourceGroupNotFound");
             }
         }
@@ -542,6 +539,61 @@ namespace CognitiveServices.Tests
                 CognitiveServicesManagementTestUtilities.ValidateExpectedException(
                     () => cognitiveServicesMgmtClient.CognitiveServicesAccounts.ListSkus(rgname, "nonExistedAccountName"),
                     "ResourceNotFound");
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesCheckSkuAvailabilityTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                cognitiveServicesMgmtClient.Location = "westus";
+
+                var skus = cognitiveServicesMgmtClient.CheckSkuAvailability.List(
+                    skus: new List<string>() { SkuName.S0 },
+                    kind: Kind.Face,
+                    type: $"{c_resourceNamespace}/{c_resourceType}");
+
+                Assert.NotNull(skus);
+                Assert.NotNull(skus.Value);
+                Assert.True(skus.Value.Count > 0);
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesAccountMinMaxNameLengthTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                var parameters = new CognitiveServicesAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.S0 },
+                    Kind = Kind.Academic,
+                    Location = CognitiveServicesManagementTestUtilities.DefaultLocation,
+                    Properties = new object(),
+                };
+
+                var minName = "zz";
+                var maxName = "AcadAcadAcadAcadAcadAcadAcadAcadAcadAcadAcadAcadAcadAcadAcadAcad";
+
+                var minAccount = cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgname, minName, parameters);
+                var maxAccount = cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgname, maxName, parameters);
+
+                Assert.Equal(minName, minAccount.Name);
+                Assert.Equal(maxName, maxAccount.Name);
             }
         }
     }
