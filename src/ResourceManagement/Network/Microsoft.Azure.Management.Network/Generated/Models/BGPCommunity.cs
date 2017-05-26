@@ -39,12 +39,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing.</param>
         /// <param name="communityPrefixes">The prefixes that the bgp community
         /// contains.</param>
-        public BGPCommunity(string serviceSupportedRegion = default(string), string communityName = default(string), string communityValue = default(string), IList<string> communityPrefixes = default(IList<string>))
+        /// <param name="isAuthorizedToUse">Customer is authorized to use bgp
+        /// community or not.</param>
+        /// <param name="serviceGroup">The service group of the bgp community
+        /// contains.</param>
+        public BGPCommunity(string serviceSupportedRegion = default(string), string communityName = default(string), string communityValue = default(string), IList<string> communityPrefixes = default(IList<string>), bool? isAuthorizedToUse = default(bool?), string serviceGroup = default(string))
         {
             ServiceSupportedRegion = serviceSupportedRegion;
             CommunityName = communityName;
             CommunityValue = communityValue;
             CommunityPrefixes = communityPrefixes;
+            IsAuthorizedToUse = isAuthorizedToUse;
+            ServiceGroup = serviceGroup;
         }
 
         /// <summary>
@@ -72,6 +78,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "communityPrefixes")]
         public IList<string> CommunityPrefixes { get; set; }
+
+        /// <summary>
+        /// Gets or sets customer is authorized to use bgp community or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "isAuthorizedToUse")]
+        public bool? IsAuthorizedToUse { get; set; }
+
+        /// <summary>
+        /// Gets or sets the service group of the bgp community contains.
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceGroup")]
+        public string ServiceGroup { get; set; }
 
     }
 }
