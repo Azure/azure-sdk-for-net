@@ -623,8 +623,7 @@ namespace Compute.Tests
                 Sku = new Sku
                 {
                     Name = hasManagedDisks ? "Aligned" : "Classic"
-                },
-                Managed = null
+                }
             };
 
             // Create an Availability Set and then create a VM inside this availability set
