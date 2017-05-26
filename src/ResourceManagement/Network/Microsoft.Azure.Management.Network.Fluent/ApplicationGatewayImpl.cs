@@ -53,6 +53,23 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
         }
         
+        internal IReadOnlyCollection<ApplicationGatewaySslProtocol> DisabledSslProtocols()
+        {
+            List<ApplicationGatewaySslProtocol> protocols = new List<ApplicationGatewaySslProtocol>();
+            if (Inner.SslPolicy == null || Inner.SslPolicy.DisabledSslProtocols == null)
+            {
+                return protocols;
+            }
+            else
+            {
+                foreach (string protocol in Inner.SslPolicy.DisabledSslProtocols)
+                {
+                    protocols.Add(ApplicationGatewaySslProtocol.Parse(protocol));
+                }
+                return protocols;
+            }
+        }
+
         ///GENMHASH:327A257714E97E0CC9195D07369866F6:AC0B304DE3854395AFFCFBF726105B2C
         public IReadOnlyDictionary<string, IApplicationGatewayFrontend> PublicFrontends()
         {

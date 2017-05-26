@@ -332,6 +332,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Disabled SSL protocols.
+        /// </summary>
+        IReadOnlyCollection<ApplicationGatewaySslProtocol> IApplicationGatewayBeta.DisabledSslProtocols
+        {
+            get
+            {
+                return this.DisabledSslProtocols();
+            }
+        }
+
+        /// <summary>
         /// Gets the SKU of this application gateway.
         /// </summary>
         Models.ApplicationGatewaySku Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Sku

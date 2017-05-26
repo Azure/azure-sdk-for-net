@@ -90,7 +90,8 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tInternet-facing? ").Append(resource.IsPublic)
                     .Append("\n\tInternal? ").Append(resource.IsPrivate)
                     .Append("\n\tDefault private IP address: ").Append(resource.PrivateIPAddress)
-                    .Append("\n\tPrivate IP address allocation method: ").Append(resource.PrivateIPAllocationMethod);
+                    .Append("\n\tPrivate IP address allocation method: ").Append(resource.PrivateIPAllocationMethod)
+                    .Append("\n\tDisabled SSL protocols: ").Append(resource.DisabledSslProtocols);
 
             // Show IP configs
             var ipConfigs = resource.IPConfigurations;

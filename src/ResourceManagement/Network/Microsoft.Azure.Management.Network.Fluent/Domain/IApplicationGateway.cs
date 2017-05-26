@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point for application gateway management API in Azure.
     /// </summary>
     public interface IApplicationGateway  :
-        IBeta,
+        IApplicationGatewayBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Network.Fluent.INetworkManager,Models.ApplicationGatewayInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<ApplicationGateway.Update.IUpdate>,
