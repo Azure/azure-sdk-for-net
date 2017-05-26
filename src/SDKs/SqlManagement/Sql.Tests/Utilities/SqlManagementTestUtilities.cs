@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +24,15 @@ namespace Sql.Tests
                 return "Japan East";
             }
         }
+
+        public static string DefaultSecondaryLocation
+        {
+            get
+            {
+                return "Central US";
+            }
+        }
+
         public static string DefaultStagePrimaryLocation
         {
             get
