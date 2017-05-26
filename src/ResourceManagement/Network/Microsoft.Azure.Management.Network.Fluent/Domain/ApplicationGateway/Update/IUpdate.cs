@@ -23,6 +23,47 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
     using Microsoft.Azure.Management.Network.Fluent.HasPublicIPAddress.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.Update;
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayIPConfiguration.UpdateDefinition;
+    using ResourceManager.Fluent.Core;
+
+    /// <summary>
+    /// The stage of an application gateway update allowing to specify the SSL protocols to disable.
+    /// </summary>
+    public interface IWithDisabledSslProtocolBeta : IBeta
+    {
+        /// <summary>
+        /// Disables the specified SSL protocol.
+        /// </summary>
+        /// <param name="protocol">an SSL protocol</param>
+        /// <returns>the next stage of the definition</returns>
+        IUpdate WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol);
+
+        /// <summary>
+        /// Disables the specified SSL protocols.
+        /// </summary>
+        /// <param name="protocols">protocols SSL protocols</param>
+        /// <returns>the next stage of the definition</returns>
+        IUpdate WithDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols);
+
+        /// <summary>
+        /// Enables the specified SSL protocol, if previously disabled.
+        /// </summary>
+        /// <param name="protocol">protocol an SSL protocol</param>
+        /// <returns>the next stage of the update</returns>
+        IUpdate WithoutDisabledSslProtocol(ApplicationGatewaySslProtocol protocol);
+
+        /// <summary>
+        /// Enables the specified SSL protocols, if previously disabled.
+        /// </summary>
+        /// <param name="protocols">protocols SSL protocols</param>
+        /// <returns>the next stage of the update</returns>
+        IUpdate WithoutDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols);
+
+        /// <summary>
+        /// Enables all SSL protocols, if previously disabled.
+        /// </summary>
+        /// <returns>the next stage of the update</returns>
+        IUpdate WithoutAnyDisabledSslProtocols();
+    }
 
     /// <summary>
     /// The stage of an application gateway update allowing to modify probes.
@@ -134,7 +175,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IWithListener,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IWithRequestRoutingRule,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IWithExistingSubnet,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IWithProbe
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update.IWithProbe,
+        IWithDisabledSslProtocolBeta
     {
     }
 

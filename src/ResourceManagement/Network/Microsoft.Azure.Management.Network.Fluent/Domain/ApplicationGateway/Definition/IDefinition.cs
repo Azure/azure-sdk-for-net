@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition;
     using Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The stage of an application gateway definition allowing to define one or more public, or Internet-facing, frontends.
@@ -28,6 +29,26 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithoutPublicFrontend();
+    }
+
+    /// <summary>
+    /// The stage of an application gateway definition allowing to specify the SSL protocols to disable.
+    /// </summary>
+    public interface IWithDisabledSslProtocolBeta : IBeta
+    {
+        /// <summary>
+        /// Disables the specified SSL protocol.
+        /// </summary>
+        /// <param name="protocol">an SSL protocol</param>
+        /// <returns>the next stage of the definition</returns>
+        IWithCreate WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol);
+
+        /// <summary>
+        /// Disables the specified SSL protocols.
+        /// </summary>
+        /// <param name="protocols">protocols SSL protocols</param>
+        /// <returns>the next stage of the definition</returns>
+        IWithCreate WithDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols);
     }
 
     /// <summary>
@@ -244,21 +265,22 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithSize,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithInstanceCount,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithSslCert,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithFrontendPort,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithListener,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithBackendHttpConfig,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithBackend,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithExistingSubnet,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPrivateIPAddress,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPrivateFrontend,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPublicFrontend,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPublicIPAddress,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithProbe
+        ICreatable<IApplicationGateway>,
+        IDefinitionWithTags<IWithCreate>,
+        IWithSize,
+        IWithInstanceCount,
+        IWithSslCert,
+        IWithFrontendPort,
+        IWithListener,
+        IWithBackendHttpConfig,
+        IWithBackend,
+        IWithExistingSubnet,
+        IWithPrivateIPAddress,
+        IWithPrivateFrontend,
+        IWithPublicFrontend,
+        IWithPublicIPAddress,
+        IWithProbe,
+        IWithDisabledSslProtocolBeta
     {
     }
 

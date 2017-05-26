@@ -52,7 +52,83 @@ namespace Microsoft.Azure.Management.Network.Fluent
             INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
         }
-        
+
+        #region WithDisabledSslProtocols
+        internal ApplicationGatewayImpl WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            if (protocol != null)
+            {
+                var policy = ensureSslPolicy();
+                if (!policy.DisabledSslProtocols.Contains(protocol.ToString()))
+                {
+                    policy.DisabledSslProtocols.Add(protocol.ToString());
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            if (protocols != null)
+            {
+                foreach (ApplicationGatewaySslProtocol protocol in protocols)
+                {
+                    WithDisabledSslProtocol(protocol);
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithoutDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            if (Inner.SslPolicy != null && Inner.SslPolicy.DisabledSslProtocols != null)
+            {
+                Inner.SslPolicy.DisabledSslProtocols.Remove(protocol.ToString());
+                if(Inner.SslPolicy.DisabledSslProtocols.Count == 0)
+                {
+                    WithoutAnyDisabledSslProtocols();
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithoutDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            if (protocols != null)
+            {
+                foreach (ApplicationGatewaySslProtocol protocol in protocols)
+                {
+                    WithoutDisabledSslProtocol(protocol);
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithoutAnyDisabledSslProtocols()
+        {
+            Inner.SslPolicy = null;
+            return this;
+        }
+
+        private ApplicationGatewaySslPolicy ensureSslPolicy()
+        {
+            ApplicationGatewaySslPolicy policy = Inner.SslPolicy;
+            if (policy == null)
+            {
+                policy = new ApplicationGatewaySslPolicy();
+                Inner.SslPolicy = policy;
+            }
+
+            var protocols = policy.DisabledSslProtocols;
+            if(protocols == null)
+            {  
+                protocols = new List<string>();
+                policy.DisabledSslProtocols = protocols;  
+            }  
+            return policy;  
+        }
+
+
         internal IReadOnlyCollection<ApplicationGatewaySslProtocol> DisabledSslProtocols()
         {
             List<ApplicationGatewaySslProtocol> protocols = new List<ApplicationGatewaySslProtocol>();
@@ -69,6 +145,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 return protocols;
             }
         }
+        #endregion
 
         ///GENMHASH:327A257714E97E0CC9195D07369866F6:AC0B304DE3854395AFFCFBF726105B2C
         public IReadOnlyDictionary<string, IApplicationGatewayFrontend> PublicFrontends()

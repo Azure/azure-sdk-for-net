@@ -104,6 +104,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                         .WithTimeBetweenProbesInSeconds(9)
                         .WithRetriesBeforeUnhealthy(5)
                         .Attach()
+                    .WithDisabledSslProtocols(ApplicationGatewaySslProtocol.TlsV1_0, ApplicationGatewaySslProtocol.TlsV1_1)
                     .Create();
             }
             catch
@@ -212,6 +213,13 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.Equal(5,  probe.RetriesBeforeUnhealthy);
             Assert.Equal(9, probe.TimeBetweenProbesInSeconds);
             Assert.Equal(10, probe.TimeoutInSeconds);
+
+            // Verify SSL policy - disabled protocols  
+            Assert.Equal(2, appGateway.DisabledSslProtocols.Count);
+            Assert.True(appGateway.DisabledSslProtocols.Contains(ApplicationGatewaySslProtocol.TlsV1_0));
+            Assert.True(appGateway.DisabledSslProtocols.Contains(ApplicationGatewaySslProtocol.TlsV1_1));
+            Assert.True(!appGateway.DisabledSslProtocols.Contains(ApplicationGatewaySslProtocol.TlsV1_2));
+
             return appGateway;
         }
 
@@ -230,6 +238,7 @@ namespace Azure.Tests.Network.ApplicationGateway
                     .Parent()
                 .WithoutRequestRoutingRule("rule9000")
                 .WithoutProbe("probe1")
+                .WithoutDisabledSslProtocols(ApplicationGatewaySslProtocol.TlsV1_0, ApplicationGatewaySslProtocol.TlsV1_1)
                 .WithTag("tag1", "value1")
                 .WithTag("tag2", "value2")
                 .Apply();
@@ -254,6 +263,10 @@ namespace Azure.Tests.Network.ApplicationGateway
 
             // Verify probes
             Assert.Equal(0, resource.Probes.Count);
+
+            // Verify SSL policy - disabled protocols  
+            Assert.Equal(0, resource.DisabledSslProtocols.Count);
+
             return resource;
         }
     }
