@@ -6,7 +6,6 @@
     <AssemblyName>Microsoft.Azure.Management.Storage</AssemblyName>
     <Version>6.4.0-preview</Version>
     <PackageTags>Microsoft Azure Storage management;Storage;Storage management</PackageTags>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
