@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:947989B0DEAD5D70EE77D478831B3C67
+        ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:E688E3B95BC05DCDA88564DDB6B8C0A2
         public async override Task<Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var endpointInner = await Parent.Manager.Inner.Endpoints.CreateAsync(
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:A8B790B37504B3C5949D6280CCA5766C:10B53C5448039688C01BB784974A2356
+        ///GENMHASH:F106CA48042B7BF747ACE119F4CFD85D:E96AF02A816CBDFCC8360643D930578E
         public async Task PurgeContentAsync(ISet<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.Parent.PurgeEndpointContentAsync(this.Name(), contentPaths, cancellationToken);
@@ -129,13 +129,13 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this.WithOrigin(hostname);
         }
 
-        ///GENMHASH:72FE6C296217E3578A9C74F7AAE606D0:8C62D9D7CE9960043DCAF3584DDE1668
+        ///GENMHASH:6896CCD591C3EF6769DA6EA9BB2D4A18:D8F827C6145C2C2B5C33E77ACD483F16
         public async Task LoadContentAsync(ISet<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.Parent.LoadEndpointContentAsync(this.Name(), contentPaths, cancellationToken);
         }
 
-        ///GENMHASH:F08598A17ADD014E223DFD77272641FF:B18E8741B5B810C680CCE7043B0158A0
+        ///GENMHASH:F08598A17ADD014E223DFD77272641FF:F733ABC4C4375BDE663CF05B96352BF2
         public async override Task<Microsoft.Azure.Management.Cdn.Fluent.ICdnEndpoint> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             EndpointUpdateParametersInner updateInner = new EndpointUpdateParametersInner
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:69AE408B69EFE5C70BE2FFF8DAFDE487:664DE54EB6DDDFB480C8D678BFF06988
+        ///GENMHASH:69AE408B69EFE5C70BE2FFF8DAFDE487:E154C004F703949670CB42D405873DC1
         public int HttpPort()
         {
 			if (Inner.Origins != null && Inner.Origins.Any() &&
@@ -244,7 +244,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 			{
 				return Inner.Origins.ElementAt(0).HttpPort.Value;
 			}
-			return 0;
+            else
+            {
+                return 0;
+            }
         }
 
         ///GENMHASH:F2439439456B08DA8AB97215E07770D4:3B1EB2372D771F546AF6E37C78648BB2
@@ -272,7 +275,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:731989EAA3E6D31DB2AFFE17967B29FB
+        ///GENMHASH:D6FBED7FC7CBF34940541851FF5C3CC1:E911321F18C62EC3EB305DB02696CF08
         public async Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.Parent.StopEndpointAsync(this.Name(), cancellationToken);
@@ -326,7 +329,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 			return Inner.OriginPath;
         }
 
-        ///GENMHASH:FEA86C0334821B08888EC64FA387E385:3C9E4B867B3BFA631870D3CB338CF2DD
+        ///GENMHASH:BB5527D0B1FA45521F9A232A06597229:01B04246BADD46D49D939AF18D08E375
         public CdnEndpointImpl WithContentTypesToCompress(ISet<string> contentTypesToCompress)
         {
             foreach (var contentType in contentTypesToCompress)
@@ -336,7 +339,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:1616938B44B8E0E6D22C3659A2BCFCFE:55912BF697AF997979E54EED9E353D49
+        ///GENMHASH:1616938B44B8E0E6D22C3659A2BCFCFE:E3A9AC70C2F97D822D50254ECE662612
         public int HttpsPort()
         {
 			if (Inner.Origins != null && Inner.Origins.Any() &&
@@ -347,7 +350,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 			return 0;
         }
 
-        ///GENMHASH:00FEB5C68B4751719C13C6D6808A9E3D:6B89DE41199AB45D2C541D6B3DBC05CC
+        ///GENMHASH:3883B65D38EC24BB4F7FD6D5BDD34433:6B89DE41199AB45D2C541D6B3DBC05CC
         public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode countryCode)
         {
             var geoFilter = this.CreateGeoFiltersObject(relativePath, action);
@@ -361,7 +364,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:2D7E7C7B6D78F7CD626A30B8C9705502:EFAC4F0A8E7E479378E2D805054B10E9
+        ///GENMHASH:4FDE4EEEC9B63397B972B76FF764225E:9172F8EE25402A275A19C898977D3A0F
         public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, ICollection<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
         {
             var geoFilter = this.CreateGeoFiltersObject(relativePath, action);
@@ -392,7 +395,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:02F4B346FD2A70C665ACC639FDB892A8:55B871B6D1B5DB1661BCCFCFAE29D39C
+        ///GENMHASH:02F4B346FD2A70C665ACC639FDB892A8:054BC4996D8D55194B78E5752276D4DE
         public ISet<string> ContentTypesToCompress()
         {
             if (Inner.ContentTypesToCompress != null)
@@ -426,7 +429,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:C245F1873A239F9C8B080F237C995994:CADA2D8BC52DA7D402455B63B068EB16
+        ///GENMHASH:C245F1873A239F9C8B080F237C995994:A795340EF45E36DBA21DC06A81CCDBD6
         public ISet<string> CustomDomains()
         {
             return new HashSet<string>(customDomainList.Select(cd => cd.HostName));
@@ -439,7 +442,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:49ED727092D355BFE0529224205A61FE:FB641FDF3348A96399457703B16AA777
+        ///GENMHASH:281727848C767EDFC12C710A13DB436B:BA8471CB595143B79C798EF5FFC865CC
         public CdnEndpointImpl WithGeoFilters(ICollection<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters)
         {
             Inner.GeoFilters = geoFilters?.ToList();
@@ -466,13 +469,13 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                     Inner.IsHttpAllowed.Value : false;
         }
 
-        ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:A5F7C81073BA64AE03AC5C595EE8B6E5
+        ///GENMHASH:D5AD274A3026D80CDF6A0DD97D9F20D4:C432CD0FA5ECF4FD2A5B42F0A5769FF8
         public async Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.Parent.StartEndpointAsync(this.Name(), cancellationToken);
         }
 
-        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:F8A6A48920042C49572BFDA9629E1BC7
+        ///GENMHASH:5A2D79502EDA81E37A36694062AEDC65:FA3619AB1196A3C6CA363F9680EFB908
         public override async Task<ICdnEndpoint> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             EndpointInner inner = await GetInnerAsync(cancellationToken);
@@ -487,6 +490,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
+        ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:2146F0F4C035C1D53CB5A84619CB4F7E
         protected override async Task<EndpointInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Parent.Manager.Inner.Endpoints.GetAsync(
@@ -505,7 +509,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:4ECAD0C81AFE0A2718CE4BFF1EC4C29F
+        ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:1FCADA6725C3703873C98FE44F5EB8D1
         public async override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await Parent.Manager.Inner.Endpoints.DeleteAsync(
@@ -587,7 +591,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return this;
         }
 
-        ///GENMHASH:AD2E24D9DFB738D4BF1A5F65CE996552:3723FC50D475B864D34F27CE06DE8A61
+        ///GENMHASH:7CB89D7FE550C78D7CC8178691681D0D:94F4EC251039F7DE8ADA1C48DB8FC42A
         public async Task<CustomDomainValidationResult> ValidateCustomDomainAsync(
             string hostName, 
             CancellationToken cancellationToken = default(CancellationToken))
@@ -595,6 +599,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return await this.Parent.ValidateEndpointCustomDomainAsync(this.Name(), hostName, cancellationToken);
         }
 
+        ///GENMHASH:89CD44AA5060CAB16CB0AF1FB046BC64:0A693DB1A3AF2F29E579F4E675DE54E9
         public IEnumerable<ResourceUsage> ListResourceUsage()
         {
             return Parent.Manager.Inner.Endpoints.ListResourceUsage(
@@ -604,6 +609,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                      .AsContinuousCollection(link => Parent.Manager.Inner.Endpoints.ListResourceUsageNext(link))
                      .Select(inner => new ResourceUsage(inner));
         }
+
 
         IUpdate ISettable<IUpdate>.Parent()
         {

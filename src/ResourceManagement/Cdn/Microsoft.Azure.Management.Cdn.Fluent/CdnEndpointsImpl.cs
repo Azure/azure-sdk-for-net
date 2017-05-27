@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     internal partial class CdnEndpointsImpl :
         ExternalChildResourcesCached<CdnEndpointImpl,ICdnEndpoint,EndpointInner,ICdnProfile,CdnProfileImpl>
     {
-        ///GENMHASH:6A122C62EB559D6E6E53725061B422FB:8A24BA59C4D80CD9D76FF994C7632585
+        ///GENMHASH:6A122C62EB559D6E6E53725061B422FB:1A09B80DD67CEC237690A0EA7E905104
         protected override IList<CdnEndpointImpl> ListChildResources()
         {
             List<CdnEndpointImpl> childResources = new List<CdnEndpointImpl>();
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             }
         }
 
-        ///GENMHASH:FCB8E9522304F2D6EDB1D6575D4FD5E5:766A5C37F4DA4720A8BBE728B7C7658C
+        ///GENMHASH:FCB8E9522304F2D6EDB1D6575D4FD5E5:73ABD9D368D93BBF137922646279124B
         private string GenerateUniqueEndpointName(string endpointNamePrefix)
         {
             string endpointName = null;
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             return endpointName;
         }
 
-        ///GENMHASH:8E8DA5B84731A2D412247D25A544C502:5A9014B901131DE511752BB8941DE4EC
+        ///GENMHASH:8E8DA5B84731A2D412247D25A544C502:A96F0F1D52A93EF30A6EAB0C5BE8EA83
         protected override CdnEndpointImpl NewChildResource(string name)
         {
             return new CdnEndpointImpl(name, Parent, new EndpointInner());
