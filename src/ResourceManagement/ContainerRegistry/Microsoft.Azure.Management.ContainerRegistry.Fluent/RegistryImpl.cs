@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
     /// Implementation for Registry and its create and update interfaces.
     /// </summary>
     public partial class RegistryImpl :
-                GroupableResource<
+        GroupableResource<
             IRegistry,
             RegistryInner,
             RegistryImpl,
