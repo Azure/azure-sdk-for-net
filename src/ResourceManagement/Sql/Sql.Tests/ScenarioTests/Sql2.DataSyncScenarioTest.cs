@@ -135,6 +135,8 @@ namespace Sql2.Tests.ScenarioTests
                     // Delete sync agent test.
                     var deleteSyncAgent1 = sqlClient.DataSync.DeleteSyncAgent(resGroupName, serverName, syncAgentName1);
                     TestUtilities.ValidateOperationResponse(deleteSyncAgent1);
+
+                    sqlClient.Servers.Delete(resGroupName, serverName);
                 }
                 finally
                 {
@@ -281,6 +283,8 @@ namespace Sql2.Tests.ScenarioTests
                     // Delete sync group test.
                     var deleteSyncGroup1 = sqlClient.DataSync.DeleteSyncGroup(resGroupName, serverName, databaseName, syncGroupName);
                     TestUtilities.ValidateOperationResponse(deleteSyncGroup1);
+
+                    sqlClient.Servers.Delete(resGroupName, serverName);
                 }
                 finally
                 {
@@ -448,6 +452,8 @@ namespace Sql2.Tests.ScenarioTests
                     //////////////////////////////////////////////////////////////////////
                     // Delete sync group.
                     var deleteSyncGroup1 = sqlClient.DataSync.DeleteSyncGroup(resGroupName, serverName, databaseName, syncGroupName);
+
+                    sqlClient.Servers.Delete(resGroupName, serverName);
                 }
                 finally
                 {
