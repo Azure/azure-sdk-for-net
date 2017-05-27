@@ -13,7 +13,14 @@ using Storage.Tests.Helpers;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.Azure;
+using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Management.KeyVault;
+using Microsoft.Rest.Azure.Authentication;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Threading.Tasks;
+using Microsoft.Azure.Test.HttpRecorder;
+using System.Net.Http;
+using Microsoft.Azure.KeyVault.WebKey;
 
 namespace Storage.Tests
 {
@@ -1299,12 +1306,12 @@ namespace Storage.Tests
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
                 var keyVaultMgmtClient = StorageManagementTestUtilities.GetKeyVaultManagementClient(context, handler);
+                var keyVaultClient = StorageManagementTestUtilities.CreateKeyVaultClient();
 
-                // Create storage account with hot
                 string accountName = TestUtilities.GenerateName("sto");
-                var rgname = "testcmk3";
-                string keyName = "testkey3";
-                string vaultName = "testkeyvaultcmk3";
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                string vaultName = TestUtilities.GenerateName("keyvault");
+                string keyName = TestUtilities.GenerateName("keyvaultkey");
 
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
                 parameters.Identity = new Identity {};
@@ -1313,20 +1320,38 @@ namespace Storage.Tests
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
                 Assert.NotNull(account.Identity);
 
-                var keyVault = keyVaultMgmtClient.Vaults.Get(rgname, vaultName);
-
-                keyVault.Properties.AccessPolicies.Add(new Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry
+                var accessPolicies = new List<Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry>();
+                accessPolicies.Add(new Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry
                 {
                     TenantId = System.Guid.Parse(account.Identity.TenantId),
                     ObjectId = account.Identity.PrincipalId,
                     Permissions = new Microsoft.Azure.Management.KeyVault.Models.Permissions(new List<string> { "wrapkey", "unwrapkey" })
                 });
 
-                keyVault = keyVaultMgmtClient.Vaults.CreateOrUpdate(rgname, vaultName, parameters: new Microsoft.Azure.Management.KeyVault.Models.VaultCreateOrUpdateParameters
+                string servicePrincipalObjectId = StorageManagementTestUtilities.GetServicePrincipalObjectId();
+                accessPolicies.Add(new Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry
                 {
-                    Location = keyVault.Location,
-                    Properties = keyVault.Properties
+                    TenantId = System.Guid.Parse(account.Identity.TenantId),
+                    ObjectId = servicePrincipalObjectId,
+                    Permissions = new Microsoft.Azure.Management.KeyVault.Models.Permissions(new List<string> { "all" })
                 });
+
+                var keyVault = keyVaultMgmtClient.Vaults.CreateOrUpdate(rgname, vaultName, new Microsoft.Azure.Management.KeyVault.Models.VaultCreateOrUpdateParameters
+                {
+                    Location = account.Location,
+                    Properties = new Microsoft.Azure.Management.KeyVault.Models.VaultProperties
+                    {
+                        TenantId = System.Guid.Parse(account.Identity.TenantId),
+                        AccessPolicies = accessPolicies,
+                        Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku(Microsoft.Azure.Management.KeyVault.Models.SkuName.Standard),
+                        EnabledForDiskEncryption = false,
+                        EnabledForDeployment = false,
+                        EnabledForTemplateDeployment = false
+                    }
+                });
+
+                var keyVaultKey = keyVaultClient.CreateKeyAsync(keyVault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa, 2048,
+                    JsonWebKeyOperation.AllOperations, new Microsoft.Azure.KeyVault.Models.KeyAttributes()).GetAwaiter().GetResult();
 
                 // Enable encryption.
                 var updateParameters = new StorageAccountUpdateParameters
@@ -1338,9 +1363,9 @@ namespace Storage.Tests
                         KeyVaultProperties =
                             new KeyVaultProperties
                             {
-                                KeyName = keyName,
+                                KeyName = keyVaultKey.KeyIdentifier.Name,
                                 KeyVaultUri = keyVault.Properties.VaultUri,
-                                KeyVersion = "dccda185f55f4c34bcd2b86cc1bfff78"
+                                KeyVersion = keyVaultKey.KeyIdentifier.Version
                             }
                     }
                 };
@@ -1368,7 +1393,6 @@ namespace Storage.Tests
                 Assert.True(account.Encryption.Services.File.Enabled);
                 Assert.Equal("Microsoft.Storage", account.Encryption.KeySource);
 
-
                 updateParameters = new StorageAccountUpdateParameters
                 {
                     Encryption = new Encryption
@@ -1379,8 +1403,6 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
                 Assert.Null(account.Encryption);
-
-                storageMgmtClient.StorageAccounts.Delete(rgname, accountName);
             }
         }
         [Fact]
