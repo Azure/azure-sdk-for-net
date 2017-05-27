@@ -33,17 +33,17 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// dead lettered.</param>
         /// <param name="scheduledMessageCount">Number of scheduled
         /// messages.</param>
-        /// <param name="transferDeadLetterMessageCount">Number of messages
-        /// transferred into dead letters.</param>
         /// <param name="transferMessageCount">Number of messages transferred
         /// to another queue, topic, or subscription.</param>
-        public MessageCountDetails(long? activeMessageCount = default(long?), long? deadLetterMessageCount = default(long?), long? scheduledMessageCount = default(long?), long? transferDeadLetterMessageCount = default(long?), long? transferMessageCount = default(long?))
+        /// <param name="transferDeadLetterMessageCount">Number of messages
+        /// transferred into dead letters.</param>
+        public MessageCountDetails(long? activeMessageCount = default(long?), long? deadLetterMessageCount = default(long?), long? scheduledMessageCount = default(long?), long? transferMessageCount = default(long?), long? transferDeadLetterMessageCount = default(long?))
         {
             ActiveMessageCount = activeMessageCount;
             DeadLetterMessageCount = deadLetterMessageCount;
             ScheduledMessageCount = scheduledMessageCount;
-            TransferDeadLetterMessageCount = transferDeadLetterMessageCount;
             TransferMessageCount = transferMessageCount;
+            TransferDeadLetterMessageCount = transferDeadLetterMessageCount;
         }
 
         /// <summary>
@@ -66,17 +66,17 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public long? ScheduledMessageCount { get; protected set; }
 
         /// <summary>
-        /// Gets number of messages transferred into dead letters.
-        /// </summary>
-        [JsonProperty(PropertyName = "transferDeadLetterMessageCount")]
-        public long? TransferDeadLetterMessageCount { get; protected set; }
-
-        /// <summary>
         /// Gets number of messages transferred to another queue, topic, or
         /// subscription.
         /// </summary>
         [JsonProperty(PropertyName = "transferMessageCount")]
         public long? TransferMessageCount { get; protected set; }
+
+        /// <summary>
+        /// Gets number of messages transferred into dead letters.
+        /// </summary>
+        [JsonProperty(PropertyName = "transferDeadLetterMessageCount")]
+        public long? TransferDeadLetterMessageCount { get; protected set; }
 
     }
 }

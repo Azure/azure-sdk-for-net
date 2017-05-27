@@ -6,7 +6,7 @@
 @echo off
 set autoRestVersion=1.0.0-Nightly20170129
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4779d58229fbe5cb94e8c6c40204af0515c07677/arm-servicebus/2015-08-01/swagger/servicebus.json"
+    set specFile="D:\Temp_SB_Swagger\servicebus.json"
 ) else (
     set specFile="%1"
 )

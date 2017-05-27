@@ -11,18 +11,29 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Azure;
     using Management;
     using ServiceBus;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for UnavailableReason.
     /// </summary>
-    public static class UnavailableReason
+    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum UnavailableReason
     {
-        public const string None = "None";
-        public const string InvalidName = "InvalidName";
-        public const string SubscriptionIsDisabled = "SubscriptionIsDisabled";
-        public const string NameInUse = "NameInUse";
-        public const string NameInLockdown = "NameInLockdown";
-        public const string TooManyNamespaceInCurrentSubscription = "TooManyNamespaceInCurrentSubscription";
+        [EnumMember(Value = "None")]
+        None,
+        [EnumMember(Value = "InvalidName")]
+        InvalidName,
+        [EnumMember(Value = "SubscriptionIsDisabled")]
+        SubscriptionIsDisabled,
+        [EnumMember(Value = "NameInUse")]
+        NameInUse,
+        [EnumMember(Value = "NameInLockdown")]
+        NameInLockdown,
+        [EnumMember(Value = "TooManyNamespaceInCurrentSubscription")]
+        TooManyNamespaceInCurrentSubscription
     }
 }
 

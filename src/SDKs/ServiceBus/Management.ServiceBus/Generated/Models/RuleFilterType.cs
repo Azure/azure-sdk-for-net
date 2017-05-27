@@ -17,21 +17,15 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for EntityAvailabilityStatus.
+    /// Defines values for RuleFilterType.
     /// </summary>
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum EntityAvailabilityStatus
+    public enum RuleFilterType
     {
-        [EnumMember(Value = "Available")]
-        Available,
-        [EnumMember(Value = "Limited")]
-        Limited,
-        [EnumMember(Value = "Renaming")]
-        Renaming,
-        [EnumMember(Value = "Restoring")]
-        Restoring,
-        [EnumMember(Value = "Unknown")]
-        Unknown
+        [EnumMember(Value = "SqlFilter")]
+        SqlFilter,
+        [EnumMember(Value = "CorrelationFilter")]
+        CorrelationFilter
     }
 }
 

@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Initializes a new instance of the CheckNameAvailabilityResult
         /// class.
         /// </summary>
+        /// <param name="message">The detailed info regarding the reason
+        /// associated with the namespace.</param>
         /// <param name="nameAvailable">Value indicating namespace is
         /// availability, true if the namespace is available; otherwise,
         /// false.</param>
@@ -36,14 +38,19 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Possible values include: 'None', 'InvalidName',
         /// 'SubscriptionIsDisabled', 'NameInUse', 'NameInLockdown',
         /// 'TooManyNamespaceInCurrentSubscription'</param>
-        /// <param name="message">The detailed info regarding the reason
-        /// associated with the namespace.</param>
-        public CheckNameAvailabilityResult(bool? nameAvailable = default(bool?), string reason = default(string), string message = default(string))
+        public CheckNameAvailabilityResult(string message = default(string), bool? nameAvailable = default(bool?), UnavailableReason? reason = default(UnavailableReason?))
         {
+            Message = message;
             NameAvailable = nameAvailable;
             Reason = reason;
-            Message = message;
         }
+
+        /// <summary>
+        /// Gets the detailed info regarding the reason associated with the
+        /// namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; protected set; }
 
         /// <summary>
         /// Gets or sets value indicating namespace is availability, true if
@@ -59,14 +66,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'TooManyNamespaceInCurrentSubscription'
         /// </summary>
         [JsonProperty(PropertyName = "reason")]
-        public string Reason { get; set; }
-
-        /// <summary>
-        /// Gets the detailed info regarding the reason associated with the
-        /// namespace.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; protected set; }
+        public UnavailableReason? Reason { get; set; }
 
     }
 }

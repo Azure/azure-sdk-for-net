@@ -101,6 +101,11 @@ namespace Microsoft.Azure.Management.ServiceBus
         public virtual ISubscriptionsOperations Subscriptions { get; private set; }
 
         /// <summary>
+        /// Gets the IRulesOperations.
+        /// </summary>
+        public virtual IRulesOperations Rules { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ServiceBusManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -306,8 +311,9 @@ namespace Microsoft.Azure.Management.ServiceBus
             Queues = new QueuesOperations(this);
             Topics = new TopicsOperations(this);
             Subscriptions = new SubscriptionsOperations(this);
+            Rules = new RulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2015-08-01";
+            ApiVersion = "2017-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

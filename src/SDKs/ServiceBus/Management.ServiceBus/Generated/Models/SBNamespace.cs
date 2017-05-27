@@ -22,67 +22,50 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// Description of a namespace resource.
     /// </summary>
     [JsonTransformation]
-    public partial class NamespaceResource : TrackedResource
+    public partial class SBNamespace : TrackedResource
     {
         /// <summary>
-        /// Initializes a new instance of the NamespaceResource class.
+        /// Initializes a new instance of the SBNamespace class.
         /// </summary>
-        public NamespaceResource() { }
+        public SBNamespace() { }
 
         /// <summary>
-        /// Initializes a new instance of the NamespaceResource class.
+        /// Initializes a new instance of the SBNamespace class.
         /// </summary>
+        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
-        /// <param name="location">Resource location.</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">Provisioning state of the
         /// namespace.</param>
-        /// <param name="status">State of the namespace. Possible values
-        /// include: 'Unknown', 'Creating', 'Created', 'Activating',
-        /// 'Enabling', 'Active', 'Disabling', 'Disabled', 'SoftDeleting',
-        /// 'SoftDeleted', 'Removing', 'Removed', 'Failed'</param>
         /// <param name="createdAt">The time the namespace was created.</param>
         /// <param name="updatedAt">The time the namespace was updated.</param>
         /// <param name="serviceBusEndpoint">Endpoint you can use to perform
         /// Service Bus operations.</param>
-        /// <param name="createACSNamespace">Indicates whether to create an ACS
-        /// namespace.</param>
-        /// <param name="enabled">Specifies whether this instance is
-        /// enabled.</param>
-        public NamespaceResource(string id = default(string), string name = default(string), string location = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), NamespaceState? status = default(NamespaceState?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), bool? createACSNamespace = default(bool?), bool? enabled = default(bool?))
-            : base(id, name, location, type, tags)
+        /// <param name="metricId">Identifier for Azure Insights
+        /// metrics</param>
+        public SBNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string))
+            : base(location, id, name, type, tags)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
-            Status = status;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
-            CreateACSNamespace = createACSNamespace;
-            Enabled = enabled;
+            MetricId = metricId;
         }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
+        public SBSku Sku { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the namespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets state of the namespace. Possible values include:
-        /// 'Unknown', 'Creating', 'Created', 'Activating', 'Enabling',
-        /// 'Active', 'Disabling', 'Disabled', 'SoftDeleting', 'SoftDeleted',
-        /// 'Removing', 'Removed', 'Failed'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public NamespaceState? Status { get; set; }
 
         /// <summary>
         /// Gets the time the namespace was created.
@@ -103,16 +86,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string ServiceBusEndpoint { get; protected set; }
 
         /// <summary>
-        /// Gets or sets indicates whether to create an ACS namespace.
+        /// Gets identifier for Azure Insights metrics
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createACSNamespace")]
-        public bool? CreateACSNamespace { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies whether this instance is enabled.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
-        public bool? Enabled { get; set; }
+        [JsonProperty(PropertyName = "properties.metricId")]
+        public string MetricId { get; protected set; }
 
         /// <summary>
         /// Validate the object.
@@ -120,8 +97,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (Sku != null)
             {
                 Sku.Validate();

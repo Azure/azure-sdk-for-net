@@ -11,30 +11,29 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Azure;
     using Management;
     using ServiceBus;
-    using Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// SKU of the namespace.
     /// </summary>
-    public partial class Sku
+    public partial class SBSku
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the SBSku class.
         /// </summary>
-        public Sku() { }
+        public SBSku() { }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the SBSku class.
         /// </summary>
-        /// <param name="tier">The billing tier of this particular SKU.
-        /// Possible values include: 'Basic', 'Standard', 'Premium'</param>
         /// <param name="name">Name of this SKU. Possible values include:
         /// 'Basic', 'Standard', 'Premium'</param>
-        /// <param name="capacity">The specified messaging units for the
-        /// tier.</param>
-        public Sku(string tier, string name = default(string), int? capacity = default(int?))
+        /// <param name="tier">The billing tier of this particular SKU.
+        /// Possible values include: 'Basic', 'Standard', 'Premium'</param>
+        /// <param name="capacity">The specified messaging units for the tier.
+        /// For Premium tier, capacity are 1,2 and 4.</param>
+        public SBSku(SkuName name, SkuTier? tier = default(SkuTier?), int? capacity = default(int?))
         {
             Name = name;
             Tier = tier;
@@ -46,17 +45,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public SkuName Name { get; set; }
 
         /// <summary>
         /// Gets or sets the billing tier of this particular SKU. Possible
         /// values include: 'Basic', 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public string Tier { get; set; }
+        public SkuTier? Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets the specified messaging units for the tier.
+        /// Gets or sets the specified messaging units for the tier. For
+        /// Premium tier, capacity are 1,2 and 4.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }
@@ -64,15 +64,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Tier == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Tier");
-            }
         }
     }
 }
