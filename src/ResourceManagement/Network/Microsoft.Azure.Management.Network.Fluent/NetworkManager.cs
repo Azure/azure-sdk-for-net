@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return new NetworkManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 

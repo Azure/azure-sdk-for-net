@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:A8B790B37504B3C5949D6280CCA5766C:10B53C5448039688C01BB784974A2356
-        public async Task PurgeContentAsync(IList<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task PurgeContentAsync(ISet<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.Parent.PurgeEndpointContentAsync(this.Name(), contentPaths, cancellationToken);
         }
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:72FE6C296217E3578A9C74F7AAE606D0:8C62D9D7CE9960043DCAF3584DDE1668
-        public async Task LoadContentAsync(IList<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task LoadContentAsync(ISet<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.Parent.LoadEndpointContentAsync(this.Name(), contentPaths, cancellationToken);
         }
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:FEA86C0334821B08888EC64FA387E385:3C9E4B867B3BFA631870D3CB338CF2DD
-        public CdnEndpointImpl WithContentTypesToCompress(IList<string> contentTypesToCompress)
+        public CdnEndpointImpl WithContentTypesToCompress(ISet<string> contentTypesToCompress)
         {
             foreach (var contentType in contentTypesToCompress)
             {
@@ -362,7 +362,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:2D7E7C7B6D78F7CD626A30B8C9705502:EFAC4F0A8E7E479378E2D805054B10E9
-        public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
+        public CdnEndpointImpl WithGeoFilter(string relativePath, GeoFilterActions action, ICollection<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes)
         {
             var geoFilter = this.CreateGeoFiltersObject(relativePath, action);
 
@@ -393,9 +393,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:02F4B346FD2A70C665ACC639FDB892A8:55B871B6D1B5DB1661BCCFCFAE29D39C
-        public IReadOnlyList<string> ContentTypesToCompress()
+        public ISet<string> ContentTypesToCompress()
         {
-			return Inner.ContentTypesToCompress?.ToList();
+            if (Inner.ContentTypesToCompress != null)
+            {
+                return new HashSet<string>(Inner.ContentTypesToCompress);
+            } 
+            else
+            {
+                return new HashSet<string>();
+            }
         }
 
         ///GENMHASH:E6BF4911DAC5A8F7935D5D2C29B496A4:5599AE7A8F08BDC419B9D9D6350D80B3
@@ -420,9 +427,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:C245F1873A239F9C8B080F237C995994:CADA2D8BC52DA7D402455B63B068EB16
-        public IReadOnlyList<string> CustomDomains()
+        public ISet<string> CustomDomains()
         {
-			return this.customDomainList.Select(cd => cd.HostName).ToList();
+            return new HashSet<string>(customDomainList.Select(cd => cd.HostName));
         }
 
         ///GENMHASH:23C4E65AB754D70B878D3A66AEE8E654:B3F227E77BD8D90C6C9A5BFB4BED56AB
@@ -433,9 +440,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         }
 
         ///GENMHASH:49ED727092D355BFE0529224205A61FE:FB641FDF3348A96399457703B16AA777
-        public CdnEndpointImpl WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters)
+        public CdnEndpointImpl WithGeoFilters(ICollection<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters)
         {
-            Inner.GeoFilters = geoFilters;
+            Inner.GeoFilters = geoFilters?.ToList();
             return this;
         }
 

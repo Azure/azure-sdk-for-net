@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
             return new ServiceBusManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 

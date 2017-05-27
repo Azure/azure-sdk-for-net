@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return new GraphRbacManager(RestClient.Configure()
                     .WithBaseUri(credentials.Environment.GraphEndpoint)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId, tenantId);
         }
 

@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             return new TrafficManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 

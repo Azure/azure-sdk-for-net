@@ -48,6 +48,9 @@ namespace Fluent.Tests.ResourceManager
 
                 Assert.True(found != null);
 
+                // Check existence
+                Assert.True(resourceManager.Deployments.CheckExistence(rgName, deploymentName1));
+
                 // Get
                 var deployment = resourceManager.Deployments.GetByResourceGroup(rgName, deploymentName1);
                 Assert.True(deployment != null);

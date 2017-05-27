@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using System.Collections.Generic;
 
     /// <summary>
@@ -21,13 +22,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         IUpdateDefinition<VirtualMachineScaleSet.Update.IWithApply>,
         VirtualMachineScaleSetExtension.Update.IUpdate
     {
-        private IDictionary<string,object> publicSettings;
-        private IDictionary<string,object> protectedSettings;
-
         ///GENMHASH:F8C651BFA96A5C2B1BE72B024FE8AEEF:815BF11DE6127502A0AFCB14BE98F20E
         internal VirtualMachineScaleSetExtensionImpl(Models.VirtualMachineScaleSetExtension inner, VirtualMachineScaleSetImpl parent) : base(inner, parent)
         {
-            InitializeSettings();
         }
 
         ///GENMHASH:3E38805ED0E7BA3CAEE31311D032A21C:61C1065B307679F3800C701AE0D87070
@@ -63,7 +60,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:E8B034BE63B3FB3349E5BCFC76224AF8:CA9E3FB93CD214E58089AA8C2C20B7A3
         public IReadOnlyDictionary<string, object> PublicSettings()
         {
-            return this.publicSettings as IReadOnlyDictionary<string, object>;
+            if (this.Inner.Settings == null)
+            {
+                return new Dictionary<string, object>();
+            }
+            if (this.Inner.Settings is JObject)
+            {
+                var jObject = this.Inner.Settings as JObject;
+                return jObject.ToObject<Dictionary<string, object>>();
+            }
+            return this.Inner.Settings as Dictionary<string, object>;
         }
 
         ///GENMHASH:316D51C271754F67D70A4782C8F17E3A:9790D012FA64E47343F12DB13F0AA212
@@ -115,24 +121,37 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F4E714A8C40DF6CD0AE34FBA3BC4C770:79A077AE3BFC0D04AB2B4B8492338A57
         public VirtualMachineScaleSetExtensionImpl WithPublicSetting(string key, object value)
         {
-            this.publicSettings.Add(key, value);
+            if (this.EnsurePublicSettings().ContainsKey(key))
+            {
+                this.EnsurePublicSettings()[key] = value;
+            }
+            else
+            {
+                this.EnsurePublicSettings().Add(key, value);
+            }
             return this;
         }
 
         ///GENMHASH:4E0AB82616606C4EEBD304EE7CA95448:C69FF63CB6446E393F7AC97CBA0B0631
         public VirtualMachineScaleSetExtensionImpl WithProtectedSetting(string key, object value)
         {
-
-            this.protectedSettings.Add(key, value);
+            if (this.EnsureProtectedSettings().ContainsKey(key))
+            {
+                this.EnsureProtectedSettings()[key] = value;
+            }
+            else
+            {
+                this.EnsureProtectedSettings().Add(key, value);
+            }
             return this;
         }
 
         ///GENMHASH:1D0CC09D7108E079E0215F59B279BCA8:2D5C9E48A5341416C6BDFB5BC6014FAE
         public VirtualMachineScaleSetExtensionImpl WithPublicSettings(IDictionary<string, object> settings)
         {
-            this.publicSettings.Clear();
+            this.EnsurePublicSettings().Clear();
             foreach(var entry in settings) {
-                this.publicSettings.Add(entry.Key, entry.Value);
+                this.EnsurePublicSettings().Add(entry.Key, entry.Value);
             }
             return this;
         }
@@ -140,10 +159,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:47A9BC4FAD4EEB04D8AA50F23064B253:8123EC3071CE1111531A48B680D93AAF
         public VirtualMachineScaleSetExtensionImpl WithProtectedSettings(IDictionary<string, object> settings)
         {
-            this.protectedSettings.Clear();
+            this.EnsureProtectedSettings().Clear();
             foreach (var entry in settings)
             {
-                this.protectedSettings.Add(entry.Key, entry.Value);
+                this.EnsureProtectedSettings().Add(entry.Key, entry.Value);
             }
             return this;
         }
@@ -162,53 +181,52 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:85C90F4F6082200D94668A66AEFC6726:7DA1F1B9237639B669A209E12821D17A
-        private void NullifySettingsIfEmpty()
-        {
-            if (this.publicSettings.Count == 0) {
-                Inner.Settings = null;
-            }
-
-            if (this.protectedSettings.Count == 0)
-            {
-                Inner.ProtectedSettings = null;
-            }
-        }
-
-        ///GENMHASH:1DE96DF05FCD164699FABE2722D3B823:DDB96B1018AF16195187204FD1A5F7F0
-        private void InitializeSettings()
-        {
-            if (Inner.Settings == null)
-            {
-                this.publicSettings = new Dictionary<string, object>();
-                Inner.Settings = this.publicSettings;
-            }
-            else
-            {
-                this.publicSettings = Inner.Settings as IDictionary<string, object>;
-            }
-
-            if (Inner.ProtectedSettings == null)
-            {
-                this.protectedSettings = new Dictionary<string, object>();
-                Inner.ProtectedSettings = this.protectedSettings;
-            }
-            else
-            {
-                this.protectedSettings = Inner.ProtectedSettings as IDictionary<string, object>;
-            }
-        }
-
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:A7E70E6A25505D4B6F0EF5B2C0549275
         public VirtualMachineScaleSetImpl Attach()
         {
-            NullifySettingsIfEmpty();
             return this.Parent.WithExtension(this);
+        }
+
+        //
+        // Note: Internal handling of VMSS extensions are different from VM extension.
+        //       VM extensions are external child resources so only new, added or updated extensions will be committed.
+        //
+        //       VMSS extensions are inline child resources hence all extensions are always part of VMSS PUT payload
+        //       i.e including the one that user didn't choose to update. EnsurePublicSettings and EnsureProtectedSettings
+        //       are used to ensure we initialize settings/protectedSettings of an extension only if user choose to update it.
+        //
+        private IDictionary<string, object> EnsurePublicSettings()
+        {
+            if (this.Inner.Settings == null)
+            {
+                this.Inner.Settings = new Dictionary<string, object>();
+                return this.Inner.Settings as Dictionary<string, object>;
+            }
+            if (this.Inner.Settings is JObject)
+            {
+                var jObject = this.Inner.Settings as JObject;
+                return jObject.ToObject<Dictionary<string, object>>();
+            }
+            return this.Inner.Settings as Dictionary<string, object>;
+        }
+
+        private IDictionary<string, object> EnsureProtectedSettings()
+        {
+            if (this.Inner.ProtectedSettings == null)
+            {
+                this.Inner.ProtectedSettings = new Dictionary<string, object>();
+                return this.Inner.ProtectedSettings as Dictionary<string, object>;
+            }
+            if (this.Inner.ProtectedSettings is JObject)
+            {
+                var jObject = this.Inner.ProtectedSettings as JObject;
+                return jObject.ToObject<Dictionary<string, object>>();
+            }
+            return this.Inner.ProtectedSettings as Dictionary<string, object>;
         }
 
         VirtualMachineScaleSet.Update.IUpdate ISettable<VirtualMachineScaleSet.Update.IUpdate>.Parent()
         {
-            NullifySettingsIfEmpty();
             return base.Parent;
         }
     }

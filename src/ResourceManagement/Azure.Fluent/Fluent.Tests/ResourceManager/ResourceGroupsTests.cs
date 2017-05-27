@@ -41,6 +41,9 @@ namespace Fluent.Tests.ResourceManager
                         .Create();
                     checkResourceGroup(resourceGroup);
 
+                    // Check existence  
+                    Assert.True(resourceManager.ResourceGroups.CheckExistence(rgName));
+
                     resourceGroup = resourceManager.ResourceGroups.GetByName(rgName);
                     checkResourceGroup(resourceGroup);
 

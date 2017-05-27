@@ -99,7 +99,7 @@ namespace ManageCdn
 
                 // =======================================================================================
                 // Load some content (referenced by Web Apps) to the CDN endpoints.
-                var contentToLoad = new List<string>();
+                var contentToLoad = new HashSet<string>();
                 contentToLoad.Add("/server.js");
                 contentToLoad.Add("/pictures/microsoft_logo.png");
 

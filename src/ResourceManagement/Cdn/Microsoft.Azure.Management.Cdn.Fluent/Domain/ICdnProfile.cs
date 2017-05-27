@@ -48,6 +48,38 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         bool IsPremiumVerizon { get; }
 
         /// <summary>
+        /// Forcibly purges CDN endpoint content in the CDN profile.
+        /// </summary>
+        /// <param name="endpointName">A name of the endpoint under the profile.</param>
+        /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
+        void PurgeEndpointContent(string endpointName, ISet<string> contentPaths);
+
+        /// <summary>
+        /// Forcibly purges CDN endpoint content in the CDN profile asynchronously.
+        /// </summary>
+        /// <param name="endpointName">A name of the endpoint under the profile.</param>
+        /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task PurgeEndpointContentAsync(string endpointName, ISet<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Forcibly pre-loads CDN endpoint content in the CDN profile asynchronously.
+        /// Note, this is Available for Verizon Profiles only.
+        /// </summary>
+        /// <param name="endpointName">A name of the endpoint under the profile.</param>
+        /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task LoadEndpointContentAsync(string endpointName, ISet<string> contentPaths, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Forcibly pre-loads CDN endpoint content in the CDN profile.
+        /// Note, this is Available for Verizon Profiles only.
+        /// </summary>
+        /// <param name="endpointName">A name of the endpoint under the profile.</param>
+        /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
+        void LoadEndpointContent(string endpointName, ISet<string> contentPaths);
+
+        /// <summary>
         /// Validates a custom domain mapping to ensure it maps to the correct CNAME in DNS in current profile.
         /// </summary>
         /// <param name="endpointName">A name of the endpoint under the profile.</param>

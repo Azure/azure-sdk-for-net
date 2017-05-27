@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.PurgeEndpointContentAsync(string endpointName, IList<string> contentPaths, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.PurgeEndpointContentAsync(string endpointName, ISet<string> contentPaths, CancellationToken cancellationToken)
         {
  
             await this.PurgeEndpointContentAsync(endpointName, contentPaths, cancellationToken);
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.PurgeEndpointContent(string endpointName, IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.PurgeEndpointContent(string endpointName, ISet<string> contentPaths)
         {
             this.PurgeEndpointContentAsync(endpointName, contentPaths).GetAwaiter().GetResult();
         }
@@ -392,9 +392,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// </summary>
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
-        void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.LoadEndpointContent(string endpointName, IList<string> contentPaths)
+        void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.LoadEndpointContent(string endpointName, ISet<string> contentPaths)
         {
-
             this.LoadEndpointContentAsync(endpointName, contentPaths).GetAwaiter().GetResult(); ;
         }
 
@@ -405,9 +404,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="endpointName">A name of the endpoint under the profile.</param>
         /// <param name="contentPaths">The paths to the content to be purged, which can be file paths or directory wild cards.</param>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfileBeta.LoadEndpointContentAsync(string endpointName, IList<string> contentPaths, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile.LoadEndpointContentAsync(string endpointName, ISet<string> contentPaths, CancellationToken cancellationToken)
         {
- 
             await this.LoadEndpointContentAsync(endpointName, contentPaths, cancellationToken);
         }
 
