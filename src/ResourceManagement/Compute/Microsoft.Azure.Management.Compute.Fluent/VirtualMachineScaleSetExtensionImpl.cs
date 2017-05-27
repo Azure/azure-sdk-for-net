@@ -60,16 +60,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:E8B034BE63B3FB3349E5BCFC76224AF8:CA9E3FB93CD214E58089AA8C2C20B7A3
         public IReadOnlyDictionary<string, object> PublicSettings()
         {
-            if (this.Inner.Settings == null)
+            if (Inner.Settings == null)
             {
                 return new Dictionary<string, object>();
             }
-            if (this.Inner.Settings is JObject)
+            else if (Inner.Settings is JObject)
             {
-                var jObject = this.Inner.Settings as JObject;
+                var jObject = (JObject)(Inner.Settings);
                 return jObject.ToObject<Dictionary<string, object>>();
             }
-            return this.Inner.Settings as Dictionary<string, object>;
+            else
+            {
+                return this.Inner.Settings as Dictionary<string, object>;
+            }
         }
 
         ///GENMHASH:316D51C271754F67D70A4782C8F17E3A:9790D012FA64E47343F12DB13F0AA212
@@ -184,7 +187,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:A7E70E6A25505D4B6F0EF5B2C0549275
         public VirtualMachineScaleSetImpl Attach()
         {
-            return this.Parent.WithExtension(this);
+            return Parent.WithExtension(this);
         }
 
         //
@@ -197,32 +200,38 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         //
         private IDictionary<string, object> EnsurePublicSettings()
         {
-            if (this.Inner.Settings == null)
+            if (Inner.Settings == null)
             {
-                this.Inner.Settings = new Dictionary<string, object>();
-                return this.Inner.Settings as Dictionary<string, object>;
+                Inner.Settings = new Dictionary<string, object>();
+                return (Dictionary <string, object>)Inner.Settings;
             }
-            if (this.Inner.Settings is JObject)
+            else if (Inner.Settings is JObject)
             {
-                var jObject = this.Inner.Settings as JObject;
+                var jObject = (JObject)(Inner.Settings);
                 return jObject.ToObject<Dictionary<string, object>>();
             }
-            return this.Inner.Settings as Dictionary<string, object>;
+            else
+            {
+                return Inner.Settings as Dictionary<string, object>;
+            }
         }
 
         private IDictionary<string, object> EnsureProtectedSettings()
         {
-            if (this.Inner.ProtectedSettings == null)
+            if (Inner.ProtectedSettings == null)
             {
-                this.Inner.ProtectedSettings = new Dictionary<string, object>();
-                return this.Inner.ProtectedSettings as Dictionary<string, object>;
+                Inner.ProtectedSettings = new Dictionary<string, object>();
+                return (Dictionary<string, object>)Inner.ProtectedSettings;
             }
-            if (this.Inner.ProtectedSettings is JObject)
+            else if (Inner.ProtectedSettings is JObject)
             {
-                var jObject = this.Inner.ProtectedSettings as JObject;
+                var jObject = (JObject)(Inner.ProtectedSettings);
                 return jObject.ToObject<Dictionary<string, object>>();
             }
-            return this.Inner.ProtectedSettings as Dictionary<string, object>;
+            else
+            {
+                return Inner.ProtectedSettings as Dictionary<string, object>;
+            }
         }
 
         VirtualMachineScaleSet.Update.IUpdate ISettable<VirtualMachineScaleSet.Update.IUpdate>.Parent()
