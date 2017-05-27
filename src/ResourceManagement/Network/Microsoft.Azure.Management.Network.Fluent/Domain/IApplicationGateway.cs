@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point for application gateway management API in Azure.
     /// </summary>
     public interface IApplicationGateway  :
-        IBeta,
+        IApplicationGatewayBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Network.Fluent.INetworkManager,Models.ApplicationGatewayInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<ApplicationGateway.Update.IUpdate>,
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Task StartAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Gets the IP configuration named "default" if it exists, or the one existing IP configuration if only one exists, else null.
+        /// The existing IP configuration if only one exists, else null.
         /// </summary>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration DefaultIPConfiguration { get; }
 
@@ -134,11 +134,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the size of the application gateway.
         /// </summary>
         Models.ApplicationGatewaySkuName Size { get; }
-
-        /// <summary>
-        /// Gets the SSL policy for the application gateway.
-        /// </summary>
-        Models.ApplicationGatewaySslPolicy SslPolicy { get; }
 
         /// <summary>
         /// Gets the frontend IP configuration associated with a private IP address, if any, that frontend listeners and request routing rules can reference implicitly.

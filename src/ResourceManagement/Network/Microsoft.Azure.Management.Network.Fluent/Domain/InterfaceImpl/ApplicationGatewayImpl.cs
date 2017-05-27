@@ -51,6 +51,41 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
+        ApplicationGateway.Definition.IWithCreate ApplicationGateway.Definition.IWithDisabledSslProtocolBeta.WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            return this.WithDisabledSslProtocol(protocol);
+        }
+
+        ApplicationGateway.Definition.IWithCreate ApplicationGateway.Definition.IWithDisabledSslProtocolBeta.WithDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            return this.WithDisabledSslProtocols(protocols);
+        }
+
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithDisabledSslProtocolBeta.WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            return this.WithDisabledSslProtocol(protocol);
+        }
+
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithDisabledSslProtocolBeta.WithDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            return this.WithDisabledSslProtocols(protocols);
+        }
+
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithDisabledSslProtocolBeta.WithoutDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            return this.WithoutDisabledSslProtocol(protocol);
+        }
+
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithDisabledSslProtocolBeta.WithoutDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            return this.WithoutDisabledSslProtocols(protocols);
+        }
+
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithDisabledSslProtocolBeta.WithoutAnyDisabledSslProtocols()
+        {
+            return this.WithoutAnyDisabledSslProtocols();
+        }
+
         /// <summary>
         /// Begins the update of an existing backend on this application gateway.
         /// </summary>
@@ -332,6 +367,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Disabled SSL protocols.
+        /// </summary>
+        IReadOnlyCollection<ApplicationGatewaySslProtocol> IApplicationGatewayBeta.DisabledSslProtocols
+        {
+            get
+            {
+                return this.DisabledSslProtocols();
+            }
+        }
+
+        /// <summary>
         /// Gets the SKU of this application gateway.
         /// </summary>
         Models.ApplicationGatewaySku Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Sku
@@ -416,17 +462,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             get
             {
                 return this.IsPublic();
-            }
-        }
-
-        /// <summary>
-        /// Gets the SSL policy for the application gateway.
-        /// </summary>
-        Models.ApplicationGatewaySslPolicy Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.SslPolicy
-        {
-            get
-            {
-                return this.SslPolicy() as Models.ApplicationGatewaySslPolicy;
             }
         }
 

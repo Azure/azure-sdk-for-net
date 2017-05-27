@@ -52,7 +52,101 @@ namespace Microsoft.Azure.Management.Network.Fluent
             INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
         }
-        
+
+        #region WithDisabledSslProtocols
+        internal ApplicationGatewayImpl WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            if (protocol != null)
+            {
+                var policy = ensureSslPolicy();
+                if (!policy.DisabledSslProtocols.Contains(protocol.ToString()))
+                {
+                    policy.DisabledSslProtocols.Add(protocol.ToString());
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            if (protocols != null)
+            {
+                foreach (ApplicationGatewaySslProtocol protocol in protocols)
+                {
+                    WithDisabledSslProtocol(protocol);
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithoutDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            if (Inner.SslPolicy != null && Inner.SslPolicy.DisabledSslProtocols != null)
+            {
+                Inner.SslPolicy.DisabledSslProtocols.Remove(protocol.ToString());
+                if(Inner.SslPolicy.DisabledSslProtocols.Count == 0)
+                {
+                    WithoutAnyDisabledSslProtocols();
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithoutDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            if (protocols != null)
+            {
+                foreach (ApplicationGatewaySslProtocol protocol in protocols)
+                {
+                    WithoutDisabledSslProtocol(protocol);
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithoutAnyDisabledSslProtocols()
+        {
+            Inner.SslPolicy = null;
+            return this;
+        }
+
+        private ApplicationGatewaySslPolicy ensureSslPolicy()
+        {
+            ApplicationGatewaySslPolicy policy = Inner.SslPolicy;
+            if (policy == null)
+            {
+                policy = new ApplicationGatewaySslPolicy();
+                Inner.SslPolicy = policy;
+            }
+
+            var protocols = policy.DisabledSslProtocols;
+            if(protocols == null)
+            {  
+                protocols = new List<string>();
+                policy.DisabledSslProtocols = protocols;  
+            }  
+            return policy;  
+        }
+
+
+        internal IReadOnlyCollection<ApplicationGatewaySslProtocol> DisabledSslProtocols()
+        {
+            List<ApplicationGatewaySslProtocol> protocols = new List<ApplicationGatewaySslProtocol>();
+            if (Inner.SslPolicy == null || Inner.SslPolicy.DisabledSslProtocols == null)
+            {
+                return protocols;
+            }
+            else
+            {
+                foreach (string protocol in Inner.SslPolicy.DisabledSslProtocols)
+                {
+                    protocols.Add(ApplicationGatewaySslProtocol.Parse(protocol));
+                }
+                return protocols;
+            }
+        }
+        #endregion
+
         ///GENMHASH:327A257714E97E0CC9195D07369866F6:AC0B304DE3854395AFFCFBF726105B2C
         public IReadOnlyDictionary<string, IApplicationGatewayFrontend> PublicFrontends()
         {
@@ -199,12 +293,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             return listener;
-        }
-
-        ///GENMHASH:140689F6718EC0DE59ED2724FEF8B493:FFD69AF34CCA85347AFB30F010027480
-        public ApplicationGatewaySslPolicy SslPolicy()
-        {
-            return Inner.SslPolicy;
         }
 
         ///GENMHASH:CD498C02D42C73AD0C1FF12493E2A9B8:CD5E24B4D8E0D679C5291E15ABECB279
@@ -1192,6 +1280,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
             // Reset and update backend HTTP settings configs
             Inner.BackendHttpSettingsCollection = InnersFromWrappers<ApplicationGatewayBackendHttpSettingsInner, IApplicationGatewayBackendHttpConfiguration>(backendHttpConfigs.Values);
+            foreach (var config in backendHttpConfigs.Values)
+            {
+                // Clear deleted probe references  
+                SubResource configRef;                
+                configRef = config.Inner.Probe;
+                if (configRef != null && !Probes().ContainsKey(ResourceUtils.NameFromResourceId(configRef.Id))) {
+                    config.Inner.Probe = null;
+                }
+            }
 
             // Reset and update HTTP listeners
             Inner.HttpListeners = InnersFromWrappers<ApplicationGatewayHttpListenerInner, IApplicationGatewayListener>(listeners.Values);

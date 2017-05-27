@@ -9,8 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// <summary>
     /// An immutable client-side representation of an application gateway backend.
     /// </summary>
-    public interface IApplicationGatewayBackend  :
-        IBeta,
+    public interface IApplicationGatewayBackend :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayBackendAddressPoolInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         Microsoft.Azure.Management.Network.Fluent.IHasBackendNics
@@ -32,6 +31,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets addresses on the backend of the application gateway, indexed by their FQDN.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress> Addresses { get; }
+        System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewayBackendAddress> Addresses { get; }
     }
 }

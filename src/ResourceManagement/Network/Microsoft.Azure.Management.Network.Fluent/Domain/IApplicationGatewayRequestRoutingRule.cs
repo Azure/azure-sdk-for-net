@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the addresses assigned to the associated backend.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress> BackendAddresses { get; }
+        System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewayBackendAddress> BackendAddresses { get; }
 
         /// <summary>
         /// Gets the frontend protocol.

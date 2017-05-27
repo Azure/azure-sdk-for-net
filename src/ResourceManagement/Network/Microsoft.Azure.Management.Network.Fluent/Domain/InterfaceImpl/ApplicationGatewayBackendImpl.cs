@@ -152,11 +152,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets addresses on the backend of the application gateway, indexed by their FQDN.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend.Addresses
+        System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewayBackendAddress> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend.Addresses
         {
             get
             {
-                return this.Addresses() as System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress>;
+                return this.Addresses() as System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewayBackendAddress>;
             }
         }
 

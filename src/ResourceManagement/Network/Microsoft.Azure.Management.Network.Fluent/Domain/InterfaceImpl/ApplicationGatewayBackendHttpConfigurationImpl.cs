@@ -2,24 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
-    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update;
-    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
-    using Microsoft.Azure.Management.Network.Fluent.HasPort.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPort.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.HasPort.Update;
-    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;
-    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
-    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
 
-    internal partial class ApplicationGatewayBackendHttpConfigurationImpl 
+    internal partial class ApplicationGatewayBackendHttpConfigurationImpl
     {
+        IApplicationGatewayProbe IApplicationGatewayBackendHttpConfigurationBeta.Probe
+        {
+            get
+            {
+                return this.Probe();
+            }
+        }
+
         /// <summary>
         /// Specifies the port number.
         /// </summary>
@@ -226,6 +220,26 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayBackendHttpConfiguration.Definition.IWithAffinity<ApplicationGateway.Definition.IWithCreate>.WithCookieBasedAffinity()
         {
             return this.WithCookieBasedAffinity() as ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
+        }
+
+        ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayBackendHttpConfiguration.Definition.IWithProbeBeta<ApplicationGateway.Definition.IWithCreate>.WithProbe(string name)
+        {
+            return this.WithProbe(name) as ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
+        }
+
+        ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithProbeBeta<ApplicationGateway.Update.IUpdate>.WithProbe(string name)
+        {
+            return this.WithProbe(name) as ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
+        }
+
+        ApplicationGatewayBackendHttpConfiguration.Update.IUpdate ApplicationGatewayBackendHttpConfiguration.Update.IWithProbeBeta.WithProbe(string name)
+        {
+            return this.WithProbe(name) as ApplicationGatewayBackendHttpConfiguration.Update.IUpdate;
+        }
+
+        ApplicationGatewayBackendHttpConfiguration.Update.IUpdate ApplicationGatewayBackendHttpConfiguration.Update.IWithProbeBeta.WithoutProbe()
+        {
+            return this.WithoutProbe() as ApplicationGatewayBackendHttpConfiguration.Update.IUpdate;
         }
     }
 }
