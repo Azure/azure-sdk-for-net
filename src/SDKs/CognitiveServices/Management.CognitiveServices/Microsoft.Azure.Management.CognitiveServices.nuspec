@@ -57,6 +57,6 @@
   <files>
     <file src="bin\release\net452\Microsoft.Azure.Management.CognitiveServices.dll" target="lib\net452" />
     <file src="bin\release\netstandard1.4\Microsoft.Azure.Management.CognitiveServices.dll" target="lib\netstandard1.4" />
-    <file src="readme.txt" target="content" />
+    <file src="notice.txt" target="content" />
   </files>
 </package>
