@@ -11,87 +11,64 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// <summary>
     /// The implementation for  ContainerServiceAgentPool and its create and update interfaces.
     /// </summary>
-    internal partial class ContainerServiceAgentPoolImpl  :
-        ChildResource<Models.ContainerServiceAgentPoolProfile,Microsoft.Azure.Management.Compute.Fluent.ContainerServiceImpl,Microsoft.Azure.Management.Compute.Fluent.IContainerService>,
+    internal partial class ContainerServiceAgentPoolImpl :
+        ChildResource<Models.ContainerServiceAgentPoolProfile, Microsoft.Azure.Management.Compute.Fluent.ContainerServiceImpl, Microsoft.Azure.Management.Compute.Fluent.IContainerService>,
         IContainerServiceAgentPool,
         ContainerServiceAgentPool.Definition.IDefinition<IContainerService>
     {
-                public int Count()
+        public int Count()
         {
-            //$ return this.Inner().Count();
-
-            return 0;
+            return this.Inner.Count;
         }
 
-                public string DnsLabel()
+        public string DnsLabel()
         {
-            //$ return this.Inner().DnsPrefix();
-
-            return null;
+            return this.Inner.DnsPrefix;
         }
 
-                public ContainerService.Definition.IDefinition Attach()
+        public ContainerService.Definition.IDefinition Attach()
         {
-            //$ this.Parent().AttachAgentPoolProfile(this);
-            //$ return this.Parent();
-
-            return null;
+            this.Parent.AttachAgentPoolProfile(this);
+            return this.Parent;
         }
 
-                public override string Name()
+        public override string Name()
         {
-            //$ return this.Inner().Name();
-
-            return null;
+            return this.Inner.Name;
         }
 
-                public ContainerServiceAgentPoolImpl WithLeafDomainLabel(string param0)
+        public ContainerServiceAgentPoolImpl WithLeafDomainLabel(string param0)
         {
-            //$ this.Inner().WithDnsPrefix(param0);
-            //$ return this;
+            this.Inner.DnsPrefix = param0;
+            return this;
 
             return this;
         }
 
-                public string VMSize()
+        public string VMSize()
         {
-            //$ return this.Inner().VmSize();
-
-            return null;
+            return this.Inner.VmSize;
         }
 
-                public string Fqdn()
+        public string Fqdn()
         {
-            //$ return this.Inner().Fqdn();
-
-            return null;
+            return this.Inner.Fqdn;
         }
 
-        internal  ContainerServiceAgentPoolImpl(ContainerServiceAgentPoolProfile inner, ContainerServiceImpl parent) :
+        internal ContainerServiceAgentPoolImpl(ContainerServiceAgentPoolProfile inner, ContainerServiceImpl parent) :
             base(inner, parent)
         {
-            //$ super(inner, parent);
-            //$ }
-
         }
 
-                public ContainerServiceAgentPoolImpl WithVMCount(int agentPoolCount)
+        public ContainerServiceAgentPoolImpl WithVMCount(int agentPoolCount)
         {
-            //$ if (agentPoolCount < 0 || agentPoolCount > 100) {
-            //$ throw new RuntimeException("Agent pool count  must be in the range of 1 to 100 (inclusive)");
-            //$ }
-            //$ 
-            //$ this.Inner().WithCount(agentPoolCount);
-            //$ return this;
-
+            this.Inner.Count = agentPoolCount;
             return this;
         }
 
-                public ContainerServiceAgentPoolImpl WithVMSize(string param0)
+        public ContainerServiceAgentPoolImpl WithVMSize(string param0)
         {
-            //$ this.Inner().WithVmSize(param0);
-            //$ return this;
-
+            this.Inner.VmSize = param0;
             return this;
         }
     }
