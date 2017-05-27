@@ -333,11 +333,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the addresses assigned to the associated backend.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayRequestRoutingRule.BackendAddresses
+        System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewayBackendAddress> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayRequestRoutingRule.BackendAddresses
         {
             get
             {
-                return this.BackendAddresses() as System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress>;
+                return this.BackendAddresses() as System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewayBackendAddress>;
             }
         }
 

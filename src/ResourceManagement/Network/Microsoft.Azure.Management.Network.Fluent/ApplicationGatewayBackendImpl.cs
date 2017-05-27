@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:B9D8E0EB1A218491349631635CDA92D3:5685D5C7D202D29D2E15856A5673C8E7
-        public IList<ApplicationGatewayBackendAddress> Addresses()
+        public IReadOnlyCollection<ApplicationGatewayBackendAddress> Addresses()
         {
             var addresses = new List<ApplicationGatewayBackendAddress>();
             if (Inner.BackendAddresses != null) {

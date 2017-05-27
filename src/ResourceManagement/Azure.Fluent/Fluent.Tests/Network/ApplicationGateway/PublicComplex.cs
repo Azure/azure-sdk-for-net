@@ -68,27 +68,21 @@ namespace Azure.Tests.Network.ApplicationGateway
                         .ToBackend("backend1")
                         .Attach()
 
-                    // Additional/explicit backend HTTP setting configs
-                    .DefineBackendHttpConfiguration("config1")
-                        .WithPort(8081)
-                        .WithRequestTimeout(45)
+                    // Additional/explicit frontend listeners
+                    .DefineListener("listener1")
+                        .WithPublicFrontend()
+                        .WithFrontendPort(9000)
+                        .WithHttps()
+                        .WithSslCertificateFromPfxFile(new FileInfo(Path.Combine("Assets", "myTest2._pfx")))
+                        .WithSslCertificatePassword("Abc123")
+                        .WithServerNameIndication()
+                        .WithHostName("www.fabricam.com")
                         .Attach()
 
                     // Additional/explicit backends
                     .DefineBackend("backend1")
                         .WithIPAddress("11.1.1.1")
                         .WithIPAddress("11.1.1.2")
-                        .Attach()
-
-                    // Additional/explicit frontend listeners
-                    .DefineListener("listener1")
-                        .WithPublicFrontend()
-                        .WithFrontendPort(9000)
-                        .WithHttps()
-                        .WithSslCertificateFromPfxFile(new FileInfo(Path.Combine("Assets","myTest2._pfx")))
-                        .WithSslCertificatePassword("Abc123")
-                        .WithServerNameIndication()
-                        .WithHostName("www.fabricam.com")
                         .Attach()
 
                     .WithExistingPublicIPAddress(testPips[0])
@@ -104,6 +98,14 @@ namespace Azure.Tests.Network.ApplicationGateway
                         .WithTimeBetweenProbesInSeconds(9)
                         .WithRetriesBeforeUnhealthy(5)
                         .Attach()
+
+                    // Additional/explicit backend HTTP setting configs
+                    .DefineBackendHttpConfiguration("config1")
+                        .WithPort(8081)
+                        .WithRequestTimeout(45)
+                        .WithProbe("probe1")
+                        .Attach()
+
                     .WithDisabledSslProtocols(ApplicationGatewaySslProtocol.TlsV1_0, ApplicationGatewaySslProtocol.TlsV1_1)
                     .Create();
             }
@@ -159,6 +161,8 @@ namespace Azure.Tests.Network.ApplicationGateway
             Assert.NotNull(config);
             Assert.Equal(config.Port, 8081);
             Assert.Equal(config.RequestTimeout, 45);
+            Assert.NotNull(config.Probe);
+            Assert.Equal("probe1", config.Probe.Name);
 
             // Verify backends
             Assert.Equal(2, appGateway.Backends.Count);
@@ -263,6 +267,9 @@ namespace Azure.Tests.Network.ApplicationGateway
 
             // Verify probes
             Assert.Equal(0, resource.Probes.Count);
+
+            // Verify backend configs
+            Assert.Null(resource.BackendHttpConfigurations["config1"].Probe);
 
             // Verify SSL policy - disabled protocols  
             Assert.Equal(0, resource.DisabledSslProtocols.Count);
