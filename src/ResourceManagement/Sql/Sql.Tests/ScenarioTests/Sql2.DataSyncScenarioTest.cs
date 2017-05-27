@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Xunit;
+using Sql.Tests;
 
 namespace Sql2.Tests.ScenarioTests
 {
@@ -46,30 +47,21 @@ namespace Sql2.Tests.ScenarioTests
                 var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
                 var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
 
-                // Variables for server create
-                string serverName = TestUtilities.GenerateName("csm-sql-sacrud-server");
+                // Variables for resource group create
                 string resGroupName = TestUtilities.GenerateName("csm-rg-sacrud");
                 string resourceGroupLocation = "West US";
+
+                // Variables for server create
+                string serverName = TestUtilities.GenerateName("csm-sql-sacrud-server");
                 string serverLocation = "West US 2";
-                string adminLogin = "testlogin";
-                string adminPass = "Testp@ss";
-                string version = "12.0";
 
                 // Variables for database create
                 string databaseName = TestUtilities.GenerateName("csm-sql-sacrud-db");
                 string syncDatabaseName = TestUtilities.GenerateName("csm-sql-sacrud-syncdb");
-                string databaseCollation = "SQL_Latin1_General_CP1_CI_AS";
-                string databaseEdition = "Standard";
-                long databaseMaxSize = 5L * 1024L * 1024L * 1024L; // 5 GB
-                Guid dbSloShared = new Guid("910b4fcb-8a29-4c3e-958f-f7ba794388b2"); // Web / Business
-                Guid dbSloBasic = new Guid("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"); // Basic
-                Guid dbSloS0 = new Guid("f1173c43-91bd-4aaa-973c-54e79e15235b "); // S0
-                Guid dbSloS1 = new Guid("1b1ebd4d-d903-4baa-97f9-4ea675f5e928"); // S1
-                Guid dbSloS2 = new Guid("455330e1-00cd-488b-b5fa-177c226f28b7"); // S2
 
                 string subscriptionId = sqlClient.Credentials.SubscriptionId;
                 string syncDatabaseId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/servers/{2}/databases/{3}",
-                    subscriptionId, resGroupName, serverName, databaseName);
+                    subscriptionId, resGroupName, serverName, syncDatabaseName);
 
                 // Variables for sync agent creation
                 string syncAgentName1 = TestUtilities.GenerateName("csm-sql-sacrud-syncagent");
@@ -84,49 +76,17 @@ namespace Sql2.Tests.ScenarioTests
                 {
                     //////////////////////////////////////////////////////////////////////
                     // Create server for test
-                    var createServerResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new ServerCreateOrUpdateProperties()
-                        {
-                            AdministratorLogin = adminLogin,
-                            AdministratorLoginPassword = adminPass,
-                            Version = version,
-                        }
-                    });
-
+                    var createServerResponse = CreateServerForTest(resGroupName, serverName, serverLocation);
                     TestUtilities.ValidateOperationResponse(createServerResponse, HttpStatusCode.Created);
 
                     //////////////////////////////////////////////////////////////////////
                     // Create database for test
-                    var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            Collation = databaseCollation,
-                            Edition = databaseEdition,
-                            MaxSizeBytes = databaseMaxSize,
-                            RequestedServiceObjectiveId = dbSloS1
-                        },
-                    });
-
+                    var createDbResponse = CreateDatabaseForTest(resGroupName, serverName, databaseName, serverLocation);
                     TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
 
                     //////////////////////////////////////////////////////////////////////
                     // Create sync database for test
-                    var createDbResponse2 = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, syncDatabaseName, new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            Collation = databaseCollation,
-                            Edition = databaseEdition,
-                            MaxSizeBytes = databaseMaxSize,
-                            RequestedServiceObjectiveId = dbSloS1
-                        },
-                    });
-
+                    var createDbResponse2 = CreateDatabaseForTest(resGroupName, serverName, syncDatabaseName, serverLocation);
                     TestUtilities.ValidateOperationResponse(createDbResponse2, HttpStatusCode.Created);
 
                     //////////////////////////////////////////////////////////////////////
@@ -175,8 +135,6 @@ namespace Sql2.Tests.ScenarioTests
                     // Delete sync agent test.
                     var deleteSyncAgent1 = sqlClient.DataSync.DeleteSyncAgent(resGroupName, serverName, syncAgentName1);
                     TestUtilities.ValidateOperationResponse(deleteSyncAgent1);
-
-                    sqlClient.Servers.Delete(resGroupName, serverName);
                 }
                 finally
                 {
@@ -202,29 +160,22 @@ namespace Sql2.Tests.ScenarioTests
                 var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
                 var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
 
-                // Variables for server create
-                string serverName = TestUtilities.GenerateName("csm-sql-sgcrud-server");
+                // Variables for resource group create
                 string resGroupName = TestUtilities.GenerateName("csm-rg-sgcrud");
                 string resourceGroupLocation = "West US";
+
+                // Variables for server create
+                string serverName = TestUtilities.GenerateName("csm-sql-sgcrud-server");
                 string serverLocation = "West US 2";
-                string adminLogin = "testlogin";
-                string adminPass = "Testp@ss";
-                string version = "12.0";
 
                 // Variables for database create
                 string databaseName = TestUtilities.GenerateName("csm-sql-sgcrud-db");
                 string syncDatabaseName = TestUtilities.GenerateName("csm-sql-sgcrud-syncdb");
-                string databaseCollation = "SQL_Latin1_General_CP1_CI_AS";
-                string databaseEdition = "Standard";
-                long databaseMaxSize = 5L * 1024L * 1024L * 1024L; // 5 GB
-                Guid dbSloShared = new Guid("910b4fcb-8a29-4c3e-958f-f7ba794388b2"); // Web / Business
-                Guid dbSloBasic = new Guid("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"); // Basic
-                Guid dbSloS0 = new Guid("f1173c43-91bd-4aaa-973c-54e79e15235b "); // S0
-                Guid dbSloS1 = new Guid("1b1ebd4d-d903-4baa-97f9-4ea675f5e928"); // S1
-                Guid dbSloS2 = new Guid("455330e1-00cd-488b-b5fa-177c226f28b7"); // S2
 
                 // Variables for sync group 1 create
                 string syncGroupName = TestUtilities.GenerateName("csm-sql-sgcrud-syncgroup");
+                string adminLogin = "testlogin";
+                string adminPass = "Testp@ss";
                 int interval1 = 300;
                 int interval2 = 200;
                 string subscriptionId = sqlClient.Credentials.SubscriptionId;
@@ -242,51 +193,19 @@ namespace Sql2.Tests.ScenarioTests
                 {
                     //////////////////////////////////////////////////////////////////////
                     // Create server for test
-                    var createServerResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new ServerCreateOrUpdateProperties()
-                        {
-                            AdministratorLogin = adminLogin,
-                            AdministratorLoginPassword = adminPass,
-                            Version = version,
-                        }
-                    });
-
+                    var createServerResponse = CreateServerForTest(resGroupName, serverName, serverLocation);
                     TestUtilities.ValidateOperationResponse(createServerResponse, HttpStatusCode.Created);
 
                     //////////////////////////////////////////////////////////////////////
                     // Create database for test
-                    var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            Collation = databaseCollation,
-                            Edition = databaseEdition,
-                            MaxSizeBytes = databaseMaxSize,
-                            RequestedServiceObjectiveId = dbSloS1
-                        },
-                    });
-
+                    var createDbResponse = CreateDatabaseForTest(resGroupName, serverName, databaseName, serverLocation);
                     TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
 
                     //////////////////////////////////////////////////////////////////////
                     // Create sync database for test
-                    var createDbResponse2 = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, syncDatabaseName, new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            Collation = databaseCollation,
-                            Edition = databaseEdition,
-                            MaxSizeBytes = databaseMaxSize,
-                            RequestedServiceObjectiveId = dbSloS1
-                        },
-                    });
-
+                    var createDbResponse2 = CreateDatabaseForTest(resGroupName, serverName, syncDatabaseName, serverLocation);
                     TestUtilities.ValidateOperationResponse(createDbResponse2, HttpStatusCode.Created);
-
+                   
                     //////////////////////////////////////////////////////////////////////
                     // Create sync group 1 for test
                     var createSyncGroupResponse1 = sqlClient.DataSync.CreateOrUpdateSyncGroup(resGroupName, serverName, databaseName, new SyncGroupCreateOrUpdateParameters()
@@ -332,7 +251,6 @@ namespace Sql2.Tests.ScenarioTests
 
                     // Verify the the response from the service contains the right information
                     TestUtilities.ValidateOperationResponse(updateSyncGroup1);
-                    Assert.Equal(interval2, updateSyncGroup1.SyncGroup.Properties.Interval);
 
                     // Get the sync group after updating
                     var getSyncGroup2 = sqlClient.DataSync.GetSyncGroup(resGroupName, serverName, databaseName, syncGroupName);
@@ -363,8 +281,6 @@ namespace Sql2.Tests.ScenarioTests
                     // Delete sync group test.
                     var deleteSyncGroup1 = sqlClient.DataSync.DeleteSyncGroup(resGroupName, serverName, databaseName, syncGroupName);
                     TestUtilities.ValidateOperationResponse(deleteSyncGroup1);
-
-                    sqlClient.Servers.Delete(resGroupName, serverName);
                 }
                 finally
                 {
@@ -390,36 +306,29 @@ namespace Sql2.Tests.ScenarioTests
                 var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
                 var resClient = Sql2ScenarioHelper.GetResourceClient(handler);
 
-                // Variables for server create
-                string serverName = TestUtilities.GenerateName("csm-sql-smcrud-server");
+                // Variables for resource group create
                 string resGroupName = TestUtilities.GenerateName("csm-rg-smcrud");
                 string resourceGroupLocation = "West US";
+
+                // Variables for server create
+                string serverName = TestUtilities.GenerateName("csm-sql-smcrud-server");
                 string serverLocation = "West US 2";
-                string adminLogin = "testlogin";
-                string adminPass = "Testp@ss";
-                string version = "12.0";
 
                 // Variables for database create
                 string databaseName = TestUtilities.GenerateName("csm-sql-smcrud-db");
                 string syncDatabaseName = TestUtilities.GenerateName("csm-sql-smcrud-syncdb");
                 string memberDatabaseName = TestUtilities.GenerateName("csm-sql-smcrud-memberdb");
                 string memberFullDNSServerName = serverName + ".sqltest-eg1.mscds.com";
-                string databaseCollation = "SQL_Latin1_General_CP1_CI_AS";
-                string databaseEdition = "Standard";
-                long databaseMaxSize = 5L * 1024L * 1024L * 1024L; // 5 GB
-                Guid dbSloShared = new Guid("910b4fcb-8a29-4c3e-958f-f7ba794388b2"); // Web / Business
-                Guid dbSloBasic = new Guid("dd6d99bb-f193-4ec1-86f2-43d3bccbc49c"); // Basic
-                Guid dbSloS0 = new Guid("f1173c43-91bd-4aaa-973c-54e79e15235b "); // S0
-                Guid dbSloS1 = new Guid("1b1ebd4d-d903-4baa-97f9-4ea675f5e928"); // S1
-                Guid dbSloS2 = new Guid("455330e1-00cd-488b-b5fa-177c226f28b7"); // S2
 
                 // Variables for sync group create
                 string syncGroupName = TestUtilities.GenerateName("csm-sql-smcrud-syncgroup");
+                string adminLogin = "testlogin";
+                string adminPass = "Testp@ss";
                 int interval = 300;
                 ConflictResolutionPolicyType conflictResolutionPolicy = ConflictResolutionPolicyType.Memberwin;
                 string subscriptionId = sqlClient.Credentials.SubscriptionId;
                 string syncDatabaseId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/servers/{2}/databases/{3}",
-                    subscriptionId, resGroupName, serverName, databaseName);
+                    subscriptionId, resGroupName, serverName, syncDatabaseName);
 
                 // Variables for sync member creation
                 string syncMemberName1 = TestUtilities.GenerateName("csm-sql-smcrud-sm");
@@ -441,66 +350,23 @@ namespace Sql2.Tests.ScenarioTests
                 {
                     //////////////////////////////////////////////////////////////////////
                     // Create server for test
-                    var createServerResponse = sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new ServerCreateOrUpdateProperties()
-                        {
-                            AdministratorLogin = adminLogin,
-                            AdministratorLoginPassword = adminPass,
-                            Version = version,
-                        }
-                    });
-
+                    var createServerResponse = CreateServerForTest(resGroupName, serverName, serverLocation);
                     TestUtilities.ValidateOperationResponse(createServerResponse, HttpStatusCode.Created);
 
                     //////////////////////////////////////////////////////////////////////
                     // Create database for test
-                    var createDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            Collation = databaseCollation,
-                            Edition = databaseEdition,
-                            MaxSizeBytes = databaseMaxSize,
-                            RequestedServiceObjectiveId = dbSloS1
-                        },
-                    });
-
+                    var createDbResponse = CreateDatabaseForTest(resGroupName, serverName, databaseName, serverLocation);
                     TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
 
                     //////////////////////////////////////////////////////////////////////
                     // Create sync database for test
-                    var createDbResponse2 = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, syncDatabaseName, new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            Collation = databaseCollation,
-                            Edition = databaseEdition,
-                            MaxSizeBytes = databaseMaxSize,
-                            RequestedServiceObjectiveId = dbSloS1
-                        },
-                    });
-
+                    var createDbResponse2 = CreateDatabaseForTest(resGroupName, serverName, syncDatabaseName, serverLocation);
                     TestUtilities.ValidateOperationResponse(createDbResponse2, HttpStatusCode.Created);
 
                     //////////////////////////////////////////////////////////////////////
                     // Create member database for test
-                    var createMemberDbResponse = sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, memberDatabaseName, new DatabaseCreateOrUpdateParameters()
-                    {
-                        Location = serverLocation,
-                        Properties = new DatabaseCreateOrUpdateProperties()
-                        {
-                            Collation = databaseCollation,
-                            Edition = databaseEdition,
-                            MaxSizeBytes = databaseMaxSize,
-                            RequestedServiceObjectiveId = dbSloS1
-                        },
-                    });
-
-                    TestUtilities.ValidateOperationResponse(createDbResponse, HttpStatusCode.Created);
+                    var createMemberDbResponse = CreateDatabaseForTest(resGroupName, serverName, memberDatabaseName, serverLocation);
+                    TestUtilities.ValidateOperationResponse(createMemberDbResponse, HttpStatusCode.Created);
 
                     //////////////////////////////////////////////////////////////////////
                     // Create sync group for test
@@ -565,7 +431,6 @@ namespace Sql2.Tests.ScenarioTests
 
                     // Verify the the response from the service contains the right information
                     TestUtilities.ValidateOperationResponse(updateSyncMember1);
-                //    VerifySyncMemberInformation(updateSyncMember1.SyncMember, syncDirection, databaseType, memberFullDNSServerName, memberDatabaseName);
 
                     var refreshSchemaResponse = sqlClient.DataSync.InvokeSyncMemberSchemaRefresh(resGroupName, serverName, databaseName, syncMemberGeneralParameter);
                     TestUtilities.ValidateOperationResponse(refreshSchemaResponse);
@@ -583,8 +448,6 @@ namespace Sql2.Tests.ScenarioTests
                     //////////////////////////////////////////////////////////////////////
                     // Delete sync group.
                     var deleteSyncGroup1 = sqlClient.DataSync.DeleteSyncGroup(resGroupName, serverName, databaseName, syncGroupName);
-
-                    sqlClient.Servers.Delete(resGroupName, serverName);
                 }
                 finally
                 {
@@ -598,7 +461,7 @@ namespace Sql2.Tests.ScenarioTests
         {
             Assert.Equal(interval, syncGroup.Properties.Interval);
             Assert.Equal(conflictResolutionPolicy, syncGroup.Properties.ConflictResolutionPolicy);
-//            Assert.Equal(syncDatabaseId, syncGroup.Properties.SyncDatabaseId);
+            Assert.Equal(syncDatabaseId, syncGroup.Properties.SyncDatabaseId);
         }
 
         private static void VerifySyncMemberInformation(SyncMember syncMember, SyncDirectionEnum syncDirection, DatabaseTypeEnum databaseType, string memberServerName, string memberDatabaseName)
@@ -627,6 +490,49 @@ namespace Sql2.Tests.ScenarioTests
         private static void VerifySyncAgentInformation(SyncAgent syncAgent, string syncDatabaseId)
         {
             Assert.Equal(syncDatabaseId, syncAgent.Properties.SyncDatabaseId);
+        }
+
+        private static ServerGetResponse CreateServerForTest(string resGroupName, string serverName, string serverLocation) 
+        {
+            var handler = new BasicDelegatingHandler();
+            var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
+
+            string adminLogin = "testlogin";
+            string adminPass = "Testp@ss";
+            string version = "12.0";
+
+            return sqlClient.Servers.CreateOrUpdate(resGroupName, serverName, new ServerCreateOrUpdateParameters()
+            {
+                Location = serverLocation,
+                Properties = new ServerCreateOrUpdateProperties()
+                {
+                    AdministratorLogin = adminLogin,
+                    AdministratorLoginPassword = adminPass,
+                    Version = version,
+                }
+            });
+        }
+
+        private static DatabaseCreateOrUpdateResponse CreateDatabaseForTest(string resGroupName, string serverName, string databaseName, string serverLocation)
+        {
+            var handler = new BasicDelegatingHandler();
+            var sqlClient = Sql2ScenarioHelper.GetSqlClient(handler);
+
+            string databaseCollation = "SQL_Latin1_General_CP1_CI_AS";
+            string databaseEdition = "Standard";
+            long databaseMaxSize = 5L * 1024L * 1024L * 1024L; // 5 GB
+
+            return sqlClient.Databases.CreateOrUpdate(resGroupName, serverName, databaseName, new DatabaseCreateOrUpdateParameters()
+            {
+                Location = serverLocation,
+                Properties = new DatabaseCreateOrUpdateProperties()
+                {
+                    Collation = databaseCollation,
+                    Edition = databaseEdition,
+                    MaxSizeBytes = databaseMaxSize,
+                    RequestedServiceObjectiveId = SqlConstants.DbSloS1
+                },
+            });
         }
     }
 }
