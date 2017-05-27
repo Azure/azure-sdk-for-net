@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Azure.Management.CognitiveServices</id>
+    <version>1.0.0</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Microsoft Azure Management Cognitive Services Library</description>
+    <summary>Microsoft Azure Management Cognitive Services Library.</summary>
+    <tags>Microsoft Azure Cognitive Services management,Cognitive Services,Cognitive Services management,REST HTTP client,windowsazureofficial,netcore451511</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[3.3.5, 4.0.0)" />
+        <dependency id="Microsoft.Rest.ClientRuntime" version="[2.3.5, 3.0.0)" />
+      </group>
+      <group targetFramework=".NETStandard1.4">
+        <dependency id="Microsoft.NETCore.Platforms" version="[1.1.0, )" />
+        <dependency id="NETStandard.Library" version="[1.6.1, )" />
+        <dependency id="System.Collections" version="[4.3.0, )" />
+        <dependency id="System.Collections.Concurrent" version="[4.3.0, )" />
+        <dependency id="System.Diagnostics.Debug" version="[4.3.0, )" />
+        <dependency id="System.Diagnostics.Tools" version="[4.3.0, )" />
+        <dependency id="System.Diagnostics.Tracing" version="[4.3.0, )" />
+        <dependency id="System.Globalization" version="[4.3.0, )" />
+        <dependency id="System.IO" version="[4.3.0, )" />
+        <dependency id="System.IO.Compression" version="[4.3.0, )" />
+        <dependency id="System.Linq" version="[4.3.0, )" />
+        <dependency id="System.Net.Http" version="[4.3.0, )" />
+        <dependency id="System.Net.Primitives" version="[4.3.0, )" />
+        <dependency id="System.ObjectModel" version="[4.3.0, )" />
+        <dependency id="System.Reflection" version="[4.3.0, )" />
+        <dependency id="System.Reflection.Extensions" version="[4.3.0, )" />
+        <dependency id="System.Reflection.Primitives" version="[4.3.0, )" />
+        <dependency id="System.Resources.ResourceManager" version="[4.3.0, )" />
+        <dependency id="System.Runtime" version="[4.3.0, )" />
+        <dependency id="System.Runtime.Extensions" version="[4.3.0, )" />
+        <dependency id="System.Runtime.InteropServices" version="[4.3.0, )" />
+        <dependency id="System.Runtime.InteropServices.RuntimeInformation" version="[4.3.0, )" />
+        <dependency id="System.Runtime.Numerics" version="[4.3.0, )" />
+        <dependency id="System.Text.Encoding" version="[4.3.0, )" />
+        <dependency id="System.Text.Encoding.Extensions" version="[4.3.0, )" />
+        <dependency id="System.Text.RegularExpressions" version="[4.3.0, )" />
+        <dependency id="System.Threading" version="[4.3.0, )" />
+        <dependency id="System.Threading.Tasks" version="[4.3.0, )" />
+        <dependency id="System.Xml.ReaderWriter" version="[4.3.0, )" />
+        <dependency id="System.Xml.XDocument" version="[4.3.0, )" />
+        <dependency id="System.Runtime.Serialization.Primitives" version="[4.1.1, )" />
+        <dependency id="Microsoft.Rest.ClientRuntime.Azure" version="[3.3.5, 4.0.0)" />
+        <dependency id="Microsoft.Rest.ClientRuntime" version="[2.3.5, 3.0.0)" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\release\net452\Microsoft.Azure.Management.CognitiveServices.dll" target="lib\net452" />
+    <file src="bin\release\netstandard1.4\Microsoft.Azure.Management.CognitiveServices.dll" target="lib\netstandard1.4" />
+    <file src="readme.txt" target="content" />
+  </files>
+</package>
