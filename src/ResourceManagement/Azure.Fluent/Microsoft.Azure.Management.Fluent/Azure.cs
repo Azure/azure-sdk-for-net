@@ -16,8 +16,6 @@ using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.Management.Sql.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.TrafficManager.Fluent;
-using Microsoft.Azure.Management.ContainerRegistry.Fluent;
-using Microsoft.Azure.Management.DocumentDB.Fluent;
 using System;
 using System.Linq;
 using ISubscriptions = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscriptions;
@@ -44,8 +42,6 @@ namespace Microsoft.Azure.Management.Fluent
         private IRedisManager redisManager;
         private IAppServiceManager appServiceManager;
         private IServiceBusManager serviceBusManager;
-        private IRegistryManager containerRegsitryManager;
-        private IDocumentDBManager documentDBManager;
 
         #endregion Service Managers
 
@@ -319,21 +315,6 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
-        public IRegistries Registries
-        {
-            get
-            {
-                return containerRegsitryManager.ContainerRegistries;
-            }
-        }
-
-        public IDatabaseAccounts DocumentDBAccounts
-        {
-            get
-            {
-                return documentDBManager.DocumentDBAccounts;
-            }
-        }
         #endregion Getters
 
         #region ctrs
@@ -353,8 +334,6 @@ namespace Microsoft.Azure.Management.Fluent
             cdnManager = CdnManager.Authenticate(restClient, subscriptionId);
             appServiceManager = AppServiceManager.Authenticate(restClient, subscriptionId, tenantId);
             serviceBusManager = ServiceBusManager.Authenticate(restClient, subscriptionId);
-            containerRegsitryManager = RegistryManager.Authenticate(restClient, subscriptionId);
-            documentDBManager = DocumentDBManager.Authenticate(restClient, subscriptionId);
 
             SubscriptionId = subscriptionId;
             this.authenticated = authenticated;
