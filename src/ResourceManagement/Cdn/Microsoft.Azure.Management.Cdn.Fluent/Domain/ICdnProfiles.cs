@@ -6,16 +6,15 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition;
+    using Microsoft.Azure.Management.Cdn.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
-    using Models;
 
     /// <summary>
     /// Entry point for CDN profile management API.
     /// </summary>
     public interface ICdnProfiles  :
-        ICdnProfilesBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<CdnProfile.Definition.IBlank>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
@@ -29,40 +28,17 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Cdn.Fluent.IProfilesOperations>
     {
         /// <summary>
-        /// Lists all the edge nodes of a CDN service.
+        /// Checks the availability of a endpoint name without creating the CDN endpoint.
         /// </summary>
-        /// <return>List of all the edge nodes of a CDN service.</return>
-        System.Collections.Generic.IEnumerable<EdgeNode> ListEdgeNodes();
-
-        /// <summary>
-        /// Starts an existing stopped CDN endpoint.
-        /// </summary>
-        /// <param name="resourceGroupName">Name of the resource group within the Azure subscription.</param>
-        /// <param name="profileName">Name of the CDN profile which is unique within the resource group.</param>
-        /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
-        void StartEndpoint(string resourceGroupName, string profileName, string endpointName);
+        /// <param name="name">The endpoint resource name to validate.</param>
+        /// <return>The CheckNameAvailabilityResult object if successful.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult CheckEndpointNameAvailability(string name);
 
         /// <summary>
         /// Lists all of the available CDN REST API operations.
         /// </summary>
         /// <return>List of available CDN REST operations.</return>
         System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Cdn.Fluent.Operation> ListOperations();
-
-        /// <summary>
-        /// Forcibly pre-loads CDN endpoint content. Available for Verizon profiles.
-        /// </summary>
-        /// <param name="resourceGroupName">Name of the resource group within the Azure subscription.</param>
-        /// <param name="profileName">Name of the CDN profile which is unique within the resource group.</param>
-        /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
-        /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
-        void LoadEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths);
-
-        /// <summary>
-        /// Checks the availability of a endpoint name without creating the CDN endpoint.
-        /// </summary>
-        /// <param name="name">The endpoint resource name to validate.</param>
-        /// <return>The CheckNameAvailabilityResult object if successful.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult CheckEndpointNameAvailability(string name);
 
         /// <summary>
         /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal.
@@ -80,7 +56,31 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Check the quota and actual usage of the CDN profiles under the current subscription.
         /// </summary>
         /// <return>Quotas and actual usages of the CDN profiles under the current subscription.</return>
-        System.Collections.Generic.IEnumerable<ResourceUsage> ListResourceUsage();
+        System.Collections.Generic.IEnumerable<Models.ResourceUsage> ListResourceUsage();
+
+        /// <summary>
+        /// Forcibly pre-loads CDN endpoint content. Available for Verizon profiles.
+        /// </summary>
+        /// <param name="resourceGroupName">Name of the resource group within the Azure subscription.</param>
+        /// <param name="profileName">Name of the CDN profile which is unique within the resource group.</param>
+        /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
+        /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
+        void LoadEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths);
+
+        /// <summary>
+        /// Checks the availability of a endpoint name without creating the CDN endpoint asynchronously.
+        /// </summary>
+        /// <param name="name">The endpoint resource name to validate.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task<Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult> CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Starts an existing stopped CDN endpoint.
+        /// </summary>
+        /// <param name="resourceGroupName">Name of the resource group within the Azure subscription.</param>
+        /// <param name="profileName">Name of the CDN profile which is unique within the resource group.</param>
+        /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
+        void StartEndpoint(string resourceGroupName, string profileName, string endpointName);
 
         /// <summary>
         /// Forcibly purges CDN endpoint content.
@@ -90,6 +90,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="endpointName">Name of the endpoint under the profile which is unique globally.</param>
         /// <param name="contentPaths">The path to the content to be purged. Can describe a file path or a wild card directory.</param>
         void PurgeEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths);
+
+        /// <summary>
+        /// Lists all the edge nodes of a CDN service.
+        /// </summary>
+        /// <return>List of all the edge nodes of a CDN service.</return>
+        System.Collections.Generic.IEnumerable<Models.EdgeNode> ListEdgeNodes();
 
         /// <summary>
         /// Stops an existing running CDN endpoint.

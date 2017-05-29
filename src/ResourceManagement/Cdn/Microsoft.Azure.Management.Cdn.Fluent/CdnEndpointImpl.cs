@@ -44,8 +44,41 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             }
         }
 
+        ///GENMHASH:AD2E24D9DFB738D4BF1A5F65CE996552:03764A67ECF90331193C59D0D3F1DA4D
+        public CustomDomainValidationResult ValidateCustomDomain(string hostName)
+        {
+            return ValidateCustomDomainAsync(hostName).GetAwaiter().GetResult();
+        }
+
+        ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:A5F7C81073BA64AE03AC5C595EE8B6E5
+        public void Start()
+        {
+            Parent.StartEndpointAsync(Name()).Wait();
+        }
+
+        ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:5A2F4445DA73DB06DF8066E5B2B6EF28
+        public void Stop()
+        {
+            StopAsync().Wait();
+        }
+
+        ///GENMHASH:1B8CF897C7FAD58F437E8F871BCBB60A:E1BA036C25473C6E724281B08EBBF98F
+        public void LoadContent(ISet<string> contentPaths)
+        {
+            LoadContentAsync(contentPaths).Wait();
+        }
+
+        ///GENMHASH:5DF0B3F994DC5D52A24BD724F4ED7028:433357741C745D4512DE012A88EDD0AE
+        public void PurgeContent(ISet<string> contentPaths)
+        {
+            if(contentPaths != null)
+            {
+                PurgeContentAsync(contentPaths).Wait();
+            }
+        }
+
         ///GENMHASH:5E567D525C2D1A4E96F5EDCE712176A4:E661050B2228F0D19D27F5E798A9AAED
-        public CdnEndpointImpl WithOrigin(string originName, string hostname)
+        internal CdnEndpointImpl WithOrigin(string originName, string hostname)
         {
             Inner.Origins.Add(
                 new DeepCreatedOrigin
