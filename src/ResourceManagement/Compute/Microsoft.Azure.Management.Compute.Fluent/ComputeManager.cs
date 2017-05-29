@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private IDisks disks;
         private ISnapshots snapshots;
         private IVirtualMachineCustomImages virtualMachineCustomImages;
+        private IContainerServices containerServices;
         #endregion
 
         #region ctrs
@@ -209,6 +210,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 return virtualMachineCustomImages;
             }
         }
+
+        public IContainerServices ContainerServices
+        {
+            get
+            {
+                if (containerServices == null)
+                {
+                    containerServices = new ContainerServicesImpl(this);
+                }
+                return containerServices;
+            }
+        }
         #endregion
     }
 
@@ -231,5 +244,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ISnapshots Snapshots { get; }
 
         IVirtualMachineCustomImages VirtualMachineCustomImages { get; }
+
+        IContainerServices ContainerServices { get; }
     }
 }

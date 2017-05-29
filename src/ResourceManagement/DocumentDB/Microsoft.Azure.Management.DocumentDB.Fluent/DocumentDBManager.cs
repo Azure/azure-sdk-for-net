@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
         #endregion
 
-        public IDatabaseAccounts DocumentAccounts
+        public IDatabaseAccounts DocumentDBAccounts
         {
             get
             {
@@ -80,6 +80,6 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
     public interface IDocumentDBManager : IManager<IDocumentDB>
     {
-       IDatabaseAccounts DocumentAccounts { get; }
+       IDatabaseAccounts DocumentDBAccounts { get; }
     }
 }

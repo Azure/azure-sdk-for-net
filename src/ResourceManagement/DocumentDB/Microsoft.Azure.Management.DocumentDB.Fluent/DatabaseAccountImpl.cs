@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
     {
         private IList<Microsoft.Azure.Management.DocumentDB.Fluent.Models.FailoverPolicyInner> failoverPolicies;
         private bool hasFailoverPolicyChanges;
+        
         public DatabaseAccountImpl WithReadReplication(Region region)
         {
             this.EnsureFailoverIsInitialized();
@@ -51,12 +52,12 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 ResourceGroupName, Name, createUpdateParametersInner);
             this.failoverPolicies.Clear();
             this.hasFailoverPolicyChanges = false;
-            IDatabaseAccount databaseAccount = await this.Manager.DocumentAccounts.GetByResourceGroupAsync(
+            IDatabaseAccount databaseAccount = await this.Manager.DocumentDBAccounts.GetByResourceGroupAsync(
                 ResourceGroupName, Name);
             while (string.IsNullOrWhiteSpace(databaseAccount.Id))
             {
                 await Task.Delay(5000);
-                databaseAccount = await this.Manager.DocumentAccounts.GetByResourceGroupAsync(
+                databaseAccount = await this.Manager.DocumentDBAccounts.GetByResourceGroupAsync(
                     ResourceGroupName, Name);
                 if (this.IsAFinalProvisioningState(databaseAccount.Inner.ProvisioningState))
                 {
@@ -89,7 +90,15 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
         private bool IsAFinalProvisioningState(string state)
         {
-            return state.Equals("succeeded", StringComparison.OrdinalIgnoreCase);
+            switch (state.ToLower())
+            {
+                case "succeeded":
+                case "canceled":
+                case "failed":
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         public IReadOnlyList<Microsoft.Azure.Management.DocumentDB.Fluent.Models.Location> WritableReplications()
