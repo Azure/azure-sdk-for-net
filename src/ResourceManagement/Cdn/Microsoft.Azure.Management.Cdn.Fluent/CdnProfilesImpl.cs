@@ -19,6 +19,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         TopLevelModifiableResources<ICdnProfile,CdnProfileImpl,ProfileInner,IProfilesOperations,ICdnManager>,
         ICdnProfiles
     {
+        ///GENMHASH:8B3976582303B73AC81C5220073E2D55:A4104491D327BA3667E857CA7A2EC15D
+        public CheckNameAvailabilityResult CheckEndpointNameAvailability(string name)
+        {
+            return CheckEndpointNameAvailabilityAsync(name).GetAwaiter().GetResult();
+        }
+
         ///GENMHASH:2CEB6E35574F5C7F1D19ADAC97C93D65:1B5FDD33003D9073F97F1C9831CA2660
         public IEnumerable<Operation> ListOperations()
         {
@@ -55,6 +61,15 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             await Manager.Inner.Endpoints.LoadContentAsync(resourceGroupName, profileName, endpointName, contentPaths, cancellationToken);
         }
 
+        internal void LoadEndpointContent(
+            string resourceGroupName,
+            string profileName,
+            string endpointName,
+            IList<string> contentPaths)
+        {
+            LoadEndpointContentAsync(resourceGroupName, profileName, endpointName, contentPaths).Wait();
+        }
+
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
         protected async override Task<IPage<ProfileInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
@@ -76,6 +91,15 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             await Manager.Inner.Endpoints.StartAsync(resourceGroupName, profileName, endpointName, cancellationToken);
         }
 
+        internal void StartEndpoint(
+            string resourceGroupName,
+            string profileName,
+            string endpointName
+            )
+        {
+            StartEndpointAsync(resourceGroupName, profileName, endpointName).Wait();
+        }
+
         ///GENMHASH:EB7BCC87B72405260E2C64D3F60E7D12:27C4EEED8156C99311E5C3646A2873AB
         public async Task StopEndpointAsync(
             string resourceGroupName, 
@@ -84,6 +108,14 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             CancellationToken cancellationToken = default(CancellationToken))
         {
             await Manager.Inner.Endpoints.StopAsync(resourceGroupName, profileName, endpointName, cancellationToken);
+        }
+
+        internal void StopEndpoint(
+            string resourceGroupName,
+            string profileName,
+            string endpointName)
+        {
+            StopEndpointAsync(resourceGroupName, profileName, endpointName).Wait();
         }
 
         ///GENMHASH:64DEF1711FC41C47500E107416B7F805:506E827968295A02B09C6EA38E8B9C1E
@@ -113,6 +145,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             }
 
             return null;
+        }
+
+        public string GenerateSsoUri(string resourceGroupName, string profileName)
+        {
+            return GenerateSsoUriAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:2404C5CA15B0D5D6226D2C7D01E79303:FA381ABED6F4688FD47A380CF0F41845
@@ -165,6 +202,16 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             CancellationToken cancellationToken = default(CancellationToken))
         {
             await Manager.Inner.Endpoints.PurgeContentAsync(resourceGroupName, profileName, endpointName, contentPaths, cancellationToken);
-        }		
+        }
+
+        public void PurgeEndpointContent(
+            string resourceGroupName,
+            string profileName,
+            string endpointName,
+            IList<string> contentPaths)
+        {
+            PurgeEndpointContentAsync(resourceGroupName, profileName, endpointName, contentPaths).Wait();
+        }
     }
+
 }

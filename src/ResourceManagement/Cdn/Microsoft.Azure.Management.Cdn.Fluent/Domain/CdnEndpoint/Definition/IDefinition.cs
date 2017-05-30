@@ -36,39 +36,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IAttachablePremium<ParentT>
     {
         /// <summary>
-        /// Adds a new CDN custom domain for the endpoint.
+        /// Specifies if HTTPS traffic is allowed.
         /// </summary>
-        /// <param name="hostName">A custom domain host name.</param>
+        /// <param name="httpsAllowed">If true then HTTPS traffic will be allowed.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithCustomDomain(string hostName);
-
-        /// <summary>
-        /// Specifies the origin path.
-        /// </summary>
-        /// <param name="originPath">An origin path.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithOriginPath(string originPath);
-
-        /// <summary>
-        /// Specifies the port for HTTPS traffic.
-        /// </summary>
-        /// <param name="httpsPort">A port number.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithHttpsPort(int httpsPort);
-
-        /// <summary>
-        /// Specifies the host header.
-        /// </summary>
-        /// <param name="hostHeader">A host header.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithHostHeader(string hostHeader);
-
-        /// <summary>
-        /// Specifies if HTTP traffic is allowed.
-        /// </summary>
-        /// <param name="httpAllowed">If true, then HTTP traffic will be allowed.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithHttpAllowed(bool httpAllowed);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithHttpsAllowed(bool httpsAllowed);
 
         /// <summary>
         /// Specifies the port for HTTP traffic.
@@ -78,11 +50,39 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithHttpPort(int httpPort);
 
         /// <summary>
-        /// Specifies if HTTPS traffic is allowed.
+        /// Adds a new CDN custom domain for the endpoint.
         /// </summary>
-        /// <param name="httpsAllowed">If true then HTTPS traffic will be allowed.</param>
+        /// <param name="hostName">A custom domain host name.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithHttpsAllowed(bool httpsAllowed);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithCustomDomain(string hostName);
+
+        /// <summary>
+        /// Specifies the port for HTTPS traffic.
+        /// </summary>
+        /// <param name="httpsPort">A port number.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithHttpsPort(int httpsPort);
+
+        /// <summary>
+        /// Specifies if HTTP traffic is allowed.
+        /// </summary>
+        /// <param name="httpAllowed">If true, then HTTP traffic will be allowed.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithHttpAllowed(bool httpAllowed);
+
+        /// <summary>
+        /// Specifies the origin path.
+        /// </summary>
+        /// <param name="originPath">An origin path.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithOriginPath(string originPath);
+
+        /// <summary>
+        /// Specifies the host header.
+        /// </summary>
+        /// <param name="hostHeader">A host header.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<ParentT> WithHostHeader(string hostHeader);
     }
 
     /// <summary>
@@ -108,41 +108,25 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IAttachableStandard<ParentT>
     {
         /// <summary>
-        /// Specifies the geo filters.
+        /// Specifies if HTTPS traffic is allowed.
         /// </summary>
-        /// <param name="geoFilters">Geo filters list</param>
+        /// <param name="httpsAllowed">If set to true Https traffic will be allowed.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilters(ICollection<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters);
-
-        /// <summary>
-        /// Sets the geo filters list for the specified countries list.
-        /// </summary>
-        /// <param name="relativePath">A relative path.</param>
-        /// <param name="action">An action value.</param>
-        /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, ICollection<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithHttpsAllowed(bool httpsAllowed);
 
         /// <summary>
         /// Specifies the content types to compress.
         /// </summary>
-        /// <param name="contentTypesToCompress">Content types to compress .</param>
+        /// <param name="contentTypesToCompress">Content types to compress to set.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithContentTypesToCompress(ISet<string> contentTypesToCompress);
 
         /// <summary>
-        /// Adds a new CDN custom domain within an endpoint.
+        /// Selects the query string caching behavior.
         /// </summary>
-        /// <param name="hostName">A custom domain host name.</param>
+        /// <param name="cachingBehavior">The query string caching behavior value to set.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithCustomDomain(string hostName);
-
-        /// <summary>
-        /// Specifies the origin path.
-        /// </summary>
-        /// <param name="originPath">An origin path.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithOriginPath(string originPath);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithQueryStringCachingBehavior(QueryStringCachingBehavior cachingBehavior);
 
         /// <summary>
         /// Specifies the port for HTTPS traffic.
@@ -152,32 +136,29 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithHttpsPort(int httpsPort);
 
         /// <summary>
-        /// Specifies the host header.
+        /// Adds a single entry to the geo filters list.
         /// </summary>
-        /// <param name="hostHeader">A host header.</param>
+        /// <param name="relativePath">A relative path.</param>
+        /// <param name="action">A geo filter action.</param>
+        /// <param name="countryCode">An ISO 2 letter country code.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithHostHeader(string hostHeader);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, CountryISOCode countryCode);
 
         /// <summary>
-        /// Sets the query string caching behavior.
+        /// Sets the geo filters list for the specified countries list.
         /// </summary>
-        /// <param name="cachingBehavior">The query string caching behavior value to set.</param>
+        /// <param name="relativePath">A relative path.</param>
+        /// <param name="action">An action value.</param>
+        /// <param name="countryCodes">A list of the ISO 2 letter country codes.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithQueryStringCachingBehavior(QueryStringCachingBehavior cachingBehavior);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes);
 
         /// <summary>
-        /// Specifies if HTTP traffic is allowed.
+        /// Specifies the origin path.
         /// </summary>
-        /// <param name="httpAllowed">If true then HTTP traffic will be allowed.</param>
+        /// <param name="originPath">An origin path.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithHttpAllowed(bool httpAllowed);
-
-        /// <summary>
-        /// Sets the compression state.
-        /// </summary>
-        /// <param name="compressionEnabled">If true then compression will be enabled.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithCompressionEnabled(bool compressionEnabled);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithOriginPath(string originPath);
 
         /// <summary>
         /// Specifies the port for HTTP traffic.
@@ -187,11 +168,32 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithHttpPort(int httpPort);
 
         /// <summary>
-        /// Specifies if HTTPS traffic is allowed.
+        /// Adds a new CDN custom domain within an endpoint.
         /// </summary>
-        /// <param name="httpsAllowed">If set to true Https traffic will be allowed.</param>
+        /// <param name="hostName">A custom domain host name.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithHttpsAllowed(bool httpsAllowed);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithCustomDomain(string hostName);
+
+        /// <summary>
+        /// Sets the compression state.
+        /// </summary>
+        /// <param name="compressionEnabled">If true then compression will be enabled.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithCompressionEnabled(bool compressionEnabled);
+
+        /// <summary>
+        /// Specifies the geo filters to use.
+        /// </summary>
+        /// <param name="geoFilters">Geo filters.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters);
+
+        /// <summary>
+        /// Specifies if HTTP traffic is allowed.
+        /// </summary>
+        /// <param name="httpAllowed">If true then HTTP traffic will be allowed.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithHttpAllowed(bool httpAllowed);
 
         /// <summary>
         /// Specifies a single content type to compress.
@@ -201,12 +203,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithContentTypeToCompress(string contentTypeToCompress);
 
         /// <summary>
-        /// Adds a single entry to the geo filters list.
+        /// Specifies the host header.
         /// </summary>
-        /// <param name="relativePath">A relative path.</param>
-        /// <param name="action">A geo filter action.</param>
-        /// <param name="countryCode">An ISO 2 letter country code.</param>
+        /// <param name="hostHeader">A host header.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithGeoFilter(string relativePath, GeoFilterActions action, CountryISOCode countryCode);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<ParentT> WithHostHeader(string hostHeader);
     }
 }
