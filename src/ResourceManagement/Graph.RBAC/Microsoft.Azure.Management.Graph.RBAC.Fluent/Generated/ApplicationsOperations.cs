@@ -1331,7 +1331,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<PasswordCredential>>> ListPasswordCredentialsWithHttpMessagesAsync(string applicationObjectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<Models.PasswordCredential>>> ListPasswordCredentialsWithHttpMessagesAsync(string applicationObjectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (applicationObjectId == null)
             {

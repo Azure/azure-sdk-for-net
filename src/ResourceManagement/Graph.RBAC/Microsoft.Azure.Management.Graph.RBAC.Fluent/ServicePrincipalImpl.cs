@@ -1,90 +1,341 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
-    using Models;
-    using System.Collections.Generic;
-    using ServicePrincipal.Definition;
-    using ResourceManager.Fluent.Core.ResourceActions;
-    using System.Threading.Tasks;
-    using ServicePrincipal.Update;
     using System.Threading;
-    using System.Linq;
-    using System;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmdyYXBocmJhYy5pbXBsZW1lbnRhdGlvbi5TZXJ2aWNlUHJpbmNpcGFsSW1wbA==
-    internal partial class ServicePrincipalImpl :
-        CreatableUpdatable<IServicePrincipal, ServicePrincipalInner, ServicePrincipalImpl, IServicePrincipal, IUpdate>,
+    public partial class ServicePrincipalImpl  :
+        Creatable<IServicePrincipal,ServicePrincipalInner,ServicePrincipalImpl,IServicePrincipal>,
         IServicePrincipal,
         IDefinition,
-        IUpdate
+        IHasCredential<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipalImpl>
     {
-        private IServicePrincipalsOperations client;
+        private GraphRbacManager manager;
         private ServicePrincipalCreateParametersInner createParameters;
-
-        internal ServicePrincipalImpl(ServicePrincipalInner innerModel,
-            IServicePrincipalsOperations client)
-            : base(innerModel.AppId, innerModel)
+        private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> cachedPasswordCredentials;
+        private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> cachedCertificateCredentials;
+        private ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable;
+        private Dictionary<string,BuiltInRole> roles;
+         string assignedSubscription;
+        private IList<Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredentialImpl<object>> certificateCredentials;
+        private IList<Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredentialImpl<object>> passwordCredentials;
+                public PasswordCredentialImpl<ServicePrincipal.Definition.IWithCreate> DefinePasswordCredential(string name)
         {
-            this.client = client;
-            this.createParameters = new ServicePrincipalCreateParametersInner()
-            {
-                AppId = AppId()
-            };
+            //$ return new PasswordCredentialImpl<>(name, this);
+
+            return null;
         }
 
-        ///GENMHASH:17540EB75C744FB87D329C55BE359E09:CC8D1D4F5D89E231669C5963BF9F8E9C
-        public string ObjectId()
+                internal async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return Inner.ObjectId;
+            //$ Observable<ServicePrincipal> keyCredentials = manager.Inner().ServicePrincipals().ListKeyCredentialsAsync(id())
+            //$ .Map(new Func1<List<KeyCredentialInner>, Map<String, CertificateCredential>>() {
+            //$ @Override
+            //$ public Map<String, CertificateCredential> call(List<KeyCredentialInner> keyCredentialInners) {
+            //$ if (keyCredentialInners == null || keyCredentialInners.IsEmpty()) {
+            //$ return null;
+            //$ }
+            //$ Map<String, CertificateCredential> certificateCredentialMap = new HashMap<String, CertificateCredential>();
+            //$ for (KeyCredentialInner inner : keyCredentialInners) {
+            //$ CertificateCredential credential = new CertificateCredentialImpl<>(inner);
+            //$ certificateCredentialMap.Put(credential.Name(), credential);
+            //$ }
+            //$ return certificateCredentialMap;
+            //$ }
+            //$ })
+            //$ .Map(new Func1<Map<String, CertificateCredential>, ServicePrincipal>() {
+            //$ @Override
+            //$ public ServicePrincipal call(Map<String, CertificateCredential> stringCertificateCredentialMap) {
+            //$ ServicePrincipalImpl.This.cachedCertificateCredentials = stringCertificateCredentialMap;
+            //$ return ServicePrincipalImpl.This;
+            //$ }
+            //$ });
+            //$ Observable<ServicePrincipal> passwordCredentials = manager.Inner().ServicePrincipals().ListPasswordCredentialsAsync(id())
+            //$ .Map(new Func1<List<PasswordCredentialInner>, Map<String, PasswordCredential>>() {
+            //$ @Override
+            //$ public Map<String, PasswordCredential> call(List<PasswordCredentialInner> passwordCredentialInners) {
+            //$ if (passwordCredentialInners == null || passwordCredentialInners.IsEmpty()) {
+            //$ return null;
+            //$ }
+            //$ Map<String, PasswordCredential> passwordCredentialMap = new HashMap<String, PasswordCredential>();
+            //$ for (PasswordCredentialInner inner : passwordCredentialInners) {
+            //$ PasswordCredential credential = new PasswordCredentialImpl<>(inner);
+            //$ passwordCredentialMap.Put(credential.Name(), credential);
+            //$ }
+            //$ return passwordCredentialMap;
+            //$ }
+            //$ }).Map(new Func1<Map<String, PasswordCredential>, ServicePrincipal>() {
+            //$ @Override
+            //$ public ServicePrincipal call(Map<String, PasswordCredential> stringPasswordCredentialMap) {
+            //$ ServicePrincipalImpl.This.cachedPasswordCredentials = stringPasswordCredentialMap;
+            //$ return ServicePrincipalImpl.This;
+            //$ }
+            //$ });
+            //$ return keyCredentials.MergeWith(passwordCredentials).Last();
+            //$ }
+
+            return null;
         }
 
-        ///GENMHASH:29024ACA1EA67366DE27F7A1B972E458:75852A31ACA71709FD61BA0195203BFF
-        public string ObjectType()
+                public GraphRbacManager Manager()
         {
-                return Inner.ObjectType;
+            //$ return manager;
+
+            return null;
         }
 
-        ///GENMHASH:19FB5490B29F08AC39628CD5F893E975:54FC41D8034FD612C7047E2055BC6E48
-        public string DisplayName()
+                public bool IsInCreateMode()
         {
-                return Inner.DisplayName;
+            //$ return true;
+
+            return false;
         }
 
-        ///GENMHASH:CF00964037C1AADDCC0C25C134168C6E:DBDA3E40337A88C78112F81653959508
-        public string AppId()
+                public ServicePrincipalImpl WithNewRoleInResourceGroup(BuiltInRole role, IResourceGroup resourceGroup)
         {
-                return Inner.AppId;
-        }
+            //$ return withNewRole(role, resourceGroup.Id());
 
-        ///GENMHASH:3190BDAA4917D0479F1E9EBBDAC6590C:9C7DB50BD87DDC349B690C1F34C49A26
-        public IList<string> ServicePrincipalNames()
-        {
-                return Inner.ServicePrincipalNames;
-        }
-
-        ///GENMHASH:8B8E171AB3970DFD7516F84B8C19861C:4549C714DB7AE421B3ED125CD30CFEF9
-        public ServicePrincipalImpl WithAccountEnabled(bool enabled)
-        {
-            createParameters.AccountEnabled = enabled;
             return this;
         }
 
-        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:6FBD633E7AC3512A3078AD9811DEC068
-        protected override async Task<ServicePrincipalInner> GetInnerAsync(CancellationToken cancellationToken)
+                public ServicePrincipalImpl WithNewRoleInSubscription(BuiltInRole role, string subscriptionId)
         {
-            var list = await client.ListAsync(new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", AppId())), cancellationToken: cancellationToken);
-            return list.FirstOrDefault();
+            //$ this.assignedSubscription = subscriptionId;
+            //$ return withNewRole(role, "subscriptions/" + subscriptionId);
+
+            return this;
         }
 
-        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:E9A4DA014B21051979442ACE026C7D1F
-        public override Task<IServicePrincipal> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+                public CertificateCredentialImpl<ServicePrincipal.Definition.IWithCreate> DefineCertificateCredential(string name)
         {
-            throw new NotImplementedException();
+            //$ return new CertificateCredentialImpl<>(name, this);
+
+            return null;
+        }
+
+                public ServicePrincipalImpl WithNewApplication(ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable)
+        {
+            //$ addCreatableDependency(applicationCreatable);
+            //$ this.applicationCreatable = applicationCreatable;
+            //$ return this;
+
+            return this;
+        }
+
+                public ServicePrincipalImpl WithNewApplication(string signOnUrl)
+        {
+            //$ return withNewApplication(manager.Applications().Define(signOnUrl)
+            //$ .WithSignOnUrl(signOnUrl)
+            //$ .WithIdentifierUrl(signOnUrl));
+
+            return this;
+        }
+
+                internal  ServicePrincipalImpl(ServicePrincipalInner innerObject, GraphRbacManager manager)
+                    : base(innerObject.DisplayName, innerObject)
+        {
+            //$ super(innerObject.DisplayName(), innerObject);
+            //$ this.manager = manager;
+            //$ this.createParameters = new ServicePrincipalCreateParametersInner().WithAccountEnabled(true);
+            //$ this.roles = new HashMap<>();
+            //$ this.certificateCredentials = new ArrayList<>();
+            //$ this.passwordCredentials = new ArrayList<>();
+            //$ }
+
+        }
+
+                public ServicePrincipalImpl WithCertificateCredential(CertificateCredentialImpl<object> credential)
+        {
+            //$ if (createParameters.KeyCredentials() == null) {
+            //$ createParameters.WithKeyCredentials(new ArrayList<KeyCredentialInner>());
+            //$ }
+            //$ createParameters.KeyCredentials().Add(credential.Inner());
+            //$ this.certificateCredentials.Add(credential);
+            //$ return this;
+
+            return this;
+        }
+
+                public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> CertificateCredentials()
+        {
+            //$ if (cachedCertificateCredentials == null) {
+            //$ return null;
+            //$ }
+            //$ return Collections.UnmodifiableMap(cachedCertificateCredentials);
+
+            return null;
+        }
+
+                protected override async Task<Models.ServicePrincipalInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            //$ return manager.Inner().ServicePrincipals().GetAsync(id());
+
+            return null;
+        }
+
+                public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> PasswordCredentials()
+        {
+            //$ if (cachedPasswordCredentials == null) {
+            //$ return null;
+            //$ }
+            //$ return Collections.UnmodifiableMap(cachedPasswordCredentials);
+
+            return null;
+        }
+
+                public ServicePrincipalImpl WithNewRole(BuiltInRole role, string scope)
+        {
+            //$ this.roles.Put(scope, role);
+            //$ return this;
+
+            return this;
+        }
+
+                public ServicePrincipalImpl WithExistingApplication(string id)
+        {
+            //$ createParameters.WithAppId(id);
+            //$ return this;
+
+            return this;
+        }
+
+                public ServicePrincipalImpl WithExistingApplication(IActiveDirectoryApplication application)
+        {
+            //$ createParameters.WithAppId(application.ApplicationId());
+            //$ return this;
+
+            return this;
+        }
+
+                public IReadOnlyList<string> ServicePrincipalNames()
+        {
+            //$ return inner().ServicePrincipalNames();
+
+            return null;
+        }
+
+                public ServicePrincipalImpl WithPasswordCredential(PasswordCredentialImpl<object> credential)
+        {
+            //$ if (createParameters.PasswordCredentials() == null) {
+            //$ createParameters.WithPasswordCredentials(new ArrayList<PasswordCredentialInner>());
+            //$ }
+            //$ createParameters.PasswordCredentials().Add(credential.Inner());
+            //$ this.passwordCredentials.Add(credential);
+            //$ return this;
+
+            return this;
+        }
+
+                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            //$ return getInnerAsync()
+            //$ .Map(innerToFluentMap(this))
+            //$ .FlatMap(new Func1<ServicePrincipal, Observable<ServicePrincipal>>() {
+            //$ @Override
+            //$ public Observable<ServicePrincipal> call(ServicePrincipal application) {
+            //$ return refreshCredentialsAsync();
+            //$ }
+            //$ });
+
+            return null;
+        }
+
+                public string Id()
+        {
+            //$ return inner().ObjectId();
+
+            return null;
+        }
+
+                public string ApplicationId()
+        {
+            //$ return inner().AppId();
+
+            return null;
+        }
+
+                public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            //$ ActiveDirectoryApplication application = (ActiveDirectoryApplication) ((Object) super.CreatedModel(applicationCreatable.Key()));
+            //$ createParameters.WithAppId(application.ApplicationId());
+            //$ Observable<ServicePrincipal> sp = manager.Inner().ServicePrincipals().CreateAsync(createParameters)
+            //$ .Map(innerToFluentMap(this))
+            //$ .FlatMap(new Func1<ServicePrincipal, Observable<ServicePrincipal>>() {
+            //$ @Override
+            //$ public Observable<ServicePrincipal> call(ServicePrincipal servicePrincipal) {
+            //$ return refreshCredentialsAsync();
+            //$ }
+            //$ });
+            //$ if (roles == null || roles.IsEmpty()) {
+            //$ return sp;
+            //$ }
+            //$ return sp.FlatMap(new Func1<ServicePrincipal, Observable<ServicePrincipal>>() {
+            //$ @Override
+            //$ public Observable<ServicePrincipal> call( ServicePrincipal servicePrincipal) {
+            //$ return Observable.From(roles.EntrySet())
+            //$ .FlatMap(new Func1<Map.Entry<String, BuiltInRole>, Observable<?>>() {
+            //$ @Override
+            //$ public Observable<?> call(Map.Entry<String, BuiltInRole> role) {
+            //$ return manager().RoleAssignments().Define(UUID.RandomUUID().ToString())
+            //$ .ForServicePrincipal(servicePrincipal)
+            //$ .WithBuiltInRole(role.GetValue())
+            //$ .WithScope(role.GetKey())
+            //$ .CreateAsync()
+            //$ .RetryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
+            //$ @Override
+            //$ public Observable<?> call(Observable<? extends Throwable> observable) {
+            //$ return observable.ZipWith(Observable.Range(1, 30), new Func2<Throwable, Integer, Integer>() {
+            //$ @Override
+            //$ public Integer call(Throwable throwable, Integer integer) {
+            //$ if (throwable instanceof CloudException
+            //$ && ((CloudException) throwable).Body().Code().EqualsIgnoreCase("PrincipalNotFound")) {
+            //$ return integer;
+            //$ } else {
+            //$ throw Exceptions.Propagate(throwable);
+            //$ }
+            //$ }
+            //$ }).FlatMap(new Func1<Integer, Observable<?>>() {
+            //$ @Override
+            //$ public Observable<?> call(Integer i) {
+            //$ return Observable.Timer(i, TimeUnit.SECONDS);
+            //$ }
+            //$ });
+            //$ }
+            //$ });
+            //$ }
+            //$ })
+            //$ .Last()
+            //$ .Map(new Func1<Object, ServicePrincipal>() {
+            //$ @Override
+            //$ public ServicePrincipal call(Object o) {
+            //$ return servicePrincipal;
+            //$ }
+            //$ });
+            //$ }
+            //$ }).Map(new Func1<ServicePrincipal, ServicePrincipal>() {
+            //$ @Override
+            //$ public ServicePrincipal call(ServicePrincipal servicePrincipal) {
+            //$ for (PasswordCredentialImpl<?> passwordCredential : passwordCredentials) {
+            //$ passwordCredential.ExportAuthFile((ServicePrincipalImpl) servicePrincipal);
+            //$ }
+            //$ for (CertificateCredentialImpl<?> certificateCredential : certificateCredentials) {
+            //$ certificateCredential.ExportAuthFile((ServicePrincipalImpl) servicePrincipal);
+            //$ }
+            //$ return servicePrincipal;
+            //$ }
+            //$ });
+
+            return null;
         }
     }
 }

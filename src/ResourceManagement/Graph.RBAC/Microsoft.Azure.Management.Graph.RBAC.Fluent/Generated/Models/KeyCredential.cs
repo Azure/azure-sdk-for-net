@@ -40,8 +40,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.Models
         /// 'Sign'.</param>
         /// <param name="type">Type. Acceptable values are 'AsymmetricX509Cert'
         /// and 'Symmetric'.</param>
-        public KeyCredential(System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string value = default(string), string keyId = default(string), string usage = default(string), string type = default(string))
+        public KeyCredential(string customKeyIdentifier = default(string), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string value = default(string), string keyId = default(string), string usage = default(string), string type = default(string))
         {
+            CustomKeyIdentifier = customKeyIdentifier;
             StartDate = startDate;
             EndDate = endDate;
             Value = value;
@@ -55,6 +56,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets custom key identifier.
+        /// </summary>
+        [JsonProperty(PropertyName = "customKeyIdentifier")]
+        public string CustomKeyIdentifier { get; set; }
 
         /// <summary>
         /// Gets or sets start date.

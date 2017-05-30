@@ -1,37 +1,153 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Rest.Azure;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Rest;
+    using System;
 
     /// <summary>
     /// The implementation of ServicePrincipals and its parent interfaces.
     /// </summary>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmdyYXBocmJhYy5pbXBsZW1lbnRhdGlvbi5TZXJ2aWNlUHJpbmNpcGFsc0ltcGw=
-    internal partial class ServicePrincipalsImpl  :
-        ReadableWrappers<IServicePrincipal, ServicePrincipalImpl, ServicePrincipalInner>,
-        IServicePrincipals
+    public partial class ServicePrincipalsImpl  :
+        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal,Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipalImpl,Models.ServicePrincipalInner>,
+        IServicePrincipals,
+        IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>,
+        IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipalsOperations>
     {
         private IServicePrincipalsOperations innerCollection;
-        private IGraphRbacManager manager;
-
-        public IGraphRbacManager Manager
+        private GraphRbacManager manager;
+                internal  ServicePrincipalsImpl(IServicePrincipalsOperations client, GraphRbacManager graphRbacManager)
         {
-            get
-            {
-                return manager;
-            }
+            //$ {
+            //$ this.innerCollection = client;
+            //$ this.manager = graphRbacManager;
+            //$ converter = new PagedListConverter<ServicePrincipalInner, ServicePrincipal>() {
+            //$ @Override
+            //$ public ServicePrincipal typeConvert(ServicePrincipalInner servicePrincipalInner) {
+            //$ ServicePrincipalImpl impl = wrapModel(servicePrincipalInner);
+            //$ return impl.RefreshCredentialsAsync().ToBlocking().Single();
+            //$ }
+            //$ };
+            //$ }
+
         }
 
-        public IServicePrincipalsOperations Inner
+                public GraphRbacManager Manager()
+        {
+            //$ return this.manager;
+
+            return null;
+        }
+
+                public ServicePrincipalImpl GetById(string id)
+        {
+            //$ return (ServicePrincipalImpl) getByIdAsync(id).ToBlocking().Single();
+
+            return null;
+        }
+
+                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            //$ return innerCollection.GetAsync(id)
+            //$ .Map(new Func1<ServicePrincipalInner, ServicePrincipalImpl>() {
+            //$ @Override
+            //$ public ServicePrincipalImpl call(ServicePrincipalInner servicePrincipalInner) {
+            //$ if (servicePrincipalInner == null) {
+            //$ return null;
+            //$ }
+            //$ return new ServicePrincipalImpl(servicePrincipalInner, manager());
+            //$ }
+            //$ }).FlatMap(new Func1<ServicePrincipalImpl, Observable<ServicePrincipal>>() {
+            //$ @Override
+            //$ public Observable<ServicePrincipal> call(ServicePrincipalImpl servicePrincipal) {
+            //$ if (servicePrincipal == null) {
+            //$ return null;
+            //$ }
+            //$ return servicePrincipal.RefreshCredentialsAsync();
+            //$ }
+            //$ });
+
+            return null;
+        }
+
+                public IServicePrincipal GetByName(string spn)
+        {
+            //$ return getByNameAsync(spn).ToBlocking().Single();
+
+            return null;
+        }
+
+                public ServicePrincipalImpl Define(string name)
+        {
+            //$ return new ServicePrincipalImpl(new ServicePrincipalInner().WithDisplayName(name), manager());
+
+            return null;
+        }
+
+                public async override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await manager.Inner.ServicePrincipals.DeleteAsync(id, cancellationToken);
+        }
+
+                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            //$ return innerCollection.ListWithServiceResponseAsync(String.Format("servicePrincipalNames/any(c:c eq '%s')", name))
+            //$ .FlatMap(new Func1<ServiceResponse<Page<ServicePrincipalInner>>, Observable<Page<ServicePrincipalInner>>>() {
+            //$ @Override
+            //$ public Observable<Page<ServicePrincipalInner>> call(ServiceResponse<Page<ServicePrincipalInner>> result) {
+            //$ if (result == null || result.Body().Items() == null || result.Body().Items().IsEmpty()) {
+            //$ return innerCollection.ListAsync(String.Format("displayName eq '%s'", name));
+            //$ }
+            //$ return Observable.Just(result.Body());
+            //$ }
+            //$ }).Map(new Func1<Page<ServicePrincipalInner>, ServicePrincipalImpl>() {
+            //$ @Override
+            //$ public ServicePrincipalImpl call(Page<ServicePrincipalInner> result) {
+            //$ if (result == null || result.Items() == null || result.Items().IsEmpty()) {
+            //$ return null;
+            //$ }
+            //$ return new ServicePrincipalImpl(result.Items().Get(0), manager());
+            //$ }
+            //$ }).FlatMap(new Func1<ServicePrincipalImpl, Observable<ServicePrincipal>>() {
+            //$ @Override
+            //$ public Observable<ServicePrincipal> call(ServicePrincipalImpl servicePrincipal) {
+            //$ if (servicePrincipal == null) {
+            //$ return null;
+            //$ }
+            //$ return servicePrincipal.RefreshCredentialsAsync();
+            //$ }
+            //$ });
+
+            return null;
+        }
+
+                public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> List()
+        {
+            //$ return wrapList(this.innerCollection.List());
+
+            return null;
+        }
+
+                public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IServicePrincipal>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            //$ return wrapPageAsync(this.Inner().ListAsync())
+            //$ .FlatMap(new Func1<ServicePrincipal, Observable<ServicePrincipal>>() {
+            //$ @Override
+            //$ public Observable<ServicePrincipal> call(ServicePrincipal servicePrincipal) {
+            //$ return ((ServicePrincipalImpl) servicePrincipal).RefreshCredentialsAsync();
+            //$ }
+            //$ });
+
+            return null;
+        }
+
+                public IServicePrincipalsOperations Inner
         {
             get
             {
@@ -39,73 +155,26 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-        ///GENMHASH:A268FD9043A10BBA863D754221CF201B:B5C5E95A3298DE50C35002A7B21387E7
-        internal ServicePrincipalsImpl (IServicePrincipalsOperations client, IGraphRbacManager graphRbacManager)
+                protected override IServicePrincipal WrapModel(ServicePrincipalInner servicePrincipalInner)
         {
-            this.innerCollection = client;
-            this.manager = graphRbacManager;
+            //$ if (servicePrincipalInner == null) {
+            //$ return null;
+            //$ }
+            //$ return new ServicePrincipalImpl(servicePrincipalInner, manager());
+
+            return null;
         }
 
-        ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:6FB4EA69673E1D8A74E1418EB52BB9FE
-        public IEnumerable<IServicePrincipal> List()
+                protected override ServicePrincipalImpl WrapModel(string name)
         {
-            return WrapList(this.innerCollection.List());
+            //$ return new ServicePrincipalImpl(new ServicePrincipalInner().WithDisplayName(name), manager());
+
+            return null;
         }
 
-        ///GENMHASH:B6D698CC3012EA097E8D0E54375F2F9C:DECE5DD844886B2B30C5F0DDB9EAB09E
-        protected override IServicePrincipal WrapModel (ServicePrincipalInner servicePrincipalInner)
+        public override void DeleteById(string id)
         {
-            return new ServicePrincipalImpl(servicePrincipalInner, this.innerCollection);
-        }
-
-        ///GENMHASH:0DE1C4F9167E6FED0CDC9D2B979CBBBF:858D059E37288A2B0A50BE70FD79972D
-        public ServicePrincipalImpl GetByObjectId (string objectId)
-        {
-            return new ServicePrincipalImpl(innerCollection.Get(objectId), innerCollection);
-        }
-
-        ///GENMHASH:512256D5280EFD9A3AA9FDCF9496C049:9790D012FA64E47343F12DB13F0AA212
-        public IServicePrincipal GetByAppId (string appId)
-        {
-            throw new NotImplementedException();
-        }
-
-        ///GENMHASH:BE4BCDD3BCE89FEFD9E95BD27432EDD1:427A94ECBA6D5EDB289FD55E027B6032
-        public IServicePrincipal GetByServicePrincipalName (string spn)
-        {
-            IPage<ServicePrincipalInner> spList = innerCollection.List(new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", spn)));
-            if (spList == null || spList.Count() == 0)
-            {
-                return null;
-            }
-            else
-            {
-                return new ServicePrincipalImpl(spList.FirstOrDefault(), innerCollection);
-            }
-        }
-
-        ///GENMHASH:D5CC1AE1ACFF2AFCB45457F1FE786CA6:27DDEDD37FD80C9C08415FDFC32A607C
-        public async Task<IServicePrincipal> GetByServicePrincipalNameAsync (string spn, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            IPage<ServicePrincipalInner> spList = await innerCollection.ListAsync(
-                new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", spn)), 
-                cancellationToken);
-            if (spList == null || spList.Count() == 0)
-            {
-                return null;
-            }
-            else
-            {
-                return new ServicePrincipalImpl(spList.FirstOrDefault(), innerCollection);
-            }
-        }
-
-        public async Task<IPagedCollection<IServicePrincipal>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await PagedCollection<IServicePrincipal, ServicePrincipalInner>.LoadPage(
-                async (cancellation) => await innerCollection.ListAsync(cancellationToken: cancellation),
-                innerCollection.ListNextAsync,
-                WrapModel, loadAllPages, cancellationToken);
+            Inner.Delete(id);
         }
     }
 }
