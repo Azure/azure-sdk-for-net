@@ -2,7 +2,7 @@
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.7,3.0.0)" />
-		<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
 	</ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">

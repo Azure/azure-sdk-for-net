@@ -34,7 +34,7 @@
 
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Net" />
@@ -49,7 +49,7 @@
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.1.0" />
-	<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />  
+	<PackageReference Include="Newtonsoft.Json" Version="10.0.2" />  
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />
 		<PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta1-build1309" />	
