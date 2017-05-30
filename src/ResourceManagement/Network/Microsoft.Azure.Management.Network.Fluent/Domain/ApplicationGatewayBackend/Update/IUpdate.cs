@@ -19,13 +19,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutFqdn(string fqdn);
 
         /// <summary>
-        /// Ensure the specified address is not associated with this backend.
-        /// </summary>
-        /// <param name="address">An existing address currently associated with the backend.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutAddress(ApplicationGatewayBackendAddress address);
-
-        /// <summary>
         /// Ensures the specified IP address is not associated with this backend.
         /// </summary>
         /// <param name="ipAddress">An IP address.</param>
@@ -33,11 +26,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutIPAddress(string ipAddress);
 
         /// <summary>
-        /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
+        /// Ensure the specified address is not associated with this backend.
         /// </summary>
-        /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
+        /// <param name="address">An existing address currently associated with the backend.</param>
         /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithFqdn(string fqdn);
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithoutAddress(ApplicationGatewayBackendAddress address);
 
         /// <summary>
         /// Adds the specified existing IP address to the backend.
@@ -45,6 +38,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Up
         /// <param name="ipAddress">An IP address.</param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithIPAddress(string ipAddress);
+
+        /// <summary>
+        /// Adds the specified existing fully qualified domain name (FQDN) to the backend.
+        /// </summary>
+        /// <param name="fqdn">A fully qualified domain name (FQDN).</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackend.Update.IUpdate WithFqdn(string fqdn);
     }
 
     /// <summary>

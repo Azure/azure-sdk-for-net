@@ -33,6 +33,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition
     public interface IWithRoute 
     {
         /// <summary>
+        /// Creates a route via a virtual appliance.
+        /// </summary>
+        /// <param name="destinationAddressPrefix">The destination address prefix, expressed in the CIDR notation, for the route to apply to.</param>
+        /// <param name="ipAddress">The IP address of the virtual appliance to route the traffic through.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IWithCreate WithRouteViaVirtualAppliance(string destinationAddressPrefix, string ipAddress);
+
+        /// <summary>
         /// Begins the definition of a new route to add to the route table.
         /// The definition must be completed with a call to  Route.DefinitionStages.WithAttach.attach().
         /// </summary>
@@ -48,14 +56,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition
         /// <param name="nextHop">The next hop type.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IWithCreate WithRoute(string destinationAddressPrefix, RouteNextHopType nextHop);
-
-        /// <summary>
-        /// Creates a route via a virtual appliance.
-        /// </summary>
-        /// <param name="destinationAddressPrefix">The destination address prefix, expressed in the CIDR notation, for the route to apply to.</param>
-        /// <param name="ipAddress">The IP address of the virtual appliance to route the traffic through.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.RouteTable.Definition.IWithCreate WithRouteViaVirtualAppliance(string destinationAddressPrefix, string ipAddress);
     }
 
     /// <summary>

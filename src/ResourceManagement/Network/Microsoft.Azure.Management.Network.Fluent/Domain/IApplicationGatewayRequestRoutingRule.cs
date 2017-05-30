@@ -7,10 +7,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Collections.Generic;
 
     /// <summary>
-    /// An immutable client-side representation of an application gateway request routing rule.
+    /// A client-side representation of an application gateway request routing rule.
     /// </summary>
     public interface IApplicationGatewayRequestRoutingRule  :
-        IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayRequestRoutingRuleInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         Microsoft.Azure.Management.Network.Fluent.IHasPublicIPAddress,
@@ -22,14 +21,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.Network.Fluent.IHasServerNameIndication
     {
         /// <summary>
+        /// Gets the associated backend HTTP settings configuration.
+        /// </summary>
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackendHttpConfiguration BackendHttpConfiguration { get; }
+
+        /// <summary>
         /// Gets rule type.
         /// </summary>
         Models.ApplicationGatewayRequestRoutingRuleType RuleType { get; }
-
-        /// <summary>
-        /// Gets the associated backend address pool.
-        /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend Backend { get; }
 
         /// <summary>
         /// Gets the associated frontend HTTP listener.
@@ -37,18 +36,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener Listener { get; }
 
         /// <summary>
-        /// Gets the addresses assigned to the associated backend.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewayBackendAddress> BackendAddresses { get; }
-
-        /// <summary>
         /// Gets the frontend protocol.
         /// </summary>
         Models.ApplicationGatewayProtocol FrontendProtocol { get; }
 
         /// <summary>
-        /// Gets the associated backend HTTP settings configuration.
+        /// Gets the associated backend address pool.
         /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackendHttpConfiguration BackendHttpConfiguration { get; }
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend Backend { get; }
+
+        /// <summary>
+        /// Gets the addresses assigned to the associated backend.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress> BackendAddresses { get; }
     }
 }

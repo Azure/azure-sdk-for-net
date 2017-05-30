@@ -17,14 +17,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<Network.Update.IUpdate>
     {
         /// <summary>
-        /// Gets list of DNS server IP addresses associated with this virtual network.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> DnsServerIPs { get; }
-
-        /// <summary>
         /// Gets list of address spaces associated with this virtual network, in the CIDR notation.
         /// </summary>
         System.Collections.Generic.IReadOnlyList<string> AddressSpaces { get; }
+
+        /// <summary>
+        /// Gets list of DNS server IP addresses associated with this virtual network.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<string> DnsServerIPs { get; }
 
         /// <summary>
         /// Gets subnets of this virtual network as a map indexed by subnet name

@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of an inbound NAT rule.
     /// </summary>
     public interface ILoadBalancerInboundNatPool  :
-        IBeta,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
         Microsoft.Azure.Management.Network.Fluent.IHasFrontend,
         Microsoft.Azure.Management.Network.Fluent.IHasBackendPort,
         Microsoft.Azure.Management.Network.Fluent.IHasProtocol<Models.TransportProtocol>,
@@ -17,13 +17,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>
     {
         /// <summary>
-        /// Gets the ending frontend port number.
-        /// </summary>
-        int FrontendPortRangeEnd { get; }
-
-        /// <summary>
         /// Gets the starting frontend port number.
         /// </summary>
         int FrontendPortRangeStart { get; }
+
+        /// <summary>
+        /// Gets the ending frontend port number.
+        /// </summary>
+        int FrontendPortRangeEnd { get; }
     }
 }

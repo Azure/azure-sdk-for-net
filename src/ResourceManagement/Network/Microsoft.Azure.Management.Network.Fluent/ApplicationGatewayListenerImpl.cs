@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         public IPublicIPAddress GetPublicIPAddress()
         {
             string pipId = PublicIPAddressId();
-            return (pipId != null) ? Parent.Manager.PublicIPAddresses.GetById(pipId) : null;
+            return (pipId != null) ? Parent.Manager().PublicIPAddresses.GetById(pipId) : null;
         }
 
         #endregion

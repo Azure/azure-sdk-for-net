@@ -87,13 +87,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDef
     public interface IWithNetwork<ParentT> 
     {
         /// <summary>
-        /// Associate an existing virtual network with the network interface IP configuration.
-        /// </summary>
-        /// <param name="network">An existing virtual network.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithSubnet<ParentT> WithExistingNetwork(INetwork network);
-
-        /// <summary>
         /// Create a new virtual network to associate with the  network interface IP configuration,
         /// based on the provided definition.
         /// </summary>
@@ -121,6 +114,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDef
         /// <param name="addressSpace">The address space for the virtual network.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithPrivateIP<ParentT> WithNewNetwork(string addressSpace);
+
+        /// <summary>
+        /// Associate an existing virtual network with the network interface IP configuration.
+        /// </summary>
+        /// <param name="network">An existing virtual network.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.UpdateDefinition.IWithSubnet<ParentT> WithExistingNetwork(INetwork network);
     }
 
     /// <summary>

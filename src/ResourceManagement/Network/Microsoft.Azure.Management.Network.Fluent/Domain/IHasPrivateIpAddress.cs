@@ -10,13 +10,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public interface IHasPrivateIPAddress 
     {
         /// <summary>
-        /// Gets the private IP address associated with this resource.
-        /// </summary>
-        string PrivateIPAddress { get; }
-
-        /// <summary>
         /// Gets the private IP address allocation method within the associated subnet.
         /// </summary>
         Models.IPAllocationMethod PrivateIPAllocationMethod { get; }
+
+        /// <summary>
+        /// Gets the private IP address associated with this resource.
+        /// </summary>
+        string PrivateIPAddress { get; }
     }
 }

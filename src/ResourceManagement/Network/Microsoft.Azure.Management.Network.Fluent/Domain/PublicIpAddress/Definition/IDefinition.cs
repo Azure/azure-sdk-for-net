@@ -53,18 +53,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition
     public interface IWithIPAddress 
     {
         /// <summary>
-        /// Enables dynamic IP address allocation.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithDynamicIP();
-
-        /// <summary>
         /// Enables static IP address allocation.
         /// Use  PublicIPAddress.ipAddress() after the public IP address is created to obtain the
         /// actual IP address allocated for this resource by Azure.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithStaticIP();
+
+        /// <summary>
+        /// Enables dynamic IP address allocation.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.PublicIPAddress.Definition.IWithCreate WithDynamicIP();
     }
 
     /// <summary>

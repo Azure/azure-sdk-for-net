@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of an HTTP load balancing rule.
     /// </summary>
     public interface ILoadBalancingRule  :
-        IBeta,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.LoadBalancingRuleInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         Microsoft.Azure.Management.Network.Fluent.IHasBackendPort,
@@ -19,11 +19,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.Network.Fluent.IHasFrontendPort
     {
         /// <summary>
-        /// Gets the backend associated with the load balancing rule.
-        /// </summary>
-        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend Backend { get; }
-
-        /// <summary>
         /// Gets the method of load distribution.
         /// </summary>
         Models.LoadDistribution LoadDistribution { get; }
@@ -32,6 +27,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the number of minutes before an inactive connection is closed.
         /// </summary>
         int IdleTimeoutInMinutes { get; }
+
+        /// <summary>
+        /// Gets the backend associated with the load balancing rule.
+        /// </summary>
+        Microsoft.Azure.Management.Network.Fluent.ILoadBalancerBackend Backend { get; }
 
         /// <summary>
         /// Gets the probe associated with the load balancing rule.

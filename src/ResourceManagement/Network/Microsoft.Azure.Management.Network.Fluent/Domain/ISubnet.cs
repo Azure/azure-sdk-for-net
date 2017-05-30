@@ -13,6 +13,16 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.SubnetInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.INetwork>
     {
+        /// <summary>
+        /// Gets the address space prefix, in CIDR notation, assigned to this subnet.
+        /// </summary>
+        string AddressPrefix { get; }
+
+        /// <summary>
+        /// Gets the resource ID of the route table associated with this subnet, if any.
+        /// </summary>
+        string RouteTableId { get; }
+
         /// <return>
         /// The network security group associated with this subnet, if any
         /// Note that this method will result in a call to Azure each time it is invoked.
@@ -26,29 +36,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.ISet<Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration> GetNetworkInterfaceIPConfigurations();
 
         /// <summary>
+        /// Gets the resource ID of the network security group associated with this subnet, if any.
+        /// </summary>
+        string NetworkSecurityGroupId { get; }
+
+        /// <summary>
         /// Gets number of network interface IP configurations associated with this subnet.
         /// </summary>
         int NetworkInterfaceIPConfigurationCount { get; }
-
-        /// <summary>
-        /// Gets the address space prefix, in CIDR notation, assigned to this subnet.
-        /// </summary>
-        string AddressPrefix { get; }
-
-        /// <summary>
-        /// Gets the resource ID of the route table associated with this subnet, if any.
-        /// </summary>
-        string RouteTableId { get; }
 
         /// <return>
         /// The route table associated with this subnet, if any
         /// Note that this method will result in a call to Azure each time it is invoked.
         /// </return>
         Microsoft.Azure.Management.Network.Fluent.IRouteTable GetRouteTable();
-
-        /// <summary>
-        /// Gets the resource ID of the network security group associated with this subnet, if any.
-        /// </summary>
-        string NetworkSecurityGroupId { get; }
     }
 }

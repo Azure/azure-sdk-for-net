@@ -13,7 +13,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// Entry point to application gateway management API in Azure.
     /// </summary>
     public interface IApplicationGateways  :
-        IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<ApplicationGateway.Definition.IBlank>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
@@ -26,20 +25,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Network.Fluent.INetworkManager>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaysOperations>
     {
-        /// <summary>
-        /// Stops the specified application gateways in parallel asynchronously.
-        /// </summary>
-        /// <param name="ids">Application gateway resource ids.</param>
-        /// <return>An Observable emitting the resource ID for each successfully stopped application gateway.</return>
-        Task<System.Collections.Generic.IEnumerable<string>> StopAsync(string[] ids, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Stops the specified application gateways in parallel asynchronously.
-        /// </summary>
-        /// <param name="ids">Application gateway resource id.</param>
-        /// <return>An Observable emitting the resource ID for each successfully stopped application gateway.</return>
-        Task<System.Collections.Generic.IEnumerable<string>> StopAsync(IList<string> ids, CancellationToken cancellationToken = default(CancellationToken));
-
         /// <summary>
         /// Stops the specified application gateways.
         /// </summary>
@@ -65,17 +50,31 @@ namespace Microsoft.Azure.Management.Network.Fluent
         void Start(IList<string> ids);
 
         /// <summary>
+        /// Stops the specified application gateways in parallel asynchronously.
+        /// </summary>
+        /// <param name="ids">Application gateway resource ids.</param>
+        /// <return>An emitter of the resource ID for each successfully stopped application gateway.</return>
+        Task<System.Collections.Generic.IEnumerable<string>> StopAsync(string[] ids, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Stops the specified application gateways in parallel asynchronously.
+        /// </summary>
+        /// <param name="ids">Application gateway resource id.</param>
+        /// <return>An emitter of the resource ID for each successfully stopped application gateway.</return>
+        Task<System.Collections.Generic.IEnumerable<string>> StopAsync(IList<string> ids, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Starts the specified application gateways in parallel asynchronously.
         /// </summary>
         /// <param name="ids">Application gateway resource id.</param>
-        /// <return>An Observable emitting the resource ID for each successfully started application gateway.</return>
+        /// <return>An emitter of the resource ID for each successfully started application gateway.</return>
         Task<System.Collections.Generic.IEnumerable<string>> StartAsync(string[] ids, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Starts the specified application gateways in parallel asynchronously.
         /// </summary>
         /// <param name="ids">Application gateway resource id.</param>
-        /// <return>An Observable emitting the resource ID for each successfully started application gateway.</return>
+        /// <return>An emitter of the resource ID for each successfully started application gateway.</return>
         Task<System.Collections.Generic.IEnumerable<string>> StartAsync(IList<string> ids, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

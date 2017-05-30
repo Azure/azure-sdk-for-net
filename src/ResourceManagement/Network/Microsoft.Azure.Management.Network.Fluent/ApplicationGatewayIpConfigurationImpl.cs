@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:777AE9B7CB4EA1B471FA1957A07DF81F:447635D831A0A80A464ADA6413BED58F
         public ISubnet GetSubnet()
         {
-            return Parent.Manager.GetAssociatedSubnet(Inner.Subnet);
+            return Parent.Manager().GetAssociatedSubnet(Inner.Subnet);
         }
 
         ///GENMHASH:077EB7776EFFBFAA141C1696E75EF7B3:4174C1298FBF6ABE50F5AB6DA4F03B10

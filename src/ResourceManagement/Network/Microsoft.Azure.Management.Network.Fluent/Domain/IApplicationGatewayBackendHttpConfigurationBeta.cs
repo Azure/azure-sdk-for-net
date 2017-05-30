@@ -2,16 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
-    /// Members of applucation gateway backend HTTP configuration that are in beta.
+    /// A client-side representation of an application gateway's backend HTTP configuration.
     /// </summary>
-    public interface IApplicationGatewayBackendHttpConfigurationBeta : IBeta
+    public interface IApplicationGatewayBackendHttpConfigurationBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
     {
         /// <summary>
-        /// Gets the probe associated with this backend  
+        /// Gets the probe associated with this backend.
         /// </summary>
-        IApplicationGatewayProbe Probe { get; }
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayProbe Probe { get; }
     }
 }
