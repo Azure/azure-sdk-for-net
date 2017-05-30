@@ -63,6 +63,28 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update
         Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IWithRedisConfiguration
     {
         /// <summary>
+        /// Assigns the specified subnet to this instance of Redis Cache.
+        /// </summary>
+        /// <param name="networkResource">Instance of Network object.</param>
+        /// <param name="subnetName">The name of the subnet.</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithSubnet(IHasId networkResource, string subnetName);
+
+        /// <summary>
+        /// Sets Redis Cache static IP. Required when deploying a Redis Cache inside an existing Azure Virtual Network.
+        /// </summary>
+        /// <param name="staticIP">The staticIP value to set.</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithStaticIP(string staticIP);
+
+        /// <summary>
+        /// The number of shards to be created on a Premium Cluster Cache.
+        /// </summary>
+        /// <param name="shardCount">The shard count value to set.</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithShardCount(int shardCount);
+
+        /// <summary>
         /// Patch schedule on a Premium Cluster Cache.
         /// </summary>
         /// <param name="dayOfWeek">Day of week when cache can be patched.</param>
@@ -92,28 +114,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update
         /// <param name="scheduleEntry">List of patch schedule entries for Premium Redis Cache.</param>
         /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
         Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithPatchSchedule(IList<Microsoft.Azure.Management.Redis.Fluent.Models.ScheduleEntry> scheduleEntry);
-
-        /// <summary>
-        /// The number of shards to be created on a Premium Cluster Cache.
-        /// </summary>
-        /// <param name="shardCount">The shard count value to set.</param>
-        /// <return>The next stage of Redis Cache update.</return>
-        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithShardCount(int shardCount);
-
-        /// <summary>
-        /// Sets Redis Cache static IP. Required when deploying a Redis Cache inside an existing Azure Virtual Network.
-        /// </summary>
-        /// <param name="staticIP">The staticIP value to set.</param>
-        /// <return>The next stage of Redis Cache update.</return>
-        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithStaticIP(string staticIP);
-
-        /// <summary>
-        /// Assigns the specified subnet to this instance of Redis Cache.
-        /// </summary>
-        /// <param name="networkResource">Instance of Network object.</param>
-        /// <param name="subnetName">The name of the subnet.</param>
-        /// <return>The next stage of Redis Cache update.</return>
-        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithSubnet(IHasId networkResource, string subnetName);
     }
 
     /// <summary>
@@ -153,6 +153,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update
         Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithPremiumSku(int capacity);
 
         /// <summary>
+        /// Updates Redis Cache to Basic sku with new capacity.
+        /// </summary>
+        /// <param name="capacity">Specifies what size of Redis Cache to update to for Basic sku with C family (0, 1, 2, 3, 4, 5, 6).</param>
+        /// <return>The next stage of Redis Cache update.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithBasicSku(int capacity);
+
+        /// <summary>
         /// Updates Redis Cache to Standard sku.
         /// </summary>
         /// <return>The next stage of Redis Cache update.</return>
@@ -164,12 +171,5 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update
         /// <param name="capacity">Specifies what size of Redis Cache to update to for Standard sku with C family (0, 1, 2, 3, 4, 5, 6).</param>
         /// <return>The next stage of Redis Cache update.</return>
         Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithStandardSku(int capacity);
-
-        /// <summary>
-        /// Updates Redis Cache to Basic sku with new capacity.
-        /// </summary>
-        /// <param name="capacity">Specifies what size of Redis Cache to update to for Basic sku with C family (0, 1, 2, 3, 4, 5, 6).</param>
-        /// <return>The next stage of Redis Cache update.</return>
-        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Update.IUpdate WithBasicSku(int capacity);
     }
 }

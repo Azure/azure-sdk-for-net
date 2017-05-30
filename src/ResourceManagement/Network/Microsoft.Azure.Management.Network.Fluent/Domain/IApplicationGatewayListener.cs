@@ -6,10 +6,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
-    /// An immutable client-side representation of an application gateway's HTTP listener.
+    /// A client-side representation of an application gateway's HTTP listener.
     /// </summary>
     public interface IApplicationGatewayListener  :
-        IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayHttpListenerInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>,
         Microsoft.Azure.Management.Network.Fluent.IHasSslCertificate<Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate>,
@@ -20,6 +19,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasSubnet
     {
         /// <summary>
+        /// Gets the number of the frontend port the listener is listening on.
+        /// </summary>
+        int FrontendPortNumber { get; }
+
+        /// <summary>
         /// Gets the frontend IP configuration this listener is associated with.
         /// </summary>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend Frontend { get; }
@@ -28,10 +32,5 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the name of the frontend port the listener is listening on.
         /// </summary>
         string FrontendPortName { get; }
-
-        /// <summary>
-        /// Gets the number of the frontend port the listener is listening on.
-        /// </summary>
-        int FrontendPortNumber { get; }
     }
 }

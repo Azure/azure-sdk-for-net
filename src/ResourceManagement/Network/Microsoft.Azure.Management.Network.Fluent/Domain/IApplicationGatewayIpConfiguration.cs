@@ -6,10 +6,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
-    /// An immutable client-side representation of an application gateway IP configuration.
+    /// A client-side representation of an application gateway IP configuration.
     /// </summary>
     public interface IApplicationGatewayIPConfiguration  :
-        IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationGatewayIPConfigurationInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.IApplicationGateway>
     {

@@ -79,6 +79,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName);
 
         /// <summary>
+        /// Associates the network interface's primary IP configuration with an inbound NAT rule of an existing load balancer.
+        /// </summary>
+        /// <param name="loadBalancer">An existing load balancer.</param>
+        /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
+
+        /// <summary>
         /// Removes all the existing associations with any load balancer inbound NAT rules.
         /// </summary>
         /// <return>The next stage of the update.</return>
@@ -89,14 +97,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         /// </summary>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutLoadBalancerBackends();
-
-        /// <summary>
-        /// Associates the network interface's primary IP configuration with an inbound NAT rule of an existing load balancer.
-        /// </summary>
-        /// <param name="loadBalancer">An existing load balancer.</param>
-        /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
     }
 
     /// <summary>
@@ -155,6 +155,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
     public interface IWithPrimaryPublicIPAddress 
     {
         /// <summary>
+        /// Associates an existing public IP address with the network interface's primary IP configuration.
+        /// if there is an existing public IP association then that will be removed in favour of this.
+        /// </summary>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
+        /// <return>The next stage of the network interface update.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress);
+
+        /// <summary>
         /// Create a new public IP address to associate the network interface's primary IP configuration,
         /// based on the provided definition.
         /// if there is public IP associated with the primary IP configuration then that will be removed in
@@ -184,14 +192,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithNewPrimaryPublicIPAddress(string leafDnsLabel);
 
         /// <summary>
-        /// Associates an existing public IP address with the network interface's primary IP configuration.
-        /// if there is an existing public IP association then that will be removed in favour of this.
-        /// </summary>
-        /// <param name="publicIPAddress">An existing public IP address.</param>
-        /// <return>The next stage of the network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress);
-
-        /// <summary>
         /// Specifies that remove any public IP associated with the network interface's primary IP configuration.
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
@@ -210,18 +210,18 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutNetworkSecurityGroup();
 
         /// <summary>
-        /// Associates an existing network security group with the network interface.
-        /// </summary>
-        /// <param name="networkSecurityGroup">An existing network security group.</param>
-        /// <return>The next stage of the network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithExistingNetworkSecurityGroup(INetworkSecurityGroup networkSecurityGroup);
-
-        /// <summary>
         /// Create a new network security group to associate with network interface, based on the provided definition.
         /// </summary>
         /// <param name="creatable">A creatable definition for a new network security group.</param>
         /// <return>The next stage of the network interface update.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithNewNetworkSecurityGroup(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup> creatable);
+
+        /// <summary>
+        /// Associates an existing network security group with the network interface.
+        /// </summary>
+        /// <param name="networkSecurityGroup">An existing network security group.</param>
+        /// <return>The next stage of the network interface update.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithExistingNetworkSecurityGroup(INetworkSecurityGroup networkSecurityGroup);
     }
 
     /// <summary>
@@ -230,15 +230,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update
     public interface IWithIPForwarding 
     {
         /// <summary>
-        /// Disable IP forwarding in the network interface.
-        /// </summary>
-        /// <return>The next stage of the network interface update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutIPForwarding();
-
-        /// <summary>
         /// Enable IP forwarding in the network interface.
         /// </summary>
         /// <return>The next stage of the network interface update.</return>
         Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithIPForwarding();
+
+        /// <summary>
+        /// Disable IP forwarding in the network interface.
+        /// </summary>
+        /// <return>The next stage of the network interface update.</return>
+        Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate WithoutIPForwarding();
     }
 }

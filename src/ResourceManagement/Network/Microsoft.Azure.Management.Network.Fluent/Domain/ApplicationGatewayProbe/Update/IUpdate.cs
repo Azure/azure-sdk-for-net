@@ -28,16 +28,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Upda
         Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IUpdate,Microsoft.Azure.Management.Network.Fluent.Models.ApplicationGatewayProtocol>
     {
         /// <summary>
-        /// Specifies HTTPS as the probe protocol.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IUpdate WithHttps();
-
-        /// <summary>
         /// Specifies HTTP as the probe protocol.
         /// </summary>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IUpdate WithHttp();
+
+        /// <summary>
+        /// Specifies HTTPS as the probe protocol.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Update.IUpdate WithHttps();
     }
 
     /// <summary>

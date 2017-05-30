@@ -29,14 +29,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Update
         Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate> DefineSubnet(string name);
 
         /// <summary>
-        /// Explicitly defines all the subnets in the virtual network based on the provided map.
-        /// This replaces any previously existing subnets.
-        /// </summary>
-        /// <param name="nameCidrPairs">A  Map of CIDR addresses for the subnets, indexed by the name of each subnet to be added.</param>
-        /// <return>The next stage of the virtual network update.</return>
-        Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate WithSubnets(IDictionary<string,string> nameCidrPairs);
-
-        /// <summary>
         /// Explicitly adds a subnet to the virtual network.
         /// Note this method's effect is additive, i.e. each time it is used, a new subnet is added to the network.
         /// </summary>
@@ -51,6 +43,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Update
         /// <param name="name">The name of an existing subnet.</param>
         /// <return>The first stage of the subnet update description.</return>
         Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate UpdateSubnet(string name);
+
+        /// <summary>
+        /// Explicitly defines all the subnets in the virtual network based on the provided map.
+        /// This replaces any previously existing subnets.
+        /// </summary>
+        /// <param name="nameCidrPairs">A  Map of CIDR addresses for the subnets, indexed by the name of each subnet to be added.</param>
+        /// <return>The next stage of the virtual network update.</return>
+        Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate WithSubnets(IDictionary<string,string> nameCidrPairs);
     }
 
     /// <summary>

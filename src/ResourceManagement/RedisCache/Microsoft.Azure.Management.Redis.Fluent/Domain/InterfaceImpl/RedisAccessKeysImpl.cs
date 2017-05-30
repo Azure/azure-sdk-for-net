@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         {
             get
             {
-                return this.SecondaryKey;
+                return this.SecondaryKey();
             }
         }
 
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         {
             get
             {
-                return this.PrimaryKey;
+                return this.PrimaryKey();
             }
         }
     }

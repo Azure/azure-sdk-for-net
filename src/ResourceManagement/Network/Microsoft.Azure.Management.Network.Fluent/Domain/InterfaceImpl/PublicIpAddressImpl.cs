@@ -83,12 +83,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
         }
 
-        /// <return>The network interface IP configuration that this public IP address is assigned to.</return>
-        Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.GetAssignedNetworkInterfaceIPConfiguration()
-        {
-            return this.GetAssignedNetworkInterfaceIPConfiguration() as Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration;
-        }
-
         /// <summary>
         /// Gets the idle connection timeout setting (in minutes).
         /// </summary>
@@ -98,6 +92,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 return this.IdleTimeoutInMinutes();
             }
+        }
+
+        /// <return>The network interface IP configuration that this public IP address is assigned to.</return>
+        Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress.GetAssignedNetworkInterfaceIPConfiguration()
+        {
+            return this.GetAssignedNetworkInterfaceIPConfiguration() as Microsoft.Azure.Management.Network.Fluent.INicIPConfiguration;
         }
 
         /// <summary>
