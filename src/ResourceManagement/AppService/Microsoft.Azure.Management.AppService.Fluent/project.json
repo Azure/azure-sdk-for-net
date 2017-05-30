@@ -34,12 +34,6 @@
         "debugType": "portable"
       },
       "dependencies": {
-      },
-      "frameworkAssemblies": {
-        "System": "",
-        "System.Xml.XDocument": "",
-        "System.Xml.Linq": "",
-        "mscorlib": ""
       }
     },
     "netstandard1.3": {
