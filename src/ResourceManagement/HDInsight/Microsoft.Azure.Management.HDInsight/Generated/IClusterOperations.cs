@@ -112,6 +112,45 @@ namespace Microsoft.Azure.Management.HDInsight
         Task<HDInsightOperationResponse> BeginDeletingAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Begins disabling Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        Task<HDInsightOperationResponse> BeginDisableMonitoringAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Begins executing enabling Operations Management Suite on the
+        /// HDInsight cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='clusterMonitoringParameters'>
+        /// The Operations Management Suite workspace parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        Task<HDInsightOperationResponse> BeginEnableMonitoringAsync(string resourceGroupName, string clusterName, ClusterMonitoringRequest clusterMonitoringParameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Begins executing script actions on the specified HDInsight cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -250,6 +289,45 @@ namespace Microsoft.Azure.Management.HDInsight
         Task<AzureOperationResponse> DeletePersistedScriptAsync(string resourceGroupName, string clusterName, string scriptName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Executes enabling Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        Task<OperationResource> DisableMonitoringAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Executes enabling Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='clusterMonitoringParameters'>
+        /// The Operations Management Suite workspace parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        Task<OperationResource> EnableMonitoringAsync(string resourceGroupName, string clusterName, ClusterMonitoringRequest clusterMonitoringParameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Executes script actions on the specified HDInsight cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -364,6 +442,24 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The azure async operation response.
         /// </returns>
         Task<OperationResource> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get the status of Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Describes the Operations Management Suite workspace parameters
+        /// </returns>
+        Task<ClusterMonitoringResponse> GetMonitoringStatusAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Gets the script execution detail for the given script execution id.

@@ -239,6 +239,108 @@ namespace Microsoft.Azure.Management.HDInsight
         }
         
         /// <summary>
+        /// Begins disabling Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        public static HDInsightOperationResponse BeginDisableMonitoring(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).BeginDisableMonitoringAsync(resourceGroupName, clusterName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begins disabling Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        public static Task<HDInsightOperationResponse> BeginDisableMonitoringAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        {
+            return operations.BeginDisableMonitoringAsync(resourceGroupName, clusterName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Begins executing enabling Operations Management Suite on the
+        /// HDInsight cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='clusterMonitoringParameters'>
+        /// Required. The Operations Management Suite workspace parameters.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        public static HDInsightOperationResponse BeginEnableMonitoring(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterMonitoringRequest clusterMonitoringParameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).BeginEnableMonitoringAsync(resourceGroupName, clusterName, clusterMonitoringParameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Begins executing enabling Operations Management Suite on the
+        /// HDInsight cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='clusterMonitoringParameters'>
+        /// Required. The Operations Management Suite workspace parameters.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        public static Task<HDInsightOperationResponse> BeginEnableMonitoringAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterMonitoringRequest clusterMonitoringParameters)
+        {
+            return operations.BeginEnableMonitoringAsync(resourceGroupName, clusterName, clusterMonitoringParameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Begins executing script actions on the specified HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
@@ -599,6 +701,108 @@ namespace Microsoft.Azure.Management.HDInsight
         }
         
         /// <summary>
+        /// Executes enabling Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        public static OperationResource DisableMonitoring(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).DisableMonitoringAsync(resourceGroupName, clusterName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Executes enabling Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        public static Task<OperationResource> DisableMonitoringAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        {
+            return operations.DisableMonitoringAsync(resourceGroupName, clusterName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Executes enabling Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='clusterMonitoringParameters'>
+        /// Required. The Operations Management Suite workspace parameters.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        public static OperationResource EnableMonitoring(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterMonitoringRequest clusterMonitoringParameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).EnableMonitoringAsync(resourceGroupName, clusterName, clusterMonitoringParameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Executes enabling Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='clusterMonitoringParameters'>
+        /// Required. The Operations Management Suite workspace parameters.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        public static Task<OperationResource> EnableMonitoringAsync(this IClusterOperations operations, string resourceGroupName, string clusterName, ClusterMonitoringRequest clusterMonitoringParameters)
+        {
+            return operations.EnableMonitoringAsync(resourceGroupName, clusterName, clusterMonitoringParameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Executes script actions on the specified HDInsight cluster.
         /// </summary>
         /// <param name='operations'>
@@ -912,6 +1116,54 @@ namespace Microsoft.Azure.Management.HDInsight
         public static Task<OperationResource> GetDeleteStatusAsync(this IClusterOperations operations, string operationStatusLink)
         {
             return operations.GetDeleteStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get the status of Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// Describes the Operations Management Suite workspace parameters
+        /// </returns>
+        public static ClusterMonitoringResponse GetMonitoringStatus(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IClusterOperations)s).GetMonitoringStatusAsync(resourceGroupName, clusterName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get the status of Operations Management Suite on the HDInsight
+        /// cluster.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <returns>
+        /// Describes the Operations Management Suite workspace parameters
+        /// </returns>
+        public static Task<ClusterMonitoringResponse> GetMonitoringStatusAsync(this IClusterOperations operations, string resourceGroupName, string clusterName)
+        {
+            return operations.GetMonitoringStatusAsync(resourceGroupName, clusterName, CancellationToken.None);
         }
         
         /// <summary>
