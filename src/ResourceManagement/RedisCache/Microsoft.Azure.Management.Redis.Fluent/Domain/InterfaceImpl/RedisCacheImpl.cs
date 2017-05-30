@@ -201,6 +201,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this.WithShardCount(shardCount) as RedisCache.Definition.IWithPremiumSkuCreate;
         }
 
+        /// <return>A Redis Cache's access keys. This operation requires write permission to the Cache resource.</return>
+        Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.GetKeys()
+        {
+            return this.GetKeys() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
+        }
+
         /// <summary>
         /// Gets the hostName value.
         /// </summary>
@@ -230,7 +236,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <return>The generated access keys for this Redis Cache.</return>
         Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.RegenerateKey(RedisKeyType keyType)
         {
-            return this.RegenerateKeyAsync(keyType).GetAwaiter().GetResult() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
+            return this.RegenerateKey(keyType) as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
         }
 
         /// <summary>
@@ -280,9 +286,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <summary>
         /// Gets a Redis Cache's access keys. This operation requires write permission to the Cache resource.
         /// </summary>
-        Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.GetKeys()
+        Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.Keys
         {
-            return this.GetKeysAsync().GetAwaiter().GetResult() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
+            get
+            {
+                return this.Keys() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
+            }
         }
 
         /// <summary>
@@ -324,7 +333,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// <return>The access keys for this Redis Cache.</return>
         Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys Microsoft.Azure.Management.Redis.Fluent.IRedisCache.RefreshKeys()
         {
-            return this.RefreshKeysAsync().GetAwaiter().GetResult() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
+            return this.RefreshKeys() as Microsoft.Azure.Management.Redis.Fluent.IRedisAccessKeys;
         }
 
         /// <summary>
@@ -557,7 +566,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ExportData(string containerSASUrl, string prefix)
         {
  
-            this.ExportDataAsync(containerSASUrl, prefix).GetAwaiter().GetResult();
+            this.ExportData(containerSASUrl, prefix);
         }
 
         /// <summary>
@@ -569,7 +578,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ExportData(string containerSASUrl, string prefix, string fileFormat)
         {
  
-            this.ExportDataAsync(containerSASUrl, prefix, fileFormat).GetAwaiter().GetResult();
+            this.ExportData(containerSASUrl, prefix, fileFormat);
         }
 
         /// <summary>
@@ -579,7 +588,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ImportData(IList<string> files)
         {
  
-            this.ImportDataAsync(files).GetAwaiter().GetResult();
+            this.ImportData(files);
         }
 
         /// <summary>
@@ -590,7 +599,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ImportData(IList<string> files, string fileFormat)
         {
  
-            this.ImportDataAsync(files, fileFormat).GetAwaiter().GetResult();
+            this.ImportData(files, fileFormat);
         }
 
         /// <summary>
@@ -621,7 +630,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ForceReboot(string rebootType)
         {
  
-            this.ForceRebootAsync(rebootType).GetAwaiter().GetResult();
+            this.ForceReboot(rebootType);
         }
 
         /// <summary>
@@ -635,7 +644,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         void Microsoft.Azure.Management.Redis.Fluent.IRedisCachePremium.ForceReboot(string rebootType, int shardId)
         {
  
-            this.ForceRebootAsync(rebootType, shardId).GetAwaiter().GetResult();
+            this.ForceReboot(rebootType, shardId);
         }
     }
 }

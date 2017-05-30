@@ -14,12 +14,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         private RedisAccessKeysInner inner;
 
         ///GENMHASH:052932D87146B729CFA163215691D8ED:B906418BFAF9A0252DDBFB702ABE2774
-        public string SecondaryKey
+        internal string SecondaryKey()
         {
-            get
-            {
-                return this.inner.SecondaryKey;
-            }
+            return inner.SecondaryKey;
         }
 
         /// <summary>
@@ -33,12 +30,9 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         }
 
         ///GENMHASH:0B1F8FBCA0C4DFB5EA228CACB374C6C2:EF4A3D6252BFD28784D9F9BED7CEA1C0
-        public string PrimaryKey
+        internal string PrimaryKey()
         {
-            get
-            {
-                return this.inner.PrimaryKey;
-            }
+            return inner.PrimaryKey;
         }
     }
 }
