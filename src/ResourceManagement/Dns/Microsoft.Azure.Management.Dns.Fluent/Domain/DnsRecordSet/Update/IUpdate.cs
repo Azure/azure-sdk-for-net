@@ -39,11 +39,26 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     public interface IWithSoaRecordAttributes 
     {
         /// <summary>
+        /// Specifies time in seconds that a secondary name server should wait before trying to contact the
+        /// the primary name server for a zone file update.
+        /// </summary>
+        /// <param name="refreshTimeInSeconds">The refresh time in seconds.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithRefreshTimeInSeconds(long refreshTimeInSeconds);
+
+        /// <summary>
         /// Specifies the email server associated with the SOA record.
         /// </summary>
         /// <param name="emailServerHostName">The email server.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithEmailServer(string emailServerHostName);
+
+        /// <summary>
+        /// Specifies the serial number for the zone file.
+        /// </summary>
+        /// <param name="serialNumber">The serial number.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithSerialNumber(long serialNumber);
 
         /// <summary>
         /// Specifies the time in seconds that a secondary name server will treat its cached zone file as valid
@@ -54,11 +69,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithExpireTimeInSeconds(long expireTimeInSeconds);
 
         /// <summary>
-        /// Specifies the serial number for the zone file.
+        /// Specifies the time in seconds that a secondary name server should wait before trying to contact
+        /// the primary name server again after a failed attempt to check for a zone file update.
         /// </summary>
-        /// <param name="serialNumber">The serial number.</param>
+        /// <param name="refreshTimeInSeconds">The retry time in seconds.</param>
         /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithSerialNumber(long serialNumber);
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithRetryTimeInSeconds(long refreshTimeInSeconds);
 
         /// <summary>
         /// Specifies the time in seconds that any name server or resolver should cache a negative response.
@@ -66,22 +82,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
         /// <param name="negativeCachingTimeToLive">The TTL for cached negative response.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithNegativeResponseCachingTimeToLiveInSeconds(long negativeCachingTimeToLive);
-
-        /// <summary>
-        /// Specifies time in seconds that a secondary name server should wait before trying to contact the
-        /// the primary name server for a zone file update.
-        /// </summary>
-        /// <param name="refreshTimeInSeconds">The refresh time in seconds.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithRefreshTimeInSeconds(long refreshTimeInSeconds);
-
-        /// <summary>
-        /// Specifies the time in seconds that a secondary name server should wait before trying to contact
-        /// the primary name server again after a failed attempt to check for a zone file update.
-        /// </summary>
-        /// <param name="refreshTimeInSeconds">The retry time in seconds.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord WithRetryTimeInSeconds(long refreshTimeInSeconds);
     }
 
     /// <summary>
@@ -89,16 +89,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     /// </summary>
     public interface IWithSrvRecordEntry 
     {
-        /// <summary>
-        /// Specifies a service record for a service.
-        /// </summary>
-        /// <param name="target">The canonical name of the target host running the service.</param>
-        /// <param name="port">The port on which the service is bounded.</param>
-        /// <param name="priority">The priority of the target host, lower the value higher the priority.</param>
-        /// <param name="weight">The relative weight (preference) of the records with the same priority, higher the value more the preference.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet WithRecord(string target, int port, int priority, int weight);
-
         /// <summary>
         /// Removes a service record for a service.
         /// </summary>
@@ -108,6 +98,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
         /// <param name="weight">The relative weight (preference) of the records.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet WithoutRecord(string target, int port, int priority, int weight);
+
+        /// <summary>
+        /// Specifies a service record for a service.
+        /// </summary>
+        /// <param name="target">The canonical name of the target host running the service.</param>
+        /// <param name="port">The port on which the service is bounded.</param>
+        /// <param name="priority">The priority of the target host, lower the value higher the priority.</param>
+        /// <param name="weight">The relative weight (preference) of the records with the same priority, higher the value more the preference.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateSrvRecordSet.IUpdateSrvRecordSet WithRecord(string target, int port, int priority, int weight);
     }
 
     /// <summary>
@@ -168,18 +168,18 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update
     public interface IWithPtrRecordTargetDomainName 
     {
         /// <summary>
-        /// Removes the CName record with the provided canonical name from this record set.
-        /// </summary>
-        /// <param name="targetDomainName">The target domain name.</param>
-        /// <return>The next stage of the record set update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet WithoutTargetDomainName(string targetDomainName);
-
-        /// <summary>
         /// Creates a CName record with the provided canonical name in this record set.
         /// </summary>
         /// <param name="targetDomainName">The target domain name.</param>
         /// <return>The next stage of the record set update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet WithTargetDomainName(string targetDomainName);
+
+        /// <summary>
+        /// Removes the CName record with the provided canonical name from this record set.
+        /// </summary>
+        /// <param name="targetDomainName">The target domain name.</param>
+        /// <return>The next stage of the record set update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet WithoutTargetDomainName(string targetDomainName);
     }
 
     /// <summary>

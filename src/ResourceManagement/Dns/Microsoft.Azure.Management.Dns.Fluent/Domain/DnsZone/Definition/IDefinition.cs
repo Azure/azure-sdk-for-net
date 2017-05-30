@@ -42,6 +42,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
     public interface IWithRecordSet 
     {
         /// <summary>
+        /// Specifies definition of a PTR record set.
+        /// </summary>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <return>The stage representing configuration for the PTR record set.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IPtrRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefinePtrRecordSet(string name);
+
+        /// <summary>
         /// Specifies definition of a SRV record set.
         /// </summary>
         /// <param name="name">The name of the SRV record set.</param>
@@ -63,18 +70,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.INSRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineNSRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of an A record set.
-        /// </summary>
-        /// <param name="name">Name of the A record set.</param>
-        /// <return>The stage representing configuration for the A record set.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IARecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineARecordSet(string name);
-
-        /// <summary>
         /// Specifies definition of a TXT record set.
         /// </summary>
         /// <param name="name">The name of the TXT record set.</param>
         /// <return>The stage representing configuration for the TXT record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.ITxtRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineTxtRecordSet(string name);
+
+        /// <summary>
+        /// Specifies definition of a CNAME record set.
+        /// </summary>
+        /// <param name="name">Name of the CNAME record set.</param>
+        /// <param name="alias">The CNAME record alias.</param>
+        /// <return>The next stage of DNS zone definition.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate WithCNameRecordSet(string name, string alias);
 
         /// <summary>
         /// Specifies definition of a MX record set.
@@ -84,18 +92,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IMXRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineMXRecordSet(string name);
 
         /// <summary>
-        /// Specifies definition of a PTR record set.
+        /// Specifies definition of an A record set.
         /// </summary>
-        /// <param name="name">Name of the PTR record set.</param>
-        /// <return>The stage representing configuration for the PTR record set.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IPtrRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefinePtrRecordSet(string name);
-
-        /// <summary>
-        /// Specifies definition of a CNAME record set.
-        /// </summary>
-        /// <param name="name">Name of the CNAME record set.</param>
-        /// <param name="alias">The CNAME record alias.</param>
-        /// <return>The next stage of DNS zone definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate WithCNameRecordSet(string name, string alias);
+        /// <param name="name">Name of the A record set.</param>
+        /// <return>The stage representing configuration for the A record set.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IARecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineARecordSet(string name);
     }
 }

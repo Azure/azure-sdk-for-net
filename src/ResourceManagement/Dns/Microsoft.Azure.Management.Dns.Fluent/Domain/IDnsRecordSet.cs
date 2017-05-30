@@ -14,11 +14,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.RecordSetInner>
     {
         /// <summary>
-        /// Gets the type of records in this record set.
-        /// </summary>
-        Models.RecordType RecordType { get; }
-
-        /// <summary>
         /// Gets TTL of the records in this record set.
         /// </summary>
         long TimeToLive { get; }
@@ -27,5 +22,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Gets the metadata associated with this record set.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,string> Metadata { get; }
+
+        /// <summary>
+        /// Gets the type of records in this record set.
+        /// </summary>
+        Models.RecordType RecordType { get; }
     }
 }

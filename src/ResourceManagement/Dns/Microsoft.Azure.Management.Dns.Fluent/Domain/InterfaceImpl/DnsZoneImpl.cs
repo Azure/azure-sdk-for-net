@@ -300,11 +300,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
-        /// Gets Begins the description of an update of the SOA record in this DNS zone.
+        /// Begins the description of an update of the SOA record in this DNS zone.
         /// </summary>
-        /// <summary>
-        /// Gets the stage representing configuration for the TXT record set.
-        /// </summary>
+        /// <return>The stage representing configuration for the TXT record set.</return>
         DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord DnsZone.Update.IWithRecordSet.UpdateSoaRecord()
         {
             return this.UpdateSoaRecord() as DnsRecordSet.UpdateSoaRecord.IUpdateSoaRecord;
