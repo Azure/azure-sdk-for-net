@@ -5,6 +5,8 @@ using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Batch.Fluent;
 using Microsoft.Azure.Management.Cdn.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.ContainerRegistry.Fluent;
+using Microsoft.Azure.Management.DocumentDB.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
@@ -193,6 +195,24 @@ namespace Fluent.Tests.Common
         public static IServiceBusManager CreateServiceBusManager()
         {
             return CreateMockedManager(c => ServiceBusManager
+                .Configure()
+                .WithDelegatingHandlers(GetHandlers())
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
+                .Authenticate(c, c.DefaultSubscriptionId));
+        }
+
+        public static IRegistryManager CreateRegistryManager()
+        {
+            return CreateMockedManager(c => RegistryManager
+                .Configure()
+                .WithDelegatingHandlers(GetHandlers())
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
+                .Authenticate(c, c.DefaultSubscriptionId));
+        }
+
+        public static IDocumentDBManager CreateDocumentDB()
+        {
+            return CreateMockedManager(c => DocumentDBManager
                 .Configure()
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)

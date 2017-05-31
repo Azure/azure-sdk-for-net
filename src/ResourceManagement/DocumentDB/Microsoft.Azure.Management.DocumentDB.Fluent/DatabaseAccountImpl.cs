@@ -59,11 +59,11 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 await Task.Delay(5000);
                 databaseAccount = await this.Manager.DocumentDBAccounts.GetByResourceGroupAsync(
                     ResourceGroupName, Name);
-                if (this.IsAFinalProvisioningState(databaseAccount.Inner.ProvisioningState))
+                if (this.IsProvisioningStateFinal(databaseAccount.Inner.ProvisioningState))
                 {
                     foreach (Models.Location location in databaseAccount.ReadableReplications)
                     {
-                        if (!this.IsAFinalProvisioningState(location.ProvisioningState))
+                        if (!this.IsProvisioningStateFinal(location.ProvisioningState))
                         {
                             break;
                         }
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             return createUpdateParametersInner;
         }
 
-        private bool IsAFinalProvisioningState(string state)
+        private bool IsProvisioningStateFinal(string state)
         {
             switch (state.ToLower())
             {
