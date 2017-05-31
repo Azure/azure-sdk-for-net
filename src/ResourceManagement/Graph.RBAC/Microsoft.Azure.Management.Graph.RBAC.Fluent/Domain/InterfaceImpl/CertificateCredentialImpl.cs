@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System;
     using System.IO;
 
-    public partial class CertificateCredentialImpl<T> 
+    public partial class CertificateCredentialImpl<T> where T : class
     {
         /// <summary>
         /// Export the information of this service principal into an auth file.

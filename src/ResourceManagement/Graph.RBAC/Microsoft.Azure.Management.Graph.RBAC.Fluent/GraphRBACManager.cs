@@ -14,8 +14,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     public class GraphRbacManager : Manager<IGraphRbacManagementClient>, IGraphRbacManager, IBeta
     {
         #region Fluent private collections
-        private IUsers users;
+        private IActiveDirectoryUsers users;
         private IServicePrincipals servicePrincipals;
+        private IAuthorizationManagementClient roleInner;
         #endregion
 
         #region ctrs
@@ -78,15 +79,21 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         #region IGraphRbacManager implementation 
 
-        public IUsers Users
+        public IAuthorizationManagementClient RoleInner
+        {
+            get
+            {
+                return roleInner;
+            }
+        }
+
+        public IActiveDirectoryUsers Users
         {
             get
             {
                 if (users == null)
                 {
-                    users = new UsersImpl(
-                        Inner.Users,
-                        this);
+                    users = new ActiveDirectoryUsersImpl(this);
                 }
 
                 return users;
@@ -109,7 +116,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
     public interface IGraphRbacManager : IManager<IGraphRbacManagementClient>
     {
-        IUsers Users { get; }
+        IAuthorizationManagementClient RoleInner { get; }
+        IActiveDirectoryUsers Users { get; }
         IServicePrincipals ServicePrincipals { get; }
     }
 }

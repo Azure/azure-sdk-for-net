@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
     public partial class RoleDefinitionImpl  :
-        WrapperImpl<Models.RoleDefinitionInner>,
+        Wrapper<Models.RoleDefinitionInner>,
         IRoleDefinition
     {
         private GraphRbacManager manager;
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return null;
         }
 
-                public ISet<Models.PermissionInner> Permissions()
+                public ISet<Models.Permission> Permissions()
         {
             //$ if (inner().Properties() == null) {
             //$ return null;
@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
                 internal  RoleDefinitionImpl(RoleDefinitionInner innerObject, GraphRbacManager manager)
+                    : base(innerObject)
         {
             //$ super(innerObject);
             //$ this.manager = manager;

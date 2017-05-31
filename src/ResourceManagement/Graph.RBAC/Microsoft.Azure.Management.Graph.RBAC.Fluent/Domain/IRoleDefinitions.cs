@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     public interface IRoleDefinitions  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.RoleDefinitionsInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<IRoleDefinitionsOperations>
     {
         /// <summary>
         /// Gets the information about a role definition based on scope and name.
@@ -30,16 +30,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <param name="name">The name of the role definition.</param>
         /// <return>An immutable representation of the role definition.</return>
         Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> GetByScopeAsync(string scope, string name, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Gets the information about a role definition based on scope and name.
-        /// </summary>
-        /// <param name="scope">The scope of the role definition.</param>
-        /// <param name="name">The name of the role definition.</param>
-        /// <param name="callback">The callback when the operation finishes.</param>
-        /// <return>An immutable representation of the role definition.</return>
-        Task<Microsoft.Rest.ServiceFuture<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition>> GetByScopeAsync(string scope, string name, IServiceCallback<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> callback, CancellationToken cancellationToken = default(CancellationToken));
-
+        
         /// <summary>
         /// Gets the information about a role definition based on scope and name.
         /// </summary>
@@ -77,14 +68,5 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <param name="roleName">The name of the role.</param>
         /// <return>An immutable representation of the role definition.</return>
         Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> GetByScopeAndRoleNameAsync(string scope, string roleName, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Gets the information about a role definition based on scope and name.
-        /// </summary>
-        /// <param name="scope">The scope of the role definition.</param>
-        /// <param name="roleName">The name of the role.</param>
-        /// <param name="callback">The callback when the operation finishes.</param>
-        /// <return>An immutable representation of the role definition.</return>
-        Task<Microsoft.Rest.ServiceFuture<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition>> GetByScopeAndRoleNameAsync(string scope, string roleName, IServiceCallback<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> callback, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

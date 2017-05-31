@@ -1279,7 +1279,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<PasswordCredential>>();
+            var _result = new AzureOperationResponse<IEnumerable<Models.PasswordCredential>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1292,7 +1292,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<PasswordCredential>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Models.PasswordCredential>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

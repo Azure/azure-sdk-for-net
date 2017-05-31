@@ -56,6 +56,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
                 internal  RoleAssignmentImpl(RoleAssignmentInner innerObject, GraphRbacManager manager)
+                    : base(innerObject.Name, innerObject)
         {
             //$ super(innerObject.Name(), innerObject);
             //$ this.manager = manager;
@@ -119,7 +120,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                protected async Task<Models.RoleAssignmentInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+                protected override async Task<Models.RoleAssignmentInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ return manager.RoleInner().RoleAssignments().GetAsync(scope(), name());
 
@@ -186,7 +187,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+                public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ Observable<String> objectIdObservable;
             //$ if (objectId != null) {

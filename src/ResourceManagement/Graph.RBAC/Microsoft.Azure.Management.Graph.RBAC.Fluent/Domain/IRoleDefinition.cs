@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <summary>
         /// Gets role definition permissions.
         /// </summary>
-        System.Collections.Generic.ISet<Models.PermissionInner> Permissions { get; }
+        System.Collections.Generic.ISet<Models.Permission> Permissions { get; }
 
         /// <summary>
         /// Gets the role name.

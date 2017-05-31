@@ -9,14 +9,15 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
+    using System;
 
     /// <summary>
     /// The implementation of RoleAssignments and its parent interfaces.
     /// </summary>
     public partial class RoleAssignmentsImpl  :
-        CreatableResourcesImpl<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment,Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignmentImpl,Models.RoleAssignmentInner>,
+        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment,Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignmentImpl,Models.RoleAssignmentInner>,
         IRoleAssignments,
-        IHasInner<Models.RoleAssignmentsInner>
+        IHasInner<IRoleAssignmentsOperations>
     {
         private GraphRbacManager manager;
                 public GraphRbacManager Manager()
@@ -45,20 +46,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             //$ }
             //$ }
             //$ });
-
-            return null;
-        }
-
-                public async Task<ServiceFuture<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment>> GetByIdAsync(string id, IServiceCallback<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> callback, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return ServiceFuture.FromBody(getByIdAsync(id), callback);
-
-            return null;
-        }
-
-                public async Task<ServiceFuture<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment>> GetByScopeAsync(string scope, string name, IServiceCallback<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> callback, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return ServiceFuture.FromBody(getByScopeAsync(scope, name), callback);
 
             return null;
         }
@@ -100,11 +87,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return null;
         }
 
-                public async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+                public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return manager().RoleInner().RoleAssignments().DeleteByIdAsync(id).ToCompletable();
-
-            return null;
+            await manager.RoleInner.RoleAssignments.DeleteByIdAsync(id);
         }
 
                 public RoleAssignmentImpl GetByScope(string scope, string name)
@@ -114,11 +99,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return null;
         }
 
-                public RoleAssignmentsInner Inner()
+                public IRoleAssignmentsOperations Inner
         {
-            //$ return this.manager().RoleInner().RoleAssignments();
-
-            return null;
+            get
+            {
+                return manager.RoleInner.RoleAssignments;
+            }
         }
 
                 internal  RoleAssignmentsImpl(GraphRbacManager manager)
@@ -129,7 +115,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         }
 
-                protected RoleAssignmentImpl WrapModel(RoleAssignmentInner roleAssignmentInner)
+                protected override IRoleAssignment WrapModel(RoleAssignmentInner roleAssignmentInner)
         {
             //$ if (roleAssignmentInner == null) {
             //$ return null;
@@ -139,11 +125,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return null;
         }
 
-                protected RoleAssignmentImpl WrapModel(string name)
+                protected override RoleAssignmentImpl WrapModel(string name)
         {
             //$ return new RoleAssignmentImpl(new RoleAssignmentInner().WithName(name), manager());
 
             return null;
+        }
+
+        public override void DeleteById(string id)
+        {
+            manager.RoleInner.RoleAssignments.DeleteById(id);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.RoleAssignmentsInner>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<IRoleAssignmentsOperations>
     {
         /// <summary>
         /// Gets the information about a role assignment based on scope and name.
@@ -34,16 +34,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <param name="name">The name of the role assignment.</param>
         /// <return>An immutable representation of the role assignment.</return>
         Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> GetByScopeAsync(string scope, string name, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Gets the information about a role assignment based on scope and name.
-        /// </summary>
-        /// <param name="scope">The scope of the role assignment.</param>
-        /// <param name="name">The name of the role assignment.</param>
-        /// <param name="callback">The callback when the operation finishes.</param>
-        /// <return>An immutable representation of the role assignment.</return>
-        Task<Microsoft.Rest.ServiceFuture<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment>> GetByScopeAsync(string scope, string name, IServiceCallback<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> callback, CancellationToken cancellationToken = default(CancellationToken));
-
+        
         /// <summary>
         /// List role assignments in a scope.
         /// </summary>

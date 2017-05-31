@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System;
     using System.IO;
 
-    public partial class PasswordCredentialImpl<T> 
+    public partial class PasswordCredentialImpl<T> where T : class
     {
         /// <summary>
         /// Gets the name of the resource.

@@ -33,11 +33,11 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <summary>
         /// Gets role definition permissions.
         /// </summary>
-        System.Collections.Generic.ISet<Models.PermissionInner> Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition.Permissions
+        System.Collections.Generic.ISet<Models.Permission> Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition.Permissions
         {
             get
             {
-                return this.Permissions() as System.Collections.Generic.ISet<Models.PermissionInner>;
+                return this.Permissions() as System.Collections.Generic.ISet<Models.Permission>;
             }
         }
 

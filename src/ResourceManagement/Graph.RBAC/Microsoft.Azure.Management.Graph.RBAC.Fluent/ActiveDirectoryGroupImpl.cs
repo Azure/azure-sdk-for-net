@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
                 internal  ActiveDirectoryGroupImpl(ADGroupInner innerModel, GraphRbacManager manager)
+                    : base(innerModel)
         {
             //$ super(innerModel);
             //$ this.manager = manager;

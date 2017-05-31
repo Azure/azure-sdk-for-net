@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return this;
         }
 
-                public PasswordCredentialImpl<T> DefinePasswordCredential<T>(string name)
+                public PasswordCredentialImpl<T> DefinePasswordCredential<T>(string name) where T : class
         {
             //$ public PasswordCredentialImpl definePasswordCredential(String name) {
             //$ return new PasswordCredentialImpl<>(name, this);
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return false;
         }
 
-                public CertificateCredentialImpl<T> DefineCertificateCredential<T>(string name)
+                public CertificateCredentialImpl<T> DefineCertificateCredential<T>(string name) where T : class
         {
             //$ public CertificateCredentialImpl defineCertificateCredential(String name) {
             //$ return new CertificateCredentialImpl<>(name, this);
