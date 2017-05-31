@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// include: 'Hot', 'Cool'</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
-        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?))
+        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), StorageNetworkAcls networkAcls = default(StorageNetworkAcls), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?))
         {
             Sku = sku;
             Kind = kind;
@@ -74,6 +74,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             Identity = identity;
             CustomDomain = customDomain;
             Encryption = encryption;
+            NetworkAcls = networkAcls;
             AccessTier = accessTier;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
         }
@@ -136,6 +137,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         public Encryption Encryption { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAcls")]
+        public StorageNetworkAcls NetworkAcls { get; set; }
+
+        /// <summary>
         /// Gets or sets required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
         /// include: 'Hot', 'Cool'
@@ -177,6 +183,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (Encryption != null)
             {
                 Encryption.Validate();
+            }
+            if (NetworkAcls != null)
+            {
+                NetworkAcls.Validate();
             }
         }
     }
