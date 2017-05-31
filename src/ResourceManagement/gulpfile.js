@@ -57,6 +57,12 @@ var mappings = {
         'source': 'arm-graphrbac/1.6/swagger/graphrbac.json',
         'package': 'Microsoft.Azure.Management.Graph.RBAC.Fluent',
     },
+    'authorization': {
+        'dir': 'Graph.RBAC/Microsoft.Azure.Management.Graph.RBAC.Fluent',
+        'source': 'arm-authorization/2015-07-01/swagger/authorization.json',
+        'package': 'Microsoft.Azure.Management.Graph.RBAC.Fluent',
+        'args': '-FT 1'
+    },
     'keyvault': {
         'dir': 'KeyVault/Microsoft.Azure.Management.KeyVault.Fluent',
         'source': 'arm-keyvault/2015-06-01/swagger/keyvault.json',

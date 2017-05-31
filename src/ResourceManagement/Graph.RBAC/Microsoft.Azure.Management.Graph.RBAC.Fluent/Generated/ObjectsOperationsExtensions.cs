@@ -51,5 +51,73 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 }
             }
 
+            /// <summary>
+            /// Gets AD group membership for the specified AD object IDs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Objects filtering parameters.
+            /// </param>
+            public static IPage<AADObjectInner> GetObjectsByObjectIds(this IObjectsOperations operations, GetObjectsParametersInner parameters)
+            {
+                return operations.GetObjectsByObjectIdsAsync(parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets AD group membership for the specified AD object IDs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Objects filtering parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AADObjectInner>> GetObjectsByObjectIdsAsync(this IObjectsOperations operations, GetObjectsParametersInner parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetObjectsByObjectIdsWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets AD group membership for the specified AD object IDs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextLink'>
+            /// Next link for the list operation.
+            /// </param>
+            public static IPage<AADObjectInner> GetObjectsByObjectIdsNext(this IObjectsOperations operations, string nextLink)
+            {
+                return operations.GetObjectsByObjectIdsNextAsync(nextLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets AD group membership for the specified AD object IDs.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextLink'>
+            /// Next link for the list operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AADObjectInner>> GetObjectsByObjectIdsNextAsync(this IObjectsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetObjectsByObjectIdsNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

@@ -39,12 +39,17 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.Models
         /// <param name="passwordProfile">The password profile of the
         /// user.</param>
         /// <param name="mailNickname">The mail alias for the user.</param>
-        public UserUpdateParametersInner(bool? accountEnabled = default(bool?), string displayName = default(string), PasswordProfile passwordProfile = default(PasswordProfile), string mailNickname = default(string))
+        /// <param name="usageLocation">A two letter country code (ISO standard
+        /// 3166). Required for users that will be assigned licenses due to
+        /// legal requirement to check for availability of services in
+        /// countries. Examples include: "US", "JP", and "GB".</param>
+        public UserUpdateParametersInner(bool? accountEnabled = default(bool?), string displayName = default(string), PasswordProfile passwordProfile = default(PasswordProfile), string mailNickname = default(string), string usageLocation = default(string))
         {
             AccountEnabled = accountEnabled;
             DisplayName = displayName;
             PasswordProfile = passwordProfile;
             MailNickname = mailNickname;
+            UsageLocation = usageLocation;
             CustomInit();
         }
 
@@ -76,6 +81,15 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.Models
         /// </summary>
         [JsonProperty(PropertyName = "mailNickname")]
         public string MailNickname { get; set; }
+
+        /// <summary>
+        /// Gets or sets a two letter country code (ISO standard 3166).
+        /// Required for users that will be assigned licenses due to legal
+        /// requirement to check for availability of services in countries.
+        /// Examples include: "US", "JP", and "GB".
+        /// </summary>
+        [JsonProperty(PropertyName = "usageLocation")]
+        public string UsageLocation { get; set; }
 
         /// <summary>
         /// Validate the object.
