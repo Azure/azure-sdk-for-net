@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the
         /// StorageAccountCheckNameAvailabilityParameters class.
         /// </summary>
+        /// <param name="name">The storage account name.</param>
         public StorageAccountCheckNameAvailabilityParameters(string name)
         {
             Name = name;
@@ -45,11 +46,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         }
 
         /// <summary>
+        /// Gets or sets the storage account name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// The type of resource, Microsoft.Storage/storageAccounts
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public static string Type { get; private set; }

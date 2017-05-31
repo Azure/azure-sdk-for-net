@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Azure;
     using Management;
     using Storage;
+    using Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -27,18 +28,19 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the Encryption class.
         /// </summary>
+        /// <param name="keySource">The encryption keySource (provider).
+        /// Possible values (case-insensitive):  Microsoft.Storage,
+        /// Microsoft.Keyvault. Possible values include: 'Microsoft.Storage',
+        /// 'Microsoft.Keyvault'</param>
         /// <param name="services">List of services which support
         /// encryption.</param>
-        public Encryption(EncryptionServices services = default(EncryptionServices))
+        /// <param name="keyVaultProperties">Properties provided by key
+        /// vault.</param>
+        public Encryption(string keySource, EncryptionServices services = default(EncryptionServices), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties))
         {
             Services = services;
-        }
-        /// <summary>
-        /// Static constructor for Encryption class.
-        /// </summary>
-        static Encryption()
-        {
-            KeySource = "Microsoft.Storage";
+            KeySource = keySource;
+            KeyVaultProperties = keyVaultProperties;
         }
 
         /// <summary>
@@ -48,12 +50,32 @@ namespace Microsoft.Azure.Management.Storage.Models
         public EncryptionServices Services { get; set; }
 
         /// <summary>
-        /// The encryption keySource (provider). Possible values
-        /// (case-insensitive):  Microsoft.Storage
+        /// Gets or sets the encryption keySource (provider). Possible values
+        /// (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault.
+        /// Possible values include: 'Microsoft.Storage', 'Microsoft.Keyvault'
         /// </summary>
         [JsonProperty(PropertyName = "keySource")]
-        public static string KeySource { get; private set; }
+        public string KeySource { get; set; }
 
+        /// <summary>
+        /// Gets or sets properties provided by key vault.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyvaultproperties")]
+        public KeyVaultProperties KeyVaultProperties { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (KeySource == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "KeySource");
+            }
+        }
     }
 }
 

@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Cognitive Services error object.
+    /// </summary>
     public partial class Error
     {
         /// <summary>
@@ -24,12 +27,14 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <summary>
         /// Initializes a new instance of the Error class.
         /// </summary>
+        /// <param name="errorProperty">The error body.</param>
         public Error(ErrorBody errorProperty = default(ErrorBody))
         {
             ErrorProperty = errorProperty;
         }
 
         /// <summary>
+        /// Gets or sets the error body.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public ErrorBody ErrorProperty { get; set; }

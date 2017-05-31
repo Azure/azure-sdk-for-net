@@ -35,9 +35,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             /// <param name='parameters'>
             /// The parameters to provide for the created account.
@@ -59,9 +57,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             /// <param name='parameters'>
             /// The parameters to provide for the created account.
@@ -87,11 +83,10 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             /// <param name='sku'>
+            /// Gets or sets the SKU of the resource.
             /// </param>
             /// <param name='tags'>
             /// Gets or sets a list of key value pairs that describe the resource. These
@@ -115,11 +110,10 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             /// <param name='sku'>
+            /// Gets or sets the SKU of the resource.
             /// </param>
             /// <param name='tags'>
             /// Gets or sets a list of key value pairs that describe the resource. These
@@ -149,9 +143,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             public static void Delete(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName)
             {
@@ -168,9 +160,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -190,9 +180,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             public static CognitiveServicesAccount GetProperties(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName)
             {
@@ -209,9 +197,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -219,70 +205,6 @@ namespace Microsoft.Azure.Management.CognitiveServices
             public static async Task<CognitiveServicesAccount> GetPropertiesAsync(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetPropertiesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Returns all the resources of a particular type belonging to a resource
-            /// group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            public static IEnumerable<CognitiveServicesAccount> ListByResourceGroup(this ICognitiveServicesAccountsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns all the resources of a particular type belonging to a resource
-            /// group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IEnumerable<CognitiveServicesAccount>> ListByResourceGroupAsync(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Returns all the resources of a particular type belonging to a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IEnumerable<CognitiveServicesAccount> List(this ICognitiveServicesAccountsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns all the resources of a particular type belonging to a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IEnumerable<CognitiveServicesAccount>> ListAsync(this ICognitiveServicesAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -298,9 +220,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Congitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             public static CognitiveServicesAccountKeys ListKeys(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName)
             {
@@ -317,9 +237,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Congitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -343,14 +261,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             /// <param name='keyName'>
             /// key name to generate (Key1|Key2). Possible values include: 'Key1', 'Key2'
             /// </param>
-            public static CognitiveServicesAccountKeys RegenerateKey(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName, KeyName? keyName = default(KeyName?))
+            public static CognitiveServicesAccountKeys RegenerateKey(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName, KeyName keyName)
             {
                 return operations.RegenerateKeyAsync(resourceGroupName, accountName, keyName).GetAwaiter().GetResult();
             }
@@ -366,9 +282,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             /// <param name='keyName'>
             /// key name to generate (Key1|Key2). Possible values include: 'Key1', 'Key2'
@@ -376,7 +290,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccountKeys> RegenerateKeyAsync(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName, KeyName? keyName = default(KeyName?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CognitiveServicesAccountKeys> RegenerateKeyAsync(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName, KeyName keyName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, keyName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -394,9 +308,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             public static CognitiveServicesAccountEnumerateSkusResult ListSkus(this ICognitiveServicesAccountsOperations operations, string resourceGroupName, string accountName)
             {
@@ -413,9 +325,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the cognitive services account within the specified resource
-            /// group. Cognitive Services account names must be between 3 and 24 characters
-            /// in length and use numbers and lower-case letters only.
+            /// The name of Cognitive Services account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

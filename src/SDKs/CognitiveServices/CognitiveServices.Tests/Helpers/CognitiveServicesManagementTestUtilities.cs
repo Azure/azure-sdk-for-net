@@ -1,21 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.CognitiveServices;
 using Microsoft.Azure.Management.CognitiveServices.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using ResourceGroups.Tests;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using Xunit;
 
 namespace CognitiveServices.Tests.Helpers
@@ -25,11 +20,6 @@ namespace CognitiveServices.Tests.Helpers
         public static bool IsTestTenant = false;
         private static HttpClientHandler Handler = null;
 
-        // These should be filled in only if test tenant is true
-#if DNX451
-        private static string certName = null;
-        private static string certPassword = null;
-#endif
         private const string testSubscription = null;
         private static Uri testUri = null;
 
@@ -76,16 +66,6 @@ namespace CognitiveServices.Tests.Helpers
 
         private static HttpClientHandler GetHandler()
         {
-#if DNX451
-            if (Handler == null)
-            {
-                //talk to yugangw-msft, if the code doesn't work under dnx451 (same with net451)
-                X509Certificate2 cert = new X509Certificate2(certName, certPassword);
-                Handler = new System.Net.Http.WebRequestHandler();
-                ((WebRequestHandler)Handler).ClientCertificates.Add(cert);
-                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
-            }
-#endif
             return Handler;
         }
 
@@ -95,7 +75,7 @@ namespace CognitiveServices.Tests.Helpers
             {
                 Location = DefaultLocation,
                 Tags = DefaultTags,
-                Sku = new Sku { Name = DefaultSkuName },
+                Sku = new Microsoft.Azure.Management.CognitiveServices.Models.Sku { Name = DefaultSkuName },
                 Kind = DefaultKind,
                 Properties = new object(),
             };
@@ -137,7 +117,7 @@ namespace CognitiveServices.Tests.Helpers
             var accountName = TestUtilities.GenerateName("csa");
             var parameters = new CognitiveServicesAccountCreateParameters
             {
-                Sku = new Sku { Name = skuName },
+                Sku = new Microsoft.Azure.Management.CognitiveServices.Models.Sku { Name = skuName },
                 Kind = accountType,
                 Location = location ?? DefaultLocation,
                 Properties = new object(),

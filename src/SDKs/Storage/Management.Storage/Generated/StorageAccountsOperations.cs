@@ -54,6 +54,7 @@ namespace Microsoft.Azure.Management.Storage
         /// Checks that the storage account name is valid and is not already in use.
         /// </summary>
         /// <param name='name'>
+        /// The storage account name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1561,6 +1562,8 @@ namespace Microsoft.Azure.Management.Storage
         /// numbers and lower-case letters only.
         /// </param>
         /// <param name='keyName'>
+        /// The name of storage keys that want to be regenerated, possible vaules are
+        /// key1, key2.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

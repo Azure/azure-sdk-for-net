@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Permissions the identity has for keys, secrets and certificates.
+    /// Permissions the identity has for keys, secrets, certificates and
+    /// storage.
     /// </summary>
     public partial class Permissions
     {
@@ -32,11 +33,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="keys">Permissions to keys</param>
         /// <param name="secrets">Permissions to secrets</param>
         /// <param name="certificates">Permissions to certificates</param>
-        public Permissions(IList<string> keys = default(IList<string>), IList<string> secrets = default(IList<string>), IList<string> certificates = default(IList<string>))
+        /// <param name="storage">Permissions to storage accounts</param>
+        public Permissions(IList<string> keys = default(IList<string>), IList<string> secrets = default(IList<string>), IList<string> certificates = default(IList<string>), IList<string> storage = default(IList<string>))
         {
             Keys = keys;
             Secrets = secrets;
             Certificates = certificates;
+            Storage = storage;
         }
 
         /// <summary>
@@ -56,6 +59,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "certificates")]
         public IList<string> Certificates { get; set; }
+
+        /// <summary>
+        /// Gets or sets permissions to storage accounts
+        /// </summary>
+        [JsonProperty(PropertyName = "storage")]
+        public IList<string> Storage { get; set; }
 
     }
 }

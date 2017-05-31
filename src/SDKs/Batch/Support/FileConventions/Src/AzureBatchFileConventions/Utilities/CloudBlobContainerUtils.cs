@@ -16,9 +16,6 @@
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
 {
@@ -45,6 +42,24 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
 
             var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(jobId);
             return storageAccount.CreateCloudBlobClient().GetContainerReference(jobOutputContainerName);
+        }
+
+        internal static IEnumerable<IListBlobItem> ListBlobs(this CloudBlobContainer container, string prefix, bool useFlatBlobListing)
+        {
+            BlobContinuationToken continuationToken = null;
+            do
+            {
+                BlobResultSegment segment = container
+                    .ListBlobsSegmentedAsync(prefix, useFlatBlobListing, BlobListingDetails.None, null, continuationToken, null, null)
+                    .GetAwaiter()
+                    .GetResult();
+                foreach (var result in segment.Results)
+                {
+                    yield return result;
+                }
+                continuationToken = segment.ContinuationToken;
+            } while (continuationToken != null);
+
         }
     }
 }
