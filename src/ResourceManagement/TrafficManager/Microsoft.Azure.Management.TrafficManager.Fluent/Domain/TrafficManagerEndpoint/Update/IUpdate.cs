@@ -30,18 +30,18 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
     public interface IWithNestedProfileConfig 
     {
         /// <summary>
-        /// Specifies the minimum number of endpoints to be online for the nested profile to be considered healthy.
-        /// </summary>
-        /// <param name="count">Number of endpoints.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint WithMinimumEndpointsToEnableTraffic(int count);
-
-        /// <summary>
         /// Specifies a nested traffic manager profile for the endpoint.
         /// </summary>
         /// <param name="nestedProfile">The nested traffic manager profile.</param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint ToProfile(ITrafficManagerProfile nestedProfile);
+
+        /// <summary>
+        /// Specifies the minimum number of endpoints to be online for the nested profile to be considered healthy.
+        /// </summary>
+        /// <param name="count">Number of endpoints.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint WithMinimumEndpointsToEnableTraffic(int count);
     }
 
     /// <summary>
@@ -89,16 +89,16 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
     public interface IWithTrafficDisabledOrEnabled 
     {
         /// <summary>
-        /// Specifies that the endpoint should receive the traffic.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithTrafficEnabled();
-
-        /// <summary>
         /// Specifies that the endpoint should be excluded from receiving traffic.
         /// </summary>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithTrafficDisabled();
+
+        /// <summary>
+        /// Specifies that the endpoint should receive the traffic.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithTrafficEnabled();
     }
 
     /// <summary>

@@ -23,18 +23,18 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Specifies that this endpoint should be excluded from receiving traffic.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithTrafficDisabled<TrafficManagerProfile.Definition.IWithCreate>.WithTrafficDisabled()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithTrafficDisabled<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.WithTrafficDisabled()
         {
-            return this.WithTrafficDisabled() as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.WithTrafficDisabled() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
         /// Specifies that this endpoint should be excluded from receiving traffic.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithTrafficDisabled<TrafficManagerProfile.Update.IUpdate>.WithTrafficDisabled()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithTrafficDisabled<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.WithTrafficDisabled()
         {
-            return this.WithTrafficDisabled() as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
+            return this.WithTrafficDisabled() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.Definition.IWithEndpointThreshold<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithSourceTrafficRegionThenThreshold<TrafficManagerProfile.Definition.IWithCreate>.FromRegion(Region region)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegionThenThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.FromRegion(Region region)
         {
-            return this.FromRegion(region) as TrafficManagerEndpoint.Definition.IWithEndpointThreshold<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.FromRegion(region) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<TrafficManagerProfile.Update.IUpdate>.FromRegion(Region region)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.FromRegion(Region region)
         {
-            return this.FromRegion(region) as TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<TrafficManagerProfile.Update.IUpdate>;
+            return this.FromRegion(region) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="priority">The endpoint priority.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithRoutingPriority<TrafficManagerProfile.Definition.IWithCreate>.WithRoutingPriority(int priority)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithRoutingPriority<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.WithRoutingPriority(int priority)
         {
-            return this.WithRoutingPriority(priority) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.WithRoutingPriority(priority) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -79,27 +79,27 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// values represent higher priority.
         /// </param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithRoutingPriority<TrafficManagerProfile.Update.IUpdate>.WithRoutingPriority(int priority)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithRoutingPriority<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.WithRoutingPriority(int priority)
         {
-            return this.WithRoutingPriority(priority) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
+            return this.WithRoutingPriority(priority) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
         /// Specifies that the endpoint should receive the traffic.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        TrafficManagerEndpoint.Update.IUpdate TrafficManagerEndpoint.Update.IWithTrafficDisabledOrEnabled.WithTrafficEnabled()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithTrafficDisabledOrEnabled.WithTrafficEnabled()
         {
-            return this.WithTrafficEnabled() as TrafficManagerEndpoint.Update.IUpdate;
+            return this.WithTrafficEnabled() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate;
         }
 
         /// <summary>
         /// Specifies that the endpoint should be excluded from receiving traffic.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        TrafficManagerEndpoint.Update.IUpdate TrafficManagerEndpoint.Update.IWithTrafficDisabledOrEnabled.WithTrafficDisabled()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithTrafficDisabledOrEnabled.WithTrafficDisabled()
         {
-            return this.WithTrafficDisabled() as TrafficManagerEndpoint.Update.IUpdate;
+            return this.WithTrafficDisabled() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate;
         }
 
         /// <summary>
@@ -107,9 +107,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="externalFqdn">The external FQDN.</param>
         /// <return>The next stage of the endpoint update.</return>
-        TrafficManagerEndpoint.UpdateExternalEndpoint.IUpdateExternalEndpoint TrafficManagerEndpoint.Update.IWithFqdn.ToFqdn(string externalFqdn)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateExternalEndpoint.IUpdateExternalEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithFqdn.ToFqdn(string externalFqdn)
         {
-            return this.ToFqdn(externalFqdn) as TrafficManagerEndpoint.UpdateExternalEndpoint.IUpdateExternalEndpoint;
+            return this.ToFqdn(externalFqdn) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateExternalEndpoint.IUpdateExternalEndpoint;
         }
 
         /// <summary>
@@ -118,18 +118,18 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="resourceId">The Azure resource id.</param>
         /// <return>The next stage of the update.</return>
-        TrafficManagerEndpoint.Update.IUpdate TrafficManagerEndpoint.Update.IWithAzureResource.ToResourceId(string resourceId)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithAzureResource.ToResourceId(string resourceId)
         {
-            return this.ToResourceId(resourceId) as TrafficManagerEndpoint.Update.IUpdate;
+            return this.ToResourceId(resourceId) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate;
         }
 
         /// <summary>
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<TrafficManagerProfile.Update.IUpdate>.Attach()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.Attach()
         {
-            return this.Attach() as TrafficManagerProfile.Update.IUpdate;
+            return this.Attach() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -138,9 +138,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="weight">The endpoint weight.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithRoutingWeight<TrafficManagerProfile.Definition.IWithCreate>.WithRoutingWeight(int weight)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithRoutingWeight<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.WithRoutingWeight(int weight)
         {
-            return this.WithRoutingWeight(weight) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.WithRoutingWeight(weight) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -149,9 +149,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="weight">The endpoint weight.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithRoutingWeight<TrafficManagerProfile.Update.IUpdate>.WithRoutingWeight(int weight)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithRoutingWeight<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.WithRoutingWeight(int weight)
         {
-            return this.WithRoutingWeight(weight) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
+            return this.WithRoutingWeight(weight) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
@@ -159,9 +159,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="count">The number of endpoints.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithEndpointThreshold<TrafficManagerProfile.Definition.IWithCreate>.WithMinimumEndpointsToEnableTraffic(int count)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.WithMinimumEndpointsToEnableTraffic(int count)
         {
-            return this.WithMinimumEndpointsToEnableTraffic(count) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.WithMinimumEndpointsToEnableTraffic(count) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -169,9 +169,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="count">The number of endpoints.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<TrafficManagerProfile.Update.IUpdate>.WithMinimumEndpointsToEnableTraffic(int count)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithEndpointThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.WithMinimumEndpointsToEnableTraffic(int count)
         {
-            return this.WithMinimumEndpointsToEnableTraffic(count) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
+            return this.WithMinimumEndpointsToEnableTraffic(count) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="weight">The endpoint weight.</param>
         /// <return>The next stage of the update.</return>
-        TrafficManagerEndpoint.Update.IUpdate TrafficManagerEndpoint.Update.IWithRoutingWeight.WithRoutingWeight(int weight)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithRoutingWeight.WithRoutingWeight(int weight)
         {
-            return this.WithRoutingWeight(weight) as TrafficManagerEndpoint.Update.IUpdate;
+            return this.WithRoutingWeight(weight) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate;
         }
 
         /// <summary>
@@ -190,9 +190,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="profile">The nested traffic manager profile.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.Definition.IWithSourceTrafficRegionThenThreshold<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithNestedProfile<TrafficManagerProfile.Definition.IWithCreate>.ToProfile(ITrafficManagerProfile profile)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegionThenThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithNestedProfile<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.ToProfile(ITrafficManagerProfile profile)
         {
-            return this.ToProfile(profile) as TrafficManagerEndpoint.Definition.IWithSourceTrafficRegionThenThreshold<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.ToProfile(profile) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegionThenThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -200,18 +200,18 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="profile">The nested traffic manager profile.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithNestedProfile<TrafficManagerProfile.Update.IUpdate>.ToProfile(ITrafficManagerProfile profile)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithNestedProfile<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.ToProfile(ITrafficManagerProfile profile)
         {
-            return this.ToProfile(profile) as TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<TrafficManagerProfile.Update.IUpdate>;
+            return this.ToProfile(profile) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegionThenThreshold<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        TrafficManagerProfile.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<TrafficManagerProfile.Definition.IWithCreate>.Attach()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.Attach()
         {
-            return this.Attach() as TrafficManagerProfile.Definition.IWithCreate;
+            return this.Attach() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -219,9 +219,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="externalFqdn">The external FQDN.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithFqdn<TrafficManagerProfile.Definition.IWithCreate>.ToFqdn(string externalFqdn)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithFqdn<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.ToFqdn(string externalFqdn)
         {
-            return this.ToFqdn(externalFqdn) as TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.ToFqdn(externalFqdn) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -229,9 +229,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="externalFqdn">The external FQDN.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithFqdn<TrafficManagerProfile.Update.IUpdate>.ToFqdn(string externalFqdn)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithFqdn<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.ToFqdn(string externalFqdn)
         {
-            return this.ToFqdn(externalFqdn) as TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<TrafficManagerProfile.Update.IUpdate>;
+            return this.ToFqdn(externalFqdn) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
@@ -240,9 +240,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="priority">The endpoint priority.</param>
         /// <return>The next stage of the update.</return>
-        TrafficManagerEndpoint.Update.IUpdate TrafficManagerEndpoint.Update.IWithRoutingPriority.WithRoutingPriority(int priority)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithRoutingPriority.WithRoutingPriority(int priority)
         {
-            return this.WithRoutingPriority(priority) as TrafficManagerEndpoint.Update.IUpdate;
+            return this.WithRoutingPriority(priority) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate;
         }
 
         /// <summary>
@@ -251,9 +251,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<TrafficManagerProfile.Definition.IWithCreate>.FromRegion(Region region)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.FromRegion(Region region)
         {
-            return this.FromRegion(region) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.FromRegion(region) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -262,9 +262,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="region">The location.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<TrafficManagerProfile.Update.IUpdate>.FromRegion(Region region)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithSourceTrafficRegion<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.FromRegion(Region region)
         {
-            return this.FromRegion(region) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
+            return this.FromRegion(region) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
@@ -273,9 +273,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="resourceId">The Azure resource id.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerEndpoint.Definition.IWithAzureResource<TrafficManagerProfile.Definition.IWithCreate>.ToResourceId(string resourceId)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAzureResource<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>.ToResourceId(string resourceId)
         {
-            return this.ToResourceId(resourceId) as TrafficManagerEndpoint.Definition.IWithAttach<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.ToResourceId(resourceId) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -284,9 +284,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="resourceId">The Azure resource id.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate> TrafficManagerEndpoint.UpdateDefinition.IWithAzureResource<TrafficManagerProfile.Update.IUpdate>.ToResourceId(string resourceId)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAzureResource<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>.ToResourceId(string resourceId)
         {
-            return this.ToResourceId(resourceId) as TrafficManagerEndpoint.UpdateDefinition.IWithAttach<TrafficManagerProfile.Update.IUpdate>;
+            return this.ToResourceId(resourceId) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
@@ -295,9 +295,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="location">The location.</param>
         /// <return>The next stage of the endpoint update.</return>
-        TrafficManagerEndpoint.Update.IUpdate TrafficManagerEndpoint.Update.IWithSourceTrafficRegion.FromRegion(Region location)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithSourceTrafficRegion.FromRegion(Region location)
         {
-            return this.FromRegion(location) as TrafficManagerEndpoint.Update.IUpdate;
+            return this.FromRegion(location) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate;
         }
 
         /// <summary>
@@ -305,9 +305,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="count">Number of endpoints.</param>
         /// <return>The next stage of the endpoint update.</return>
-        TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint TrafficManagerEndpoint.Update.IWithNestedProfileConfig.WithMinimumEndpointsToEnableTraffic(int count)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithNestedProfileConfig.WithMinimumEndpointsToEnableTraffic(int count)
         {
-            return this.WithMinimumEndpointsToEnableTraffic(count) as TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint;
+            return this.WithMinimumEndpointsToEnableTraffic(count) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint;
         }
 
         /// <summary>
@@ -315,9 +315,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="nestedProfile">The nested traffic manager profile.</param>
         /// <return>The next stage of the update.</return>
-        TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint TrafficManagerEndpoint.Update.IWithNestedProfileConfig.ToProfile(ITrafficManagerProfile nestedProfile)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithNestedProfileConfig.ToProfile(ITrafficManagerProfile nestedProfile)
         {
-            return this.ToProfile(nestedProfile) as TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint;
+            return this.ToProfile(nestedProfile) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint;
         }
 
         /// <summary>

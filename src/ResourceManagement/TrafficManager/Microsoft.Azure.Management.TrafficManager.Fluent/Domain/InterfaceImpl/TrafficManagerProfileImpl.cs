@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="ttlInSeconds">DNS TTL in seconds.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithTtl.WithTimeToLive(int ttlInSeconds)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithTtl.WithTimeToLive(int ttlInSeconds)
         {
-            return this.WithTimeToLive(ttlInSeconds) as TrafficManagerProfile.Update.IUpdate;
+            return this.WithTimeToLive(ttlInSeconds) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="ttlInSeconds">DNS TTL in seconds.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithCreate TrafficManagerProfile.Definition.IWithTtl.WithTimeToLive(int ttlInSeconds)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithTtl.WithTimeToLive(int ttlInSeconds)
         {
-            return this.WithTimeToLive(ttlInSeconds) as TrafficManagerProfile.Definition.IWithCreate;
+            return this.WithTimeToLive(ttlInSeconds) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IAzureTargetEndpointBlank<TrafficManagerProfile.Update.IUpdate> TrafficManagerProfile.Update.IWithEndpoint.DefineAzureTargetEndpoint(string name)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IAzureTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithEndpoint.DefineAzureTargetEndpoint(string name)
         {
-            return this.DefineAzureTargetEndpoint(name) as TrafficManagerEndpoint.UpdateDefinition.IAzureTargetEndpointBlank<TrafficManagerProfile.Update.IUpdate>;
+            return this.DefineAzureTargetEndpoint(name) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IAzureTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
-        TrafficManagerEndpoint.UpdateDefinition.INestedProfileTargetEndpointBlank<TrafficManagerProfile.Update.IUpdate> TrafficManagerProfile.Update.IWithEndpoint.DefineNestedTargetEndpoint(string name)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.INestedProfileTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithEndpoint.DefineNestedTargetEndpoint(string name)
         {
-            return this.DefineNestedTargetEndpoint(name) as TrafficManagerEndpoint.UpdateDefinition.INestedProfileTargetEndpointBlank<TrafficManagerProfile.Update.IUpdate>;
+            return this.DefineNestedTargetEndpoint(name) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.INestedProfileTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
@@ -73,9 +73,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="name">The name of the nested profile endpoint.</param>
         /// <return>The stage representing updating configuration for the nested traffic manager profile endpoint.</return>
-        TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint TrafficManagerProfile.Update.IWithEndpoint.UpdateNestedProfileTargetEndpoint(string name)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithEndpoint.UpdateNestedProfileTargetEndpoint(string name)
         {
-            return this.UpdateNestedProfileTargetEndpoint(name) as TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint;
+            return this.UpdateNestedProfileTargetEndpoint(name) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateNestedProfileEndpoint.IUpdateNestedProfileEndpoint;
         }
 
         /// <summary>
@@ -83,9 +83,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="name">The name of the external endpoint.</param>
         /// <return>The stage representing updating configuration for the external endpoint.</return>
-        TrafficManagerEndpoint.UpdateExternalEndpoint.IUpdateExternalEndpoint TrafficManagerProfile.Update.IWithEndpoint.UpdateExternalTargetEndpoint(string name)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateExternalEndpoint.IUpdateExternalEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithEndpoint.UpdateExternalTargetEndpoint(string name)
         {
-            return this.UpdateExternalTargetEndpoint(name) as TrafficManagerEndpoint.UpdateExternalEndpoint.IUpdateExternalEndpoint;
+            return this.UpdateExternalTargetEndpoint(name) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateExternalEndpoint.IUpdateExternalEndpoint;
         }
 
         /// <summary>
@@ -93,9 +93,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="name">The name of the Azure endpoint.</param>
         /// <return>The stage representing updating configuration for the Azure endpoint.</return>
-        TrafficManagerEndpoint.UpdateAzureEndpoint.IUpdateAzureEndpoint TrafficManagerProfile.Update.IWithEndpoint.UpdateAzureTargetEndpoint(string name)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateAzureEndpoint.IUpdateAzureEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithEndpoint.UpdateAzureTargetEndpoint(string name)
         {
-            return this.UpdateAzureTargetEndpoint(name) as TrafficManagerEndpoint.UpdateAzureEndpoint.IUpdateAzureEndpoint;
+            return this.UpdateAzureTargetEndpoint(name) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateAzureEndpoint.IUpdateAzureEndpoint;
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
-        TrafficManagerEndpoint.UpdateDefinition.IExternalTargetEndpointBlank<TrafficManagerProfile.Update.IUpdate> TrafficManagerProfile.Update.IWithEndpoint.DefineExternalTargetEndpoint(string name)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IExternalTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithEndpoint.DefineExternalTargetEndpoint(string name)
         {
-            return this.DefineExternalTargetEndpoint(name) as TrafficManagerEndpoint.UpdateDefinition.IExternalTargetEndpointBlank<TrafficManagerProfile.Update.IUpdate>;
+            return this.DefineExternalTargetEndpoint(name) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateDefinition.IExternalTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>;
         }
 
         /// <summary>
@@ -113,9 +113,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="name">The name of the endpoint.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithEndpoint.WithoutEndpoint(string name)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithEndpoint.WithoutEndpoint(string name)
         {
-            return this.WithoutEndpoint(name) as TrafficManagerProfile.Update.IUpdate;
+            return this.WithoutEndpoint(name) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -123,9 +123,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
-        TrafficManagerEndpoint.Definition.IAzureTargetEndpointBlank<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerProfile.Definition.IWithEndpoint.DefineAzureTargetEndpoint(string name)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IAzureTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint.DefineAzureTargetEndpoint(string name)
         {
-            return this.DefineAzureTargetEndpoint(name) as TrafficManagerEndpoint.Definition.IAzureTargetEndpointBlank<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.DefineAzureTargetEndpoint(name) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IAzureTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -133,9 +133,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
-        TrafficManagerEndpoint.Definition.INestedProfileTargetEndpointBlank<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerProfile.Definition.IWithEndpoint.DefineNestedTargetEndpoint(string name)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.INestedProfileTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint.DefineNestedTargetEndpoint(string name)
         {
-            return this.DefineNestedTargetEndpoint(name) as TrafficManagerEndpoint.Definition.INestedProfileTargetEndpointBlank<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.DefineNestedTargetEndpoint(name) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.INestedProfileTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -143,9 +143,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
-        TrafficManagerEndpoint.Definition.IExternalTargetEndpointBlank<TrafficManagerProfile.Definition.IWithCreate> TrafficManagerProfile.Definition.IWithEndpoint.DefineExternalTargetEndpoint(string name)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IExternalTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint.DefineExternalTargetEndpoint(string name)
         {
-            return this.DefineExternalTargetEndpoint(name) as TrafficManagerEndpoint.Definition.IExternalTargetEndpointBlank<TrafficManagerProfile.Definition.IWithCreate>;
+            return this.DefineExternalTargetEndpoint(name) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IExternalTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -153,9 +153,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Disabling the profile will disables traffic to all endpoints in the profile.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithProfileStatus.WithProfileStatusDisabled()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithProfileStatus.WithProfileStatusDisabled()
         {
-            return this.WithProfileStatusDisabled() as TrafficManagerProfile.Update.IUpdate;
+            return this.WithProfileStatusDisabled() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -163,9 +163,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Enabling the profile will enables traffic to all endpoints in the profile.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithProfileStatus.WithProfileStatusEnabled()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithProfileStatus.WithProfileStatusEnabled()
         {
-            return this.WithProfileStatusEnabled() as TrafficManagerProfile.Update.IUpdate;
+            return this.WithProfileStatusEnabled() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// Disabling the profile will disables traffic to all endpoints in the profile.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithCreate TrafficManagerProfile.Definition.IWithProfileStatus.WithProfileStatusDisabled()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithProfileStatus.WithProfileStatusDisabled()
         {
-            return this.WithProfileStatusDisabled() as TrafficManagerProfile.Definition.IWithCreate;
+            return this.WithProfileStatusDisabled() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -185,9 +185,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="dnsLabel">The relative DNS name of the profile.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithTrafficRoutingMethod TrafficManagerProfile.Definition.IWithLeafDomainLabel.WithLeafDomainLabel(string dnsLabel)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithTrafficRoutingMethod Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithLeafDomainLabel.WithLeafDomainLabel(string dnsLabel)
         {
-            return this.WithLeafDomainLabel(dnsLabel) as TrafficManagerProfile.Definition.IWithTrafficRoutingMethod;
+            return this.WithLeafDomainLabel(dnsLabel) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithTrafficRoutingMethod;
         }
 
         /// <summary>
@@ -317,9 +317,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// to the endpoint.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithTrafficRoutingMethod.WithWeightBasedRouting()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithTrafficRoutingMethod.WithWeightBasedRouting()
         {
-            return this.WithWeightBasedRouting() as TrafficManagerProfile.Update.IUpdate;
+            return this.WithWeightBasedRouting() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -327,9 +327,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// close to user.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithTrafficRoutingMethod.WithPerformanceBasedRouting()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithTrafficRoutingMethod.WithPerformanceBasedRouting()
         {
-            return this.WithPerformanceBasedRouting() as TrafficManagerProfile.Update.IUpdate;
+            return this.WithPerformanceBasedRouting() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -338,9 +338,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// priority endpoint.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithTrafficRoutingMethod.WithPriorityBasedRouting()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithTrafficRoutingMethod.WithPriorityBasedRouting()
         {
-            return this.WithPriorityBasedRouting() as TrafficManagerProfile.Update.IUpdate;
+            return this.WithPriorityBasedRouting() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -348,9 +348,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="routingMethod">The traffic routing method for the profile.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithTrafficRoutingMethod.WithTrafficRoutingMethod(TrafficRoutingMethod routingMethod)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithTrafficRoutingMethod.WithTrafficRoutingMethod(TrafficRoutingMethod routingMethod)
         {
-            return this.WithTrafficRoutingMethod(routingMethod) as TrafficManagerProfile.Update.IUpdate;
+            return this.WithTrafficRoutingMethod(routingMethod) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -358,9 +358,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// to the endpoint.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithEndpoint TrafficManagerProfile.Definition.IWithTrafficRoutingMethod.WithWeightBasedRouting()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithTrafficRoutingMethod.WithWeightBasedRouting()
         {
-            return this.WithWeightBasedRouting() as TrafficManagerProfile.Definition.IWithEndpoint;
+            return this.WithWeightBasedRouting() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint;
         }
 
         /// <summary>
@@ -368,9 +368,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// close to user.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithEndpoint TrafficManagerProfile.Definition.IWithTrafficRoutingMethod.WithPerformanceBasedRouting()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithTrafficRoutingMethod.WithPerformanceBasedRouting()
         {
-            return this.WithPerformanceBasedRouting() as TrafficManagerProfile.Definition.IWithEndpoint;
+            return this.WithPerformanceBasedRouting() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint;
         }
 
         /// <summary>
@@ -379,9 +379,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// priority endpoint.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithEndpoint TrafficManagerProfile.Definition.IWithTrafficRoutingMethod.WithPriorityBasedRouting()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithTrafficRoutingMethod.WithPriorityBasedRouting()
         {
-            return this.WithPriorityBasedRouting() as TrafficManagerProfile.Definition.IWithEndpoint;
+            return this.WithPriorityBasedRouting() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint;
         }
 
         /// <summary>
@@ -389,9 +389,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// </summary>
         /// <param name="routingMethod">The traffic routing method for the profile.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithEndpoint TrafficManagerProfile.Definition.IWithTrafficRoutingMethod.WithTrafficRoutingMethod(TrafficRoutingMethod routingMethod)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithTrafficRoutingMethod.WithTrafficRoutingMethod(TrafficRoutingMethod routingMethod)
         {
-            return this.WithTrafficRoutingMethod(routingMethod) as TrafficManagerProfile.Definition.IWithEndpoint;
+            return this.WithTrafficRoutingMethod(routingMethod) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithEndpoint;
         }
 
         /// <summary>
@@ -399,9 +399,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// at regular intervals, using port 80.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithMonitoringConfiguration.WithHttpMonitoring()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithMonitoringConfiguration.WithHttpMonitoring()
         {
-            return this.WithHttpMonitoring() as TrafficManagerProfile.Update.IUpdate;
+            return this.WithHttpMonitoring() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -411,9 +411,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// <param name="port">The monitoring port.</param>
         /// <param name="path">The monitoring path.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithMonitoringConfiguration.WithHttpMonitoring(int port, string path)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithMonitoringConfiguration.WithHttpMonitoring(int port, string path)
         {
-            return this.WithHttpMonitoring(port, path) as TrafficManagerProfile.Update.IUpdate;
+            return this.WithHttpMonitoring(port, path) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -421,9 +421,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// at regular intervals, using port 443.
         /// </summary>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithMonitoringConfiguration.WithHttpsMonitoring()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithMonitoringConfiguration.WithHttpsMonitoring()
         {
-            return this.WithHttpsMonitoring() as TrafficManagerProfile.Update.IUpdate;
+            return this.WithHttpsMonitoring() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -433,9 +433,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// <param name="port">The monitoring port.</param>
         /// <param name="path">The monitoring path.</param>
         /// <return>The next stage of the traffic manager profile update.</return>
-        TrafficManagerProfile.Update.IUpdate TrafficManagerProfile.Update.IWithMonitoringConfiguration.WithHttpsMonitoring(int port, string path)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IWithMonitoringConfiguration.WithHttpsMonitoring(int port, string path)
         {
-            return this.WithHttpsMonitoring(port, path) as TrafficManagerProfile.Update.IUpdate;
+            return this.WithHttpsMonitoring(port, path) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate;
         }
 
         /// <summary>
@@ -443,9 +443,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// at regular intervals, using port 80.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithCreate TrafficManagerProfile.Definition.IWithMonitoringConfiguration.WithHttpMonitoring()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithMonitoringConfiguration.WithHttpMonitoring()
         {
-            return this.WithHttpMonitoring() as TrafficManagerProfile.Definition.IWithCreate;
+            return this.WithHttpMonitoring() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -455,9 +455,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// <param name="port">The monitoring port.</param>
         /// <param name="path">The monitoring path.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithCreate TrafficManagerProfile.Definition.IWithMonitoringConfiguration.WithHttpMonitoring(int port, string path)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithMonitoringConfiguration.WithHttpMonitoring(int port, string path)
         {
-            return this.WithHttpMonitoring(port, path) as TrafficManagerProfile.Definition.IWithCreate;
+            return this.WithHttpMonitoring(port, path) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -465,9 +465,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// at regular intervals, using port 443.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithCreate TrafficManagerProfile.Definition.IWithMonitoringConfiguration.WithHttpsMonitoring()
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithMonitoringConfiguration.WithHttpsMonitoring()
         {
-            return this.WithHttpsMonitoring() as TrafficManagerProfile.Definition.IWithCreate;
+            return this.WithHttpsMonitoring() as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -477,9 +477,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         /// <param name="port">The monitoring port.</param>
         /// <param name="path">The monitoring path.</param>
         /// <return>The next stage of the definition.</return>
-        TrafficManagerProfile.Definition.IWithCreate TrafficManagerProfile.Definition.IWithMonitoringConfiguration.WithHttpsMonitoring(int port, string path)
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithMonitoringConfiguration.WithHttpsMonitoring(int port, string path)
         {
-            return this.WithHttpsMonitoring(port, path) as TrafficManagerProfile.Definition.IWithCreate;
+            return this.WithHttpsMonitoring(port, path) as Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate;
         }
     }
 }

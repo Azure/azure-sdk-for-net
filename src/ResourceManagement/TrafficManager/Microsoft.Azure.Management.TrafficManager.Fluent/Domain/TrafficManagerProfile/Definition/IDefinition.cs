@@ -88,22 +88,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile
     public interface IWithMonitoringConfiguration 
     {
         /// <summary>
-        /// Specify to use HTTPS monitoring for the endpoints that checks for HTTPS 200 response from the path '/'
-        /// at regular intervals, using port 443.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate WithHttpsMonitoring();
-
-        /// <summary>
-        /// Specify the HTTPS monitoring for the endpoints that checks for HTTPS 200 response from the specified
-        /// path at regular intervals, using the specified port.
-        /// </summary>
-        /// <param name="port">The monitoring port.</param>
-        /// <param name="path">The monitoring path.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate WithHttpsMonitoring(int port, string path);
-
-        /// <summary>
         /// Specify to use HTTP monitoring for the endpoints that checks for HTTP 200 response from the path '/'
         /// at regular intervals, using port 80.
         /// </summary>
@@ -118,6 +102,22 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile
         /// <param name="path">The monitoring path.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate WithHttpMonitoring(int port, string path);
+
+        /// <summary>
+        /// Specify to use HTTPS monitoring for the endpoints that checks for HTTPS 200 response from the path '/'
+        /// at regular intervals, using port 443.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate WithHttpsMonitoring();
+
+        /// <summary>
+        /// Specify the HTTPS monitoring for the endpoints that checks for HTTPS 200 response from the specified
+        /// path at regular intervals, using the specified port.
+        /// </summary>
+        /// <param name="port">The monitoring port.</param>
+        /// <param name="path">The monitoring path.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate WithHttpsMonitoring(int port, string path);
     }
 
     /// <summary>
@@ -169,17 +169,17 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.INestedProfileTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> DefineNestedTargetEndpoint(string name);
 
         /// <summary>
-        /// Specifies definition of an Azure endpoint to be attached to the traffic manager profile.
-        /// </summary>
-        /// <param name="name">The name for the endpoint.</param>
-        /// <return>The stage representing configuration for the endpoint.</return>
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IAzureTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> DefineAzureTargetEndpoint(string name);
-
-        /// <summary>
         /// Specifies definition of an external endpoint to be attached to the traffic manager profile.
         /// </summary>
         /// <param name="name">The name for the endpoint.</param>
         /// <return>The stage representing configuration for the endpoint.</return>
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IExternalTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> DefineExternalTargetEndpoint(string name);
+
+        /// <summary>
+        /// Specifies definition of an Azure endpoint to be attached to the traffic manager profile.
+        /// </summary>
+        /// <param name="name">The name for the endpoint.</param>
+        /// <return>The stage representing configuration for the endpoint.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IAzureTargetEndpointBlank<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Definition.IWithCreate> DefineAzureTargetEndpoint(string name);
     }
 }

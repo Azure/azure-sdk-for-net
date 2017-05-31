@@ -13,14 +13,20 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.EndpointInner>
     {
         /// <summary>
+        /// Gets the priority of the endpoint which is used when traffic manager profile is configured with
+        /// Priority traffic-routing method.
+        /// </summary>
+        long RoutingPriority { get; }
+
+        /// <summary>
         /// Gets the endpoint type.
         /// </summary>
         Microsoft.Azure.Management.TrafficManager.Fluent.EndpointType EndpointType { get; }
 
         /// <summary>
-        /// Gets the monitor status of the endpoint.
+        /// Gets true if the endpoint is enabled, false otherwise.
         /// </summary>
-        Microsoft.Azure.Management.TrafficManager.Fluent.EndpointMonitorStatus MonitorStatus { get; }
+        bool IsEnabled { get; }
 
         /// <summary>
         /// Gets the weight of the endpoint which is used when traffic manager profile is configured with
@@ -29,14 +35,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         long RoutingWeight { get; }
 
         /// <summary>
-        /// Gets true if the endpoint is enabled, false otherwise.
+        /// Gets the monitor status of the endpoint.
         /// </summary>
-        bool IsEnabled { get; }
-
-        /// <summary>
-        /// Gets the priority of the endpoint which is used when traffic manager profile is configured with
-        /// Priority traffic-routing method.
-        /// </summary>
-        long RoutingPriority { get; }
+        Microsoft.Azure.Management.TrafficManager.Fluent.EndpointMonitorStatus MonitorStatus { get; }
     }
 }

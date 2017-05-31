@@ -16,13 +16,13 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region SourceTrafficLocation { get; }
 
         /// <summary>
-        /// Gets the nested traffic manager profile resource id.
-        /// </summary>
-        string NestedProfileId { get; }
-
-        /// <summary>
         /// Gets the number of child endpoints to be online to consider nested profile as healthy.
         /// </summary>
         long MinimumChildEndpointCount { get; }
+
+        /// <summary>
+        /// Gets the nested traffic manager profile resource id.
+        /// </summary>
+        string NestedProfileId { get; }
     }
 }
