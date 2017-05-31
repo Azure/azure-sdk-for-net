@@ -13,24 +13,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ServerMetric>
     {
         /// <summary>
-        /// Gets the current limit of the metric.
-        /// </summary>
-        double Limit { get; }
-
-        /// <summary>
         /// Gets the units of the metric.
         /// </summary>
         string Unit { get; }
-
-        /// <summary>
-        /// Gets the next reset time for the metric (ISO8601 format).
-        /// </summary>
-        System.DateTime NextResetTime { get; }
-
-        /// <summary>
-        /// Gets the current value of the metric.
-        /// </summary>
-        double CurrentValue { get; }
 
         /// <summary>
         /// Gets the metric display name.
@@ -38,8 +23,23 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         string DisplayName { get; }
 
         /// <summary>
+        /// Gets the current limit of the metric.
+        /// </summary>
+        double Limit { get; }
+
+        /// <summary>
+        /// Gets the next reset time for the metric (ISO8601 format).
+        /// </summary>
+        System.DateTime NextResetTime { get; }
+
+        /// <summary>
         /// Gets the name of the resource.
         /// </summary>
         string ResourceName { get; }
+
+        /// <summary>
+        /// Gets the current value of the metric.
+        /// </summary>
+        double CurrentValue { get; }
     }
 }

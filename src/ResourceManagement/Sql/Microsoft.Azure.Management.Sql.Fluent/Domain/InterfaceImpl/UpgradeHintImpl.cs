@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
     using System;
 
     internal partial class UpgradeHintImpl 

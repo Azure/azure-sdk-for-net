@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId
     {
         /// <summary>
-        /// Gets whether the service level objective is enabled.
+        /// Gets whether the service level objective is a system service objective.
         /// </summary>
-        bool Enabled { get; }
+        bool IsSystem { get; }
 
         /// <summary>
         /// Gets whether the service level objective is the default service
@@ -28,23 +28,23 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         bool IsDefault { get; }
 
         /// <summary>
-        /// Gets the description for the service level objective.
-        /// </summary>
-        string Description { get; }
-
-        /// <summary>
         /// Gets name of the SQL Server to which this replication belongs.
         /// </summary>
         string SqlServerName { get; }
 
         /// <summary>
-        /// Gets whether the service level objective is a system service objective.
-        /// </summary>
-        bool IsSystem { get; }
-
-        /// <summary>
         /// Gets the name for the service objective.
         /// </summary>
         string ServiceObjectiveName { get; }
+
+        /// <summary>
+        /// Gets the description for the service level objective.
+        /// </summary>
+        string Description { get; }
+
+        /// <summary>
+        /// Gets whether the service level objective is enabled.
+        /// </summary>
+        bool Enabled { get; }
     }
 }

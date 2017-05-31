@@ -300,17 +300,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>.Manager
-        {
-            get
-            {
-                return this.Manager as Microsoft.Azure.Management.Sql.Fluent.ISqlManager;
-            }
-        }
-
-        /// <summary>
         /// Sets the administrator login user name.
         /// </summary>
         /// <param name="administratorLogin">Administrator login user name.</param>

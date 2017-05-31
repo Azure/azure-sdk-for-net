@@ -13,14 +13,14 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.SloUsageMetric>
     {
         /// <summary>
-        /// Gets the serviceLevelObjective for SLO usage metric.
-        /// </summary>
-        string ServiceLevelObjective { get; }
-
-        /// <summary>
         /// Gets the serviceLevelObjectiveId for SLO usage metric.
         /// </summary>
         System.Guid ServiceLevelObjectiveId { get; }
+
+        /// <summary>
+        /// Gets the serviceLevelObjective for SLO usage metric.
+        /// </summary>
+        string ServiceLevelObjective { get; }
 
         /// <summary>
         /// Gets inRangeTimeRatio for SLO usage metric.

@@ -15,15 +15,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId
     {
+        /// <return>An Azure SQL Database Transparent Data Encryption Activities.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> ListActivities();
+
         /// <summary>
         /// Gets name of the SQL Database to which this replication belongs.
         /// </summary>
         string DatabaseName { get; }
 
         /// <summary>
-        /// Gets the status of the Azure SQL Database Transparent Data Encryption.
+        /// Gets name of the SQL Server to which this replication belongs.
         /// </summary>
-        Models.TransparentDataEncryptionStates Status { get; }
+        string SqlServerName { get; }
 
         /// <summary>
         /// Updates the state of the transparent data encryption status.
@@ -33,11 +36,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryption UpdateStatus(TransparentDataEncryptionStates transparentDataEncryptionState);
 
         /// <summary>
-        /// Gets name of the SQL Server to which this replication belongs.
+        /// Gets the status of the Azure SQL Database Transparent Data Encryption.
         /// </summary>
-        string SqlServerName { get; }
-
-        /// <return>An Azure SQL Database Transparent Data Encryption Activities.</return>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ITransparentDataEncryptionActivity> ListActivities();
+        Models.TransparentDataEncryptionStates Status { get; }
     }
 }

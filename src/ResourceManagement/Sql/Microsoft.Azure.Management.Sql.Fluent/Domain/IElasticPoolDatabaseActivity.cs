@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId
     {
         /// <summary>
-        /// Gets the error message if available.
+        /// Gets the database name.
         /// </summary>
-        string ErrorMessage { get; }
+        string DatabaseName { get; }
 
         /// <summary>
         /// Gets the name of the current Elastic Pool the database is in if available.
@@ -26,39 +26,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         string CurrentElasticPoolName { get; }
 
         /// <summary>
-        /// Gets the percentage complete if available.
+        /// Gets the error message if available.
         /// </summary>
-        int PercentComplete { get; }
-
-        /// <summary>
-        /// Gets the current state of the operation.
-        /// </summary>
-        string State { get; }
-
-        /// <summary>
-        /// Gets the name of the Azure SQL Server the Elastic Pool is in.
-        /// </summary>
-        string ServerName { get; }
-
-        /// <summary>
-        /// Gets the time the operation finished (ISO8601 format).
-        /// </summary>
-        System.DateTime EndTime { get; }
-
-        /// <summary>
-        /// Gets the unique operation ID.
-        /// </summary>
-        string OperationId { get; }
-
-        /// <summary>
-        /// Gets the time the operation started (ISO8601 format).
-        /// </summary>
-        System.DateTime StartTime { get; }
-
-        /// <summary>
-        /// Gets the database name.
-        /// </summary>
-        string DatabaseName { get; }
+        string ErrorMessage { get; }
 
         /// <summary>
         /// Gets the error severity if available.
@@ -66,14 +36,24 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         int ErrorSeverity { get; }
 
         /// <summary>
-        /// Gets the operation name.
-        /// </summary>
-        string Operation { get; }
-
-        /// <summary>
         /// Gets the error code if available.
         /// </summary>
         int ErrorCode { get; }
+
+        /// <summary>
+        /// Gets the name of the Azure SQL Server the Elastic Pool is in.
+        /// </summary>
+        string ServerName { get; }
+
+        /// <summary>
+        /// Gets the percentage complete if available.
+        /// </summary>
+        int PercentComplete { get; }
+
+        /// <summary>
+        /// Gets the name of the current service objective if available.
+        /// </summary>
+        string CurrentServiceObjective { get; }
 
         /// <summary>
         /// Gets the name for the Elastic Pool the database is moving into if available.
@@ -86,8 +66,28 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         string RequestedServiceObjective { get; }
 
         /// <summary>
-        /// Gets the name of the current service objective if available.
+        /// Gets the unique operation ID.
         /// </summary>
-        string CurrentServiceObjective { get; }
+        string OperationId { get; }
+
+        /// <summary>
+        /// Gets the time the operation started (ISO8601 format).
+        /// </summary>
+        System.DateTime StartTime { get; }
+
+        /// <summary>
+        /// Gets the time the operation finished (ISO8601 format).
+        /// </summary>
+        System.DateTime EndTime { get; }
+
+        /// <summary>
+        /// Gets the current state of the operation.
+        /// </summary>
+        string State { get; }
+
+        /// <summary>
+        /// Gets the operation name.
+        /// </summary>
+        string Operation { get; }
     }
 }

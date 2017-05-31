@@ -14,13 +14,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.ElasticPools
     public interface IElasticPools 
     {
         /// <summary>
-        /// Creates a new elastic pool in SQL Server.
-        /// </summary>
-        /// <param name="elasticPoolName">Name of the elastic pool to be created.</param>
-        /// <return>Returns a stage to specify arguments of the elastic pool.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IBlank Define(string elasticPoolName);
-
-        /// <summary>
         /// Gets a particular elastic pool.
         /// </summary>
         /// <param name="elasticPoolName">Name of the elastic pool to get.</param>
@@ -28,10 +21,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.ElasticPools
         Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool Get(string elasticPoolName);
 
         /// <summary>
+        /// Creates a new elastic pool in SQL Server.
+        /// </summary>
+        /// <param name="elasticPoolName">Name of the elastic pool to be created.</param>
+        /// <return>Returns a stage to specify arguments of the elastic pool.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlElasticPool.Definition.IBlank Define(string elasticPoolName);
+
+        /// <summary>
         /// Delete specified elastic pool in the server.
         /// </summary>
         /// <param name="elasticPoolName">Name of the elastic pool to delete.</param>
-        void Delete(string elasticPoolName);
+        /// <return>Observable for the delete operation.</return>
+        Task DeleteAsync(string elasticPoolName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Returns all the elastic pools for the server.
@@ -43,7 +44,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.ElasticPools
         /// Delete specified elastic pool in the server.
         /// </summary>
         /// <param name="elasticPoolName">Name of the elastic pool to delete.</param>
-        /// <return>Observable for the delete operation.</return>
-        Task DeleteAsync(string elasticPoolName, CancellationToken cancellationToken = default(CancellationToken));
+        void Delete(string elasticPoolName);
     }
 }
