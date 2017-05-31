@@ -8,12 +8,13 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using ResourceManager.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
     public partial class RoleAssignmentImpl  :
-        CreatableImpl<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment,Models.RoleAssignmentInner,Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignmentImpl>,
+        Creatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment,Models.RoleAssignmentInner,Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignmentImpl,IRoleAssignment>,
         IRoleAssignment,
         IDefinition
     {

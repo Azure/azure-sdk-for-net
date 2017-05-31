@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// The implementation of Users and its parent interfaces.
     /// </summary>
     public partial class ActiveDirectoryUsersImpl  :
-        ReadableWrappersImpl<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUserImpl,Models.UserInner>,
+        ReadableWrappers<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUserImpl,Models.UserInner>,
         IActiveDirectoryUsers,
         IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUsersOperations>
     {
@@ -48,14 +48,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
             return null;
         }
-
-                public async Task<ServiceFuture<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser>> GetByIdAsync(string id, IServiceCallback<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> callback, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return ServiceFuture.FromBody(getByIdAsync(id), callback);
-
-            return null;
-        }
-
+        
                 internal  ActiveDirectoryUsersImpl(GraphRbacManager manager)
         {
             //$ {
@@ -129,11 +122,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return null;
         }
 
-                public IUsersOperations Inner()
+                public IUsersOperations Inner
         {
-            //$ return this.manager().Inner().Users();
-
-            return null;
+            get
+            {
+                return manager.Inner.Users;
+            }
         }
 
                 public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryUser>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
@@ -143,7 +137,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return null;
         }
 
-                protected ActiveDirectoryUserImpl WrapModel(UserInner userInner)
+                protected override IActiveDirectoryUser WrapModel(UserInner userInner)
         {
             //$ if (userInner == null) {
             //$ return null;

@@ -9,11 +9,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// Implementation for User and its parent interfaces.
     /// </summary>
     public partial class ActiveDirectoryUserImpl  :
-        WrapperImpl<Models.UserInner>,
+        Wrapper<Models.UserInner>,
         IActiveDirectoryUser
     {
         private GraphRbacManager manager;
                 internal  ActiveDirectoryUserImpl(UserInner innerObject, GraphRbacManager manager)
+                : base (innerObject)
         {
             //$ super(innerObject);
             //$ this.manager = manager;

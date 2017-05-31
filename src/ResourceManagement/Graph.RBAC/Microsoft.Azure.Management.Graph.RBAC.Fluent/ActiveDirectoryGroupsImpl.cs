@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// The implementation of Users and its parent interfaces.
     /// </summary>
     public partial class ActiveDirectoryGroupsImpl  :
-        ReadableWrappersImpl<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroupImpl,Models.ADGroupInner>,
+        ReadableWrappers<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroupImpl,Models.ADGroupInner>,
         IActiveDirectoryGroups
     {
         private GraphRbacManager manager;
@@ -55,14 +55,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
             return null;
         }
-
-                public async Task<ServiceFuture<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup>> GetByIdAsync(string id, IServiceCallback<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> callback, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return ServiceFuture.FromBody(getByIdAsync(id), callback);
-
-            return null;
-        }
-
+        
                 public IActiveDirectoryGroup GetByName(string name)
         {
             //$ return getByNameAsync(name).ToBlocking().Single();
@@ -101,17 +94,18 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return null;
         }
 
-                public IGroupsOperations Inner()
+                public IGroupsOperations Inner
         {
-            //$ return manager().Inner().Groups();
-
-            return null;
+            get
+            {
+                return manager.Inner.Groups;
+            }
         }
 
-                protected ActiveDirectoryGroupImpl WrapModel(ADGroupInner groupInner)
+                protected override IActiveDirectoryGroup WrapModel(ADGroupInner groupInner)
         {
             //$ if (groupInner == null) {
-            //$ return null;
+            //$ return null;    
             //$ }
             //$ return new ActiveDirectoryGroupImpl(groupInner, manager());
 

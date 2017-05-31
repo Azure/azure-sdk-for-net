@@ -26,17 +26,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// Gets the information about a resource from Azure based on the resource id.
         /// </summary>
         /// <param name="id">The id of the resource.</param>
-        /// <param name="callback">The callback to call on success or failure.</param>
-        /// <return>An immutable representation of the resource.</return>
-        async Task<Microsoft.Rest.ServiceFuture<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup>> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup>.GetByIdAsync(string id, IServiceCallback<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> callback, CancellationToken cancellationToken)
-        {
-            return await this.GetByIdAsync(id, callback, cancellationToken) as Microsoft.Rest.ServiceFuture<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup>;
-        }
-
-        /// <summary>
-        /// Gets the information about a resource from Azure based on the resource id.
-        /// </summary>
-        /// <param name="id">The id of the resource.</param>
         /// <return>An immutable representation of the resource.</return>
         Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup>.GetById(string id)
         {
@@ -87,7 +76,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="name">The name of the resource. (Note, this is not the resource ID.).</param>
         /// <return>An immutable representation of the resource.</return>
-        async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByNameAsync<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup>.GetByNameAsync(string name, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup>.GetByNameAsync(string name, CancellationToken cancellationToken)
         {
             return await this.GetByNameAsync(name, cancellationToken) as Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup;
         }
