@@ -77,6 +77,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAddress { get; set; }
 
         /// <summary>
+        /// Gets or sets PrivateIP allocation method (Static/Dynamic).
+        /// Possible values for this property include: 'Static', 'Dynamic'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
         public string PrivateIPAllocationMethod { get; set; }
