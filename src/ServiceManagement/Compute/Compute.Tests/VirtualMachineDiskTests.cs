@@ -31,6 +31,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
     public class VirtualMachineDiskTests : TestBase, IUseFixture<TestFixtureData>
     {
         private TestFixtureData fixture;
+        private const string PLACEHOLDER = "PLACEHOLDER";
 
         public void SetFixture(TestFixtureData data)
         {
@@ -152,7 +153,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                                             new ConfigurationSet
                                             {
                                                 AdminUserName = "FooBar12",
-                                                AdminPassword = "foobarB@z21!",
+                                                AdminPassword = PLACEHOLDER,
                                                 ConfigurationSetType = ConfigurationSetTypes
                                                                       .WindowsProvisioningConfiguration,
                                                 ComputerName = serviceName,

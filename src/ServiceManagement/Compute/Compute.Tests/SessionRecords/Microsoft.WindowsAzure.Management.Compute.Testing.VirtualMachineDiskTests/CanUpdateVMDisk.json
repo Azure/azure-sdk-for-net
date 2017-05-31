@@ -579,7 +579,7 @@
           "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/5.0.0.0"
         ]
       },
-      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo1477</Url>\r\n  <StorageServiceKeys>\r\n    <Primary>/v31mOgZjwOggc+4YZvzxxYz5mywqKnWuyr7BJ2l8NDV0Ts9Egc+BRxmt6j4JSshBKN9/rTlg2soQfjLgKECfQ==</Primary>\r\n    <Secondary>+Oaz4aLRGk/evTuox13V8TiAXWYcDpnIFZY6yyI7xnH45k34cSYu/mOLsIxWdYWqugQrVeRygW5/Aod9oN0GPA==</Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
+      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo1477</Url>\r\n  <StorageServiceKeys>\r\n    <Primary></Primary>\r\n    <Secondary></Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
       "ResponseHeaders": {
         "Content-Length": [
           "516"
@@ -620,7 +620,7 @@
           "Microsoft.WindowsAzure.Management.Storage.StorageManagementClient/5.0.0.0"
         ]
       },
-      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo1477</Url>\r\n  <StorageServiceKeys>\r\n    <Primary>/v31mOgZjwOggc+4YZvzxxYz5mywqKnWuyr7BJ2l8NDV0Ts9Egc+BRxmt6j4JSshBKN9/rTlg2soQfjLgKECfQ==</Primary>\r\n    <Secondary>+Oaz4aLRGk/evTuox13V8TiAXWYcDpnIFZY6yyI7xnH45k34cSYu/mOLsIxWdYWqugQrVeRygW5/Aod9oN0GPA==</Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
+      "ResponseBody": "<StorageService xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Url>https://management.core.windows.net/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/services/storageservices/psteststo1477</Url>\r\n  <StorageServiceKeys>\r\n    <Primary></Primary>\r\n    <Secondary></Secondary>\r\n  </StorageServiceKeys>\r\n</StorageService>",
       "ResponseHeaders": {
         "Content-Length": [
           "516"
