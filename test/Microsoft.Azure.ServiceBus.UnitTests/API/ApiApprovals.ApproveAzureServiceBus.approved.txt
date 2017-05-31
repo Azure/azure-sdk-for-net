@@ -1,0 +1,82 @@
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleToAttribute(@"Microsoft.Azure.ServiceBus.UnitTests,PublicKey=0024000004800000940000000602000000240000525341310004000001000100fdf4acac3b2244dd8a96737e5385b31414369dc3e42f371172127252856a0650793e1f5673a16d5d78e2ac852a104bc51e6f018dca44fdd26a219c27cb2b263956a80620223c8e9c2f8913c3c903e1e453e9e4e84098afdad5f4badb8c1ebe0a7b0a4b57a08454646a65886afe3e290a791ff3260099ce0edf0bdbccafadfeb6")]
+[assembly: System.Runtime.InteropServices.ComVisibleAttribute(false)]
+[assembly: System.Runtime.InteropServices.GuidAttribute("a042adf0-ef65-4f87-b634-322a409f3d61")]
+[assembly: System.Runtime.Versioning.TargetFrameworkAttribute(".NETFramework,Version=v4.5.1", FrameworkDisplayName=".NET Framework 4.5.1")]
+
+namespace Microsoft.Azure.ServiceBus
+{
+    
+    public abstract class ClientEntity : Microsoft.Azure.ServiceBus.IClientEntity { }
+    public class static EntityNameHelper { }
+    public interface IClientEntity { }
+    public interface IMessageSession : Microsoft.Azure.ServiceBus.Core.IMessageReceiver, Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity { }
+    public interface IQueueClient : Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity { }
+    public interface ISubscriptionClient : Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity { }
+    public interface ITopicClient : Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity { }
+    public class Message
+    {
+        public sealed class SystemPropertiesCollection { }
+    }
+    public sealed class MessageHandlerOptions { }
+    public sealed class MessageLockLostException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public sealed class MessagingEntityDisabledException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public sealed class MessagingEntityNotFoundException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public sealed class NoRetry : Microsoft.Azure.ServiceBus.RetryPolicy { }
+    public class QueueClient : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity, Microsoft.Azure.ServiceBus.IQueueClient { }
+    public sealed class QuotaExceededException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public enum ReceiveMode
+    {
+        PeekLock = 0,
+        ReceiveAndDelete = 1,
+    }
+    public sealed class RetryExponential : Microsoft.Azure.ServiceBus.RetryPolicy { }
+    public abstract class RetryPolicy { }
+    public class SecurityToken { }
+    public sealed class ServerBusyException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public class ServiceBusCommunicationException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public class ServiceBusConnectionStringBuilder { }
+    public class ServiceBusException : System.Exception { }
+    public sealed class SessionHandlerOptions { }
+    public sealed class SessionLockLostException : Microsoft.Azure.ServiceBus.ServiceBusException { }
+    public class SharedAccessSignatureTokenProvider : Microsoft.Azure.ServiceBus.TokenProvider
+    {
+        public static readonly System.DateTime EpochTime;
+    }
+    public class SubscriptionClient : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity, Microsoft.Azure.ServiceBus.ISubscriptionClient
+    {
+        public const string DefaultRule = "$Default";
+    }
+    public abstract class TokenProvider { }
+    public enum TokenScope
+    {
+        Namespace = 0,
+        Entity = 1,
+    }
+    public class TopicClient : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity, Microsoft.Azure.ServiceBus.ITopicClient { }
+}
+namespace Microsoft.Azure.ServiceBus.Core
+{
+    
+    public interface IMessageReceiver : Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity { }
+    public interface IReceiverClient : Microsoft.Azure.ServiceBus.IClientEntity { }
+    public interface ISenderClient : Microsoft.Azure.ServiceBus.IClientEntity { }
+    public class MessageReceiver : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.IMessageReceiver, Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity { }
+    public class MessageSender : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity { }
+}
+namespace Microsoft.Azure.ServiceBus.Filters
+{
+    
+    public sealed class CorrelationFilter : Microsoft.Azure.ServiceBus.Filters.Filter { }
+    public sealed class FalseFilter : Microsoft.Azure.ServiceBus.Filters.SqlFilter { }
+    public abstract class Filter { }
+    public abstract class RuleAction { }
+    public sealed class RuleDescription { }
+    public class SqlFilter : Microsoft.Azure.ServiceBus.Filters.Filter { }
+    public sealed class SqlRuleAction : Microsoft.Azure.ServiceBus.Filters.RuleAction { }
+    public sealed class TrueFilter : Microsoft.Azure.ServiceBus.Filters.SqlFilter { }
+}
+namespace Microsoft.Azure.ServiceBus.Primitives
+{
+    
+    public sealed class ExceptionReceivedEventArgs : System.EventArgs { }
+}

@@ -1,4 +1,4 @@
-MIT License
+﻿MIT License
 
 Copyright © Microsoft Corporation 2016
 
@@ -19,3 +19,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Third Party Programs: The software may include third party programs that Microsoft, not the third party,
+licenses to you under this agreement. Notices, if any, for the third party programs are included for your
+information only.
