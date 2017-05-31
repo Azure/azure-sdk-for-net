@@ -35,7 +35,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
                 Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver()
+                ContractResolver = new ReadOnlyJsonContractResolver(),
+                SerializationBinder = new Newtonsoft.Json.Serialization.DefaultSerializationBinder()
             };
             deserializeSettings.Converters.Add(new CloudErrorJsonConverter());
             var cloudError = JsonConvert.DeserializeObject<CloudError>(expected, deserializeSettings);
