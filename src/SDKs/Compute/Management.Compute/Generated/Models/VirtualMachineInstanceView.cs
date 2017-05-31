@@ -37,16 +37,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// thumbprint.</param>
         /// <param name="vmAgent">The VM Agent running on the virtual
         /// machine.</param>
+        /// <param name="maintenanceRedeployStatus">The Maintenance Operation
+        /// status on the virtual machine.</param>
         /// <param name="disks">The virtual machine disk information.</param>
         /// <param name="extensions">The extensions information.</param>
         /// <param name="bootDiagnostics">The boot diagnostics.</param>
         /// <param name="statuses">The resource status information.</param>
-        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
             RdpThumbPrint = rdpThumbPrint;
             VmAgent = vmAgent;
+            MaintenanceRedeployStatus = maintenanceRedeployStatus;
             Disks = disks;
             Extensions = extensions;
             BootDiagnostics = bootDiagnostics;
@@ -76,6 +79,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmAgent")]
         public VirtualMachineAgentInstanceView VmAgent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Maintenance Operation status on the virtual
+        /// machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "maintenanceRedeployStatus")]
+        public MaintenanceRedeployStatus MaintenanceRedeployStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine disk information.
