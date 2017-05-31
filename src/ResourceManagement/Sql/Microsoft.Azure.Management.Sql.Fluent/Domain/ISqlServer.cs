@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     public interface ISqlServer  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Sql.Fluent.ISqlManager,Models.ServerInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<SqlServer.Update.IUpdate>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<SqlServer.Update.IUpdate>
     {
         /// <summary>
         /// Gets the administrator login user name for the SQL Server.
