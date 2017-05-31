@@ -21,12 +21,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         string DatabaseName { get; }
 
         /// <summary>
-        /// Gets earliest restore time (ISO8601 format). Populated when restorePointType
-        /// = DISCRETE. Null otherwise.
-        /// </summary>
-        System.DateTime EarliestRestoreDate { get; }
-
-        /// <summary>
         /// Gets restore point creation time (ISO8601 format). Populated when
         /// restorePointType = CONTINUOUS. Null otherwise.
         /// </summary>
@@ -41,5 +35,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Gets the restore point type of the Azure SQL Database restore point.
         /// </summary>
         Models.RestorePointTypes RestorePointType { get; }
+
+        /// <summary>
+        /// Gets earliest restore time (ISO8601 format). Populated when restorePointType
+        /// = DISCRETE. Null otherwise.
+        /// </summary>
+        System.DateTime EarliestRestoreDate { get; }
     }
 }

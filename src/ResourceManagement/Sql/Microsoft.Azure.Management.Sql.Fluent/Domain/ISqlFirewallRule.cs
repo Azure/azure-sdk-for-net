@@ -17,21 +17,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ServerFirewallRuleInner>
     {
         /// <summary>
-        /// Gets region of SQL Server that contains this firewall rule.
-        /// </summary>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Region { get; }
-
-        /// <summary>
-        /// Gets the start IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.
-        /// </summary>
-        string StartIPAddress { get; }
-
-        /// <summary>
-        /// Deletes the firewall rule.
-        /// </summary>
-        void Delete();
-
-        /// <summary>
         /// Gets name of the SQL Server to which this firewall rule belongs.
         /// </summary>
         string SqlServerName { get; }
@@ -40,6 +25,21 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Gets kind of SQL Server that contains this firewall rule.
         /// </summary>
         string Kind { get; }
+
+        /// <summary>
+        /// Gets the start IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.
+        /// </summary>
+        string StartIPAddress { get; }
+
+        /// <summary>
+        /// Gets region of SQL Server that contains this firewall rule.
+        /// </summary>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Region { get; }
+
+        /// <summary>
+        /// Deletes the firewall rule.
+        /// </summary>
+        void Delete();
 
         /// <summary>
         /// Gets the end IP address (in IPv4 format) of the Azure SQL Server Firewall Rule.

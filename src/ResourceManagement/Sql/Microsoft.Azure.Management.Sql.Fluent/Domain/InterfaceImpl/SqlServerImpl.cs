@@ -4,7 +4,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition;
@@ -297,17 +296,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         SqlServer.Update.IUpdate SqlServer.Update.IWithFirewallRule.WithNewFirewallRule(string startIPAddress, string endIPAddress, string firewallRuleName)
         {
             return this.WithNewFirewallRule(startIPAddress, endIPAddress, firewallRuleName) as SqlServer.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>.Manager
-        {
-            get
-            {
-                return this.Manager as Microsoft.Azure.Management.Sql.Fluent.ISqlManager;
-            }
         }
 
         /// <summary>

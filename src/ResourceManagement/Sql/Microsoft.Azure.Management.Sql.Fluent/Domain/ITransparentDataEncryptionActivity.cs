@@ -15,24 +15,24 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId
     {
         /// <summary>
+        /// Gets name of the SQL Database to which this replication belongs.
+        /// </summary>
+        string DatabaseName { get; }
+
+        /// <summary>
+        /// Gets name of the SQL Server to which this replication belongs.
+        /// </summary>
+        string SqlServerName { get; }
+
+        /// <summary>
         /// Gets the percent complete of the transparent data encryption scan for a
         /// Azure SQL Database.
         /// </summary>
         double PercentComplete { get; }
 
         /// <summary>
-        /// Gets name of the SQL Database to which this replication belongs.
-        /// </summary>
-        string DatabaseName { get; }
-
-        /// <summary>
         /// Gets the status transparent data encryption of the Azure SQL Database.
         /// </summary>
         string Status { get; }
-
-        /// <summary>
-        /// Gets name of the SQL Server to which this replication belongs.
-        /// </summary>
-        string SqlServerName { get; }
     }
 }

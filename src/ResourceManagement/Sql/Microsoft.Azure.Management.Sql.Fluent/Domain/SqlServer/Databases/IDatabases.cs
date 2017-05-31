@@ -14,13 +14,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Databases
     public interface IDatabases 
     {
         /// <summary>
-        /// Creates a new database in SQL Server.
-        /// </summary>
-        /// <param name="databaseName">Name of the database to be created.</param>
-        /// <return>Returns a stage to specify arguments of the database.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IBlank Define(string databaseName);
-
-        /// <summary>
         /// Gets a particular sql database.
         /// </summary>
         /// <param name="databaseName">Name of the sql database to get.</param>
@@ -28,10 +21,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Databases
         Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase Get(string databaseName);
 
         /// <summary>
+        /// Creates a new database in SQL Server.
+        /// </summary>
+        /// <param name="databaseName">Name of the database to be created.</param>
+        /// <return>Returns a stage to specify arguments of the database.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlDatabase.Definition.IBlank Define(string databaseName);
+
+        /// <summary>
         /// Delete specified database in the server.
         /// </summary>
         /// <param name="databaseName">Name of the database to delete.</param>
-        void Delete(string databaseName);
+        /// <return>Observable for the delete operation.</return>
+        Task DeleteAsync(string databaseName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Returns all the databases for the server.
@@ -43,7 +44,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Databases
         /// Delete specified database in the server.
         /// </summary>
         /// <param name="databaseName">Name of the database to delete.</param>
-        /// <return>Observable for the delete operation.</return>
-        Task DeleteAsync(string databaseName, CancellationToken cancellationToken = default(CancellationToken));
+        void Delete(string databaseName);
     }
 }

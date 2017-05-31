@@ -7,7 +7,6 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Fluent;
-    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// A storage account definition allowing the sku to be set.
@@ -43,15 +42,9 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition
     /// <summary>
     /// A storage account definition specifying encryption setting.
     /// </summary>
-    public interface IWithEncryption : IBeta
+    public interface IWithEncryption  :
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition.IWithEncryptionBeta
     {
-        /// <summary>
-        /// Specifies the encryption settings on the account. The default
-        /// setting is unencrypted.
-        /// </summary>
-        /// <param name="encryption">The encryption setting.</param>
-        /// <return>The nest stage of storage account definition.</return>
-        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition.IWithCreate WithEncryption(Encryption encryption);
     }
 
     /// <summary>
@@ -149,5 +142,20 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition
         /// </summary>
         /// <return>The next stage of storage account definition.</return>
         Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition.IWithCreateAndAccessTier WithBlobStorageAccountKind();
+    }
+
+    /// <summary>
+    /// A storage account definition specifying encryption setting.
+    /// </summary>
+    public interface IWithEncryptionBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies the encryption settings on the account. The default
+        /// setting is unencrypted.
+        /// </summary>
+        /// <param name="encryption">The encryption setting.</param>
+        /// <return>The nest stage of storage account definition.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition.IWithCreate WithEncryption(Encryption encryption);
     }
 }

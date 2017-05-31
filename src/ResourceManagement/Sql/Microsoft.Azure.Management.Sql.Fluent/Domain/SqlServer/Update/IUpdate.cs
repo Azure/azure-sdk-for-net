@@ -23,6 +23,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update
     public interface IWithFirewallRule 
     {
         /// <summary>
+        /// Removes firewall rule from the SQL Server.
+        /// </summary>
+        /// <param name="firewallRuleName">Name of the firewall rule to be removed.</param>
+        /// <return>Next stage of the SQL Server update.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithoutFirewallRule(string firewallRuleName);
+
+        /// <summary>
         /// Create new firewall rule in the SQL Server.
         /// </summary>
         /// <param name="ipAddress">IP address for the firewall rule.</param>
@@ -45,13 +52,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update
         /// <param name="firewallRuleName">Name for the firewall rule.</param>
         /// <return>Next stage of the SQL Server update.</return>
         Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewFirewallRule(string startIPAddress, string endIPAddress, string firewallRuleName);
-
-        /// <summary>
-        /// Removes firewall rule from the SQL Server.
-        /// </summary>
-        /// <param name="firewallRuleName">Name of the firewall rule to be removed.</param>
-        /// <return>Next stage of the SQL Server update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithoutFirewallRule(string firewallRuleName);
     }
 
     /// <summary>
@@ -60,18 +60,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update
     public interface IWithDatabase 
     {
         /// <summary>
-        /// Create new database in the SQL Server.
-        /// </summary>
-        /// <param name="databaseName">Name of the database to be created.</param>
-        /// <return>Next stage of the SQL Server update.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewDatabase(string databaseName);
-
-        /// <summary>
         /// Remove database from the SQL Server.
         /// </summary>
         /// <param name="databaseName">Name of the database to be removed.</param>
         /// <return>Next stage of the SQL Server update.</return>
         Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithoutDatabase(string databaseName);
+
+        /// <summary>
+        /// Create new database in the SQL Server.
+        /// </summary>
+        /// <param name="databaseName">Name of the database to be created.</param>
+        /// <return>Next stage of the SQL Server update.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlServer.Update.IUpdate WithNewDatabase(string databaseName);
     }
 
     /// <summary>

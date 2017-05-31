@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.Sql.Fluent.Models;
     using System;
 
     /// <summary>
@@ -12,13 +13,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.UpgradeHint>
     {
         /// <summary>
-        /// Gets Target ServiceLevelObjective for upgrade hint.
-        /// </summary>
-        string TargetServiceLevelObjective { get; }
-
-        /// <summary>
         /// Gets Target ServiceLevelObjectiveId for upgrade hint.
         /// </summary>
         System.Guid TargetServiceLevelObjectiveId { get; }
+
+        /// <summary>
+        /// Gets Target ServiceLevelObjective for upgrade hint.
+        /// </summary>
+        string TargetServiceLevelObjective { get; }
     }
 }

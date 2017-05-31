@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             IUpdate>,
         IStorageAccount,
         IDefinition,
-        StorageAccount.Update.IUpdate
+        IUpdate
     {
         private string name;
         private StorageAccountCreateParametersInner createParameters;
@@ -38,7 +38,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             createParameters = new StorageAccountCreateParametersInner();
             updateParameters = new StorageAccountUpdateParametersInner();
         }
-        
+
+        #region Accessors
         public AccessTier AccessTier
         {
             get
@@ -128,6 +129,10 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 return Inner.Sku;
             }
         }
+        #endregion
+
+
+        #region Actions
 
         public IReadOnlyList<StorageAccountKey> GetKeys()
         {
@@ -142,113 +147,11 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             }
             return cachedAccountKeys;
         }
-        
-        public IWithCreate WithSku(SkuName skuName)
-        {
-            createParameters.Sku = new Sku()
-            {
-                Name = skuName
-            };
-            return this;
-        }
 
-        public IWithCreate WithAccessTier(AccessTier accessTier)
-        {
-            createParameters.AccessTier = accessTier;
-            return this;
-        }
-
-        public IWithCreateAndAccessTier WithBlobStorageAccountKind()
-        {
-            createParameters.Kind = Kind.BlobStorage;
-            return this;
-        }
-
-        public IWithCreate WithGeneralPurposeAccountKind()
-        {
-            createParameters.Kind = Kind.Storage;
-            return this;
-        }
-
-
-        public IWithCreate WithCustomDomain(string name)
-        {
-            createParameters.CustomDomain = new CustomDomain(name);
-            return this;
-        }
-
-        public IWithCreate WithCustomDomain(CustomDomain customDomain)
-        {
-            createParameters.CustomDomain = customDomain;
-            return this;
-        }
-
-        public IWithCreate WithCustomDomain(string name, bool useSubDomain)
-        {
-            return WithCustomDomain(new CustomDomain()
-            {
-                Name = name,
-                UseSubDomain = useSubDomain
-            });
-        }
-
-        public IWithCreate WithEncryption(Encryption encryption)
-        {
-            createParameters.Encryption = encryption;
-            return this;
-        }
-        
-        IUpdate IWithAccessTier.WithAccessTier(AccessTier accessTier)
-        {
-            if (Inner.Kind != Kind.BlobStorage)
-            {
-                throw new ArgumentException("Access tier cannot be changed for general purpose storage accounts");
-            }
-            updateParameters.AccessTier = accessTier;
-            return this;
-        }
-
-        IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(string name)
-        {
-            updateParameters.CustomDomain = new CustomDomain(name);
-            return this;
-        }
-
-        IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(CustomDomain customDomain)
-        {
-            updateParameters.CustomDomain = customDomain;
-            return this;
-        }
-
-        IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(string name, bool useSubDomain)
-        {
-            updateParameters.CustomDomain = new CustomDomain()
-            {
-                Name = name,
-                UseSubDomain = useSubDomain
-            };
-            return this;
-        }
-
-        IUpdate StorageAccount.Update.IWithSku.WithSku(SkuName skuName)
-        {
-            updateParameters.Sku = new Sku()
-            {
-                Name = skuName
-            };
-            return this;
-        }
-
-        IUpdate StorageAccount.Update.IWithEncryption.WithEncryption(Encryption encryption)
-        {
-            updateParameters.Encryption = encryption;
-            return this;
-        }
-                
         public async Task<IReadOnlyList<StorageAccountKey>> RefreshKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var storageAccountListKeysResultInner = await Manager.Inner.StorageAccounts.ListKeysAsync(
-                ResourceGroupName, 
+                ResourceGroupName,
                 Name,
                 cancellationToken);
             var list = new List<StorageAccountKey>();
@@ -265,8 +168,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         public async Task<IReadOnlyList<StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken))
         {
             var storageAccountListKeysResultInner = await Manager.Inner.StorageAccounts.RegenerateKeyAsync(
-                ResourceGroupName, 
-                Name, 
+                ResourceGroupName,
+                Name,
                 keyName,
                 cancellationToken);
             var list = new List<StorageAccountKey>();
@@ -308,5 +211,186 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             SetInner(response);
             return this;
         }
+
+        #endregion
+
+
+        #region Withers
+
+        #region WithSku
+        internal StorageAccountImpl WithSku(SkuName skuName)
+        {
+            var sku = new Sku();
+            if (IsInCreateMode)
+            {
+                createParameters.Sku = sku;
+            }
+            else
+            {
+                updateParameters.Sku = sku;
+            }
+            return this;
+        }
+
+        IWithCreate StorageAccount.Definition.IWithSku.WithSku(SkuName skuName)
+        {
+            return WithSku(skuName);
+        }
+
+        IUpdate StorageAccount.Update.IWithSku.WithSku(SkuName skuName)
+        {
+            return WithSku(skuName);
+        }
+        #endregion
+
+        #region WithAccountKind
+        internal StorageAccountImpl WithBlobStorageAccountKind()
+        {
+            if (IsInCreateMode)
+            {
+                createParameters.Kind = Kind.Storage;
+            }
+            return this;
+        }
+
+        internal StorageAccountImpl WithGeneralPurposeAccountKind()
+        {
+            if (IsInCreateMode)
+            {
+                createParameters.Kind = Kind.Storage;
+            }
+            return this;
+        }
+
+        IWithCreateAndAccessTier StorageAccount.Definition.IWithBlobStorageAccountKind.WithBlobStorageAccountKind()
+        {
+            return WithBlobStorageAccountKind();
+        }
+
+        IWithCreate StorageAccount.Definition.IWithGeneralPurposeAccountKind.WithGeneralPurposeAccountKind()
+        {
+            return WithGeneralPurposeAccountKind();
+        }
+
+        #endregion
+
+        #region WithAccessTier
+        internal StorageAccountImpl WithAccessTier(AccessTier accessTier)
+        {
+            if (IsInCreateMode)
+            {
+                createParameters.AccessTier = accessTier;
+            }
+            else
+            {
+                updateParameters.AccessTier = accessTier;
+            }
+            return this;
+        }
+
+        IWithCreate StorageAccount.Definition.IWithCreateAndAccessTier.WithAccessTier(AccessTier accessTier)
+        {
+            return WithAccessTier(accessTier);
+        }
+
+        IUpdate StorageAccount.Update.IWithAccessTier.WithAccessTier(AccessTier accessTier)
+        {
+            return WithAccessTier(accessTier);
+        }
+        #endregion
+
+        #region WithCustomDomain
+        internal StorageAccountImpl WithCustomDomain(string name)
+        {
+            if (IsInCreateMode)
+            {
+                createParameters.CustomDomain = new CustomDomain(name);
+            }
+            else
+            {
+                updateParameters.CustomDomain = new CustomDomain(name);
+            }
+            return this;
+        }
+
+        IWithCreate StorageAccount.Definition.IWithCustomDomain.WithCustomDomain(string name)
+        {
+            return WithCustomDomain(name);
+        }
+
+        IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(string name)
+        {
+            return WithCustomDomain(name);
+        }
+
+        internal StorageAccountImpl WithCustomDomain(CustomDomain customDomain)
+        {
+            if (IsInCreateMode)
+            {
+                createParameters.CustomDomain = customDomain;
+            }
+            else
+            {
+                updateParameters.CustomDomain = customDomain;
+            }
+            return this;
+        }
+
+        IWithCreate StorageAccount.Definition.IWithCustomDomain.WithCustomDomain(CustomDomain customDomain)
+        {
+            return WithCustomDomain(customDomain);
+        }
+
+        IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(CustomDomain customDomain)
+        {
+            return WithCustomDomain(customDomain);
+        }
+
+        internal StorageAccountImpl WithCustomDomain(string name, bool useSubDomain)
+        {
+            return WithCustomDomain(new CustomDomain()
+            {
+                Name = name,
+                UseSubDomain = useSubDomain
+            });
+        }
+
+        IWithCreate StorageAccount.Definition.IWithCustomDomain.WithCustomDomain(string name, bool useSubDomain)
+        {
+            return WithCustomDomain(name, useSubDomain);
+        }
+
+        IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(string name, bool useSubDomain)
+        {
+            return WithCustomDomain(name, useSubDomain);
+        }
+        #endregion
+
+        #region WithEncryption
+        internal StorageAccountImpl WithEncryption(Encryption encryption)
+        {
+            if (IsInCreateMode)
+            {
+                createParameters.Encryption = encryption;
+            }
+            else
+            {
+                updateParameters.Encryption = encryption;
+            }
+            return this;
+        }
+
+        IUpdate StorageAccount.Update.IWithEncryptionBeta.WithEncryption(Encryption encryption)
+        {
+            return WithEncryption(encryption);
+        }
+
+        IWithCreate StorageAccount.Definition.IWithEncryptionBeta.WithEncryption(Encryption encryption)
+        {
+            return WithEncryption(encryption);
+        }
+        #endregion
+
+        #endregion
     }
 }

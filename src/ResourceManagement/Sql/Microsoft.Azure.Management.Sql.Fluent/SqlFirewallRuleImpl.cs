@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:86CD1E259A3329513723B4E03EFABB98:15BC15CFDD8106B985088348087483E5
-        public SqlFirewallRuleImpl WithIpAddressRange(string startIpAddress, string endIpAddress)
+        public SqlFirewallRuleImpl WithIPAddressRange(string startIpAddress, string endIpAddress)
         {
             Inner.StartIpAddress = startIpAddress;
             Inner.EndIpAddress = endIpAddress;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:F447869988CA4FAC84328D668E8C3E63:FC2F4AB7336D8B5FBACF1012628B157F
-        public SqlFirewallRuleImpl WithEndIpAddress(string endIpAddress)
+        public SqlFirewallRuleImpl WithEndIPAddress(string endIpAddress)
         {
             Inner.EndIpAddress = endIpAddress;
 
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:D5B3C39B9575015B060C5915E28F7DED:E2EB90CF1BFD48AF581DD19E19A48783
-        public string StartIpAddress()
+        public string StartIPAddress()
         {
             return Inner.StartIpAddress;
         }
@@ -89,13 +89,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:6ADF1ABD01F52EF2AB48EBDB916AC61B:0E617A4FA7C8B0429E44FA81A0CA93AE
-        public string EndIpAddress()
+        public string EndIPAddress()
         {
             return Inner.EndIpAddress;
         }
 
         ///GENMHASH:78ADACC8F10C5519A35307D4BCF30B70:19E90E783DF08C6EF5789BCD8F9F2F63
-        public SqlFirewallRuleImpl WithStartIpAddress(string startIpAddress)
+        public SqlFirewallRuleImpl WithStartIPAddress(string startIpAddress)
         {
             Inner.StartIpAddress = startIpAddress;
 
@@ -103,9 +103,9 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         ///GENMHASH:040FE6797829F09ECF75BDE559FBA5FC:0D4A3A3FE03B789EAEFA20F7BEA0BF8F
-        public SqlFirewallRuleImpl WithIpAddress(string ipAddress)
+        public SqlFirewallRuleImpl WithIPAddress(string ipAddress)
         {
-            this.WithStartIpAddress(ipAddress).WithEndIpAddress(ipAddress);
+            this.WithStartIPAddress(ipAddress).WithEndIPAddress(ipAddress);
 
             return this;
         }
