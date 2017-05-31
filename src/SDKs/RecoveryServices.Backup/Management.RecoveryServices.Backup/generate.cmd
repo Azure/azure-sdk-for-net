@@ -4,9 +4,9 @@
 ::
 
 @echo off
-set autoRestVersion=1.0.1-20170419-2300-nightly
+set autoRestVersion=1.0.1-20170525-2300-nightly
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/933056da11d6c332da7ce05cd701848356d81010/arm-recoveryservicesbackup/2016-12-01/readme.md"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3396af0038f19b21ac417e14c6f82a7b5e646e60/arm-recoveryservicesbackup/readme.md"
 ) else (
     set specFile="%1"
 )

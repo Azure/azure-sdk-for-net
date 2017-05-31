@@ -70,11 +70,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
         /// Gets the IBackupResourceVaultConfigsOperations.
         /// </summary>
         public virtual IBackupResourceVaultConfigsOperations BackupResourceVaultConfigs { get; private set; }
@@ -223,6 +218,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// Gets the IBackupUsageSummariesOperations.
         /// </summary>
         public virtual IBackupUsageSummariesOperations BackupUsageSummaries { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the RecoveryServicesBackupClient class.
@@ -425,7 +425,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </summary>
         private void Initialize()
         {
-            Operations = new Operations(this);
             BackupResourceVaultConfigs = new BackupResourceVaultConfigsOperations(this);
             BackupEngines = new BackupEnginesOperations(this);
             ProtectionContainerRefreshOperationResults = new ProtectionContainerRefreshOperationResultsOperations(this);
@@ -456,6 +455,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             SecurityPINs = new SecurityPINsOperations(this);
             BackupResourceStorageConfigs = new BackupResourceStorageConfigsOperations(this);
             BackupUsageSummaries = new BackupUsageSummariesOperations(this);
+            Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
