@@ -21,34 +21,22 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ObjectsOperations operations.
+    /// ProviderOperationsMetadataOperations operations.
     /// </summary>
-    public partial interface IObjectsOperations
+    public partial interface IProviderOperationsMetadataOperations
     {
         /// <summary>
-        /// Gets the details for the currently logged-in user.
+        /// Gets provider operations metadata for the specified resource
+        /// provider.
         /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
+        /// <param name='resourceProviderNamespace'>
+        /// The namespace of the resource provider.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
+        /// <param name='apiVersion'>
+        /// The API version to use for the operation.
         /// </param>
-        /// <exception cref="GraphErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AADObjectInner>> GetCurrentUserWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets AD group membership for the specified AD object IDs.
-        /// </summary>
-        /// <param name='parameters'>
-        /// Objects filtering parameters.
+        /// <param name='expand'>
+        /// Specifies whether to expand the values.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -65,12 +53,15 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AADObjectInner>>> GetObjectsByObjectIdsWithHttpMessagesAsync(GetObjectsParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ProviderOperationsMetadataInner>> GetWithHttpMessagesAsync(string resourceProviderNamespace, string apiVersion, string expand = "resourceTypes", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets AD group membership for the specified AD object IDs.
+        /// Gets provider operations metadata for all resource providers.
         /// </summary>
-        /// <param name='nextLink'>
-        /// Next link for the list operation.
+        /// <param name='apiVersion'>
+        /// The API version to use for this operation.
+        /// </param>
+        /// <param name='expand'>
+        /// Specifies whether to expand the values.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -87,6 +78,28 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AADObjectInner>>> GetObjectsByObjectIdsNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ProviderOperationsMetadataInner>>> ListWithHttpMessagesAsync(string apiVersion, string expand = "resourceTypes", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets provider operations metadata for all resource providers.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<ProviderOperationsMetadataInner>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

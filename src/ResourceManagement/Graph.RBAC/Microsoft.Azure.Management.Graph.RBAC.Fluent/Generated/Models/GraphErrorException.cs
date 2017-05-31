@@ -18,9 +18,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.Models
     /// <summary>
     /// Exception thrown for an invalid response with GraphError information.
     /// </summary>
-#if LEGACY
-    [System.Serializable]
-#endif
     public class GraphErrorException : RestException
     {
         /// <summary>
@@ -63,39 +60,5 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.Models
             : base(message, innerException)
         {
         }
-
-#if LEGACY
-        /// <summary>
-        /// Initializes a new instance of the GraphErrorException class.
-        /// </summary>
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Streaming context.</param>
-        protected GraphErrorException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        {
-        }
-
-        /// <summary>
-        /// Serializes content of the exception.
-        /// </summary>
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Streaming context.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true)]
-        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            if (info == null)
-            {
-                throw new System.ArgumentNullException("info");
-            }
-
-            info.AddValue("Request", Request);
-            info.AddValue("Response", Response);
-            info.AddValue("Body", Body);
-        }
-#endif
     }
 }
