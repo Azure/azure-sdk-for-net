@@ -72,17 +72,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
         /// Creates a credentials object from a service principal.
         /// </summary>
         /// <param name="clientId">the client ID of the application the service principal is associated with</param>
-        /// <param name="clientSecret">the secret for the client ID</param>
+        /// <param name="certificatePath">the certificate file for the client ID</param>]
+        /// <param name="certificatePassword">the password for the certificate</param>
         /// <param name="tenantId">the tenant ID or domain the application is in</param>
         /// <param name="environment">the environment to authenticate to</param>
         /// <returns>an authenticated credentials object</returns>
-        public AzureCredentials FromServicePrincipal(string clientId, string certificate, string certificatePassword, string tenantId, AzureEnvironment environment)
+        public AzureCredentials FromServicePrincipal(string clientId, string certificatePath, string certificatePassword, string tenantId, AzureEnvironment environment)
         {
-            var certBytes = File.ReadAllBytes(certificate);
+            var certBytes = File.ReadAllBytes(certificatePath);
             return new AzureCredentials(new ServicePrincipalLoginInformation
             {
                 ClientId = clientId,
-                Certifcate = new X509Certificate2(certBytes, certificatePassword)
+                Certifcate = certBytes,
+                CertifcatePassword = certificatePassword
             }, tenantId, environment);
         }
 
@@ -142,7 +144,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
                     certificatePath = Path.Combine(Path.GetDirectoryName(authFile), certificatePath);
                 }
                 credentials = FromServicePrincipal(config["client"], certificatePath,
-                    config.ContainsKey("certificatePassword") ? config["certificatePassword"] : "", config["tenant"], env);
+                    config.ContainsKey("certificatepassword") ? config["certificatepassword"] : "", config["tenant"], env);
             }
             else
             {

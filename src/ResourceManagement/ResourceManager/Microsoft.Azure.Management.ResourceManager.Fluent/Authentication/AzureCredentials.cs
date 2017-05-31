@@ -103,8 +103,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
                     }
                     else
                     {
-                        credentialsCache[adSettings.TokenAudience] = await ApplicationTokenProvider.LoginSilentWithCertificateAsync(
-                            TenantId, new ClientAssertionCertificate(servicePrincipalLoginInformation.ClientId, servicePrincipalLoginInformation.Certifcate));
+                        credentialsCache[adSettings.TokenAudience] = await ApplicationTokenProvider.LoginSilentAsync(
+                            TenantId, servicePrincipalLoginInformation.ClientId, servicePrincipalLoginInformation.Certifcate, servicePrincipalLoginInformation.CertifcatePassword, TokenCache.DefaultShared);
                     }
                 }
 #if !PORTABLE
