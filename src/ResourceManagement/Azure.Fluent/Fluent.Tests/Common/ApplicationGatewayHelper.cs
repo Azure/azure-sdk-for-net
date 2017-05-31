@@ -55,11 +55,11 @@ namespace Azure.Tests.Common
                     .Append("\n\tTags: ").Append(resource.Tags.ToString())
                     .Append("\n\tSKU: ").Append(resource.Sku.ToString())
                     .Append("\n\tOperational state: ").Append(resource.OperationalState)
-                    .Append("\n\tSSL policy: ").Append(resource.SslPolicy)
                     .Append("\n\tInternet-facing? ").Append(resource.IsPublic)
                     .Append("\n\tInternal? ").Append(resource.IsPrivate)
                     .Append("\n\tDefault private IP address: ").Append(resource.PrivateIPAddress)
-                    .Append("\n\tPrivate IP address allocation method: ").Append(resource.PrivateIPAllocationMethod);
+                    .Append("\n\tPrivate IP address allocation method: ").Append(resource.PrivateIPAllocationMethod)
+                    .Append("\n\tDisabled SSL protocols: ").Append(resource.DisabledSslProtocols);
 
             // Show IP configs
             var ipConfigs = resource.IPConfigurations;

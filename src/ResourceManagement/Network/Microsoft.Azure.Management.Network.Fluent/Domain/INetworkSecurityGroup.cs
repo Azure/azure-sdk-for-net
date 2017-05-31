@@ -23,13 +23,13 @@ namespace Microsoft.Azure.Management.Network.Fluent
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.INetworkSecurityRule> DefaultSecurityRules { get; }
 
         /// <summary>
-        /// Gets the IDs of the network interfaces associated with this network security group.
-        /// </summary>
-        System.Collections.Generic.ISet<string> NetworkInterfaceIds { get; }
-
-        /// <summary>
         /// Gets security rules associated with this network security group, indexed by their names.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.INetworkSecurityRule> SecurityRules { get; }
+
+        /// <summary>
+        /// Gets the IDs of the network interfaces associated with this network security group.
+        /// </summary>
+        System.Collections.Generic.ISet<string> NetworkInterfaceIds { get; }
     }
 }

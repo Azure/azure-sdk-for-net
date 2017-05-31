@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayFrontend.U
     }
 
     /// <summary>
-    /// The first stage of an application gatewway frontend definition.
+    /// The first stage of an application gateway frontend definition.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IBlank<ParentT>  :

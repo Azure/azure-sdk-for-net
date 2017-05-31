@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
     public interface IWithPrivateFrontend 
     {
         /// <summary>
-        /// Enables a private (internal) default frontend in the subnet containing the application gateway.
-        /// A frontend with the name "default" will be created if needed.
+        /// Enables a private (internal) default frontend within the subnet containing the application gateway.
+        /// A frontend with an automatically generated name will be created if none exists.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithPrivateFrontend();
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// Specifies the capacity (number of instances) for the application gateway.
         /// By default, 1 instance is used.
         /// </summary>
-        /// <param name="instanceCount">The capacity as a number between 1 and 10 but also based on the limits imposed by the selected applicatiob gateway size.</param>
+        /// <param name="instanceCount">The capacity as a number between 1 and 10 but also based on the limits imposed by the selected application gateway size.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithInstanceCount(int instanceCount);
     }
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
 
     /// <summary>
     /// The stage of an application gateway definition allowing to specify the default IP address the app gateway will be internally available at,
-    /// if the default private frontend has been enabled.
+    /// if a default private frontend has been enabled.
     /// </summary>
     public interface IWithPrivateIPAddress  :
         Microsoft.Azure.Management.Network.Fluent.HasPrivateIPAddress.Definition.IWithPrivateIPAddress<Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate>
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
 
     /// <summary>
     /// The stage of an application gateway definition containing all the required inputs for
-    /// the resource to be created (via  WithCreate.create()), but also allowing
+    /// the resource to be created, but also allowing
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
@@ -258,7 +258,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPrivateFrontend,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPublicFrontend,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithPublicIPAddress,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithProbe
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithProbe,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithDisabledSslProtocol
     {
     }
 
@@ -281,5 +282,34 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definitio
         /// <param name="name">The name to assign to the port.</param>
         /// <return>The next stage of the definition, or null if a port matching either the name or the number, but not both, already exists.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithFrontendPort(int portNumber, string name);
+    }
+
+    /// <summary>
+    /// The stage of an application gateway definition allowing to specify the SSL protocols to disable.
+    /// </summary>
+    public interface IWithDisabledSslProtocol  :
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithDisabledSslProtocolBeta
+    {
+    }
+
+    /// <summary>
+    /// The stage of an application gateway definition allowing to specify the SSL protocols to disable.
+    /// </summary>
+    public interface IWithDisabledSslProtocolBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Disables the specified SSL protocols.
+        /// </summary>
+        /// <param name="protocols">SSL protocols.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols);
+
+        /// <summary>
+        /// Disables the specified SSL protocol.
+        /// </summary>
+        /// <param name="protocol">An SSL protocol.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition.IWithCreate WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol);
     }
 }

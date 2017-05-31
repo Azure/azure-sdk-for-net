@@ -8,13 +8,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     public interface IRedisAccessKeys 
     {
         /// <summary>
-        /// Gets a primary key value.
-        /// </summary>
-        string PrimaryKey { get; }
-
-        /// <summary>
         /// Gets a secondary key value.
         /// </summary>
         string SecondaryKey { get; }
+
+        /// <summary>
+        /// Gets a primary key value.
+        /// </summary>
+        string PrimaryKey { get; }
     }
 }

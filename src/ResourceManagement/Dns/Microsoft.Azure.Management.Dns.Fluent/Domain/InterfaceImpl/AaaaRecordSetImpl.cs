@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         {
             get
             {
-                return this.Ipv6Addresses() as System.Collections.Generic.IReadOnlyList<string>;
+                return this.IPv6Addresses() as System.Collections.Generic.IReadOnlyList<string>;
             }
         }
 

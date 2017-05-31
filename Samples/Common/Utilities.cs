@@ -86,11 +86,11 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tTags: ").Append(resource.Tags.ToString())
                     .Append("\n\tSKU: ").Append(resource.Sku.ToString())
                     .Append("\n\tOperational state: ").Append(resource.OperationalState)
-                    .Append("\n\tSSL policy: ").Append(resource.SslPolicy)
                     .Append("\n\tInternet-facing? ").Append(resource.IsPublic)
                     .Append("\n\tInternal? ").Append(resource.IsPrivate)
                     .Append("\n\tDefault private IP address: ").Append(resource.PrivateIPAddress)
-                    .Append("\n\tPrivate IP address allocation method: ").Append(resource.PrivateIPAllocationMethod);
+                    .Append("\n\tPrivate IP address allocation method: ").Append(resource.PrivateIPAllocationMethod)
+                    .Append("\n\tDisabled SSL protocols: ").Append(resource.DisabledSslProtocols);
 
             // Show IP configs
             var ipConfigs = resource.IPConfigurations;
@@ -154,6 +154,12 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\t\t\tPort: ").Append(httpConfig.Port)
                     .Append("\n\t\t\tRequest timeout in seconds: ").Append(httpConfig.RequestTimeout)
                     .Append("\n\t\t\tProtocol: ").Append(httpConfig.Protocol.ToString());
+
+                var probe = httpConfig.Probe;
+                if (probe != null)
+                {
+                    info.Append("\n\t\tProbe: " + probe.Name);
+                }
             }
 
             // Show SSL certificates
@@ -255,6 +261,19 @@ namespace Microsoft.Azure.Management.Samples.Common
                 {
                     info.Append(config.Name);
                 }
+            }
+
+            // Show probes  
+            var probes = resource.Probes;
+            info.Append("\n\tProbes: ").Append(probes.Count);
+            foreach (var probe in probes.Values)
+            {
+                info.Append("\n\t\tName: ").Append(probe.Name)
+                    .Append("\n\t\tProtocol:").Append(probe.Protocol.ToString())
+                    .Append("\n\t\tInterval in seconds: ").Append(probe.TimeBetweenProbesInSeconds)
+                    .Append("\n\t\tRetries: ").Append(probe.RetriesBeforeUnhealthy)
+                    .Append("\n\t\tTimeout: ").Append(probe.TimeoutInSeconds)
+                    .Append("\n\t\tHost: ").Append(probe.Host);
             }
 
             Utilities.Log(info.ToString());

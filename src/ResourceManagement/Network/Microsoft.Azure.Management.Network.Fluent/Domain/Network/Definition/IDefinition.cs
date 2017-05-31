@@ -42,13 +42,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Definition
         Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet> DefineSubnet(string name);
 
         /// <summary>
-        /// Explicitly defines subnets in the virtual network based on the provided map.
-        /// </summary>
-        /// <param name="nameCidrPairs">A  Map of CIDR addresses for the subnets, indexed by the name of each subnet to be defined.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet WithSubnets(IDictionary<string,string> nameCidrPairs);
-
-        /// <summary>
         /// Explicitly adds a subnet to the virtual network.
         /// If no subnets are explicitly specified, a default subnet called "subnet1" covering the
         /// entire first address space will be created.
@@ -58,6 +51,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Definition
         /// <param name="cidr">The address space of the subnet, within the address space of the network, using the CIDR notation.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet WithSubnet(string name, string cidr);
+
+        /// <summary>
+        /// Explicitly defines subnets in the virtual network based on the provided map.
+        /// </summary>
+        /// <param name="nameCidrPairs">A  Map of CIDR addresses for the subnets, indexed by the name of each subnet to be defined.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet WithSubnets(IDictionary<string,string> nameCidrPairs);
     }
 
     /// <summary>
@@ -92,6 +92,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Definition
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreate>
     {
         /// <summary>
+        /// Specifies the IP address of an existing DNS server to associate with the virtual network.
+        /// Note this method's effect is additive, i.e. each time it is used, a new dns server is added
+        /// to the network.
+        /// </summary>
+        /// <param name="ipAddress">The IP address of the DNS server.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreate WithDnsServer(string ipAddress);
+
+        /// <summary>
         /// Explicitly adds an address space to the virtual network.
         /// If no address spaces are explicitly specified, a default address space with the CIDR "10.0.0.0/16" will be
         /// assigned to the virtual network.
@@ -102,14 +111,5 @@ namespace Microsoft.Azure.Management.Network.Fluent.Network.Definition
         /// <param name="cidr">The CIDR representation of the address space.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet WithAddressSpace(string cidr);
-
-        /// <summary>
-        /// Specifies the IP address of an existing DNS server to associate with the virtual network.
-        /// Note this method's effect is additive, i.e. each time it is used, a new dns server is added
-        /// to the network.
-        /// </summary>
-        /// <param name="ipAddress">The IP address of the DNS server.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreate WithDnsServer(string ipAddress);
     }
 }

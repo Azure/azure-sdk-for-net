@@ -33,20 +33,20 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.D
     public interface IWithFrontend<ParentT> 
     {
         /// <summary>
-        /// Associates the listener with the application gateway's public (Internet-facing) frontend.
-        /// If the public frontend does not exist yet, it will be created under an auto-generated name
-        /// and associated with the application gateway's public IP address.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition.IWithFrontendPort<ParentT> WithPublicFrontend();
-
-        /// <summary>
         /// Associates the listener with the application gateway's private (internal) frontend.
         /// If the private frontend does not exist yet, it will be created under an auto-generated name
         /// and associated with the application gateway's subnet.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition.IWithFrontendPort<ParentT> WithPrivateFrontend();
+
+        /// <summary>
+        /// Associates the listener with the application gateway's public (Internet-facing) frontend.
+        /// If the public frontend does not exist yet, it will be created under an auto-generated name
+        /// and associated with the application gateway's public IP address.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition.IWithFrontendPort<ParentT> WithPublicFrontend();
     }
 
     /// <summary>
@@ -56,16 +56,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.D
     public interface IWithProtocol<ParentT> 
     {
         /// <summary>
-        /// Specifies that the listener is for the HTTPS protocol.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition.IWithSslCertificate<ParentT> WithHttps();
-
-        /// <summary>
         /// Specifies that the listener is for the HTTP protocol.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition.IWithAttach<ParentT> WithHttp();
+
+        /// <summary>
+        /// Specifies that the listener is for the HTTPS protocol.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.Definition.IWithSslCertificate<ParentT> WithHttps();
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayListener.D
     /// <summary>
     /// The final stage of an application gateway HTTP listener.
     /// At this stage, any remaining optional settings can be specified, or the definition
-    /// can be attached to the parent application gateway definition using  WithAttach.attach().
+    /// can be attached to the parent application gateway definition.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
     public interface IWithAttach<ParentT>  :

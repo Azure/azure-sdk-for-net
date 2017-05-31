@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:EC29C72674344ADABB3A944C3E2479DB:5ED48E280A79185C34BAD7FC806CCBB5
-        public DnsRecordSetImpl WithoutIpv4Address(string ipv4Address)
+        public DnsRecordSetImpl WithoutIPv4Address(string ipv4Address)
         {
             this.recordSetRemoveInfo.ARecords
                 .Add(new ARecord { Ipv4Address = ipv4Address });
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:504BA34CAE2BA25152B7E5B0E29E8C87:5DA00DC8D7A2405A86C3DDBFD2B0DDC7
-        public DnsRecordSetImpl WithoutIpv6Address(string ipv6Address)
+        public DnsRecordSetImpl WithoutIPv6Address(string ipv6Address)
         {
             this.recordSetRemoveInfo.AaaaRecords
                 .Add(new AaaaRecord { Ipv6Address = ipv6Address });
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         ///GENMHASH:0CFE78AB79C5BF41808567966F348D74:F96F4FA644159C0CD0EBB1C5B9EEF1A0
-        public DnsRecordSetImpl WithIpv6Address(string ipv6Address)
+        internal DnsRecordSetImpl WithIPv6Address(string ipv6Address)
         {
             Inner.AaaaRecords
                 .Add(new AaaaRecord { Ipv6Address =ipv6Address });
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         protected abstract RecordSetInner PrepareForUpdate(RecordSetInner resource);
 
         ///GENMHASH:C99F2F80022268E13D703B3379BD3B58:E0FC813C874E3B3480E4DA74E4253BCC
-        public DnsRecordSetImpl WithIpv4Address(string ipv4Address)
+        internal DnsRecordSetImpl WithIPv4Address(string ipv4Address)
         {
             Inner.ARecords.Add(new ARecord { Ipv4Address = ipv4Address });
             return this;

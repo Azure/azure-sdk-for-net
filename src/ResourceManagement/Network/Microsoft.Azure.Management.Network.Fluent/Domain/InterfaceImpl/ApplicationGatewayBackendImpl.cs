@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets addresses on the backend of the application gateway, indexed by their FQDN.
+        /// Gets addresses on the backend of the application gateway.
         /// </summary>
         System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackend.Addresses
         {

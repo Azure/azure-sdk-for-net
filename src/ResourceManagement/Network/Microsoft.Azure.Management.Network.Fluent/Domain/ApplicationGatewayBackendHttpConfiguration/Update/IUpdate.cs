@@ -38,6 +38,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     }
 
     /// <summary>
+    /// The stage of an application gateway backend HTTP configuration allowing to associate an existing probe.
+    /// </summary>
+    public interface IWithProbe  :
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithProbeBeta
+    {
+    }
+
+    /// <summary>
     /// The stage of an application gateway backend HTTP configuration allowing to enable or disable cookie based affinity.
     /// </summary>
     public interface IWithAffinity 
@@ -63,7 +71,30 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithPort,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithAffinity,
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithProtocol,
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithRequestTimeout
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithRequestTimeout,
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IWithProbe
     {
+    }
+
+    /// <summary>
+    /// The stage of an application gateway backend HTTP configuration allowing to associate an existing probe.
+    /// </summary>
+    public interface IWithProbeBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies an existing probe on this application gateway to associate with this backend.
+        /// If the probe with the specified name does not yet exist, it must be defined separately in the optional part
+        /// of the application gateway definition. This only adds a reference to the probe by its name.
+        /// </summary>
+        /// <param name="name">The name of an existing probe.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IUpdate WithProbe(string name);
+
+        /// <summary>
+        /// Removes the association with a probe.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update.IUpdate WithoutProbe();
     }
 }

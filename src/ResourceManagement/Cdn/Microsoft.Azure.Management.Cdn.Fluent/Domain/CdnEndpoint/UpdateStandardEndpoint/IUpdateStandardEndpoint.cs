@@ -14,20 +14,32 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoi
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Update.IUpdate
     {
         /// <summary>
-        /// Sets the geo filters list for the specified countries list.
+        /// Specifies if HTTPS traffic is allowed.
         /// </summary>
-        /// <param name="relativePath">A relative path.</param>
-        /// <param name="action">An action.</param>
-        /// <param name="countryCodes">A list of ISO 2 letter country codes.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithGeoFilter(string relativePath, GeoFilterActions action, ICollection<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes);
+        /// <param name="httpsAllowed">If true then HTTPS traffic will be allowed.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithHttpsAllowed(bool httpsAllowed);
 
         /// <summary>
-        /// Sets the geo filters list.
+        /// Specifies the content types to compress.
         /// </summary>
-        /// <param name="geoFilters">A geo filters list.</param>
+        /// <param name="contentTypesToCompress">Content types to compress to set.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithGeoFilters(ICollection<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithContentTypesToCompress(ISet<string> contentTypesToCompress);
+
+        /// <summary>
+        /// Sets the query string caching behavior.
+        /// </summary>
+        /// <param name="cachingBehavior">The query string caching behavior value to set.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithQueryStringCachingBehavior(QueryStringCachingBehavior cachingBehavior);
+
+        /// <summary>
+        /// Specifies the port for HTTP traffic.
+        /// </summary>
+        /// <param name="httpsPort">A port number.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithHttpsPort(int httpsPort);
 
         /// <summary>
         /// Clears entire geo filters list.
@@ -36,32 +48,18 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoi
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithoutGeoFilters();
 
         /// <summary>
-        /// Specifies the content types to compress.
+        /// Removes an entry from the geo filters list.
         /// </summary>
-        /// <param name="contentTypesToCompress">The list of content types to compress to set.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithContentTypesToCompress(ISet<string> contentTypesToCompress);
+        /// <param name="relativePath">A relative path.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithoutGeoFilter(string relativePath);
 
         /// <summary>
-        /// Specifies the origin path.
+        /// Removes the content type to compress from the list.
         /// </summary>
-        /// <param name="originPath">An origin path.</param>
+        /// <param name="contentTypeToCompress">A single content type to remove from the list.</param>
         /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithOriginPath(string originPath);
-
-        /// <summary>
-        /// Removes CDN custom domain within an endpoint.
-        /// </summary>
-        /// <param name="hostName">A custom domain host name.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithoutCustomDomain(string hostName);
-
-        /// <summary>
-        /// Specifies the port for HTTP traffic.
-        /// </summary>
-        /// <param name="httpsPort">A port number.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithHttpsPort(int httpsPort);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithoutContentTypeToCompress(string contentTypeToCompress);
 
         /// <summary>
         /// Adds a single entry to the Geo filters list.
@@ -73,6 +71,36 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoi
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithGeoFilter(string relativePath, GeoFilterActions action, CountryISOCode countryCode);
 
         /// <summary>
+        /// Sets the geo filters list for the specified countries list.
+        /// </summary>
+        /// <param name="relativePath">A relative path.</param>
+        /// <param name="action">An action.</param>
+        /// <param name="countryCodes">A list of ISO 2 letter country codes.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithGeoFilter(string relativePath, GeoFilterActions action, IList<Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode> countryCodes);
+
+        /// <summary>
+        /// Specifies the origin path.
+        /// </summary>
+        /// <param name="originPath">An origin path.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithOriginPath(string originPath);
+
+        /// <summary>
+        /// Specifies the port for HTTP traffic.
+        /// </summary>
+        /// <param name="httpPort">A port number.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithHttpPort(int httpPort);
+
+        /// <summary>
+        /// Removes CDN custom domain within an endpoint.
+        /// </summary>
+        /// <param name="hostName">A custom domain host name.</param>
+        /// <return>The next stage of the endpoint update.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithoutCustomDomain(string hostName);
+
+        /// <summary>
         /// Adds a new CDN custom domain within an endpoint.
         /// </summary>
         /// <param name="hostName">Custom domain host name.</param>
@@ -80,18 +108,32 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoi
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithCustomDomain(string hostName);
 
         /// <summary>
-        /// Removes the content type to compress from the list.
+        /// Sets the compression state.
         /// </summary>
-        /// <param name="contentTypeToCompress">A single content type to remove from the list.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithoutContentTypeToCompress(string contentTypeToCompress);
+        /// <param name="compressionEnabled">If true then compression will be enabled.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithCompressionEnabled(bool compressionEnabled);
 
         /// <summary>
-        /// Removes an entry from the geo filters list.
+        /// Specifies the geo filters to use.
         /// </summary>
-        /// <param name="relativePath">A relative path.</param>
+        /// <param name="geoFilters">Geo filters.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithGeoFilters(IList<Microsoft.Azure.Management.Cdn.Fluent.Models.GeoFilter> geoFilters);
+
+        /// <summary>
+        /// Specifies if HTTP traffic is allowed.
+        /// </summary>
+        /// <param name="httpAllowed">If true then HTTP traffic will be allowed.</param>
         /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithoutGeoFilter(string relativePath);
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithHttpAllowed(bool httpAllowed);
+
+        /// <summary>
+        /// Specifies a single content type to compress.
+        /// </summary>
+        /// <param name="contentTypeToCompress">A single content type to compress to add to the list.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithContentTypeToCompress(string contentTypeToCompress);
 
         /// <summary>
         /// Specifies the host header.
@@ -105,47 +147,5 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoi
         /// </summary>
         /// <return>The next stage of the endpoint update.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithoutContentTypesToCompress();
-
-        /// <summary>
-        /// Sets the query string caching behavior.
-        /// </summary>
-        /// <param name="cachingBehavior">The query string caching behavior value to set.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithQueryStringCachingBehavior(QueryStringCachingBehavior cachingBehavior);
-
-        /// <summary>
-        /// Specifies if HTTP traffic is allowed.
-        /// </summary>
-        /// <param name="httpAllowed">If true then HTTP traffic will be allowed.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithHttpAllowed(bool httpAllowed);
-
-        /// <summary>
-        /// Specifies the port for HTTP traffic.
-        /// </summary>
-        /// <param name="httpPort">A port number.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithHttpPort(int httpPort);
-
-        /// <summary>
-        /// Sets the compression state.
-        /// </summary>
-        /// <param name="compressionEnabled">If true then compression will be enabled.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithCompressionEnabled(bool compressionEnabled);
-
-        /// <summary>
-        /// Specifies if HTTPS traffic is allowed.
-        /// </summary>
-        /// <param name="httpsAllowed">If true then HTTPS traffic will be allowed.</param>
-        /// <return>The next stage of the endpoint update.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithHttpsAllowed(bool httpsAllowed);
-
-        /// <summary>
-        /// Specifies a single content type to compress.
-        /// </summary>
-        /// <param name="contentTypeToCompress">A single content type to compress to add to the list.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.UpdateStandardEndpoint.IUpdateStandardEndpoint WithContentTypeToCompress(string contentTypeToCompress);
     }
 }

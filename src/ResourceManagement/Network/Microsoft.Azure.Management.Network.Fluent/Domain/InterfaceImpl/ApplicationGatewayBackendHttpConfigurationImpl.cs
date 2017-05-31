@@ -102,6 +102,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Specifies an existing probe on this application gateway to associate with this backend.
+        /// If the probe with the specified name does not yet exist, it must be defined separately in the optional part
+        /// of the application gateway definition. This only adds a reference to the probe by its name.
+        /// </summary>
+        /// <param name="name">The name of an existing probe.</param>
+        /// <return>The next stage of the update.</return>
+        ApplicationGatewayBackendHttpConfiguration.Update.IUpdate ApplicationGatewayBackendHttpConfiguration.Update.IWithProbeBeta.WithProbe(string name)
+        {
+            return this.WithProbe(name) as ApplicationGatewayBackendHttpConfiguration.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Removes the association with a probe.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        ApplicationGatewayBackendHttpConfiguration.Update.IUpdate ApplicationGatewayBackendHttpConfiguration.Update.IWithProbeBeta.WithoutProbe()
+        {
+            return this.WithoutProbe() as ApplicationGatewayBackendHttpConfiguration.Update.IUpdate;
+        }
+
+        /// <summary>
         /// Specifies the request timeout.
         /// </summary>
         /// <param name="seconds">A number of seconds.</param>
@@ -153,6 +174,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Gets the probe associated with this backend.
+        /// </summary>
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayProbe Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackendHttpConfigurationBeta.Probe
+        {
+            get
+            {
+                return this.Probe() as Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayProbe;
+            }
+        }
+
+        /// <summary>
         /// Gets true if cookie based affinity (sticky sessions) is enabled, else false.
         /// </summary>
         bool Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackendHttpConfiguration.CookieBasedAffinity
@@ -199,6 +231,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ApplicationGatewayBackendHttpConfiguration.Update.IUpdate ApplicationGatewayBackendHttpConfiguration.Update.IWithAffinity.WithCookieBasedAffinity()
         {
             return this.WithCookieBasedAffinity() as ApplicationGatewayBackendHttpConfiguration.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies an existing probe on this application gateway to associate with this backend.
+        /// If the probe with the specified name does not yet exist, it must be defined separately in the optional part
+        /// of the application gateway definition. This only adds a reference to the probe by its name.
+        /// </summary>
+        /// <param name="name">The name of an existing probe.</param>
+        /// <return>The next stage of the definition.</return>
+        ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayBackendHttpConfiguration.Definition.IWithProbeBeta<ApplicationGateway.Definition.IWithCreate>.WithProbe(string name)
+        {
+            return this.WithProbe(name) as ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
         }
 
         /// <summary>

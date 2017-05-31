@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <return>The next stage of the definition.</return>
         DnsRecordSet.UpdateDefinition.IWithARecordIPv4AddressOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithARecordIPv4Address<DnsZone.Update.IUpdate>.WithIPv4Address(string ipv4Address)
         {
-            return this.WithIpv4Address(ipv4Address) as DnsRecordSet.UpdateDefinition.IWithARecordIPv4AddressOrAttachable<DnsZone.Update.IUpdate>;
+            return this.WithIPv4Address(ipv4Address) as DnsRecordSet.UpdateDefinition.IWithARecordIPv4AddressOrAttachable<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <return>The next stage of the definition.</return>
         DnsRecordSet.Definition.IWithARecordIPv4AddressOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithARecordIPv4Address<DnsZone.Definition.IWithCreate>.WithIPv4Address(string ipv4Address)
         {
-            return this.WithIpv4Address(ipv4Address) as DnsRecordSet.Definition.IWithARecordIPv4AddressOrAttachable<DnsZone.Definition.IWithCreate>;
+            return this.WithIPv4Address(ipv4Address) as DnsRecordSet.Definition.IWithARecordIPv4AddressOrAttachable<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <return>The next stage of the definition.</return>
         DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6Address<DnsZone.Update.IUpdate>.WithIPv6Address(string ipv6Address)
         {
-            return this.WithIpv6Address(ipv6Address) as DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Update.IUpdate>;
+            return this.WithIPv6Address(ipv6Address) as DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Update.IUpdate>;
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <return>The next stage of the definition.</return>
         DnsRecordSet.Definition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithAaaaRecordIPv6Address<DnsZone.Definition.IWithCreate>.WithIPv6Address(string ipv6Address)
         {
-            return this.WithIpv6Address(ipv6Address) as DnsRecordSet.Definition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Definition.IWithCreate>;
+            return this.WithIPv6Address(ipv6Address) as DnsRecordSet.Definition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <return>The next stage of the record set update.</return>
         DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet DnsRecordSet.Update.IWithAaaaRecordIPv6Address.WithoutIPv6Address(string ipv6Address)
         {
-            return this.WithoutIpv6Address(ipv6Address) as DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet;
+            return this.WithoutIPv6Address(ipv6Address) as DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet;
         }
 
         /// <summary>
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <return>The next stage of the record set update.</return>
         DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet DnsRecordSet.Update.IWithAaaaRecordIPv6Address.WithIPv6Address(string ipv6Address)
         {
-            return this.WithIpv6Address(ipv6Address) as DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet;
+            return this.WithIPv6Address(ipv6Address) as DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet;
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <return>The next stage of the record set update.</return>
         DnsRecordSet.UpdateARecordSet.IUpdateARecordSet DnsRecordSet.Update.IWithARecordIPv4Address.WithoutIPv4Address(string ipv4Address)
         {
-            return this.WithoutIpv4Address(ipv4Address) as DnsRecordSet.UpdateARecordSet.IUpdateARecordSet;
+            return this.WithoutIPv4Address(ipv4Address) as DnsRecordSet.UpdateARecordSet.IUpdateARecordSet;
         }
 
         /// <summary>
@@ -486,7 +486,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <return>The next stage of the record set update.</return>
         DnsRecordSet.UpdateARecordSet.IUpdateARecordSet DnsRecordSet.Update.IWithARecordIPv4Address.WithIPv4Address(string ipv4Address)
         {
-            return this.WithIpv4Address(ipv4Address) as DnsRecordSet.UpdateARecordSet.IUpdateARecordSet;
+            return this.WithIPv4Address(ipv4Address) as DnsRecordSet.UpdateARecordSet.IUpdateARecordSet;
         }
 
         /// <summary>

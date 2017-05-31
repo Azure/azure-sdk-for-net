@@ -12,15 +12,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.Usage>
     {
         /// <summary>
+        /// Gets the unit of measurement.
+        /// </summary>
+        Models.NetworkUsageUnit Unit { get; }
+
+        /// <summary>
         /// Gets the maximum count of the resources that can be allocated in the
         /// subscription.
         /// </summary>
         long Limit { get; }
-
-        /// <summary>
-        /// Gets the unit of measurement.
-        /// </summary>
-        Models.NetworkUsageUnit Unit { get; }
 
         /// <summary>
         /// Gets the name of the type of usage.

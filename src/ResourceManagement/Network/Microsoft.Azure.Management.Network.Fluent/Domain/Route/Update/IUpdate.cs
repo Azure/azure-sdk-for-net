@@ -22,19 +22,19 @@ namespace Microsoft.Azure.Management.Network.Fluent.Route.Update
     public interface IWithNextHopType 
     {
         /// <summary>
+        /// Specifies the IP address of the virtual appliance for the next hop to go to.
+        /// </summary>
+        /// <param name="ipAddress">An IP address of an existing virtual appliance (virtual machine).</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.Route.Update.IUpdate WithNextHopToVirtualAppliance(string ipAddress);
+
+        /// <summary>
         /// Specifies the next hop type.
         /// To use a virtual appliance, use  .withNextHopToVirtualAppliance(String) instead and specify its IP address.
         /// </summary>
         /// <param name="nextHopType">A hop type.</param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.Route.Update.IUpdate WithNextHop(RouteNextHopType nextHopType);
-
-        /// <summary>
-        /// Specifies the IP address of the virtual appliance for the next hop to go to.
-        /// </summary>
-        /// <param name="ipAddress">An IP address of an existing virtual appliance (virtual machine).</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.Route.Update.IUpdate WithNextHopToVirtualAppliance(string ipAddress);
     }
 
     /// <summary>

@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             get
             {
-                return this.Manager as Microsoft.Azure.Management.Network.Fluent.INetworkManager;
+                return this.Manager() as Microsoft.Azure.Management.Network.Fluent.INetworkManager;
             }
         }
 
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Specifies the subnet the application gateway gets its private IP address from.
         /// This will create a new IP configuration, if it does not already exist.
-        /// Private (internal) frontends, if any have been enabled, will be configured to use this subnet as well.
+        /// Private (internal) front ends, if any have been enabled, will be configured to use this subnet as well.
         /// </summary>
         /// <param name="network">The virtual network the subnet is part of.</param>
         /// <param name="subnetName">The name of a subnet within the selected network.</param>
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Specifies the capacity (number of instances) for the application gateway.
         /// By default, 1 instance is used.
         /// </summary>
-        /// <param name="instanceCount">The capacity as a number between 1 and 10 but also based on the limits imposed by the selected applicatiob gateway size.</param>
+        /// <param name="instanceCount">The capacity as a number between 1 and 10 but also based on the limits imposed by the selected application gateway size.</param>
         /// <return>The next stage of the definition.</return>
         ApplicationGateway.Definition.IWithCreate ApplicationGateway.Definition.IWithInstanceCount.WithInstanceCount(int instanceCount)
         {
@@ -237,13 +237,24 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets frontend IP configurations with a private IP address on a subnet, indexed by name.
+        /// Gets frontend IP configurations with a private IP address within a subnet, indexed by name.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.PrivateFrontends
         {
             get
             {
                 return this.PrivateFrontends() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend>;
+            }
+        }
+
+        /// <summary>
+        /// Gets disabled SSL protocols.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewaySslProtocol> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBeta.DisabledSslProtocols
+        {
+            get
+            {
+                return this.DisabledSslProtocols() as System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewaySslProtocol>;
             }
         }
 
@@ -270,7 +281,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the IP configuration named "default" if it exists, or the one existing IP configuration if only one exists, else null.
+        /// Gets the existing IP configurations if only one exists, else null.
         /// </summary>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayIPConfiguration Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.DefaultIPConfiguration
         {
@@ -290,10 +301,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Finds a frontend listener associated with the specified frontend port number, if any.
+        /// Finds a front end listener associated with the specified front end port number, if any.
         /// </summary>
         /// <param name="portNumber">A used port number.</param>
-        /// <return>A frontend listener, or null if none found.</return>
+        /// <return>A front end listener, or null if none found.</return>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.ListenerByPortNumber(int portNumber)
         {
             return this.ListenerByPortNumber(portNumber) as Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener;
@@ -420,17 +431,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets the SSL policy for the application gateway.
-        /// </summary>
-        Models.ApplicationGatewaySslPolicy Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.SslPolicy
-        {
-            get
-            {
-                return this.SslPolicy() as Models.ApplicationGatewaySslPolicy;
-            }
-        }
-
-        /// <summary>
         /// Gets the frontend IP configuration associated with a public IP address, if any, that frontend listeners and request routing rules can reference implicitly.
         /// </summary>
         Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayFrontend Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.DefaultPublicFrontend
@@ -453,6 +453,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Gets frontend listeners, indexed by name.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Listeners
+        {
+            get
+            {
+                return this.Listeners() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener>;
+            }
+        }
+
+        /// <summary>
         /// Gets the tier of the application gateway.
         /// </summary>
         Models.ApplicationGatewayTier Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Tier
@@ -464,14 +475,12 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Gets Frontend listeners, indexed by name.
+        /// Stops the application gateway.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener> Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Listeners
+        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Stop()
         {
-            get
-            {
-                return this.Listeners() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayListener>;
-            }
+ 
+            this.Stop();
         }
 
         /// <summary>
@@ -482,15 +491,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
  
             await this.StartAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Stops the application gateway.
-        /// </summary>
-        void Microsoft.Azure.Management.Network.Fluent.IApplicationGateway.Stop()
-        {
- 
-            this.Stop();
         }
 
         /// <summary>
@@ -534,6 +534,75 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 return this.SslCertificates() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.IApplicationGatewaySslCertificate>;
             }
+        }
+
+        /// <summary>
+        /// Enables the specified SSL protocols, if previously disabled.
+        /// </summary>
+        /// <param name="protocols">SSL protocols.</param>
+        /// <return>The next stage of the update.</return>
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithDisabledSslProtocolBeta.WithoutDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            return this.WithoutDisabledSslProtocols(protocols) as ApplicationGateway.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Enables all SSL protocols, if previously disabled.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithDisabledSslProtocolBeta.WithoutAnyDisabledSslProtocols()
+        {
+            return this.WithoutAnyDisabledSslProtocols() as ApplicationGateway.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Disables the specified SSL protocol.
+        /// </summary>
+        /// <param name="protocol">An SSL protocol.</param>
+        /// <return>The next stage of the update.</return>
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithDisabledSslProtocolBeta.WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            return this.WithDisabledSslProtocol(protocol) as ApplicationGateway.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Disables the specified SSL protocols.
+        /// </summary>
+        /// <param name="protocols">SSL protocols.</param>
+        /// <return>The next stage of the update.</return>
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithDisabledSslProtocolBeta.WithDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            return this.WithDisabledSslProtocols(protocols) as ApplicationGateway.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Enables the specified SSL protocol, if previously disabled.
+        /// </summary>
+        /// <param name="protocol">An SSL protocol.</param>
+        /// <return>The next stage of the update.</return>
+        ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithDisabledSslProtocolBeta.WithoutDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            return this.WithoutDisabledSslProtocol(protocol) as ApplicationGateway.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Disables the specified SSL protocol.
+        /// </summary>
+        /// <param name="protocol">An SSL protocol.</param>
+        /// <return>The next stage of the definition.</return>
+        ApplicationGateway.Definition.IWithCreate ApplicationGateway.Definition.IWithDisabledSslProtocolBeta.WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            return this.WithDisabledSslProtocol(protocol) as ApplicationGateway.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Disables the specified SSL protocols.
+        /// </summary>
+        /// <param name="protocols">SSL protocols.</param>
+        /// <return>The next stage of the definition.</return>
+        ApplicationGateway.Definition.IWithCreate ApplicationGateway.Definition.IWithDisabledSslProtocolBeta.WithDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            return this.WithDisabledSslProtocols(protocols) as ApplicationGateway.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -768,7 +837,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Creates a frontend port with an auto-generated name and the specified port number, unless one already exists.
+        /// Creates a front end port with an auto-generated name and the specified port number, unless one already exists.
         /// </summary>
         /// <param name="portNumber">A port number.</param>
         /// <return>The next stage of the definition.</return>
@@ -778,7 +847,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Creates a frontend port with the specified name and port number, unless a port matching this name and/or number already exists.
+        /// Creates a front end port with the specified name and port number, unless a port matching this name and/or number already exists.
         /// </summary>
         /// <param name="portNumber">A port number.</param>
         /// <param name="name">The name to assign to the port.</param>
@@ -851,9 +920,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Begins the definition of the default public frontend IP configuration, creating one if it does not already exist.
+        /// Begins the definition of the default public front end IP configuration, creating one if it does not already exist.
         /// </summary>
-        /// <return>The first stage of a frontend definition.</return>
+        /// <return>The first stage of a front end definition.</return>
         ApplicationGatewayFrontend.UpdateDefinition.IBlank<ApplicationGateway.Update.IUpdate> ApplicationGateway.Update.IWithFrontend.DefinePublicFrontend()
         {
             return this.DefinePublicFrontend() as ApplicationGatewayFrontend.UpdateDefinition.IBlank<ApplicationGateway.Update.IUpdate>;
@@ -861,7 +930,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Specifies that the application gateway should not be Internet-facing.
-        /// Note that if there are any other settings referencing the public frontend, removing it may break the application gateway.
+        /// Note that if there are any other settings referencing the public front end, removing it may break the application gateway.
         /// </summary>
         /// <return>The next stage of the update.</return>
         ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithFrontend.WithoutPublicFrontend()
@@ -870,27 +939,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Begins the update of the public frontend IP configuration, if it exists.
+        /// Begins the update of the public front end IP configuration, if it exists.
         /// </summary>
-        /// <return>The first stage of a frontend update or null if no public frontend exists.</return>
+        /// <return>The first stage of a front end update or null if no public front end exists.</return>
         ApplicationGatewayFrontend.Update.IUpdate ApplicationGateway.Update.IWithFrontend.UpdatePublicFrontend()
         {
             return this.UpdatePublicFrontend() as ApplicationGatewayFrontend.Update.IUpdate;
         }
 
         /// <summary>
-        /// Begins the definition of the default private frontend IP configuration, creating one if it does not already exist.
+        /// Begins the definition of the default private front end IP configuration, creating one if it does not already exist.
         /// </summary>
-        /// <return>The first stage of a frontend definition.</return>
+        /// <return>The first stage of a front end definition.</return>
         ApplicationGatewayFrontend.UpdateDefinition.IBlank<ApplicationGateway.Update.IUpdate> ApplicationGateway.Update.IWithFrontend.DefinePrivateFrontend()
         {
             return this.DefinePrivateFrontend() as ApplicationGatewayFrontend.UpdateDefinition.IBlank<ApplicationGateway.Update.IUpdate>;
         }
 
         /// <summary>
-        /// Specifies that the application gateway should not be private, i.e. its endponts should not be internally accessible
+        /// Specifies that the application gateway should not be private, i.e. its endpoints should not be internally accessible
         /// from within the virtual network.
-        /// Note that if there are any other settings referencing the private frontend, removing it may break the application gateway.
+        /// Note that if there are any other settings referencing the private front end, removing it may break the application gateway.
         /// </summary>
         /// <return>The next stage of the update.</return>
         ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithFrontend.WithoutPrivateFrontend()
@@ -899,10 +968,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Removes the specified frontend IP configuration.
-        /// Note that removing a frontend referenced by other settings may break the application gateway.
+        /// Removes the specified front end IP configuration.
+        /// Note that removing a front end referenced by other settings may break the application gateway.
         /// </summary>
-        /// <param name="frontendName">The name of the frontend IP configuration to remove.</param>
+        /// <param name="frontendName">The name of the front end IP configuration to remove.</param>
         /// <return>The next stage of the update.</return>
         ApplicationGateway.Update.IUpdate ApplicationGateway.Update.IWithFrontend.WithoutFrontend(string frontendName)
         {
@@ -910,10 +979,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Begins the update of an existing frontend IP configuration.
+        /// Begins the update of an existing front end IP configuration.
         /// </summary>
-        /// <param name="frontendName">The name of an existing frontend IP configuration.</param>
-        /// <return>The first stage of the frontend IP configuration update.</return>
+        /// <param name="frontendName">The name of an existing front end IP configuration.</param>
+        /// <return>The first stage of the front end IP configuration update.</return>
         ApplicationGatewayFrontend.Update.IUpdate ApplicationGateway.Update.IWithFrontend.UpdateFrontend(string frontendName)
         {
             return this.UpdateFrontend(frontendName) as ApplicationGatewayFrontend.Update.IUpdate;
@@ -982,6 +1051,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Removes a probe from the application gateway.
+        /// Any references to this probe from backend HTTP configurations will be automatically removed.
         /// </summary>
         /// <param name="name">The name of an existing probe.</param>
         /// <return>The next stage of the update.</return>
@@ -1010,8 +1080,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
-        /// Enables a private (internal) default frontend in the subnet containing the application gateway.
-        /// A frontend with the name "default" will be created if needed.
+        /// Enables a private (internal) default frontend within the subnet containing the application gateway.
+        /// A frontend with an automatically generated name will be created if none exists.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         ApplicationGateway.Definition.IWithCreate ApplicationGateway.Definition.IWithPrivateFrontend.WithPrivateFrontend()

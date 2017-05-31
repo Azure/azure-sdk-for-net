@@ -52,7 +52,106 @@ namespace Microsoft.Azure.Management.Network.Fluent
             INetworkManager networkManager) : base(name, innerModel, networkManager)
         {
         }
-        
+
+        internal INetworkManager Manager()
+        {
+            return base.Manager;
+        }
+
+        #region WithDisabledSslProtocols
+        internal ApplicationGatewayImpl WithDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            if (protocol != null)
+            {
+                var policy = ensureSslPolicy();
+                if (!policy.DisabledSslProtocols.Contains(protocol.ToString()))
+                {
+                    policy.DisabledSslProtocols.Add(protocol.ToString());
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            if (protocols != null)
+            {
+                foreach (ApplicationGatewaySslProtocol protocol in protocols)
+                {
+                    WithDisabledSslProtocol(protocol);
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithoutDisabledSslProtocol(ApplicationGatewaySslProtocol protocol)
+        {
+            if (Inner.SslPolicy != null && Inner.SslPolicy.DisabledSslProtocols != null)
+            {
+                Inner.SslPolicy.DisabledSslProtocols.Remove(protocol.ToString());
+                if(Inner.SslPolicy.DisabledSslProtocols.Count == 0)
+                {
+                    WithoutAnyDisabledSslProtocols();
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithoutDisabledSslProtocols(params ApplicationGatewaySslProtocol[] protocols)
+        {
+            if (protocols != null)
+            {
+                foreach (ApplicationGatewaySslProtocol protocol in protocols)
+                {
+                    WithoutDisabledSslProtocol(protocol);
+                }
+            }
+            return this;
+        }
+
+        internal ApplicationGatewayImpl WithoutAnyDisabledSslProtocols()
+        {
+            Inner.SslPolicy = null;
+            return this;
+        }
+
+        private ApplicationGatewaySslPolicy ensureSslPolicy()
+        {
+            ApplicationGatewaySslPolicy policy = Inner.SslPolicy;
+            if (policy == null)
+            {
+                policy = new ApplicationGatewaySslPolicy();
+                Inner.SslPolicy = policy;
+            }
+
+            var protocols = policy.DisabledSslProtocols;
+            if(protocols == null)
+            {  
+                protocols = new List<string>();
+                policy.DisabledSslProtocols = protocols;  
+            }  
+            return policy;  
+        }
+
+
+        internal IReadOnlyCollection<ApplicationGatewaySslProtocol> DisabledSslProtocols()
+        {
+            List<ApplicationGatewaySslProtocol> protocols = new List<ApplicationGatewaySslProtocol>();
+            if (Inner.SslPolicy == null || Inner.SslPolicy.DisabledSslProtocols == null)
+            {
+                return protocols;
+            }
+            else
+            {
+                foreach (string protocol in Inner.SslPolicy.DisabledSslProtocols)
+                {
+                    protocols.Add(ApplicationGatewaySslProtocol.Parse(protocol));
+                }
+                return protocols;
+            }
+        }
+        #endregion
+
         ///GENMHASH:327A257714E97E0CC9195D07369866F6:AC0B304DE3854395AFFCFBF726105B2C
         public IReadOnlyDictionary<string, IApplicationGatewayFrontend> PublicFrontends()
         {
@@ -101,7 +200,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:D5AD274A3026D80CDF6A0DD97D9F20D4:8E7C5AF309A720AEBD981CD714D58952
         public async Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Manager.ApplicationGateways.Inner.StartAsync(ResourceGroupName, Name, cancellationToken);
+            await Manager().ApplicationGateways.Inner.StartAsync(ResourceGroupName, Name, cancellationToken);
             await RefreshAsync(cancellationToken);
         }
 
@@ -120,7 +219,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:D6FBED7FC7CBF34940541851FF5C3CC1:9E4F1BE9C6626B590BF7E05F4AD83D73
         public async Task StopAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Manager.ApplicationGateways.Inner.StopAsync(this.ResourceGroupName, this.Name, cancellationToken);
+            await Manager().ApplicationGateways.Inner.StopAsync(this.ResourceGroupName, this.Name, cancellationToken);
             await RefreshAsync(cancellationToken);
         }
 
@@ -199,12 +298,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             return listener;
-        }
-
-        ///GENMHASH:140689F6718EC0DE59ED2724FEF8B493:FFD69AF34CCA85347AFB30F010027480
-        public ApplicationGatewaySslPolicy SslPolicy()
-        {
-            return Inner.SslPolicy;
         }
 
         ///GENMHASH:CD498C02D42C73AD0C1FF12493E2A9B8:CD5E24B4D8E0D679C5291E15ABECB279
@@ -1092,7 +1185,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             }
 
             var appGatewayInnerTask = Task.WhenAll(tasks.ToArray()).ContinueWith(antecedent => {
-                return Manager.Inner.ApplicationGateways.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
+                return Manager().Inner.ApplicationGateways.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken);
             });
 
             return await appGatewayInnerTask.Result;
@@ -1192,6 +1285,15 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
             // Reset and update backend HTTP settings configs
             Inner.BackendHttpSettingsCollection = InnersFromWrappers<ApplicationGatewayBackendHttpSettingsInner, IApplicationGatewayBackendHttpConfiguration>(backendHttpConfigs.Values);
+            foreach (var config in backendHttpConfigs.Values)
+            {
+                // Clear deleted probe references  
+                SubResource configRef;                
+                configRef = config.Inner.Probe;
+                if (configRef != null && !Probes().ContainsKey(ResourceUtils.NameFromResourceId(configRef.Id))) {
+                    config.Inner.Probe = null;
+                }
+            }
 
             // Reset and update HTTP listeners
             Inner.HttpListeners = InnersFromWrappers<ApplicationGatewayHttpListenerInner, IApplicationGatewayListener>(listeners.Values);
@@ -1338,7 +1440,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (creatablePip == null)
             {
                 string pipName = SdkContext.RandomResourceName("pip", 9);
-                creatablePip = Manager.PublicIPAddresses.Define(pipName)
+                creatablePip = Manager().PublicIPAddresses.Define(pipName)
                     .WithRegion(RegionName)
                     .WithExistingResourceGroup(ResourceGroupName);
             }
@@ -1430,7 +1532,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             if (creatableNetwork == null)
             {
                 string vnetName = SdkContext.RandomResourceName("vnet", 10);
-                creatableNetwork = Manager.Networks.Define(vnetName)
+                creatableNetwork = Manager().Networks.Define(vnetName)
                     .WithRegion(Region)
                     .WithExistingResourceGroup(ResourceGroupName)
                     .WithAddressSpace("10.0.0.0/24")
@@ -1499,7 +1601,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:1559E5218F079E5EF7779F023F4EF358
         protected override async Task<ApplicationGatewayInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            return await Manager.Inner.ApplicationGateways.GetAsync(this.ResourceGroupName, this.Name, cancellationToken: cancellationToken);
+            return await Manager().Inner.ApplicationGateways.GetAsync(this.ResourceGroupName, this.Name, cancellationToken: cancellationToken);
         }
     }
 }

@@ -9,7 +9,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition
     using Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.Blank.PremiumEndpoint;
     using Microsoft.Azure.Management.Cdn.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The entirety of a CDN profile definition.
@@ -25,32 +24,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition
     }
 
     /// <summary>
-    /// Members of this stage of the definition that are in Beta.
-    /// </summary>
-    public interface IWithStandardCreateBeta : IBeta
-    {
-        /// <summary>
-        /// Starts the definition of a new endpoint to be attached to the CDN profile.
-        /// </summary>
-        /// <return>The first stage of a new CDN endpoint definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.Blank.StandardEndpoint.IStandardEndpoint<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithStandardCreate> DefineNewEndpoint();
-
-        /// <summary>
-        /// Starts the definition of a new endpoint to be attached to the CDN profile.
-        /// </summary>
-        /// <param name="name">The name for the endpoint.</param>
-        /// <param name="endpointOriginHostname">An endpoint origin hostname.</param>
-        /// <return>The first stage of a new CDN endpoint definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithStandardCreate> DefineNewEndpoint(string name, string endpointOriginHostname);
-    }
-
-    /// <summary>
     /// The stage of the definition which contains all the minimum required inputs for the resource to be created
     /// but also allows for any other optional settings to be specified.
     /// </summary>
     public interface IWithStandardCreate  :
-        IWithStandardCreateBeta,
-        Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithCreate
+        Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithCreate,
+        Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithStandardCreateBeta
     {
         /// <summary>
         /// Adds new endpoint to the CDN profile.
@@ -65,6 +44,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition
         /// <param name="name">A new endpoint name.</param>
         /// <return>The first stage of a new CDN endpoint definition.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.Blank.StandardEndpoint.IStandardEndpoint<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithStandardCreate> DefineNewEndpoint(string name);
+
     }
 
     /// <summary>
@@ -81,12 +61,6 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition
     public interface IWithSku 
     {
         /// <summary>
-        /// Selects the Standard Akamai SKU.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithStandardCreate WithStandardAkamaiSku();
-
-        /// <summary>
         /// Selects the Standard Verizon SKU.
         /// </summary>
         /// <return>The next stage of the definition.</return>
@@ -97,6 +71,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithPremiumVerizonCreate WithPremiumVerizonSku();
+
+        /// <summary>
+        /// Selects the Standard Akamai SKU.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithStandardCreate WithStandardAkamaiSku();
     }
 
     /// <summary>
@@ -108,32 +88,12 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition
     }
 
     /// <summary>
-    /// Members of this stage of the definition that are in Beta.
-    /// </summary>
-    public interface IWithPremiumVerizonCreateBeta : IBeta
-    {
-        /// <summary>
-        /// Starts the definition of a new endpoint to be attached to the CDN profile.
-        /// </summary>
-        /// <return>The first stage of a new CDN endpoint definition.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.Blank.PremiumEndpoint.IPremiumEndpoint<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithPremiumVerizonCreate> DefineNewPremiumEndpoint();
-
-        /// <summary>
-        /// Starts the definition of a new endpoint to be attached to the CDN profile.
-        /// </summary>
-        /// <param name="name">The name for the endpoint.</param>
-        /// <param name="endpointOriginHostname">The endpoint origin hostname.</param>
-        /// <return>The stage representing configuration for the endpoint.</return>
-        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithPremiumVerizonCreate> DefineNewPremiumEndpoint(string name, string endpointOriginHostname);
-    }
-
-    /// <summary>
     /// The stage of the definition which contains all the minimum required inputs for the resource to be created
     /// but also allows for any other optional settings to be specified.
     /// </summary>
     public interface IWithPremiumVerizonCreate  :
-        IWithPremiumVerizonCreateBeta,
-        Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithCreate
+        Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithCreate,
+        Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithPremiumVerizonCreateBeta
     {
         /// <summary>
         /// Starts the definition of a new endpoint to be attached to the CDN profile.
@@ -158,5 +118,49 @@ namespace Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Cdn.Fluent.ICdnProfile>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithCreate>
     {
+    }
+
+    /// <summary>
+    /// The stage of the definition which contains all the minimum required inputs for the resource to be created
+    /// but also allows for any other optional settings to be specified.
+    /// </summary>
+    public interface IWithStandardCreateBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Starts the definition of a new endpoint to be attached to the CDN profile.
+        /// </summary>
+        /// <return>The first stage of a new CDN endpoint definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.Blank.StandardEndpoint.IStandardEndpoint<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithStandardCreate> DefineNewEndpoint();
+
+        /// <summary>
+        /// Starts the definition of a new endpoint to be attached to the CDN profile.
+        /// </summary>
+        /// <param name="name">The name for the endpoint.</param>
+        /// <param name="endpointOriginHostname">An endpoint origin hostname.</param>
+        /// <return>The first stage of a new CDN endpoint definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithStandardAttach<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithStandardCreate> DefineNewEndpoint(string name, string endpointOriginHostname);
+    }
+
+    /// <summary>
+    /// The stage of the definition which contains all the minimum required inputs for the resource to be created
+    /// but also allows for any other optional settings to be specified.
+    /// </summary>
+    public interface IWithPremiumVerizonCreateBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Starts the definition of a new endpoint to be attached to the CDN profile.
+        /// </summary>
+        /// <return>The first stage of a new CDN endpoint definition.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.Blank.PremiumEndpoint.IPremiumEndpoint<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithPremiumVerizonCreate> DefineNewPremiumEndpoint();
+
+        /// <summary>
+        /// Starts the definition of a new endpoint to be attached to the CDN profile.
+        /// </summary>
+        /// <param name="name">The name for the endpoint.</param>
+        /// <param name="endpointOriginHostname">The endpoint origin hostname.</param>
+        /// <return>The stage representing configuration for the endpoint.</return>
+        Microsoft.Azure.Management.Cdn.Fluent.CdnEndpoint.Definition.IWithPremiumAttach<Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition.IWithPremiumVerizonCreate> DefineNewPremiumEndpoint(string name, string endpointOriginHostname);
     }
 }

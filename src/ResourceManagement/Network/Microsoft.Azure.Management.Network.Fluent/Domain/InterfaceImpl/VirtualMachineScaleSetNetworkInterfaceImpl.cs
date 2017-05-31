@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             get
             {
-                return this.Manager as Microsoft.Azure.Management.Network.Fluent.INetworkManager;
+                return this.Manager() as Microsoft.Azure.Management.Network.Fluent.INetworkManager;
             }
         }
     }

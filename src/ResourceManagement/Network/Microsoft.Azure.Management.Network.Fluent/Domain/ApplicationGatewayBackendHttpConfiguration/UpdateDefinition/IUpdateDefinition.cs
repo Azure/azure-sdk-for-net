@@ -75,6 +75,15 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     }
 
     /// <summary>
+    /// The stage of an application gateway backend HTTP configuration allowing to associate an existing probe.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent application gateway update to return to after attaching this definition.</typeparam>
+    public interface IWithProbe<ParentT>  :
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithProbeBeta<ParentT>
+    {
+    }
+
+    /// <summary>
     /// The stage of an application gateway backend HTTP configuration allowing to specify the port number.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent application gateway definition to return to after attaching this definition.</typeparam>
@@ -90,5 +99,22 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHtt
     public interface IWithProtocol<ParentT>  :
         Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithAttach<ParentT>,Microsoft.Azure.Management.Network.Fluent.Models.ApplicationGatewayProtocol>
     {
+    }
+
+    /// <summary>
+    /// The stage of an application gateway backend HTTP configuration allowing to associate an existing probe.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent application gateway update to return to after attaching this definition.</typeparam>
+    public interface IWithProbeBeta<ParentT>  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies an existing probe on this application gateway to associate with this backend.
+        /// If the probe with the specified name does not yet exist, it must be defined separately in the optional part
+        /// of the application gateway definition. This only adds a reference to the probe by its name.
+        /// </summary>
+        /// <param name="name">The name of an existing probe.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithAttach<ParentT> WithProbe(string name);
     }
 }

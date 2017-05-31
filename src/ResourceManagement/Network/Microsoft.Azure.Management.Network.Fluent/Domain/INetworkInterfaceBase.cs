@@ -14,39 +14,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.NetworkInterfaceInner>
     {
         /// <summary>
-        /// Gets the network security group associated this network interface.
-        /// This method makes a rest API call to fetch the Network Security Group resource.
-        /// </summary>
-        /// <return>The network security group associated with this network interface.</return>
-        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup GetNetworkSecurityGroup();
-
-        /// <summary>
-        /// Gets the Internal DNS name assigned to this network interface.
-        /// </summary>
-        string InternalDnsNameLabel { get; }
-
-        /// <summary>
-        /// Gets the resource ID of the associated virtual machine, or null if none.
-        /// </summary>
-        string VirtualMachineId { get; }
-
-        /// <summary>
-        /// Gets the private IP addresses.
-        /// </summary>
-        string PrimaryPrivateIP { get; }
-
-        /// <summary>
-        /// Gets the internal domain name suffix.
-        /// </summary>
-        string InternalDomainNameSuffix { get; }
-
-        /// <summary>
-        /// Gets the private IP allocation method (Dynamic, Static) of this network interface's
-        /// primary IP configuration.
-        /// </summary>
-        Models.IPAllocationMethod PrimaryPrivateIPAllocationMethod { get; }
-
-        /// <summary>
         /// Gets applied DNS servers.
         /// </summary>
         System.Collections.Generic.IReadOnlyList<string> AppliedDnsServers { get; }
@@ -57,19 +24,19 @@ namespace Microsoft.Azure.Management.Network.Fluent
         string MacAddress { get; }
 
         /// <summary>
-        /// Gets the network security group resource id associated with this network interface.
+        /// Gets the resource ID of the associated virtual machine, or null if none.
         /// </summary>
-        string NetworkSecurityGroupId { get; }
+        string VirtualMachineId { get; }
 
         /// <summary>
-        /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
+        /// Gets the Internal DNS name assigned to this network interface.
         /// </summary>
-        bool IsIPForwardingEnabled { get; }
+        string InternalDnsNameLabel { get; }
 
         /// <summary>
-        /// Gets IP addresses of this network interface's DNS servers.
+        /// Gets the internal domain name suffix.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<string> DnsServers { get; }
+        string InternalDomainNameSuffix { get; }
 
         /// <summary>
         /// Gets the fully qualified domain name of this network interface.
@@ -79,5 +46,42 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the qualified domain name.
         /// </summary>
         string InternalFqdn { get; }
+
+        /// <summary>
+        /// Gets <tt>true</tt> if IP forwarding is enabled in this network interface.
+        /// </summary>
+        bool IsIPForwardingEnabled { get; }
+
+        /// <summary>
+        /// Gets the private IP allocation method (Dynamic, Static) of this network interface's
+        /// primary IP configuration.
+        /// </summary>
+        Models.IPAllocationMethod PrimaryPrivateIPAllocationMethod { get; }
+
+        /// <summary>
+        /// Gets IP addresses of this network interface's DNS servers.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyList<string> DnsServers { get; }
+
+        /// <summary>
+        /// Gets the network security group associated this network interface.
+        /// This method makes a rest API call to fetch the Network Security Group resource.
+        /// </summary>
+        /// <return>The network security group associated with this network interface.</return>
+        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup GetNetworkSecurityGroup();
+
+        /// <summary>
+        /// Gets the private IP address allocated to this network interface's primary IP configuration.
+        /// The private IP will be within the virtual network subnet of this network interface.
+        /// </summary>
+        /// <summary>
+        /// Gets the private IP addresses.
+        /// </summary>
+        string PrimaryPrivateIP { get; }
+
+        /// <summary>
+        /// Gets the network security group resource id associated with this network interface.
+        /// </summary>
+        string NetworkSecurityGroupId { get; }
     }
 }
