@@ -129,6 +129,34 @@ namespace Microsoft.Azure.Management.DataFactories
                     cancellationToken);
         }
 
+        public async Task<GatewayRegenerateAuthKeyResponse> RegenerateAuthKeyAsync(
+            string resourceGroupName,
+            string dataFactoryName,
+            string gatewayName,
+            GatewayRegenerateAuthKeyParameters parameters,
+            CancellationToken cancellationToken)
+        {
+            return await this.Client.InternalClient.Gateways.RegenerateAuthKeyAsync(
+                    resourceGroupName,
+                    dataFactoryName,
+                    gatewayName,
+                    parameters,
+                    cancellationToken);
+        }
+
+        public async Task<GatewayListAuthKeysResponse> ListAuthKeysAsync(
+            string resourceGroupName,
+            string dataFactoryName,
+            string gatewayName,
+            CancellationToken cancellationToken)
+        {
+            return await this.Client.InternalClient.Gateways.ListAuthKeysAsync(
+                    resourceGroupName,
+                    dataFactoryName,
+                    gatewayName,
+                    cancellationToken);
+        }
+
         public async Task<GatewayConnectionInfoRetrieveResponse> RetrieveConnectionInfoAsync(
             string resourceGroupName,
             string dataFactoryName,

@@ -1,5 +1,12 @@
 ﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 4.13.0
+_Release date: 2017.05.15_
+
+## Feature Additions
+* Introduce gateway authentication key feature
+* Deprecate gateway key
+
 ## Version 4.12.1
 
 ### Bug Fixes
