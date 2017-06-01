@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            this.SetInner(databaseAccount.Inner);z
+            this.SetInner(databaseAccount.Inner);
             this.initializeFailover();
             return databaseAccount;
         }
