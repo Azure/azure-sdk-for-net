@@ -6,7 +6,7 @@
 @echo off
 set autoRestVersion=1.0.0-Nightly20170212
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d743c53461e6172e68e54184293295bde3babd13/arm-compute/compositeComputeClient.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b86684441ae014cd58c924081488b6a71e92dba0/arm-compute/compositeComputeClient.json"
 ) else (
     set specFile="%1"
 )
