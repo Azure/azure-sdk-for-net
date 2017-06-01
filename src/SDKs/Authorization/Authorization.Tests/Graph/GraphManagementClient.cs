@@ -245,15 +245,10 @@ namespace Authorization.Tests
             httpRequest.Headers.Add("x-ms-version", GraphManagementClient.GraphApiVersion);
             httpRequest.Headers.Add("Accept", "application/json;odata=minimalmetadata");
 
-
             if (this.testEnvironment != null && this.testEnvironment.TokenInfo != null)
             {
-				// Not Supported in current code
-				// var tokenCredentials = (TokenCredentials)this.testEnvironment.Credentials;
 				httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer",
-					"Put the access token for graph here for the tests to work in record mode");
-            //                                    this.testEnvironment.AccessTokenType,
-            //                                    this.testEnvironment.AuthorizationContext.AccessToken);
+				this.testEnvironment.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey("RawGraphToken"));
             }
 
             if(body != null)
