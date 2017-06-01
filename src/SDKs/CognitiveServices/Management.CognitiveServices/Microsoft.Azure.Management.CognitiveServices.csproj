@@ -13,7 +13,4 @@
   <ItemGroup>
     <Content Include="notice.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <NuspecFile Include="Microsoft.Azure.Management.CognitiveServices.nuspec"/>
-  </ItemGroup>
 </Project>
