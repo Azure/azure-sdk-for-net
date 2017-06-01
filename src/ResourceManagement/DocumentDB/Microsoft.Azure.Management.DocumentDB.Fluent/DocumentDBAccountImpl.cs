@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             return databaseAccount;
         }
 
-        private Models.DatzabaseAccountCreateUpdateParametersInner CreateUpdateParametersInner(Models.DatabaseAccountInner inner)
+        private Models.DatabaseAccountCreateUpdateParametersInner CreateUpdateParametersInner(Models.DatabaseAccountInner inner)
         {
             this.EnsureFailoverIsInitialized();
             Models.DatabaseAccountCreateUpdateParametersInner createUpdateParametersInner =
