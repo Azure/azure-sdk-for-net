@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="credential">The credential to attach to.</param>
         /// <return>The interface itself.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipalImpl Microsoft.Azure.Management.Graph.RBAC.Fluent.IHasCredential<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipalImpl>.WithPasswordCredential(PasswordCredentialImpl<object> credential)
+        IWithCreate Microsoft.Azure.Management.Graph.RBAC.Fluent.IHasCredential<IWithCreate>.WithPasswordCredential(PasswordCredentialImpl<IWithCreate> credential)
         {
             return this.WithPasswordCredential(credential) as Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipalImpl;
         }
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="credential">The credential to attach to.</param>
         /// <return>The interface itself.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipalImpl Microsoft.Azure.Management.Graph.RBAC.Fluent.IHasCredential<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipalImpl>.WithCertificateCredential(CertificateCredentialImpl<object> credential)
+        IWithCreate Microsoft.Azure.Management.Graph.RBAC.Fluent.IHasCredential<IWithCreate>.WithCertificateCredential(CertificateCredentialImpl<IWithCreate> credential)
         {
             return this.WithCertificateCredential(credential) as Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipalImpl;
         }

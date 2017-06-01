@@ -22,81 +22,50 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private GraphRbacManager manager;
                 public GraphRbacManager Manager()
         {
-            //$ return manager;
-
-            return null;
+            return manager;
         }
 
                 public RoleAssignmentImpl GetById(string objectId)
         {
-            //$ return (RoleAssignmentImpl) getByIdAsync(objectId).ToBlocking().Single();
-
-            return null;
+            return (RoleAssignmentImpl) GetByIdAsync(objectId).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
                 public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return manager().RoleInner().RoleAssignments().GetByIdAsync(id).Map(new Func1<RoleAssignmentInner, RoleAssignment>() {
-            //$ @Override
-            //$ public RoleAssignment call(RoleAssignmentInner roleAssignmentInner) {
-            //$ if (roleAssignmentInner == null) {
-            //$ return null;
-            //$ } else {
-            //$ return new RoleAssignmentImpl(roleAssignmentInner, manager());
-            //$ }
-            //$ }
-            //$ });
-
-            return null;
+            return WrapModel(await manager.RoleInner.RoleAssignments.GetByIdAsync(id, cancellationToken));
         }
 
                 public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> GetByScopeAsync(string scope, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return manager().RoleInner().RoleAssignments().GetAsync(scope, name)
-            //$ .Map(new Func1<RoleAssignmentInner, RoleAssignment>() {
-            //$ @Override
-            //$ public RoleAssignment call(RoleAssignmentInner roleAssignmentInner) {
-            //$ if (roleAssignmentInner == null) {
-            //$ return null;
-            //$ }
-            //$ return new RoleAssignmentImpl(roleAssignmentInner, manager());
-            //$ }
-            //$ });
-
-            return null;
+            return WrapModel(await manager.RoleInner.RoleAssignments.GetAsync(scope, name, cancellationToken));
         }
 
                 public RoleAssignmentImpl Define(string name)
         {
-            //$ return wrapModel(name);
-
-            return null;
+            return WrapModel(name);
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> ListByScopeAsync(string scope, CancellationToken cancellationToken = default(CancellationToken))
+                public async Task<IPagedCollection<IRoleAssignment>> ListByScopeAsync(string scope, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return wrapPageAsync(manager().RoleInner().RoleAssignments().ListAsync());
-
-            return null;
+            return await PagedCollection<IRoleAssignment, RoleAssignmentInner>.LoadPage(
+                async (cancellation) => await manager.RoleInner.RoleAssignments.ListForScopeAsync(scope, null, cancellation),
+                manager.RoleInner.RoleAssignments.ListForScopeNextAsync,
+                WrapModel, true, cancellationToken);
         }
 
                 public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> ListByScope(string scope)
         {
-            //$ return wrapList(manager().RoleInner().RoleAssignments().List());
-
-            return null;
+            return WrapList(manager.RoleInner.RoleAssignments.ListForScope(scope));
         }
 
                 public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await manager.RoleInner.RoleAssignments.DeleteByIdAsync(id);
+            await manager.RoleInner.RoleAssignments.DeleteByIdAsync(id, cancellationToken);
         }
 
                 public RoleAssignmentImpl GetByScope(string scope, string name)
         {
-            //$ return (RoleAssignmentImpl) getByScopeAsync(scope, name).ToBlocking().Single();
-
-            return null;
+            return (RoleAssignmentImpl) GetByScopeAsync(scope, name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
                 public IRoleAssignmentsOperations Inner
@@ -109,27 +78,24 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
                 internal  RoleAssignmentsImpl(GraphRbacManager manager)
         {
-            //$ {
-            //$ this.manager = manager;
-            //$ }
-
+            this.manager = manager;
         }
 
                 protected override IRoleAssignment WrapModel(RoleAssignmentInner roleAssignmentInner)
         {
-            //$ if (roleAssignmentInner == null) {
-            //$ return null;
-            //$ }
-            //$ return new RoleAssignmentImpl(roleAssignmentInner, manager());
-
-            return null;
+            if (roleAssignmentInner == null)
+            {
+                return null;
+            }
+            return new RoleAssignmentImpl(roleAssignmentInner, manager);
         }
 
                 protected override RoleAssignmentImpl WrapModel(string name)
         {
-            //$ return new RoleAssignmentImpl(new RoleAssignmentInner().WithName(name), manager());
-
-            return null;
+            return new RoleAssignmentImpl(new RoleAssignmentInner
+            {
+                Name = name
+            }, manager);
         }
 
         public override void DeleteById(string id)

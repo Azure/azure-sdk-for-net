@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
     using System;
+    using System.Linq;
 
     /// <summary>
     /// The implementation of ServicePrincipals and its parent interfaces.
@@ -22,72 +23,35 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     {
         private IServicePrincipalsOperations innerCollection;
         private GraphRbacManager manager;
-                internal  ServicePrincipalsImpl(IServicePrincipalsOperations client, GraphRbacManager graphRbacManager)
+                internal  ServicePrincipalsImpl(GraphRbacManager graphRbacManager)
         {
-            //$ {
-            //$ this.innerCollection = client;
-            //$ this.manager = graphRbacManager;
-            //$ converter = new PagedListConverter<ServicePrincipalInner, ServicePrincipal>() {
-            //$ @Override
-            //$ public ServicePrincipal typeConvert(ServicePrincipalInner servicePrincipalInner) {
-            //$ ServicePrincipalImpl impl = wrapModel(servicePrincipalInner);
-            //$ return impl.RefreshCredentialsAsync().ToBlocking().Single();
-            //$ }
-            //$ };
-            //$ }
-
+            this.innerCollection = graphRbacManager.Inner.ServicePrincipals;
+            this.manager = graphRbacManager;
         }
 
                 public GraphRbacManager Manager()
         {
-            //$ return this.manager;
-
-            return null;
+            return this.manager;
         }
 
                 public ServicePrincipalImpl GetById(string id)
         {
-            //$ return (ServicePrincipalImpl) getByIdAsync(id).ToBlocking().Single();
-
-            return null;
+            return (ServicePrincipalImpl) GetByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
                 public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return innerCollection.GetAsync(id)
-            //$ .Map(new Func1<ServicePrincipalInner, ServicePrincipalImpl>() {
-            //$ @Override
-            //$ public ServicePrincipalImpl call(ServicePrincipalInner servicePrincipalInner) {
-            //$ if (servicePrincipalInner == null) {
-            //$ return null;
-            //$ }
-            //$ return new ServicePrincipalImpl(servicePrincipalInner, manager());
-            //$ }
-            //$ }).FlatMap(new Func1<ServicePrincipalImpl, Observable<ServicePrincipal>>() {
-            //$ @Override
-            //$ public Observable<ServicePrincipal> call(ServicePrincipalImpl servicePrincipal) {
-            //$ if (servicePrincipal == null) {
-            //$ return null;
-            //$ }
-            //$ return servicePrincipal.RefreshCredentialsAsync();
-            //$ }
-            //$ });
-
-            return null;
+            return await ((ServicePrincipalImpl)WrapModel(await innerCollection.GetAsync(id, cancellationToken))).RefreshCredentialsAsync(cancellationToken);
         }
 
                 public IServicePrincipal GetByName(string spn)
         {
-            //$ return getByNameAsync(spn).ToBlocking().Single();
-
-            return null;
+            return GetByNameAsync(spn).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
                 public ServicePrincipalImpl Define(string name)
         {
-            //$ return new ServicePrincipalImpl(new ServicePrincipalInner().WithDisplayName(name), manager());
-
-            return null;
+            return WrapModel(name);
         }
 
                 public async override Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -97,54 +61,40 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
                 public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return innerCollection.ListWithServiceResponseAsync(String.Format("servicePrincipalNames/any(c:c eq '%s')", name))
-            //$ .FlatMap(new Func1<ServiceResponse<Page<ServicePrincipalInner>>, Observable<Page<ServicePrincipalInner>>>() {
-            //$ @Override
-            //$ public Observable<Page<ServicePrincipalInner>> call(ServiceResponse<Page<ServicePrincipalInner>> result) {
-            //$ if (result == null || result.Body().Items() == null || result.Body().Items().IsEmpty()) {
-            //$ return innerCollection.ListAsync(String.Format("displayName eq '%s'", name));
-            //$ }
-            //$ return Observable.Just(result.Body());
-            //$ }
-            //$ }).Map(new Func1<Page<ServicePrincipalInner>, ServicePrincipalImpl>() {
-            //$ @Override
-            //$ public ServicePrincipalImpl call(Page<ServicePrincipalInner> result) {
-            //$ if (result == null || result.Items() == null || result.Items().IsEmpty()) {
-            //$ return null;
-            //$ }
-            //$ return new ServicePrincipalImpl(result.Items().Get(0), manager());
-            //$ }
-            //$ }).FlatMap(new Func1<ServicePrincipalImpl, Observable<ServicePrincipal>>() {
-            //$ @Override
-            //$ public Observable<ServicePrincipal> call(ServicePrincipalImpl servicePrincipal) {
-            //$ if (servicePrincipal == null) {
-            //$ return null;
-            //$ }
-            //$ return servicePrincipal.RefreshCredentialsAsync();
-            //$ }
-            //$ });
-
-            return null;
+            IEnumerable<ServicePrincipalInner> inners = await manager.Inner.ServicePrincipals.ListAsync(string.Format("displayName eq '{0}'", name), cancellationToken);
+            if (inners == null || !inners.Any())
+            {
+                inners = await manager.Inner.ServicePrincipals.ListAsync(string.Format("servicePrincipalNames/any(c:c eq '{0}')", name), cancellationToken);
+            }
+            if (inners == null || !inners.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await new ServicePrincipalImpl(inners.First(), manager).RefreshCredentialsAsync(cancellationToken);
+            }
         }
 
                 public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> List()
         {
-            //$ return wrapList(this.innerCollection.List());
+            Func<ServicePrincipalInner, IServicePrincipal> converter = inner =>
+            {
+                return ((ServicePrincipalImpl)WrapModel(inner)).RefreshCredentialsAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            };
 
-            return null;
+            return Inner.List()
+                        .AsContinuousCollection(link => Inner.ListNext(link))
+                        .Select(inner => converter(inner));
         }
 
                 public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IServicePrincipal>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return wrapPageAsync(this.Inner().ListAsync())
-            //$ .FlatMap(new Func1<ServicePrincipal, Observable<ServicePrincipal>>() {
-            //$ @Override
-            //$ public Observable<ServicePrincipal> call(ServicePrincipal servicePrincipal) {
-            //$ return ((ServicePrincipalImpl) servicePrincipal).RefreshCredentialsAsync();
-            //$ }
-            //$ });
-
-            return null;
+            return await PagedCollection<IServicePrincipal, ServicePrincipalInner>.LoadPageWithWrapModelAsync(
+                async (cancellation) => await innerCollection.ListAsync(null, cancellation),
+                innerCollection.ListNextAsync,
+                async (inner, cancellation) => await ((ServicePrincipalImpl)WrapModel(inner)).RefreshCredentialsAsync(cancellation),
+                loadAllPages, cancellationToken);
         }
 
                 public IServicePrincipalsOperations Inner
@@ -157,19 +107,15 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
                 protected override IServicePrincipal WrapModel(ServicePrincipalInner servicePrincipalInner)
         {
-            //$ if (servicePrincipalInner == null) {
-            //$ return null;
-            //$ }
-            //$ return new ServicePrincipalImpl(servicePrincipalInner, manager());
-
-            return null;
+            return servicePrincipalInner == null ? null : new ServicePrincipalImpl(servicePrincipalInner, manager);
         }
 
                 protected override ServicePrincipalImpl WrapModel(string name)
         {
-            //$ return new ServicePrincipalImpl(new ServicePrincipalInner().WithDisplayName(name), manager());
-
-            return null;
+            return new ServicePrincipalImpl(new ServicePrincipalInner
+            {
+                DisplayName = name
+            }, manager);
         }
 
         public override void DeleteById(string id)

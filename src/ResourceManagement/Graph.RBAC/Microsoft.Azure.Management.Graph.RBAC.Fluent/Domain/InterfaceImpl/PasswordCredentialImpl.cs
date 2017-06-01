@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="outputStream">The output stream to export the file.</param>
         /// <return>The next stage in credential definition.</return>
-        PasswordCredential.UpdateDefinition.IWithAttach<T> PasswordCredential.UpdateDefinition.IWithAuthFile<T>.WithAuthFileToExport(FileStream outputStream)
+        PasswordCredential.UpdateDefinition.IWithAttach<T> PasswordCredential.UpdateDefinition.IWithAuthFile<T>.WithAuthFileToExport(StreamWriter outputStream)
         {
             return this.WithAuthFileToExport(outputStream) as PasswordCredential.UpdateDefinition.IWithAttach<T>;
         }
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="outputStream">The output stream to export the file.</param>
         /// <return>The next stage in credential definition.</return>
-        PasswordCredential.Definition.IWithAttach<T> PasswordCredential.Definition.IWithAuthFile<T>.WithAuthFileToExport(FileStream outputStream)
+        PasswordCredential.Definition.IWithAttach<T> PasswordCredential.Definition.IWithAuthFile<T>.WithAuthFileToExport(StreamWriter outputStream)
         {
             return this.WithAuthFileToExport(outputStream) as PasswordCredential.Definition.IWithAttach<T>;
         }
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="duration">The duration of validity.</param>
         /// <return>The next stage in credential definition.</return>
-        PasswordCredential.UpdateDefinition.IWithAttach<T> PasswordCredential.UpdateDefinition.IWithDuration<T>.WithDateTimeOffset(DateTimeOffset duration)
+        PasswordCredential.UpdateDefinition.IWithAttach<T> PasswordCredential.UpdateDefinition.IWithDuration<T>.WithDateTimeOffset(TimeSpan duration)
         {
             return this.WithDuration(duration) as PasswordCredential.UpdateDefinition.IWithAttach<T>;
         }
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="duration">The duration of validity.</param>
         /// <return>The next stage in credential definition.</return>
-        PasswordCredential.Definition.IWithAttach<T> PasswordCredential.Definition.IWithDuration<T>.WithDateTimeOffset(DateTimeOffset duration)
+        PasswordCredential.Definition.IWithAttach<T> PasswordCredential.Definition.IWithDuration<T>.WithDateTimeOffset(TimeSpan duration)
         {
             return this.WithDuration(duration) as PasswordCredential.Definition.IWithAttach<T>;
         }

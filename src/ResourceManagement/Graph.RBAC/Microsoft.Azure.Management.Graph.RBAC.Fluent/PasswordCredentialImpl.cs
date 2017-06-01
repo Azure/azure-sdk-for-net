@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System;
     using ResourceManager.Fluent.Core.ResourceActions;
     using System.IO;
+    using ResourceManager.Fluent;
+    using ResourceManager.Fluent.Authentication;
+    using System.Text;
 
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
@@ -24,87 +27,93 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         IUpdateDefinition<T>
     {
         private string name;
-        private IHasCredential<object> parent;
-        FileStream authFile;
+        private IHasCredential<T> parent;
+        StreamWriter authFile;
                 public PasswordCredentialImpl<T> WithPasswordValue(string password)
         {
-            //$ inner().WithValue(password);
-            //$ return this;
-
+            Inner.Value = password;
             return this;
         }
 
                 public DateTime EndDate()
         {
-            //$ return inner().EndDate();
-
-            return DateTime.Now;
+            return Inner.EndDate ?? DateTime.MinValue;
         }
 
                 protected override async Task<Models.PasswordCredential> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ throw new UnsupportedOperationException("Cannot refresh credentials.");
-
-            return null;
+            throw new NotSupportedException("Cannot refresh credentials.");
         }
 
-                public PasswordCredentialImpl<T> WithDuration(DateTimeOffset duration)
+                public PasswordCredentialImpl<T> WithDuration(TimeSpan duration)
         {
-            //$ inner().WithEndDate(startDate().PlusDays((int) duration.GetStandardDays()));
-            //$ return this;
-
+            Inner.EndDate = StartDate().Add(duration);
             return this;
         }
 
-                internal void ExportAuthFile(ServicePrincipalImpl servicePrincipal)
+                internal async Task ExportAuthFileAsync(ServicePrincipalImpl servicePrincipal, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ if (authFile == null) {
-            //$ return;
-            //$ }
-            //$ RestClient restClient = servicePrincipal.Manager().RoleInner().RestClient();
-            //$ AzureEnvironment environment = null;
-            //$ if (restClient.Credentials() instanceof AzureTokenCredentials) {
-            //$ environment = ((AzureTokenCredentials) restClient.Credentials()).Environment();
-            //$ } else {
-            //$ String baseUrl = restClient.Retrofit().BaseUrl().ToString();
-            //$ for (AzureEnvironment env : AzureEnvironment.KnownEnvironments()) {
-            //$ if (env.ResourceManagerEndpoint().ToLowerCase().Contains(baseUrl.ToLowerCase())) {
-            //$ environment = env;
-            //$ }
-            //$ }
-            //$ if (environment == null) {
-            //$ throw new IllegalArgumentException("Unknown resource manager endpoint " + baseUrl);
-            //$ }
-            //$ }
-            //$ 
-            //$ StringBuilder builder = new StringBuilder();
-            //$ builder.Append(String.Format("client=%s", servicePrincipal.ApplicationId())).Append("\n");
-            //$ builder.Append(String.Format("key=%s", value())).Append("\n");
-            //$ builder.Append(String.Format("tenant=%s", servicePrincipal.Manager().TenantId())).Append("\n");
-            //$ builder.Append(String.Format("subscription=%s", servicePrincipal.AssignedSubscription)).Append("\n");
-            //$ builder.Append(String.Format("authURL=%s", normalizeAuthFileUrl(environment.ActiveDirectoryEndpoint()))).Append("\n");
-            //$ builder.Append(String.Format("baseURL=%s", normalizeAuthFileUrl(environment.ResourceManagerEndpoint()))).Append("\n");
-            //$ builder.Append(String.Format("graphURL=%s", normalizeAuthFileUrl(environment.GraphEndpoint()))).Append("\n");
-            //$ builder.Append(String.Format("managementURI=%s", normalizeAuthFileUrl(environment.ManagementEndpoint())));
-            //$ try {
-            //$ authFile.Write(builder.ToString().GetBytes());
-            //$ } catch (IOException e) {
-            //$ throw new RuntimeException(e);
-            //$ }
-            //$ }
+            if (authFile == null)
+            {
+                return;
+            }
+            RestClient restClient = servicePrincipal.Manager().restClient;
+            AzureEnvironment environment = null;
+            if (restClient.Credentials is AzureCredentials)
+            {
+                environment = ((AzureCredentials)restClient.Credentials).Environment;
+            }
+            else
+            {
+                string baseUrl = restClient.BaseUri;
+                if (AzureEnvironment.AzureGlobalCloud.GraphEndpoint.ToLower().Contains(baseUrl.ToLower()))
+                {
+                    environment = AzureEnvironment.AzureGlobalCloud;
+                }
+                else if (AzureEnvironment.AzureChinaCloud.GraphEndpoint.ToLower().Contains(baseUrl.ToLower()))
+                {
+                    environment = AzureEnvironment.AzureChinaCloud;
+                }
+                else if (AzureEnvironment.AzureGermanCloud.GraphEndpoint.ToLower().Contains(baseUrl.ToLower()))
+                {
+                    environment = AzureEnvironment.AzureGermanCloud;
+                }
+                else if (AzureEnvironment.AzureUSGovernment.GraphEndpoint.ToLower().Contains(baseUrl.ToLower()))
+                {
+                    environment = AzureEnvironment.AzureUSGovernment;
+                }
+                if (environment == null)
+                {
+                    throw new NotSupportedException("Unknown graph endpoint " + baseUrl);
+                }
+            }
 
+            try
+            {
+                await authFile.WriteLineAsync(String.Format("client=%s", servicePrincipal.ApplicationId()));
+                await authFile.WriteLineAsync(String.Format("key=%s", Value()));
+                await authFile.WriteLineAsync(String.Format("tenant=%s", servicePrincipal.Manager().tenantId));
+                await authFile.WriteLineAsync(String.Format("subscription=%s", servicePrincipal.assignedSubscription));
+                await authFile.WriteLineAsync(String.Format("authURL=%s", NormalizeAuthFileUrl(environment.AuthenticationEndpoint)));
+                await authFile.WriteLineAsync(String.Format("baseURL=%s", NormalizeAuthFileUrl(environment.ResourceManagerEndpoint)));
+                await authFile.WriteLineAsync(String.Format("graphURL=%s", NormalizeAuthFileUrl(environment.GraphEndpoint)));
+                await authFile.WriteLineAsync(String.Format("managementURI=%s", NormalizeAuthFileUrl(environment.ManagementEnpoint)));
+            }
+            finally
+            {
+#if NET45
+                authFile.Close();
+#endif
+            }
         }
 
-                internal  PasswordCredentialImpl(Models.PasswordCredential passwordCredential)
+        internal  PasswordCredentialImpl(Models.PasswordCredential passwordCredential)
                     : base(System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(passwordCredential.CustomKeyIdentifier)), passwordCredential)
         {
-            //$ super(passwordCredential);
-            //$ this.name = new String(BaseEncoding.Base64().Decode(passwordCredential.CustomKeyIdentifier()));
-            //$ }
-
+            name = System.Text.Encoding.UTF8.GetString(System.Convert.FromBase64String(passwordCredential.CustomKeyIdentifier));
         }
 
-                internal  PasswordCredentialImpl(string name, IHasCredential<object> parent)
+                internal  PasswordCredentialImpl(string name, IHasCredential<T> parent)
                     : base(name, new Models.PasswordCredential()
                     {
                         CustomKeyIdentifier = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(name)),
@@ -112,88 +121,63 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                         EndDate = DateTime.Now.AddYears(1)
                     })
         {
-            //$ super(new PasswordCredentialInner()
-            //$ .WithCustomKeyIdentifier(BaseEncoding.Base64().Encode(name.GetBytes()))
-            //$ .WithStartDate(DateTime.Now())
-            //$ .WithEndDate(DateTime.Now().PlusYears(1)));
-            //$ this.name = name;
-            //$ this.parent = parent;
-            //$ }
-
+            this.name = name;
+            this.parent = parent;
         }
 
                 private string NormalizeAuthFileUrl(string url)
         {
-            //$ if (!url.EndsWith("/")) {
-            //$ url = url + "/";
-            //$ }
-            //$ return url.Replace("://", "\\://");
-            //$ }
-
-            return null;
+            if (!url.EndsWith("/"))
+            {
+                url = url + "/";
+            }
+            return url.Replace("://", "\\://");
         }
 
                 public PasswordCredentialImpl<T> WithStartDate(DateTime startDate)
         {
-            //$ DateTime original = startDate();
-            //$ inner().WithStartDate(startDate);
-            //$ // Adjust end time
-            //$ withDuration(Duration.Millis(endDate().GetMillis() - original.GetMillis()));
-            //$ return this;
-
+            DateTime original = StartDate();
+            Inner.StartDate = startDate;
+            // Adjust end time
+            WithDuration(EndDate().Subtract(original));
             return this;
         }
 
                 public string Name()
         {
-            //$ return name;
-
-            return null;
+            return name;
         }
 
                 public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ throw new UnsupportedOperationException("Cannot refresh credentials.");
-
-            return null;
+            throw new NotSupportedException("Cannot refresh credentials.");
         }
 
                 public string Id()
         {
-            //$ return inner().KeyId();
-
-            return null;
+            return Inner.KeyId;
         }
 
                 public T Attach()
         {
-            //$ public T attach() {
-            //$ parent.WithPasswordCredential(this);
-            //$ return (T) parent;
-
-            return default(T);
+            parent.WithPasswordCredential(this);
+            return parent as T;
         }
 
                 public string Value()
         {
-            //$ return inner().Value();
-
-            return null;
+            return Inner.Value;
         }
 
-                public PasswordCredentialImpl<T> WithAuthFileToExport(FileStream outputStream)
+                public PasswordCredentialImpl<T> WithAuthFileToExport(StreamWriter outputStream)
         {
-            //$ this.authFile = outputStream;
-            //$ return this;
-
+            this.authFile = outputStream;
             return this;
         }
 
                 public DateTime StartDate()
         {
-            //$ return inner().StartDate();
-
-            return DateTime.Now;
+            return Inner.StartDate ?? DateTime.MinValue;
         }
     }
 }

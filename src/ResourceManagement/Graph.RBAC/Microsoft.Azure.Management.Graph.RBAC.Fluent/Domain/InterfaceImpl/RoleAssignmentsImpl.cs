@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="scope">The scope of the role assignments.</param>
         /// <return>An observable of role assignments.</return>
-        async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignments.ListByScopeAsync(string scope, CancellationToken cancellationToken)
+        async Task<IPagedCollection<IRoleAssignment>> Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignments.ListByScopeAsync(string scope, CancellationToken cancellationToken)
         {
-            return await this.ListByScopeAsync(scope, cancellationToken) as Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment;
+            return await this.ListByScopeAsync(scope, cancellationToken) as IPagedCollection<IRoleAssignment>;
         }
 
         /// <summary>

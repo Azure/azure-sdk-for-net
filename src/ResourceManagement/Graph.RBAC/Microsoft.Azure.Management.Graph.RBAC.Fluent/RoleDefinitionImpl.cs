@@ -21,82 +21,68 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private string roleName;
                 public GraphRbacManager Manager()
         {
-            //$ return manager;
-
-            return null;
+            return manager;
         }
 
                 public ISet<Models.Permission> Permissions()
         {
-            //$ if (inner().Properties() == null) {
-            //$ return null;
-            //$ }
-            //$ return Collections.UnmodifiableSet(Sets.NewHashSet(inner().Properties().Permissions()));
-
-            return null;
+            if (Inner.Properties == null)
+            {
+                return null;
+            }
+            return new HashSet<Models.Permission>(Inner.Properties.Permissions);
         }
 
                 internal  RoleDefinitionImpl(RoleDefinitionInner innerObject, GraphRbacManager manager)
                     : base(innerObject)
         {
-            //$ super(innerObject);
-            //$ this.manager = manager;
-            //$ }
-
+            this.manager = manager;
         }
 
                 public string Name()
         {
-            //$ return inner().Name();
-
-            return null;
+            return Inner.Name;
         }
 
                 public string RoleName()
         {
-            //$ if (inner().Properties() == null) {
-            //$ return null;
-            //$ }
-            //$ return inner().Properties().RoleName();
-
-            return null;
+            if (Inner.Properties == null)
+            {
+                return null;
+            }
+            return Inner.Properties.RoleName;
         }
 
                 public string Description()
         {
-            //$ if (inner().Properties() == null) {
-            //$ return null;
-            //$ }
-            //$ return inner().Properties().Description();
-
-            return null;
+            if (Inner.Properties == null)
+            {
+                return null;
+            }
+            return Inner.Properties.Description;
         }
 
                 public string Id()
         {
-            //$ return inner().Id();
-
-            return null;
+            return Inner.Id;
         }
 
                 public string Type()
         {
-            //$ if (inner().Properties() == null) {
-            //$ return null;
-            //$ }
-            //$ return inner().Properties().Type();
-
-            return null;
+            if (Inner.Properties == null)
+            {
+                return null;
+            }
+            return Inner.Properties.Type;
         }
 
                 public ISet<string> AssignableScopes()
         {
-            //$ if (inner().Properties() == null) {
-            //$ return null;
-            //$ }
-            //$ return Collections.UnmodifiableSet(Sets.NewHashSet(inner().Properties().AssignableScopes()));
-
-            return null;
+            if (Inner.Properties == null)
+            {
+                return null;
+            }
+            return new HashSet<string>(Inner.Properties.AssignableScopes);
         }
     }
 }

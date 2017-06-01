@@ -5,20 +5,20 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// An interface representing a model that can attach a credential.
     /// </summary>
-    public interface IHasCredential<T> 
+    public interface IHasCredential<T> where T : class
     {
         /// <summary>
         /// Attach a credential to this model.
         /// </summary>
         /// <param name="credential">The credential to attach to.</param>
         /// <return>The interface itself.</return>
-        T WithPasswordCredential(PasswordCredentialImpl<object> credential);
+        T WithPasswordCredential(PasswordCredentialImpl<T> credential);
 
         /// <summary>
         /// Attach a credential to this model.
         /// </summary>
         /// <param name="credential">The credential to attach to.</param>
         /// <return>The interface itself.</return>
-        T WithCertificateCredential(CertificateCredentialImpl<object> credential);
+        T WithCertificateCredential(CertificateCredentialImpl<T> credential);
     }
 }

@@ -11,14 +11,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Collections.Generic;
     using System;
 
-    public partial class ActiveDirectoryApplicationImpl 
+    public partial class ActiveDirectoryApplicationImpl
     {
         /// <summary>
         /// Attach a credential to this model.
         /// </summary>
         /// <param name="credential">The credential to attach to.</param>
         /// <return>The interface itself.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl Microsoft.Azure.Management.Graph.RBAC.Fluent.IHasCredential<Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl>.WithCertificateCredential(CertificateCredentialImpl<object> credential)
+        IWithCreate Microsoft.Azure.Management.Graph.RBAC.Fluent.IHasCredential<IWithCreate>.WithCertificateCredential(CertificateCredentialImpl<IWithCreate> credential)
         {
             return this.WithCertificateCredential(credential) as Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl;
         }
@@ -28,7 +28,27 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="credential">The credential to attach to.</param>
         /// <return>The interface itself.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl Microsoft.Azure.Management.Graph.RBAC.Fluent.IHasCredential<Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl>.WithPasswordCredential(PasswordCredentialImpl<object> credential)
+        IUpdate Microsoft.Azure.Management.Graph.RBAC.Fluent.IHasCredential<IUpdate>.WithCertificateCredential(CertificateCredentialImpl<IUpdate> credential)
+        {
+            return this.WithCertificateCredential(credential) as Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl;
+        }
+
+        /// <summary>
+        /// Attach a credential to this model.
+        /// </summary>
+        /// <param name="credential">The credential to attach to.</param>
+        /// <return>The interface itself.</return>
+        IWithCreate Microsoft.Azure.Management.Graph.RBAC.Fluent.IHasCredential<IWithCreate>.WithPasswordCredential(PasswordCredentialImpl<IWithCreate> credential)
+        {
+            return this.WithPasswordCredential(credential) as Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl;
+        }
+
+        /// <summary>
+        /// Attach a credential to this model.
+        /// </summary>
+        /// <param name="credential">The credential to attach to.</param>
+        /// <return>The interface itself.</return>
+        IUpdate Microsoft.Azure.Management.Graph.RBAC.Fluent.IHasCredential<IUpdate>.WithPasswordCredential(PasswordCredentialImpl<IUpdate> credential)
         {
             return this.WithPasswordCredential(credential) as Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl;
         }

@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using ResourceManager.Fluent.Core.ResourceActions;
+    using Rest;
 
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
@@ -26,222 +27,168 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private string roleName;
                 public RoleAssignmentImpl ForUser(IActiveDirectoryUser user)
         {
-            //$ this.objectId = user.Id();
-            //$ return this;
-
+            this.objectId = user.Id;
             return this;
         }
 
                 public RoleAssignmentImpl ForUser(string name)
         {
-            //$ this.userName = name;
-            //$ return this;
-
+            this.userName = name;
             return this;
         }
 
                 public RoleAssignmentImpl WithBuiltInRole(BuiltInRole role)
         {
-            //$ this.roleName = role.ToString();
-            //$ return this;
-
+            this.roleName = role.Value;
             return this;
         }
 
                 public RoleAssignmentImpl WithResourceScope(IResource resource)
         {
-            //$ return withScope(resource.Id());
-
-            return this;
+            return WithScope(resource.Id);
         }
 
                 internal  RoleAssignmentImpl(RoleAssignmentInner innerObject, GraphRbacManager manager)
                     : base(innerObject.Name, innerObject)
         {
-            //$ super(innerObject.Name(), innerObject);
-            //$ this.manager = manager;
-            //$ }
-
+            this.manager = manager;
         }
 
                 public GraphRbacManager Manager()
         {
-            //$ return manager;
-
-            return null;
+            return manager;
         }
 
                 public RoleAssignmentImpl ForGroup(IActiveDirectoryGroup activeDirectoryGroup)
         {
-            //$ this.objectId = activeDirectoryGroup.Id();
-            //$ return this;
-
+            this.objectId = activeDirectoryGroup.Id;
             return this;
         }
 
                 public bool IsInCreateMode()
         {
-            //$ return inner().Id() == null;
-
-            return false;
+            return Inner.Id == null;
         }
 
                 public RoleAssignmentImpl ForServicePrincipal(IServicePrincipal servicePrincipal)
         {
-            //$ this.objectId = servicePrincipal.Id();
-            //$ return this;
-
+            this.objectId = servicePrincipal.Id;
             return this;
         }
 
                 public RoleAssignmentImpl ForServicePrincipal(string servicePrincipalName)
         {
-            //$ this.servicePrincipalName = servicePrincipalName;
-            //$ return this;
-
+            this.servicePrincipalName = servicePrincipalName;
             return this;
         }
 
                 public string PrincipalId()
         {
-            //$ if (inner().Properties() == null) {
-            //$ return null;
-            //$ }
-            //$ return inner().Properties().PrincipalId();
-
-            return null;
+            if (Inner.Properties == null)
+            {
+                return null;
+            }
+            return Inner.Properties.PrincipalId;
         }
 
                 public RoleAssignmentImpl ForObjectId(string objectId)
         {
-            //$ this.objectId = objectId;
-            //$ return this;
-
+            this.objectId = objectId;
             return this;
         }
 
                 protected override async Task<Models.RoleAssignmentInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return manager.RoleInner().RoleAssignments().GetAsync(scope(), name());
-
-            return null;
+            return await manager.RoleInner.RoleAssignments.GetByIdAsync(Id(), cancellationToken);
         }
 
                 public string RoleDefinitionId()
         {
-            //$ if (inner().Properties() == null) {
-            //$ return null;
-            //$ }
-            //$ return inner().Properties().RoleDefinitionId();
-
-            return null;
+            if (Inner.Properties == null)
+            {
+                return null;
+            }
+            return Inner.Properties.RoleDefinitionId;
         }
 
                 public RoleAssignmentImpl WithRoleDefinition(string roleDefinitionId)
         {
-            //$ this.roleDefinitionId = roleDefinitionId;
-            //$ return this;
-
+            this.roleDefinitionId = roleDefinitionId;
             return this;
         }
 
                 public string Scope()
         {
-            //$ if (inner().Properties() == null) {
-            //$ return null;
-            //$ }
-            //$ return inner().Properties().Scope();
-
-            return null;
+            if (Inner.Properties == null)
+            {
+                return null;
+            }
+            return Inner.Properties.Scope;
         }
 
                 public RoleAssignmentImpl WithScope(string scope)
         {
-            //$ if (this.Inner().Properties() == null) {
-            //$ this.Inner().WithProperties(new RoleAssignmentPropertiesWithScope());
-            //$ }
-            //$ this.Inner().Properties().WithScope(scope);
-            //$ return this;
-
+            if (Inner.Properties == null)
+            {
+                Inner.Properties = new RoleAssignmentPropertiesWithScope();
+            }
+            Inner.Properties.Scope = scope;
             return this;
         }
 
                 public RoleAssignmentImpl WithResourceGroupScope(IResourceGroup resourceGroup)
         {
-            //$ return withScope(resourceGroup.Id());
-
-            return this;
+            return WithScope(resourceGroup.Id);
         }
 
                 public string Id()
         {
-            //$ return inner().Id();
-
-            return null;
+            return Inner.Id;
         }
 
                 public RoleAssignmentImpl WithSubscriptionScope(string subscriptionId)
         {
-            //$ return withScope("subscriptions/" + subscriptionId);
-
-            return this;
+            return WithScope("subscriptions/" + subscriptionId);
         }
 
                 public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ Observable<String> objectIdObservable;
-            //$ if (objectId != null) {
-            //$ objectIdObservable = Observable.Just(objectId);
-            //$ } else if (userName != null) {
-            //$ objectIdObservable = manager.Users().GetByNameAsync(userName)
-            //$ .Map(new Func1<ActiveDirectoryUser, String>() {
-            //$ @Override
-            //$ public String call(ActiveDirectoryUser user) {
-            //$ return user.Id();
-            //$ }
-            //$ });
-            //$ } else if (servicePrincipalName != null) {
-            //$ objectIdObservable = manager.ServicePrincipals().GetByNameAsync(servicePrincipalName)
-            //$ .Map(new Func1<ServicePrincipal, String>() {
-            //$ @Override
-            //$ public String call(ServicePrincipal sp) {
-            //$ return sp.Id();
-            //$ }
-            //$ });
-            //$ } else {
-            //$ throw new IllegalArgumentException("Please pass a non-null value for either object Id, user, group, or service principal");
-            //$ }
-            //$ 
-            //$ Observable<String> roleDefinitionIdObservable;
-            //$ if (roleDefinitionId != null) {
-            //$ roleDefinitionIdObservable = Observable.Just(roleDefinitionId);
-            //$ } else if (roleName != null) {
-            //$ roleDefinitionIdObservable = manager().RoleDefinitions().GetByScopeAndRoleNameAsync(scope(), roleName)
-            //$ .Map(new Func1<RoleDefinition, String>() {
-            //$ @Override
-            //$ public String call(RoleDefinition roleDefinition) {
-            //$ return roleDefinition.Id();
-            //$ }
-            //$ });
-            //$ } else {
-            //$ throw new IllegalArgumentException("Please pass a non-null value for either role name or role definition ID");
-            //$ }
-            //$ 
-            //$ return Observable.Zip(objectIdObservable, roleDefinitionIdObservable, new Func2<String, String, RoleAssignmentPropertiesInner>() {
-            //$ @Override
-            //$ public RoleAssignmentPropertiesInner call(String objectId, String roleDefinitionId) {
-            //$ return new RoleAssignmentPropertiesInner()
-            //$ .WithPrincipalId(objectId).WithRoleDefinitionId(roleDefinitionId);
-            //$ }
-            //$ }).FlatMap(new Func1<RoleAssignmentPropertiesInner, Observable<RoleAssignmentInner>>() {
-            //$ @Override
-            //$ public Observable<RoleAssignmentInner> call(RoleAssignmentPropertiesInner roleAssignmentPropertiesInner) {
-            //$ return manager().RoleInner().RoleAssignments()
-            //$ .CreateAsync(scope(), name(), roleAssignmentPropertiesInner);
-            //$ }
-            //$ }).Map(innerToFluentMap(this));
+            if (objectId == null)
+            {
+                if (userName != null)
+                {
+                    objectId = (await manager.Users.GetByNameAsync(userName, cancellationToken)).Id;
+                }
+                else if (servicePrincipalName != null)
+                {
+                    objectId = (await manager.ServicePrincipals.GetByNameAsync(servicePrincipalName, cancellationToken)).Id;
+                }
+                else
+                {
+                    throw new ValidationException("Please pass a non-null value for either object id, user, group, or service principal");
+                }
+            }
+            
+            if (roleDefinitionId == null)
+            {
+                if (roleName != null)
+                {
+                    roleDefinitionId = (await manager.RoleDefinitions.GetByScopeAndRoleNameAsync(Scope(), roleName, cancellationToken)).Id;
+                }
+                else
+                {
+                    throw new ValidationException("Please pass a non-null value for either role name or role definition ID");
+                }
+            }
 
-            return null;
+            var propertiesInner = new RoleAssignmentPropertiesInner
+            {
+                PrincipalId = objectId,
+                RoleDefinitionId = roleDefinitionId
+            };
+            var inner = await manager.RoleInner.RoleAssignments.CreateAsync(Scope(), Name, propertiesInner, cancellationToken);
+            SetInner(inner);
+            return this;
         }
     }
 }

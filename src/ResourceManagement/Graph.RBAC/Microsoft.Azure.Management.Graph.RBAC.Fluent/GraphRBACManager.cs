@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
@@ -14,8 +15,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     public class GraphRbacManager : Manager<IGraphRbacManagementClient>, IGraphRbacManager, IBeta
     {
         #region Fluent private collections
+        internal RestClient restClient;
+        internal string tenantId;
         private IActiveDirectoryUsers users;
+        private IActiveDirectoryGroups groups;
+        private IActiveDirectoryApplications applications;
         private IServicePrincipals servicePrincipals;
+        private IRoleDefinitions roleDefinitions;
+        private IRoleAssignments roleAssignments;
         private IAuthorizationManagementClient roleInner;
         #endregion
 
@@ -30,6 +37,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 TenantID = tenantId
             })
         {
+            string resourceManagerUrl = AzureEnvironment.AzureGlobalCloud.ResourceManagerEndpoint;
+            if (restClient.Credentials is AzureCredentials)
+            {
+                resourceManagerUrl = ((AzureCredentials)restClient.Credentials).Environment.ResourceManagerEndpoint;
+            }
+            roleInner = new AuthorizationManagementClient(new Uri(resourceManagerUrl),
+                restClient.Credentials,
+                restClient.RootHttpHandler,
+                restClient.Handlers.ToArray());
+            this.tenantId = tenantId;
         }
 
         #endregion
@@ -100,15 +117,65 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
+        public IActiveDirectoryGroups Groups
+        {
+            get
+            {
+                if (groups == null)
+                {
+                    groups = new ActiveDirectoryGroupsImpl(this);
+                }
+
+                return groups;
+            }
+        }
+
+        public IActiveDirectoryApplications Applications
+        {
+            get
+            {
+                if (applications == null)
+                {
+                    applications = new ActiveDirectoryApplicationsImpl(this);
+                }
+
+                return applications;
+            }
+        }
+
         public IServicePrincipals ServicePrincipals
         {
             get
             {
                 if (servicePrincipals == null)
                 {
-                    servicePrincipals = new ServicePrincipalsImpl(Inner.ServicePrincipals, this);
+                    servicePrincipals = new ServicePrincipalsImpl(this);
                 }
                 return servicePrincipals;
+            }
+        }
+
+        public IRoleDefinitions RoleDefinitions
+        {
+            get
+            {
+                if (roleDefinitions == null)
+                {
+                    roleDefinitions = new RoleDefinitionsImpl(this);
+                }
+                return roleDefinitions;
+            }
+        }
+
+        public IRoleAssignments RoleAssignments
+        {
+            get
+            {
+                if (roleAssignments == null)
+                {
+                    roleAssignments = new RoleAssignmentsImpl(this);
+                }
+                return roleAssignments;
             }
         }
         #endregion
@@ -118,6 +185,10 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     {
         IAuthorizationManagementClient RoleInner { get; }
         IActiveDirectoryUsers Users { get; }
+        IActiveDirectoryGroups Groups { get; }
+        IActiveDirectoryApplications Applications { get; }
         IServicePrincipals ServicePrincipals { get; }
+        IRoleDefinitions RoleDefinitions { get; }
+        IRoleAssignments RoleAssignments { get; }
     }
 }

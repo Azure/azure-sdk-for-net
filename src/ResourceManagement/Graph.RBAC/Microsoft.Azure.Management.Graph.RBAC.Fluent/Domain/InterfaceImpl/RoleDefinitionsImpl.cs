@@ -28,9 +28,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="scope">The scope of the role definition.</param>
         /// <return>An observable of role definitions.</return>
-        async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinitions.ListByScopeAsync(string scope, CancellationToken cancellationToken)
+        async Task<IPagedCollection<IRoleDefinition>> Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinitions.ListByScopeAsync(string scope, CancellationToken cancellationToken)
         {
-            return await this.ListByScopeAsync(scope, cancellationToken) as Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition;
+            return await this.ListByScopeAsync(scope, cancellationToken) as IPagedCollection<IRoleDefinition>;
         }
         
         /// <summary>

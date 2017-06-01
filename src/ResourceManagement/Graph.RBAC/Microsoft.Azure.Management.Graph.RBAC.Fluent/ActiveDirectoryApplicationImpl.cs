@@ -10,7 +10,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
     using System;
+    using System.Linq;
     using ResourceManager.Fluent.Core.ResourceActions;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
@@ -20,7 +22,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         IActiveDirectoryApplication,
         IDefinition,
         IUpdate,
-        IHasCredential<Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplicationImpl>
+        IHasCredential<IWithCreate>,
+        IHasCredential<IUpdate>
     {
         private GraphRbacManager manager;
         private ApplicationCreateParametersInner createParameters;
@@ -29,161 +32,124 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> cachedCertificateCredentials;
                 public ActiveDirectoryApplicationImpl WithAvailableToOtherTenants(bool availableToOtherTenants)
         {
-            //$ if (isInCreateMode()) {
-            //$ createParameters.WithAvailableToOtherTenants(availableToOtherTenants);
-            //$ } else {
-            //$ updateParameters.WithAvailableToOtherTenants(availableToOtherTenants);
-            //$ }
-            //$ return this;
-
+            if (IsInCreateMode())
+            {
+                createParameters.AvailableToOtherTenants = availableToOtherTenants;
+            }
+            else
+            {
+                updateParameters.AvailableToOtherTenants = availableToOtherTenants;
+            }
             return this;
         }
 
                 public PasswordCredentialImpl<T> DefinePasswordCredential<T>(string name) where T : class
         {
-            //$ public PasswordCredentialImpl definePasswordCredential(String name) {
-            //$ return new PasswordCredentialImpl<>(name, this);
-
-            return null;
+            return new PasswordCredentialImpl<T>(name, (IHasCredential<T>) this);
         }
 
                 public IReadOnlyList<string> ApplicationPermissions()
         {
-            //$ if (inner().AppPermissions() == null) {
-            //$ return null;
-            //$ }
-            //$ return Collections.UnmodifiableList(inner().AppPermissions());
-
-            return null;
+            if (Inner.AppPermissions == null)
+            {
+                return null;
+            }
+            return Inner.AppPermissions.ToList().AsReadOnly();
         }
 
                 internal async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> RefreshCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ Observable<ActiveDirectoryApplication> keyCredentials = manager.Inner().Applications().ListKeyCredentialsAsync(id())
-            //$ .FlatMapIterable(new Func1<List<KeyCredentialInner>, Iterable<KeyCredentialInner>>() {
-            //$ @Override
-            //$ public Iterable<KeyCredentialInner> call(List<KeyCredentialInner> keyCredentialInners) {
-            //$ return keyCredentialInners;
-            //$ }
-            //$ })
-            //$ .Map(new Func1<KeyCredentialInner, CertificateCredential>() {
-            //$ @Override
-            //$ public CertificateCredential call(KeyCredentialInner keyCredentialInner) {
-            //$ return new CertificateCredentialImpl<ActiveDirectoryApplication>(keyCredentialInner);
-            //$ }
-            //$ })
-            //$ .ToMap(new Func1<CertificateCredential, String>() {
-            //$ @Override
-            //$ public String call(CertificateCredential certificateCredential) {
-            //$ return certificateCredential.Name();
-            //$ }
-            //$ }).Map(new Func1<Map<String, CertificateCredential>, ActiveDirectoryApplication>() {
-            //$ @Override
-            //$ public ActiveDirectoryApplication call(Map<String, CertificateCredential> stringCertificateCredentialMap) {
-            //$ ActiveDirectoryApplicationImpl.This.cachedCertificateCredentials = stringCertificateCredentialMap;
-            //$ return ActiveDirectoryApplicationImpl.This;
-            //$ }
-            //$ });
-            //$ Observable<ActiveDirectoryApplication> passwordCredentials = manager.Inner().Applications().ListPasswordCredentialsAsync(id())
-            //$ .FlatMapIterable(new Func1<List<PasswordCredentialInner>, Iterable<PasswordCredentialInner>>() {
-            //$ @Override
-            //$ public Iterable<PasswordCredentialInner> call(List<PasswordCredentialInner> passwordCredentialInners) {
-            //$ return passwordCredentialInners;
-            //$ }
-            //$ })
-            //$ .Map(new Func1<PasswordCredentialInner, PasswordCredential>() {
-            //$ @Override
-            //$ public PasswordCredential call(PasswordCredentialInner passwordCredentialInner) {
-            //$ return new PasswordCredentialImpl<ActiveDirectoryApplication>(passwordCredentialInner);
-            //$ }
-            //$ })
-            //$ .ToMap(new Func1<PasswordCredential, String>() {
-            //$ @Override
-            //$ public String call(PasswordCredential passwordCredential) {
-            //$ return passwordCredential.Name();
-            //$ }
-            //$ }).Map(new Func1<Map<String, PasswordCredential>, ActiveDirectoryApplication>() {
-            //$ @Override
-            //$ public ActiveDirectoryApplication call(Map<String, PasswordCredential> stringPasswordCredentialMap) {
-            //$ ActiveDirectoryApplicationImpl.This.cachedPasswordCredentials = stringPasswordCredentialMap;
-            //$ return ActiveDirectoryApplicationImpl.This;
-            //$ }
-            //$ });
-            //$ return keyCredentials.MergeWith(passwordCredentials).Last();
-            //$ }
+            IEnumerable<KeyCredential> keyCredentials = await manager.Inner.Applications.ListKeyCredentialsAsync(Id(), cancellationToken);
+            this.cachedCertificateCredentials = new Dictionary<string, ICertificateCredential>();
+            foreach (var cred in keyCredentials)
+            {
+                ICertificateCredential cert = new CertificateCredentialImpl<IActiveDirectoryApplication>(cred);
+                this.cachedCertificateCredentials.Add(cert.Name, cert);
+            }
 
-            return null;
+            IEnumerable<Models.PasswordCredential> passwordCredentials = await manager.Inner.Applications.ListPasswordCredentialsAsync(Id(), cancellationToken);
+            this.cachedPasswordCredentials = new Dictionary<string, IPasswordCredential>();
+            foreach (var cred in passwordCredentials)
+            {
+                IPasswordCredential cert = new PasswordCredentialImpl<IActiveDirectoryApplication>(cred);
+                this.cachedPasswordCredentials.Add(cert.Name, cert);
+            }
+
+            return this;
         }
 
                 public ActiveDirectoryApplicationImpl WithIdentifierUrl(string identifierUrl)
         {
-            //$ if (isInCreateMode()) {
-            //$ if (createParameters.IdentifierUris() == null) {
-            //$ createParameters.WithIdentifierUris(new ArrayList<String>());
-            //$ }
-            //$ createParameters.IdentifierUris().Add(identifierUrl);
-            //$ } else {
-            //$ if (updateParameters.IdentifierUris() == null) {
-            //$ updateParameters.WithIdentifierUris(new ArrayList<>(identifierUris()));
-            //$ }
-            //$ updateParameters.IdentifierUris().Add(identifierUrl);
-            //$ }
-            //$ return this;
-
+            if (IsInCreateMode())
+            {
+                if (createParameters.IdentifierUris == null)
+                {
+                    createParameters.IdentifierUris = new List<string>();
+                }
+                createParameters.IdentifierUris.Add(identifierUrl);
+            }
+            else
+            {
+                if (updateParameters.IdentifierUris == null) {
+                    updateParameters.IdentifierUris = new List<string>(IdentifierUris());
+                }
+                updateParameters.IdentifierUris.Add(identifierUrl);
+            }
             return this;
         }
 
                 internal  ActiveDirectoryApplicationImpl(ApplicationInner innerObject, GraphRbacManager manager)
                     : base(innerObject.DisplayName, innerObject)
         {
-            //$ super(innerObject.DisplayName(), innerObject);
-            //$ this.manager = manager;
-            //$ this.createParameters = new ApplicationCreateParametersInner().WithDisplayName(innerObject.DisplayName());
-            //$ this.updateParameters = new ApplicationUpdateParametersInner().WithDisplayName(innerObject.DisplayName());
-            //$ }
-
+            this.manager = manager;
+            this.createParameters = new ApplicationCreateParametersInner
+            {
+                DisplayName = innerObject.DisplayName
+            };
+            this.updateParameters = new ApplicationUpdateParametersInner
+            {
+                DisplayName = innerObject.DisplayName
+            };
         }
 
                 public ActiveDirectoryApplicationImpl WithSignOnUrl(string signOnUrl)
         {
-            //$ if (isInCreateMode()) {
-            //$ createParameters.WithHomepage(signOnUrl);
-            //$ } else {
-            //$ updateParameters.WithHomepage(signOnUrl);
-            //$ }
-            //$ return withReplyUrl(signOnUrl);
-
-            return this;
+            if (IsInCreateMode())
+            {
+                createParameters.Homepage = signOnUrl;
+            }
+            else
+            {
+                updateParameters.Homepage = signOnUrl;
+            }
+            return WithReplyUrl(signOnUrl);
         }
 
                 public ISet<string> ReplyUrls()
         {
-            //$ if (inner().ReplyUrls() == null) {
-            //$ return null;
-            //$ }
-            //$ return Collections.UnmodifiableSet(Sets.NewHashSet(inner().ReplyUrls()));
-
-            return null;
+            if (Inner.ReplyUrls == null)
+            {
+                return null;
+            }
+            return new System.Collections.Generic.HashSet<string>(Inner.ReplyUrls);
         }
 
                 public IUpdate WithoutIdentifierUrl(string identifierUrl)
         {
-            //$ if (updateParameters.IdentifierUris() != null) {
-            //$ updateParameters.IdentifierUris().Remove(identifierUrl);
-            //$ }
-            //$ return this;
-
-            return null;
+            if (updateParameters.IdentifierUris != null)
+            {
+                updateParameters.IdentifierUris.Remove(identifierUrl);
+            }
+            return this;
         }
 
                 public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> CertificateCredentials()
         {
-            //$ if (cachedCertificateCredentials == null) {
-            //$ return null;
-            //$ }
-            //$ return Collections.UnmodifiableMap(cachedCertificateCredentials);
-
-            return null;
+            if (cachedCertificateCredentials == null)
+            {
+                return null;
+            }
+            return new ReadOnlyDictionary<string, ICertificateCredential>(cachedCertificateCredentials);
         }
 
                 protected override async Task<Models.ApplicationInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -193,216 +159,168 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
                 public bool AvailableToOtherTenants()
         {
-            //$ return inner().AvailableToOtherTenants();
-
-            return false;
+            return Inner.AvailableToOtherTenants ?? false;
         }
 
                 public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> PasswordCredentials()
         {
-            //$ if (cachedPasswordCredentials == null) {
-            //$ return null;
-            //$ }
-            //$ return Collections.UnmodifiableMap(cachedPasswordCredentials);
-
-            return null;
+            if (cachedPasswordCredentials == null)
+            {
+                return null;
+            }
+            return new ReadOnlyDictionary<string, IPasswordCredential>(cachedPasswordCredentials);
         }
 
-                public ActiveDirectoryApplicationImpl WithPasswordCredential(PasswordCredentialImpl<object> credential)
+                public ActiveDirectoryApplicationImpl WithPasswordCredential<T>(PasswordCredentialImpl<T> credential) where T : class
         {
-            //$ if (isInCreateMode()) {
-            //$ if (createParameters.PasswordCredentials() == null) {
-            //$ createParameters.WithPasswordCredentials(new ArrayList<PasswordCredentialInner>());
-            //$ }
-            //$ createParameters.PasswordCredentials().Add(credential.Inner());
-            //$ } else {
-            //$ if (updateParameters.PasswordCredentials() == null) {
-            //$ updateParameters.WithPasswordCredentials(new ArrayList<PasswordCredentialInner>());
-            //$ }
-            //$ updateParameters.PasswordCredentials().Add(credential.Inner());
-            //$ }
-            //$ return this;
-
+            if (IsInCreateMode())
+            {
+                if (createParameters.PasswordCredentials == null)
+                {
+                    createParameters.PasswordCredentials = new List<Models.PasswordCredential>();
+                }
+                createParameters.PasswordCredentials.Add(credential.Inner);
+            }
+            else
+            {
+                if (updateParameters.PasswordCredentials == null) {
+                    updateParameters.PasswordCredentials = new List<Models.PasswordCredential>();
+                }
+                updateParameters.PasswordCredentials.Add(credential.Inner);
+            }
             return this;
         }
 
                 public ISet<string> IdentifierUris()
         {
-            //$ if (inner().IdentifierUris() == null) {
-            //$ return null;
-            //$ }
-            //$ return Collections.UnmodifiableSet(Sets.NewHashSet(inner().IdentifierUris()));
-
-            return null;
+            if (Inner.IdentifierUris == null)
+            {
+                return null;
+            }
+            return new HashSet<string>(Inner.IdentifierUris);
         }
 
                 public string Id()
         {
-            //$ return inner().ObjectId();
-
-            return null;
-        }
-
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> UpdateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            //$ return manager.Inner().Applications().PatchAsync(id(), updateParameters)
-            //$ .FlatMap(new Func1<Void, Observable<ActiveDirectoryApplication>>() {
-            //$ @Override
-            //$ public Observable<ActiveDirectoryApplication> call(Void aVoid) {
-            //$ return refreshAsync();
-            //$ }
-            //$ });
-
-            return null;
+            return Inner.ObjectId;
         }
 
                 public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ if (createParameters.IdentifierUris() == null) {
-            //$ createParameters.WithIdentifierUris(new ArrayList<String>());
-            //$ createParameters.IdentifierUris().Add(createParameters.Homepage());
-            //$ }
-            //$ return manager.Inner().Applications().CreateAsync(createParameters)
-            //$ .Map(innerToFluentMap(this))
-            //$ .FlatMap(new Func1<ActiveDirectoryApplication, Observable<ActiveDirectoryApplication>>() {
-            //$ @Override
-            //$ public Observable<ActiveDirectoryApplication> call(ActiveDirectoryApplication application) {
-            //$ return refreshCredentialsAsync();
-            //$ }
-            //$ });
-
-            return null;
+            if (IsInCreateMode())
+            {
+                if (createParameters.IdentifierUris == null)
+                {
+                    createParameters.IdentifierUris = new List<string>();
+                    createParameters.IdentifierUris.Add(createParameters.Homepage);
+                }
+                SetInner(await manager.Inner.Applications.CreateAsync(createParameters, cancellationToken));
+                return await RefreshCredentialsAsync(cancellationToken);
+            }
+            else
+            {
+                await manager.Inner.Applications.PatchAsync(Id(), updateParameters, cancellationToken);
+                return await RefreshAsync(cancellationToken);
+            }
         }
 
                 public GraphRbacManager Manager()
         {
-            //$ return manager;
-
-            return null;
+            return manager;
         }
 
                 public bool IsInCreateMode()
         {
-            //$ return id() == null;
-
-            return false;
+            return Id() == null;
         }
 
                 public CertificateCredentialImpl<T> DefineCertificateCredential<T>(string name) where T : class
         {
-            //$ public CertificateCredentialImpl defineCertificateCredential(String name) {
-            //$ return new CertificateCredentialImpl<>(name, this);
-
-            return null;
+            return new CertificateCredentialImpl<T>(name, (IHasCredential<T>) this);
         }
 
-                public ActiveDirectoryApplicationImpl WithCertificateCredential(CertificateCredentialImpl<object> credential)
+                public ActiveDirectoryApplicationImpl WithCertificateCredential<T>(CertificateCredentialImpl<T> credential) where T : class
         {
-            //$ if (isInCreateMode()) {
-            //$ if (createParameters.KeyCredentials() == null) {
-            //$ createParameters.WithKeyCredentials(new ArrayList<KeyCredentialInner>());
-            //$ }
-            //$ createParameters.KeyCredentials().Add(credential.Inner());
-            //$ } else {
-            //$ if (updateParameters.KeyCredentials() == null) {
-            //$ updateParameters.WithKeyCredentials(new ArrayList<KeyCredentialInner>());
-            //$ }
-            //$ updateParameters.KeyCredentials().Add(credential.Inner());
-            //$ }
-            //$ return this;
-
+            if (IsInCreateMode())
+            {
+                if (createParameters.KeyCredentials == null) {
+                    createParameters.KeyCredentials = new List<KeyCredential>();
+                }
+                createParameters.KeyCredentials.Add(credential.Inner);
+            }
+            else
+            {
+                if (updateParameters.KeyCredentials == null) {
+                    updateParameters.KeyCredentials = new List<KeyCredential>();
+                }
+                updateParameters.KeyCredentials.Add(credential.Inner);
+            }
             return this;
         }
 
                 public Uri SignOnUrl()
         {
-            //$ try {
-            //$ return new URL(inner().Homepage());
-            //$ } catch (MalformedURLException e) {
-            //$ return null;
-            //$ }
-
-            return null;
+            try
+            {
+                return new Uri(Inner.Homepage);
+            }
+            catch (UriFormatException)
+            {
+                return null;
+            }
         }
 
                 public ActiveDirectoryApplicationImpl WithoutReplyUrl(string replyUrl)
         {
-            //$ if (updateParameters.ReplyUrls() != null) {
-            //$ updateParameters.ReplyUrls().Remove(replyUrl);
-            //$ }
-            //$ return this;
-
+            if (updateParameters.ReplyUrls != null)
+            {
+                updateParameters.ReplyUrls.Remove(replyUrl);
+            }
             return this;
         }
 
                 public ActiveDirectoryApplicationImpl WithoutCredential(string name)
         {
-            //$ if (cachedPasswordCredentials.ContainsKey(name)) {
-            //$ cachedPasswordCredentials.Remove(name);
-            //$ if (updateParameters.PasswordCredentials() == null) {
-            //$ updateParameters.WithPasswordCredentials(Lists.Transform(
-            //$ new ArrayList<>(cachedPasswordCredentials.Values()),
-            //$ new Function<PasswordCredential, PasswordCredentialInner>() {
-            //$ @Override
-            //$ public PasswordCredentialInner apply(PasswordCredential input) {
-            //$ return input.Inner();
-            //$ }
-            //$ }));
-            //$ }
-            //$ } else if (cachedCertificateCredentials.ContainsKey(name)) {
-            //$ cachedCertificateCredentials.Remove(name);
-            //$ if (updateParameters.KeyCredentials() == null) {
-            //$ updateParameters.WithKeyCredentials(Lists.Transform(
-            //$ new ArrayList<>(cachedCertificateCredentials.Values()),
-            //$ new Function<CertificateCredential, KeyCredentialInner>() {
-            //$ @Override
-            //$ public KeyCredentialInner apply(CertificateCredential input) {
-            //$ return input.Inner();
-            //$ }
-            //$ }));
-            //$ }
-            //$ }
-            //$ return this;
-
+            if (cachedPasswordCredentials.ContainsKey(name))
+            {
+                cachedPasswordCredentials.Remove(name);
+                updateParameters.PasswordCredentials = cachedPasswordCredentials.Values.Select(pc => pc.Inner).ToList();
+            }
+            else if (cachedCertificateCredentials.ContainsKey(name))
+            {
+                cachedCertificateCredentials.Remove(name);
+                updateParameters.KeyCredentials = cachedCertificateCredentials.Values.Select(pc => pc.Inner).ToList();
+            }
             return this;
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
+                public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return getInnerAsync()
-            //$ .Map(innerToFluentMap(this))
-            //$ .FlatMap(new Func1<ActiveDirectoryApplication, Observable<ActiveDirectoryApplication>>() {
-            //$ @Override
-            //$ public Observable<ActiveDirectoryApplication> call(ActiveDirectoryApplication application) {
-            //$ return refreshCredentialsAsync();
-            //$ }
-            //$ });
-
-            return null;
+            SetInner(await GetInnerAsync(cancellationToken));
+            return await RefreshCredentialsAsync(cancellationToken);
         }
 
                 public string ApplicationId()
         {
-            //$ return inner().AppId();
-
-            return null;
+            return Inner.AppId;
         }
 
                 public ActiveDirectoryApplicationImpl WithReplyUrl(string replyUrl)
         {
-            //$ if (isInCreateMode()) {
-            //$ if (createParameters.ReplyUrls() == null) {
-            //$ createParameters.WithReplyUrls(new ArrayList<String>());
-            //$ }
-            //$ createParameters.ReplyUrls().Add(replyUrl);
-            //$ } else {
-            //$ if (updateParameters.ReplyUrls() == null) {
-            //$ updateParameters.WithReplyUrls(new ArrayList<>(replyUrls()));
-            //$ }
-            //$ updateParameters.ReplyUrls().Add(replyUrl);
-            //$ }
-            //$ return this;
-
+            if (IsInCreateMode())
+            {
+                if (createParameters.ReplyUrls == null) {
+                    createParameters.ReplyUrls = new List<string>();
+                }
+                createParameters.ReplyUrls.Add(replyUrl);
+            }
+            else
+            {
+                if (updateParameters.ReplyUrls == null) {
+                    updateParameters.ReplyUrls = new List<string>(ReplyUrls());
+                }
+                updateParameters.ReplyUrls.Add(replyUrl);
+            }
             return this;
         }
     }

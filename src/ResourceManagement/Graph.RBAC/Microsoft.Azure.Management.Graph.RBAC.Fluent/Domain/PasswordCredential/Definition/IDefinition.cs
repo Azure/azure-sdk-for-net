@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
         /// </summary>
         /// <param name="duration">The duration of validity.</param>
         /// <return>The next stage in credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT> WithDateTimeOffset(DateTimeOffset duration);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT> WithDateTimeOffset(TimeSpan duration);
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
         /// </summary>
         /// <param name="outputStream">The output stream to export the file.</param>
         /// <return>The next stage in credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT> WithAuthFileToExport(FileStream outputStream);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT> WithAuthFileToExport(StreamWriter outputStream);
     }
 
     /// <summary>

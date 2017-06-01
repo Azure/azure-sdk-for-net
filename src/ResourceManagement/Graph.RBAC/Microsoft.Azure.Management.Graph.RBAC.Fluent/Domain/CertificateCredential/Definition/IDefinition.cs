@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
         /// </summary>
         /// <param name="duration">The duration of validity.</param>
         /// <return>The next stage in credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithAttach<ParentT> WithDuration(DateTimeOffset duration);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithAttach<ParentT> WithDuration(TimeSpan duration);
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
         /// </summary>
         /// <param name="certificate">The certificate content.</param>
         /// <return>The next stage in credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithAttach<ParentT> WithPublicKey(params byte[] certificate);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithAttach<ParentT> WithPublicKey(byte[] certificate);
     }
 
     /// <summary>
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
         /// </summary>
         /// <param name="outputStream">The output stream to export the file.</param>
         /// <return>The next stage in credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithAuthFileCertificate<ParentT> WithAuthFileToExport(FileStream outputStream);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithAuthFileCertificate<ParentT> WithAuthFileToExport(StreamWriter outputStream);
     }
 
     /// <summary>
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Def
         /// </summary>
         /// <param name="secret">The secret key content.</param>
         /// <return>The next stage in credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithAttach<ParentT> WithSecretKey(params byte[] secret);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IWithAttach<ParentT> WithSecretKey(byte[] secret);
     }
 
     /// <summary>

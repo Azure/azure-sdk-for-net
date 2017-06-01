@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
+    using System.Linq;
 
     /// <summary>
     /// The implementation of Users and its parent interfaces.
@@ -21,105 +22,58 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private GraphRbacManager manager;
                 public GraphRbacManager Manager()
         {
-            //$ return manager;
-
-            return null;
+            return manager;
         }
 
                 public ActiveDirectoryUserImpl GetById(string objectId)
         {
-            //$ return (ActiveDirectoryUserImpl) getByIdAsync(objectId).ToBlocking().Single();
-
-            return null;
+            return (ActiveDirectoryUserImpl) GetByIdAsync(objectId).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
                 public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return manager().Inner().Users().GetAsync(id).Map(new Func1<UserInner, ActiveDirectoryUser>() {
-            //$ @Override
-            //$ public ActiveDirectoryUser call(UserInner userInner) {
-            //$ if (userInner == null) {
-            //$ return null;
-            //$ } else {
-            //$ return new ActiveDirectoryUserImpl(userInner, manager());
-            //$ }
-            //$ }
-            //$ });
-
-            return null;
+            return WrapModel(await Inner.GetAsync(id, cancellationToken));
         }
         
                 internal  ActiveDirectoryUsersImpl(GraphRbacManager manager)
         {
-            //$ {
-            //$ this.manager = manager;
-            //$ }
-
+            this.manager = manager;
         }
 
                 public ActiveDirectoryUserImpl GetByName(string upn)
         {
-            //$ return (ActiveDirectoryUserImpl) getByNameAsync(upn).ToBlocking().Single();
-
-            return null;
+            return (ActiveDirectoryUserImpl) GetByNameAsync(upn).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
                 public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return manager().Inner().Users().GetAsync(name)
-            //$ .FlatMap(new Func1<UserInner, Observable<UserInner>>() {
-            //$ @Override
-            //$ public Observable<UserInner> call(UserInner userInner) {
-            //$ // Exact match
-            //$ if (userInner != null) {
-            //$ return Observable.Just(userInner);
-            //$ }
-            //$ // Search mail & mail nickname
-            //$ if (name.Contains("@")) {
-            //$ return manager().Inner().Users().ListAsync(String.Format("mail eq '%s' or mailNickName eq '%s#EXT#'", name, name.Replace("@", "_")))
-            //$ .Map(new Func1<Page<UserInner>, UserInner>() {
-            //$ @Override
-            //$ public UserInner call(Page<UserInner> userInnerPage) {
-            //$ if (userInnerPage.Items() == null || userInnerPage.Items().IsEmpty()) {
-            //$ return null;
-            //$ }
-            //$ return userInnerPage.Items().Get(0);
-            //$ }
-            //$ });
-            //$ }
-            //$ // Search display name
-            //$ else {
-            //$ return manager().Inner().Users().ListAsync(String.Format("displayName eq '%s'", name))
-            //$ .Map(new Func1<Page<UserInner>, UserInner>() {
-            //$ @Override
-            //$ public UserInner call(Page<UserInner> userInnerPage) {
-            //$ if (userInnerPage.Items() == null || userInnerPage.Items().IsEmpty()) {
-            //$ return null;
-            //$ }
-            //$ return userInnerPage.Items().Get(0);
-            //$ }
-            //$ });
-            //$ }
-            //$ }
-            //$ })
-            //$ .Map(new Func1<UserInner, ActiveDirectoryUser>() {
-            //$ @Override
-            //$ public ActiveDirectoryUser call(UserInner userInnerServiceResponse) {
-            //$ if (userInnerServiceResponse == null) {
-            //$ return null;
-            //$ }
-            //$ return new ActiveDirectoryUserImpl(userInnerServiceResponse, manager());
-            //$ }
-            //$ });
-
+            var inner = await Inner.GetAsync(name);
+            if (inner != null)
+            {
+                return WrapModel(inner);
+            }
+            if (name.Contains("@"))
+            {
+                var inners = await Inner.ListAsync(string.Format("mail eq '{0}' or mailNickName eq '{1}#EXT#'", name, name.Replace("@", "_")));
+                if (inners != null && inners.Any())
+                {
+                    return WrapModel(inners.First());
+                }
+            }
+            else
+            {
+                var inners = await Inner.ListAsync(string.Format("displayName eq '{0}'", name));
+                if (inners != null && inners.Any())
+                {
+                    return WrapModel(inners.First());
+                }
+            }
             return null;
         }
 
                 public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> List()
         {
-            //$ return wrapList(this.manager().Inner().Users().List());
-
-            return null;
+            return WrapList(this.manager.Inner.Users.List());
         }
 
                 public IUsersOperations Inner
@@ -132,19 +86,19 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
                 public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryUser>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return wrapPageAsync(this.Inner().ListAsync());
-
-            return null;
+            return await PagedCollection<IActiveDirectoryUser, UserInner>.LoadPage(
+                async (cancellation) => await Inner.ListAsync(null, cancellation),
+                Inner.ListNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
 
                 protected override IActiveDirectoryUser WrapModel(UserInner userInner)
         {
-            //$ if (userInner == null) {
-            //$ return null;
-            //$ }
-            //$ return new ActiveDirectoryUserImpl(userInner, manager());
-
-            return null;
+            if (userInner == null)
+            {
+                return null;
+            }
+            return new ActiveDirectoryUserImpl(userInner, manager);
         }
     }
 }

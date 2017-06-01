@@ -16,59 +16,42 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 internal  ActiveDirectoryUserImpl(UserInner innerObject, GraphRbacManager manager)
                 : base (innerObject)
         {
-            //$ super(innerObject);
-            //$ this.manager = manager;
-            //$ }
-
+            this.manager = manager;
         }
 
                 public string Mail()
         {
-            //$ return inner().Mail();
-
-            return null;
+            return Inner.Mail;
         }
 
                 public GraphRbacManager Manager()
         {
-            //$ return manager;
-
-            return null;
+            return manager;
         }
 
                 public string SignInName()
         {
-            //$ return inner().SignInName();
-
-            return null;
+            return Inner.SignInName;
         }
 
                 public string Name()
         {
-            //$ return inner().DisplayName();
-
-            return null;
+            return Inner.DisplayName;
         }
 
                 public string Id()
         {
-            //$ return inner().ObjectId();
-
-            return null;
+            return Inner.ObjectId;
         }
 
                 public string UserPrincipalName()
         {
-            //$ return inner().UserPrincipalName();
-
-            return null;
+            return Inner.UserPrincipalName;
         }
 
                 public string MailNickname()
         {
-            //$ return inner().MailNickname();
-
-            return null;
+            return Inner.MailNickname;
         }
     }
 }

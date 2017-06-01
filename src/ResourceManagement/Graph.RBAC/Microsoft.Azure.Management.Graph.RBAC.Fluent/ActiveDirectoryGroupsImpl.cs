@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
+    using System.Linq;
 
     /// <summary>
     /// The implementation of Users and its parent interfaces.
@@ -20,78 +21,50 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private GraphRbacManager manager;
                 internal  ActiveDirectoryGroupsImpl(GraphRbacManager manager)
         {
-            //$ this.manager = manager;
-            //$ }
-
+            this.manager = manager;
         }
 
                 public GraphRbacManager Manager()
         {
-            //$ return manager;
-
-            return null;
+            return manager;
         }
 
                 public ActiveDirectoryGroupImpl GetById(string objectId)
         {
-            //$ return (ActiveDirectoryGroupImpl) getByIdAsync(objectId).ToBlocking().Single();
-
-            return null;
+            return (ActiveDirectoryGroupImpl) GetByIdAsync(objectId).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
                 public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return manager.Inner().Groups().GetAsync(id)
-            //$ .Map(new Func1<ADGroupInner, ActiveDirectoryGroup>() {
-            //$ @Override
-            //$ public ActiveDirectoryGroup call(ADGroupInner groupInner) {
-            //$ if (groupInner == null) {
-            //$ return null;
-            //$ } else {
-            //$ return new ActiveDirectoryGroupImpl(groupInner, manager());
-            //$ }
-            //$ }
-            //$ });
-
-            return null;
+            return WrapModel(await Inner.GetAsync(id, cancellationToken));
         }
         
                 public IActiveDirectoryGroup GetByName(string name)
         {
-            //$ return getByNameAsync(name).ToBlocking().Single();
-
-            return null;
+            return GetByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
                 public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return manager().Inner().Groups().ListAsync(String.Format("displayName eq '%s'", name))
-            //$ .Map(new Func1<Page<ADGroupInner>, ActiveDirectoryGroup>() {
-            //$ @Override
-            //$ public ActiveDirectoryGroup call(Page<ADGroupInner> adGroupInnerPage) {
-            //$ if (adGroupInnerPage.Items() == null || adGroupInnerPage.Items().IsEmpty()) {
-            //$ return null;
-            //$ } else {
-            //$ return new ActiveDirectoryGroupImpl(adGroupInnerPage.Items().Get(0), manager());
-            //$ }
-            //$ }
-            //$ });
-
-            return null;
+            IEnumerable<ADGroupInner> inners = await Inner.ListAsync(string.Format("displayName eq '{0}'", name), cancellationToken);
+            if (inners == null || !inners.Any())
+            {
+                return null;
+            }
+            return WrapModel(inners.First());
         }
 
                 public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> List()
         {
-            //$ return wrapList(this.manager.Inner().Groups().List());
-
-            return null;
+            return WrapList(Inner.List());
         }
 
                 public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryGroup>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ return wrapPageAsync(manager().Inner().Groups().ListAsync());
-
-            return null;
+            return await PagedCollection<IActiveDirectoryGroup, ADGroupInner>.LoadPage(
+                async (cancellation) => await Inner.ListAsync(null, cancellation),
+                Inner.ListNextAsync,
+                (inner) => WrapModel(inner), loadAllPages, cancellationToken);
         }
 
                 public IGroupsOperations Inner
@@ -104,12 +77,11 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
                 protected override IActiveDirectoryGroup WrapModel(ADGroupInner groupInner)
         {
-            //$ if (groupInner == null) {
-            //$ return null;    
-            //$ }
-            //$ return new ActiveDirectoryGroupImpl(groupInner, manager());
-
-            return null;
+            if (groupInner == null)
+            {
+                return null;    
+            }
+            return new ActiveDirectoryGroupImpl(groupInner, manager);
         }
     }
 }

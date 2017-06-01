@@ -15,46 +15,33 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private GraphRbacManager manager;
                 public string Mail()
         {
-            //$ return inner().Mail();
-
-            return null;
+            return Inner.Mail;
         }
 
                 public GraphRbacManager Manager()
         {
-            //$ return manager;
-
-            return null;
+            return manager;
         }
 
                 internal  ActiveDirectoryGroupImpl(ADGroupInner innerModel, GraphRbacManager manager)
                     : base(innerModel)
         {
-            //$ super(innerModel);
-            //$ this.manager = manager;
-            //$ }
-
+            this.manager = manager;
         }
 
                 public string Name()
         {
-            //$ return inner().DisplayName();
-
-            return null;
+            return Inner.DisplayName;
         }
 
                 public string Id()
         {
-            //$ return inner().ObjectId();
-
-            return null;
+            return Inner.ObjectId;
         }
 
                 public bool SecurityEnabled()
         {
-            //$ return Utils.ToPrimitiveBoolean(inner().SecurityEnabled());
-
-            return false;
+            return Inner.SecurityEnabled ?? false;
         }
     }
 }
