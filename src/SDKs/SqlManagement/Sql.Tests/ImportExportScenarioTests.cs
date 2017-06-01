@@ -6,7 +6,6 @@ using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using Xunit;
@@ -34,10 +33,8 @@ namespace Sql.Tests
             string suiteName = this.GetType().FullName;
             SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, testName, testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
-                string serverNameV12 = SqlManagementTestUtilities.GenerateName(testPrefix);
                 string login = "dummylogin";
                 string password = "Un53cuRE!";
-                string version12 = "12.0";
                 string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
                 string dbName2 = SqlManagementTestUtilities.GenerateName(testPrefix);
                 string storageAccountName = SqlManagementTestUtilities.GenerateName("sqlcrudstorage");
@@ -73,7 +70,6 @@ namespace Sql.Tests
                 // Get Storage container credentials
                 HttpRecorderMode testMode = HttpMockServer.GetCurrentMode();
                 string storageKey = "StorageKey";
-                string storageKeyType = "StorageAccessKey";
                 string exportBacpacLink = string.Format(CultureInfo.InvariantCulture, "http://test.blob.core.windows.net/databases/{0}.bacpac", dbName);
 
                 if (testMode == HttpRecorderMode.Record)

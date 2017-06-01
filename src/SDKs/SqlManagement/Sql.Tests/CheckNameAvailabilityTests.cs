@@ -1,12 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Collections.Generic;
-using System.Net;
 using Xunit;
 
 namespace Sql.Tests
@@ -17,11 +13,12 @@ namespace Sql.Tests
         public void TestCheckServerNameAvailable()
         {
             string testPrefix = "sqlcrudtest-";
-            string serverName = SqlManagementTestUtilities.GenerateName(testPrefix);
             string suiteName = this.GetType().FullName;
 
             SqlManagementTestUtilities.RunTest(suiteName, "TestCheckServerNameAvailable", (resClient, sqlClient) =>
             {
+                string serverName = SqlManagementTestUtilities.GenerateName(testPrefix);
+
                 CheckNameAvailabilityResponse response = sqlClient.Servers.CheckNameAvailability(new CheckNameAvailabilityRequest
                 {
                     Name = serverName
@@ -38,14 +35,15 @@ namespace Sql.Tests
         public void TestCheckServerNameInvalid()
         {
             string testPrefix = "sqlcrudtest-";
-            string serverName = SqlManagementTestUtilities.GenerateName(testPrefix).ToUpperInvariant(); // upper case is invalid
             string suiteName = this.GetType().FullName;
 
             SqlManagementTestUtilities.RunTest(suiteName, "TestCheckServerNameInvalid", (resClient, sqlClient) =>
             {
+                string serverName = SqlManagementTestUtilities.GenerateName(testPrefix).ToUpperInvariant(); // upper case is invalid
+
                 CheckNameAvailabilityResponse response = sqlClient.Servers.CheckNameAvailability(new CheckNameAvailabilityRequest
                 {
-                    Name = serverName
+                    Name = serverName,
                 });
 
                 Assert.False(response.Available);

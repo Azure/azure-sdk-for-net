@@ -4,10 +4,8 @@
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
@@ -38,7 +36,7 @@ namespace Sql.Tests
                 // Create a database with all parameters specified
                 // 
                 dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var db2Input = new Microsoft.Azure.Management.Sql.Models.Database()
+                var db2Input = new Database()
                 {
                     Location = server.Location,
                     Collation = SqlTestConstants.DefaultCollation,
@@ -57,7 +55,7 @@ namespace Sql.Tests
                 // Service Objective ID
                 //
                 dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var db3Input = new Microsoft.Azure.Management.Sql.Models.Database()
+                var db3Input = new Database()
                 {
                     Location = server.Location,
                     RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
@@ -70,7 +68,7 @@ namespace Sql.Tests
                 // Service Objective Name
                 //
                 dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var db4Input = new Microsoft.Azure.Management.Sql.Models.Database()
+                var db4Input = new Database()
                 {
                     Location = server.Location,
                     RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
@@ -83,7 +81,7 @@ namespace Sql.Tests
                 // Edition
                 //
                 dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var db5Input = new Microsoft.Azure.Management.Sql.Models.Database()
+                var db5Input = new Database()
                 {
                     Location = server.Location,
                     Edition = SqlTestConstants.DefaultDatabaseEdition,
