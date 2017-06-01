@@ -249,6 +249,15 @@ namespace Microsoft.Azure.ServiceBus {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to The {0} plugin has already been registered...
+        /// </summary>
+        public static string PluginAlreadyRegistered {
+            get {
+                return ResourceManager.GetString("PluginAlreadyRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Provided rule filter {0} is not supported. Supported values are: {1}, {2}.
         /// </summary>
         public static string RuleFilterNotSupported {

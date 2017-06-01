@@ -362,23 +362,23 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public static AmqpMap GetRuleDescriptionMap(RuleDescription description)
         {
             AmqpMap ruleDescriptionMap = new AmqpMap();
-            if (description.Filter is SqlFilter)
+
+            switch (description.Filter)
             {
-                AmqpMap filterMap = GetSqlFilterMap(description.Filter as SqlFilter);
-                ruleDescriptionMap[ManagementConstants.Properties.SqlFilter] = filterMap;
-            }
-            else if (description.Filter is CorrelationFilter)
-            {
-                AmqpMap correlationFilterMap = GetCorrelationFilterMap(description.Filter as CorrelationFilter);
-                ruleDescriptionMap[ManagementConstants.Properties.CorrelationFilter] = correlationFilterMap;
-            }
-            else
-            {
-                throw new NotSupportedException(
-                    Resources.RuleFilterNotSupported.FormatForUser(
-                        description.Filter.GetType(),
-                        nameof(SqlFilter),
-                        nameof(CorrelationFilter)));
+                case SqlFilter sqlFilter:
+                    AmqpMap filterMap = GetSqlFilterMap(sqlFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.SqlFilter] = filterMap;
+                    break;
+                case CorrelationFilter correlationFilter:
+                    AmqpMap correlationFilterMap = GetCorrelationFilterMap(correlationFilter);
+                    ruleDescriptionMap[ManagementConstants.Properties.CorrelationFilter] = correlationFilterMap;
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        Resources.RuleFilterNotSupported.FormatForUser(
+                            description.Filter.GetType(),
+                            nameof(SqlFilter),
+                            nameof(CorrelationFilter)));
             }
 
             AmqpMap amqpAction = GetRuleActionMap(description.Action as SqlRuleAction);
@@ -431,29 +431,29 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     amqpObject = new DescribedType((AmqpSymbol)TimeSpanName, ((TimeSpan)netObject).Ticks);
                     break;
                 case PropertyValueType.Unknown:
-                    if (netObject is Stream)
+                    if (netObject is Stream netObjectAsStream)
                     {
                         if (mappingType == MappingType.ApplicationProperty)
                         {
-                            amqpObject = StreamToBytes((Stream)netObject);
+                            amqpObject = StreamToBytes(netObjectAsStream);
                         }
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
                     {
                         throw Fx.Exception.AsError(new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(netObject.GetType().FullName)));
                     }
-                    else if (netObject is byte[])
+                    else if (netObject is byte[] netObjectAsByteArray)
                     {
-                        amqpObject = new ArraySegment<byte>((byte[])netObject);
+                        amqpObject = new ArraySegment<byte>(netObjectAsByteArray);
                     }
                     else if (netObject is IList)
                     {
                         // Array is also an IList
                         amqpObject = netObject;
                     }
-                    else if (netObject is IDictionary)
+                    else if (netObject is IDictionary netObjectAsDictionary)
                     {
-                        amqpObject = new AmqpMap((IDictionary)netObject);
+                        amqpObject = new AmqpMap(netObjectAsDictionary);
                     }
                     break;
             }
@@ -490,13 +490,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     netObject = amqpObject;
                     break;
                 case PropertyValueType.Unknown:
-                    if (amqpObject is AmqpSymbol)
+                    if (amqpObject is AmqpSymbol amqpObjectAsAmqpSymbol)
                     {
-                        netObject = ((AmqpSymbol)amqpObject).Value;
+                        netObject = (amqpObjectAsAmqpSymbol).Value;
                     }
-                    else if (amqpObject is ArraySegment<byte>)
+                    else if (amqpObject is ArraySegment<byte> amqpObjectAsArraySegment)
                     {
-                        ArraySegment<byte> binValue = (ArraySegment<byte>)amqpObject;
+                        ArraySegment<byte> binValue = amqpObjectAsArraySegment;
                         if (binValue.Count == binValue.Array.Length)
                         {
                             netObject = binValue.Array;
@@ -508,23 +508,22 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                             netObject = buffer;
                         }
                     }
-                    else if (amqpObject is DescribedType)
+                    else if (amqpObject is DescribedType amqpObjectAsDescribedType)
                     {
-                        DescribedType describedType = (DescribedType)amqpObject;
-                        if (describedType.Descriptor is AmqpSymbol)
+                        if (amqpObjectAsDescribedType.Descriptor is AmqpSymbol)
                         {
-                            AmqpSymbol symbol = (AmqpSymbol)describedType.Descriptor;
+                            AmqpSymbol symbol = (AmqpSymbol)amqpObjectAsDescribedType.Descriptor;
                             if (symbol.Equals((AmqpSymbol)UriName))
                             {
-                                netObject = new Uri((string)describedType.Value);
+                                netObject = new Uri((string)amqpObjectAsDescribedType.Value);
                             }
                             else if (symbol.Equals((AmqpSymbol)TimeSpanName))
                             {
-                                netObject = new TimeSpan((long)describedType.Value);
+                                netObject = new TimeSpan((long)amqpObjectAsDescribedType.Value);
                             }
                             else if (symbol.Equals((AmqpSymbol)DateTimeOffsetName))
                             {
-                                netObject = new DateTimeOffset(new DateTime((long)describedType.Value, DateTimeKind.Utc));
+                                netObject = new DateTimeOffset(new DateTime((long)amqpObjectAsDescribedType.Value, DateTimeKind.Utc));
                             }
                         }
                     }
@@ -532,9 +531,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     {
                         throw Fx.Exception.AsError(new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(amqpObject.GetType().FullName)));
                     }
-                    else if (amqpObject is AmqpMap)
+                    else if (amqpObject is AmqpMap map)
                     {
-                        AmqpMap map = (AmqpMap)amqpObject;
                         Dictionary<string, object> dictionary = new Dictionary<string, object>();
                         foreach (var pair in map)
                         {

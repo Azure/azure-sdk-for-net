@@ -62,6 +62,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     public interface ISenderClient : Microsoft.Azure.ServiceBus.IClientEntity { }
     public class MessageReceiver : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.IMessageReceiver, Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity { }
     public class MessageSender : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity { }
+    public abstract class ServiceBusPlugin { }
 }
 namespace Microsoft.Azure.ServiceBus.Filters
 {

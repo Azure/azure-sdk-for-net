@@ -62,13 +62,10 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public static AmqpResponseStatusCode GetResponseStatusCode(this AmqpMessage responseMessage)
         {
             AmqpResponseStatusCode responseStatusCode = AmqpResponseStatusCode.Unused;
-            if (responseMessage != null)
+            object statusCodeValue = responseMessage?.ApplicationProperties.Map[ManagementConstants.Response.StatusCode];
+            if (statusCodeValue is int && Enum.IsDefined(typeof(AmqpResponseStatusCode), statusCodeValue))
             {
-                object statusCodeValue = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.StatusCode];
-                if (statusCodeValue is int && Enum.IsDefined(typeof(AmqpResponseStatusCode), statusCodeValue))
-                {
-                    responseStatusCode = (AmqpResponseStatusCode)statusCodeValue;
-                }
+                responseStatusCode = (AmqpResponseStatusCode)statusCodeValue;
             }
 
             return responseStatusCode;
@@ -179,31 +176,23 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             string message = builder.ToString();
 
-            if (exception is SocketException || exception is IOException)
+            switch (exception)
             {
-                return new ServiceBusCommunicationException(message, exception);
-            }
+                case SocketException _:
+                case IOException _:
+                    return new ServiceBusCommunicationException(message, exception);
 
-            if (exception is AmqpException)
-            {
-                AmqpException amqpException = exception as AmqpException;
-                return ToMessagingContractException(amqpException.Error);
-            }
-
-            if (exception is OperationCanceledException)
-            {
-                AmqpException amqpException = exception.InnerException as AmqpException;
-                if (amqpException != null)
-                {
+                case AmqpException amqpException:
                     return ToMessagingContractException(amqpException.Error);
-                }
 
-                return new ServiceBusException(true, message, exception);
-            }
+                case OperationCanceledException operationCanceledException when operationCanceledException.InnerException is AmqpException amqpException:
+                    return ToMessagingContractException(amqpException.Error);
 
-            if (exception is TimeoutException && referenceId != null)
-            {
-                return new TimeoutException(message, exception);
+                case OperationCanceledException _:
+                    return new ServiceBusException(true, message, exception);
+
+                case TimeoutException _ when referenceId != null:
+                    return new TimeoutException(message, exception);
             }
 
             return exception;

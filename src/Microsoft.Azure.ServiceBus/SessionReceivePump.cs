@@ -211,7 +211,7 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 while (!this.pumpCancellationToken.IsCancellationRequested &&
-                       (!session.IsClosedOrClosing))
+                       !session.IsClosedOrClosing)
                 {
                     Message message;
                     try
@@ -226,11 +226,9 @@ namespace Microsoft.Azure.ServiceBus
                             // Timeout Exceptions are pretty common. Not alerting the User on this.
                             continue;
                         }
-                        else
-                        {
-                            this.RaiseExceptionRecieved(exception, "Receive Message");
-                            break;
-                        }
+
+                        this.RaiseExceptionRecieved(exception, "Receive Message");
+                        break;
                     }
 
                     if (message == null)

@@ -127,6 +127,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
+        /// Gets a list of currently registered plugins.
+        /// </summary>
+        public IList<ServiceBusPlugin> RegisteredPlugins { get; } = new List<ServiceBusPlugin>();
+
+        /// <summary>
         /// Gets the <see cref="ReceiveMode.ReceiveMode"/> of the current receiver.
         /// </summary>
         public ReceiveMode ReceiveMode { get; protected set; }
@@ -136,10 +141,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <remarks> Takes effect on the next receive call to the server. </remarks>
         public int PrefetchCount
         {
-            get
-            {
-                return this.prefetchCount;
-            }
+            get => this.prefetchCount;
 
             set
             {
@@ -148,8 +150,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     throw Fx.Exception.ArgumentOutOfRange(nameof(this.PrefetchCount), value, "Value cannot be less than 0.");
                 }
                 this.prefetchCount = value;
-                ReceivingAmqpLink link;
-                if (this.ReceiveLinkManager.TryGetOpenedObject(out link))
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out var link))
                 {
                     link.SetTotalLinkCredit((uint)value, true, true);
                 }
@@ -160,10 +161,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <value>The sequence number of the last peeked message.</value>
         public long LastPeekedSequenceNumber
         {
-            get
-            {
-                return this.lastPeekedSequenceNumber;
-            }
+            get => this.lastPeekedSequenceNumber;
 
             internal set
             {
@@ -200,6 +198,46 @@ namespace Microsoft.Azure.ServiceBus.Core
         FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLinkManager { get; }
 
         FaultTolerantAmqpObject<RequestResponseAmqpLink> RequestResponseLinkManager { get; }
+
+        private async Task<Message> ProcessMessage(Message message)
+        {
+            var processedMessage = message;
+            foreach (var plugin in this.RegisteredPlugins)
+            {
+                try
+                {
+                    MessagingEventSource.Log.PluginCallStarted(plugin.Name, message.MessageId);
+                    processedMessage = await plugin.AfterMessageReceive(message).ConfigureAwait(false);
+                    MessagingEventSource.Log.PluginCallCompleted(plugin.Name, message.MessageId);
+                }
+                catch (Exception ex)
+                {
+                    MessagingEventSource.Log.PluginCallFailed(plugin.Name, message.MessageId, ex.Message);
+                    if (!plugin.ShouldContinueOnException)
+                    {
+                        throw;
+                    }
+                }
+            }
+            return processedMessage;
+        }
+
+        private async Task<IList<Message>> ProcessMessages(IList<Message> messageList)
+        {
+            if (this.RegisteredPlugins.Count < 1)
+            {
+                return messageList;
+            }
+
+            var processedMessageList = new List<Message>();
+            foreach (var message in messageList)
+            {
+                var processedMessage = await this.ProcessMessage(message).ConfigureAwait(false);
+                processedMessageList.Add(processedMessage);
+            }
+
+            return processedMessageList;
+        }
 
         /// <summary>
         /// Asynchronously receives a message using the <see cref="MessageReceiver" />.
@@ -246,13 +284,13 @@ namespace Microsoft.Azure.ServiceBus.Core
         {
             MessagingEventSource.Log.MessageReceiveStart(this.ClientId, maxMessageCount);
 
-            IList<Message> messages = null;
+            IList<Message> unprocessedMessageList = null;
             try
             {
                 await this.RetryPolicy.RunOperation(
                     async () =>
                     {
-                        messages = await this.OnReceiveAsync(maxMessageCount, serverWaitTime).ConfigureAwait(false);
+                        unprocessedMessageList = await this.OnReceiveAsync(maxMessageCount, serverWaitTime).ConfigureAwait(false);
                     }, serverWaitTime)
                     .ConfigureAwait(false);
             }
@@ -262,8 +300,14 @@ namespace Microsoft.Azure.ServiceBus.Core
                 throw;
             }
 
-            MessagingEventSource.Log.MessageReceiveStop(this.ClientId, messages?.Count ?? 0);
-            return messages;
+            MessagingEventSource.Log.MessageReceiveStop(this.ClientId, unprocessedMessageList?.Count ?? 0);
+
+            if (unprocessedMessageList == null)
+            {
+                return unprocessedMessageList;
+            }
+
+            return await this.ProcessMessages(unprocessedMessageList).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -918,10 +962,8 @@ namespace Microsoft.Azure.ServiceBus.Core
                     {
                         throw new SessionLockLostException(Resources.SessionLockExpiredOnMessageSession);
                     }
-                    else
-                    {
-                        throw new MessageLockLostException(Resources.MessageLockLost);
-                    }
+
+                    throw new MessageLockLostException(Resources.MessageLockLost);
                 }
 
                 throw AmqpExceptionHelper.GetClientException(exception);
@@ -1083,6 +1125,44 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             MessagingEventSource.Log.RegisterOnMessageHandlerStop(this.ClientId);
+        }
+
+        /// <summary>
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used for receiving messages from Service Bus.
+        /// </summary>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register</param>
+        public void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
+        {
+            if (serviceBusPlugin == null)
+            {
+                throw new ArgumentNullException(nameof(serviceBusPlugin), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPlugin)));
+            }
+            else if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPlugin.Name))
+            {
+                throw new ArgumentException(nameof(serviceBusPlugin), Resources.PluginAlreadyRegistered.FormatForUser(nameof(serviceBusPlugin)));
+            }
+            this.RegisteredPlugins.Add(serviceBusPlugin);
+        }
+
+        /// <summary>
+        /// Unregisters a <see cref="ServiceBusPlugin"/>.
+        /// </summary>
+        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
+        public void UnregisterPlugin(string serviceBusPluginName)
+        {
+            if (this.RegisteredPlugins == null)
+            {
+                return;
+            }
+            if (serviceBusPluginName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceBusPluginName), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPluginName)));
+            }
+            if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPluginName))
+            {
+                var plugin = this.RegisteredPlugins.First(p => p.Name == serviceBusPluginName);
+                this.RegisteredPlugins.Remove(plugin);
+            }
         }
     }
 }

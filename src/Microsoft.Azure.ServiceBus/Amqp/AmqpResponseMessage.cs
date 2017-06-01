@@ -83,7 +83,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             object condition = this.responseMessage.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition];
 
-            return condition is AmqpSymbol ? (AmqpSymbol)condition : null;
+            return condition is AmqpSymbol amqpSymbol ? amqpSymbol : null;
         }
 
         public Exception ToMessagingContractException()

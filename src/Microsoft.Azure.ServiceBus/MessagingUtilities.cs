@@ -25,8 +25,8 @@ namespace Microsoft.Azure.ServiceBus
 
         public static bool ShouldRetry(Exception exception)
         {
-            ServiceBusException serviceBusException = exception as ServiceBusException;
-            return serviceBusException != null && serviceBusException.IsTransient;
+            var serviceBusException = exception as ServiceBusException;
+            return serviceBusException?.IsTransient == true;
         }
     }
 }

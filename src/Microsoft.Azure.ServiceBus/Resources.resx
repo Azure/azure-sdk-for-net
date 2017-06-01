@@ -207,4 +207,7 @@
   <data name="InvalidAmqpMessageProperty" xml:space="preserve">
     <value>{0} is not a supported user property type.</value>
   </data>
+  <data name="PluginAlreadyRegistered" xml:space="preserve">
+    <value>The {0} plugin has already been registered.</value>
+  </data>
 </root>

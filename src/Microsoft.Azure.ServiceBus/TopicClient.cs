@@ -157,5 +157,23 @@ namespace Microsoft.Azure.ServiceBus
         {
             return this.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
         }
+
+        /// <summary>
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used for sending messages to Service Bus.
+        /// </summary>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register</param>
+        public void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
+        {
+            this.InnerSender.RegisterPlugin(serviceBusPlugin);
+        }
+
+        /// <summary>
+        /// Unregisters a <see cref="ServiceBusPlugin"/>.
+        /// </summary>
+        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
+        public void UnregisterPlugin(string serviceBusPluginName)
+        {
+            this.InnerSender.UnregisterPlugin(serviceBusPluginName);
+        }
     }
 }

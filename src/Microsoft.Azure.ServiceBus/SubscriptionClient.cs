@@ -347,5 +347,23 @@ namespace Microsoft.Azure.ServiceBus
 
             MessagingEventSource.Log.RemoveRuleStop(this.ClientId);
         }
+
+        /// <summary>
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used for receiving messages from Service Bus.
+        /// </summary>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register</param>
+        public void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
+        {
+            this.InnerSubscriptionClient.InnerReceiver.RegisterPlugin(serviceBusPlugin);
+        }
+
+        /// <summary>
+        /// Unregisters a <see cref="ServiceBusPlugin"/>.
+        /// </summary>
+        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
+        public void UnregisterPlugin(string serviceBusPluginName)
+        {
+            this.InnerSubscriptionClient.InnerReceiver.UnregisterPlugin(serviceBusPluginName);
+        }
     }
 }
