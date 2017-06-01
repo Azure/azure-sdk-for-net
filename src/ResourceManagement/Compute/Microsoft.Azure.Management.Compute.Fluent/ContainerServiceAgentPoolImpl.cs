@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     internal partial class ContainerServiceAgentPoolImpl :
         ChildResource<Models.ContainerServiceAgentPoolProfile, Microsoft.Azure.Management.Compute.Fluent.ContainerServiceImpl, Microsoft.Azure.Management.Compute.Fluent.IContainerService>,
         IContainerServiceAgentPool,
-        ContainerServiceAgentPool.Definition.IDefinition<IContainerService>
+        ContainerServiceAgentPool.Definition.IDefinition<ContainerService.Definition.IWithCreate>
     {
         public int Count()
         {

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
     public class DocumentDBManager : Manager<IDocumentDB>, IDocumentDBManager
     {
         #region Fluent private collections
-        private IDatabaseAccounts databaseAccounts;
+        private IDocumentDBAccounts databaseAccounts;
         #endregion
 
         public DocumentDBManager(RestClient restClient, string subscriptionId) :
@@ -64,13 +64,13 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
         #endregion
 
-        public IDatabaseAccounts DocumentDBAccounts
+        public IDocumentDBAccounts DocumentDBAccounts
         {
             get
             {
                 if (databaseAccounts == null)
                 {
-                    databaseAccounts = new DatabaseAccountsImpl(this);
+                    databaseAccounts = new DocumentDBAccountsImpl(this);
                 }
 
                 return databaseAccounts;
@@ -80,6 +80,6 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
     public interface IDocumentDBManager : IManager<IDocumentDB>
     {
-       IDatabaseAccounts DocumentDBAccounts { get; }
+       IDocumentDBAccounts DocumentDBAccounts { get; }
     }
 }

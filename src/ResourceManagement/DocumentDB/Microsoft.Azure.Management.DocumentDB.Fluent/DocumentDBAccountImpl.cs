@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Definition;
-    using Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update;
+    using Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Definition;
+    using Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System.Collections.Generic;
@@ -15,24 +15,24 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
     /// <summary>
     /// The implementation for DatabaseAccount.
     /// </summary>
-    public partial class DatabaseAccountImpl :
+    public partial class DocumentDBAccountImpl :
         GroupableResource<
-            IDatabaseAccount,
+            IDocumentDBAccount,
             Models.DatabaseAccountInner,
-            DatabaseAccountImpl,
+            DocumentDBAccountImpl,
             IDocumentDBManager,
             IWithGroup,
             IWithKind,
             IWithCreate,
             IUpdate>,
-        IDatabaseAccount,
+        IDocumentDBAccount,
         IDefinition,
         IUpdate
     {
         private IList<Microsoft.Azure.Management.DocumentDB.Fluent.Models.FailoverPolicyInner> failoverPolicies;
         private bool hasFailoverPolicyChanges;
         
-        public DatabaseAccountImpl WithReadReplication(Region region)
+        public DocumentDBAccountImpl WithReadReplication(Region region)
         {
             this.EnsureFailoverIsInitialized();
             Models.FailoverPolicyInner failoverPolicyInner = new Models.FailoverPolicyInner();
@@ -43,38 +43,42 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             return this;
         }
 
-        private async Task<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount> DoDatabaseUpdateCreateAsync(CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount> DoDatabaseUpdateCreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            DatabaseAccountImpl self = this;
+            DocumentDBAccountImpl self = this;
             Models.DatabaseAccountCreateUpdateParametersInner createUpdateParametersInner =
                 this.CreateUpdateParametersInner(this.Inner);
             await this.Manager.Inner.DatabaseAccounts.CreateOrUpdateAsync(
                 ResourceGroupName, Name, createUpdateParametersInner);
             this.failoverPolicies.Clear();
             this.hasFailoverPolicyChanges = false;
-            IDatabaseAccount databaseAccount = await this.Manager.DocumentDBAccounts.GetByResourceGroupAsync(
-                ResourceGroupName, Name);
-            while (string.IsNullOrWhiteSpace(databaseAccount.Id))
+            bool done = false;
+            IDocumentDBAccount databaseAccount = null;
+            while (!done)
             {
                 await Task.Delay(5000);
                 databaseAccount = await this.Manager.DocumentDBAccounts.GetByResourceGroupAsync(
                     ResourceGroupName, Name);
                 if (this.IsProvisioningStateFinal(databaseAccount.Inner.ProvisioningState))
                 {
+                    done = true;
                     foreach (Models.Location location in databaseAccount.ReadableReplications)
                     {
                         if (!this.IsProvisioningStateFinal(location.ProvisioningState))
                         {
+                            done = false;
                             break;
                         }
                     }
                 }
             }
 
+            this.SetInner(databaseAccount.Inner);z
+            this.initializeFailover();
             return databaseAccount;
         }
 
-        private Models.DatabaseAccountCreateUpdateParametersInner CreateUpdateParametersInner(Models.DatabaseAccountInner inner)
+        private Models.DatzabaseAccountCreateUpdateParametersInner CreateUpdateParametersInner(Models.DatabaseAccountInner inner)
         {
             this.EnsureFailoverIsInitialized();
             Models.DatabaseAccountCreateUpdateParametersInner createUpdateParametersInner =
@@ -112,7 +116,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 this.Name);
         }
 
-        public override async Task<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.DoDatabaseUpdateCreateAsync(cancellationToken);
         }
@@ -139,26 +143,33 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             }
 
             if (!this.hasFailoverPolicyChanges) {
-                this.failoverPolicies.Clear();
-                Models.FailoverPolicyInner[] policyInners = new Models.FailoverPolicyInner[this.Inner.FailoverPolicies.Count];
-                for (var i = 0; i < policyInners.Length; i++)
-                {
-                    policyInners[i] = this.Inner.FailoverPolicies[i];
-                }
-
-                Array.Sort(policyInners, (o1, o2) => {
-                    return o1.FailoverPriority.GetValueOrDefault().CompareTo(o2.FailoverPriority.GetValueOrDefault());
-                });
-
-                for (int i = 0; i < policyInners.Length; i++) {
-                    this.failoverPolicies.Add(policyInners[i]);
-                }
-
-                this.hasFailoverPolicyChanges = true;
+                this.initializeFailover();
             }
         }
 
-        public DatabaseAccountImpl WithStrongConsistency()
+        private void initializeFailover()
+        {
+            this.failoverPolicies.Clear();
+            Models.FailoverPolicyInner[] policyInners = new Models.FailoverPolicyInner[this.Inner.FailoverPolicies.Count];
+            for (var i = 0; i < policyInners.Length; i++)
+            {
+                policyInners[i] = this.Inner.FailoverPolicies[i];
+            }
+
+            Array.Sort(policyInners, (o1, o2) =>
+            {
+                return o1.FailoverPriority.GetValueOrDefault().CompareTo(o2.FailoverPriority.GetValueOrDefault());
+            });
+
+            for (int i = 0; i < policyInners.Length; i++)
+            {
+                this.failoverPolicies.Add(policyInners[i]);
+            }
+
+            this.hasFailoverPolicyChanges = true;
+        }
+
+        public DocumentDBAccountImpl WithStrongConsistency()
         {
             this.SetConsistencyPolicy(Models.DefaultConsistencyLevel.Strong, 0, 0);
             return this;
@@ -188,19 +199,19 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             await this.Manager.Inner.DatabaseAccounts.RegenerateKeyAsync(this.ResourceGroupName, this.Name, keyKind);
         }
 
-        public DatabaseAccountImpl WithKind(string kind)
+        public DocumentDBAccountImpl WithKind(string kind)
         {
             this.Inner.Kind = kind;
             return this;
         }
 
-        public DatabaseAccountImpl WithEventualConsistency()
+        public DocumentDBAccountImpl WithEventualConsistency()
         {
             this.SetConsistencyPolicy(Models.DefaultConsistencyLevel.Eventual, 0, 0);
             return this;
         }
 
-        public DatabaseAccountImpl WithBoundedStalenessConsistency(int maxStalenessPrefix, int maxIntervalInSeconds)
+        public DocumentDBAccountImpl WithBoundedStalenessConsistency(int maxStalenessPrefix, int maxIntervalInSeconds)
         {
             this.SetConsistencyPolicy(Models.DefaultConsistencyLevel.BoundedStaleness,
                 maxStalenessPrefix,
@@ -222,7 +233,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             return this.ListConnectionStringsAsync().GetAwaiter().GetResult();
         }
 
-        internal DatabaseAccountImpl(string name, Models.DatabaseAccountInner innerObject, IDocumentDBManager manager) :
+        internal DocumentDBAccountImpl(string name, Models.DatabaseAccountInner innerObject, IDocumentDBManager manager) :
             base(name, innerObject, manager)
         {
             this.failoverPolicies = new List<Models.FailoverPolicyInner>();
@@ -233,21 +244,26 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             return this.Inner.ConsistencyPolicy;
         }
 
-        public DatabaseAccountImpl WithoutReadReplication(Region region)
+        public DocumentDBAccountImpl WithoutReadReplication(Region region)
         {
             this.EnsureFailoverIsInitialized();
-            for (int i = 1; i < this.failoverPolicies.Count; i++) {
-                if (this.failoverPolicies[i].Id.EndsWith(region.Name))
+            for (int i = 1; i < this.failoverPolicies.Count; i++)
+            {
+                if (this.failoverPolicies[i].LocationName != null)
                 {
-                    this.failoverPolicies.RemoveAt(i);
-                    break;
+                    string locName = this.failoverPolicies[i].LocationName.Replace(" ", "").ToLower();
+                    if (locName.Equals(region.Name))
+                    {
+                        this.failoverPolicies.RemoveAt(i);
+                        break;
+                    }
                 }
             }
 
             return this;
         }
 
-        public DatabaseAccountImpl WithSessionConsistency()
+        public DocumentDBAccountImpl WithSessionConsistency()
         {
             this.SetConsistencyPolicy(Models.DefaultConsistencyLevel.Session, 0, 0);
             return this;
@@ -269,13 +285,13 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             }
         }
 
-        public DatabaseAccountImpl WithIpRangeFilter(string ipRangeFilter)
+        public DocumentDBAccountImpl WithIpRangeFilter(string ipRangeFilter)
         {
             this.Inner.IpRangeFilter = ipRangeFilter;
             return this;
         }
 
-        public DatabaseAccountImpl WithWriteReplication(Region region)
+        public DocumentDBAccountImpl WithWriteReplication(Region region)
         {
             Models.FailoverPolicyInner failoverPolicyInner = new Models.FailoverPolicyInner();
             failoverPolicyInner.LocationName = region.Name;

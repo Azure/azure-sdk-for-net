@@ -20,6 +20,8 @@ using System;
 using System.Linq;
 using ISubscriptions = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscriptions;
 using ISubscription = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscription;
+using Microsoft.Azure.Management.ContainerRegistry.Fluent;
+using Microsoft.Azure.Management.DocumentDB.Fluent;
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -42,6 +44,8 @@ namespace Microsoft.Azure.Management.Fluent
         private IRedisManager redisManager;
         private IAppServiceManager appServiceManager;
         private IServiceBusManager serviceBusManager;
+        private IRegistryManager registryManager;
+        private IDocumentDBManager documentDBManager;
 
         #endregion Service Managers
 
@@ -315,6 +319,22 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        public IDocumentDBAccounts DocumentDBAccounts
+        {
+            get
+            {
+                return documentDBManager.DocumentDBAccounts;
+            }
+        }
+
+        public IRegistries ContainerRegistries
+        {
+            get
+            {
+                return registryManager.ContainerRegistries;
+            }
+        }
+        
         #endregion Getters
 
         #region ctrs
@@ -334,6 +354,8 @@ namespace Microsoft.Azure.Management.Fluent
             cdnManager = CdnManager.Authenticate(restClient, subscriptionId);
             appServiceManager = AppServiceManager.Authenticate(restClient, subscriptionId, tenantId);
             serviceBusManager = ServiceBusManager.Authenticate(restClient, subscriptionId);
+            registryManager = RegistryManager.Authenticate(restClient, subscriptionId);
+            documentDBManager = DocumentDBManager.Authenticate(restClient, subscriptionId);
 
             SubscriptionId = subscriptionId;
             this.authenticated = authenticated;
@@ -489,6 +511,12 @@ namespace Microsoft.Azure.Management.Fluent
         IAppServiceManager AppServices { get; }
 
         IServiceBusNamespaces ServiceBusNamespaces { get; }
+
+        IContainerServices ContainerServices { get; }
+
+        IDocumentDBAccounts DocumentDBAccounts { get; }
+
+        IRegistries ContainerRegistries { get; }
     }
 
     public interface IAzure : IAzureBeta

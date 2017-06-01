@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update
+namespace Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update
 {
     using Microsoft.Azure.Management.DocumentDB.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
@@ -18,25 +18,25 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update
         /// <param name="maxStalenessPrefix">The max staleness prefix.</param>
         /// <param name="maxIntervalInSeconds">The max interval in seconds.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithOptionals WithBoundedStalenessConsistency(int maxStalenessPrefix, int maxIntervalInSeconds);
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithOptionals WithBoundedStalenessConsistency(int maxStalenessPrefix, int maxIntervalInSeconds);
 
         /// <summary>
         /// The consistency policy for the DocumentDB account.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithOptionals WithStrongConsistency();
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithOptionals WithStrongConsistency();
 
         /// <summary>
         /// The consistency policy for the DocumentDB account.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithOptionals WithEventualConsistency();
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithOptionals WithEventualConsistency();
 
         /// <summary>
         /// The consistency policy for the DocumentDB account.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithOptionals WithSessionConsistency();
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithOptionals WithSessionConsistency();
     }
 
     /// <summary>
@@ -51,17 +51,17 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update
         /// </summary>
         /// <param name="ipRangeFilter">Specifies the set of IP addresses or IP address ranges.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithOptionals WithIpRangeFilter(string ipRangeFilter);
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithOptionals WithIpRangeFilter(string ipRangeFilter);
     }
 
     /// <summary>
     /// Grouping of document db update stages.
     /// </summary>
     public interface IWithOptionals  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithOptionals>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount>,
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithConsistencyPolicy,
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithIpRangeFilter
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithOptionals>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount>,
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithConsistencyPolicy,
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithIpRangeFilter
     {
     }
 
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update
     /// Grouping of document db update stages.
     /// </summary>
     public interface IUpdate  :
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithReadLocations,
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithOptionals
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithReadLocations,
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithOptionals
     {
     }
 
@@ -78,20 +78,20 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update
     /// The stage of the document db definition allowing the definition of a write location.
     /// </summary>
     public interface IWithReadLocations  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount>
     {
         /// <summary>
         /// A georeplication location for the DocumentDB account.
         /// </summary>
         /// <param name="region">The region for the location.</param>
         /// <return>The next stage.</return>
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithReadLocations WithReadReplication(Region region);
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithReadLocations WithReadReplication(Region region);
 
         /// <summary>
         /// A georeplication location for the DocumentDB account.
         /// </summary>
         /// <param name="region">The region for the location.</param>
         /// <return>The next stage.</return>
-        Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update.IWithReadLocations WithoutReadReplication(Region region);
+        Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update.IWithReadLocations WithoutReadReplication(Region region);
     }
 }

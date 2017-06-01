@@ -7,8 +7,10 @@ using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.ContainerRegistry.Fluent;
 using Microsoft.Azure.Management.DocumentDB.Fluent;
 using Microsoft.Azure.Management.DocumentDB.Fluent.Models;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using System;
 
-namespace Azure.Tests.Compute
+namespace Azure.Tests.DocumentDB
 {
     public class DocumentDBTest
     {
@@ -20,7 +22,7 @@ namespace Azure.Tests.Compute
                 var dbName = TestUtilities.GenerateName("db");
                 var saName = TestUtilities.GenerateName("dbsa");
                 var manager = TestHelper.CreateDocumentDB();
-                IDatabaseAccount databaseAccount = null;
+                IDocumentDBAccount databaseAccount = null;
 
                 try
                 {
@@ -43,7 +45,7 @@ namespace Azure.Tests.Compute
                     databaseAccount = databaseAccount.Update()
                             .WithReadReplication(Region.AsiaSouthEast)
                             .WithoutReadReplication(Region.USEast)
-                            .WithReadReplication(Region.USCentral)
+                            .WithoutReadReplication(Region.USCentral)
                             .Apply();
 
                     databaseAccount = databaseAccount.Update()
