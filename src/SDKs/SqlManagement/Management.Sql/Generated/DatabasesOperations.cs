@@ -3423,7 +3423,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database for which database blob audit policy is defined.
+        /// The name of the database for which the blob audit policy is defined.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3448,10 +3448,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </return>
         public async Task<AzureOperationResponse<DatabaseBlobAuditingPolicy>> GetBlobAuditingPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -3464,6 +3460,11 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            string blobAuditingPolicyName = "default";
             string apiVersion = "2015-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3475,17 +3476,19 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("blobAuditingPolicyName", blobAuditingPolicyName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetBlobAuditingPolicy", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/auditingSettings/default").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/auditingSettings/{blobAuditingPolicyName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{blobAuditingPolicyName}", System.Uri.EscapeDataString(blobAuditingPolicyName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -3627,7 +3630,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database for which database blob audit policy will be
+        /// The name of the database for which the blob auditing policy will be
         /// defined.
         /// </param>
         /// <param name='parameters'>
@@ -3656,10 +3659,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </return>
         public async Task<AzureOperationResponse<DatabaseBlobAuditingPolicy>> CreateOrUpdateBlobAuditingPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, DatabaseBlobAuditingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -3676,10 +3675,11 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
+            if (Client.SubscriptionId == null)
             {
-                parameters.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string blobAuditingPolicyName = "default";
             string apiVersion = "2015-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3691,6 +3691,7 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("blobAuditingPolicyName", blobAuditingPolicyName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -3698,11 +3699,12 @@ namespace Microsoft.Azure.Management.Sql
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/auditingSettings/default").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/auditingSettings/{blobAuditingPolicyName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{blobAuditingPolicyName}", System.Uri.EscapeDataString(blobAuditingPolicyName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {

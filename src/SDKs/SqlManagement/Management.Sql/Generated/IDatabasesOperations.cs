@@ -766,7 +766,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database for which database blob audit policy is
+        /// The name of the database for which the blob audit policy is
         /// defined.
         /// </param>
         /// <param name='customHeaders'>
@@ -797,8 +797,8 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database for which database blob audit policy will
-        /// be defined.
+        /// The name of the database for which the blob auditing policy will be
+        /// defined.
         /// </param>
         /// <param name='parameters'>
         /// The database blob auditing policy.

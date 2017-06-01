@@ -17,6 +17,14 @@ namespace Sql.Tests
 {
     public class SqlManagementTestUtilities
     {
+        public static string DefaultLocationId
+        {
+            get
+            {
+                return "japaneast";
+            }
+        }
+
         public static string DefaultLocation
         {
             get
@@ -281,7 +289,7 @@ namespace Sql.Tests
             Assert.Equal(expected.EndIpAddress, actual.EndIpAddress);
         }
 
-        public static void RunTestInNewResourceGroup(string suiteName, string testName, string resourcePrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup> test)
+        public static void RunTest(string suiteName, string testName, Action<ResourceManagementClient, SqlManagementClient> test)
         {
             using (MockContext context = MockContext.Start(suiteName, testName))
             {
@@ -289,6 +297,14 @@ namespace Sql.Tests
                 var resourceClient = SqlManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var sqlClient = SqlManagementTestUtilities.GetSqlManagementClient(context, handler);
 
+                test(resourceClient, sqlClient);
+            }
+        }
+
+        public static void RunTestInNewResourceGroup(string suiteName, string testName, string resourcePrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup> test)
+        {
+            RunTest(suiteName, testName, (resourceClient, sqlClient) =>
+            {
                 ResourceGroup resourceGroup = null;
 
                 try
@@ -312,7 +328,7 @@ namespace Sql.Tests
                         resourceClient.ResourceGroups.BeginDelete(resourceGroup.Name);
                     }
                 }
-            }
+            });
         }
 
         internal static void RunTestInNewV12Server(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server> test)
@@ -334,9 +350,9 @@ namespace Sql.Tests
                     AdministratorLoginPassword = password,
                     Version = version12,
                     Tags = tags,
-                    Location = SqlManagementTestUtilities.DefaultLocation,
+                    Location = SqlManagementTestUtilities.DefaultLocation, // this will be normalized to the location id when the server is returned
                 });
-                SqlManagementTestUtilities.ValidateServer(v12Server, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(v12Server, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocationId);
 
                 test(resClient, sqlClient, resGroup, v12Server);
             });

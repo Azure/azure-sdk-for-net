@@ -111,5 +111,15 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IFailoverGroupsOperations FailoverGroups { get; }
 
+        /// <summary>
+        /// Gets the IVnetFirewallRulesOperations.
+        /// </summary>
+        IVnetFirewallRulesOperations VnetFirewallRules { get; }
+
+        /// <summary>
+        /// Gets the IServerKeysOperations.
+        /// </summary>
+        IServerKeysOperations ServerKeys { get; }
+
     }
 }

@@ -1217,7 +1217,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database for which database blob audit policy is defined.
+            /// The name of the database for which the blob audit policy is defined.
             /// </param>
             public static DatabaseBlobAuditingPolicy GetBlobAuditingPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
@@ -1238,7 +1238,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database for which database blob audit policy is defined.
+            /// The name of the database for which the blob audit policy is defined.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1265,7 +1265,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database for which database blob audit policy will be
+            /// The name of the database for which the blob auditing policy will be
             /// defined.
             /// </param>
             /// <param name='parameters'>
@@ -1290,7 +1290,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database for which database blob audit policy will be
+            /// The name of the database for which the blob auditing policy will be
             /// defined.
             /// </param>
             /// <param name='parameters'>

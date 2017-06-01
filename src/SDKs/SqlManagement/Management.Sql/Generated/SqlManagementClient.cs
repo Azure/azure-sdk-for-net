@@ -117,6 +117,16 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IFailoverGroupsOperations FailoverGroups { get; private set; }
 
         /// <summary>
+        /// Gets the IVnetFirewallRulesOperations.
+        /// </summary>
+        public virtual IVnetFirewallRulesOperations VnetFirewallRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerKeysOperations.
+        /// </summary>
+        public virtual IServerKeysOperations ServerKeys { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -325,8 +335,9 @@ namespace Microsoft.Azure.Management.Sql
             ElasticPools = new ElasticPoolsOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
-
             FailoverGroups = new FailoverGroupsOperations(this);
+            VnetFirewallRules = new VnetFirewallRulesOperations(this);
+            ServerKeys = new ServerKeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
