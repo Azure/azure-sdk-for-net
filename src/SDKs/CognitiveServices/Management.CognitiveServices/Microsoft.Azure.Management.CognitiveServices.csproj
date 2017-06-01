@@ -10,4 +10,10 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="notice.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <NuspecFile Include="Microsoft.Azure.Management.CognitiveServices.nuspec"/>
+  </ItemGroup>
 </Project>
