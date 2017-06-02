@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         protected override IList<ApplicationImpl> ListChildResources()
         {
             var childResources = new List<ApplicationImpl>();
-            if (Parent.Inner.Id == null || Parent.Inner.AutoStorage == null)
+            if (Parent.Inner.Id == null || Parent.AutoStorage() == null)
             {
                 return childResources;
             }
