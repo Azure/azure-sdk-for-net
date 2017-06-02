@@ -39,10 +39,10 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         /// Possible values include: 'pending', 'active', 'unmapped'</param>
         /// <param name="format">The format of the application package, if the
         /// package is active.</param>
-        /// <param name="storageUrl">The storage URL at which the application
-        /// package is stored.</param>
-        /// <param name="storageUrlExpiry">The UTC time at which the storage
-        /// URL will expire.</param>
+        /// <param name="storageUrl">The URL for the application package in
+        /// Azure Storage.</param>
+        /// <param name="storageUrlExpiry">The UTC time at which the Azure
+        /// Storage URL will expire.</param>
         /// <param name="lastActivationTime">The time at which the package was
         /// last activated, if the package is active.</param>
         public ApplicationPackageInner(string id = default(string), string version = default(string), PackageState? state = default(PackageState?), string format = default(string), string storageUrl = default(string), System.DateTime? storageUrlExpiry = default(System.DateTime?), System.DateTime? lastActivationTime = default(System.DateTime?))
@@ -63,50 +63,49 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the application.
+        /// Gets the ID of the application.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the version of the application package.
+        /// Gets the version of the application package.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
-        public string Version { get; set; }
+        public string Version { get; private set; }
 
         /// <summary>
-        /// Gets or sets the current state of the application package. Possible
-        /// values include: 'pending', 'active', 'unmapped'
+        /// Gets the current state of the application package. Possible values
+        /// include: 'pending', 'active', 'unmapped'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public PackageState? State { get; set; }
+        public PackageState? State { get; private set; }
 
         /// <summary>
-        /// Gets or sets the format of the application package, if the package
-        /// is active.
+        /// Gets the format of the application package, if the package is
+        /// active.
         /// </summary>
         [JsonProperty(PropertyName = "format")]
-        public string Format { get; set; }
+        public string Format { get; private set; }
 
         /// <summary>
-        /// Gets or sets the storage URL at which the application package is
-        /// stored.
+        /// Gets the URL for the application package in Azure Storage.
         /// </summary>
         [JsonProperty(PropertyName = "storageUrl")]
-        public string StorageUrl { get; set; }
+        public string StorageUrl { get; private set; }
 
         /// <summary>
-        /// Gets or sets the UTC time at which the storage URL will expire.
+        /// Gets the UTC time at which the Azure Storage URL will expire.
         /// </summary>
         [JsonProperty(PropertyName = "storageUrlExpiry")]
-        public System.DateTime? StorageUrlExpiry { get; set; }
+        public System.DateTime? StorageUrlExpiry { get; private set; }
 
         /// <summary>
-        /// Gets or sets the time at which the package was last activated, if
-        /// the package is active.
+        /// Gets the time at which the package was last activated, if the
+        /// package is active.
         /// </summary>
         [JsonProperty(PropertyName = "lastActivationTime")]
-        public System.DateTime? LastActivationTime { get; set; }
+        public System.DateTime? LastActivationTime { get; private set; }
 
     }
 }

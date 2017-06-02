@@ -17,26 +17,28 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties related to the auto-storage account.
+    /// Parameters for an activating an application package.
     /// </summary>
-    public partial class AutoStorageBaseProperties
+    public partial class ActivateApplicationPackageParametersInner
     {
         /// <summary>
-        /// Initializes a new instance of the AutoStorageBaseProperties class.
+        /// Initializes a new instance of the
+        /// ActivateApplicationPackageParametersInner class.
         /// </summary>
-        public AutoStorageBaseProperties()
+        public ActivateApplicationPackageParametersInner()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AutoStorageBaseProperties class.
+        /// Initializes a new instance of the
+        /// ActivateApplicationPackageParametersInner class.
         /// </summary>
-        /// <param name="storageAccountId">The resource ID of the storage
-        /// account to be used for auto-storage account.</param>
-        public AutoStorageBaseProperties(string storageAccountId)
+        /// <param name="format">The format of the application package binary
+        /// file.</param>
+        public ActivateApplicationPackageParametersInner(string format)
         {
-            StorageAccountId = storageAccountId;
+            Format = format;
             CustomInit();
         }
 
@@ -46,11 +48,10 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource ID of the storage account to be used for
-        /// auto-storage account.
+        /// Gets or sets the format of the application package binary file.
         /// </summary>
-        [JsonProperty(PropertyName = "storageAccountId")]
-        public string StorageAccountId { get; set; }
+        [JsonProperty(PropertyName = "format")]
+        public string Format { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -60,9 +61,9 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (StorageAccountId == null)
+            if (Format == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StorageAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Format");
             }
         }
     }

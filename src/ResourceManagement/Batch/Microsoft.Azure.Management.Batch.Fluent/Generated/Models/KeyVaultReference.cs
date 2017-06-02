@@ -17,29 +17,29 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for an ApplicationOperations.ActivateApplicationPackage
-    /// request.
+    /// Identifies the Azure key vault associated with a Batch account.
     /// </summary>
-    public partial class ActivateApplicationPackageParameters
+    public partial class KeyVaultReference
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ActivateApplicationPackageParameters class.
+        /// Initializes a new instance of the KeyVaultReference class.
         /// </summary>
-        public ActivateApplicationPackageParameters()
+        public KeyVaultReference()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ActivateApplicationPackageParameters class.
+        /// Initializes a new instance of the KeyVaultReference class.
         /// </summary>
-        /// <param name="format">The format of the application package binary
-        /// file.</param>
-        public ActivateApplicationPackageParameters(string format)
+        /// <param name="id">The resource ID of the Azure key vault associated
+        /// with the Batch account.</param>
+        /// <param name="url">The URL of the Azure key vault associated with
+        /// the Batch account.</param>
+        public KeyVaultReference(string id, string url)
         {
-            Format = format;
+            Id = id;
+            Url = url;
             CustomInit();
         }
 
@@ -49,10 +49,18 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the format of the application package binary file.
+        /// Gets or sets the resource ID of the Azure key vault associated with
+        /// the Batch account.
         /// </summary>
-        [JsonProperty(PropertyName = "format")]
-        public string Format { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of the Azure key vault associated with the
+        /// Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "url")]
+        public string Url { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -62,9 +70,13 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Format == null)
+            if (Id == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Format");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+            if (Url == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
             }
         }
     }
