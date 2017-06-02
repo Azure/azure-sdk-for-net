@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// MySQL migration status.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class MigrateMySqlStatusInner : Rest.Azure.Resource
+    public partial class MigrateMySqlStatusInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the MigrateMySqlStatusInner class.

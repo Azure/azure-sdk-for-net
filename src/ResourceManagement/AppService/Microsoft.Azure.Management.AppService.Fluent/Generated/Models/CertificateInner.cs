@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// SSL certificate for an app.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class CertificateInner : Rest.Azure.Resource
+    public partial class CertificateInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the CertificateInner class.

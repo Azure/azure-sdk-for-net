@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Used for getting ResourceHealthCheck settings.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ResourceHealthMetadataInner : Rest.Azure.Resource
+    public partial class ResourceHealthMetadataInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ResourceHealthMetadataInner

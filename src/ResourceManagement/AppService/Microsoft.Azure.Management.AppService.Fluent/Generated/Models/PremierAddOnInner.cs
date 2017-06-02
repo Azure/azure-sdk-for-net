@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Premier add-on.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PremierAddOnInner : Rest.Azure.Resource
+    public partial class PremierAddOnInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the PremierAddOnInner class.

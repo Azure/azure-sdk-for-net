@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:3F0152723C985A22C1032733AB942C96:6FCE951A1B9813960CE8873DF107297F
         public override IPublishingProfile GetPublishingProfile()
         {
-            Stream stream = Manager.Inner.WebApps.ListPublishingProfileXmlWithSecretsSlot(ResourceGroupName, Parent().Name, Name());
+            Stream stream = Manager.Inner.WebApps.ListPublishingProfileXmlWithSecretsSlot(ResourceGroupName, Parent().Name, null, Name());
             StreamReader reader = new StreamReader(stream);
             string xml = reader.ReadToEnd();
             return new PublishingProfileImpl(xml);
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         public async override Task<IPublishingProfile> GetPublishingProfileAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            Stream stream = await Manager.Inner.WebApps.ListPublishingProfileXmlWithSecretsSlotAsync(ResourceGroupName, parent.Name, Name(), null, cancellationToken);
+            Stream stream = await Manager.Inner.WebApps.ListPublishingProfileXmlWithSecretsSlotAsync(ResourceGroupName, parent.Name, null, Name(), cancellationToken);
             StreamReader reader = new StreamReader(stream);
             string xml = reader.ReadToEnd();
             return new PublishingProfileImpl(xml);
