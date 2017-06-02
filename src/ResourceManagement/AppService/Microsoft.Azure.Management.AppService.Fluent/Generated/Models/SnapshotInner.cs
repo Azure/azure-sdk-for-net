@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// A snapshot of an app.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SnapshotInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class SnapshotInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SnapshotInner class.

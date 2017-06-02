@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Slot Config names azure resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SlotConfigNamesResourceInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class SlotConfigNamesResourceInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SlotConfigNamesResourceInner

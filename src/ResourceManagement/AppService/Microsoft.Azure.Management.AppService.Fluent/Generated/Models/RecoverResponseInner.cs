@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Response for an app recovery request.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RecoverResponseInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class RecoverResponseInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the RecoverResponseInner class.

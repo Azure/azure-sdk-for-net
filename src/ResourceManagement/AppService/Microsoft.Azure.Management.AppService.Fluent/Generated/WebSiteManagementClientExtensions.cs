@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// </param>
             /// <param name='sku'>
             /// Name of SKU used to filter the regions. Possible values include: 'Free',
-            /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic'
+            /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic', 'Isolated'
             /// </param>
             /// <param name='linuxWorkersEnabled'>
             /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// </param>
             /// <param name='sku'>
             /// Name of SKU used to filter the regions. Possible values include: 'Free',
-            /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic'
+            /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic', 'Isolated'
             /// </param>
             /// <param name='linuxWorkersEnabled'>
             /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// App Service plan.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AppServicePlanInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class AppServicePlanInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the AppServicePlanInner class.

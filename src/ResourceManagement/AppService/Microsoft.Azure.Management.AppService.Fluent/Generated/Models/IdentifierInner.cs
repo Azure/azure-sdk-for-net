@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Identifier.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class IdentifierInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class IdentifierInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the IdentifierInner class.

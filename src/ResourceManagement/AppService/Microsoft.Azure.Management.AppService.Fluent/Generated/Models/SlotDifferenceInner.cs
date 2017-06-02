@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// A setting difference between two deployment slots of an app.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SlotDifferenceInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class SlotDifferenceInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the SlotDifferenceInner class.

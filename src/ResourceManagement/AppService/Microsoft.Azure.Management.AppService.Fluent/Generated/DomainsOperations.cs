@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <remarks>
         /// Check if a domain is available for registration.
         /// </remarks>
-        /// <param name='name'>
-        /// Name of the object.
+        /// <param name='identifier'>
+        /// Name of the domain.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -81,18 +81,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DomainAvailablilityCheckResultInner>> CheckAvailabilityWithHttpMessagesAsync(string name = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DomainAvailablilityCheckResultInner>> CheckAvailabilityWithHttpMessagesAsync(NameIdentifierInner identifier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (identifier == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "identifier");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string apiVersion = "2015-04-01";
-            NameIdentifier identifier = new NameIdentifier();
-            if (name != null)
-            {
-                identifier.Name = name;
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -100,8 +99,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("identifier", identifier);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckAvailability", tracingParameters);
             }
@@ -633,7 +632,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<NameIdentifier>>> ListRecommendationsWithHttpMessagesAsync(DomainRecommendationSearchParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<NameIdentifierInner>>> ListRecommendationsWithHttpMessagesAsync(DomainRecommendationSearchParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (parameters == null)
             {
@@ -764,7 +763,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<NameIdentifier>>();
+            var _result = new AzureOperationResponse<IPage<NameIdentifierInner>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -777,7 +776,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<NameIdentifier>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<NameIdentifierInner>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -3008,7 +3007,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<NameIdentifier>>> ListRecommendationsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<NameIdentifierInner>>> ListRecommendationsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -3122,7 +3121,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<NameIdentifier>>();
+            var _result = new AzureOperationResponse<IPage<NameIdentifierInner>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -3135,7 +3134,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<NameIdentifier>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<NameIdentifierInner>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

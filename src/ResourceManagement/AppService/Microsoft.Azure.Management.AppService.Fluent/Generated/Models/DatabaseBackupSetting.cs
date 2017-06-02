@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// Initializes a new instance of the DatabaseBackupSetting class.
         /// </summary>
         /// <param name="databaseType">Database type (e.g. SqlAzure / MySql).
-        /// Possible values include: 'SqlAzure', 'MySql', 'LocalMySql'</param>
+        /// Possible values include: 'SqlAzure', 'MySql', 'LocalMySql',
+        /// 'PostgreSql'</param>
         /// <param name="connectionStringName">Contains a connection string
         /// name that is linked to the SiteConfig.ConnectionStrings.
         /// This is used during restore with overwrite connection strings
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
 
         /// <summary>
         /// Gets or sets database type (e.g. SqlAzure / MySql). Possible values
-        /// include: 'SqlAzure', 'MySql', 'LocalMySql'
+        /// include: 'SqlAzure', 'MySql', 'LocalMySql', 'PostgreSql'
         /// </summary>
         [JsonProperty(PropertyName = "databaseType")]
         public string DatabaseType { get; set; }

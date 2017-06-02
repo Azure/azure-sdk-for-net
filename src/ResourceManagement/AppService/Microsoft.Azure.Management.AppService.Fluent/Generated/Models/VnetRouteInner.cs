@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Virtual Network.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VnetRouteInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class VnetRouteInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VnetRouteInner class.

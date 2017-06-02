@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// SSL certificate email.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class CertificateEmailInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class CertificateEmailInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the CertificateEmailInner class.

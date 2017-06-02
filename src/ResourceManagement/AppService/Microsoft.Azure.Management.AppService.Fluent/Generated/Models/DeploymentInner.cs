@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// User crendentials used for publishing activity.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DeploymentInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class DeploymentInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the DeploymentInner class.
@@ -101,19 +101,19 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// <summary>
         /// Gets or sets author email.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.author_email")]
+        [JsonProperty(PropertyName = "properties.authorEmail")]
         public string AuthorEmail { get; set; }
 
         /// <summary>
         /// Gets or sets start time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.start_time")]
+        [JsonProperty(PropertyName = "properties.startTime")]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets end time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.end_time")]
+        [JsonProperty(PropertyName = "properties.endTime")]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>

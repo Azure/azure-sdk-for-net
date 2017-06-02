@@ -16,29 +16,31 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Options for retrieving the list of top level domain legal agreements.
+    /// Publishing options for requested profile.
     /// </summary>
-    public partial class TopLevelDomainAgreementOption
+    public partial class CsmPublishingProfileOptionsInner
     {
         /// <summary>
-        /// Initializes a new instance of the TopLevelDomainAgreementOption
+        /// Initializes a new instance of the CsmPublishingProfileOptionsInner
         /// class.
         /// </summary>
-        public TopLevelDomainAgreementOption()
+        public CsmPublishingProfileOptionsInner()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TopLevelDomainAgreementOption
+        /// Initializes a new instance of the CsmPublishingProfileOptionsInner
         /// class.
         /// </summary>
-        /// <param name="includePrivacy">If &lt;code&gt;true&lt;/code&gt;, then
-        /// the list of agreements will include agreements for domain privacy
-        /// as well; otherwise, &lt;code&gt;false&lt;/code&gt;.</param>
-        public TopLevelDomainAgreementOption(bool? includePrivacy = default(bool?))
+        /// <param name="format">Name of the format. Valid values are:
+        /// FileZilla3
+        /// WebDeploy -- default
+        /// Ftp. Possible values include: 'FileZilla3', 'WebDeploy',
+        /// 'Ftp'</param>
+        public CsmPublishingProfileOptionsInner(string format = default(string))
         {
-            IncludePrivacy = includePrivacy;
+            Format = format;
             CustomInit();
         }
 
@@ -48,12 +50,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets if &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;, then
-        /// the list of agreements will include agreements for domain privacy
-        /// as well; otherwise, &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// Gets or sets name of the format. Valid values are:
+        /// FileZilla3
+        /// WebDeploy -- default
+        /// Ftp. Possible values include: 'FileZilla3', 'WebDeploy', 'Ftp'
         /// </summary>
-        [JsonProperty(PropertyName = "includePrivacy")]
-        public bool? IncludePrivacy { get; set; }
+        [JsonProperty(PropertyName = "format")]
+        public string Format { get; set; }
 
     }
 }

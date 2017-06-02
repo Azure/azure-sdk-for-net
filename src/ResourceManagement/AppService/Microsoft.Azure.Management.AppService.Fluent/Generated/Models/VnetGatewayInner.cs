@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Network gateway access to the VPN package.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VnetGatewayInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class VnetGatewayInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VnetGatewayInner class.

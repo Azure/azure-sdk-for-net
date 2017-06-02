@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Custom domain analysis.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class CustomHostnameAnalysisResultInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class CustomHostnameAnalysisResultInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the CustomHostnameAnalysisResultInner

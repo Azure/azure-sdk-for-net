@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Information about a domain.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DomainInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class DomainInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the DomainInner class.
@@ -74,7 +74,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// <param name="consent">Legal agreement consent.</param>
         /// <param name="domainNotRenewableReasons">Reasons why domain is not
         /// renewable.</param>
-        public DomainInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Contact contactAdmin = default(Contact), Contact contactBilling = default(Contact), Contact contactRegistrant = default(Contact), Contact contactTech = default(Contact), DomainStatus? registrationStatus = default(DomainStatus?), ProvisioningState? provisioningState = default(ProvisioningState?), IList<string> nameServers = default(IList<string>), bool? privacy = default(bool?), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), System.DateTime? lastRenewedTime = default(System.DateTime?), bool? autoRenew = default(bool?), bool? readyForDnsRecordManagement = default(bool?), IList<HostName> managedHostNames = default(IList<HostName>), DomainPurchaseConsent consent = default(DomainPurchaseConsent), IList<string> domainNotRenewableReasons = default(IList<string>))
+        /// <param name="dnsType">Current DNS type. Possible values include:
+        /// 'AzureDns', 'DefaultDomainRegistrarDns'</param>
+        /// <param name="dnsZoneId">Azure DNS Zone to use</param>
+        /// <param name="targetDnsType">Target DNS type (would be used for
+        /// migration). Possible values include: 'AzureDns',
+        /// 'DefaultDomainRegistrarDns'</param>
+        public DomainInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Contact contactAdmin = default(Contact), Contact contactBilling = default(Contact), Contact contactRegistrant = default(Contact), Contact contactTech = default(Contact), DomainStatus? registrationStatus = default(DomainStatus?), ProvisioningState? provisioningState = default(ProvisioningState?), IList<string> nameServers = default(IList<string>), bool? privacy = default(bool?), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), System.DateTime? lastRenewedTime = default(System.DateTime?), bool? autoRenew = default(bool?), bool? readyForDnsRecordManagement = default(bool?), IList<HostName> managedHostNames = default(IList<HostName>), DomainPurchaseConsent consent = default(DomainPurchaseConsent), IList<string> domainNotRenewableReasons = default(IList<string>), DnsType? dnsType = default(DnsType?), string dnsZoneId = default(string), DnsType? targetDnsType = default(DnsType?), string authCode = default(string))
             : base(location, id, name, type, tags)
         {
             ContactAdmin = contactAdmin;
@@ -93,6 +99,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
             ManagedHostNames = managedHostNames;
             Consent = consent;
             DomainNotRenewableReasons = domainNotRenewableReasons;
+            DnsType = dnsType;
+            DnsZoneId = dnsZoneId;
+            TargetDnsType = targetDnsType;
+            AuthCode = authCode;
             CustomInit();
         }
 
@@ -143,10 +153,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         public ProvisioningState? ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets name servers.
+        /// Gets name servers.
         /// </summary>
         [JsonProperty(PropertyName = "properties.nameServers")]
-        public IList<string> NameServers { get; set; }
+        public IList<string> NameServers { get; private set; }
 
         /// <summary>
         /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if
@@ -194,11 +204,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         public bool? ReadyForDnsRecordManagement { get; private set; }
 
         /// <summary>
-        /// Gets or sets all hostnames derived from the domain and assigned to
-        /// Azure resources.
+        /// Gets all hostnames derived from the domain and assigned to Azure
+        /// resources.
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedHostNames")]
-        public IList<HostName> ManagedHostNames { get; set; }
+        public IList<HostName> ManagedHostNames { get; private set; }
 
         /// <summary>
         /// Gets or sets legal agreement consent.
@@ -207,10 +217,35 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         public DomainPurchaseConsent Consent { get; set; }
 
         /// <summary>
-        /// Gets or sets reasons why domain is not renewable.
+        /// Gets reasons why domain is not renewable.
         /// </summary>
         [JsonProperty(PropertyName = "properties.domainNotRenewableReasons")]
-        public IList<string> DomainNotRenewableReasons { get; set; }
+        public IList<string> DomainNotRenewableReasons { get; private set; }
+
+        /// <summary>
+        /// Gets or sets current DNS type. Possible values include: 'AzureDns',
+        /// 'DefaultDomainRegistrarDns'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsType")]
+        public DnsType? DnsType { get; set; }
+
+        /// <summary>
+        /// Gets or sets azure DNS Zone to use
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsZoneId")]
+        public string DnsZoneId { get; set; }
+
+        /// <summary>
+        /// Gets or sets target DNS type (would be used for migration).
+        /// Possible values include: 'AzureDns', 'DefaultDomainRegistrarDns'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetDnsType")]
+        public DnsType? TargetDnsType { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.authCode")]
+        public string AuthCode { get; private set; }
 
         /// <summary>
         /// Validate the object.

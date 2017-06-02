@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// A snapshot of a web app configuration.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SiteConfigurationSnapshotInfoInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class SiteConfigurationSnapshotInfoInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the

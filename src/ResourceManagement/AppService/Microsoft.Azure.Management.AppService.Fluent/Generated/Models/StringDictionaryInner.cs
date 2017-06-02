@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// <summary>
     /// String dictionary resource.
     /// </summary>
-    public partial class StringDictionaryInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class StringDictionaryInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the StringDictionaryInner class.

@@ -71,7 +71,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// actually notified. Null means that this recommendation hasn't been
         /// notified yet.</param>
         /// <param name="score">A metric value measured by the rule.</param>
-        public RecommendationInner(System.DateTime? creationTime = default(System.DateTime?), string recommendationId = default(string), string resourceId = default(string), string resourceScope = default(string), string ruleName = default(string), string displayName = default(string), string message = default(string), NotificationLevel? level = default(NotificationLevel?), Channels? channels = default(Channels?), IList<string> tags = default(IList<string>), string actionName = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? nextNotificationTime = default(System.DateTime?), System.DateTime? notificationExpirationTime = default(System.DateTime?), System.DateTime? notifiedTime = default(System.DateTime?), double? score = default(double?))
+        /// <param name="isDynamic">True if this is associated with a
+        /// dynamically added rule</param>
+        /// <param name="extensionName">Extension name of the portal if
+        /// exists.</param>
+        /// <param name="bladeName">Deep link to a blade on the portal.</param>
+        /// <param name="forwardLink">Forward link to an external document
+        /// associated with the rule.</param>
+        public RecommendationInner(System.DateTime? creationTime = default(System.DateTime?), string recommendationId = default(string), string resourceId = default(string), string resourceScope = default(string), string ruleName = default(string), string displayName = default(string), string message = default(string), NotificationLevel? level = default(NotificationLevel?), Channels? channels = default(Channels?), IList<string> tags = default(IList<string>), string actionName = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? nextNotificationTime = default(System.DateTime?), System.DateTime? notificationExpirationTime = default(System.DateTime?), System.DateTime? notifiedTime = default(System.DateTime?), double? score = default(double?), bool? isDynamic = default(bool?), string extensionName = default(string), string bladeName = default(string), string forwardLink = default(string))
         {
             CreationTime = creationTime;
             RecommendationId = recommendationId;
@@ -90,6 +97,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
             NotificationExpirationTime = notificationExpirationTime;
             NotifiedTime = notifiedTime;
             Score = score;
+            IsDynamic = isDynamic;
+            ExtensionName = extensionName;
+            BladeName = bladeName;
+            ForwardLink = forwardLink;
             CustomInit();
         }
 
@@ -213,6 +224,32 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// </summary>
         [JsonProperty(PropertyName = "score")]
         public double? Score { get; set; }
+
+        /// <summary>
+        /// Gets or sets true if this is associated with a dynamically added
+        /// rule
+        /// </summary>
+        [JsonProperty(PropertyName = "isDynamic")]
+        public bool? IsDynamic { get; set; }
+
+        /// <summary>
+        /// Gets or sets extension name of the portal if exists.
+        /// </summary>
+        [JsonProperty(PropertyName = "extensionName")]
+        public string ExtensionName { get; set; }
+
+        /// <summary>
+        /// Gets or sets deep link to a blade on the portal.
+        /// </summary>
+        [JsonProperty(PropertyName = "bladeName")]
+        public string BladeName { get; set; }
+
+        /// <summary>
+        /// Gets or sets forward link to an external document associated with
+        /// the rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "forwardLink")]
+        public string ForwardLink { get; set; }
 
     }
 }

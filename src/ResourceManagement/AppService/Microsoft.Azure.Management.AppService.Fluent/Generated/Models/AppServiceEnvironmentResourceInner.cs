@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// App Service Environment ARM resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AppServiceEnvironmentResourceInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class AppServiceEnvironmentResourceInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -98,8 +98,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// the App Service Environment is healthy.</param>
         /// <param name="environmentStatus">Detailed message about with results
         /// of the last check of the App Service Environment.</param>
-        /// <param name="appServiceEnvironmentResourceKind">Kind of the app
-        /// service environment</param>
         /// <param name="resourceGroup">Resource group of the App Service
         /// Environment.</param>
         /// <param name="frontEndScaleFactor">Scale factor for
@@ -119,7 +117,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// (most likely because NSG blocked the incoming traffic).</param>
         /// <param name="clusterSettings">Custom settings for changing the
         /// behavior of the App Service Environment.</param>
-        public AppServiceEnvironmentResourceInner(string appServiceEnvironmentResourceName, string appServiceEnvironmentResourceLocation, VirtualNetworkProfile virtualNetwork, IList<WorkerPool> workerPools, string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ProvisioningState? provisioningState = default(ProvisioningState?), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string vnetName = default(string), string vnetResourceGroupName = default(string), string vnetSubnetName = default(string), InternalLoadBalancingMode? internalLoadBalancingMode = default(InternalLoadBalancingMode?), string multiSize = default(string), int? multiRoleCount = default(int?), int? ipsslAddressCount = default(int?), string databaseEdition = default(string), string databaseServiceObjective = default(string), int? upgradeDomains = default(int?), string subscriptionId = default(string), string dnsSuffix = default(string), string lastAction = default(string), string lastActionResult = default(string), string allowedMultiSizes = default(string), string allowedWorkerSizes = default(string), int? maximumNumberOfMachines = default(int?), IList<VirtualIPMapping> vipMappings = default(IList<VirtualIPMapping>), IList<StampCapacity> environmentCapacities = default(IList<StampCapacity>), IList<NetworkAccessControlEntry> networkAccessControlList = default(IList<NetworkAccessControlEntry>), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), string appServiceEnvironmentResourceKind = default(string), string resourceGroup = default(string), int? frontEndScaleFactor = default(int?), int? defaultFrontEndScaleFactor = default(int?), string apiManagementAccountId = default(string), bool? suspended = default(bool?), bool? dynamicCacheEnabled = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>))
+        public AppServiceEnvironmentResourceInner(string appServiceEnvironmentResourceName, string appServiceEnvironmentResourceLocation, VirtualNetworkProfile virtualNetwork, IList<WorkerPool> workerPools, string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ProvisioningState? provisioningState = default(ProvisioningState?), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string vnetName = default(string), string vnetResourceGroupName = default(string), string vnetSubnetName = default(string), InternalLoadBalancingMode? internalLoadBalancingMode = default(InternalLoadBalancingMode?), string multiSize = default(string), int? multiRoleCount = default(int?), int? ipsslAddressCount = default(int?), string databaseEdition = default(string), string databaseServiceObjective = default(string), int? upgradeDomains = default(int?), string subscriptionId = default(string), string dnsSuffix = default(string), string lastAction = default(string), string lastActionResult = default(string), string allowedMultiSizes = default(string), string allowedWorkerSizes = default(string), int? maximumNumberOfMachines = default(int?), IList<VirtualIPMapping> vipMappings = default(IList<VirtualIPMapping>), IList<StampCapacity> environmentCapacities = default(IList<StampCapacity>), IList<NetworkAccessControlEntry> networkAccessControlList = default(IList<NetworkAccessControlEntry>), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), string resourceGroup = default(string), int? frontEndScaleFactor = default(int?), int? defaultFrontEndScaleFactor = default(int?), string apiManagementAccountId = default(string), bool? suspended = default(bool?), bool? dynamicCacheEnabled = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>))
             : base(location, id, name, type, tags)
         {
             AppServiceEnvironmentResourceName = appServiceEnvironmentResourceName;
@@ -150,7 +148,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
             NetworkAccessControlList = networkAccessControlList;
             EnvironmentIsHealthy = environmentIsHealthy;
             EnvironmentStatus = environmentStatus;
-            AppServiceEnvironmentResourceKind = appServiceEnvironmentResourceKind;
             ResourceGroup = resourceGroup;
             FrontEndScaleFactor = frontEndScaleFactor;
             DefaultFrontEndScaleFactor = defaultFrontEndScaleFactor;
@@ -350,12 +347,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.environmentStatus")]
         public string EnvironmentStatus { get; private set; }
-
-        /// <summary>
-        /// Gets or sets kind of the app service environment
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.kind")]
-        public string AppServiceEnvironmentResourceKind { get; set; }
 
         /// <summary>
         /// Gets resource group of the App Service Environment.

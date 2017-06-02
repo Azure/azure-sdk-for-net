@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// SSL certificate for an app.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class CertificateInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class CertificateInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the CertificateInner class.
@@ -64,10 +64,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// 'AzureServiceUnauthorizedToAccessKeyVault', 'KeyVaultDoesNotExist',
         /// 'KeyVaultSecretDoesNotExist', 'UnknownError', 'ExternalPrivateKey',
         /// 'Unknown'</param>
+        /// <param name="geoRegion">Region of the certificate.</param>
+        /// <param name="certificateName">Resource name of the
+        /// certificate.</param>
         /// <param name="serverFarmId">Resource ID of the associated App
         /// Service plan, formatted as:
         /// "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".</param>
-        public CertificateInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), byte[] pfxBlob = default(byte[]), string siteName = default(string), string selfLink = default(string), string issuer = default(string), System.DateTime? issueDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string password = default(string), string thumbprint = default(string), bool? valid = default(bool?), string cerBlob = default(string), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultId = default(string), string keyVaultSecretName = default(string), KeyVaultSecretStatus? keyVaultSecretStatus = default(KeyVaultSecretStatus?), string serverFarmId = default(string))
+        public CertificateInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), byte[] pfxBlob = default(byte[]), string siteName = default(string), string selfLink = default(string), string issuer = default(string), System.DateTime? issueDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string password = default(string), string thumbprint = default(string), bool? valid = default(bool?), string cerBlob = default(string), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultId = default(string), string keyVaultSecretName = default(string), KeyVaultSecretStatus? keyVaultSecretStatus = default(KeyVaultSecretStatus?), string geoRegion = default(string), string certificateName = default(string), string serverFarmId = default(string))
             : base(location, id, name, type, tags)
         {
             FriendlyName = friendlyName;
@@ -88,6 +91,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
             KeyVaultId = keyVaultId;
             KeyVaultSecretName = keyVaultSecretName;
             KeyVaultSecretStatus = keyVaultSecretStatus;
+            GeoRegion = geoRegion;
+            CertificateName = certificateName;
             ServerFarmId = serverFarmId;
             CustomInit();
         }
@@ -170,10 +175,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         public bool? Valid { get; private set; }
 
         /// <summary>
-        /// Gets or sets raw bytes of .cer file
+        /// Gets raw bytes of .cer file
         /// </summary>
         [JsonProperty(PropertyName = "properties.cerBlob")]
-        public string CerBlob { get; set; }
+        public string CerBlob { get; private set; }
 
         /// <summary>
         /// Gets public key hash.
@@ -210,6 +215,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.keyVaultSecretStatus")]
         public KeyVaultSecretStatus? KeyVaultSecretStatus { get; private set; }
+
+        /// <summary>
+        /// Gets region of the certificate.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.geoRegion")]
+        public string GeoRegion { get; private set; }
+
+        /// <summary>
+        /// Gets resource name of the certificate.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.name")]
+        public string CertificateName { get; private set; }
 
         /// <summary>
         /// Gets or sets resource ID of the associated App Service plan,

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// Domain ownership Identifier.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DomainOwnershipIdentifierInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class DomainOwnershipIdentifierInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the DomainOwnershipIdentifierInner
