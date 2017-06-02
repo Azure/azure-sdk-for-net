@@ -1536,7 +1536,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             }
         }
 
-        public static void UploadFileToFtp(IPublishingProfile profile, string filePath, string fileName = null)
+        public static void UploadFileToWebApp(IPublishingProfile profile, string filePath, string fileName = null)
         {
             if (!IsRunningMocked)
             {
@@ -1566,6 +1566,53 @@ namespace Microsoft.Azure.Management.Samples.Common
                         ftpClient.CreateDirectoryAsync("webapps").GetAwaiter().GetResult();
                     }
                     ftpClient.ChangeWorkingDirectoryAsync("./webapps").GetAwaiter().GetResult();
+
+                    if (fileName == null)
+                    {
+                        fileName = Path.GetFileName(filePath);
+                    }
+                    while (fileName.Contains("/"))
+                    {
+                        int slash = fileName.IndexOf("/");
+                        string subDir = fileName.Substring(0, slash);
+                        ftpClient.CreateDirectoryAsync(subDir).GetAwaiter().GetResult();
+                        ftpClient.ChangeWorkingDirectoryAsync("./" + subDir);
+                        fileName = fileName.Substring(slash + 1);
+                    }
+
+                    using (var writeStream = ftpClient.OpenFileWriteStreamAsync(fileName).GetAwaiter().GetResult())
+                    {
+                        var fileReadStream = fileinfo.OpenRead();
+                        fileReadStream.CopyToAsync(writeStream).GetAwaiter().GetResult();
+                    }
+                }
+            }
+        }
+        public static void UploadFileToFunctionApp(IPublishingProfile profile, string filePath, string fileName = null)
+        {
+            if (!IsRunningMocked)
+            {
+                string host = profile.FtpUrl.Split(new char[] { '/' }, 2)[0];
+
+                using (var ftpClient = new FtpClient(new FtpClientConfiguration
+                {
+                    Host = host,
+                    Username = profile.FtpUsername,
+                    Password = profile.FtpPassword
+                }))
+                {
+                    var fileinfo = new FileInfo(filePath);
+                    ftpClient.LoginAsync().GetAwaiter().GetResult();
+                    if (!ftpClient.ListDirectoriesAsync().GetAwaiter().GetResult().Any(fni => fni.Name == "site"))
+                    {
+                        ftpClient.CreateDirectoryAsync("site").GetAwaiter().GetResult();
+                    }
+                    ftpClient.ChangeWorkingDirectoryAsync("./site").GetAwaiter().GetResult();
+                    if (!ftpClient.ListDirectoriesAsync().GetAwaiter().GetResult().Any(fni => fni.Name == "wwwroot"))
+                    {
+                        ftpClient.CreateDirectoryAsync("wwwroot").GetAwaiter().GetResult();
+                    }
+                    ftpClient.ChangeWorkingDirectoryAsync("./wwwroot").GetAwaiter().GetResult();
 
                     if (fileName == null)
                     {

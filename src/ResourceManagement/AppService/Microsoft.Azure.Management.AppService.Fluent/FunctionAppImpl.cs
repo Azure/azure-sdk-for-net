@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         private ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> storageAccountCreatable;
         private IStorageAccount storageAccountToSet;
         private IStorageAccount currentStorageAccount;
+
         public IStorageAccount StorageAccount()
         {
             return currentStorageAccount;
@@ -302,6 +303,26 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
             return null;
+        }
+
+        public void SyncTriggers()
+        {
+            SyncTriggersAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        public async Task SyncTriggersAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            try
+            {
+                await Manager.Inner.WebApps.SyncFunctionTriggersAsync(ResourceGroupName, Name, cancellationToken);
+            }
+            catch (CloudException e)
+            {
+                if (e.Response.StatusCode != HttpStatusCode.OK)
+                {
+                    throw e;
+                }
+            }
         }
     }
 }
