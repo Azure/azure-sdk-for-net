@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Fluent;
-    using ResourceManager.Fluent.Core;
 
     /// <summary>
     /// A storage account update stage allowing to change the parameters.
@@ -52,15 +51,9 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
     /// <summary>
     /// A storage account update allowing encryption to be specified.
     /// </summary>
-    public interface IWithEncryption : IBeta
+    public interface IWithEncryption  :
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IWithEncryptionBeta
     {
-        /// <summary>
-        /// Specifies the encryption setting on the account.
-        /// The default setting is unencrypted.
-        /// </summary>
-        /// <param name="encryption">The encryption setting.</param>
-        /// <return>The nest stage of storage account update.</return>
-        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithEncryption(Encryption encryption);
     }
 
     /// <summary>
@@ -91,5 +84,20 @@ namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
         /// <param name="accessTier">The access tier value.</param>
         /// <return>The next stage of storage account update.</return>
         Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithAccessTier(AccessTier accessTier);
+    }
+
+    /// <summary>
+    /// A storage account update allowing encryption to be specified.
+    /// </summary>
+    public interface IWithEncryptionBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies the encryption setting on the account.
+        /// The default setting is unencrypted.
+        /// </summary>
+        /// <param name="encryption">The encryption setting.</param>
+        /// <return>The nest stage of storage account update.</return>
+        Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate WithEncryption(Encryption encryption);
     }
 }

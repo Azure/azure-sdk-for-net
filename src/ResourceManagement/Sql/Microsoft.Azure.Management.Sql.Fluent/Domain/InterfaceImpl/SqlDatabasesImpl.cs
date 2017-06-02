@@ -20,17 +20,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>.Manager
-        {
-            get
-            {
-                return this.Manager as Microsoft.Azure.Management.Sql.Fluent.ISqlManager;
-            }
-        }
-
-        /// <summary>
         /// Gets the SQLDatabase based on the resource group name, SQLServer name and SQLDatabase name.
         /// </summary>
         /// <param name="resourceGroup">The name of resource group.</param>
@@ -80,7 +69,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <param name="resourceGroup">The name of resource group.</param>
         /// <param name="parentName">The name of parent resource.</param>
         /// <param name="name">The name of resource.</param>
-        /// <return>Observable to an immutable representation of the resource.</return>
+        /// <return>A representation of the deferred computation of this call returning the found resource.</return>
         async Task<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase,Microsoft.Azure.Management.Sql.Fluent.ISqlServer,Microsoft.Azure.Management.Sql.Fluent.ISqlManager>.GetByParentAsync(string resourceGroup, string parentName, string name, CancellationToken cancellationToken)
         {
             return await this.GetByParentAsync(resourceGroup, parentName, name, cancellationToken) as Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase;
@@ -91,7 +80,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// </summary>
         /// <param name="parentResource">The instance of parent resource.</param>
         /// <param name="name">The name of resource.</param>
-        /// <return>Observable to an immutable representation of the resource.</return>
+        /// <return>A representation of the deferred computation of this call returning the found resource.</return>
         async Task<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByParent<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase,Microsoft.Azure.Management.Sql.Fluent.ISqlServer,Microsoft.Azure.Management.Sql.Fluent.ISqlManager>.GetByParentAsync(ISqlServer parentResource, string name, CancellationToken cancellationToken)
         {
             return await this.GetByParentAsync(parentResource, name, cancellationToken) as Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase;

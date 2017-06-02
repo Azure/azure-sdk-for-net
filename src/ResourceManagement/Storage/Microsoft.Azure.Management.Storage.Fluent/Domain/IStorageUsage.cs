@@ -12,16 +12,16 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.Usage>
     {
         /// <summary>
-        /// Gets the maximum count of the resources that can be allocated in the
-        /// subscription.
-        /// </summary>
-        int Limit { get; }
-
-        /// <summary>
         /// Gets the unit of measurement. Possible values include: 'Count',
         /// 'Bytes', 'Seconds', 'Percent', 'CountsPerSecond', 'BytesPerSecond'.
         /// </summary>
         Models.UsageUnit Unit { get; }
+
+        /// <summary>
+        /// Gets the maximum count of the resources that can be allocated in the
+        /// subscription.
+        /// </summary>
+        int Limit { get; }
 
         /// <summary>
         /// Gets the name of the type of usage.

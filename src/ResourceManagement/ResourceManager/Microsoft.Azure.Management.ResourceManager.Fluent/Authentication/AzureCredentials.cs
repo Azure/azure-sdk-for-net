@@ -96,8 +96,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
             {
                 if (servicePrincipalLoginInformation != null)
                 {
-                    credentialsCache[adSettings.TokenAudience] = await ApplicationTokenProvider.LoginSilentAsync(
-                        TenantId, servicePrincipalLoginInformation.ClientId, servicePrincipalLoginInformation.ClientSecret, adSettings, TokenCache.DefaultShared);
+                    if (servicePrincipalLoginInformation.ClientSecret != null)
+                    {
+                        credentialsCache[adSettings.TokenAudience] = await ApplicationTokenProvider.LoginSilentAsync(
+                            TenantId, servicePrincipalLoginInformation.ClientId, servicePrincipalLoginInformation.ClientSecret, adSettings, TokenCache.DefaultShared);
+                    }
+                    else
+                    {
+                        credentialsCache[adSettings.TokenAudience] = await ApplicationTokenProvider.LoginSilentAsync(
+                            TenantId, servicePrincipalLoginInformation.ClientId, servicePrincipalLoginInformation.Certifcate, servicePrincipalLoginInformation.CertifcatePassword, TokenCache.DefaultShared);
+                    }
                 }
 #if !PORTABLE
                 else if (userLoginInformation != null)

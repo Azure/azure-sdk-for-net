@@ -17,15 +17,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<SqlElasticPool.Update.IUpdate>
     {
-        /// <summary>
-        /// Gets the edition of Azure SQL Elastic Pool.
-        /// </summary>
-        string Edition { get; }
+        /// <return>The information about elastic pool activities.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity> ListActivities();
 
         /// <summary>
-        /// Gets the state of the Azure SQL Elastic Pool.
+        /// Gets the maximum DTU any one SQL Azure database can consume.
         /// </summary>
-        string State { get; }
+        int DatabaseDtuMax { get; }
 
         /// <summary>
         /// Gets The total shared DTU for the SQL Azure Database Elastic Pool.
@@ -33,14 +31,17 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         int Dtu { get; }
 
         /// <summary>
-        /// Gets the minimum DTU all SQL Azure Databases are guaranteed.
+        /// Gets name of the SQL Server to which this elastic pool belongs.
         /// </summary>
-        int DatabaseDtuMin { get; }
+        string SqlServerName { get; }
+
+        /// <return>The information about databases in elastic pool.</return>
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListDatabases();
 
         /// <summary>
-        /// Gets the storage limit for the SQL Azure Database Elastic Pool in MB.
+        /// Gets the edition of Azure SQL Elastic Pool.
         /// </summary>
-        int StorageMB { get; }
+        string Edition { get; }
 
         /// <summary>
         /// Gets the creation date of the Azure SQL Elastic Pool.
@@ -48,12 +49,17 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         System.DateTime CreationDate { get; }
 
         /// <summary>
-        /// Gets the maximum DTU any one SQL Azure database can consume.
+        /// Deletes the elastic pool from the server.
         /// </summary>
-        int DatabaseDtuMax { get; }
+        void Delete();
 
         /// <return>The information about elastic pool database activities.</return>
         System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolDatabaseActivity> ListDatabaseActivities();
+
+        /// <summary>
+        /// Gets the minimum DTU all SQL Azure Databases are guaranteed.
+        /// </summary>
+        int DatabaseDtuMin { get; }
 
         /// <summary>
         /// Gets the specific database in the elastic pool.
@@ -63,19 +69,13 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase GetDatabase(string databaseName);
 
         /// <summary>
-        /// Deletes the elastic pool from the server.
+        /// Gets the storage limit for the SQL Azure Database Elastic Pool in MB.
         /// </summary>
-        void Delete();
+        int StorageMB { get; }
 
         /// <summary>
-        /// Gets name of the SQL Server to which this elastic pool belongs.
+        /// Gets the state of the Azure SQL Elastic Pool.
         /// </summary>
-        string SqlServerName { get; }
-
-        /// <return>The information about elastic pool activities.</return>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.IElasticPoolActivity> ListActivities();
-
-        /// <return>The information about databases in elastic pool.</return>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListDatabases();
+        string State { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>The next stage of the update.</return>
         SqlFirewallRule.Update.IUpdate SqlFirewallRule.Update.IWithEndIPAddress.WithEndIPAddress(string endIPAddress)
         {
-            return this.WithEndIpAddress(endIPAddress) as SqlFirewallRule.Update.IUpdate;
+            return this.WithEndIPAddress(endIPAddress) as SqlFirewallRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -30,18 +30,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>The next stage of the update.</return>
         SqlFirewallRule.Update.IUpdate SqlFirewallRule.Update.IWithStartIPAddress.WithStartIPAddress(string startIPAddress)
         {
-            return this.WithStartIpAddress(startIPAddress) as SqlFirewallRule.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>.Manager
-        {
-            get
-            {
-                return this.Manager as Microsoft.Azure.Management.Sql.Fluent.ISqlManager;
-            }
+            return this.WithStartIPAddress(startIPAddress) as SqlFirewallRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -51,18 +40,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>The next stage of the definition.</return>
         SqlFirewallRule.Definition.IWithCreate SqlFirewallRule.Definition.IWithIPAddress.WithIPAddress(string ipAddress)
         {
-            return this.WithIpAddress(ipAddress) as SqlFirewallRule.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id;
-            }
+            return this.WithIPAddress(ipAddress) as SqlFirewallRule.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -104,18 +82,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// <return>The next stage of the definition.</return>
         SqlFirewallRule.Definition.IWithCreate SqlFirewallRule.Definition.IWithIPAddressRange.WithIPAddressRange(string startIPAddress, string endIPAddress)
         {
-            return this.WithIpAddressRange(startIPAddress, endIPAddress) as SqlFirewallRule.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Gets the name of the resource group.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasResourceGroup.ResourceGroupName
-        {
-            get
-            {
-                return this.ResourceGroupName;
-            }
+            return this.WithIPAddressRange(startIPAddress, endIPAddress) as SqlFirewallRule.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -125,7 +92,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             get
             {
-                return this.StartIpAddress();
+                return this.StartIPAddress();
             }
         }
 
@@ -147,7 +114,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             get
             {
-                return this.EndIpAddress();
+                return this.EndIPAddress();
             }
         }
 

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Resume an Azure SQL Data Warehouse database asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouseBeta.ResumeDataWarehouseAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouse.ResumeDataWarehouseAsync(CancellationToken cancellationToken)
         {
  
             await this.ResumeDataWarehouseAsync(cancellationToken);
@@ -44,98 +44,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         /// Pause an Azure SQL Data Warehouse database asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouseBeta.PauseDataWarehouseAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Sql.Fluent.ISqlWarehouse.PauseDataWarehouseAsync(CancellationToken cancellationToken)
         {
  
             await this.PauseDataWarehouseAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the name of the resource.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
-        {
-            get
-            {
-                return this.Name;
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the region the resource is in.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.RegionName
-        {
-            get
-            {
-                return this.RegionName;
-            }
-        }
-
-        /// <summary>
-        /// Gets the tags for the resource.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Tags
-        {
-            get
-            {
-                return this.Tags as System.Collections.Generic.IReadOnlyDictionary<string,string>;
-            }
-        }
-
-        /// <summary>
-        /// Gets the region the resource is in.
-        /// </summary>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Region
-        {
-            get
-            {
-                return this.Region as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
-            }
-        }
-
-        /// <summary>
-        /// Gets the type of the resource.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Type
-        {
-            get
-            {
-                return this.Type;
-            }
-        }
-
-        /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id;
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the resource group.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasResourceGroup.ResourceGroupName
-        {
-            get
-            {
-                return this.ResourceGroupName;
-            }
-        }
-
-        /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>.Manager
-        {
-            get
-            {
-                return this.Manager as Microsoft.Azure.Management.Sql.Fluent.ISqlManager;
-            }
         }
 
         /// <summary>

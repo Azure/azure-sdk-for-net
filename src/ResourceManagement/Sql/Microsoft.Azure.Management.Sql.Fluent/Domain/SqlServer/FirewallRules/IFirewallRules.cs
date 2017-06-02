@@ -14,13 +14,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.FirewallRules
     public interface IFirewallRules 
     {
         /// <summary>
-        /// Creates a new firewall rule in SQL Server.
-        /// </summary>
-        /// <param name="firewallRuleName">Name of the firewall rule to be created.</param>
-        /// <return>Returns a stage to specify arguments of the firewall rule.</return>
-        Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Definition.IBlank Define(string firewallRuleName);
-
-        /// <summary>
         /// Gets a particular firewall rule.
         /// </summary>
         /// <param name="firewallRuleName">Name of the firewall rule to get.</param>
@@ -28,10 +21,18 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.FirewallRules
         Microsoft.Azure.Management.Sql.Fluent.ISqlFirewallRule Get(string firewallRuleName);
 
         /// <summary>
+        /// Creates a new firewall rule in SQL Server.
+        /// </summary>
+        /// <param name="firewallRuleName">Name of the firewall rule to be created.</param>
+        /// <return>Returns a stage to specify arguments of the firewall rule.</return>
+        Microsoft.Azure.Management.Sql.Fluent.SqlFirewallRule.Definition.IBlank Define(string firewallRuleName);
+
+        /// <summary>
         /// Delete specified firewall rule in the server.
         /// </summary>
         /// <param name="firewallRuleName">Name of the firewall rule to delete.</param>
-        void Delete(string firewallRuleName);
+        /// <return>Observable for the delete operation.</return>
+        Task DeleteAsync(string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Returns all the firewall rules for the server.
@@ -43,7 +44,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent.SqlServer.FirewallRules
         /// Delete specified firewall rule in the server.
         /// </summary>
         /// <param name="firewallRuleName">Name of the firewall rule to delete.</param>
-        /// <return>Observable for the delete operation.</return>
-        Task DeleteAsync(string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken));
+        void Delete(string firewallRuleName);
     }
 }
