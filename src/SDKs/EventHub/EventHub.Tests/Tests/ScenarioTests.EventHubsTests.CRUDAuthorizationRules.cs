@@ -164,37 +164,15 @@ namespace EventHub.Tests.ScenarioTests
                 EventHubManagementClient.EventHubs.DeleteAuthorizationRule(resourceGroup, namespaceName, eventhubName, authorizationRuleName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
-                try
-                {
-                    EventHubManagementClient.EventHubs.GetAuthorizationRule(resourceGroup, namespaceName, eventhubName, authorizationRuleName);
-                    Assert.True(false, "this step should have failed");
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
+                
 
                 // Delete Eventhub and check for the NotFound exception 
                 EventHubManagementClient.EventHubs.Delete(resourceGroup, namespaceName, eventhubName);
-                try
-                {
-                    var getEventhubResponse_chkDelete = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound,ex.Response.StatusCode);
-                }
+               
 
                 // Delete namespace and check for the NotFound exception 
                 EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
-                try
-                {
-                    var getNamespaceResponse_chkDelete = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
+                
             }
         }
     }

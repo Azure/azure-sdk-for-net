@@ -90,25 +90,11 @@ namespace EventHub.Tests.ScenarioTests
 
                 // Delete the Evnet Hub
                 EventHubManagementClient.EventHubs.Delete(resourceGroup, namespaceName, eventhubName);
-                try
-                {
-                    var getEventHubResponse1 = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
-                }
-                catch (Exception ex)
-                {
-                    Assert.Equal(ex.Message, "Operation returned an invalid status code 'NotFound'");
-                }
+                
 
                 // Delete namespace and check for the NotFound exception
                 EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
-                try
-                {
-                    var getNamespaceResponse_chkDelete = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
+                
             }
         }
     }

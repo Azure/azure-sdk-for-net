@@ -100,35 +100,15 @@ namespace EventHub.Tests.ScenarioTests
                 
                 // Delete Created ConsumerGroup and check for the NotFound exception 
                 EventHubManagementClient.ConsumerGroups.Delete(resourceGroup, namespaceName, eventhubName, consumergroupName);
-                try
-                {
-                    var getConsumerGroupResponse1 = EventHubManagementClient.ConsumerGroups.Get(resourceGroup, namespaceName, eventhubName,consumergroupName);                    
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound,ex.Response.StatusCode);
-                }
+                
 
                 // Delete Created EventHub  and check for the NotFound exception 
                 EventHubManagementClient.EventHubs.Delete(resourceGroup, namespaceName, eventhubName);
-                try
-                {
-                    var getEventHugResponse1 = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
+                
 
                 // Delete namespace
-                try
-                {                    
-                    EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
-                }
-                catch (Exception ex)
-                {
-                    Assert.True(ex.Message.Contains("NotFound"));
-                }
+               EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
+                
                 //Subscription end
             }
         }

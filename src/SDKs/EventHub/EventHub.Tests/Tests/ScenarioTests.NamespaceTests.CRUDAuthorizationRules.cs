@@ -160,26 +160,11 @@ namespace EventHub.Tests.ScenarioTests
                 // Delete namespace authorizationRule
                 EventHubManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
 
-                TestUtilities.Wait(TimeSpan.FromSeconds(5));
-                try
-                {
-                    EventHubManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
-                    Assert.True(false, "this step should have failed");
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));                
 
-                try
-                {
-                    //Delete namespace
-                    EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName); 
-                }
-                catch (Exception ex)
-                {
-                    Assert.True(ex.Message.Contains("NotFound"));
-                }
+                //Delete namespace
+                EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName); 
+                
             }
         }
     }
