@@ -12,31 +12,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definiti
     /// <summary>
     /// A service principal definition allowing credentials to be specified.
     /// </summary>
-    public interface IWithCredential 
+    public interface IWithCredential  :
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCredentialBeta
     {
-        /// <summary>
-        /// Starts the definition of a password credential.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="name">The descriptive name of the password credential.</param>
-        /// <return>The first stage in password credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IBlank<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate> DefinePasswordCredential(string name);
-
-        /// <summary>
-        /// Starts the definition of a certificate credential.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="name">The descriptive name of the certificate credential.</param>
-        /// <return>The first stage in certificate credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IBlank<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate> DefineCertificateCredential(string name);
     }
 
     /// <summary>
@@ -51,55 +29,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definiti
     /// <summary>
     /// A service principal definition allowing application to be specified.
     /// </summary>
-    public interface IWithApplication 
+    public interface IWithApplication  :
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithApplicationBeta
     {
-        /// <summary>
-        /// Specifies an existing application by its app ID.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="id">The app ID of the application.</param>
-        /// <return>The next stage of the service principal definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithExistingApplication(string id);
-
-        /// <summary>
-        /// Specifies an existing application to use by the service principal.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="application">The application.</param>
-        /// <return>The next stage of the service principal definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithExistingApplication(IActiveDirectoryApplication application);
-
-        /// <summary>
-        /// Specifies a new application to create and use by the service principal.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="applicationCreatable">The new application's creatable.</param>
-        /// <return>The next stage of the service principal definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewApplication(ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable);
-
-        /// <summary>
-        /// Specifies a new application to create and use by the service principal.
-        /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
-        /// <param name="signOnUrl">The new application's sign on URL.</param>
-        /// <return>The next stage of the service principal definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewApplication(string signOnUrl);
     }
 
     /// <summary>
@@ -125,16 +57,76 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definiti
     /// <summary>
     /// A service principal definition allowing role assignments to be added.
     /// </summary>
-    public interface IWithRoleAssignment 
+    public interface IWithRoleAssignment  :
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithRoleAssignmentBeta
+    {
+    }
+
+    /// <summary>
+    /// A service principal definition allowing credentials to be specified.
+    /// </summary>
+    public interface IWithCredentialBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Starts the definition of a password credential.
+        /// </summary>
+        /// <param name="name">The descriptive name of the password credential.</param>
+        /// <return>The first stage in password credential definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IBlank<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate> DefinePasswordCredential(string name);
+
+        /// <summary>
+        /// Starts the definition of a certificate credential.
+        /// </summary>
+        /// <param name="name">The descriptive name of the certificate credential.</param>
+        /// <return>The first stage in certificate credential definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.Definition.IBlank<Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate> DefineCertificateCredential(string name);
+    }
+
+    /// <summary>
+    /// A service principal definition allowing application to be specified.
+    /// </summary>
+    public interface IWithApplicationBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies an existing application by its app ID.
+        /// </summary>
+        /// <param name="id">The app ID of the application.</param>
+        /// <return>The next stage of the service principal definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithExistingApplication(string id);
+
+        /// <summary>
+        /// Specifies an existing application to use by the service principal.
+        /// </summary>
+        /// <param name="application">The application.</param>
+        /// <return>The next stage of the service principal definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithExistingApplication(IActiveDirectoryApplication application);
+
+        /// <summary>
+        /// Specifies a new application to create and use by the service principal.
+        /// </summary>
+        /// <param name="applicationCreatable">The new application's creatable.</param>
+        /// <return>The next stage of the service principal definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewApplication(ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable);
+
+        /// <summary>
+        /// Specifies a new application to create and use by the service principal.
+        /// </summary>
+        /// <param name="signOnUrl">The new application's sign on URL.</param>
+        /// <return>The next stage of the service principal definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithNewApplication(string signOnUrl);
+    }
+
+    /// <summary>
+    /// A service principal definition allowing role assignments to be added.
+    /// </summary>
+    public interface IWithRoleAssignmentBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
     {
         /// <summary>
         /// Assigns a new role to the service principal.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="role">The role to assign to the service principal.</param>
         /// <param name="resourceGroup">The resource group the service principal can access.</param>
         /// <return>The next stage of the service principal definition.</return>
@@ -143,11 +135,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definiti
         /// <summary>
         /// Assigns a new role to the service principal.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="role">The role to assign to the service principal.</param>
         /// <param name="subscriptionId">The subscription the service principal can access.</param>
         /// <return>The next stage of the service principal definition.</return>
@@ -156,11 +143,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definiti
         /// <summary>
         /// Assigns a new role to the service principal.
         /// </summary>
-        /// <remarks>
-        /// (Beta: This functionality is in preview and as such is subject to change in non-backwards compatible ways in
-        /// future releases, including removal, regardless of any compatibility expectations set by the containing library
-        /// version number.).
-        /// </remarks>
         /// <param name="role">The role to assign to the service principal.</param>
         /// <param name="scope">The scope the service principal can access.</param>
         /// <return>The next stage of the service principal definition.</return>
