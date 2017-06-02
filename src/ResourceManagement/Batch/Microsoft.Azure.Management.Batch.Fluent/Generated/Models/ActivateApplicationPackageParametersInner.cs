@@ -20,24 +20,24 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
     /// Parameters for an ApplicationOperations.ActivateApplicationPackage
     /// request.
     /// </summary>
-    public partial class ActivateApplicationPackageParameters
+    public partial class ActivateApplicationPackageParametersInner
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ActivateApplicationPackageParameters class.
+        /// ActivateApplicationPackageParametersInner class.
         /// </summary>
-        public ActivateApplicationPackageParameters()
+        public ActivateApplicationPackageParametersInner()
         {
           CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ActivateApplicationPackageParameters class.
+        /// ActivateApplicationPackageParametersInner class.
         /// </summary>
         /// <param name="format">The format of the application package binary
         /// file.</param>
-        public ActivateApplicationPackageParameters(string format)
+        public ActivateApplicationPackageParametersInner(string format)
         {
             Format = format;
             CustomInit();

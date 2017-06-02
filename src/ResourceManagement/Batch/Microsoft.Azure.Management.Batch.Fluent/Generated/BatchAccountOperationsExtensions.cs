@@ -325,13 +325,12 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             /// <param name='accountName'>
             /// The name of the account.
             /// </param>
-            /// <param name='keyName'>
-            /// The type of account key to regenerate. Possible values include: 'Primary',
-            /// 'Secondary'
+            /// <param name='parameters'>
+            /// The type of key to regenerate.
             /// </param>
-            public static BatchAccountKeysInner RegenerateKey(this IBatchAccountOperations operations, string resourceGroupName, string accountName, AccountKeyType keyName)
+            public static BatchAccountKeysInner RegenerateKey(this IBatchAccountOperations operations, string resourceGroupName, string accountName, BatchAccountRegenerateKeyParametersInner parameters)
             {
-                return operations.RegenerateKeyAsync(resourceGroupName, accountName, keyName).GetAwaiter().GetResult();
+                return operations.RegenerateKeyAsync(resourceGroupName, accountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -346,16 +345,15 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             /// <param name='accountName'>
             /// The name of the account.
             /// </param>
-            /// <param name='keyName'>
-            /// The type of account key to regenerate. Possible values include: 'Primary',
-            /// 'Secondary'
+            /// <param name='parameters'>
+            /// The type of key to regenerate.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BatchAccountKeysInner> RegenerateKeyAsync(this IBatchAccountOperations operations, string resourceGroupName, string accountName, AccountKeyType keyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BatchAccountKeysInner> RegenerateKeyAsync(this IBatchAccountOperations operations, string resourceGroupName, string accountName, BatchAccountRegenerateKeyParametersInner parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, keyName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

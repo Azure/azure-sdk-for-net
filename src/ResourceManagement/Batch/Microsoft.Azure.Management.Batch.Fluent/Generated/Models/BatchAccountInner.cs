@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
     /// Contains information about an Azure Batch account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class BatchAccountInner : Microsoft.Azure.Management.ResourceManager.Fluent.Resource
+    public partial class BatchAccountInner : Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the BatchAccountInner class.

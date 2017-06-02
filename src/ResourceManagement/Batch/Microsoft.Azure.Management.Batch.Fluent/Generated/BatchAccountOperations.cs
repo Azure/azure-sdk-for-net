@@ -1136,9 +1136,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <param name='accountName'>
         /// The name of the account.
         /// </param>
-        /// <param name='keyName'>
-        /// The type of account key to regenerate. Possible values include: 'Primary',
-        /// 'Secondary'
+        /// <param name='parameters'>
+        /// The type of key to regenerate.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1161,7 +1160,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BatchAccountKeysInner>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, AccountKeyType keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BatchAccountKeysInner>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, BatchAccountRegenerateKeyParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1193,6 +1192,14 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[-\\w\\._]+$");
                 }
             }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -1201,8 +1208,6 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            BatchAccountRegenerateKeyParameters parameters = new BatchAccountRegenerateKeyParameters();
-            parameters.KeyName = keyName;
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

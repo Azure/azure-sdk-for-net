@@ -210,9 +210,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <param name='accountName'>
         /// The name of the account.
         /// </param>
-        /// <param name='keyName'>
-        /// The type of account key to regenerate. Possible values include:
-        /// 'Primary', 'Secondary'
+        /// <param name='parameters'>
+        /// The type of key to regenerate.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -229,7 +228,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BatchAccountKeysInner>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, AccountKeyType keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BatchAccountKeysInner>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, BatchAccountRegenerateKeyParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the account keys for the specified Batch account.
         /// </summary>

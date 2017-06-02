@@ -18,24 +18,24 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
     /// <summary>
     /// Parameters supplied to the RegenerateKey operation.
     /// </summary>
-    public partial class BatchAccountRegenerateKeyParameters
+    public partial class BatchAccountRegenerateKeyParametersInner
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// BatchAccountRegenerateKeyParameters class.
+        /// BatchAccountRegenerateKeyParametersInner class.
         /// </summary>
-        public BatchAccountRegenerateKeyParameters()
+        public BatchAccountRegenerateKeyParametersInner()
         {
           CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// BatchAccountRegenerateKeyParameters class.
+        /// BatchAccountRegenerateKeyParametersInner class.
         /// </summary>
         /// <param name="keyName">The type of account key to regenerate.
         /// Possible values include: 'Primary', 'Secondary'</param>
-        public BatchAccountRegenerateKeyParameters(AccountKeyType keyName)
+        public BatchAccountRegenerateKeyParametersInner(AccountKeyType keyName)
         {
             KeyName = keyName;
             CustomInit();
