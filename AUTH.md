@@ -1,4 +1,4 @@
-#Authentication in Azure Management Libraries for .NET
+# Authentication in Azure Management Libraries for .NET
 
 To use the APIs in the Azure Management Libraries for .NET, as the first step you need to 
 create an authenticated client. There are several possible approaches to authentication. This document illustrates a couple of the simpler ones.
