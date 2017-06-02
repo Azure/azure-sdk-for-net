@@ -14,7 +14,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.API
         [UseReporter(typeof(DiffReporter))]
         public void ApproveAzureServiceBus()
         {
-            //Directory.SetCurrentDirectory(TestContext.CurrentContext.TestDirectory);
             var publicApi = ApiGenerator.GeneratePublicApi(typeof(Message).Assembly);
             Approvals.Verify(publicApi);
         }

@@ -111,9 +111,9 @@ namespace PublicApiGenerator
 
         static bool IsDotNetTypeMember(IMemberDefinition m)
         {
-            if (m.DeclaringType == null || m.DeclaringType.FullName == null)
+            if (m.DeclaringType?.FullName == null)
                 return false;
-            return m.DeclaringType.FullName.StartsWith("System") || m.DeclaringType.FullName.StartsWith("Microsoft");
+            return m.DeclaringType.FullName.StartsWith("System") || m.DeclaringType.FullName.StartsWith("Microsoft") && !m.DeclaringType.FullName.StartsWith("Microsoft.Azure.ServiceBus");
         }
 
         static void AddMemberToTypeDeclaration(CodeTypeDeclaration typeDeclaration, IMemberDefinition memberInfo)
