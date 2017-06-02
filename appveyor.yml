@@ -9,16 +9,16 @@ matrix:
 image: Visual Studio 2017
 environment:
   azure-service-bus-dotnet/ClientSecret:
-    secure: /8H7C81iNS+gVi7LhJCEOPUlNaa30y4KcY4nw/g2C4HGxOv6SrcroyDvMnqD+5GN
+    secure: yO+qgkyY5FO/4a7rMRl60F5eMTrz03L6r3oD/VCzgKhtuYW5APmgvd9Wu+AHM8T7
   azure-service-bus-dotnet/TenantId:
-    secure: xohonz/X8PPLOVIdT3ch2C5XeSa30RwR6NuXFh4e85svXT1mJNGGO1HQEGxCk3wp
+    secure: qHryGNZnkslfefQBj8zMZPNhrxSuoe1NJVauNidhhvVLTGi194jotblSTmExuTKQ
   azure-service-bus-dotnet/AppId:
-    secure: c+H140oRJfHtmFHZxSRLWocv5AU0q33X7kgMcTcXxhJvtVhk2WAk1dRQkSN+SyoA
+    secure: sTox3GxT9oqRUhCe56citfJdYQmdUVMaZlAevCJ0xnC0nV9LyR8+gC/I4Ji/FKoU
   matrix:
     # First build
     - DotNetRunTime: netcoreapp1.0
       azure-service-bus-dotnet/CodeCovSecret:
-        secure: 4/S+CQQJP+gBYrAOj6c1zg3GBMbhKofjIbqq7z6GeVUIWDJCd3ATGsDRT4++bruM
+        secure: m5MmSzWEul80WJWHp+aznaNNgbQpIYcYfSTBNcPMWO2qgPmTls0OjXezx1KoJGTi
     # Second build
     - DotNetRunTime: net46
       azure-service-bus-dotnet/SkipCodeCoverage: true
