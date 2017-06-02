@@ -26,6 +26,7 @@
     "Microsoft.Azure.Management.Cdn.Fluent": "[1.0.0, 2.0)",
     "Microsoft.Azure.Management.Compute.Fluent": "[1.0.0, 2.0)",
     "Microsoft.Azure.Management.Dns.Fluent": "[1.0.0, 2.0)",
+    "Microsoft.Azure.Management.Graph.RBAC.Fluent": "1.0.0",
     "Microsoft.Azure.Management.KeyVault.Fluent": "[1.0.0, 2.0)",
     "Microsoft.Azure.Management.Network.Fluent": "[1.0.0, 2.0)",
     "Microsoft.Azure.Management.Redis.Fluent": "[1.0.0, 2.0)",

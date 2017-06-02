@@ -20,6 +20,7 @@ using System;
 using System.Linq;
 using ISubscriptions = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscriptions;
 using ISubscription = Microsoft.Azure.Management.ResourceManager.Fluent.ISubscription;
+using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 
 namespace Microsoft.Azure.Management.Fluent
 {
@@ -307,6 +308,54 @@ namespace Microsoft.Azure.Management.Fluent
             }
         }
 
+        public IActiveDirectoryUsers ActiveDirectoryUsers
+        {
+            get
+            {
+                return authenticated.ActiveDirectoryUsers;
+            }
+        }
+
+        public IActiveDirectoryGroups ActiveDirectoryGroups
+        {
+            get
+            {
+                return authenticated.ActiveDirectoryGroups;
+            }
+        }
+
+        public IActiveDirectoryApplications ActiveDirectoryApplications
+        {
+            get
+            {
+                return authenticated.ActiveDirectoryApplications;
+            }
+        }
+
+        public IServicePrincipals ServicePrincipals
+        {
+            get
+            {
+                return authenticated.ServicePrincipals;
+            }
+        }
+
+        public IRoleDefinitions RoleDefinitions
+        {
+            get
+            {
+                return authenticated.RoleDefinitions;
+            }
+        }
+
+        public IRoleAssignments RoleAssignments
+        {
+            get
+            {
+                return authenticated.RoleAssignments;
+            }
+        }
+
         #endregion Getters
 
         #region ctrs
@@ -370,7 +419,25 @@ namespace Microsoft.Azure.Management.Fluent
 
         #region IAuthenticated and it's implementation
 
-        public interface IAuthenticated
+        /// <summary>
+        /// Members of IAuthenticated that are in Beta
+        /// </summary>
+        public interface IAuthenticatedBeta : IBeta
+        {
+            IActiveDirectoryUsers ActiveDirectoryUsers { get; }
+
+            IActiveDirectoryGroups ActiveDirectoryGroups { get; }
+
+            IActiveDirectoryApplications ActiveDirectoryApplications { get; }
+
+            IServicePrincipals ServicePrincipals { get; }
+
+            IRoleDefinitions RoleDefinitions { get; }
+
+            IRoleAssignments RoleAssignments { get; }
+        }
+
+        public interface IAuthenticated : IAuthenticatedBeta
         {
             ITenants Tenants { get; }
 
@@ -385,6 +452,7 @@ namespace Microsoft.Azure.Management.Fluent
         {
             private RestClient restClient;
             private ResourceManager.Fluent.ResourceManager.IAuthenticated resourceManagerAuthenticated;
+            private IGraphRbacManager graphRbacManager;
             private string defaultSubscription;
             private string tenantId;
 
@@ -404,10 +472,59 @@ namespace Microsoft.Azure.Management.Fluent
                 }
             }
 
+            public IActiveDirectoryUsers ActiveDirectoryUsers
+            {
+                get
+                {
+                    return graphRbacManager.Users;
+                }
+            }
+
+            public IActiveDirectoryGroups ActiveDirectoryGroups
+            {
+                get
+                {
+                    return graphRbacManager.Groups;
+                }
+            }
+
+            public IActiveDirectoryApplications ActiveDirectoryApplications
+            {
+                get
+                {
+                    return graphRbacManager.Applications;
+                }
+            }
+
+            public IServicePrincipals ServicePrincipals
+            {
+                get
+                {
+                    return graphRbacManager.ServicePrincipals;
+                }
+            }
+
+            public IRoleDefinitions RoleDefinitions
+            {
+                get
+                {
+                    return graphRbacManager.RoleDefinitions;
+                }
+            }
+
+            public IRoleAssignments RoleAssignments
+            {
+                get
+                {
+                    return graphRbacManager.RoleAssignments;
+                }
+            }
+
             public Authenticated(RestClient restClient, string tenantId)
             {
                 this.restClient = restClient;
                 resourceManagerAuthenticated = ResourceManager.Fluent.ResourceManager.Authenticate(this.restClient);
+                graphRbacManager = GraphRbacManager.Authenticate(this.restClient, tenantId);
                 this.tenantId = tenantId;
             }
 
@@ -481,6 +598,18 @@ namespace Microsoft.Azure.Management.Fluent
         IAppServiceManager AppServices { get; }
 
         IServiceBusNamespaces ServiceBusNamespaces { get; }
+
+        IActiveDirectoryUsers ActiveDirectoryUsers { get; }
+
+        IActiveDirectoryGroups ActiveDirectoryGroups { get; }
+
+        IActiveDirectoryApplications ActiveDirectoryApplications { get; }
+
+        IServicePrincipals ServicePrincipals { get; }
+
+        IRoleDefinitions RoleDefinitions { get; }
+
+        IRoleAssignments RoleAssignments { get; }
     }
 
     public interface IAzure : IAzureBeta

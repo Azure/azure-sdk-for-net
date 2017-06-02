@@ -31,19 +31,19 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public GraphRbacManager(RestClient restClient, string tenantId)
         {
-            string resourceManagerUrl = AzureEnvironment.AzureGlobalCloud.ResourceManagerEndpoint;
+            string graphEndpoint = AzureEnvironment.AzureGlobalCloud.GraphEndpoint;
             if (restClient.Credentials is AzureCredentials)
             {
-                resourceManagerUrl = ((AzureCredentials)restClient.Credentials).Environment.ResourceManagerEndpoint;
+                graphEndpoint = ((AzureCredentials)restClient.Credentials).Environment.GraphEndpoint;
             }
-            inner = new GraphRbacManagementClient(new Uri(restClient.BaseUri),
+            inner = new GraphRbacManagementClient(new Uri(graphEndpoint),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
                 restClient.Handlers.ToArray())
             {
                 TenantID = tenantId
             };
-            roleInner = new AuthorizationManagementClient(new Uri(resourceManagerUrl),
+            roleInner = new AuthorizationManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
                 restClient.Handlers.ToArray());
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         public static IGraphRbacManager Authenticate(AzureCredentials credentials, string tenantId)
         {
             return new GraphRbacManager(RestClient.Configure()
-                    .WithBaseUri(credentials.Environment.GraphEndpoint)
+                    .WithBaseUri(credentials.Environment.ResourceManagerEndpoint)
                     .WithCredentials(credentials)
                     .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), tenantId);
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         {
             public IGraphRbacManager Authenticate(AzureCredentials credentials, string tenantId)
             {
-                return new GraphRbacManager(BuildRestClientForGraph(credentials), tenantId);
+                return new GraphRbacManager(BuildRestClient(credentials), tenantId);
             }
         }
 

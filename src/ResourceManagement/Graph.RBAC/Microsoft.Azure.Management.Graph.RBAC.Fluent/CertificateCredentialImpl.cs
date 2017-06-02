@@ -79,25 +79,25 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             else
             {
                 string baseUrl = restClient.BaseUri;
-                if (AzureEnvironment.AzureGlobalCloud.GraphEndpoint.ToLower().Contains(baseUrl.ToLower()))
+                if (AzureEnvironment.AzureGlobalCloud.ResourceManagerEndpoint.ToLower().Contains(baseUrl.ToLower()))
                 {
                     environment = AzureEnvironment.AzureGlobalCloud;
                 }
-                else if (AzureEnvironment.AzureChinaCloud.GraphEndpoint.ToLower().Contains(baseUrl.ToLower()))
+                else if (AzureEnvironment.AzureChinaCloud.ResourceManagerEndpoint.ToLower().Contains(baseUrl.ToLower()))
                 {
                     environment = AzureEnvironment.AzureChinaCloud;
                 }
-                else if (AzureEnvironment.AzureGermanCloud.GraphEndpoint.ToLower().Contains(baseUrl.ToLower()))
+                else if (AzureEnvironment.AzureGermanCloud.ResourceManagerEndpoint.ToLower().Contains(baseUrl.ToLower()))
                 {
                     environment = AzureEnvironment.AzureGermanCloud;
                 }
-                else if (AzureEnvironment.AzureUSGovernment.GraphEndpoint.ToLower().Contains(baseUrl.ToLower()))
+                else if (AzureEnvironment.AzureUSGovernment.ResourceManagerEndpoint.ToLower().Contains(baseUrl.ToLower()))
                 {
                     environment = AzureEnvironment.AzureUSGovernment;
                 }
                 if (environment == null)
                 {
-                    throw new NotSupportedException("Unknown graph endpoint " + baseUrl);
+                    throw new NotSupportedException("Unknown resource manager endpoint " + baseUrl);
                 }
             }
 
