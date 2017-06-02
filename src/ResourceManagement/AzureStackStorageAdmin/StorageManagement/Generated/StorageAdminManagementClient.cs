@@ -9300,6 +9300,10 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
                     // Deserialize Response
                     result = new OnDemandGcResponse();
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
