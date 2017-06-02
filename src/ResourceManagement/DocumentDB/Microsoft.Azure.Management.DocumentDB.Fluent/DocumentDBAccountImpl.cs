@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
     {
         private IList<Microsoft.Azure.Management.DocumentDB.Fluent.Models.FailoverPolicyInner> failoverPolicies;
         private bool hasFailoverPolicyChanges;
-        
+        private const int maxDelayDueToMissingFailovers = 5000 * 12 * 10;
+
         public DocumentDBAccountImpl WithReadReplication(Region region)
         {
             this.EnsureFailoverIsInitialized();
@@ -46,6 +47,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         private async Task<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount> DoDatabaseUpdateCreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             DocumentDBAccountImpl self = this;
+            int currentDelayDueToMissingFailovers = 0;
             Models.DatabaseAccountCreateUpdateParametersInner createUpdateParametersInner =
                 this.CreateUpdateParametersInner(this.Inner);
             await this.Manager.Inner.DatabaseAccounts.CreateOrUpdateAsync(
@@ -59,6 +61,17 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 await Task.Delay(5000);
                 databaseAccount = await this.Manager.DocumentDBAccounts.GetByResourceGroupAsync(
                     ResourceGroupName, Name);
+
+                if (maxDelayDueToMissingFailovers > currentDelayDueToMissingFailovers && 
+                    (databaseAccount.Id == null
+                    || databaseAccount.Id.Length == 0
+                    || createUpdateParametersInner.Location.Length >
+                        databaseAccount.Inner.FailoverPolicies.Count))
+                {
+                    currentDelayDueToMissingFailovers += 5000;
+                    continue;
+                }
+
                 if (this.IsProvisioningStateFinal(databaseAccount.Inner.ProvisioningState))
                 {
                     done = true;
@@ -255,7 +268,6 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                     if (locName.Equals(region.Name))
                     {
                         this.failoverPolicies.RemoveAt(i);
-                        break;
                     }
                 }
             }
