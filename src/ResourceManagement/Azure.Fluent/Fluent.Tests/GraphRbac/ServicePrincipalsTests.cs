@@ -55,7 +55,7 @@ namespace Fluent.Tests.Graph.RBAC
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Do not record - Can contain sensitive auth info")]
         public void CanCRUDServicePrincipalWithRole()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))

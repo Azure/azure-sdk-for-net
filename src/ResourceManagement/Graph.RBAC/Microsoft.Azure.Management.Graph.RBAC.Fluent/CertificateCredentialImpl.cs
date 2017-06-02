@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             try
             {
                 await authFile.WriteLineAsync(string.Format("client={0}", servicePrincipal.ApplicationId()));
-                await authFile.WriteLineAsync(string.Format("certificate={0}", privateKeyPath));
+                await authFile.WriteLineAsync(string.Format("certificate={0}", NormalizeAuthFilePath(privateKeyPath)));
                 await authFile.WriteLineAsync(string.Format("certificatePassword={0}", privateKeyPassword));
                 await authFile.WriteLineAsync(string.Format("tenant={0}", servicePrincipal.Manager().tenantId));
                 await authFile.WriteLineAsync(string.Format("subscription={0}", servicePrincipal.assignedSubscription));
@@ -145,16 +145,21 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         }
 
-                private string NormalizeAuthFileUrl(string url)
+        private string NormalizeAuthFileUrl(string url)
         {
             if (!url.EndsWith("/"))
             {
                 url = url + "/";
             }
-            return url.Replace("://", "\\://");
+            return url.Replace("\\", "\\\\").Replace("://", "\\://");
         }
 
-                public CertificateCredentialImpl<T> WithPrivateKeyFile(string privateKeyPath)
+        private string NormalizeAuthFilePath(string path)
+        {
+            return path.Replace("\\", "\\\\").Replace(":", "\\:");
+        }
+
+        public CertificateCredentialImpl<T> WithPrivateKeyFile(string privateKeyPath)
         {
             this.privateKeyPath = Path.GetFullPath(privateKeyPath).ToString();
             return this;
