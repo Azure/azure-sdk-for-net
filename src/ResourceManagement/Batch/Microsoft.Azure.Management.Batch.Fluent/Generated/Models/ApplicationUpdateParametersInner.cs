@@ -16,31 +16,34 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for an ApplicationOperations.AddApplication request.
+    /// Parameters for an update application request.
     /// </summary>
-    public partial class AddApplicationParametersInner
+    public partial class ApplicationUpdateParametersInner
     {
         /// <summary>
-        /// Initializes a new instance of the AddApplicationParametersInner
+        /// Initializes a new instance of the ApplicationUpdateParametersInner
         /// class.
         /// </summary>
-        public AddApplicationParametersInner()
+        public ApplicationUpdateParametersInner()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddApplicationParametersInner
+        /// Initializes a new instance of the ApplicationUpdateParametersInner
         /// class.
         /// </summary>
         /// <param name="allowUpdates">A value indicating whether packages
         /// within the application may be overwritten using the same version
         /// string.</param>
+        /// <param name="defaultVersion">The package to use if a client
+        /// requests the application but does not specify a version.</param>
         /// <param name="displayName">The display name for the
         /// application.</param>
-        public AddApplicationParametersInner(bool? allowUpdates = default(bool?), string displayName = default(string))
+        public ApplicationUpdateParametersInner(bool? allowUpdates = default(bool?), string defaultVersion = default(string), string displayName = default(string))
         {
             AllowUpdates = allowUpdates;
+            DefaultVersion = defaultVersion;
             DisplayName = displayName;
             CustomInit();
         }
@@ -56,6 +59,13 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         /// </summary>
         [JsonProperty(PropertyName = "allowUpdates")]
         public bool? AllowUpdates { get; set; }
+
+        /// <summary>
+        /// Gets or sets the package to use if a client requests the
+        /// application but does not specify a version.
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultVersion")]
+        public string DefaultVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for the application.

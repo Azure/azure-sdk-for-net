@@ -17,26 +17,29 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties related to the auto-storage account.
+    /// Identifies the Azure key vault associated with a Batch account.
     /// </summary>
-    public partial class AutoStorageBaseProperties
+    public partial class KeyVaultReference
     {
         /// <summary>
-        /// Initializes a new instance of the AutoStorageBaseProperties class.
+        /// Initializes a new instance of the KeyVaultReference class.
         /// </summary>
-        public AutoStorageBaseProperties()
+        public KeyVaultReference()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AutoStorageBaseProperties class.
+        /// Initializes a new instance of the KeyVaultReference class.
         /// </summary>
-        /// <param name="storageAccountId">The resource ID of the storage
-        /// account to be used for auto-storage account.</param>
-        public AutoStorageBaseProperties(string storageAccountId)
+        /// <param name="id">The resource ID of the Azure key vault associated
+        /// with the Batch account.</param>
+        /// <param name="url">The URL of the Azure key vault associated with
+        /// the Batch account.</param>
+        public KeyVaultReference(string id, string url)
         {
-            StorageAccountId = storageAccountId;
+            Id = id;
+            Url = url;
             CustomInit();
         }
 
@@ -46,11 +49,18 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource ID of the storage account to be used for
-        /// auto-storage account.
+        /// Gets or sets the resource ID of the Azure key vault associated with
+        /// the Batch account.
         /// </summary>
-        [JsonProperty(PropertyName = "storageAccountId")]
-        public string StorageAccountId { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL of the Azure key vault associated with the
+        /// Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "url")]
+        public string Url { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -60,9 +70,13 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (StorageAccountId == null)
+            if (Id == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StorageAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+            if (Url == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
             }
         }
     }

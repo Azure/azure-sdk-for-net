@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             /// <param name='parameters'>
             /// The parameters for the request.
             /// </param>
-            public static ApplicationInner Create(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, AddApplicationParametersInner parameters = default(AddApplicationParametersInner))
+            public static ApplicationInner Create(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, ApplicationCreateParametersInner parameters = default(ApplicationCreateParametersInner))
             {
                 return operations.CreateAsync(resourceGroupName, accountName, applicationId, parameters).GetAwaiter().GetResult();
             }
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplicationInner> CreateAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, AddApplicationParametersInner parameters = default(AddApplicationParametersInner), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApplicationInner> CreateAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, ApplicationCreateParametersInner parameters = default(ApplicationCreateParametersInner), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             /// <param name='parameters'>
             /// The parameters for the request.
             /// </param>
-            public static void Update(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, UpdateApplicationParametersInner parameters)
+            public static void Update(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, ApplicationUpdateParametersInner parameters)
             {
                 operations.UpdateAsync(resourceGroupName, accountName, applicationId, parameters).GetAwaiter().GetResult();
             }
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, UpdateApplicationParametersInner parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IApplicationOperations operations, string resourceGroupName, string accountName, string applicationId, ApplicationUpdateParametersInner parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

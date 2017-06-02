@@ -42,7 +42,7 @@ var mappings = {
     },
     'batch': {
         'dir': 'Batch/Microsoft.Azure.Management.Batch.Fluent',
-        'source': 'arm-batch/2015-12-01/swagger/BatchManagement.json',
+        'source': 'arm-batch/2017-05-01/swagger/BatchManagement.json',
         'package': 'Microsoft.Azure.Management.Batch.Fluent',
         'args': '-FT 1'
     },

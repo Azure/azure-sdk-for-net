@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for an ApplicationOperations.ActivateApplicationPackage
-    /// request.
+    /// Parameters for an activating an application package.
     /// </summary>
     public partial class ActivateApplicationPackageParametersInner
     {

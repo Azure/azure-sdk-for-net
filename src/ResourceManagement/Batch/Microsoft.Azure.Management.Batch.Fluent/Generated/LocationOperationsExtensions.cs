@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             /// The operations group for this extension method.
             /// </param>
             /// <param name='locationName'>
-            /// The desired region for the quotas.
+            /// The region for which to retrieve Batch service quotas.
             /// </param>
             public static BatchLocationQuotaInner GetQuotas(this ILocationOperations operations, string locationName)
             {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             /// The operations group for this extension method.
             /// </param>
             /// <param name='locationName'>
-            /// The desired region for the quotas.
+            /// The region for which to retrieve Batch service quotas.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
