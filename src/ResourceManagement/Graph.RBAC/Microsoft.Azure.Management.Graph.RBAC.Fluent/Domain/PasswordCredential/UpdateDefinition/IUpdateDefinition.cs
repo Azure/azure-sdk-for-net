@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Update
         /// </summary>
         /// <param name="duration">The duration of validity.</param>
         /// <return>The next stage in credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.UpdateDefinition.IWithAttach<ParentT> WithDateTimeOffset(TimeSpan duration);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.UpdateDefinition.IWithAttach<ParentT> WithDuration(TimeSpan duration);
     }
 
     /// <summary>

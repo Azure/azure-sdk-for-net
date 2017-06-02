@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
     public partial class ServicePrincipalImpl  :
-        Creatable<IServicePrincipal,ServicePrincipalInner,ServicePrincipalImpl,IServicePrincipal>,
+        Creatable<IServicePrincipal,ServicePrincipalInner,ServicePrincipalImpl,IHasId>,
         IServicePrincipal,
         IDefinition,
         IHasCredential<IWithCreate>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
                 public ServicePrincipalImpl WithNewApplication(ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable)
         {
-            AddCreatableDependency(applicationCreatable as IResourceCreator<IServicePrincipal>);
+            AddCreatableDependency(applicationCreatable as IResourceCreator<IHasId>);
             this.applicationCreatable = applicationCreatable;
             return this;
         }
@@ -224,6 +224,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                             .WithBuiltInRole(role.Value)
                             .WithScope(role.Key)
                             .CreateAsync(cancellationToken);
+                        break;
                     }
                     catch (CloudException e)
                     {
@@ -231,9 +232,13 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                         {
                             throw e;
                         }
-                        if (e.Body != null && "PrincipalNotFound".Equals(e.Body.Code, StringComparison.OrdinalIgnoreCase))
+                        else if (e.Body != null && "PrincipalNotFound".Equals(e.Body.Code, StringComparison.OrdinalIgnoreCase))
                         {
                             await SdkContext.DelayProvider.DelayAsync((30 - limit) * 1000, cancellationToken);
+                        }
+                        else
+                        {
+                            throw e;
                         }
                     }
                 }

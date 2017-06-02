@@ -10,6 +10,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
     using System.Linq;
+    using Rest.Azure;
+    using System.Net;
 
     /// <summary>
     /// The implementation of Users and its parent interfaces.
@@ -47,14 +49,25 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
                 public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var inner = await Inner.GetAsync(name);
+            UserInner inner = null;
+            try
+            {
+                inner = await Inner.GetAsync(name, cancellationToken);
+            }
+            catch (GraphErrorException e)
+            {
+                if (e.Response.StatusCode != HttpStatusCode.NotFound)
+                {
+                    throw e;
+                }
+            }
             if (inner != null)
             {
                 return WrapModel(inner);
             }
             if (name.Contains("@"))
             {
-                var inners = await Inner.ListAsync(string.Format("mail eq '{0}' or mailNickName eq '{1}#EXT#'", name, name.Replace("@", "_")));
+                var inners = await Inner.ListAsync(string.Format("mail eq '{0}' or mailNickName eq '{1}%23EXT%23'", name, name.Replace("@", "_")), cancellationToken);
                 if (inners != null && inners.Any())
                 {
                     return WrapModel(inners.First());
@@ -62,7 +75,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
             else
             {
-                var inners = await Inner.ListAsync(string.Format("displayName eq '{0}'", name));
+                var inners = await Inner.ListAsync(string.Format("displayName eq '{0}'", name), cancellationToken);
                 if (inners != null && inners.Any())
                 {
                     return WrapModel(inners.First());

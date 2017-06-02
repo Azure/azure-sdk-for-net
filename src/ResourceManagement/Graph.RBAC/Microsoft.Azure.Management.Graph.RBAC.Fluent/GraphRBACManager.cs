@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// Entry point to Azure Graph RBAC management.
     /// </summary>
-    public class GraphRbacManager : Manager<IGraphRbacManagementClient>, IGraphRbacManager, IBeta
+    public class GraphRbacManager : IHasInner<IGraphRbacManagementClient>, IGraphRbacManager, IBeta
     {
         #region Fluent private collections
         internal RestClient restClient;
@@ -24,47 +24,49 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private IRoleDefinitions roleDefinitions;
         private IRoleAssignments roleAssignments;
         private IAuthorizationManagementClient roleInner;
+        private IGraphRbacManagementClient inner;
         #endregion
 
         #region ctrs
 
-        public GraphRbacManager(RestClient restClient, string subscriptionId, string tenantId) :
-            base(restClient, subscriptionId, new GraphRbacManagementClient(new Uri(restClient.BaseUri),
-                restClient.Credentials,
-                restClient.RootHttpHandler,
-                restClient.Handlers.ToArray())
-            {
-                TenantID = tenantId
-            })
+        public GraphRbacManager(RestClient restClient, string tenantId)
         {
             string resourceManagerUrl = AzureEnvironment.AzureGlobalCloud.ResourceManagerEndpoint;
             if (restClient.Credentials is AzureCredentials)
             {
                 resourceManagerUrl = ((AzureCredentials)restClient.Credentials).Environment.ResourceManagerEndpoint;
             }
+            inner = new GraphRbacManagementClient(new Uri(restClient.BaseUri),
+                restClient.Credentials,
+                restClient.RootHttpHandler,
+                restClient.Handlers.ToArray())
+            {
+                TenantID = tenantId
+            };
             roleInner = new AuthorizationManagementClient(new Uri(resourceManagerUrl),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
                 restClient.Handlers.ToArray());
             this.tenantId = tenantId;
+            this.restClient = restClient;
         }
 
         #endregion
 
         #region Graph RBAC Manager builder
 
-        public static IGraphRbacManager Authenticate(AzureCredentials credentials, string subscriptionId, string tenantId)
+        public static IGraphRbacManager Authenticate(AzureCredentials credentials, string tenantId)
         {
             return new GraphRbacManager(RestClient.Configure()
                     .WithBaseUri(credentials.Environment.GraphEndpoint)
                     .WithCredentials(credentials)
                     .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
-                    .Build(), subscriptionId, tenantId);
+                    .Build(), tenantId);
         }
 
-        public static IGraphRbacManager Authenticate(RestClient restClient, string subscriptionId, string tenantId)
+        public static IGraphRbacManager Authenticate(RestClient restClient, string tenantId)
         {
-            return new GraphRbacManager(restClient, subscriptionId, tenantId);
+            return new GraphRbacManager(restClient, tenantId);
         }
 
         public static IConfigurable Configure()
@@ -79,16 +81,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            IGraphRbacManager Authenticate(AzureCredentials credentials, string subscriptionId, string tenantId);
+            IGraphRbacManager Authenticate(AzureCredentials credentials, string tenantId);
         }
 
         protected class Configurable :
             AzureConfigurable<IConfigurable>,
             IConfigurable
         {
-            public IGraphRbacManager Authenticate(AzureCredentials credentials, string subscriptionId, string tenantId)
+            public IGraphRbacManager Authenticate(AzureCredentials credentials, string tenantId)
             {
-                return new GraphRbacManager(BuildRestClientForGraph(credentials), subscriptionId, tenantId);
+                return new GraphRbacManager(BuildRestClientForGraph(credentials), tenantId);
             }
         }
 
@@ -178,10 +180,18 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 return roleAssignments;
             }
         }
+
+        public IGraphRbacManagementClient Inner
+        {
+            get
+            {
+                return inner;
+            }
+        }
         #endregion
     }
 
-    public interface IGraphRbacManager : IManager<IGraphRbacManagementClient>
+    public interface IGraphRbacManager : IHasInner<IGraphRbacManagementClient>
     {
         IAuthorizationManagementClient RoleInner { get; }
         IActiveDirectoryUsers Users { get; }

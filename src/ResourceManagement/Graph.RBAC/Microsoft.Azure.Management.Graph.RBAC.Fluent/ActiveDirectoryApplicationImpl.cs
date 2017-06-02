@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
     public partial class ActiveDirectoryApplicationImpl  :
-        CreatableUpdatable<IActiveDirectoryApplication,ApplicationInner,ActiveDirectoryApplicationImpl,IActiveDirectoryApplication,IUpdate>,
+        CreatableUpdatable<IActiveDirectoryApplication,ApplicationInner,ActiveDirectoryApplicationImpl,IHasId,IUpdate>,
         IActiveDirectoryApplication,
         IDefinition,
         IUpdate,

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 .WithBaseUri(graphEndpoint)
                 .WithDelegatingHandlers(restClient.Handlers.ToArray())
                 .WithCredentials(restClient.Credentials)
-                .Build(), subscriptionId, tenantId);
+                .Build(), tenantId);
             this.tenantId = tenantId;
         }
 

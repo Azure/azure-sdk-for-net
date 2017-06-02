@@ -90,20 +90,18 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
             try
             {
-                await authFile.WriteLineAsync(String.Format("client=%s", servicePrincipal.ApplicationId()));
-                await authFile.WriteLineAsync(String.Format("key=%s", Value()));
-                await authFile.WriteLineAsync(String.Format("tenant=%s", servicePrincipal.Manager().tenantId));
-                await authFile.WriteLineAsync(String.Format("subscription=%s", servicePrincipal.assignedSubscription));
-                await authFile.WriteLineAsync(String.Format("authURL=%s", NormalizeAuthFileUrl(environment.AuthenticationEndpoint)));
-                await authFile.WriteLineAsync(String.Format("baseURL=%s", NormalizeAuthFileUrl(environment.ResourceManagerEndpoint)));
-                await authFile.WriteLineAsync(String.Format("graphURL=%s", NormalizeAuthFileUrl(environment.GraphEndpoint)));
-                await authFile.WriteLineAsync(String.Format("managementURI=%s", NormalizeAuthFileUrl(environment.ManagementEnpoint)));
+                await authFile.WriteLineAsync(string.Format("client={0}", servicePrincipal.ApplicationId()));
+                await authFile.WriteLineAsync(string.Format("key={0}", Value()));
+                await authFile.WriteLineAsync(string.Format("tenant={0}", servicePrincipal.Manager().tenantId));
+                await authFile.WriteLineAsync(string.Format("subscription={0}", servicePrincipal.assignedSubscription));
+                await authFile.WriteLineAsync(string.Format("authURL={0}", NormalizeAuthFileUrl(environment.AuthenticationEndpoint)));
+                await authFile.WriteLineAsync(string.Format("baseURL={0}", NormalizeAuthFileUrl(environment.ResourceManagerEndpoint)));
+                await authFile.WriteLineAsync(string.Format("graphURL={0}", NormalizeAuthFileUrl(environment.GraphEndpoint)));
+                await authFile.WriteLineAsync(string.Format("managementURI={0}", NormalizeAuthFileUrl(environment.ManagementEnpoint)));
             }
             finally
             {
-#if NET45
-                authFile.Close();
-#endif
+                authFile.Dispose();
             }
         }
 
