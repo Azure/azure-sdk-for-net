@@ -34,9 +34,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:C821FF91D77C2B3E93FA31DD47D5EA29:52876A7A5B8CFB81FC39CDD83E66AC9E
         internal static ApplicationPackageImpl NewApplicationPackage(string name, ApplicationImpl parent, IApplicationPackageOperations client)
         {
-            ApplicationPackageInner inner = new ApplicationPackageInner();
-            inner.Version = name;
-            return new ApplicationPackageImpl(name, parent, inner, client);
+            return new ApplicationPackageImpl(name, parent, new ApplicationPackageInner(), client);
         }
 
         ///GENMHASH:AEE17FD09F624712647F5EBCEC141EA5:F31B0F3D0CD1A4C57DB28EB70C9E094A
@@ -121,7 +119,10 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:CD5E69C00F6C1D6EBFC019860CB4AEA6:EF37815ABD90C720F1C27B3219616A48
         internal async Task ActivateAsync(string format, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await client.ActivateAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), format, cancellationToken);
+            await client.ActivateAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), new ActivateApplicationPackageParametersInner
+            {
+                Format = format
+            }, cancellationToken);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:1A5A27E52191D0AB303947147157C578

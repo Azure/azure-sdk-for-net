@@ -1,90 +1,259 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
-    using Models;
-    using System.Collections.Generic;
-    using ServicePrincipal.Definition;
-    using ResourceManager.Fluent.Core.ResourceActions;
-    using System.Threading.Tasks;
-    using ServicePrincipal.Update;
     using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System;
+    using Rest.Azure;
 
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmdyYXBocmJhYy5pbXBsZW1lbnRhdGlvbi5TZXJ2aWNlUHJpbmNpcGFsSW1wbA==
-    internal partial class ServicePrincipalImpl :
-        CreatableUpdatable<IServicePrincipal, ServicePrincipalInner, ServicePrincipalImpl, IServicePrincipal, IUpdate>,
+    public partial class ServicePrincipalImpl  :
+        Creatable<IServicePrincipal,ServicePrincipalInner,ServicePrincipalImpl,IHasId>,
         IServicePrincipal,
         IDefinition,
-        IUpdate
+        IHasCredential<IWithCreate>
     {
-        private IServicePrincipalsOperations client;
+        private GraphRbacManager manager;
         private ServicePrincipalCreateParametersInner createParameters;
-
-        internal ServicePrincipalImpl(ServicePrincipalInner innerModel,
-            IServicePrincipalsOperations client)
-            : base(innerModel.AppId, innerModel)
+        private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> cachedPasswordCredentials;
+        private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> cachedCertificateCredentials;
+        private ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable;
+        private Dictionary<string,BuiltInRole> roles;
+        internal string assignedSubscription;
+        private IList<Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredentialImpl<IWithCreate>> certificateCredentials;
+        private IList<Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredentialImpl<IWithCreate>> passwordCredentials;
+                public PasswordCredentialImpl<ServicePrincipal.Definition.IWithCreate> DefinePasswordCredential(string name)
         {
-            this.client = client;
-            this.createParameters = new ServicePrincipalCreateParametersInner()
-            {
-                AppId = AppId()
-            };
+            return new PasswordCredentialImpl<IWithCreate>(name, this);
         }
 
-        ///GENMHASH:17540EB75C744FB87D329C55BE359E09:CC8D1D4F5D89E231669C5963BF9F8E9C
-        public string ObjectId()
+                internal async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            IEnumerable<KeyCredential> keyCredentials = await manager.Inner.ServicePrincipals.ListKeyCredentialsAsync(Id(), cancellationToken);
+            this.cachedCertificateCredentials = new Dictionary<string, ICertificateCredential>();
+            foreach (var cred in keyCredentials)
+            {
+                ICertificateCredential cert = new CertificateCredentialImpl<IServicePrincipal>(cred);
+                this.cachedCertificateCredentials.Add(cert.Name, cert);
+            }
+
+            IEnumerable<Models.PasswordCredential> passwordCredentials = await manager.Inner.ServicePrincipals.ListPasswordCredentialsAsync(Id(), cancellationToken);
+            this.cachedPasswordCredentials = new Dictionary<string, IPasswordCredential>();
+            foreach (var cred in passwordCredentials)
+            {
+                IPasswordCredential cert = new PasswordCredentialImpl<IServicePrincipal>(cred);
+                this.cachedPasswordCredentials.Add(cert.Name, cert);
+            }
+
+            return this;
+        }
+
+                public GraphRbacManager Manager()
+        {
+            return manager;
+        }
+
+                public bool IsInCreateMode()
+        {
+            return true;
+        }
+
+                public ServicePrincipalImpl WithNewRoleInResourceGroup(BuiltInRole role, IResourceGroup resourceGroup)
+        {
+            return WithNewRole(role, resourceGroup.Id);
+        }
+
+                public ServicePrincipalImpl WithNewRoleInSubscription(BuiltInRole role, string subscriptionId)
+        {
+            this.assignedSubscription = subscriptionId;
+            return WithNewRole(role, "subscriptions/" + subscriptionId);
+        }
+
+                public CertificateCredentialImpl<ServicePrincipal.Definition.IWithCreate> DefineCertificateCredential(string name)
+        {
+            return new CertificateCredentialImpl<IWithCreate>(name, this);
+        }
+
+                public ServicePrincipalImpl WithNewApplication(ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> applicationCreatable)
+        {
+            AddCreatableDependency(applicationCreatable as IResourceCreator<IHasId>);
+            this.applicationCreatable = applicationCreatable;
+            return this;
+        }
+
+                public ServicePrincipalImpl WithNewApplication(string signOnUrl)
+        {
+            return WithNewApplication(manager.Applications.Define(signOnUrl)
+                    .WithSignOnUrl(signOnUrl)
+                    .WithIdentifierUrl(signOnUrl));
+        }
+
+        internal ServicePrincipalImpl(ServicePrincipalInner innerObject, GraphRbacManager manager)
+            : base(innerObject.DisplayName, innerObject)
+        {
+            this.manager = manager;
+            this.createParameters = new ServicePrincipalCreateParametersInner
+            {
+                AccountEnabled = true
+            };
+            this.roles = new Dictionary<string, BuiltInRole>();
+            this.certificateCredentials = new List<CertificateCredentialImpl<IWithCreate>>();
+            this.passwordCredentials = new List<PasswordCredentialImpl<IWithCreate>>();
+        }
+
+                public ServicePrincipalImpl WithCertificateCredential(CertificateCredentialImpl<IWithCreate> credential)
+        {
+            if (createParameters.KeyCredentials == null)
+            {
+                createParameters.KeyCredentials = new List<KeyCredential>();
+            }
+            createParameters.KeyCredentials.Add(credential.Inner);
+            this.certificateCredentials.Add(credential);
+            return this;
+        }
+
+                public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> CertificateCredentials()
+        {
+            if (cachedCertificateCredentials == null)
+            {
+                return null;
+            }
+            return new ReadOnlyDictionary<string, ICertificateCredential>(cachedCertificateCredentials);
+        }
+
+                protected override async Task<Models.ServicePrincipalInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await manager.Inner.ServicePrincipals.GetAsync(Id(), cancellationToken);
+        }
+
+                public IReadOnlyDictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> PasswordCredentials()
+        {
+            if (cachedPasswordCredentials == null)
+            {
+                return null;
+            }
+            return new ReadOnlyDictionary<string, IPasswordCredential>(cachedPasswordCredentials);
+        }
+
+                public ServicePrincipalImpl WithNewRole(BuiltInRole role, string scope)
+        {
+            this.roles.Add(scope, role);
+            return this;
+        }
+
+                public ServicePrincipalImpl WithExistingApplication(string id)
+        {
+            createParameters.AppId = id;
+            return this;
+        }
+
+                public ServicePrincipalImpl WithExistingApplication(IActiveDirectoryApplication application)
+        {
+            createParameters.AppId = application.ApplicationId;
+            return this;
+        }
+
+                public IReadOnlyList<string> ServicePrincipalNames()
+        {
+            return Inner.ServicePrincipalNames.ToList().AsReadOnly();
+        }
+
+                public ServicePrincipalImpl WithPasswordCredential(PasswordCredentialImpl<IWithCreate> credential)
+        {
+            if (createParameters.PasswordCredentials == null)
+            {
+                createParameters.PasswordCredentials = new List<Models.PasswordCredential>();
+            }
+            createParameters.PasswordCredentials.Add(credential.Inner);
+            this.passwordCredentials.Add(credential);
+            return this;
+        }
+
+                public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            SetInner(await GetInnerAsync(cancellationToken));
+            return await RefreshCredentialsAsync(cancellationToken);
+        }
+
+                public string Id()
         {
             return Inner.ObjectId;
         }
 
-        ///GENMHASH:29024ACA1EA67366DE27F7A1B972E458:75852A31ACA71709FD61BA0195203BFF
-        public string ObjectType()
+                public string ApplicationId()
         {
-                return Inner.ObjectType;
+            return Inner.AppId;
         }
 
-        ///GENMHASH:19FB5490B29F08AC39628CD5F893E975:54FC41D8034FD612C7047E2055BC6E48
-        public string DisplayName()
+                public override async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-                return Inner.DisplayName;
-        }
+            if (applicationCreatable != null)
+            {
+                IActiveDirectoryApplication application = (IActiveDirectoryApplication)base.CreatedResource(applicationCreatable.Key);
+                createParameters.AppId = application.ApplicationId;
+            }
+            ServicePrincipalInner inner = await manager.Inner.ServicePrincipals.CreateAsync(createParameters, cancellationToken);
+            SetInner(inner);
+            IServicePrincipal sp = await RefreshCredentialsAsync(cancellationToken);
 
-        ///GENMHASH:CF00964037C1AADDCC0C25C134168C6E:DBDA3E40337A88C78112F81653959508
-        public string AppId()
-        {
-                return Inner.AppId;
-        }
+            if (roles == null || !roles.Any())
+            {
+                return sp;
+            }
 
-        ///GENMHASH:3190BDAA4917D0479F1E9EBBDAC6590C:9C7DB50BD87DDC349B690C1F34C49A26
-        public IList<string> ServicePrincipalNames()
-        {
-                return Inner.ServicePrincipalNames;
-        }
+            foreach (KeyValuePair<string, BuiltInRole> role in roles)
+            {
+                int limit = 30;
+                while (true)
+                {
+                    try
+                    {
+                        IRoleAssignment roleAssignment = await manager.RoleAssignments.Define(Guid.NewGuid().ToString())
+                            .ForServicePrincipal(sp)
+                            .WithBuiltInRole(role.Value)
+                            .WithScope(role.Key)
+                            .CreateAsync(cancellationToken);
+                        break;
+                    }
+                    catch (CloudException e)
+                    {
+                        if (--limit < 0)
+                        {
+                            throw e;
+                        }
+                        else if (e.Body != null && "PrincipalNotFound".Equals(e.Body.Code, StringComparison.OrdinalIgnoreCase))
+                        {
+                            await SdkContext.DelayProvider.DelayAsync((30 - limit) * 1000, cancellationToken);
+                        }
+                        else
+                        {
+                            throw e;
+                        }
+                    }
+                }
+            }
 
-        ///GENMHASH:8B8E171AB3970DFD7516F84B8C19861C:4549C714DB7AE421B3ED125CD30CFEF9
-        public ServicePrincipalImpl WithAccountEnabled(bool enabled)
-        {
-            createParameters.AccountEnabled = enabled;
+            foreach (PasswordCredentialImpl<IWithCreate> password in passwordCredentials)
+            {
+                await password.ExportAuthFileAsync(this, cancellationToken);
+            }
+            foreach (CertificateCredentialImpl<IWithCreate> certificate in certificateCredentials)
+            {
+                await certificate.ExportAuthFileAsync(this, cancellationToken);
+            }
+
             return this;
-        }
-
-        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:6FBD633E7AC3512A3078AD9811DEC068
-        protected override async Task<ServicePrincipalInner> GetInnerAsync(CancellationToken cancellationToken)
-        {
-            var list = await client.ListAsync(new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", AppId())), cancellationToken: cancellationToken);
-            return list.FirstOrDefault();
-        }
-
-        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:E9A4DA014B21051979442ACE026C7D1F
-        public override Task<IServicePrincipal> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
         }
     }
 }

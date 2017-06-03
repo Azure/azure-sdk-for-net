@@ -27,19 +27,19 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition
         Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithNonSslPort();
 
         /// <summary>
-        /// Sets Redis Cache static IP. Required when deploying a Redis Cache inside an existing Azure Virtual Network.
-        /// </summary>
-        /// <param name="staticIP">The static IP value to set.</param>
-        /// <return>The next stage of Redis Cache definition.</return>
-        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithStaticIP(string staticIP);
-
-        /// <summary>
         /// Assigns the specified subnet to this instance of Redis Cache.
         /// </summary>
         /// <param name="network">Instance of Network object.</param>
         /// <param name="subnetName">The name of the subnet.</param>
         /// <return>The next stage of Redis Cache definition.</return>
         Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithSubnet(IHasId network, string subnetName);
+
+        /// <summary>
+        /// Sets Redis Cache static IP. Required when deploying a Redis Cache inside an existing Azure Virtual Network.
+        /// </summary>
+        /// <param name="staticIP">The static IP value to set.</param>
+        /// <return>The next stage of Redis Cache definition.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithStaticIP(string staticIP);
 
         /// <summary>
         /// All Redis Settings. Few possible keys:
@@ -92,19 +92,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition
         Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithPremiumSkuCreate WithPremiumSku(int capacity);
 
         /// <summary>
-        /// Specifies the Standard Sku of the Redis Cache.
-        /// </summary>
-        /// <return>The next stage of Redis Cache definition.</return>
-        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithStandardSku();
-
-        /// <summary>
-        /// Specifies the Standard sku of the Redis Cache.
-        /// </summary>
-        /// <param name="capacity">Specifies what size of Redis Cache to deploy for Standard sku with C family (0, 1, 2, 3, 4, 5, 6).</param>
-        /// <return>The next stage of Redis Cache definition.</return>
-        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithStandardSku(int capacity);
-
-        /// <summary>
         /// Specifies the Basic sku of the Redis Cache.
         /// </summary>
         /// <return>The next stage of Redis Cache definition.</return>
@@ -116,6 +103,19 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition
         /// <param name="capacity">Specifies what size of Redis Cache to deploy for Basic sku with C family (0, 1, 2, 3, 4, 5, 6).</param>
         /// <return>The next stage of Redis Cache definition.</return>
         Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithBasicSku(int capacity);
+
+        /// <summary>
+        /// Specifies the Standard Sku of the Redis Cache.
+        /// </summary>
+        /// <return>The next stage of Redis Cache definition.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithStandardSku();
+
+        /// <summary>
+        /// Specifies the Standard sku of the Redis Cache.
+        /// </summary>
+        /// <param name="capacity">Specifies what size of Redis Cache to deploy for Standard sku with C family (0, 1, 2, 3, 4, 5, 6).</param>
+        /// <return>The next stage of Redis Cache definition.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate WithStandardSku(int capacity);
     }
 
     /// <summary>
@@ -132,6 +132,13 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition
     public interface IWithPremiumSkuCreate  :
         Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithCreate
     {
+        /// <summary>
+        /// The number of shards to be created on a Premium Cluster Cache.
+        /// </summary>
+        /// <param name="shardCount">The shard count value to set.</param>
+        /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithPremiumSkuCreate WithShardCount(int shardCount);
+
         /// <summary>
         /// Patch schedule on a Premium Cluster Cache.
         /// </summary>
@@ -162,13 +169,6 @@ namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition
         /// <param name="scheduleEntry">List of patch schedule entries for Premium Redis Cache.</param>
         /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
         Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithPremiumSkuCreate WithPatchSchedule(IList<Microsoft.Azure.Management.Redis.Fluent.Models.ScheduleEntry> scheduleEntry);
-
-        /// <summary>
-        /// The number of shards to be created on a Premium Cluster Cache.
-        /// </summary>
-        /// <param name="shardCount">The shard count value to set.</param>
-        /// <return>The next stage of Redis Cache with Premium SKU definition.</return>
-        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithPremiumSkuCreate WithShardCount(int shardCount);
     }
 
     /// <summary>

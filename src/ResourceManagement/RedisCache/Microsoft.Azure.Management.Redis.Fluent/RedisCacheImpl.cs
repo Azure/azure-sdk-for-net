@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return Inner.HostName;
         }
 
-        ///GENMHASH:3D7C4113A3F55E3E31A8AB77D2A98BC2:342BB306A1B89F9C0E62BB6844E58611
+        ///GENMHASH:3D7C4113A3F55E3E31A8AB77D2A98BC2:D096D794DD08C7A81CB4711B276ACAF0
         public void DeletePatchSchedule()
         {
             Manager.Inner.PatchSchedules.Delete(ResourceGroupName, Name);
@@ -89,6 +89,16 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         public string StaticIP()
         {
             return Inner.StaticIP;
+        }
+
+        internal IRedisAccessKeys Keys()
+        {
+            return GetKeysAsync().GetAwaiter().GetResult();
+        }
+
+        internal IRedisAccessKeys GetKeys()
+        {
+            return GetKeysAsync().GetAwaiter().GetResult();
         }
 
         ///GENMHASH:6EE61FA0DE4D0297160B059C5B56D12A:FCE23512A2C31EB7F68F7065799142F4
@@ -154,7 +164,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this;
         }
 
-        ///GENMHASH:7EA43FE4B5DC6873C3A15AE9AF9FD9A2:0176FA0695BE5AF7085965288087F3E6
+        internal void ImportData(IList<string> files)
+        {
+            ImportDataAsync(files).Wait();
+        }
+
+        ///GENMHASH:7EA43FE4B5DC6873C3A15AE9AF9FD9A2:DB640B4FFC3846A52E12E749C7AE1E07
         public async Task ImportDataAsync(IList<string> files, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new ImportRDBParametersInner
@@ -164,7 +179,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             await Manager.Inner.Redis.ImportDataAsync(this.ResourceGroupName, this.Name, parameters, cancellationToken);
         }
 
-        ///GENMHASH:797BE61D54080982DA71A130D2628D30:245A7A45CB8ACD07ADC910C1F5C669C3
+        internal void ImportData(IList<string> files, string fileFormat)
+        {
+            ImportDataAsync(files, fileFormat).Wait();
+        }
+
+        ///GENMHASH:797BE61D54080982DA71A130D2628D30:F1FC7E1F9F01D79933EE309917AC42ED
         public async Task ImportDataAsync(IList<string> files, string fileFormat, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new ImportRDBParametersInner
@@ -190,7 +210,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this;
         }
 
-        ///GENMHASH:E3A7804FB0FA9098FEB1BBC27C0AC302:1D1FD1926CD83B5A53D025D908F50F70
+        internal void ExportData(string containerSASUrl, string prefix)
+        {
+            ExportDataAsync(containerSASUrl, prefix).Wait();
+        }
+
+        ///GENMHASH:E3A7804FB0FA9098FEB1BBC27C0AC302:7E617ED18080CC8A1CBB2EA724051876
         public async Task ExportDataAsync(string containerSASUrl, string prefix, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new ExportRDBParametersInner
@@ -201,7 +226,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             await Manager.Inner.Redis.ExportDataAsync(this.ResourceGroupName, this.Name, parameters, cancellationToken);
         }
 
-        ///GENMHASH:D36720446E1DFBFE86C7D6259BB131A7:96E7F137224736FF0D8B93037CAC1AB4
+        internal void ExportData(string containerSASUrl, string prefix, string fileFormat)
+        {
+            ExportDataAsync(containerSASUrl, prefix, fileFormat).Wait();
+        }
+
+        ///GENMHASH:D36720446E1DFBFE86C7D6259BB131A7:DBFE731939CDFD6A00021D18D3050471
         public async Task ExportDataAsync(string containerSASUrl, string prefix, string fileFormat, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new ExportRDBParametersInner
@@ -213,7 +243,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             await Manager.Inner.Redis.ExportDataAsync(this.ResourceGroupName, this.Name, parameters, cancellationToken);
         }
 
-        ///GENMHASH:CC99BC6F0FDDE008E581A6EB944FE764:0C30EC62BAFB5962817F1799BCD0FA3F
+        ///GENMHASH:CC99BC6F0FDDE008E581A6EB944FE764:6082EF512339E71B6A18A70D5F982D8A
         public IReadOnlyList<Models.ScheduleEntry> ListPatchSchedules()
         {
             RedisPatchScheduleInner patchSchedules = null;
@@ -278,7 +308,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return Inner.Sku;
         }
 
-        ///GENMHASH:507A92D4DCD93CE9595A78198DEBDFCF:C4C75685A8644A15C4342387354A58BB
+        ///GENMHASH:507A92D4DCD93CE9595A78198DEBDFCF:C939BB939FCE92CA0B2A26D322003DEA
         public async Task<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> UpdateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var inner = await Manager.Inner.Redis.UpdateAsync(ResourceGroupName, Name, updateParameters, cancellationToken);
@@ -294,7 +324,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this;
         }
 
-        ///GENMHASH:861E02F6BBA5773E9337D78B346B0D6B:A13471591206DDE563C137910EBF8D1F
+        internal IRedisAccessKeys RegenerateKey(RedisKeyType keyType)
+        {
+            return RegenerateKeyAsync(keyType).GetAwaiter().GetResult();
+        }
+
+        ///GENMHASH:861E02F6BBA5773E9337D78B346B0D6B:1E017460FECC66E20EB360CE96692158
         public async Task<IRedisAccessKeys> RegenerateKeyAsync(RedisKeyType keyType, CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await Manager.Inner.Redis.RegenerateKeyAsync(ResourceGroupName, Name, keyType, cancellationToken);
@@ -302,7 +337,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return cachedAccessKeys;
         }
 
-        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:5E5963AD8180E75B1BDD4665CB491F14
+        ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:292D01776A83815A20D32F10B590AFEE
         public async override Task<Microsoft.Azure.Management.Redis.Fluent.IRedisCache> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (IsInCreateMode)
@@ -320,7 +355,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
         }
 
-        ///GENMHASH:7EDCF977DFDBB33CAD61C0A35BD4E3F0:FDF1D73E8E4D62C39446855B695C604B
+        ///GENMHASH:7EDCF977DFDBB33CAD61C0A35BD4E3F0:B85274740259A09ED8D26A65DDFFB972
         private async Task UpdatePatchSchedules(CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.scheduleEntries != null &&
@@ -345,7 +380,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             }
         }
 
-        ///GENMHASH:36C3CA891B448CCCA6D3BB4C29A31470:A33045316FD527F5E8BD1321B1F93CB2
+        internal IRedisAccessKeys RefreshKeys()
+        {
+            return RefreshKeysAsync().GetAwaiter().GetResult();
+        }
+
+        ///GENMHASH:36C3CA891B448CCCA6D3BB4C29A31470:222A26931EAF5A1984B63F0B88A1D104
         public async Task<IRedisAccessKeys> RefreshKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var response = await Manager.Inner.Redis.ListKeysAsync(this.ResourceGroupName, this.Name, cancellationToken);
@@ -418,7 +458,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 Inner.Port.Value : 0;
         }
 
-        ///GENMHASH:00B3FC5713723EC459E8D0BBE862C56F:FB69548FAA3E0BDC93FB1EB6A6E158EC
+        internal void ForceReboot(string rebootType)
+        {
+            ForceRebootAsync(rebootType).Wait();
+        }
+
+        ///GENMHASH:00B3FC5713723EC459E8D0BBE862C56F:C9FD7CE2B1D3311D7590A05CB6863CEE
         public async Task ForceRebootAsync(string rebootType, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new RedisRebootParametersInner
@@ -428,7 +473,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             await Manager.Inner.Redis.ForceRebootAsync(ResourceGroupName, Name, parameters, cancellationToken);
         }
 
-        ///GENMHASH:9514189731558B5E71CF90933A631027:98E14B4429597E5D69A9A512FB31AC81
+        internal void ForceReboot(string rebootType, int shardId)
+        {
+            ForceRebootAsync(rebootType, shardId).Wait();
+        }
+
+        ///GENMHASH:9514189731558B5E71CF90933A631027:341BAF022C60AC1258474CDECEA5B296
         public async Task ForceRebootAsync(string rebootType, int shardId, CancellationToken cancellationToken = default(CancellationToken))
         {
             var parameters = new RedisRebootParametersInner
@@ -593,7 +643,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             return this;
         }
 
-        ///GENMHASH:28A59E2D7BB5002CC1F16417C4F25FD1:90FDAC2D7F671EE3AF491F69172F0D7E
+        ///GENMHASH:C2110F8F251298226638BAFE08EB2503:90FDAC2D7F671EE3AF491F69172F0D7E
         public RedisCacheImpl WithPatchSchedule(Models.DayOfWeek dayOfWeek, int startHourUtc)
         {
             return this.WithPatchSchedule(
@@ -601,7 +651,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                     new ScheduleEntryInner(dayOfWeek, startHourUtc, null)));
         }
 
-        ///GENMHASH:6201C51B639713985315AA03C532B541:5848DBA8C0AAE4C5977BD3956E8379ED
+        ///GENMHASH:2B41019E00D6558C5F5C529D3296C590:5848DBA8C0AAE4C5977BD3956E8379ED
         public RedisCacheImpl WithPatchSchedule(Models.DayOfWeek dayOfWeek, int startHourUtc, System.TimeSpan? maintenanceWindow)
         {
             return this.WithPatchSchedule(
@@ -609,7 +659,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                     new ScheduleEntryInner(dayOfWeek, startHourUtc, maintenanceWindow)));
         }
 
-        ///GENMHASH:4DC611DFE1B12D88B1FBC380172484A4:5EA2206D23C4D336706EFB8004C25FC1
+        ///GENMHASH:4DC611DFE1B12D88B1FBC380172484A4:A5D82382EEDA234E079CD77064B53310
         public RedisCacheImpl WithPatchSchedule(IList<Models.ScheduleEntry> scheduleEntry)
         {
             this.scheduleEntries.Clear();

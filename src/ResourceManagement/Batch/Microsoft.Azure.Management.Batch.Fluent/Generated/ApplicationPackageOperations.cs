@@ -66,8 +66,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <param name='version'>
         /// The version of the application to activate.
         /// </param>
-        /// <param name='format'>
-        /// The format of the application package binary file.
+        /// <param name='parameters'>
+        /// The parameters for the request.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ActivateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, string version, string format, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ActivateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, string version, ActivateApplicationPackageParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -127,6 +127,14 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -134,15 +142,6 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (format == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "format");
-            }
-            ActivateApplicationPackageParameters parameters = new ActivateApplicationPackageParameters();
-            if (format != null)
-            {
-                parameters.Format = format;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

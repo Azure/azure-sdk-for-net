@@ -24,12 +24,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private string scaleSetName;
         private string resourceGroupName;
 
-        public INetworkManager Manager
+        internal INetworkManager Manager()
         {
-            get
-            {
-                return networkManager;
-            }
+            return networkManager;
         }
 
         internal VirtualMachineScaleSetNetworkInterfaceImpl(
@@ -190,7 +187,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         protected override async Task<NetworkInterfaceInner> GetInnerAsync(CancellationToken cancellationToken)
         {
-            return await Manager.Inner.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterfaceAsync(
+            return await Manager().Inner.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterfaceAsync(
                 resourceGroupName,
                 scaleSetName,
                 ResourceUtils.NameFromResourceId(VirtualMachineId()),

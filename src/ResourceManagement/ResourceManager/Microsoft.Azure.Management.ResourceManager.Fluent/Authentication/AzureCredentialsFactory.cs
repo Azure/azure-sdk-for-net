@@ -2,10 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Rest;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
 {
@@ -67,6 +69,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
         }
 
         /// <summary>
+        /// Creates a credentials object from a service principal.
+        /// </summary>
+        /// <param name="clientId">the client ID of the application the service principal is associated with</param>
+        /// <param name="certificatePath">the certificate file for the client ID</param>]
+        /// <param name="certificatePassword">the password for the certificate</param>
+        /// <param name="tenantId">the tenant ID or domain the application is in</param>
+        /// <param name="environment">the environment to authenticate to</param>
+        /// <returns>an authenticated credentials object</returns>
+        public AzureCredentials FromServicePrincipal(string clientId, string certificatePath, string certificatePassword, string tenantId, AzureEnvironment environment)
+        {
+            var certBytes = File.ReadAllBytes(certificatePath);
+            return new AzureCredentials(new ServicePrincipalLoginInformation
+            {
+                ClientId = clientId,
+                Certifcate = certBytes,
+                CertifcatePassword = certificatePassword
+            }, tenantId, environment);
+        }
+
+        /// <summary>
         /// Creates a credentials object from a file in the following format:
         ///
         ///     subscription=&lt;subscription-id&gt;
@@ -109,7 +131,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
                 GraphEndpoint = config["graphurl"].Replace("\\", "")
             };
 
-            AzureCredentials credentials = FromServicePrincipal(config["client"], config["key"], config["tenant"], env);
+            AzureCredentials credentials;
+            if (config.ContainsKey("key"))
+            {
+                credentials = FromServicePrincipal(config["client"], config["key"], config["tenant"], env);
+            }
+            else if (config.ContainsKey("certificate"))
+            {
+                string certificatePath = config["certificate"].Replace("\\:", ":").Replace("\\\\", "\\");
+                if (!File.Exists(certificatePath))
+                {
+                    certificatePath = Path.Combine(Path.GetDirectoryName(authFile), certificatePath);
+                }
+                credentials = FromServicePrincipal(config["client"], certificatePath,
+                    config.ContainsKey("certificatepassword") ? config["certificatepassword"] : "", config["tenant"], env);
+            }
+            else
+            {
+                throw new ValidationException("Please specify either a client key or a client certificate.");
+            }
             credentials.WithDefaultSubscription(config["subscription"]);
             return credentials;
         }

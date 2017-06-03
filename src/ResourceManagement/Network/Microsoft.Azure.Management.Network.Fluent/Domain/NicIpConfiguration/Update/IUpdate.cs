@@ -44,6 +44,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update
         Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName);
 
         /// <summary>
+        /// Specifies the load balancer inbound NAT rule to associate this IP configuration with.
+        /// </summary>
+        /// <param name="loadBalancer">An existing load balancer.</param>
+        /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
+
+        /// <summary>
         /// Removes all the existing associations with load balancer inbound NAT rules.
         /// </summary>
         /// <return>The next stage of the update.</return>
@@ -54,14 +62,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update
         /// </summary>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate WithoutLoadBalancerBackends();
-
-        /// <summary>
-        /// Specifies the load balancer inbound NAT rule to associate this IP configuration with.
-        /// </summary>
-        /// <param name="loadBalancer">An existing load balancer.</param>
-        /// <param name="inboundNatRuleName">The name of an existing inbound NAT rule on the selected load balancer.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Network.Fluent.NicIPConfiguration.Update.IUpdate WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
     }
 
     /// <summary>

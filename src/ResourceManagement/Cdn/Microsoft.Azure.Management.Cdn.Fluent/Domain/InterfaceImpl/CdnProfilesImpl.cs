@@ -6,10 +6,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Cdn.Fluent.CdnProfile.Definition;
+    using Microsoft.Azure.Management.Cdn.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Rest;
-    using Models;
 
     internal partial class CdnProfilesImpl 
     {
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <return>The CheckNameAvailabilityResult object if successful.</return>
         Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.CheckEndpointNameAvailability(string name)
         {
-            return this.CheckEndpointNameAvailabilityAsync(name).GetAwaiter().GetResult();
+            return this.CheckEndpointNameAvailability(name) as Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <return>The Sso Uri string if successful.</return>
         string Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.GenerateSsoUri(string resourceGroupName, string profileName)
         {
-            return this.GenerateSsoUriAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
+            return this.GenerateSsoUri(resourceGroupName, profileName);
         }
 
         /// <summary>
@@ -75,7 +75,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="contentPaths">The path to the content to be purged. Can describe a file path or a wild card directory.</param>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.PurgeEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
         {
-            this.PurgeEndpointContentAsync(resourceGroupName, profileName, endpointName, contentPaths).GetAwaiter().GetResult();
+ 
+            this.PurgeEndpointContent(resourceGroupName, profileName, endpointName, contentPaths);
         }
 
         /// <summary>
@@ -87,24 +88,24 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.StartEndpoint(string resourceGroupName, string profileName, string endpointName)
         {
  
-            this.StartEndpointAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
+            this.StartEndpoint(resourceGroupName, profileName, endpointName);
         }
 
         /// <summary>
         /// Check the quota and actual usage of the CDN profiles under the current subscription.
         /// </summary>
         /// <return>Quotas and actual usages of the CDN profiles under the current subscription.</return>
-        System.Collections.Generic.IEnumerable<ResourceUsage> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.ListResourceUsage()
+        System.Collections.Generic.IEnumerable<Models.ResourceUsage> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.ListResourceUsage()
         {
-            return this.ListResourceUsage();
+            return this.ListResourceUsage() as System.Collections.Generic.IEnumerable<Models.ResourceUsage>;
         }
 
         /// <summary>
         /// Checks the availability of a endpoint name without creating the CDN endpoint asynchronously.
         /// </summary>
         /// <param name="name">The endpoint resource name to validate.</param>
-        /// <return>The Observable to CheckNameAvailabilityResult object if successful.</return>
-        async Task<Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfilesBeta.CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken)
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task<Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.CheckEndpointNameAvailabilityAsync(string name, CancellationToken cancellationToken)
         {
             return await this.CheckEndpointNameAvailabilityAsync(name, cancellationToken) as Microsoft.Azure.Management.Cdn.Fluent.CheckNameAvailabilityResult;
         }
@@ -113,9 +114,9 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// Lists all the edge nodes of a CDN service.
         /// </summary>
         /// <return>List of all the edge nodes of a CDN service.</return>
-        System.Collections.Generic.IEnumerable<EdgeNode> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.ListEdgeNodes()
+        System.Collections.Generic.IEnumerable<Models.EdgeNode> Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.ListEdgeNodes()
         {
-            return this.ListEdgeNodes();
+            return this.ListEdgeNodes() as System.Collections.Generic.IEnumerable<Models.EdgeNode>;
         }
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.StopEndpoint(string resourceGroupName, string profileName, string endpointName)
         {
  
-            this.StopEndpointAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
+            this.StopEndpoint(resourceGroupName, profileName, endpointName);
         }
 
         /// <summary>
@@ -139,7 +140,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         /// <param name="contentPaths">The path to the content to be loaded. Should describe a file path.</param>
         void Microsoft.Azure.Management.Cdn.Fluent.ICdnProfiles.LoadEndpointContent(string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
         {
-            this.LoadEndpointContentAsync(resourceGroupName, profileName, endpointName, contentPaths).GetAwaiter().GetResult();
+ 
+            this.LoadEndpointContent(resourceGroupName, profileName, endpointName, contentPaths);
         }
     }
 }

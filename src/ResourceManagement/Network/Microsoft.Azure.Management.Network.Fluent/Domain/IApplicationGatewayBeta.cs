@@ -2,18 +2,23 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Models;
-    using ResourceManager.Fluent.Core;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
 
     /// <summary>
-    /// Members of ApplicationGateway that are in Beta.
+    /// Entry point for application gateway management API in Azure.
     /// </summary>
-    public interface IApplicationGatewayBeta : IBeta
+    public interface IApplicationGatewayBeta  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
     {
         /// <summary>
-        /// Disabled SSL protocols.
+        /// Gets disabled SSL protocols.
         /// </summary>
-        IReadOnlyCollection<ApplicationGatewaySslProtocol> DisabledSslProtocols {  get; }
+        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewaySslProtocol> DisabledSslProtocols { get; }
     }
 }

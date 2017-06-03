@@ -12,15 +12,14 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Batch;
     using Microsoft.Azure.Management.Batch.Fluent;
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Contains information about the auto storage account associated with a
+    /// Contains information about the auto-storage account associated with a
     /// Batch account.
     /// </summary>
-    public partial class AutoStorageProperties
+    public partial class AutoStorageProperties : AutoStorageBaseProperties
     {
         /// <summary>
         /// Initializes a new instance of the AutoStorageProperties class.
@@ -34,12 +33,12 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         /// Initializes a new instance of the AutoStorageProperties class.
         /// </summary>
         /// <param name="storageAccountId">The resource ID of the storage
-        /// account to be used for auto storage account.</param>
+        /// account to be used for auto-storage account.</param>
         /// <param name="lastKeySync">The UTC time at which storage keys were
         /// last synchronized with the Batch account.</param>
         public AutoStorageProperties(string storageAccountId, System.DateTime lastKeySync)
+            : base(storageAccountId)
         {
-            StorageAccountId = storageAccountId;
             LastKeySync = lastKeySync;
             CustomInit();
         }
@@ -48,13 +47,6 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the resource ID of the storage account to be used for
-        /// auto storage account.
-        /// </summary>
-        [JsonProperty(PropertyName = "storageAccountId")]
-        public string StorageAccountId { get; set; }
 
         /// <summary>
         /// Gets or sets the UTC time at which storage keys were last
@@ -66,15 +58,12 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (StorageAccountId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StorageAccountId");
-            }
+            base.Validate();
         }
     }
 }

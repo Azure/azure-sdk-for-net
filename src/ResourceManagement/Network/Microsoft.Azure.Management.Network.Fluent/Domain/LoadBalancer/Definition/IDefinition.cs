@@ -23,6 +23,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     public interface IWithLoadBalancingRule 
     {
         /// <summary>
+        /// Begins the definition of a new load balancing rule to add to the load balancer.
+        /// The definition must be completed with a call to  LoadBalancingRule.DefinitionStages.WithAttach.attach().
+        /// </summary>
+        /// <param name="name">The name of the load balancing rule.</param>
+        /// <return>The first stage of the new load balancing rule definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> DefineLoadBalancingRule(string name);
+
+        /// <summary>
         /// Creates a load balancing rule between the specified front end and back end ports and protocol.
         /// The new rule will be assigned an automatically generated name.
         /// </summary>
@@ -40,14 +48,6 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// <param name="protocol">The protocol to load balance.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate WithLoadBalancingRule(int port, TransportProtocol protocol);
-
-        /// <summary>
-        /// Begins the definition of a new load balancing rule to add to the load balancer.
-        /// The definition must be completed with a call to  LoadBalancingRule.DefinitionStages.WithAttach.attach().
-        /// </summary>
-        /// <param name="name">The name of the load balancing rule.</param>
-        /// <return>The first stage of the new load balancing rule definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancingRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate> DefineLoadBalancingRule(string name);
     }
 
     /// <summary>
@@ -89,6 +89,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackendOrProbe,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrNat,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithLoadBalancingRule,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate,
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatPool,
@@ -198,11 +199,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     }
 
     /// <summary>
-    /// The stage of a load balancer definition allowing to add a backend or start adding probes.
+    /// The stage of a load balancer definition allowing to add a backend or start adding probes, or NAT rules, or NAT pools.
     /// </summary>
     public interface IWithBackendOrProbe  :
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithBackend,
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrNat
     {
     }
 
@@ -229,20 +230,20 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
     public interface IWithProbe 
     {
         /// <summary>
-        /// Begins the definition of a new TCP probe to add to the load balancer.
-        /// The definition must be completed with a call to  LoadBalancerTcpProbe.DefinitionStages.WithAttach.attach().
-        /// </summary>
-        /// <param name="name">The name of the probe.</param>
-        /// <return>The first stage of the new probe definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> DefineTcpProbe(string name);
-
-        /// <summary>
         /// Adds an HTTP probe checking for an HTTP 200 response from the specified path at regular intervals, using port 80.
         /// An automatically generated name is assigned to the probe.
         /// </summary>
         /// <param name="requestPath">The path for the probe to invoke.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule WithHttpProbe(string requestPath);
+
+        /// <summary>
+        /// Begins the definition of a new TCP probe to add to the load balancer.
+        /// The definition must be completed with a call to  LoadBalancerTcpProbe.DefinitionStages.WithAttach.attach().
+        /// </summary>
+        /// <param name="name">The name of the probe.</param>
+        /// <return>The first stage of the new probe definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancerTcpProbe.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule> DefineTcpProbe(string name);
 
         /// <summary>
         /// Begins the definition of a new HTTP probe to add to the load balancer.
@@ -305,6 +306,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition
         /// <param name="name">The name of the inbound NAT rule.</param>
         /// <return>The first stage of the new inbound NAT rule definition.</return>
         Microsoft.Azure.Management.Network.Fluent.LoadBalancerInboundNatRule.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithCreateAndInboundNatRule> DefineInboundNatRule(string name);
+    }
+
+    /// <summary>
+    /// The stage of a load balancer definition allowing to add a probe or an inbound NAT rule or pool.
+    /// </summary>
+    public interface IWithProbeOrNat  :
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithProbe,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithInboundNatRule,
+        Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Definition.IWithInboundNatPool
+    {
     }
 
     /// <summary>

@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// A unique identifier of a Microsoft Azure subscription. The subscription ID
-        /// forms part of the URI for every service call.
+        /// The Azure subscription ID. This is a GUID-formatted string (e.g.
+        /// 00000000-0000-0000-0000-000000000000)
         /// </summary>
         public string SubscriptionId { get; set; }
 
@@ -91,6 +91,11 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// Gets the ILocationOperations.
         /// </summary>
         public virtual ILocationOperations Location { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the BatchManagementClient class.
@@ -297,8 +302,9 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             ApplicationPackage = new ApplicationPackageOperations(this);
             Application = new ApplicationOperations(this);
             Location = new LocationOperations(this);
+            Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2015-12-01";
+            ApiVersion = "2017-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

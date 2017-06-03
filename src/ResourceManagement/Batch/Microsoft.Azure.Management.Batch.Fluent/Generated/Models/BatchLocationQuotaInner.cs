@@ -45,11 +45,11 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the number of Batch accounts that may be created under
-        /// the subscription in the specified region.
+        /// Gets the number of Batch accounts that may be created under the
+        /// subscription in the specified region.
         /// </summary>
         [JsonProperty(PropertyName = "accountQuota")]
-        public int? AccountQuota { get; set; }
+        public int? AccountQuota { get; private set; }
 
     }
 }

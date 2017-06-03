@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ApplicationInner>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, AddApplicationParametersInner parameters = default(AddApplicationParametersInner), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ApplicationInner>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, ApplicationCreateParametersInner parameters = default(ApplicationCreateParametersInner), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -754,7 +754,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, UpdateApplicationParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, ApplicationUpdateParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {

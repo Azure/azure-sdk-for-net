@@ -59,8 +59,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Enables the rule to apply to the application gateway's public (Internet-facing) frontend.
         /// If the public frontend IP configuration does not yet exist, it will be created under an auto-generated name.
         /// If the application gateway does not have a public IP address specified for its public frontend, one will be created
-        /// automatically, unless a specific public IP address is specified in the application gateway definition's optional settings using
-        /// withExistingPublicIPAddress(...) or  withNewPublicIPAddress(...).
+        /// automatically, unless a specific public IP address is specified in the application gateway definition's optional settings.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithFrontendPort<ApplicationGateway.Update.IUpdate> ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithFrontend<ApplicationGateway.Update.IUpdate>.FromPublicFrontend()
@@ -72,8 +71,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Enables the rule to apply to the application gateway's private (internal) frontend.
         /// If the private frontend IP configuration does not yet exist, it will be created under an auto-generated name.
         /// If the application gateway does not have a subnet specified for its private frontend, one will be created automatically,
-        /// unless a specific subnet is specified in the application gateway definition's optional settings using
-        /// withExistingSubnet(...).
+        /// unless a specific subnet is specified in the application gateway definition's optional settings.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithFrontendPort<ApplicationGateway.Update.IUpdate> ApplicationGatewayRequestRoutingRule.UpdateDefinition.IWithFrontend<ApplicationGateway.Update.IUpdate>.FromPrivateFrontend()
@@ -85,8 +83,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Enables the rule to apply to the application gateway's public (Internet-facing) frontend.
         /// If the public frontend IP configuration does not yet exist, it will be created under an auto-generated name.
         /// If the application gateway does not have a public IP address specified for its public frontend, one will be created
-        /// automatically, unless a specific public IP address is specified in the application gateway definition's optional settings using
-        /// withExistingPublicIPAddress(...) or  withNewPublicIPAddress(...).
+        /// automatically, unless a specific public IP address is specified in the application gateway definition's optional settings.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         ApplicationGatewayRequestRoutingRule.Definition.IWithFrontendPort<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate> ApplicationGatewayRequestRoutingRule.Definition.IWithFrontend<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate>.FromPublicFrontend()
@@ -98,8 +95,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Enables the rule to apply to the application gateway's private (internal) frontend.
         /// If the private frontend IP configuration does not yet exist, it will be created under an auto-generated name.
         /// If the application gateway does not have a subnet specified for its private frontend, one will be created automatically,
-        /// unless a specific subnet is specified in the application gateway definition's optional settings using
-        /// withExistingSubnet(...).
+        /// unless a specific subnet is specified in the application gateway definition's optional settings.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         ApplicationGatewayRequestRoutingRule.Definition.IWithFrontendPort<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate> ApplicationGatewayRequestRoutingRule.Definition.IWithFrontend<ApplicationGateway.Definition.IWithRequestRoutingRuleOrCreate>.FromPrivateFrontend()
@@ -275,8 +271,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Associates the request routing rule with a backend on this application gateway.
-        /// If the backend does not yet exist, it must be defined in the optional part of the application gateway definition,
-        /// using  defineBackend(...). The request routing rule references it only by name.
+        /// If the backend does not yet exist, it must be defined in the optional part of the application gateway definition.
+        /// The request routing rule references it only by name.
         /// </summary>
         /// <param name="name">The name of an existing backend.</param>
         /// <return>The next stage of the definition.</return>
@@ -287,8 +283,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Associates the request routing rule with a backend on this application gateway.
-        /// If the backend does not yet exist, it must be defined in the optional part of the application gateway definition,
-        /// using  defineBackend(...). The request routing rule references it only by name.
+        /// If the backend does not yet exist, it must be defined in the optional part of the application gateway definition.
+        /// The request routing rule references it only by name.
         /// </summary>
         /// <param name="name">The name of an existing backend.</param>
         /// <return>The next stage of the definition.</return>
@@ -333,11 +329,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Gets the addresses assigned to the associated backend.
         /// </summary>
-        System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewayBackendAddress> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayRequestRoutingRule.BackendAddresses
+        System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress> Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayRequestRoutingRule.BackendAddresses
         {
             get
             {
-                return this.BackendAddresses() as System.Collections.Generic.IReadOnlyCollection<Models.ApplicationGatewayBackendAddress>;
+                return this.BackendAddresses() as System.Collections.Generic.IReadOnlyList<Models.ApplicationGatewayBackendAddress>;
             }
         }
 
@@ -430,8 +426,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Associates the request routing rule with a frontend listener.
         /// If the listener with the specified name does not yet exist, it must be defined separately in the optional part
-        /// of the application gateway definition, using  defineListener(...).
-        /// This only adds a reference to the listener by its name.
+        /// of the application gateway definition. This only adds a reference to the listener by its name.
         /// Also, note that a given listener can be used by no more than one request routing rule at a time.
         /// </summary>
         /// <param name="name">The name of a listener to reference.</param>
@@ -443,9 +438,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         /// <summary>
         /// Associates the request routing rule with a frontend listener.
-        /// If the listener with the specified name does not yet exist, it must be defined separately in the optional part
-        /// of the application gateway definition, using  defineListener(...).
-        /// This only adds a reference to the listener by its name.
+        /// If the listener with the specified name does not yet exist, it must be defined separately in the optional stages
+        /// of the application gateway definition. This only adds a reference to the listener by its name.
         /// Also, note that a given listener can be used by no more than one request routing rule at a time.
         /// </summary>
         /// <param name="name">The name of a listener to reference.</param>
@@ -515,7 +509,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Associates the specified backend HTTP settings configuration with this request routing rule.
         /// If the backend configuration does not exist yet, it must be defined in the optional part of the application gateway
-        /// definition, using  defineBackendHttpConfiguration(...). The request routing rule references it only by name.
+        /// definition. The request routing rule references it only by name.
         /// </summary>
         /// <param name="name">The name of a backend HTTP settings configuration.</param>
         /// <return>The next stage of the definition.</return>
@@ -539,7 +533,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// <summary>
         /// Associates the specified backend HTTP settings configuration with this request routing rule.
         /// If the backend configuration does not exist yet, it must be defined in the optional part of the application gateway
-        /// definition, using  defineBackendHttpConfiguration(...). The request routing rule references it only by name.
+        /// definition. The request routing rule references it only by name.
         /// </summary>
         /// <param name="name">The name of a backend HTTP settings configuration.</param>
         /// <return>The next stage of the definition.</return>

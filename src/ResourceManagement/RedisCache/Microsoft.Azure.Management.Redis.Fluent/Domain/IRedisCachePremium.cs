@@ -12,43 +12,15 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         Microsoft.Azure.Management.Redis.Fluent.IRedisCache
     {
         /// <summary>
-        /// Export data from Redis Cache.
+        /// Gets the patching schedule for Redis Cache.
         /// </summary>
-        /// <param name="containerSASUrl">Container name to export to.</param>
-        /// <param name="prefix">Prefix to use for exported files.</param>
-        void ExportData(string containerSASUrl, string prefix);
-
-        /// <summary>
-        /// Export data from Redis Cache.
-        /// </summary>
-        /// <param name="containerSASUrl">Container name to export to.</param>
-        /// <param name="prefix">Prefix to use for exported files.</param>
-        /// <param name="fileFormat">Specifies file format.</param>
-        void ExportData(string containerSASUrl, string prefix, string fileFormat);
-
-        /// <summary>
-        /// Import data into Redis Cache.
-        /// </summary>
-        /// <param name="files">Files to import.</param>
-        /// <param name="fileFormat">Specifies file format.</param>
-        void ImportData(IList<string> files, string fileFormat);
-
-        /// <summary>
-        /// Import data into Redis Cache.
-        /// </summary>
-        /// <param name="files">Files to import.</param>
-        void ImportData(IList<string> files);
+        /// <return>List of patch schedules for current Redis Cache.</return>
+        System.Collections.Generic.IReadOnlyList<Models.ScheduleEntry> ListPatchSchedules();
 
         /// <summary>
         /// Deletes the patching schedule for Redis Cache.
         /// </summary>
         void DeletePatchSchedule();
-
-        /// <summary>
-        /// Gets the patching schedule for Redis Cache.
-        /// </summary>
-        /// <return>List of patch schedules for current Redis Cache.</return>
-        System.Collections.Generic.IReadOnlyList<Models.ScheduleEntry> ListPatchSchedules();
 
         /// <summary>
         /// Reboot specified Redis node(s). This operation requires write permission to the cache resource. There can be potential data loss.
@@ -68,5 +40,33 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         /// possible. Possible values include: 'PrimaryNode', 'SecondaryNode', 'AllNodes'.
         /// </param>
         void ForceReboot(string rebootType);
+
+        /// <summary>
+        /// Import data into Redis Cache.
+        /// </summary>
+        /// <param name="files">Files to import.</param>
+        /// <param name="fileFormat">Specifies file format.</param>
+        void ImportData(IList<string> files, string fileFormat);
+
+        /// <summary>
+        /// Import data into Redis Cache.
+        /// </summary>
+        /// <param name="files">Files to import.</param>
+        void ImportData(IList<string> files);
+
+        /// <summary>
+        /// Export data from Redis Cache.
+        /// </summary>
+        /// <param name="containerSASUrl">Container name to export to.</param>
+        /// <param name="prefix">Prefix to use for exported files.</param>
+        void ExportData(string containerSASUrl, string prefix);
+
+        /// <summary>
+        /// Export data from Redis Cache.
+        /// </summary>
+        /// <param name="containerSASUrl">Container name to export to.</param>
+        /// <param name="prefix">Prefix to use for exported files.</param>
+        /// <param name="fileFormat">Specifies file format.</param>
+        void ExportData(string containerSASUrl, string prefix, string fileFormat);
     }
 }

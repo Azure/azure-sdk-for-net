@@ -93,16 +93,16 @@ namespace Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Defi
         Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Definition.IWithTimeout<ParentT>,Microsoft.Azure.Management.Network.Fluent.Models.ApplicationGatewayProtocol>
     {
         /// <summary>
-        /// Specifies HTTPS as the probe protocol.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Definition.IWithTimeout<ParentT> WithHttps();
-
-        /// <summary>
         /// Specifies HTTP as the probe protocol.
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Definition.IWithTimeout<ParentT> WithHttp();
+
+        /// <summary>
+        /// Specifies HTTPS as the probe protocol.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayProbe.Definition.IWithTimeout<ParentT> WithHttps();
     }
 
     /// <summary>

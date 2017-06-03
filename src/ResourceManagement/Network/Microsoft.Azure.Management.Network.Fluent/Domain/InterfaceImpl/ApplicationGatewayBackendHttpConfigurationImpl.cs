@@ -2,18 +2,24 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Network.Fluent
 {
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGateway.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.Update;
+    using Microsoft.Azure.Management.Network.Fluent.ApplicationGatewayBackendHttpConfiguration.UpdateDefinition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.HasPort.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPort.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasPort.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.Update;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
 
-    internal partial class ApplicationGatewayBackendHttpConfigurationImpl
+    internal partial class ApplicationGatewayBackendHttpConfigurationImpl 
     {
-        IApplicationGatewayProbe IApplicationGatewayBackendHttpConfigurationBeta.Probe
-        {
-            get
-            {
-                return this.Probe();
-            }
-        }
-
         /// <summary>
         /// Specifies the port number.
         /// </summary>
@@ -96,6 +102,27 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Specifies an existing probe on this application gateway to associate with this backend.
+        /// If the probe with the specified name does not yet exist, it must be defined separately in the optional part
+        /// of the application gateway definition. This only adds a reference to the probe by its name.
+        /// </summary>
+        /// <param name="name">The name of an existing probe.</param>
+        /// <return>The next stage of the update.</return>
+        ApplicationGatewayBackendHttpConfiguration.Update.IUpdate ApplicationGatewayBackendHttpConfiguration.Update.IWithProbeBeta.WithProbe(string name)
+        {
+            return this.WithProbe(name) as ApplicationGatewayBackendHttpConfiguration.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Removes the association with a probe.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        ApplicationGatewayBackendHttpConfiguration.Update.IUpdate ApplicationGatewayBackendHttpConfiguration.Update.IWithProbeBeta.WithoutProbe()
+        {
+            return this.WithoutProbe() as ApplicationGatewayBackendHttpConfiguration.Update.IUpdate;
+        }
+
+        /// <summary>
         /// Specifies the request timeout.
         /// </summary>
         /// <param name="seconds">A number of seconds.</param>
@@ -143,6 +170,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
             get
             {
                 return this.RequestTimeout();
+            }
+        }
+
+        /// <summary>
+        /// Gets the probe associated with this backend.
+        /// </summary>
+        Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayProbe Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayBackendHttpConfigurationBeta.Probe
+        {
+            get
+            {
+                return this.Probe() as Microsoft.Azure.Management.Network.Fluent.IApplicationGatewayProbe;
             }
         }
 
@@ -196,6 +234,18 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         /// <summary>
+        /// Specifies an existing probe on this application gateway to associate with this backend.
+        /// If the probe with the specified name does not yet exist, it must be defined separately in the optional part
+        /// of the application gateway definition. This only adds a reference to the probe by its name.
+        /// </summary>
+        /// <param name="name">The name of an existing probe.</param>
+        /// <return>The next stage of the definition.</return>
+        ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayBackendHttpConfiguration.Definition.IWithProbeBeta<ApplicationGateway.Definition.IWithCreate>.WithProbe(string name)
+        {
+            return this.WithProbe(name) as ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
+        }
+
+        /// <summary>
         /// Disables cookie based affinity.
         /// </summary>
         /// <return>The next stage of the update.</return>
@@ -220,26 +270,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayBackendHttpConfiguration.Definition.IWithAffinity<ApplicationGateway.Definition.IWithCreate>.WithCookieBasedAffinity()
         {
             return this.WithCookieBasedAffinity() as ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
-        }
-
-        ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate> ApplicationGatewayBackendHttpConfiguration.Definition.IWithProbeBeta<ApplicationGateway.Definition.IWithCreate>.WithProbe(string name)
-        {
-            return this.WithProbe(name) as ApplicationGatewayBackendHttpConfiguration.Definition.IWithAttach<ApplicationGateway.Definition.IWithCreate>;
-        }
-
-        ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate> ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithProbeBeta<ApplicationGateway.Update.IUpdate>.WithProbe(string name)
-        {
-            return this.WithProbe(name) as ApplicationGatewayBackendHttpConfiguration.UpdateDefinition.IWithAttach<ApplicationGateway.Update.IUpdate>;
-        }
-
-        ApplicationGatewayBackendHttpConfiguration.Update.IUpdate ApplicationGatewayBackendHttpConfiguration.Update.IWithProbeBeta.WithProbe(string name)
-        {
-            return this.WithProbe(name) as ApplicationGatewayBackendHttpConfiguration.Update.IUpdate;
-        }
-
-        ApplicationGatewayBackendHttpConfiguration.Update.IUpdate ApplicationGatewayBackendHttpConfiguration.Update.IWithProbeBeta.WithoutProbe()
-        {
-            return this.WithoutProbe() as ApplicationGatewayBackendHttpConfiguration.Update.IUpdate;
         }
     }
 }

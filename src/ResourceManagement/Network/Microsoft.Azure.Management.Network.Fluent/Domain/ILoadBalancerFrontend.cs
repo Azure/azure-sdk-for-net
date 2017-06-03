@@ -10,16 +10,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// An immutable client-side representation of a load balancer frontend.
     /// </summary>
     public interface ILoadBalancerFrontend  :
-        IBeta,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.FrontendIPConfigurationInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         Microsoft.Azure.Management.Network.Fluent.IHasLoadBalancingRules
     {
-        /// <summary>
-        /// Gets true if the frontend is public, i.e. it has a public IP address associated with it.
-        /// </summary>
-        bool IsPublic { get; }
-
         /// <summary>
         /// Gets the inbound NAT pools on this load balancer that use this frontend, indexed by their names.
         /// </summary>
@@ -29,5 +24,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Gets the inbound NAT rules on this load balancer that use this frontend, indexed by their names.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancerInboundNatRule> InboundNatRules { get; }
+
+        /// <summary>
+        /// Gets true if the frontend is public, i.e. it has a public IP address associated with it.
+        /// </summary>
+        bool IsPublic { get; }
     }
 }

@@ -17,28 +17,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     internal partial class SqlElasticPoolImpl 
     {
         /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Sql.Fluent.ISqlManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Sql.Fluent.ISqlManager>.Manager
-        {
-            get
-            {
-                return this.Manager as Microsoft.Azure.Management.Sql.Fluent.ISqlManager;
-            }
-        }
-
-        /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id;
-            }
-        }
-
-        /// <summary>
         /// Creates a new child resource under parent resource.
         /// </summary>
         /// <param name="existingParentResource">The parent resource under which this resource to be created.</param>
@@ -67,17 +45,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IndependentChild.Definition.IWithParentResource<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool,Microsoft.Azure.Management.Sql.Fluent.ISqlServer>.WithNewParentResource(ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlServer> parentResourceCreatable)
         {
             return this.WithNewParentResource(parentResourceCreatable) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Sql.Fluent.ISqlElasticPool>;
-        }
-
-        /// <summary>
-        /// Gets the name of the resource.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
-        {
-            get
-            {
-                return this.Name;
-            }
         }
 
         /// <summary>
@@ -357,50 +324,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         }
 
         /// <summary>
-        /// Gets the name of the region the resource is in.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.RegionName
-        {
-            get
-            {
-                return this.RegionName;
-            }
-        }
-
-        /// <summary>
-        /// Gets the tags for the resource.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Tags
-        {
-            get
-            {
-                return this.Tags as System.Collections.Generic.IReadOnlyDictionary<string,string>;
-            }
-        }
-
-        /// <summary>
-        /// Gets the region the resource is in.
-        /// </summary>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Region
-        {
-            get
-            {
-                return this.Region as Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region;
-            }
-        }
-
-        /// <summary>
-        /// Gets the type of the resource.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IResource.Type
-        {
-            get
-            {
-                return this.Type;
-            }
-        }
-
-        /// <summary>
         /// Sets the minimum DTU all SQL Azure Databases are guaranteed.
         /// </summary>
         /// <param name="databaseDtuMin">Minimum DTU for all SQL Azure databases.</param>
@@ -418,17 +341,6 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         SqlElasticPool.Definition.IWithCreate SqlElasticPool.Definition.IWithDatabaseDtuMin.WithDatabaseDtuMin(int databaseDtuMin)
         {
             return this.WithDatabaseDtuMin(databaseDtuMin) as SqlElasticPool.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Gets the name of the resource group.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasResourceGroup.ResourceGroupName
-        {
-            get
-            {
-                return this.ResourceGroupName;
-            }
         }
     }
 }

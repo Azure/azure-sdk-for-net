@@ -31,12 +31,14 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         /// <summary>
         /// Initializes a new instance of the BatchAccountKeysInner class.
         /// </summary>
+        /// <param name="accountName">The Batch account name.</param>
         /// <param name="primary">The primary key associated with the
         /// account.</param>
         /// <param name="secondary">The secondary key associated with the
         /// account.</param>
-        public BatchAccountKeysInner(string primary = default(string), string secondary = default(string))
+        public BatchAccountKeysInner(string accountName = default(string), string primary = default(string), string secondary = default(string))
         {
+            AccountName = accountName;
             Primary = primary;
             Secondary = secondary;
             CustomInit();
@@ -48,16 +50,22 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the primary key associated with the account.
+        /// Gets the Batch account name.
         /// </summary>
-        [JsonProperty(PropertyName = "primary")]
-        public string Primary { get; set; }
+        [JsonProperty(PropertyName = "accountName")]
+        public string AccountName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the secondary key associated with the account.
+        /// Gets the primary key associated with the account.
+        /// </summary>
+        [JsonProperty(PropertyName = "primary")]
+        public string Primary { get; private set; }
+
+        /// <summary>
+        /// Gets the secondary key associated with the account.
         /// </summary>
         [JsonProperty(PropertyName = "secondary")]
-        public string Secondary { get; set; }
+        public string Secondary { get; private set; }
 
     }
 }

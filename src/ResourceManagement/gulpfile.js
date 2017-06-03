@@ -42,7 +42,7 @@ var mappings = {
     },
     'batch': {
         'dir': 'Batch/Microsoft.Azure.Management.Batch.Fluent',
-        'source': 'arm-batch/2015-12-01/swagger/BatchManagement.json',
+        'source': 'arm-batch/2017-05-01/swagger/BatchManagement.json',
         'package': 'Microsoft.Azure.Management.Batch.Fluent',
         'args': '-FT 1'
     },
@@ -56,6 +56,12 @@ var mappings = {
         'dir': 'Graph.RBAC/Microsoft.Azure.Management.Graph.RBAC.Fluent',
         'source': 'arm-graphrbac/1.6/swagger/graphrbac.json',
         'package': 'Microsoft.Azure.Management.Graph.RBAC.Fluent',
+    },
+    'authorization': {
+        'dir': 'Graph.RBAC/Microsoft.Azure.Management.Graph.RBAC.Fluent',
+        'source': 'arm-authorization/2015-07-01/swagger/authorization.json',
+        'package': 'Microsoft.Azure.Management.Graph.RBAC.Fluent',
+        'args': '-FT 1'
     },
     'keyvault': {
         'dir': 'KeyVault/Microsoft.Azure.Management.KeyVault.Fluent',

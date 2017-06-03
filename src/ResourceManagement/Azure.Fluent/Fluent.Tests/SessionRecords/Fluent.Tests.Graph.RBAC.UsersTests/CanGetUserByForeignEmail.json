@@ -1,0 +1,160 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/54826b22-38d6-4fb2-bad9-b7b93a3e9c5a/users/jianghlu@microsoft.com?api-version=1.6",
+      "EncodedRequestUri": "LzU0ODI2YjIyLTM4ZDYtNGZiMi1iYWQ5LWI3YjkzYTNlOWM1YS91c2Vycy9qaWFuZ2hsdUBtaWNyb3NvZnQuY29tP2FwaS12ZXJzaW9uPTEuNg==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "68c4ce4c-b25d-4a9a-8344-4b19a01c2f05"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManagementClient/1.0.0",
+          "MacAddressHash/962739e6375bb5bb0c92b0bb4e683999dc61b965d3cf07368a9ea5d1dfa19dcf"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"odata.error\": {\r\n    \"code\": \"Request_ResourceNotFound\",\r\n    \"message\": {\r\n      \"lang\": \"en\",\r\n      \"value\": \"Resource 'jianghlu@microsoft.com' does not exist or one of its queried reference-property objects are not present.\"\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "200"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Fri, 02 Jun 2017 00:41:45 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "ocp-aad-diagnostics-server-name": [
+          "rCqKBoQnC6LMwwviCF9YtBI0AvZKzQUiECK9L6PGKAs="
+        ],
+        "request-id": [
+          "a9a341cc-0394-4e57-8560-c45140e9f049"
+        ],
+        "client-request-id": [
+          "a0254bcf-4401-4859-bfbc-833eb4866be3"
+        ],
+        "x-ms-dirapi-data-contract-version": [
+          "1.6"
+        ],
+        "ocp-aad-session-key": [
+          "O1V4US9zlaT2FRJNoY49LgZaZyEbagNrlVbBZ6Hmfc4GXDkJwaFL5hXSFVXHM0mXy0DCXIdCpii2OsWLZxPfhlwWwFUlpwjWGtrrz_0tjMSLsYDhOwjm0SQo4ZuBd43TfDWPk8b-YIm5ZvUCZpoJzZk-hfHWbDY0r_OGAjADDuD-b5i5o1bbMxIqhYbEBQpoi_ktGXJ8h35LwjDp0jRWzA.t3D5yrBdwN_J7iE9XrxyHRGert49fPPReymd6GlqVOw"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Duration": [
+          "565496"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/54826b22-38d6-4fb2-bad9-b7b93a3e9c5a/users?$filter=mail%20eq%20'jianghlu@microsoft.com'%20or%20mailNickName%20eq%20'jianghlu_microsoft.com%23EXT%23'&api-version=1.6",
+      "EncodedRequestUri": "LzU0ODI2YjIyLTM4ZDYtNGZiMi1iYWQ5LWI3YjkzYTNlOWM1YS91c2Vycz8kZmlsdGVyPW1haWwlMjBlcSUyMCdqaWFuZ2hsdUBtaWNyb3NvZnQuY29tJyUyMG9yJTIwbWFpbE5pY2tOYW1lJTIwZXElMjAnamlhbmdobHVfbWljcm9zb2Z0LmNvbSUyM0VYVCUyMycmYXBpLXZlcnNpb249MS42",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7821cb48-c3c2-4a91-87a3-af492ab16ca6"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManagementClient/1.0.0",
+          "MacAddressHash/962739e6375bb5bb0c92b0bb4e683999dc61b965d3cf07368a9ea5d1dfa19dcf"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/54826b22-38d6-4fb2-bad9-b7b93a3e9c5a/$metadata#directoryObjects/Microsoft.DirectoryServices.User\",\r\n  \"value\": [\r\n    {\r\n      \"odata.type\": \"Microsoft.DirectoryServices.User\",\r\n      \"objectType\": \"User\",\r\n      \"objectId\": \"f87ae4ed-cc22-4002-a100-bf566d3b1fae\",\r\n      \"deletionTimestamp\": null,\r\n      \"accountEnabled\": true,\r\n      \"signInNames\": [],\r\n      \"assignedLicenses\": [],\r\n      \"assignedPlans\": [],\r\n      \"city\": null,\r\n      \"companyName\": null,\r\n      \"country\": null,\r\n      \"creationType\": null,\r\n      \"department\": \"AppPlat Products & Services -US\",\r\n      \"dirSyncEnabled\": null,\r\n      \"displayName\": \"Jianghao Lu\",\r\n      \"facsimileTelephoneNumber\": null,\r\n      \"givenName\": \"Jianghao\",\r\n      \"immutableId\": null,\r\n      \"isCompromised\": null,\r\n      \"jobTitle\": \"SOFTWARE ENGINEER\",\r\n      \"lastDirSyncTime\": null,\r\n      \"mail\": null,\r\n      \"mailNickname\": \"jianghlu_microsoft.com#EXT#\",\r\n      \"mobile\": null,\r\n      \"onPremisesSecurityIdentifier\": null,\r\n      \"otherMails\": [\r\n        \"jianghlu@microsoft.com\"\r\n      ],\r\n      \"passwordPolicies\": \"None\",\r\n      \"passwordProfile\": {\r\n        \"password\": null,\r\n        \"forceChangePasswordNextLogin\": true,\r\n        \"enforceChangePasswordPolicy\": false\r\n      },\r\n      \"physicalDeliveryOfficeName\": \"44/3N\",\r\n      \"postalCode\": null,\r\n      \"preferredLanguage\": null,\r\n      \"provisionedPlans\": [],\r\n      \"provisioningErrors\": [],\r\n      \"proxyAddresses\": [],\r\n      \"refreshTokensValidFromDateTime\": \"2016-01-06T17:28:51Z\",\r\n      \"showInAddressList\": null,\r\n      \"sipProxyAddress\": null,\r\n      \"state\": null,\r\n      \"streetAddress\": null,\r\n      \"surname\": \"Lu\",\r\n      \"telephoneNumber\": \"+1 (425) 4216346\",\r\n      \"usageLocation\": \"US\",\r\n      \"userPrincipalName\": \"jianghlu_microsoft.com#EXT#@AzureSDKTeam.onmicrosoft.com\",\r\n      \"userType\": \"Member\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1427"
+        ],
+        "Content-Type": [
+          "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 02 Jun 2017 00:41:45 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "ocp-aad-diagnostics-server-name": [
+          "fcVKpTiyCCfKvFRoa9VsOHwp/gqYQpq53SpCg0Zgl2k="
+        ],
+        "request-id": [
+          "17c098ee-010e-4964-b5cf-4a0b539ad69a"
+        ],
+        "client-request-id": [
+          "9702b894-5650-45f3-ae7e-79ce0073cbe3"
+        ],
+        "x-ms-dirapi-data-contract-version": [
+          "1.6"
+        ],
+        "ocp-aad-session-key": [
+          "pQ4LxeBCp68V1usfF5iukyjHODW2LXItAeeQuBnvDKVfjHcXMCapEL7K3gpzsoPWSMKSMJ-VVKQTfoJ5Jwi7stmdbJ3MoGx6bBpj8ZHcDVCWYn9br3pdJ0VIpvg43nj-nmgltzsSvXc1dr2aVJ4CJdjodC2ah5LsNIPtsLYOCMbCJF2y9WeYDdzraLdP9CcsFq5HWIa3wCexQoMIp_C_EQ.G01euZkGjgsCKzXDxt9RqH264Z4WfMis8xuc31exY70"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "DataServiceVersion": [
+          "3.0;"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET",
+          "ASP.NET"
+        ],
+        "Duration": [
+          "876317"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "ServicePrincipal": "30025a6e-6179-4064-9bef-b52de61a4c9c",
+    "AADTenant": "54826b22-38d6-4fb2-bad9-b7b93a3e9c5a",
+    "SubscriptionId": "0b1f6471-1bf0-4dda-aec3-cb9272f09590"
+  }
+}
