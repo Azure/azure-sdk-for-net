@@ -45,8 +45,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
 
             return this.GetSingleAgentPool().Count;
-
-            return 0;
         }
 
         public int MasterNodeCount()
@@ -315,6 +313,36 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         protected override async Task<ContainerServiceInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.Manager.Inner.ContainerServices.GetAsync(this.ResourceGroupName, this.Name);
+        }
+
+        public IWithLinux WithServicePrincipal(string clientId, string secret)
+        {
+            ContainerServiceServicePrincipalProfile serviceProfile =
+                new ContainerServiceServicePrincipalProfile();
+            serviceProfile.ClientId = clientId;
+            serviceProfile.Secret = secret;
+            this.Inner.ServicePrincipalProfile = serviceProfile;
+            return this;
+        }
+
+        public string ServicePrincipalClientId()
+        {
+            if (this.Inner.ServicePrincipalProfile == null)
+            {
+                return null;
+            }
+
+            return this.Inner.ServicePrincipalProfile.ClientId;
+        }
+
+        public string ServicePrincipalSecret()
+        {
+            if (this.Inner.ServicePrincipalProfile == null)
+            {
+                return null;
+            }
+
+            return this.Inner.ServicePrincipalProfile.Secret;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Azure.Tests.Compute
                             .WithRegion(Region.USWest)
                             .WithNewResourceGroup()
                             .WithDcosOrchestration()
+                            .WithDiagnostics()
                             .WithLinux()
                             .WithRootUsername("testusername")
                             .WithSshKey(SshKey)
@@ -39,7 +40,6 @@ namespace Azure.Tests.Compute
                                 .WithVMSize(ContainerServiceVMSizeTypes.StandardA1)
                                 .WithLeafDomainLabel("ap0" + dnsPrefix)
                                 .Attach()
-                            .WithDiagnostics()
                             .WithTag("tag1", "value1")
                             .Create();
                     Assert.NotNull(containerService.Id);
@@ -57,7 +57,6 @@ namespace Azure.Tests.Compute
 
                     containerService = containerService.Update()
                         .WithAgentVMCount(5)
-                        .WithoutDiagnostics()
                         .WithTag("tag2", "value2")
                         .WithTag("tag3", "value3")
                         .WithoutTag("tag1")
@@ -66,7 +65,6 @@ namespace Azure.Tests.Compute
                     Assert.True(containerService.AgentPoolCount == 5);
                     Assert.True(containerService.Tags.ContainsKey("tag2"));
                     Assert.True(!containerService.Tags.ContainsKey("tag1"));
-                    Assert.True(!containerService.IsDiagnosticsEnabled);
 
                 }
                 finally

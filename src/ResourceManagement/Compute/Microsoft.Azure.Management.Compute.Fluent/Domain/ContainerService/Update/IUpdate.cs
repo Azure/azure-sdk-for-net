@@ -30,26 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.ContainerService.Update
     public interface IUpdate  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Compute.Fluent.ContainerService.Update.IUpdate>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Compute.Fluent.IContainerService>,
-        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Update.IWithUpdateAgentPoolCount,
-        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Update.IWithDiagnostics
+        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Update.IWithUpdateAgentPoolCount
     {
-    }
-
-    /// <summary>
-    /// The stage of the container service definition allowing to specific diagnostic settings.
-    /// </summary>
-    public interface IWithDiagnostics 
-    {
-        /// <summary>
-        /// Disables diagnostics.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Update.IUpdate WithoutDiagnostics();
-
-        /// <summary>
-        /// Enables diagnostics.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Update.IUpdate WithDiagnostics();
     }
 }
