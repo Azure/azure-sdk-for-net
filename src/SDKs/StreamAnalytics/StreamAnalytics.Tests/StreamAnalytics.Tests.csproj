@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.StreamAnalytics" Version="2.0.0" />-->
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
     <ProjectReference Include="..\Management.StreamAnalytics\Microsoft.Azure.Management.StreamAnalytics.csproj" />
   </ItemGroup>
 
