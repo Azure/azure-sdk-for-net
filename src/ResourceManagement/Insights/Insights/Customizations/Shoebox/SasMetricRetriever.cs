@@ -23,18 +23,24 @@ namespace Microsoft.Azure.Insights.Customizations.Shoebox
         {
             MetricFilter filter = MetricFilterExpressionParser.Parse(filterString);
 
+            // Filter definitions by timegrain
+            var timegraindefinitions = from d in definitions
+                                       where d.MetricAvailabilities.Count > 0
+                                       && d.MetricAvailabilities[0].TimeGrain == filter.TimeGrain
+                                       select d;
+
             // Group definitions by location so we can make one request to each location
             Dictionary<MetricAvailability, MetricFilter> groups =
-                definitions.GroupBy(d => d.MetricAvailabilities.First(a => a.TimeGrain == filter.TimeGrain),
-                    new SasMetricRetriever.AvailabilityComparer()).ToDictionary(g => g.Key, g => new MetricFilter()
-                    {
-                        TimeGrain = filter.TimeGrain,
-                        StartTime = filter.StartTime,
-                        EndTime = filter.EndTime,
-                        DimensionFilters = g.Select(d =>
-                            filter.DimensionFilters.FirstOrDefault(df => string.Equals(df.Name, d.Name.Value, StringComparison.OrdinalIgnoreCase))
-                            ?? new MetricDimension() {Name = d.Name.Value})
-                    });
+                timegraindefinitions.GroupBy(d => d.MetricAvailabilities[0]).ToDictionary(g => g.Key, g => new MetricFilter()
+                {
+                    TimeGrain = filter.TimeGrain,
+                    StartTime = filter.StartTime,
+                    EndTime = filter.EndTime,
+                    DimensionFilters = g.Select(d =>
+                        filter.DimensionFilters.FirstOrDefault(df => string.Equals(df.Name, d.Name.Value, StringComparison.OrdinalIgnoreCase))
+                        ?? new MetricDimension() {Name = d.Name.Value})
+                });
+
 
             // Verify all groups represent shoebox metrics
             if (groups.Any(g => g.Key.Location == null))
