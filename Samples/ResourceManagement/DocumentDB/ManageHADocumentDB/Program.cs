@@ -26,6 +26,14 @@ namespace HADocumentDB
         const String DATABASE_ID = "TestDB";
         const String COLLECTION_ID = "TestCollection";
 
+        /**
+         * Azure DocumentDB sample -
+         *  - Create a DocumentDB configured with a single read location
+         *  - Get the credentials for the DocumentDB
+         *  - Update the DocumentDB with additional read locations
+         *  - add collection to the DocumentDB with throughput 4000
+         *  - Delete the DocumentDB
+         */
         public static void RunSample(IAzure azure)
         {
             string docDBName = SdkContext.RandomResourceName("docDb", 10);
@@ -34,9 +42,9 @@ namespace HADocumentDB
             try
             {
                 //============================================================
-                // Create a documentdb.
+                // Create a DocumentDB.
 
-                Console.WriteLine("Creating a documentdb...");
+                Console.WriteLine("Creating a DocumentDB...");
                 IDocumentDBAccount documentDBAccount = azure.DocumentDBAccounts.Define(docDBName)
                         .WithRegion(Region.USWest)
                         .WithNewResourceGroup(rgName)
@@ -47,49 +55,49 @@ namespace HADocumentDB
                         .WithIpRangeFilter("13.91.6.132,13.91.6.1/24")
                         .Create();
 
-                Console.WriteLine("Created documentdb");
+                Console.WriteLine("Created DocumentDB");
                 Utilities.Print(documentDBAccount);
 
                 //============================================================
                 // Update document db with three additional read regions
 
-                Console.WriteLine("Updating documentdb with three additional read replication regions");
+                Console.WriteLine("Updating DocumentDB with three additional read replication regions");
                 documentDBAccount = documentDBAccount.Update()
                         .WithReadReplication(Region.AsiaEast)
                         .WithReadReplication(Region.AsiaSouthEast)
                         .WithReadReplication(Region.UKSouth)
                         .Apply();
 
-                Console.WriteLine("Updated documentdb");
+                Console.WriteLine("Updated DocumentDB");
                 Utilities.Print(documentDBAccount);
 
                 //============================================================
-                // Get credentials for the documentdb.
+                // Get credentials for the DocumentDB.
 
-                Console.WriteLine("Get credentials for the documentdb");
+                Console.WriteLine("Get credentials for the DocumentDB");
                 DatabaseAccountListKeysResultInner databaseAccountListKeysResult = documentDBAccount.ListKeys();
                 string masterKey = databaseAccountListKeysResult.PrimaryMasterKey;
                 string endPoint = documentDBAccount.DocumentEndpoint;
 
                 //============================================================
-                // Connect to documentdb and add a collection
+                // Connect to DocumentDB and add a collection
 
                 Console.WriteLine("Connecting and adding collection");
                 //CreateDBAndAddCollection(masterKey, endPoint);
 
                 //============================================================
-                // Delete documentdb
-                Console.WriteLine("Deleting the docuemntdb");
+                // Delete DocumentDB
+                Console.WriteLine("Deleting the DocumentDB");
                 azure.DocumentDBAccounts.DeleteById(documentDBAccount.Id);
-                Console.WriteLine("Deleted the documentdb");
+                Console.WriteLine("Deleted the DocumentDB");
             }
             finally
             {
                 try
                 {
-                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    Utilities.Log("Deleting resource group: " + rgName);
                     azure.ResourceGroups.DeleteByName(rgName);
-                    Utilities.Log("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleted resource group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {

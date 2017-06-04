@@ -7,8 +7,8 @@
 
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>C809A9F9-D061-4A1B-BEA5-CF7E3C87B0DC</ProjectGuid>
-    <RootNamespace>DocumentDBWithIPRange</RootNamespace>
+    <ProjectGuid>BF31D3E5-0CCF-4BDC-934A-0ED5C6DC8414</ProjectGuid>
+    <RootNamespace>CreateDocumentDBWithKindMongoDB</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>

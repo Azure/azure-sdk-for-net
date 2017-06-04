@@ -222,13 +222,13 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DocumentDB", "DocumentDB", "{05B043C3-9691-489D-B963-5329885829F8}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DocumentDBWithEventualConsistency", "ResourceManagement\DocumentDB\DocumentDBWithEventualConsistency\DocumentDBWithEventualConsistency.xproj", "{AD18F398-E2F1-48BE-94FA-71F31393BA12}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CreateDocumentDBWithEventualConsistency", "ResourceManagement\DocumentDB\CreateDocumentDBWithEventualConsistency\CreateDocumentDBWithEventualConsistency.xproj", "{AD18F398-E2F1-48BE-94FA-71F31393BA12}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DocumentDBWithIPRange", "ResourceManagement\DocumentDB\DocumentDBWithIPRange\DocumentDBWithIPRange.xproj", "{C809A9F9-D061-4A1B-BEA5-CF7E3C87B0DC}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CreateDocumentDBWithIPRange", "ResourceManagement\DocumentDB\CreateDocumentDBWithIPRange\CreateDocumentDBWithIPRange.xproj", "{C809A9F9-D061-4A1B-BEA5-CF7E3C87B0DC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DocumentDBWithKindMongoDB", "ResourceManagement\DocumentDB\DocumentDBWithKindMongoDB\DocumentDBWithKindMongoDB.xproj", "{BF31D3E5-0CCF-4BDC-934A-0ED5C6DC8414}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CreateDocumentDBWithKindMongoDB", "ResourceManagement\DocumentDB\CreateDocumentDBWithKindMongoDB\CreateDocumentDBWithKindMongoDB.xproj", "{BF31D3E5-0CCF-4BDC-934A-0ED5C6DC8414}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HADocumentDB", "ResourceManagement\DocumentDB\HADocumentDB\HADocumentDB.xproj", "{32A300D2-7DDA-4B84-9903-522FEA0D075C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageHADocumentDB", "ResourceManagement\DocumentDB\ManageHADocumentDB\ManageHADocumentDB.xproj", "{32A300D2-7DDA-4B84-9903-522FEA0D075C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

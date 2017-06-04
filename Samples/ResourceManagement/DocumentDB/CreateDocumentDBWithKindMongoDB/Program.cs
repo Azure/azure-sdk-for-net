@@ -21,6 +21,12 @@ namespace DocumentDBWithKindMongoDB
 {
     public class Program
     {
+        /**
+         * Azure DocumentDB sample -
+         *  - Create a DocumentDB configured with MongoDB kind.
+         *  - Get the mongodb connection string
+         *  - Delete the DocumentDB.
+         */
         public static void RunSample(IAzure azure)
         {
             string docDBName = SdkContext.RandomResourceName("docDb", 10);
@@ -29,9 +35,9 @@ namespace DocumentDBWithKindMongoDB
             try
             {
                 //============================================================
-                // Create a documentdb.
+                // Create a DocumentDB.
 
-                Console.WriteLine("Creating a documentdb...");
+                Console.WriteLine("Creating a DocumentDB...");
                 IDocumentDBAccount documentDBAccount = azure.DocumentDBAccounts.Define(docDBName)
                         .WithRegion(Region.USWest)
                         .WithNewResourceGroup(rgName)
@@ -41,35 +47,35 @@ namespace DocumentDBWithKindMongoDB
                         .WithReadReplication(Region.USCentral)
                         .Create();
 
-                Console.WriteLine("Created documentdb");
+                Console.WriteLine("Created DocumentDB");
                 Utilities.Print(documentDBAccount);
 
                 //============================================================
-                // Get credentials for the documentdb.
+                // Get credentials for the DocumentDB.
 
-                Console.WriteLine("Get credentials for the documentdb");
+                Console.WriteLine("Get credentials for the DocumentDB");
                 DatabaseAccountListKeysResultInner databaseAccountListKeysResult = documentDBAccount.ListKeys();
                 string masterKey = databaseAccountListKeysResult.PrimaryMasterKey;
                 string endPoint = documentDBAccount.DocumentEndpoint;
 
-                Console.WriteLine("Get the mongodb connection string");
+                Console.WriteLine("Get the MongoDB connection string");
                 DatabaseAccountListConnectionStringsResultInner databaseAccountListConnectionStringsResult = documentDBAccount.ListConnectionStrings();
                 Console.WriteLine("MongoDB connection string: "
                         + databaseAccountListConnectionStringsResult.ConnectionStrings[0].ConnectionString);
 
                 //============================================================
-                // Delete documentdb
-                Console.WriteLine("Deleting the docuemntdb");
+                // Delete DocumentDB
+                Console.WriteLine("Deleting the DocumentDB");
                 azure.DocumentDBAccounts.DeleteById(documentDBAccount.Id);
-                Console.WriteLine("Deleted the documentdb");
+                Console.WriteLine("Deleted the DocumentDB");
             }
             finally
             {
                 try
                 {
-                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    Utilities.Log("Deleting resource group: " + rgName);
                     azure.ResourceGroups.DeleteByName(rgName);
-                    Utilities.Log("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleted resource group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {

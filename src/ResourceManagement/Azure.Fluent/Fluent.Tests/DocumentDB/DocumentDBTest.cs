@@ -1,14 +1,9 @@
-﻿using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Fluent.Tests.Common;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using Microsoft.Azure.Management.Compute.Fluent;
-using Microsoft.Azure.Management.Compute.Fluent.Models;
-using Microsoft.Azure.Management.ContainerRegistry.Fluent;
+﻿using Fluent.Tests.Common;
 using Microsoft.Azure.Management.DocumentDB.Fluent;
 using Microsoft.Azure.Management.DocumentDB.Fluent.Models;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using System;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
 
 namespace Azure.Tests.DocumentDB
 {

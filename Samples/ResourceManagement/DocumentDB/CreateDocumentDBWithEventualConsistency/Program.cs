@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.DocumentDB.Fluent;
@@ -17,10 +19,21 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace DocumentDBWithIPRange
+namespace DocumentDBWithEventualConsistency
 {
+
     public class Program
     {
+        const String DATABASE_ID = "TestDB";
+        const String COLLECTION_ID = "TestCollection";
+
+        /**
+          * Azure DocumentDB sample -
+          *  - Create a DocumentDB configured with eventual consistency
+          *  - Get the credentials for the DocumentDB
+          *  - add collection to the DocumentDB
+          *  - Delete the DocumentDB.
+          */
         public static void RunSample(IAzure azure)
         {
             string docDBName = SdkContext.RandomResourceName("docDb", 10);
@@ -29,49 +42,48 @@ namespace DocumentDBWithIPRange
             try
             {
                 //============================================================
-                // Create a documentdb.
+                // Create a DocumentDB.
 
-                Console.WriteLine("Creating a documentdb...");
+                Console.WriteLine("Creating a DocumentDB...");
                 IDocumentDBAccount documentDBAccount = azure.DocumentDBAccounts.Define(docDBName)
                         .WithRegion(Region.USWest)
                         .WithNewResourceGroup(rgName)
                         .WithKind(DatabaseAccountKind.GlobalDocumentDB)
-                        .WithSessionConsistency()
+                        .WithEventualConsistency()
                         .WithWriteReplication(Region.USEast)
                         .WithReadReplication(Region.USCentral)
-                        .WithIpRangeFilter("13.91.6.132,13.91.6.1/24")
                         .Create();
 
-                Console.WriteLine("Created documentdb");
+                Console.WriteLine("Created DocumentDB");
                 Utilities.Print(documentDBAccount);
 
                 //============================================================
-                // Get credentials for the documentdb.
+                // Get credentials for the DocumentDB.
 
-                Console.WriteLine("Get credentials for the documentdb");
+                Console.WriteLine("Get credentials for the DocumentDB");
                 DatabaseAccountListKeysResultInner databaseAccountListKeysResult = documentDBAccount.ListKeys();
                 string masterKey = databaseAccountListKeysResult.PrimaryMasterKey;
                 string endPoint = documentDBAccount.DocumentEndpoint;
 
                 //============================================================
-                // Connect to documentdb and add a collection
+                // Connect to DocumentDB and add a collection
 
                 Console.WriteLine("Connecting and adding collection");
                 //CreateDBAndAddCollection(masterKey, endPoint);
 
                 //============================================================
-                // Delete documentdb
-                Console.WriteLine("Deleting the docuemntdb");
+                // Delete DocumentDB
+                Console.WriteLine("Deleting the DocumentDB");
                 azure.DocumentDBAccounts.DeleteById(documentDBAccount.Id);
-                Console.WriteLine("Deleted the documentdb");
+                Console.WriteLine("Deleted the DocumentDB");
             }
             finally
             {
                 try
                 {
-                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    Utilities.Log("Deleting resource group: " + rgName);
                     azure.ResourceGroups.DeleteByName(rgName);
-                    Utilities.Log("Deleted Resource Group: " + rgName);
+                    Utilities.Log("Deleted resource group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {
@@ -81,6 +93,43 @@ namespace DocumentDBWithIPRange
                 {
                     Utilities.Log(e.StackTrace);
                 }
+            }
+        }
+
+        private void CreateDBAndAddCollection(string masterKey, string endPoint)
+        {
+            try
+            {
+                DocumentClient documentClient = new DocumentClient(new System.Uri(endPoint),
+                        masterKey, ConnectionPolicy.Default,
+                        ConsistencyLevel.Session);
+
+                // Define a new database using the id above.
+                Database myDatabase = new Database();
+                myDatabase.Id = DATABASE_ID;
+
+                myDatabase = documentClient.CreateDatabaseAsync(myDatabase, null)
+                        .GetAwaiter().GetResult();
+
+                Console.WriteLine("Created a new database:");
+                Console.WriteLine(myDatabase.ToString());
+
+                // Define a new collection using the id above.
+                DocumentCollection myCollection = new DocumentCollection();
+                myCollection.Id = COLLECTION_ID;
+
+                // Set the provisioned throughput for this collection to be 1000 RUs.
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions.OfferThroughput = 4000;
+
+                // Create a new collection.
+                myCollection = documentClient.CreateDocumentCollectionAsync(
+                        "dbs/" + DATABASE_ID, myCollection, requestOptions)
+                        .GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
