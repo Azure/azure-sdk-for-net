@@ -41,16 +41,16 @@ namespace Microsoft.AzureStack.Management
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
-    internal partial class ManagedSubscriptionOperations : IServiceOperations<AzureStackClient>, IManagedSubscriptionOperations
+    internal partial class SubscriptionOperationsAsAdmin : IServiceOperations<AzureStackClient>, ISubscriptionOperationsAsAdmin
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedSubscriptionOperations
+        /// Initializes a new instance of the SubscriptionOperationsAsAdmin
         /// class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal ManagedSubscriptionOperations(AzureStackClient client)
+        internal SubscriptionOperationsAsAdmin(AzureStackClient client)
         {
             this._client = client;
         }
@@ -78,7 +78,7 @@ namespace Microsoft.AzureStack.Management
         /// <returns>
         /// Result of the create or the update operation of the subscription
         /// </returns>
-        public async Task<ManagedSubscriptionCreateOrUpdateResult> CreateOrUpdateAsync(ManagedSubscriptionCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<SubscriptionCreateOrUpdateAsAdminResult> CreateOrUpdateAsync(SubscriptionCreateOrUpdateAsAdminParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -108,7 +108,7 @@ namespace Microsoft.AzureStack.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/providers/Microsoft.Subscriptions/subscriptions/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/subscriptions/";
             if (parameters.Subscription.SubscriptionId != null)
             {
                 url = url + Uri.EscapeDataString(parameters.Subscription.SubscriptionId);
@@ -150,54 +150,54 @@ namespace Microsoft.AzureStack.Management
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject managedSubscriptionCreateOrUpdateParametersValue = new JObject();
-                requestDoc = managedSubscriptionCreateOrUpdateParametersValue;
+                JObject subscriptionCreateOrUpdateAsAdminParametersValue = new JObject();
+                requestDoc = subscriptionCreateOrUpdateAsAdminParametersValue;
                 
                 if (parameters.Subscription.Id != null)
                 {
-                    managedSubscriptionCreateOrUpdateParametersValue["id"] = parameters.Subscription.Id;
+                    subscriptionCreateOrUpdateAsAdminParametersValue["id"] = parameters.Subscription.Id;
                 }
                 
                 if (parameters.Subscription.SubscriptionId != null)
                 {
-                    managedSubscriptionCreateOrUpdateParametersValue["subscriptionId"] = parameters.Subscription.SubscriptionId;
+                    subscriptionCreateOrUpdateAsAdminParametersValue["subscriptionId"] = parameters.Subscription.SubscriptionId;
                 }
                 
                 if (parameters.Subscription.DelegatedProviderSubscriptionId != null)
                 {
-                    managedSubscriptionCreateOrUpdateParametersValue["delegatedProviderSubscriptionId"] = parameters.Subscription.DelegatedProviderSubscriptionId;
+                    subscriptionCreateOrUpdateAsAdminParametersValue["delegatedProviderSubscriptionId"] = parameters.Subscription.DelegatedProviderSubscriptionId;
                 }
                 
                 if (parameters.Subscription.DisplayName != null)
                 {
-                    managedSubscriptionCreateOrUpdateParametersValue["displayName"] = parameters.Subscription.DisplayName;
+                    subscriptionCreateOrUpdateAsAdminParametersValue["displayName"] = parameters.Subscription.DisplayName;
                 }
                 
                 if (parameters.Subscription.ExternalReferenceId != null)
                 {
-                    managedSubscriptionCreateOrUpdateParametersValue["externalReferenceId"] = parameters.Subscription.ExternalReferenceId;
+                    subscriptionCreateOrUpdateAsAdminParametersValue["externalReferenceId"] = parameters.Subscription.ExternalReferenceId;
                 }
                 
                 if (parameters.Subscription.Owner != null)
                 {
-                    managedSubscriptionCreateOrUpdateParametersValue["owner"] = parameters.Subscription.Owner;
+                    subscriptionCreateOrUpdateAsAdminParametersValue["owner"] = parameters.Subscription.Owner;
                 }
                 
                 if (parameters.Subscription.TenantId != null)
                 {
-                    managedSubscriptionCreateOrUpdateParametersValue["tenantId"] = parameters.Subscription.TenantId;
+                    subscriptionCreateOrUpdateAsAdminParametersValue["tenantId"] = parameters.Subscription.TenantId;
                 }
                 
-                managedSubscriptionCreateOrUpdateParametersValue["routingResourceManagerType"] = parameters.Subscription.RoutingResourceManagerType.ToString();
+                subscriptionCreateOrUpdateAsAdminParametersValue["routingResourceManagerType"] = parameters.Subscription.RoutingResourceManagerType.ToString();
                 
                 if (parameters.Subscription.OfferId != null)
                 {
-                    managedSubscriptionCreateOrUpdateParametersValue["offerId"] = parameters.Subscription.OfferId;
+                    subscriptionCreateOrUpdateAsAdminParametersValue["offerId"] = parameters.Subscription.OfferId;
                 }
                 
                 if (parameters.Subscription.State != null)
                 {
-                    managedSubscriptionCreateOrUpdateParametersValue["state"] = parameters.Subscription.State.Value.ToString();
+                    subscriptionCreateOrUpdateAsAdminParametersValue["state"] = parameters.Subscription.State.Value.ToString();
                 }
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
@@ -231,13 +231,13 @@ namespace Microsoft.AzureStack.Management
                     }
                     
                     // Create Result
-                    ManagedSubscriptionCreateOrUpdateResult result = null;
+                    SubscriptionCreateOrUpdateAsAdminResult result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ManagedSubscriptionCreateOrUpdateResult();
+                        result = new SubscriptionCreateOrUpdateAsAdminResult();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -385,7 +385,7 @@ namespace Microsoft.AzureStack.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/providers/Microsoft.Subscriptions/subscriptions/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/subscriptions/";
             url = url + Uri.EscapeDataString(subscriptionId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
@@ -487,7 +487,7 @@ namespace Microsoft.AzureStack.Management
         /// <returns>
         /// Result of the subscription get operation
         /// </returns>
-        public async Task<ManagedSubscriptionGetResult> GetAsync(string subscriptionId, CancellationToken cancellationToken)
+        public async Task<SubscriptionGetAsAdminResult> GetAsync(string subscriptionId, CancellationToken cancellationToken)
         {
             // Validate
             if (subscriptionId == null)
@@ -513,7 +513,7 @@ namespace Microsoft.AzureStack.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/providers/Microsoft.Subscriptions/subscriptions/";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/subscriptions/";
             url = url + Uri.EscapeDataString(subscriptionId);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
@@ -575,13 +575,13 @@ namespace Microsoft.AzureStack.Management
                     }
                     
                     // Create Result
-                    ManagedSubscriptionGetResult result = null;
+                    SubscriptionGetAsAdminResult result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ManagedSubscriptionGetResult();
+                        result = new SubscriptionGetAsAdminResult();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {
@@ -702,7 +702,7 @@ namespace Microsoft.AzureStack.Management
         /// <returns>
         /// Result of the list operations
         /// </returns>
-        public async Task<ManagedSubscriptionListResult> ListAsync(bool includeDetails, CancellationToken cancellationToken)
+        public async Task<SubscriptionListAsAdminResult> ListAsync(bool includeDetails, CancellationToken cancellationToken)
         {
             // Validate
             
@@ -724,7 +724,7 @@ namespace Microsoft.AzureStack.Management
             {
                 url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
             }
-            url = url + "/providers/Microsoft.Subscriptions/subscriptions";
+            url = url + "/providers/Microsoft.Subscriptions.Admin/subscriptions";
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
             queryParameters.Add("includeDetails=" + Uri.EscapeDataString(includeDetails.ToString().ToLower()));
@@ -786,219 +786,13 @@ namespace Microsoft.AzureStack.Management
                     }
                     
                     // Create Result
-                    ManagedSubscriptionListResult result = null;
+                    SubscriptionListAsAdminResult result = null;
                     // Deserialize Response
                     if (statusCode == HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ManagedSubscriptionListResult();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            JToken valueArray = responseDoc["value"];
-                            if (valueArray != null && valueArray.Type != JTokenType.Null)
-                            {
-                                foreach (JToken valueValue in ((JArray)valueArray))
-                                {
-                                    AdminSubscriptionDefinition adminSubscriptionDefinitionInstance = new AdminSubscriptionDefinition();
-                                    result.Subscriptions.Add(adminSubscriptionDefinitionInstance);
-                                    
-                                    JToken idValue = valueValue["id"];
-                                    if (idValue != null && idValue.Type != JTokenType.Null)
-                                    {
-                                        string idInstance = ((string)idValue);
-                                        adminSubscriptionDefinitionInstance.Id = idInstance;
-                                    }
-                                    
-                                    JToken subscriptionIdValue = valueValue["subscriptionId"];
-                                    if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
-                                    {
-                                        string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                        adminSubscriptionDefinitionInstance.SubscriptionId = subscriptionIdInstance;
-                                    }
-                                    
-                                    JToken delegatedProviderSubscriptionIdValue = valueValue["delegatedProviderSubscriptionId"];
-                                    if (delegatedProviderSubscriptionIdValue != null && delegatedProviderSubscriptionIdValue.Type != JTokenType.Null)
-                                    {
-                                        string delegatedProviderSubscriptionIdInstance = ((string)delegatedProviderSubscriptionIdValue);
-                                        adminSubscriptionDefinitionInstance.DelegatedProviderSubscriptionId = delegatedProviderSubscriptionIdInstance;
-                                    }
-                                    
-                                    JToken displayNameValue = valueValue["displayName"];
-                                    if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
-                                    {
-                                        string displayNameInstance = ((string)displayNameValue);
-                                        adminSubscriptionDefinitionInstance.DisplayName = displayNameInstance;
-                                    }
-                                    
-                                    JToken externalReferenceIdValue = valueValue["externalReferenceId"];
-                                    if (externalReferenceIdValue != null && externalReferenceIdValue.Type != JTokenType.Null)
-                                    {
-                                        string externalReferenceIdInstance = ((string)externalReferenceIdValue);
-                                        adminSubscriptionDefinitionInstance.ExternalReferenceId = externalReferenceIdInstance;
-                                    }
-                                    
-                                    JToken ownerValue = valueValue["owner"];
-                                    if (ownerValue != null && ownerValue.Type != JTokenType.Null)
-                                    {
-                                        string ownerInstance = ((string)ownerValue);
-                                        adminSubscriptionDefinitionInstance.Owner = ownerInstance;
-                                    }
-                                    
-                                    JToken tenantIdValue = valueValue["tenantId"];
-                                    if (tenantIdValue != null && tenantIdValue.Type != JTokenType.Null)
-                                    {
-                                        string tenantIdInstance = ((string)tenantIdValue);
-                                        adminSubscriptionDefinitionInstance.TenantId = tenantIdInstance;
-                                    }
-                                    
-                                    JToken routingResourceManagerTypeValue = valueValue["routingResourceManagerType"];
-                                    if (routingResourceManagerTypeValue != null && routingResourceManagerTypeValue.Type != JTokenType.Null)
-                                    {
-                                        ResourceManagerType routingResourceManagerTypeInstance = ((ResourceManagerType)Enum.Parse(typeof(ResourceManagerType), ((string)routingResourceManagerTypeValue), true));
-                                        adminSubscriptionDefinitionInstance.RoutingResourceManagerType = routingResourceManagerTypeInstance;
-                                    }
-                                    
-                                    JToken offerIdValue = valueValue["offerId"];
-                                    if (offerIdValue != null && offerIdValue.Type != JTokenType.Null)
-                                    {
-                                        string offerIdInstance = ((string)offerIdValue);
-                                        adminSubscriptionDefinitionInstance.OfferId = offerIdInstance;
-                                    }
-                                    
-                                    JToken stateValue = valueValue["state"];
-                                    if (stateValue != null && stateValue.Type != JTokenType.Null)
-                                    {
-                                        SubscriptionState stateInstance = ((SubscriptionState)Enum.Parse(typeof(SubscriptionState), ((string)stateValue), true));
-                                        adminSubscriptionDefinitionInstance.State = stateInstance;
-                                    }
-                                }
-                            }
-                            
-                            JToken odatanextLinkValue = responseDoc["@odata.nextLink"];
-                            if (odatanextLinkValue != null && odatanextLinkValue.Type != JTokenType.Null)
-                            {
-                                string odatanextLinkInstance = ((string)odatanextLinkValue);
-                                result.NextLink = odatanextLinkInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Lists the subscription with the next link
-        /// </summary>
-        /// <param name='nextLink'>
-        /// Required. The URL pointing to get the next set of subscriptions
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Result of the list operations
-        /// </returns>
-        public async Task<ManagedSubscriptionListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextLink", nextLink);
-                TracingAdapter.Enter(invocationId, this, "ListNextAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + Uri.EscapeDataString(nextLink);
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    ManagedSubscriptionListResult result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new ManagedSubscriptionListResult();
+                        result = new SubscriptionListAsAdminResult();
                         JToken responseDoc = null;
                         if (string.IsNullOrEmpty(responseContent) == false)
                         {

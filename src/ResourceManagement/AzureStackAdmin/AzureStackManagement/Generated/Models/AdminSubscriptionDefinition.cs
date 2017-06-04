@@ -30,6 +30,17 @@ namespace Microsoft.AzureStack.Management.Models
     /// </summary>
     public partial class AdminSubscriptionDefinition
     {
+        private string _delegatedProviderSubscriptionId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the parent reseller subscription identifier.
+        /// </summary>
+        public string DelegatedProviderSubscriptionId
+        {
+            get { return this._delegatedProviderSubscriptionId; }
+            set { this._delegatedProviderSubscriptionId = value; }
+        }
+        
         private string _displayName;
         
         /// <summary>
@@ -55,8 +66,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the fully qualified identifier
-        /// (/subscriptions/{subscriptionId}).
+        /// Optional. Gets or sets the fully qualified identifier.
         /// </summary>
         public string Id
         {
@@ -87,6 +97,17 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._owner = value; }
         }
         
+        private ResourceManagerType _routingResourceManagerType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the resource manager type.
+        /// </summary>
+        public ResourceManagerType RoutingResourceManagerType
+        {
+            get { return this._routingResourceManagerType; }
+            set { this._routingResourceManagerType = value; }
+        }
+        
         private Microsoft.AzureStack.Management.Models.SubscriptionState? _state;
         
         /// <summary>
@@ -101,7 +122,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _subscriptionId;
         
         /// <summary>
-        /// Optional. Gets or sets the subscription Guid string.
+        /// Optional. Gets or sets the subscription identifier.
         /// </summary>
         public string SubscriptionId
         {
@@ -112,7 +133,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _tenantId;
         
         /// <summary>
-        /// Optional. ets or sets the directory tenant identifier.
+        /// Optional. Gets or sets the directory tenant identifier.
         /// </summary>
         public string TenantId
         {

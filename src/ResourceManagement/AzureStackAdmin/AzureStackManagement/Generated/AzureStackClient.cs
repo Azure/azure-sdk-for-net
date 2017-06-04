@@ -217,6 +217,18 @@ namespace Microsoft.AzureStack.Management
             get { return this._subscriptions; }
         }
         
+        private ISubscriptionOperationsAsAdmin _tenantSubscriptions;
+        
+        /// <summary>
+        /// Administrator Operations on the subscription  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        public virtual ISubscriptionOperationsAsAdmin TenantSubscriptions
+        {
+            get { return this._tenantSubscriptions; }
+        }
+        
         private IUsageConnectionsOperations _usageConnections;
         
         /// <summary>
@@ -248,6 +260,7 @@ namespace Microsoft.AzureStack.Management
             this._publicGalleryItem = new PublicGalleryItemOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
+            this._tenantSubscriptions = new SubscriptionOperationsAsAdmin(this);
             this._usageConnections = new UsageConnectionsOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
@@ -308,6 +321,7 @@ namespace Microsoft.AzureStack.Management
             this._publicGalleryItem = new PublicGalleryItemOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._subscriptions = new SubscriptionOperations(this);
+            this._tenantSubscriptions = new SubscriptionOperationsAsAdmin(this);
             this._usageConnections = new UsageConnectionsOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
