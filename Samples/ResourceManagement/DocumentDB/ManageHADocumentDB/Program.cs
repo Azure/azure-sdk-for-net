@@ -112,36 +112,32 @@ namespace HADocumentDB
 
         private void CreateDBAndAddCollection(string masterKey, string endPoint)
         {
-        try {
-                DocumentClient documentClient = new DocumentClient(new System.Uri(endPoint),
-                        masterKey, ConnectionPolicy.Default,
-                        ConsistencyLevel.Session);
+            DocumentClient documentClient = new DocumentClient(new System.Uri(endPoint),
+                    masterKey, ConnectionPolicy.Default,
+                    ConsistencyLevel.Session);
 
-                // Define a new database using the id above.
-                Database myDatabase = new Database();
-                myDatabase.Id = DATABASE_ID;
+            // Define a new database using the id above.
+            Database myDatabase = new Database();
+            myDatabase.Id = DATABASE_ID;
 
-                myDatabase = documentClient.CreateDatabaseAsync(myDatabase, null)
-                        .GetAwaiter().GetResult();
+            myDatabase = documentClient.CreateDatabaseAsync(myDatabase, null)
+                    .GetAwaiter().GetResult();
 
-                Console.WriteLine("Created a new database:");
-                Console.WriteLine(myDatabase.ToString());
+            Console.WriteLine("Created a new database:");
+            Console.WriteLine(myDatabase.ToString());
 
-                // Define a new collection using the id above.
-                DocumentCollection myCollection = new DocumentCollection();
-                myCollection.Id = COLLECTION_ID;
+            // Define a new collection using the id above.
+            DocumentCollection myCollection = new DocumentCollection();
+            myCollection.Id = COLLECTION_ID;
 
-                // Set the provisioned throughput for this collection to be 1000 RUs.
-                RequestOptions requestOptions = new RequestOptions();
-                requestOptions.OfferThroughput = 4000;
+            // Set the provisioned throughput for this collection to be 1000 RUs.
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.OfferThroughput = 4000;
 
-                // Create a new collection.
-                myCollection = documentClient.CreateDocumentCollectionAsync(
-                        "dbs/" + DATABASE_ID, myCollection, requestOptions)
-                        .GetAwaiter().GetResult();
-            } catch (Exception ex) {
-                throw ex;
-            }
+            // Create a new collection.
+            myCollection = documentClient.CreateDocumentCollectionAsync(
+                    "dbs/" + DATABASE_ID, myCollection, requestOptions)
+                    .GetAwaiter().GetResult();
         }
 
         public static void Main(string[] args)
