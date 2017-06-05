@@ -10,7 +10,7 @@
     <AssemblyName>Microsoft.AzureStack.AzureConsistentStorage</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-  </PropertyGroup>  
+  </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
     <Compile Include="Customization\EventQueryException.cs" />
@@ -20,8 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Microsoft.AzureStack.Management.Storage.nuget.proj" />
-    <None Include="Microsoft.AzureStack.Management.Storage.nuspec" />
+    <None Include="Microsoft.AzureStack.AzureConsistentStorage.nuget.proj" />
+    <None Include="Microsoft.AzureStack.AzureConsistentStorage.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
