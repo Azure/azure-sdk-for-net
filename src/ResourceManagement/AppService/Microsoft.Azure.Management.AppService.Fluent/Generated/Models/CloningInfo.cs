@@ -66,7 +66,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// <param name="trafficManagerProfileName">Name of Traffic Manager
         /// profile to create. This is only needed if Traffic Manager profile
         /// does not already exist.</param>
-        public CloningInfo(string sourceWebAppId, string correlationId = default(string), bool? overwrite = default(bool?), bool? cloneCustomHostNames = default(bool?), bool? cloneSourceControl = default(bool?), string hostingEnvironment = default(string), IDictionary<string, string> appSettingsOverrides = default(IDictionary<string, string>), bool? configureLoadBalancing = default(bool?), string trafficManagerProfileId = default(string), string trafficManagerProfileName = default(string))
+        /// <param name="ignoreQuotas">&lt;code&gt;true&lt;/code&gt; if quotas
+        /// should be ignored; otherwise,
+        /// &lt;code&gt;false&lt;/code&gt;.</param>
+        public CloningInfo(string sourceWebAppId, string correlationId = default(string), bool? overwrite = default(bool?), bool? cloneCustomHostNames = default(bool?), bool? cloneSourceControl = default(bool?), string hostingEnvironment = default(string), IDictionary<string, string> appSettingsOverrides = default(IDictionary<string, string>), bool? configureLoadBalancing = default(bool?), string trafficManagerProfileId = default(string), string trafficManagerProfileName = default(string), bool? ignoreQuotas = default(bool?))
         {
             CorrelationId = correlationId;
             Overwrite = overwrite;
@@ -78,6 +81,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
             ConfigureLoadBalancing = configureLoadBalancing;
             TrafficManagerProfileId = trafficManagerProfileId;
             TrafficManagerProfileName = trafficManagerProfileName;
+            IgnoreQuotas = ignoreQuotas;
             CustomInit();
         }
 
@@ -165,6 +169,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// </summary>
         [JsonProperty(PropertyName = "trafficManagerProfileName")]
         public string TrafficManagerProfileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if
+        /// quotas should be ignored; otherwise,
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "ignoreQuotas")]
+        public bool? IgnoreQuotas { get; set; }
 
         /// <summary>
         /// Validate the object.

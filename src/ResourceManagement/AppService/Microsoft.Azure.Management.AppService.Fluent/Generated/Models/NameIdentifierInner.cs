@@ -18,21 +18,21 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     /// <summary>
     /// Identifies an object.
     /// </summary>
-    public partial class NameIdentifier
+    public partial class NameIdentifierInner
     {
         /// <summary>
-        /// Initializes a new instance of the NameIdentifier class.
+        /// Initializes a new instance of the NameIdentifierInner class.
         /// </summary>
-        public NameIdentifier()
+        public NameIdentifierInner()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NameIdentifier class.
+        /// Initializes a new instance of the NameIdentifierInner class.
         /// </summary>
         /// <param name="name">Name of the object.</param>
-        public NameIdentifier(string name = default(string))
+        public NameIdentifierInner(string name = default(string))
         {
             Name = name;
             CustomInit();

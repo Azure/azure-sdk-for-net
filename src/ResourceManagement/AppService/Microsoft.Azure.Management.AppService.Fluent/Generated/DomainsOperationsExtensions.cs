@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='name'>
-            /// Name of the object.
+            /// <param name='identifier'>
+            /// Name of the domain.
             /// </param>
-            public static DomainAvailablilityCheckResultInner CheckAvailability(this IDomainsOperations operations, string name = default(string))
+            public static DomainAvailablilityCheckResultInner CheckAvailability(this IDomainsOperations operations, NameIdentifierInner identifier)
             {
-                return operations.CheckAvailabilityAsync(name).GetAwaiter().GetResult();
+                return operations.CheckAvailabilityAsync(identifier).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -48,15 +48,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='name'>
-            /// Name of the object.
+            /// <param name='identifier'>
+            /// Name of the domain.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DomainAvailablilityCheckResultInner> CheckAvailabilityAsync(this IDomainsOperations operations, string name = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainAvailablilityCheckResultInner> CheckAvailabilityAsync(this IDomainsOperations operations, NameIdentifierInner identifier, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckAvailabilityWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckAvailabilityWithHttpMessagesAsync(identifier, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='parameters'>
             /// Search parameters for domain name recommendations.
             /// </param>
-            public static IPage<NameIdentifier> ListRecommendations(this IDomainsOperations operations, DomainRecommendationSearchParametersInner parameters)
+            public static IPage<NameIdentifierInner> ListRecommendations(this IDomainsOperations operations, DomainRecommendationSearchParametersInner parameters)
             {
                 return operations.ListRecommendationsAsync(parameters).GetAwaiter().GetResult();
             }
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NameIdentifier>> ListRecommendationsAsync(this IDomainsOperations operations, DomainRecommendationSearchParametersInner parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NameIdentifierInner>> ListRecommendationsAsync(this IDomainsOperations operations, DomainRecommendationSearchParametersInner parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListRecommendationsWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -736,7 +736,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NameIdentifier> ListRecommendationsNext(this IDomainsOperations operations, string nextPageLink)
+            public static IPage<NameIdentifierInner> ListRecommendationsNext(this IDomainsOperations operations, string nextPageLink)
             {
                 return operations.ListRecommendationsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -756,7 +756,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NameIdentifier>> ListRecommendationsNextAsync(this IDomainsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NameIdentifierInner>> ListRecommendationsNextAsync(this IDomainsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListRecommendationsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

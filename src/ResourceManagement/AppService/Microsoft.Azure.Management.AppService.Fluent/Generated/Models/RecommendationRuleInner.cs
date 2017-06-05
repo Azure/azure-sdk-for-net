@@ -53,7 +53,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// 'Webhook', 'All'</param>
         /// <param name="tags">An array of category tags that the rule
         /// contains.</param>
-        public RecommendationRuleInner(string name = default(string), string displayName = default(string), string message = default(string), System.Guid? recommendationId = default(System.Guid?), string description = default(string), string actionName = default(string), NotificationLevel? level = default(NotificationLevel?), Channels? channels = default(Channels?), IList<string> tags = default(IList<string>))
+        /// <param name="isDynamic">True if this is associated with a
+        /// dynamically added rule</param>
+        /// <param name="extensionName">Extension name of the portal if exists.
+        /// Applicable to dynamic rule only.</param>
+        /// <param name="bladeName">Deep link to a blade on the portal.
+        /// Applicable to dynamic rule only.</param>
+        /// <param name="forwardLink">Forward link to an external document
+        /// associated with the rule. Applicable to dynamic rule only.</param>
+        public RecommendationRuleInner(string name = default(string), string displayName = default(string), string message = default(string), System.Guid? recommendationId = default(System.Guid?), string description = default(string), string actionName = default(string), NotificationLevel? level = default(NotificationLevel?), Channels? channels = default(Channels?), IList<string> tags = default(IList<string>), bool? isDynamic = default(bool?), string extensionName = default(string), string bladeName = default(string), string forwardLink = default(string))
         {
             Name = name;
             DisplayName = displayName;
@@ -64,6 +72,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
             Level = level;
             Channels = channels;
             Tags = tags;
+            IsDynamic = isDynamic;
+            ExtensionName = extensionName;
+            BladeName = bladeName;
+            ForwardLink = forwardLink;
             CustomInit();
         }
 
@@ -132,6 +144,34 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IList<string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets true if this is associated with a dynamically added
+        /// rule
+        /// </summary>
+        [JsonProperty(PropertyName = "isDynamic")]
+        public bool? IsDynamic { get; set; }
+
+        /// <summary>
+        /// Gets or sets extension name of the portal if exists. Applicable to
+        /// dynamic rule only.
+        /// </summary>
+        [JsonProperty(PropertyName = "extensionName")]
+        public string ExtensionName { get; set; }
+
+        /// <summary>
+        /// Gets or sets deep link to a blade on the portal. Applicable to
+        /// dynamic rule only.
+        /// </summary>
+        [JsonProperty(PropertyName = "bladeName")]
+        public string BladeName { get; set; }
+
+        /// <summary>
+        /// Gets or sets forward link to an external document associated with
+        /// the rule. Applicable to dynamic rule only.
+        /// </summary>
+        [JsonProperty(PropertyName = "forwardLink")]
+        public string ForwardLink { get; set; }
 
     }
 }

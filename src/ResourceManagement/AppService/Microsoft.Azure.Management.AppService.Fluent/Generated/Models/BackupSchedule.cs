@@ -32,13 +32,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// <summary>
         /// Initializes a new instance of the BackupSchedule class.
         /// </summary>
-        /// <param name="frequencyInterval">How often should be the backup
+        /// <param name="frequencyInterval">How often the backup should be
         /// executed (e.g. for weekly backup, this should be set to 7 and
         /// FrequencyUnit should be set to Day)</param>
-        /// <param name="frequencyUnit">The unit of time for how often should
-        /// be the backup executed (e.g. for weekly backup, this should be set
-        /// to Day and FrequencyInterval should be set to 7). Possible values
-        /// include: 'Day', 'Hour'</param>
+        /// <param name="frequencyUnit">The unit of time for how often the
+        /// backup should be executed (e.g. for weekly backup, this should be
+        /// set to Day and FrequencyInterval should be set to 7). Possible
+        /// values include: 'Day', 'Hour'</param>
         /// <param name="keepAtLeastOneBackup">True if the retention policy
         /// should always keep at least one backup in the storage account,
         /// regardless how old it is; false otherwise.</param>
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets how often should be the backup executed (e.g. for
+        /// Gets or sets how often the backup should be executed (e.g. for
         /// weekly backup, this should be set to 7 and FrequencyUnit should be
         /// set to Day)
         /// </summary>
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         public int FrequencyInterval { get; set; }
 
         /// <summary>
-        /// Gets or sets the unit of time for how often should be the backup
+        /// Gets or sets the unit of time for how often the backup should be
         /// executed (e.g. for weekly backup, this should be set to Day and
         /// FrequencyInterval should be set to 7). Possible values include:
         /// 'Day', 'Hour'

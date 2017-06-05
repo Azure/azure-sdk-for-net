@@ -12,18 +12,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.AppService;
     using Microsoft.Azure.Management.AppService.Fluent;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SkuName.
+    /// Defines values for DnsType.
     /// </summary>
-    public static class SkuName
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum DnsType
     {
-        public const string Free = "Free";
-        public const string Shared = "Shared";
-        public const string Basic = "Basic";
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
-        public const string Dynamic = "Dynamic";
-        public const string Isolated = "Isolated";
+        [EnumMember(Value = "AzureDns")]
+        AzureDns,
+        [EnumMember(Value = "DefaultDomainRegistrarDns")]
+        DefaultDomainRegistrarDns
     }
 }

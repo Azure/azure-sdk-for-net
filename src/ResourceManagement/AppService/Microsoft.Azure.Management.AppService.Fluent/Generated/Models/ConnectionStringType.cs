@@ -42,6 +42,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         [EnumMember(Value = "DocDb")]
         DocDb,
         [EnumMember(Value = "RedisCache")]
-        RedisCache
+        RedisCache,
+        [EnumMember(Value = "PostgreSQL")]
+        PostgreSQL
     }
 }

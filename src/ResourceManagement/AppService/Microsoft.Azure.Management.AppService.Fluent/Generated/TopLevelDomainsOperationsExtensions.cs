@@ -110,14 +110,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the top-level domain.
             /// </param>
-            /// <param name='includePrivacy'>
-            /// If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include
-            /// agreements for domain privacy as well; otherwise,
-            /// &lt;code&gt;false&lt;/code&gt;.
+            /// <param name='agreementOption'>
+            /// Domain agreement options.
             /// </param>
-            public static IPage<TldLegalAgreement> ListAgreements(this ITopLevelDomainsOperations operations, string name, bool? includePrivacy = default(bool?))
+            public static IPage<TldLegalAgreement> ListAgreements(this ITopLevelDomainsOperations operations, string name, TopLevelDomainAgreementOptionInner agreementOption)
             {
-                return operations.ListAgreementsAsync(name, includePrivacy).GetAwaiter().GetResult();
+                return operations.ListAgreementsAsync(name, agreementOption).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -134,17 +132,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the top-level domain.
             /// </param>
-            /// <param name='includePrivacy'>
-            /// If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include
-            /// agreements for domain privacy as well; otherwise,
-            /// &lt;code&gt;false&lt;/code&gt;.
+            /// <param name='agreementOption'>
+            /// Domain agreement options.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TldLegalAgreement>> ListAgreementsAsync(this ITopLevelDomainsOperations operations, string name, bool? includePrivacy = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TldLegalAgreement>> ListAgreementsAsync(this ITopLevelDomainsOperations operations, string name, TopLevelDomainAgreementOptionInner agreementOption, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAgreementsWithHttpMessagesAsync(name, includePrivacy, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAgreementsWithHttpMessagesAsync(name, agreementOption, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

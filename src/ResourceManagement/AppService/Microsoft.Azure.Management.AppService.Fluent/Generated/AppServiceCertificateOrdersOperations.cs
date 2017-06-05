@@ -2317,8 +2317,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name='certificateOrderName'>
         /// Name of the certificate order.
         /// </param>
-        /// <param name='name'>
-        /// Name of the object.
+        /// <param name='nameIdentifier'>
+        /// Email address
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2338,7 +2338,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ResendRequestEmailsWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, string name = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ResendRequestEmailsWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, NameIdentifierInner nameIdentifier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2363,16 +2363,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateOrderName");
             }
+            if (nameIdentifier == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nameIdentifier");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string apiVersion = "2015-08-01";
-            NameIdentifier nameIdentifier = new NameIdentifier();
-            if (name != null)
-            {
-                nameIdentifier.Name = name;
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2382,8 +2381,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("certificateOrderName", certificateOrderName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("nameIdentifier", nameIdentifier);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ResendRequestEmails", tracingParameters);
             }

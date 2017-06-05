@@ -805,6 +805,52 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
 
             /// <summary>
+            /// List the configurations of an app
+            /// </summary>
+            /// <remarks>
+            /// List the configurations of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static IPage<SiteConfigResourceInner> ListConfigurations(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.ListConfigurationsAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the configurations of an app
+            /// </summary>
+            /// <remarks>
+            /// List the configurations of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SiteConfigResourceInner>> ListConfigurationsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListConfigurationsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Replaces the application settings of an app.
             /// </summary>
             /// <remarks>
@@ -4477,15 +4523,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            /// <param name='format'>
-            /// Name of the format. Valid values are:
-            /// FileZilla3
-            /// WebDeploy -- default
-            /// Ftp. Possible values include: 'FileZilla3', 'WebDeploy', 'Ftp'
+            /// <param name='publishingProfileOptions'>
+            /// Specifies publishingProfileOptions for publishing profile. For example, use
+            /// {"format": "FileZilla3"} to get a FileZilla publishing profile.
             /// </param>
-            public static Stream ListPublishingProfileXmlWithSecrets(this IWebAppsOperations operations, string resourceGroupName, string name, string format = default(string))
+            public static Stream ListPublishingProfileXmlWithSecrets(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptionsInner publishingProfileOptions)
             {
-                return operations.ListPublishingProfileXmlWithSecretsAsync(resourceGroupName, name, format).GetAwaiter().GetResult();
+                return operations.ListPublishingProfileXmlWithSecretsAsync(resourceGroupName, name, publishingProfileOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -4503,18 +4547,16 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
-            /// <param name='format'>
-            /// Name of the format. Valid values are:
-            /// FileZilla3
-            /// WebDeploy -- default
-            /// Ftp. Possible values include: 'FileZilla3', 'WebDeploy', 'Ftp'
+            /// <param name='publishingProfileOptions'>
+            /// Specifies publishingProfileOptions for publishing profile. For example, use
+            /// {"format": "FileZilla3"} to get a FileZilla publishing profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> ListPublishingProfileXmlWithSecretsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> ListPublishingProfileXmlWithSecretsAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptionsInner publishingProfileOptions, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListPublishingProfileXmlWithSecretsWithHttpMessagesAsync(resourceGroupName, name, format, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.ListPublishingProfileXmlWithSecretsWithHttpMessagesAsync(resourceGroupName, name, publishingProfileOptions, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
             }
@@ -4618,6 +4660,52 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             public static async Task ResetProductionSlotConfigAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ResetProductionSlotConfigWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// </summary>
+            /// <remarks>
+            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            public static ResourceHealthMetadataInner GetResourceHealthMetadata(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                return operations.GetResourceHealthMetadataAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// </summary>
+            /// <remarks>
+            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ResourceHealthMetadataInner> GetResourceHealthMetadataAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetResourceHealthMetadataWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -5511,6 +5599,60 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             public static async Task<RestoreResponseInner> RestoreSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string backupId, RestoreRequestInner request, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RestoreSlotWithHttpMessagesAsync(resourceGroupName, name, backupId, request, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List the configurations of an app
+            /// </summary>
+            /// <remarks>
+            /// List the configurations of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// return configuration for the production slot.
+            /// </param>
+            public static IPage<SiteConfigResourceInner> ListConfigurationsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.ListConfigurationsSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the configurations of an app
+            /// </summary>
+            /// <remarks>
+            /// List the configurations of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// return configuration for the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SiteConfigResourceInner>> ListConfigurationsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListConfigurationsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -9475,19 +9617,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
+            /// <param name='publishingProfileOptions'>
+            /// Specifies publishingProfileOptions for publishing profile. For example, use
+            /// {"format": "FileZilla3"} to get a FileZilla publishing profile.
+            /// </param>
             /// <param name='slot'>
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// the publishing profile for the production slot.
             /// </param>
-            /// <param name='format'>
-            /// Name of the format. Valid values are:
-            /// FileZilla3
-            /// WebDeploy -- default
-            /// Ftp. Possible values include: 'FileZilla3', 'WebDeploy', 'Ftp'
-            /// </param>
-            public static Stream ListPublishingProfileXmlWithSecretsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string format = default(string))
+            public static Stream ListPublishingProfileXmlWithSecretsSlot(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptionsInner publishingProfileOptions, string slot)
             {
-                return operations.ListPublishingProfileXmlWithSecretsSlotAsync(resourceGroupName, name, slot, format).GetAwaiter().GetResult();
+                return operations.ListPublishingProfileXmlWithSecretsSlotAsync(resourceGroupName, name, publishingProfileOptions, slot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -9505,22 +9645,20 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='name'>
             /// Name of the app.
             /// </param>
+            /// <param name='publishingProfileOptions'>
+            /// Specifies publishingProfileOptions for publishing profile. For example, use
+            /// {"format": "FileZilla3"} to get a FileZilla publishing profile.
+            /// </param>
             /// <param name='slot'>
             /// Name of the deployment slot. If a slot is not specified, the API will get
             /// the publishing profile for the production slot.
             /// </param>
-            /// <param name='format'>
-            /// Name of the format. Valid values are:
-            /// FileZilla3
-            /// WebDeploy -- default
-            /// Ftp. Possible values include: 'FileZilla3', 'WebDeploy', 'Ftp'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> ListPublishingProfileXmlWithSecretsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> ListPublishingProfileXmlWithSecretsSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CsmPublishingProfileOptionsInner publishingProfileOptions, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.ListPublishingProfileXmlWithSecretsSlotWithHttpMessagesAsync(resourceGroupName, name, slot, format, null, cancellationToken).ConfigureAwait(false);
+                var _result = await operations.ListPublishingProfileXmlWithSecretsSlotWithHttpMessagesAsync(resourceGroupName, name, publishingProfileOptions, slot, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
                 return _result.Body;
             }
@@ -9640,6 +9778,60 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             public static async Task ResetSlotConfigurationSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ResetSlotConfigurationSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// </summary>
+            /// <remarks>
+            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            public static ResourceHealthMetadataInner GetResourceHealthMetadataSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                return operations.GetResourceHealthMetadataSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// </summary>
+            /// <remarks>
+            /// Gets the category of ResourceHealthMetadata to use for the given site
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of web app
+            /// </param>
+            /// <param name='slot'>
+            /// Name of web app slot. If not specified then will default to production
+            /// slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ResourceHealthMetadataInner> GetResourceHealthMetadataSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetResourceHealthMetadataSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -10194,6 +10386,57 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             public static async Task SyncRepositorySlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SyncRepositorySlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Syncs function trigger metadata to the scale controller
+            /// </summary>
+            /// <remarks>
+            /// Syncs function trigger metadata to the scale controller
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// restore a backup of the production slot.
+            /// </param>
+            public static void SyncFunctionTriggersSlot(this IWebAppsOperations operations, string resourceGroupName, string name, string slot)
+            {
+                operations.SyncFunctionTriggersSlotAsync(resourceGroupName, name, slot).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Syncs function trigger metadata to the scale controller
+            /// </summary>
+            /// <remarks>
+            /// Syncs function trigger metadata to the scale controller
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='slot'>
+            /// Name of the deployment slot. If a slot is not specified, the API will
+            /// restore a backup of the production slot.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SyncFunctionTriggersSlotAsync(this IWebAppsOperations operations, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SyncFunctionTriggersSlotWithHttpMessagesAsync(resourceGroupName, name, slot, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -11210,6 +11453,49 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             public static async Task SyncRepositoryAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SyncRepositoryWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Syncs function trigger metadata to the scale controller
+            /// </summary>
+            /// <remarks>
+            /// Syncs function trigger metadata to the scale controller
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            public static void SyncFunctionTriggers(this IWebAppsOperations operations, string resourceGroupName, string name)
+            {
+                operations.SyncFunctionTriggersAsync(resourceGroupName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Syncs function trigger metadata to the scale controller
+            /// </summary>
+            /// <remarks>
+            /// Syncs function trigger metadata to the scale controller
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SyncFunctionTriggersAsync(this IWebAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SyncFunctionTriggersWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -12720,6 +13006,46 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             }
 
             /// <summary>
+            /// List the configurations of an app
+            /// </summary>
+            /// <remarks>
+            /// List the configurations of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SiteConfigResourceInner> ListConfigurationsNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.ListConfigurationsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the configurations of an app
+            /// </summary>
+            /// <remarks>
+            /// List the configurations of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SiteConfigResourceInner>> ListConfigurationsNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListConfigurationsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List deployments for an app, or a deployment slot, or for an instance of a
             /// scaled-out app.
             /// </summary>
@@ -13122,6 +13448,46 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             public static async Task<IPage<BackupItemInner>> ListBackupsSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBackupsSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List the configurations of an app
+            /// </summary>
+            /// <remarks>
+            /// List the configurations of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SiteConfigResourceInner> ListConfigurationsSlotNext(this IWebAppsOperations operations, string nextPageLink)
+            {
+                return operations.ListConfigurationsSlotNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the configurations of an app
+            /// </summary>
+            /// <remarks>
+            /// List the configurations of an app
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SiteConfigResourceInner>> ListConfigurationsSlotNextAsync(this IWebAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListConfigurationsSlotNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
