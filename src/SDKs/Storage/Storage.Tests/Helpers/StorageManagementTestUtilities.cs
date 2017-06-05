@@ -38,8 +38,8 @@ namespace Storage.Tests.Helpers
         private static Uri testUri = null;
 
         // These are used to create default accounts
-        public static string DefaultLocation = IsTestTenant ? null : "eastus2euap";
-        public static string DefaultRGLocation = IsTestTenant ? null : "eastus2euap";
+        public static string DefaultLocation = IsTestTenant ? null : "eastus2(stage)";
+        public static string DefaultRGLocation = IsTestTenant ? null : "eastus2";
         public static SkuName DefaultSkuName = SkuName.StandardGRS;
         public static Kind DefaultKind = Kind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string> 
