@@ -30,8 +30,6 @@
     "Samples/ResourceManagement/ServiceBus",
     "Samples/ResourceManagement/Sql",
     "Samples/ResourceManagement/Storage",
-    "Samples/ResourceManagement/TrafficManager",
-    "src/ResourceManagement/ContainerRegistry",
-    "src/ResourceManagement/DocumentDB"
+    "Samples/ResourceManagement/TrafficManager"
   ]
 }
