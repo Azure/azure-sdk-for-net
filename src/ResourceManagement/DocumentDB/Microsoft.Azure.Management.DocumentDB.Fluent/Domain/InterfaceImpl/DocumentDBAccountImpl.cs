@@ -4,30 +4,30 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Definition;
-    using Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update;
+    using Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Definition;
+    using Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using System.Collections.Generic;
 
-    public partial class DatabaseAccountImpl 
+    public partial class DocumentDBAccountImpl 
     {
         /// <summary>
         /// The database account kind for the DocumentDB account.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Definition.IWithConsistencyPolicy DatabaseAccount.Definition.IWithKind.WithKind(string kind)
+        DocumentDBAccount.Definition.IWithConsistencyPolicy DocumentDBAccount.Definition.IWithKind.WithKind(string kind)
         {
-            return this.WithKind(kind) as DatabaseAccount.Definition.IWithConsistencyPolicy;
+            return this.WithKind(kind) as DocumentDBAccount.Definition.IWithConsistencyPolicy;
         }
 
         /// <summary>
         /// The consistency policy for the DocumentDB account.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Update.IWithOptionals DatabaseAccount.Update.IWithConsistencyPolicy.WithSessionConsistency()
+        DocumentDBAccount.Update.IWithOptionals DocumentDBAccount.Update.IWithConsistencyPolicy.WithSessionConsistency()
         {
-            return this.WithSessionConsistency() as DatabaseAccount.Update.IWithOptionals;
+            return this.WithSessionConsistency() as DocumentDBAccount.Update.IWithOptionals;
         }
 
         /// <summary>
@@ -36,36 +36,36 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// <param name="maxStalenessPrefix">The max staleness prefix.</param>
         /// <param name="maxIntervalInSeconds">The max interval in seconds.</param>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Update.IWithOptionals DatabaseAccount.Update.IWithConsistencyPolicy.WithBoundedStalenessConsistency(int maxStalenessPrefix, int maxIntervalInSeconds)
+        DocumentDBAccount.Update.IWithOptionals DocumentDBAccount.Update.IWithConsistencyPolicy.WithBoundedStalenessConsistency(int maxStalenessPrefix, int maxIntervalInSeconds)
         {
-            return this.WithBoundedStalenessConsistency(maxStalenessPrefix, maxIntervalInSeconds) as DatabaseAccount.Update.IWithOptionals;
+            return this.WithBoundedStalenessConsistency(maxStalenessPrefix, maxIntervalInSeconds) as DocumentDBAccount.Update.IWithOptionals;
         }
 
         /// <summary>
         /// The consistency policy for the DocumentDB account.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Update.IWithOptionals DatabaseAccount.Update.IWithConsistencyPolicy.WithEventualConsistency()
+        DocumentDBAccount.Update.IWithOptionals DocumentDBAccount.Update.IWithConsistencyPolicy.WithEventualConsistency()
         {
-            return this.WithEventualConsistency() as DatabaseAccount.Update.IWithOptionals;
+            return this.WithEventualConsistency() as DocumentDBAccount.Update.IWithOptionals;
         }
 
         /// <summary>
         /// The consistency policy for the DocumentDB account.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Update.IWithOptionals DatabaseAccount.Update.IWithConsistencyPolicy.WithStrongConsistency()
+        DocumentDBAccount.Update.IWithOptionals DocumentDBAccount.Update.IWithConsistencyPolicy.WithStrongConsistency()
         {
-            return this.WithStrongConsistency() as DatabaseAccount.Update.IWithOptionals;
+            return this.WithStrongConsistency() as DocumentDBAccount.Update.IWithOptionals;
         }
 
         /// <summary>
         /// The session consistency policy for the DocumentDB account.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Definition.IWithWriteReplication DatabaseAccount.Definition.IWithConsistencyPolicy.WithSessionConsistency()
+        DocumentDBAccount.Definition.IWithWriteReplication DocumentDBAccount.Definition.IWithConsistencyPolicy.WithSessionConsistency()
         {
-            return this.WithSessionConsistency() as DatabaseAccount.Definition.IWithWriteReplication;
+            return this.WithSessionConsistency() as DocumentDBAccount.Definition.IWithWriteReplication;
         }
 
         /// <summary>
@@ -74,27 +74,27 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// <param name="maxStalenessPrefix">The max staleness prefix.</param>
         /// <param name="maxIntervalInSeconds">The max interval in seconds.</param>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Definition.IWithWriteReplication DatabaseAccount.Definition.IWithConsistencyPolicy.WithBoundedStalenessConsistency(int maxStalenessPrefix, int maxIntervalInSeconds)
+        DocumentDBAccount.Definition.IWithWriteReplication DocumentDBAccount.Definition.IWithConsistencyPolicy.WithBoundedStalenessConsistency(int maxStalenessPrefix, int maxIntervalInSeconds)
         {
-            return this.WithBoundedStalenessConsistency(maxStalenessPrefix, maxIntervalInSeconds) as DatabaseAccount.Definition.IWithWriteReplication;
+            return this.WithBoundedStalenessConsistency(maxStalenessPrefix, maxIntervalInSeconds) as DocumentDBAccount.Definition.IWithWriteReplication;
         }
 
         /// <summary>
         /// The eventual consistency policy for the DocumentDB account.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Definition.IWithWriteReplication DatabaseAccount.Definition.IWithConsistencyPolicy.WithEventualConsistency()
+        DocumentDBAccount.Definition.IWithWriteReplication DocumentDBAccount.Definition.IWithConsistencyPolicy.WithEventualConsistency()
         {
-            return this.WithEventualConsistency() as DatabaseAccount.Definition.IWithWriteReplication;
+            return this.WithEventualConsistency() as DocumentDBAccount.Definition.IWithWriteReplication;
         }
 
         /// <summary>
         /// The strong consistency policy for the DocumentDB account.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Definition.IWithCreate DatabaseAccount.Definition.IWithConsistencyPolicy.WithStrongConsistency()
+        DocumentDBAccount.Definition.IWithCreate DocumentDBAccount.Definition.IWithConsistencyPolicy.WithStrongConsistency()
         {
-            return this.WithStrongConsistency() as DatabaseAccount.Definition.IWithCreate;
+            return this.WithStrongConsistency() as DocumentDBAccount.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -102,9 +102,9 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// </summary>
         /// <param name="region">The region for the location.</param>
         /// <return>The next stage.</return>
-        DatabaseAccount.Definition.IWithCreate DatabaseAccount.Definition.IWithReadReplication.WithReadReplication(Region region)
+        DocumentDBAccount.Definition.IWithCreate DocumentDBAccount.Definition.IWithReadReplication.WithReadReplication(Region region)
         {
-            return this.WithReadReplication(region) as DatabaseAccount.Definition.IWithCreate;
+            return this.WithReadReplication(region) as DocumentDBAccount.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// </summary>
         /// <param name="ipRangeFilter">Specifies the set of IP addresses or IP address ranges.</param>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Update.IWithOptionals DatabaseAccount.Update.IWithIpRangeFilter.WithIpRangeFilter(string ipRangeFilter)
+        DocumentDBAccount.Update.IWithOptionals DocumentDBAccount.Update.IWithIpRangeFilter.WithIpRangeFilter(string ipRangeFilter)
         {
-            return this.WithIpRangeFilter(ipRangeFilter) as DatabaseAccount.Update.IWithOptionals;
+            return this.WithIpRangeFilter(ipRangeFilter) as DocumentDBAccount.Update.IWithOptionals;
         }
 
         /// <summary>
@@ -126,9 +126,9 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// </summary>
         /// <param name="ipRangeFilter">Specifies the set of IP addresses or IP address ranges.</param>
         /// <return>The next stage of the definition.</return>
-        DatabaseAccount.Definition.IWithCreate DatabaseAccount.Definition.IWithIpRangeFilter.WithIpRangeFilter(string ipRangeFilter)
+        DocumentDBAccount.Definition.IWithCreate DocumentDBAccount.Definition.IWithIpRangeFilter.WithIpRangeFilter(string ipRangeFilter)
         {
-            return this.WithIpRangeFilter(ipRangeFilter) as DatabaseAccount.Definition.IWithCreate;
+            return this.WithIpRangeFilter(ipRangeFilter) as DocumentDBAccount.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// </summary>
         /// <param name="region">The region for the location.</param>
         /// <return>The next stage.</return>
-        DatabaseAccount.Definition.IWithCreate DatabaseAccount.Definition.IWithWriteReplication.WithWriteReplication(Region region)
+        DocumentDBAccount.Definition.IWithCreate DocumentDBAccount.Definition.IWithWriteReplication.WithWriteReplication(Region region)
         {
-            return this.WithWriteReplication(region) as DatabaseAccount.Definition.IWithCreate;
+            return this.WithWriteReplication(region) as DocumentDBAccount.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -146,9 +146,9 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// </summary>
         /// <param name="region">The region for the location.</param>
         /// <return>The next stage.</return>
-        DatabaseAccount.Update.IWithReadLocations DatabaseAccount.Update.IWithReadLocations.WithoutReadReplication(Region region)
+        DocumentDBAccount.Update.IWithReadLocations DocumentDBAccount.Update.IWithReadLocations.WithoutReadReplication(Region region)
         {
-            return this.WithoutReadReplication(region) as DatabaseAccount.Update.IWithReadLocations;
+            return this.WithoutReadReplication(region) as DocumentDBAccount.Update.IWithReadLocations;
         }
 
         /// <summary>
@@ -156,13 +156,13 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// </summary>
         /// <param name="region">The region for the location.</param>
         /// <return>The next stage.</return>
-        DatabaseAccount.Update.IWithReadLocations DatabaseAccount.Update.IWithReadLocations.WithReadReplication(Region region)
+        DocumentDBAccount.Update.IWithReadLocations DocumentDBAccount.Update.IWithReadLocations.WithReadReplication(Region region)
         {
-            return this.WithReadReplication(region) as DatabaseAccount.Update.IWithReadLocations;
+            return this.WithReadReplication(region) as DocumentDBAccount.Update.IWithReadLocations;
         }
 
         /// <return>The connection strings for the specified Azure DocumentDB database account.</return>
-        async Task<Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListConnectionStringsResultInner> Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.ListConnectionStringsAsync(CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListConnectionStringsResultInner> Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.ListConnectionStringsAsync(CancellationToken cancellationToken)
         {
             return await this.ListConnectionStringsAsync(cancellationToken) as Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListConnectionStringsResultInner;
         }
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// <summary>
         /// Gets an array that contains the readable georeplication locations enabled for the DocumentDB account.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.DocumentDB.Fluent.Models.Location> Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.ReadableReplications
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.DocumentDB.Fluent.Models.Location> Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.ReadableReplications
         {
             get
             {
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// <summary>
         /// Gets the default consistency level for the DocumentDB database account.
         /// </summary>
-        Microsoft.Azure.Management.DocumentDB.Fluent.Models.DefaultConsistencyLevel Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.DefaultConsistencyLevel
+        Microsoft.Azure.Management.DocumentDB.Fluent.Models.DefaultConsistencyLevel Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.DefaultConsistencyLevel
         {
             get
             {
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         }
 
         /// <param name="keyKind">The key kind.</param>
-        void Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.RegenerateKey(string keyKind)
+        void Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.RegenerateKey(string keyKind)
         {
  
             this.RegenerateKey(keyKind);
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// <summary>
         /// Gets an array that contains the writable georeplication locations enabled for the DocumentDB account.
         /// </summary>
-        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.DocumentDB.Fluent.Models.Location> Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.WritableReplications
+        System.Collections.Generic.IReadOnlyList<Microsoft.Azure.Management.DocumentDB.Fluent.Models.Location> Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.WritableReplications
         {
             get
             {
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// <summary>
         /// Gets specifies the set of IP addresses or IP address ranges in CIDR form.
         /// </summary>
-        string Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.IPRangeFilter
+        string Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.IPRangeFilter
         {
             get
             {
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// <summary>
         /// Gets the connection endpoint for the DocumentDB database account.
         /// </summary>
-        string Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.DocumentEndpoint
+        string Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.DocumentEndpoint
         {
             get
             {
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
         /// <param name="keyKind">The key kind.</param>
         /// <return>The ServiceResponse object if successful.</return>
-        async Task Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.RegenerateKeyAsync(string keyKind, CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.RegenerateKeyAsync(string keyKind, CancellationToken cancellationToken)
         {
  
             await this.RegenerateKeyAsync(keyKind, cancellationToken);
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// <summary>
         /// Gets the consistency policy for the DocumentDB database account.
         /// </summary>
-        Microsoft.Azure.Management.DocumentDB.Fluent.Models.ConsistencyPolicy Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.ConsistencyPolicy
+        Microsoft.Azure.Management.DocumentDB.Fluent.Models.ConsistencyPolicy Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.ConsistencyPolicy
         {
             get
             {
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         }
 
         /// <return>The access keys for the specified Azure DocumentDB database account.</return>
-        async Task<Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListKeysResultInner> Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.ListKeysAsync(CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListKeysResultInner> Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.ListKeysAsync(CancellationToken cancellationToken)
         {
             return await this.ListKeysAsync(cancellationToken) as Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListKeysResultInner;
         }
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// <summary>
         /// Gets the offer type for the DocumentDB database account.
         /// </summary>
-        Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountOfferType Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.DatabaseAccountOfferType
+        Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountOfferType Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.DatabaseAccountOfferType
         {
             get
             {
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         }
 
         /// <return>The access keys for the specified Azure DocumentDB database account.</return>
-        Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListKeysResultInner Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.ListKeys()
+        Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListKeysResultInner Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.ListKeys()
         {
             return this.ListKeys() as Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListKeysResultInner;
         }
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         /// <summary>
         /// Gets indicates the type of database account.
         /// </summary>
-        string Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.Kind
+        string Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.Kind
         {
             get
             {
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
         }
 
         /// <return>The connection strings for the specified Azure DocumentDB database account.</return>
-        Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListConnectionStringsResultInner Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount.ListConnectionStrings()
+        Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListConnectionStringsResultInner Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount.ListConnectionStrings()
         {
             return this.ListConnectionStrings() as Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountListConnectionStringsResultInner;
         }
