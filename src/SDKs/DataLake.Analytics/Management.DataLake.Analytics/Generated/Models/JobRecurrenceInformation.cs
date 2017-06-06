@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Recurrence job information for a specific recurrence.
+    /// </summary>
     public partial class JobRecurrenceInformation
     {
         /// <summary>

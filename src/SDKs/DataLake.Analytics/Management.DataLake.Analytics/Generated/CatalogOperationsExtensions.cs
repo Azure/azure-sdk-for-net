@@ -295,7 +295,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// operations.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database in which to create the credential.
+            /// The name of the database in which to create the credential. Note: This is
+            /// NOT an external database name, but the name of an existing U-SQL database
+            /// that should contain the new credential object.
             /// </param>
             /// <param name='credentialName'>
             /// The name of the credential.
@@ -320,7 +322,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// operations.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database in which to create the credential.
+            /// The name of the database in which to create the credential. Note: This is
+            /// NOT an external database name, but the name of an existing U-SQL database
+            /// that should contain the new credential object.
             /// </param>
             /// <param name='credentialName'>
             /// The name of the credential.
