@@ -63,8 +63,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             this.WithDiagnosticsProfile(false);
             return this;
-
-            return this;
         }
 
         internal void AttachAgentPoolProfile(IContainerServiceAgentPool agentPoolProfile)
@@ -151,6 +149,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         public override async Task<Microsoft.Azure.Management.Compute.Fluent.IContainerService> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
+            if(!this.IsInCreateMode)
+            {
+                this.Inner.ServicePrincipalProfile = null;
+            }
+
             var containerService = await this.Manager.Inner.ContainerServices.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             this.SetInner(containerService);
             return this;
@@ -258,8 +261,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
 
             return this.GetSingleAgentPool().Fqdn;
-
-            return null;
         }
 
         public string MasterLeafDomainLabel()
@@ -270,8 +271,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
 
             return this.Inner.MasterProfile.DnsPrefix;
-
-            return null;
         }
 
 
