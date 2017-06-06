@@ -71,7 +71,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             EnsureLinuxPlan();
             CleanUpContainerSettings();
-            WithBuiltInImage(RuntimeStack.NodeJS_6_6_0);
+            if (SiteConfig == null)
+            {
+                SiteConfig = new SiteConfigResourceInner();
+            }
+            SiteConfig.LinuxFxVersion = string.Format("DOCKER|{0}", imageAndTag);
             WithAppSetting(SETTING_DOCKER_IMAGE, imageAndTag);
             WithAppSetting(SETTING_REGISTRY_SERVER, serverUrl);
             return this;
@@ -123,7 +127,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         {
             EnsureLinuxPlan();
             CleanUpContainerSettings();
-            WithBuiltInImage(RuntimeStack.NodeJS_6_6_0);
+            if (SiteConfig == null)
+            {
+                SiteConfig = new SiteConfigResourceInner();
+            }
+            SiteConfig.LinuxFxVersion = string.Format("DOCKER|{0}", imageAndTag);
             WithAppSetting(SETTING_DOCKER_IMAGE, imageAndTag);
             return this;
         }
@@ -200,7 +208,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             if (SiteConfig == null) {
                 SiteConfig = new SiteConfigResourceInner();
             }
-            SiteConfig.LinuxFxVersion = String.Format("%s|%s", runtimeStack.Stack(), runtimeStack.Version());
+            SiteConfig.LinuxFxVersion = string.Format("{0}|{1}", runtimeStack.Stack(), runtimeStack.Version());
             if (runtimeStack.Stack().Equals("NODE")) {
                 SiteConfig.NodeVersion = runtimeStack.Version();
             }
