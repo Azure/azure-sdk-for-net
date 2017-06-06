@@ -4336,31 +4336,14 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// </returns>
         internal static WacAccountPermissions ParseWacAccountPermissions(string value)
         {
-            if ("Empty".Equals(value, StringComparison.OrdinalIgnoreCase))
+            WacAccountPermissions wacAccountPermissions = WacAccountPermissions.None;
+
+            if (!Enum.TryParse<WacAccountPermissions>(value, out wacAccountPermissions))
             {
-                return WacAccountPermissions.Empty;
+                throw new ArgumentOutOfRangeException(nameof(value));
             }
-            if ("None".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountPermissions.None;
-            }
-            if ("Read".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountPermissions.Read;
-            }
-            if ("Delete".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountPermissions.Delete;
-            }
-            if ("Write".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountPermissions.Write;
-            }
-            if ("Full".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountPermissions.Full;
-            }
-            throw new ArgumentOutOfRangeException("value");
+
+            return wacAccountPermissions;
         }
         
         /// <summary>
@@ -4374,31 +4357,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// </returns>
         internal static string WacAccountPermissionsToString(WacAccountPermissions value)
         {
-            if (value == WacAccountPermissions.Empty)
-            {
-                return "Empty";
-            }
-            if (value == WacAccountPermissions.None)
-            {
-                return "None";
-            }
-            if (value == WacAccountPermissions.Read)
-            {
-                return "Read";
-            }
-            if (value == WacAccountPermissions.Delete)
-            {
-                return "Delete";
-            }
-            if (value == WacAccountPermissions.Write)
-            {
-                return "Write";
-            }
-            if (value == WacAccountPermissions.Full)
-            {
-                return "Full";
-            }
-            throw new ArgumentOutOfRangeException("value");
+			return value.ToString();
         }
         
         /// <summary>
@@ -4412,31 +4371,13 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// </returns>
         internal static WacAccountStates ParseWacAccountStates(string value)
         {
-            if ("None".Equals(value, StringComparison.OrdinalIgnoreCase))
+            WacAccountStates wacAccountState = WacAccountStates.None;
+            if (!Enum.TryParse<WacAccountStates>(value, out wacAccountState))
             {
-                return WacAccountStates.None;
+                throw new ArgumentOutOfRangeException(nameof(value));
             }
-            if ("Active".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountStates.Active;
-            }
-            if ("Deleted".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountStates.Deleted;
-            }
-            if ("AboveQuota".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountStates.AboveQuota;
-            }
-            if ("Suspended".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountStates.Suspended;
-            }
-            if ("All".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountStates.All;
-            }
-            throw new ArgumentOutOfRangeException("value");
+
+            return wacAccountState;
         }
         
         /// <summary>
@@ -4450,31 +4391,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// </returns>
         internal static string WacAccountStatesToString(WacAccountStates value)
         {
-            if (value == WacAccountStates.None)
-            {
-                return "None";
-            }
-            if (value == WacAccountStates.Active)
-            {
-                return "Active";
-            }
-            if (value == WacAccountStates.Deleted)
-            {
-                return "Deleted";
-            }
-            if (value == WacAccountStates.AboveQuota)
-            {
-                return "AboveQuota";
-            }
-            if (value == WacAccountStates.Suspended)
-            {
-                return "Suspended";
-            }
-            if (value == WacAccountStates.All)
-            {
-                return "All";
-            }
-            throw new ArgumentOutOfRangeException("value");
+            return value.ToString();
         }
         
         /// <summary>
