@@ -9,7 +9,7 @@
     <PackageTags>Microsoft AutoRest ClientRuntime HttpRecorder REST;$(CommonNugetPackageTags)</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp1.1;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   
   <ItemGroup>
