@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApplicationInner>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, AddApplicationParametersInner parameters = default(AddApplicationParametersInner), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApplicationInner>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, ApplicationCreateParametersInner parameters = default(ApplicationCreateParametersInner), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an application.
         /// </summary>
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, UpdateApplicationParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, ApplicationUpdateParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the applications in the specified account.
         /// </summary>

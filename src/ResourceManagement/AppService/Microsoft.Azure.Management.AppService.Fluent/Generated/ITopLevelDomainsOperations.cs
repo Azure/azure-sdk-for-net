@@ -82,10 +82,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name='name'>
         /// Name of the top-level domain.
         /// </param>
-        /// <param name='includePrivacy'>
-        /// If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will
-        /// include agreements for domain privacy as well; otherwise,
-        /// &lt;code&gt;false&lt;/code&gt;.
+        /// <param name='agreementOption'>
+        /// Domain agreement options.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -102,7 +100,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<TldLegalAgreement>>> ListAgreementsWithHttpMessagesAsync(string name, bool? includePrivacy = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<TldLegalAgreement>>> ListAgreementsWithHttpMessagesAsync(string name, TopLevelDomainAgreementOptionInner agreementOption, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all top-level domains supported for registration.
         /// </summary>

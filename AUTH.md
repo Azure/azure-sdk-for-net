@@ -1,4 +1,4 @@
-#Authentication in Azure Management Libraries for .NET
+# Authentication in Azure Management Libraries for .NET
 
 To use the APIs in the Azure Management Libraries for .NET, as the first step you need to 
 create an authenticated client. There are several possible approaches to authentication. This document illustrates a couple of the simpler ones.
@@ -10,7 +10,7 @@ create an authenticated client. There are several possible approaches to authent
 To create an authenticated Azure client:
 
 ```csharp
-Azure azure = Azure.Authenticate(new File("my.azureauth")).WithDefaultSubscription();
+Azure azure = Azure.Authenticate("my.azureauth").WithDefaultSubscription();
 ```
 
 The authentication file, referenced as "my.azureauth" in the example above, uses the .NET properties file format and must contain the following information:
@@ -32,11 +32,16 @@ This approach enables unattended authentication for your application (i.e. no in
 Similarly to the [file-based approach](#using-an-authentication-file), this method requires a [service principal registration](#creating-a-service-principal-in-azure), but instead of storing the credentials in a local file, the required inputs can be supplied directly via an instance of the `AzureCredentials` class:
 
 ```
-AzureCredentials credentials = AzureCredentials.FromServicePrincipal(client, key, tenant, AzureEnvironment.AZURE);
-Azure azure = Azure.authenticate(credentials).withSubscription(subscriptionId);
+var sp = new ServicePrincipalLoginInformation()
+{
+    ClientId = client,
+    ClientSecret = key
+}
+var creds = new AzureCredentials(sp, tenant, AzureEnvironment.AzureGlobalCloud);
+var azure = Azure.Authenticate(creds).WithSubscription(subscriptionId);
 ```
 
-where `client`, `tenant`, `key` and `subscriptionId` are strings with the required pieces of information about your service principal and subscription. The last parameter, `AzureEnvironment.AZURE` represents the Azure worldwide public cloud. You can use a different value out of the currently supported alternatives in the `AzureEnvironment` enum.
+where `client`, `tenant`, `key` and `subscriptionId` are strings with the required pieces of information about your service principal and subscription. The last parameter, `AzureEnvironment.AzureGlobalCloud` represents the Azure worldwide public cloud. You can use a different value out of the currently supported alternatives in the `AzureEnvironment` enum.
 
 ## Creating a Service Principal in Azure
 

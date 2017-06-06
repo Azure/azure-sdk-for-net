@@ -40,12 +40,12 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             /// <param name='version'>
             /// The version of the application to activate.
             /// </param>
-            /// <param name='format'>
-            /// The format of the application package binary file.
+            /// <param name='parameters'>
+            /// The parameters for the request.
             /// </param>
-            public static void Activate(this IApplicationPackageOperations operations, string resourceGroupName, string accountName, string applicationId, string version, string format)
+            public static void Activate(this IApplicationPackageOperations operations, string resourceGroupName, string accountName, string applicationId, string version, ActivateApplicationPackageParametersInner parameters)
             {
-                operations.ActivateAsync(resourceGroupName, accountName, applicationId, version, format).GetAwaiter().GetResult();
+                operations.ActivateAsync(resourceGroupName, accountName, applicationId, version, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -66,15 +66,15 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             /// <param name='version'>
             /// The version of the application to activate.
             /// </param>
-            /// <param name='format'>
-            /// The format of the application package binary file.
+            /// <param name='parameters'>
+            /// The parameters for the request.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ActivateAsync(this IApplicationPackageOperations operations, string resourceGroupName, string accountName, string applicationId, string version, string format, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ActivateAsync(this IApplicationPackageOperations operations, string resourceGroupName, string accountName, string applicationId, string version, ActivateApplicationPackageParametersInner parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ActivateWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, version, format, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ActivateWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, version, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

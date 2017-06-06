@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// <param name="value">Value of pair.</param>
         /// <param name="type">Type of database. Possible values include:
         /// 'MySql', 'SQLServer', 'SQLAzure', 'Custom', 'NotificationHub',
-        /// 'ServiceBus', 'EventHub', 'ApiHub', 'DocDb', 'RedisCache'</param>
+        /// 'ServiceBus', 'EventHub', 'ApiHub', 'DocDb', 'RedisCache',
+        /// 'PostgreSQL'</param>
         public ConnStringValueTypePair(string value, ConnectionStringType type)
         {
             Value = value;
@@ -57,7 +58,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// <summary>
         /// Gets or sets type of database. Possible values include: 'MySql',
         /// 'SQLServer', 'SQLAzure', 'Custom', 'NotificationHub', 'ServiceBus',
-        /// 'EventHub', 'ApiHub', 'DocDb', 'RedisCache'
+        /// 'EventHub', 'ApiHub', 'DocDb', 'RedisCache', 'PostgreSQL'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ConnectionStringType Type { get; set; }

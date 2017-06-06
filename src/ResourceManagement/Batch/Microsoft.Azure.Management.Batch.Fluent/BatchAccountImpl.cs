@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         private string creatableStorageAccountKey;
         private IStorageAccount existingStorageAccountToAssociate;
         private ApplicationsImpl applicationsImpl;
+        internal AutoStorageProperties autoStorage;
 
         ///GENMHASH:4A1C1CE1A5FD21C2D77E9D249E53B0FC:2CAC092B38BC608EA9EE02AF770A8C0D
         internal BatchAccountImpl(
@@ -64,11 +65,11 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         {
             HandleStorageSettings();
             var batchAccountCreateParametersInner = new BatchAccountCreateParametersInner();
-            if (Inner.AutoStorage != null)
+            if (autoStorage != null)
             {
                 batchAccountCreateParametersInner.AutoStorage = new AutoStorageBaseProperties
                                                                 {
-                                                                    StorageAccountId = Inner.AutoStorage.StorageAccountId
+                                                                    StorageAccountId = autoStorage.StorageAccountId
                                                                 };
             }
             else
@@ -93,7 +94,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:99D5BF64EA8AA0E287C9B6F77AAD6FC4:220D4662AAC7DF3BEFAF2B253278E85C
         internal Management.Batch.Fluent.Models.ProvisioningState ProvisioningState()
         {
-            return Inner.ProvisioningState.GetValueOrDefault();
+            return Inner.ProvisioningState;
         }
 
         ///GENMHASH:3FCA66079CE54B6624051AEEEA92C0A8:CD2239198F90BF2EF64E021F6D70308F
@@ -111,7 +112,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:B9408D6B67E96EFD3D03881CF8649A9C:954939482CB158B1E2B509B48B09585C
         internal int CoreQuota()
         {
-            return Inner.CoreQuota;
+            return Inner.DedicatedCoreQuota;
         }
 
         ///GENMHASH:7909615C516BD4E70FB021746FE02F60:CF51957E04C09A383C5B34AB6DFDC9EB
@@ -136,7 +137,10 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:837770291CB03D6C2AB9BDA889A5B07D:916D2188C6A5919A33DB6C700CE38C2A
         internal async Task<BatchAccountKeys> RegenerateKeysAsync(AccountKeyType keyType, CancellationToken cancellationToken = default(CancellationToken))
         {
-            BatchAccountKeysInner keys = await Manager.Inner.BatchAccount.RegenerateKeyAsync(ResourceGroupName, Name, keyType, cancellationToken);
+            BatchAccountKeysInner keys = await Manager.Inner.BatchAccount.RegenerateKeyAsync(ResourceGroupName, Name, new BatchAccountRegenerateKeyParametersInner
+            {
+                KeyName = keyType
+            }, cancellationToken);
             return new BatchAccountKeys(keys.Primary, keys.Secondary);
         }
 
@@ -201,7 +205,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         {
             existingStorageAccountToAssociate = null;
             creatableStorageAccountKey = null;
-            Inner.AutoStorage = null;
+            this.autoStorage = null;
 
             return this;
         }
@@ -243,12 +247,12 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 return;
             }
 
-            if (Inner.AutoStorage == null)
+            if (autoStorage == null)
             {
-                Inner.AutoStorage = new AutoStorageProperties();
+                autoStorage = new AutoStorageProperties();
             }
 
-            Inner.AutoStorage.StorageAccountId = storageAccount.Id;
+            autoStorage.StorageAccountId = storageAccount.Id;
         }
 
         ///GENMHASH:901BF64732D40F1AFA2D615FD2C9EC6C:88A053E647AE5BA086B9195689F16CA9

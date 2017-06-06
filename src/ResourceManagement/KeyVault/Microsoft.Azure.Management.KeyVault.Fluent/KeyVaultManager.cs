@@ -30,16 +30,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 SubscriptionId = subscriptionId
             })
         {
-            string graphEndpoint = AzureEnvironment.AzureGlobalCloud.GraphEndpoint;
-            if (restClient.Credentials is AzureCredentials)
-            {
-                graphEndpoint = ((AzureCredentials)restClient.Credentials).Environment.GraphEndpoint;
-            }
-            graphRbacManager = GraphRbacManager.Authenticate(RestClient.Configure()
-                .WithBaseUri(graphEndpoint)
-                .WithDelegatingHandlers(restClient.Handlers.ToArray())
-                .WithCredentials(restClient.Credentials)
-                .Build(), subscriptionId, tenantId);
+            graphRbacManager = GraphRbacManager.Authenticate(restClient, tenantId);
             this.tenantId = tenantId;
         }
 

@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             /// <param name='objectId'>
             /// The object ID of the service principal.
             /// </param>
-            public static IEnumerable<PasswordCredential> ListPasswordCredentials(this IServicePrincipalsOperations operations, string objectId)
+            public static IEnumerable<Models.PasswordCredential> ListPasswordCredentials(this IServicePrincipalsOperations operations, string objectId)
             {
                 return operations.ListPasswordCredentialsAsync(objectId).GetAwaiter().GetResult();
             }
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<PasswordCredential>> ListPasswordCredentialsAsync(this IServicePrincipalsOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Models.PasswordCredential>> ListPasswordCredentialsAsync(this IServicePrincipalsOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListPasswordCredentialsWithHttpMessagesAsync(objectId, null, cancellationToken).ConfigureAwait(false))
                 {

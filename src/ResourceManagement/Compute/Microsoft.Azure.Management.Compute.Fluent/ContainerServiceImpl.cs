@@ -45,8 +45,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
 
             return this.GetSingleAgentPool().Count;
-
-            return 0;
         }
 
         public int MasterNodeCount()
@@ -64,8 +62,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public ContainerServiceImpl WithoutDiagnostics()
         {
             this.WithDiagnosticsProfile(false);
-            return this;
-
             return this;
         }
 
@@ -153,6 +149,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 
         public override async Task<Microsoft.Azure.Management.Compute.Fluent.IContainerService> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
+            if(!this.IsInCreateMode)
+            {
+                this.Inner.ServicePrincipalProfile = null;
+            }
+
             var containerService = await this.Manager.Inner.ContainerServices.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
             this.SetInner(containerService);
             return this;
@@ -260,8 +261,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
 
             return this.GetSingleAgentPool().Fqdn;
-
-            return null;
         }
 
         public string MasterLeafDomainLabel()
@@ -272,8 +271,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
 
             return this.Inner.MasterProfile.DnsPrefix;
-
-            return null;
         }
 
 
@@ -315,6 +312,36 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         protected override async Task<ContainerServiceInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.Manager.Inner.ContainerServices.GetAsync(this.ResourceGroupName, this.Name);
+        }
+
+        public IWithLinux WithServicePrincipal(string clientId, string secret)
+        {
+            ContainerServiceServicePrincipalProfile serviceProfile =
+                new ContainerServiceServicePrincipalProfile();
+            serviceProfile.ClientId = clientId;
+            serviceProfile.Secret = secret;
+            this.Inner.ServicePrincipalProfile = serviceProfile;
+            return this;
+        }
+
+        public string ServicePrincipalClientId()
+        {
+            if (this.Inner.ServicePrincipalProfile == null)
+            {
+                return null;
+            }
+
+            return this.Inner.ServicePrincipalProfile.ClientId;
+        }
+
+        public string ServicePrincipalSecret()
+        {
+            if (this.Inner.ServicePrincipalProfile == null)
+            {
+                return null;
+            }
+
+            return this.Inner.ServicePrincipalProfile.Secret;
         }
     }
 }

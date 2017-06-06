@@ -115,6 +115,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         IDeletedWebAppsOperations DeletedWebApps { get; }
 
         /// <summary>
+        /// Gets the IProviderOperations.
+        /// </summary>
+        IProviderOperations Provider { get; }
+
+        /// <summary>
         /// Gets publishing user
         /// </summary>
         /// <remarks>
@@ -211,7 +216,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </remarks>
         /// <param name='sku'>
         /// Name of SKU used to filter the regions. Possible values include:
-        /// 'Free', 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic'
+        /// 'Free', 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic',
+        /// 'Isolated'
         /// </param>
         /// <param name='linuxWorkersEnabled'>
         /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only

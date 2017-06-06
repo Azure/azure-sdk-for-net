@@ -83,8 +83,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
             return new AzureCredentials(new ServicePrincipalLoginInformation
             {
                 ClientId = clientId,
-                Certifcate = certBytes,
-                CertifcatePassword = certificatePassword
+                Certificate = certBytes,
+                CertificatePassword = certificatePassword
             }, tenantId, environment);
         }
 

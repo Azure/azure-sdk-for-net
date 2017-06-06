@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// </summary>
         /// <param name="user">user the AD user object</param>
         /// <returns>the next stage of access policy definition</returns>
-        Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update.IUpdate> Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition.IWithIdentity<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update.IUpdate>.ForUser (IUser user) {
+        Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update.IUpdate> Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition.IWithIdentity<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update.IUpdate>.ForUser (IActiveDirectoryUser user) {
             return this.ForUser( user) as Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update.IUpdate>;
         }
 
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
         /// </summary>
         /// <param name="user">user the AD user object</param>
         /// <returns>the next stage of access policy definition</returns>
-        Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition.IWithAttach<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithCreate> Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition.IWithIdentity<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithCreate>.ForUser (IUser user) {
+        Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition.IWithAttach<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithCreate> Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition.IWithIdentity<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithCreate>.ForUser (IActiveDirectoryUser user) {
             return this.ForUser( user) as Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition.IWithAttach<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithCreate>;
         }
 

@@ -80,5 +80,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the type of the orchestrator.
         /// </summary>
         Models.ContainerServiceOchestratorTypes OrchestratorType { get; }
+
+        /// <summary>
+        /// Gets the service principal clientId.
+        /// </summary>
+        string ServicePrincipalClientId { get;  }
+
+        /// <summary>
+        /// Gets the service principal secret.
+        /// </summary>
+        string ServicePrincipalSecret { get; }
     }
 }

@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:32A8B56FE180FA4429482D706189DEA2:02EEC4EFE8B735CE832BF91D77CEE31E
         public async override Task<IApplication> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var createParameter = new AddApplicationParametersInner
+            var createParameter = new ApplicationCreateParametersInner
                                     {
                                         DisplayName = Inner.DisplayName,
                                         AllowUpdates = Inner.AllowUpdates
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:F08598A17ADD014E223DFD77272641FF:E166AAF3CE55ADF2533B6CBBEC6343E8
         public async override Task<IApplication> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var updateParameter = new UpdateApplicationParametersInner
+            var updateParameter = new ApplicationUpdateParametersInner
                                     {
                                         DisplayName = Inner.DisplayName,
                                         AllowUpdates = Inner.AllowUpdates

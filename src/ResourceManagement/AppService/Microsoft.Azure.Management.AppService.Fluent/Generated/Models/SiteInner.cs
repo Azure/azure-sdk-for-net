@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
-
+        
         /// <summary>
         /// Gets current state of the app.
         /// </summary>
