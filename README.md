@@ -36,7 +36,7 @@ that take advantage of scalable cloud computing resources.
   - Build.
   - "Test Explorer" window will be populated with tests. Go select and invoke.
 
-#### Using the command line
+#### Using command line
 
   - Refer to the [building](#building) section to get the command window set up.
   - Invoke the "Test" target from [`build.proj`](build.proj). It's likely you'll need to build the test project first, so add the "build" target as well:
