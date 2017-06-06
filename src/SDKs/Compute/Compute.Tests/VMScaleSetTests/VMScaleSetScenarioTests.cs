@@ -55,11 +55,11 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                TestScaleSetOperationsInternal(context, hasManagedDisks: true);
+                TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false);
             }
         }
 
-        public void TestScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false)
+        public void TestScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false, bool useVmssExtension = true)
         {
             EnsureClientsInitialized(context);
 
@@ -90,7 +90,7 @@ namespace Compute.Tests
                     storageAccountOutput,
                     imageRef,
                     out inputVMScaleSet,
-                    extensionProfile,
+                    useVmssExtension ? extensionProfile : null,
                     (vmScaleSet) => { vmScaleSet.Overprovision = true; },
                     createWithManagedDisks: hasManagedDisks);
 

@@ -90,7 +90,7 @@ namespace Compute.Tests
                     {
                         ComputerNamePrefix = "test",
                         AdminUsername = "Foo12",
-                        AdminPassword = "BaR@123" + rgName,
+                        AdminPassword = PLACEHOLDER,
                         CustomData = Convert.ToBase64String(Encoding.UTF8.GetBytes("Custom data"))
                     },
                     NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
@@ -252,10 +252,12 @@ namespace Compute.Tests
         {
             Assert.NotNull(vmScaleSetInstanceView.Statuses);
             Assert.NotNull(vmScaleSetInstanceView);
-            // TODO: AutoRest
-            Assert.NotNull(vmScaleSetInstanceView.Extensions);
-            int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
-            Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            if (vmScaleSet.VirtualMachineProfile.ExtensionProfile != null)
+            {
+                Assert.NotNull(vmScaleSetInstanceView.Extensions);
+                int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
+                Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            }
         }
 
         protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false)
