@@ -168,6 +168,7 @@
         Keywords="Microsoft Azure .NET SDK"
         UnsignedFiles="@(DelaySignedAssembliesToValidate)"
         DestinationPath="binaries\$(LibraryFxTarget)"
+        Certificates="72, 401"
         SigningLogPath="binaries\$(LibraryFxTarget)\signing.log"
         ToolsPath="$(CIToolsPath)"
         Condition="!$(DelaySign) and '@(DelaySignedAssembliesToValidate)' != ''"/>
