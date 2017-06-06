@@ -17,18 +17,18 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// Represents server metrics.
     /// </summary>
-    public partial class ServerMetric
+    public partial class ServerUsage
     {
         /// <summary>
-        /// Initializes a new instance of the ServerMetric class.
+        /// Initializes a new instance of the ServerUsage class.
         /// </summary>
-        public ServerMetric()
+        public ServerUsage()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServerMetric class.
+        /// Initializes a new instance of the ServerUsage class.
         /// </summary>
         /// <param name="name">Name of the server usage metric.</param>
         /// <param name="resourceName">The name of the resource.</param>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="unit">The units of the metric.</param>
         /// <param name="nextResetTime">The next reset time for the metric
         /// (ISO8601 format).</param>
-        public ServerMetric(string name = default(string), string resourceName = default(string), string displayName = default(string), double? currentValue = default(double?), double? limit = default(double?), string unit = default(string), System.DateTime? nextResetTime = default(System.DateTime?))
+        public ServerUsage(string name = default(string), string resourceName = default(string), string displayName = default(string), double? currentValue = default(double?), double? limit = default(double?), string unit = default(string), System.DateTime? nextResetTime = default(System.DateTime?))
         {
             Name = name;
             ResourceName = resourceName;

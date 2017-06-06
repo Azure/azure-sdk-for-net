@@ -82,19 +82,14 @@ namespace Microsoft.Azure.Management.Sql
         IFirewallRulesOperations FirewallRules { get; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        IServersOperations Servers { get; }
-
-        /// <summary>
         /// Gets the IElasticPoolsOperations.
         /// </summary>
         IElasticPoolsOperations ElasticPools { get; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
 
         /// <summary>
         /// Gets the IRecommendedElasticPoolsOperations.
@@ -107,9 +102,24 @@ namespace Microsoft.Azure.Management.Sql
         IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
 
         /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        IServersOperations Servers { get; }
+
+        /// <summary>
         /// Gets the IFailoverGroupsOperations.
         /// </summary>
         IFailoverGroupsOperations FailoverGroups { get; }
+
+        /// <summary>
+        /// Gets the IVnetFirewallRulesOperations.
+        /// </summary>
+        IVnetFirewallRulesOperations VnetFirewallRules { get; }
+
+        /// <summary>
+        /// Gets the IServerKeysOperations.
+        /// </summary>
+        IServerKeysOperations ServerKeys { get; }
 
     }
 }

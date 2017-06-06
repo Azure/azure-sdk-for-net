@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents impact of an operation, both in absolute and relative terms.
+    /// The Impact of an operation, both in absolute and relative terms.
     /// </summary>
     public partial class OperationImpact
     {

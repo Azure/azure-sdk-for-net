@@ -11,20 +11,17 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Sql;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ServerState.
+    /// Defines values for UnitDefinitionType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ServerState
+    public static class UnitDefinitionType
     {
-        [EnumMember(Value = "Ready")]
-        Ready,
-        [EnumMember(Value = "Disabled")]
-        Disabled
+        public const string Count = "Count";
+        public const string Bytes = "Bytes";
+        public const string Seconds = "Seconds";
+        public const string Percent = "Percent";
+        public const string CountPerSecond = "CountPerSecond";
+        public const string BytesPerSecond = "BytesPerSecond";
     }
 }

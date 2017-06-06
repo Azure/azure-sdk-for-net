@@ -19,13 +19,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ServerAzureADAdministratorsOperations operations.
+    /// ServerKeysOperations operations.
     /// </summary>
-    public partial interface IServerAzureADAdministratorsOperations
+    public partial interface IServerKeysOperations
     {
         /// <summary>
-        /// Creates a new Server Active Directory Administrator or updates an
-        /// existing server Active Directory Administrator.
+        /// Returns a list of server keys.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -34,10 +33,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
-        /// </param>
-        /// <param name='properties'>
-        /// The required parameters for creating or updating an Active
-        /// Directory Administrator.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,9 +49,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerAzureADAdministrator>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ServerAzureADAdministrator properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ServerKey>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an existing server Active Directory Administrator.
+        /// Returns a server key.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -65,6 +60,9 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
+        /// </param>
+        /// <param name='keyName'>
+        /// The name of the server key to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,9 +79,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerAzureADAdministrator>> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerKey>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns an server Administrator.
+        /// Creates or updates a server key.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -92,6 +90,17 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
+        /// </param>
+        /// <param name='keyName'>
+        /// The name of the server key to be operated on (updated or created).
+        /// The key name is required to be in the format of
+        /// 'vault_key_version'. For example, if the keyId is
+        /// https://YourVaultName.vault.azure.net/keys/YourKeyName/01234567890123456789012345678901,
+        /// then the server key name should be formatted as:
+        /// YourVaultName_YourKeyName_01234567890123456789012345678901
+        /// </param>
+        /// <param name='parameters'>
+        /// The requested server key resource state.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -108,9 +117,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerAzureADAdministrator>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerKey>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string keyName, ServerKey parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of server Administrators.
+        /// Deletes the server key with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -119,6 +128,9 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
+        /// </param>
+        /// <param name='keyName'>
+        /// The name of the server key to be deleted.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -129,16 +141,12 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<ServerAzureADAdministrator>>> ListWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new Server Active Directory Administrator or updates an
-        /// existing server Active Directory Administrator.
+        /// Creates or updates a server key.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -148,9 +156,16 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='properties'>
-        /// The required parameters for creating or updating an Active
-        /// Directory Administrator.
+        /// <param name='keyName'>
+        /// The name of the server key to be operated on (updated or created).
+        /// The key name is required to be in the format of
+        /// 'vault_key_version'. For example, if the keyId is
+        /// https://YourVaultName.vault.azure.net/keys/YourKeyName/01234567890123456789012345678901,
+        /// then the server key name should be formatted as:
+        /// YourVaultName_YourKeyName_01234567890123456789012345678901
+        /// </param>
+        /// <param name='parameters'>
+        /// The requested server key resource state.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -167,9 +182,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerAzureADAdministrator>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ServerAzureADAdministrator properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServerKey>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string keyName, ServerKey parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an existing server Active Directory Administrator.
+        /// Deletes the server key with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -178,6 +193,28 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
+        /// </param>
+        /// <param name='keyName'>
+        /// The name of the server key to be deleted.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Returns a list of server keys.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -194,6 +231,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerAzureADAdministrator>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ServerKey>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -19,13 +19,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ServerAzureADAdministratorsOperations operations.
+    /// VnetFirewallRulesOperations operations.
     /// </summary>
-    public partial interface IServerAzureADAdministratorsOperations
+    public partial interface IVnetFirewallRulesOperations
     {
         /// <summary>
-        /// Creates a new Server Active Directory Administrator or updates an
-        /// existing server Active Directory Administrator.
+        /// Gets a virtual network rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -35,9 +34,8 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='properties'>
-        /// The required parameters for creating or updating an Active
-        /// Directory Administrator.
+        /// <param name='vnetFirewallRuleName'>
+        /// The name of the virtual network rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,9 +52,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerAzureADAdministrator>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ServerAzureADAdministrator properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VnetFirewallRule>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string vnetFirewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an existing server Active Directory Administrator.
+        /// Creates or updates an existing virtual network rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -65,6 +63,12 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
+        /// </param>
+        /// <param name='vnetFirewallRuleName'>
+        /// The name of the virtual network rule.
+        /// </param>
+        /// <param name='parameters'>
+        /// The requested vnetFirewall Resource state.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,9 +85,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerAzureADAdministrator>> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VnetFirewallRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string vnetFirewallRuleName, VnetFirewallRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns an server Administrator.
+        /// Deletes the virtual network rule with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -92,6 +96,9 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
+        /// </param>
+        /// <param name='vnetFirewallRuleName'>
+        /// The name of the virtual network rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -102,15 +109,12 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerAzureADAdministrator>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string vnetFirewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of server Administrators.
+        /// Gets a list of virtual network rules in a server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -135,10 +139,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<ServerAzureADAdministrator>>> ListWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VnetFirewallRule>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new Server Active Directory Administrator or updates an
-        /// existing server Active Directory Administrator.
+        /// Creates or updates an existing virtual network rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -148,9 +151,11 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='properties'>
-        /// The required parameters for creating or updating an Active
-        /// Directory Administrator.
+        /// <param name='vnetFirewallRuleName'>
+        /// The name of the virtual network rule.
+        /// </param>
+        /// <param name='parameters'>
+        /// The requested vnetFirewall Resource state.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -167,9 +172,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerAzureADAdministrator>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, ServerAzureADAdministrator properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VnetFirewallRule>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string vnetFirewallRuleName, VnetFirewallRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an existing server Active Directory Administrator.
+        /// Deletes the virtual network rule with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -178,6 +183,28 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
+        /// </param>
+        /// <param name='vnetFirewallRuleName'>
+        /// The name of the virtual network rule.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string vnetFirewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of virtual network rules in a server.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -194,6 +221,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServerAzureADAdministrator>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<VnetFirewallRule>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

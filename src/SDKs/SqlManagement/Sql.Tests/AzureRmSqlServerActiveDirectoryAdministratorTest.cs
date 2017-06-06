@@ -45,7 +45,7 @@ namespace Sql.Tests
 
                 // Add new Active Directory Admin
                 ServerAzureADAdministrator newAdmin = new ServerAzureADAdministrator("DSEngAll", new Guid("5e90ef3b-9b42-4777-819b-25c36961ea4d"), new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), "sqlcrudtest-3421", "2c647056-bab2-4175-b172-493ff049eb29");
-                ServerAzureADAdministrator createResult = sqlClient.ServerAzureADAdministrators.CreateOrUpdateAzureADAdministrator(resourceGroup.Name, server.Name, newAdmin);
+                ServerAzureADAdministrator createResult = sqlClient.ServerAzureADAdministrators.CreateOrUpdate(resourceGroup.Name, server.Name, newAdmin);
                 
                 Assert.Equal(aadAdmin, createResult.Login);
 
