@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default?api-version=2017-03-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljTWFuYWdlckdlb2dyYXBoaWNIaWVyYXJjaGllcy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTctMDMtMDE=",
+      "RequestUri": "/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default?api-version=2017-05-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay90cmFmZmljTWFuYWdlckdlb2dyYXBoaWNIaWVyYXJjaGllcy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTctMDUtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "953da237-9711-4447-b221-4b718a21a15b"
+          "18d8268b-51aa-4dda-87c2-f5e9ef5b082f"
         ],
         "accept-language": [
           "en-US"
@@ -26,7 +26,7 @@
           "private"
         ],
         "Date": [
-          "Mon, 06 Mar 2017 12:19:46 GMT"
+          "Wed, 03 May 2017 10:28:21 GMT"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -44,7 +44,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "953da237-9711-4447-b221-4b718a21a15b"
+          "18d8268b-51aa-4dda-87c2-f5e9ef5b082f"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -53,13 +53,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14995"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "b844d6e4-73c3-4979-9486-baa14d4d767d"
+          "7b9aa4ec-e06d-4222-978e-27d7a5a0821e"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20170306T121946Z:b844d6e4-73c3-4979-9486-baa14d4d767d"
+          "CENTRALUS:20170503T102822Z:7b9aa4ec-e06d-4222-978e-27d7a5a0821e"
         ]
       },
       "StatusCode": 200
