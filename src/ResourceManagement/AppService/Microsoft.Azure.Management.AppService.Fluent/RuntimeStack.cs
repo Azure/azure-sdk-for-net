@@ -5,16 +5,18 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// <summary>
     /// Defines App service pricing tiers.
     /// </summary>
-    public partial class RuntimeStack 
+    public partial class RuntimeStack
     {
-        public static readonly RuntimeStack NodeJS_6_9_3 = new RuntimeStack("NODE", "6.9.3");
-        public static readonly RuntimeStack NodeJS_6_6_0 = new RuntimeStack("NODE", "6.6.0");
-        public static readonly RuntimeStack NodeJS_6_2_2 = new RuntimeStack("NODE", "6.2.2");
-        public static readonly RuntimeStack NodeJS_4_5_0 = new RuntimeStack("NODE", "4.5.0");
-        public static readonly RuntimeStack NodeJS_4_4_7 = new RuntimeStack("NODE", "4.4.7");
-        public static readonly RuntimeStack PHP_5_6_23 = new RuntimeStack("PHP", "5.6.23");
-        public static readonly RuntimeStack PHP_7_0_6 = new RuntimeStack("PHP", "7.0.6");
-        public static readonly RuntimeStack NETCore_V1_0 = new RuntimeStack("DOTNETCORE", "v1.0");
+        public static readonly RuntimeStack NodeJS_6_10 = new RuntimeStack("NODE", "6.10");
+        public static readonly RuntimeStack NodeJS_6_9 = new RuntimeStack("NODE", "6.9");
+        public static readonly RuntimeStack NodeJS_6_6 = new RuntimeStack("NODE", "6.6");
+        public static readonly RuntimeStack NodeJS_6_2 = new RuntimeStack("NODE", "6.2");
+        public static readonly RuntimeStack NodeJS_4_5 = new RuntimeStack("NODE", "4.5");
+        public static readonly RuntimeStack NodeJS_4_4 = new RuntimeStack("NODE", "4.4");
+        public static readonly RuntimeStack PHP_5_6 = new RuntimeStack("PHP", "5.6");
+        public static readonly RuntimeStack PHP_7_0 = new RuntimeStack("PHP", "7.0");
+        public static readonly RuntimeStack NETCore_V1_0 = new RuntimeStack("DOTNETCORE", "1.0");
+        public static readonly RuntimeStack NETCore_V1_1 = new RuntimeStack("DOTNETCORE", "1.1");
         public static readonly RuntimeStack Ruby_2_3 = new RuntimeStack("RUBY", "2.3");
 
         private string stack;

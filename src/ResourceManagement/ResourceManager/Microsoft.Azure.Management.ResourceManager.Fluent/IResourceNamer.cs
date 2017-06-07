@@ -6,5 +6,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     public interface IResourceNamer
     {
         string RandomName(string prefix, int maxLen);
+
+        string RandomGuid();
     }
 }

@@ -56,5 +56,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             }
             return str;
         }
+
+        public virtual string RandomGuid()
+        {
+            return Guid.NewGuid().ToString();
+        }
     }
 }

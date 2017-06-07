@@ -43,7 +43,7 @@ namespace ManageLinuxWebAppWithDomainSsl
                         .WithRegion(Region.USWest)
                         .WithNewResourceGroup(rgName)
                         .WithNewLinuxPlan(PricingTier.StandardS1)
-                        .WithBuiltInImage(RuntimeStack.NodeJS_6_9_3)
+                        .WithBuiltInImage(RuntimeStack.NodeJS_6_9)
                         .Create();
 
                 Utilities.Log("Created web app " + app1.Name);
@@ -57,7 +57,7 @@ namespace ManageLinuxWebAppWithDomainSsl
                 IWebApp app2 = azure.WebApps.Define(app2Name)
                         .WithExistingLinuxPlan(plan)
                         .WithExistingResourceGroup(rgName)
-                        .WithBuiltInImage(RuntimeStack.NodeJS_6_9_3)
+                        .WithBuiltInImage(RuntimeStack.NodeJS_6_9)
                         .Create();
 
                 Utilities.Log("Created web app " + app2.Name);
