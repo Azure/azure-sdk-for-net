@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-04-30-preview";
+            string apiVersion = "2017-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -156,6 +156,8 @@ namespace Microsoft.Azure.Management.Compute
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -203,7 +205,7 @@ namespace Microsoft.Azure.Management.Compute
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -240,7 +242,7 @@ namespace Microsoft.Azure.Management.Compute
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualMachineExtensionImage>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -299,7 +301,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-04-30-preview";
+            string apiVersion = "2017-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -346,6 +348,8 @@ namespace Microsoft.Azure.Management.Compute
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -393,7 +397,7 @@ namespace Microsoft.Azure.Management.Compute
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -430,7 +434,7 @@ namespace Microsoft.Azure.Management.Compute
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<VirtualMachineExtensionImage>>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
@@ -498,7 +502,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2016-04-30-preview";
+            string apiVersion = "2017-03-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -556,6 +560,8 @@ namespace Microsoft.Azure.Management.Compute
                 }
                 _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
             }
+
+
             if (customHeaders != null)
             {
                 foreach(var _header in customHeaders)
@@ -603,7 +609,7 @@ namespace Microsoft.Azure.Management.Compute
                         ex.Body = _errorBody;
                     }
                 }
-                catch (Newtonsoft.Json.JsonException)
+                catch (JsonException)
                 {
                     // Ignore the exception
                 }
@@ -640,7 +646,7 @@ namespace Microsoft.Azure.Management.Compute
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<VirtualMachineExtensionImage>>(_responseContent, Client.DeserializationSettings);
                 }
-                catch (Newtonsoft.Json.JsonException ex)
+                catch (JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)

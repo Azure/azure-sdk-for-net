@@ -252,10 +252,12 @@ namespace Compute.Tests
         {
             Assert.NotNull(vmScaleSetInstanceView.Statuses);
             Assert.NotNull(vmScaleSetInstanceView);
-            // TODO: AutoRest
-            Assert.NotNull(vmScaleSetInstanceView.Extensions);
-            int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
-            Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            if (vmScaleSet.VirtualMachineProfile.ExtensionProfile != null)
+            {
+                Assert.NotNull(vmScaleSetInstanceView.Extensions);
+                int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
+                Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            }
         }
 
         protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false)

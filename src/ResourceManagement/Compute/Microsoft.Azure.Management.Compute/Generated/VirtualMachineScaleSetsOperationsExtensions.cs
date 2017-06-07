@@ -629,8 +629,7 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// Reimages all the disks ( including data disks ) in the virtual machines in
-            /// a virtual machine scale set. This operation is only supported for managed
-            /// disks.
+            /// a VM scale set. This operation is only supported for managed disks.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -648,8 +647,7 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// Reimages all the disks ( including data disks ) in the virtual machines in
-            /// a virtual machine scale set. This operation is only supported for managed
-            /// disks.
+            /// a VM scale set. This operation is only supported for managed disks.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1087,8 +1085,7 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// Reimages all the disks ( including data disks ) in the virtual machines in
-            /// a virtual machine scale set. This operation is only supported for managed
-            /// disks.
+            /// a VM scale set. This operation is only supported for managed disks.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1106,8 +1103,7 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// Reimages all the disks ( including data disks ) in the virtual machines in
-            /// a virtual machine scale set. This operation is only supported for managed
-            /// disks.
+            /// a VM scale set. This operation is only supported for managed disks.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

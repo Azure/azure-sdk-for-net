@@ -71,9 +71,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Allows you to re-image all the disks ( including data disks ) in the a
-            /// virtual machine scale set instance. This operation is only supported for
-            /// managed disks.
+            /// Allows you to re-image all the disks ( including data disks ) in the a VM
+            /// scale set instance. This operation is only supported for managed disks.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,9 +92,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Allows you to re-image all the disks ( including data disks ) in the a
-            /// virtual machine scale set instance. This operation is only supported for
-            /// managed disks.
+            /// Allows you to re-image all the disks ( including data disks ) in the a VM
+            /// scale set instance. This operation is only supported for managed disks.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -553,9 +551,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Allows you to re-image all the disks ( including data disks ) in the a
-            /// virtual machine scale set instance. This operation is only supported for
-            /// managed disks.
+            /// Allows you to re-image all the disks ( including data disks ) in the a VM
+            /// scale set instance. This operation is only supported for managed disks.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -575,9 +572,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Allows you to re-image all the disks ( including data disks ) in the a
-            /// virtual machine scale set instance. This operation is only supported for
-            /// managed disks.
+            /// Allows you to re-image all the disks ( including data disks ) in the a VM
+            /// scale set instance. This operation is only supported for managed disks.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

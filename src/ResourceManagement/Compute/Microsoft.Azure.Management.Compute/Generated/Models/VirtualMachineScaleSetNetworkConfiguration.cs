@@ -41,11 +41,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="id">Resource Id</param>
         /// <param name="primary">Whether this is a primary NIC on a virtual
         /// machine.</param>
-        public VirtualMachineScaleSetNetworkConfiguration(string name, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, string id = default(string), bool? primary = default(bool?))
+        /// <param name="networkSecurityGroup">The network security
+        /// group.</param>
+        /// <param name="dnsSettings">The dns settings to be applied on the
+        /// network interfaces.</param>
+        public VirtualMachineScaleSetNetworkConfiguration(string name, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, string id = default(string), bool? primary = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings))
             : base(id)
         {
             Name = name;
             Primary = primary;
+            NetworkSecurityGroup = networkSecurityGroup;
+            DnsSettings = dnsSettings;
             IpConfigurations = ipConfigurations;
         }
 
@@ -60,6 +66,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the network security group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
+        public SubResource NetworkSecurityGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dns settings to be applied on the network
+        /// interfaces.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dnsSettings")]
+        public VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine scale set IP Configuration.
