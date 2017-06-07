@@ -5,19 +5,17 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Text;
 using Xunit;
+using CM = Microsoft.Azure.Management.Compute.Models;
 
 namespace Compute.Tests
 {
@@ -54,7 +52,7 @@ namespace Compute.Tests
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                Sku = new Sku()
+                Sku = new CM.Sku()
                 {
                     Capacity = 2,
                     Name = VirtualMachineSizeTypes.StandardA0,

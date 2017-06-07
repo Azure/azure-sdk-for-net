@@ -22,7 +22,7 @@
           "FxVersion/4.6.1637.0",
           "OSName/Windows_10_Pro",
           "OSVersion/6.3.14393",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.4.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.4.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/crptestar3104\",\r\n  \"name\": \"crptestar3104\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
@@ -460,7 +460,7 @@
           "FxVersion/4.6.1637.0",
           "OSName/Windows_10_Pro",
           "OSVersion/6.3.14393",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.4.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.4.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -514,7 +514,7 @@
           "FxVersion/4.6.1637.0",
           "OSName/Windows_10_Pro",
           "OSVersion/6.3.14393",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.4.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.4.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -568,7 +568,7 @@
           "FxVersion/4.6.1637.0",
           "OSName/Windows_10_Pro",
           "OSVersion/6.3.14393",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.4.0-preview"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.4.0-preview"
         ]
       },
       "ResponseBody": "",
