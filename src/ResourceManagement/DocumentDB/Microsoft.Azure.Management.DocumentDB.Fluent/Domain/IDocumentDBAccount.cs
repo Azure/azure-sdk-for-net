@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Update;
+    using Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
@@ -17,11 +17,11 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
     /// future releases, including removal, regardless of any compatibility expectations set by the containing library
     /// version number.).
     /// </remarks>
-    public interface IDatabaseAccount  :
+    public interface IDocumentDBAccount  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBManager,Microsoft.Azure.Management.DocumentDB.Fluent.Models.DatabaseAccountInner>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<DatabaseAccount.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<DocumentDBAccount.Update.IUpdate>
     {
         /// <summary>
         /// Gets an array that contains the writable georeplication locations enabled for the DocumentDB account.

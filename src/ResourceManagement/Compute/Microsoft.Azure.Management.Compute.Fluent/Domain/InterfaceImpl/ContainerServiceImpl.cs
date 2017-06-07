@@ -16,27 +16,27 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Specifies the DCOS orchestration type for the container service.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        ContainerService.Definition.IWithLinux ContainerService.Definition.IWithOrchestrator.WithDcosOrchestration()
+        ContainerService.Definition.IWithDiagnostics ContainerService.Definition.IWithOrchestrator.WithDcosOrchestration()
         {
-            return this.WithDcosOrchestration() as ContainerService.Definition.IWithLinux;
+            return this.WithDcosOrchestration() as ContainerService.Definition.IWithDiagnostics;
         }
 
         /// <summary>
         /// Specifies the Kubernetes orchestration type for the container service.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        ContainerService.Definition.IWithLinux ContainerService.Definition.IWithOrchestrator.WithKubernetesOrchestration()
+        ContainerService.Definition.IWithServicePrincipalProfile ContainerService.Definition.IWithOrchestrator.WithKubernetesOrchestration()
         {
-            return this.WithKubernetesOrchestration() as ContainerService.Definition.IWithLinux;
+            return this.WithKubernetesOrchestration() as ContainerService.Definition.IWithServicePrincipalProfile;
         }
 
         /// <summary>
         /// Specifies the Swarm orchestration type for the container service.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        ContainerService.Definition.IWithLinux ContainerService.Definition.IWithOrchestrator.WithSwarmOrchestration()
+        ContainerService.Definition.IWithDiagnostics ContainerService.Definition.IWithOrchestrator.WithSwarmOrchestration()
         {
-            return this.WithSwarmOrchestration() as ContainerService.Definition.IWithLinux;
+            return this.WithSwarmOrchestration() as ContainerService.Definition.IWithDiagnostics;
         }
 
         /// <summary>
@@ -93,30 +93,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Disables diagnostics.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        ContainerService.Update.IUpdate ContainerService.Update.IWithDiagnostics.WithoutDiagnostics()
-        {
-            return this.WithoutDiagnostics() as ContainerService.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Enables diagnostics.
-        /// </summary>
-        /// <return>The next stage of the update.</return>
-        ContainerService.Update.IUpdate ContainerService.Update.IWithDiagnostics.WithDiagnostics()
-        {
-            return this.WithDiagnostics() as ContainerService.Update.IUpdate;
-        }
-
-        /// <summary>
         /// Enable diagnostics.
         /// </summary>
         /// <return>The create stage of the definition.</return>
-        ContainerService.Definition.IWithCreate ContainerService.Definition.IWithDiagnostics.WithDiagnostics()
+        ContainerService.Definition.IWithLinux ContainerService.Definition.IWithDiagnostics.WithDiagnostics()
         {
-            return this.WithDiagnostics() as ContainerService.Definition.IWithCreate;
+            return this.WithDiagnostics() as ContainerService.Definition.IWithLinux;
         }
 
         /// <summary>
@@ -270,5 +252,28 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 return this.AgentPoolFqdn();
             }
         }
+
+        /// <summary>
+        /// Gets the service principal clientId.
+        /// </summary>
+        string Microsoft.Azure.Management.Compute.Fluent.IContainerService.ServicePrincipalClientId
+        {
+            get
+            {
+                return this.ServicePrincipalClientId();
+            }
+        }
+
+        /// <summary>
+        /// Gets the service principal secret.
+        /// </summary>
+        string Microsoft.Azure.Management.Compute.Fluent.IContainerService.ServicePrincipalSecret
+        {
+            get
+            {
+                return this.ServicePrincipalSecret();
+            }
+        }
+
     }
 }

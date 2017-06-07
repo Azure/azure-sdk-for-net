@@ -30,6 +30,8 @@ using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.ServiceBus;
 using System.Threading;
 using System.Net.Http.Headers;
+using Microsoft.Azure.Management.DocumentDB.Fluent;
+using Microsoft.Azure.Management.DocumentDB.Fluent.Models;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -1511,6 +1513,32 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
             Utilities.Log(builder.ToString());
+        }
+
+        public static void Print(IDocumentDBAccount documentDBAccount)
+        {
+            StringBuilder builder = new StringBuilder()
+                    .Append("DocumentDB: ").Append(documentDBAccount.Id)
+                    .Append("\n\tName: ").Append(documentDBAccount.Name)
+                    .Append("\n\tResourceGroupName: ").Append(documentDBAccount.ResourceGroupName)
+                    .Append("\n\tKind: ").Append(documentDBAccount.Kind.ToString())
+                    .Append("\n\tDefault consistency level: ").Append(documentDBAccount.ConsistencyPolicy.DefaultConsistencyLevel)
+                    .Append("\n\tIP range filter: ").Append(documentDBAccount.IPRangeFilter);
+
+            foreach (Location writeReplica in documentDBAccount.WritableReplications)
+            {
+                builder.Append("\n\t\tWrite replication: ")
+                        .Append("\n\t\t\tName :").Append(writeReplica.LocationName);
+            }
+
+            builder.Append("\n\tNumber of read replications: ").Append(documentDBAccount.ReadableReplications.Count);
+            foreach (Location readReplica in documentDBAccount.ReadableReplications)
+            {
+                builder.Append("\n\t\tRead replication: ")
+                        .Append("\n\t\t\tName :").Append(readReplica.LocationName);
+            }
+
+            Log(builder.ToString());
         }
 
         public static void CreateCertificate(string domainName, string pfxPath, string password)

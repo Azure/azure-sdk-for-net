@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
             return new RegistryManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 

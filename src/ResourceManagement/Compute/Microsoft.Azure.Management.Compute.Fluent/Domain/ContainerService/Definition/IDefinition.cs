@@ -35,7 +35,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition
         Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithLinuxRootUsername,
         Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithLinuxSshKey,
         Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithAgentPool,
-        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithCreate
+        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithServicePrincipalProfile,
+        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithCreate,
+        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithDiagnostics
     {
     }
 
@@ -48,19 +50,33 @@ namespace Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition
         /// Specifies the DCOS orchestration type for the container service.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithLinux WithDcosOrchestration();
+        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithDiagnostics WithDcosOrchestration();
 
         /// <summary>
         /// Specifies the Swarm orchestration type for the container service.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithLinux WithSwarmOrchestration();
+        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithDiagnostics WithSwarmOrchestration();
 
         /// <summary>
         /// Specifies the Kubernetes orchestration type for the container service.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithLinux WithKubernetesOrchestration();
+        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithServicePrincipalProfile WithKubernetesOrchestration();
+    }
+
+    /// <summary>
+    /// The stage allowing properties for cluster service principals.
+    /// </summary>
+    public interface IWithServicePrincipalProfile
+    {
+        /// <summary>
+        /// Properties for cluster service principals.
+        /// </summary>
+        /// <param name="clientId">The ID for the service principal.</param>
+        /// <param name="secret">The secret password associated with the service principal.</param>
+        /// <return>The next stage of the definition.</return>
+        IWithLinux WithServicePrincipal(string clientId, string secret);
     }
 
     /// <summary>
@@ -126,13 +142,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition
     /// <summary>
     /// The stage of the container service definition allowing to specific diagnostic settings.
     /// </summary>
-    public interface IWithDiagnostics 
+    public interface IWithDiagnostics :
+        IWithLinux
     {
         /// <summary>
         /// Enable diagnostics.
         /// </summary>
         /// <return>The create stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithCreate WithDiagnostics();
+        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithLinux WithDiagnostics();
     }
 
     /// <summary>
@@ -142,8 +159,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition
     /// </summary>
     public interface IWithCreate  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Compute.Fluent.IContainerService>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithCreate>,
-        Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithDiagnostics
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.ContainerService.Definition.IWithCreate>
     {
     }
 

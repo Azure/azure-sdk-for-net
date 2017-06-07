@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Definition;
+    using Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
@@ -17,18 +17,18 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
     /// future releases, including removal, regardless of any compatibility expectations set by the containing library
     /// version number.).
     /// </remarks>
-    public interface IDatabaseAccounts  :
+    public interface IDocumentDBAccounts  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<DatabaseAccount.Definition.IBlank>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<DocumentDBAccount.Definition.IBlank>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBManager>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccountsOperations>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingById<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingById,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsDeletingByResourceGroup,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.DocumentDB.Fluent.IDatabaseAccount>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByResourceGroup<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount>,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByResourceGroup<Microsoft.Azure.Management.DocumentDB.Fluent.IDocumentDBAccount>
     {
         /// <summary>
         /// Changes the failover priority for the Azure DocumentDB database account. A failover priority of 0 indicates

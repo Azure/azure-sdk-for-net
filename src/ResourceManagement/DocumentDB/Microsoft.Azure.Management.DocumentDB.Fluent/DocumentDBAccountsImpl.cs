@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.DocumentDB.Fluent.DatabaseAccount.Definition;
+    using Microsoft.Azure.Management.DocumentDB.Fluent.DocumentDBAccount.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Linq;
@@ -15,36 +15,36 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
     /// <summary>
     /// Implementation for Registries.
     /// </summary>
-    public partial class DatabaseAccountsImpl :
-        TopLevelModifiableResources<IDatabaseAccount,
-            DatabaseAccountImpl,
+    public partial class DocumentDBAccountsImpl :
+        TopLevelModifiableResources<IDocumentDBAccount,
+            DocumentDBAccountImpl,
             Models.DatabaseAccountInner,
             IDatabaseAccountsOperations, 
             IDocumentDBManager>,
-        IDatabaseAccounts
+        IDocumentDBAccounts
     {
-        internal DatabaseAccountsImpl(IDocumentDBManager manager) :
+        internal DocumentDBAccountsImpl(IDocumentDBManager manager) :
             base(manager.Inner.DatabaseAccounts, manager)
         {
         }
 
-        public DatabaseAccountImpl Define(string name)
+        public DocumentDBAccountImpl Define(string name)
         {
             return WrapModel(name);
         }
 
-        protected override IDatabaseAccount WrapModel(Models.DatabaseAccountInner inner)
+        protected override IDocumentDBAccount WrapModel(Models.DatabaseAccountInner inner)
         {
-            return new DatabaseAccountImpl(inner.Name, inner, Manager);
+            return new DocumentDBAccountImpl(inner.Name, inner, Manager);
         }
 
         /// <summary>
         /// Fluent model helpers.
         /// </summary>
 
-        protected override DatabaseAccountImpl WrapModel(string name)
+        protected override DocumentDBAccountImpl WrapModel(string name)
         {
-            return new DatabaseAccountImpl(name, new Models.DatabaseAccountInner(), Manager);
+            return new DocumentDBAccountImpl(name, new Models.DatabaseAccountInner(), Manager);
         }
 
         protected async override Task DeleteInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
@@ -52,16 +52,16 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        public override IEnumerable<IDatabaseAccount> List()
+        public override IEnumerable<IDocumentDBAccount> List()
         {
             return Manager.ResourceManager.ResourceGroups.List()
                                           .SelectMany(rg => ListByResourceGroup(rg.Name));
         }
 
-        public override async Task<IPagedCollection<IDatabaseAccount>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<IPagedCollection<IDocumentDBAccount>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             var task = await Manager.ResourceManager.ResourceGroups.ListAsync(true, cancellationToken);
-            return await PagedCollection<IDatabaseAccount, Models.DatabaseAccountInner>.LoadPage(async (cancellation) =>
+            return await PagedCollection<IDocumentDBAccount, Models.DatabaseAccountInner>.LoadPage(async (cancellation) =>
             {
                 var resourceGroups = await Manager.ResourceManager.ResourceGroups.ListAsync(true, cancellation);
                 var containerService = await Task.WhenAll(resourceGroups.Select(async (rg) => await ListInnerByGroupAsync(rg.Name, cancellation)));
