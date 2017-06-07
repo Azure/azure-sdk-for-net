@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Determines whether a resource can be created with the specified name.
         /// </summary>
         /// <param name='parameters'>
-        /// The required parameters for creating or updating a database.
+        /// The parameters to request for name availability.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

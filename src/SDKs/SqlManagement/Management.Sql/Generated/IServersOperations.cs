@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Sql
         /// name.
         /// </summary>
         /// <param name='parameters'>
-        /// The required parameters for creating or updating a database.
+        /// The parameters to request for name availability.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

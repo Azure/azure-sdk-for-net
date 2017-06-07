@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for creating or updating a database.
+            /// The parameters to request for name availability.
             /// </param>
             public static CheckNameAvailabilityResponse CheckNameAvailability(this IServersOperations operations, CheckNameAvailabilityRequest parameters)
             {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The operations group for this extension method.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters for creating or updating a database.
+            /// The parameters to request for name availability.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -12,6 +12,15 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.Azure.Management.KeyVault;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.KeyVault.Models;
+using Microsoft.Azure.Management.KeyVault.Models;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Sql.Tests.Utilities;
+using System.IO;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Azure.KeyVault.WebKey;
 
 namespace Sql.Tests
 {
@@ -40,12 +49,53 @@ namespace Sql.Tests
                 handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
             return client;
         }
-        
+
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
             var client = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
             return client;
+        }
+
+        public static KeyVaultManagementClient GetKeyVaultManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<KeyVaultManagementClient>(handlers: handler);
+            return client;
+        }
+
+        public static KeyVaultClient GetKeyVaultClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            handler.IsPassThrough = true;
+            var client = new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), handlers: handler);
+            return client;
+        }
+
+        public static async Task<string> GetAccessToken(string authority, string resource, string scope)
+        {
+            var context = new AuthenticationContext(authority);
+            string authClientId = TryGetEnvironmentOrAppSetting("AuthClientId");
+            string authSecret = TryGetEnvironmentOrAppSetting("AuthClientSecret");
+            var clientCredential = new ClientCredential(authClientId, authSecret);
+            var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
+
+            return result.AccessToken;
+        }
+
+        public static string TryGetEnvironmentOrAppSetting(string settingName, string defaultValue = null)
+        {
+            var value = Environment.GetEnvironmentVariable(settingName);
+
+            // We don't use IsNullOrEmpty because an empty setting overrides what's on AppSettings.
+            if (value == null)
+            {
+                var config = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile("appsettings.json").Build();
+                value = config.GetSection("AppSettings:" + settingName).Value;
+            }
+
+            return value ?? defaultValue;
         }
 
         public static string GenerateName(
@@ -273,6 +323,14 @@ namespace Sql.Tests
             Assert.Equal(expected.EndIpAddress, actual.EndIpAddress);
         }
 
+        public static void ValidateServerKey(ServerKey actual, string expectedName, string expectedKeyType, string expectedUri)
+        {
+            Assert.NotNull(actual);
+            Assert.Equal(expectedName, actual.Name);
+            Assert.Equal(expectedKeyType, actual.ServerKeyType);
+            Assert.Equal(expectedUri, actual.Uri);
+        }
+
         public static void RunTest(string suiteName, string testName, Action<ResourceManagementClient, SqlManagementClient> test)
         {
             using (MockContext context = MockContext.Start(suiteName, testName))
@@ -337,7 +395,7 @@ namespace Sql.Tests
                 string name = SqlManagementTestUtilities.GenerateName(testPrefix);
                 createDbTasks.Add(sqlClient.Databases.CreateOrUpdateAsync(
                     resourceGroupName,
-                    server.Name, 
+                    server.Name,
                     name,
                     new Database()
                     {
@@ -367,6 +425,117 @@ namespace Sql.Tests
             });
             ValidateServer(v12Server, serverName, login, version12, tags, location);
             return v12Server;
+        }
+
+        internal static void RunTestWithTdeByokSetup(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server, KeyBundle> test)
+        {
+            using (MockContext context = MockContext.Start(suiteName, testName))
+            {
+                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                var resourceClient = SqlManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var sqlClient = SqlManagementTestUtilities.GetSqlManagementClient(context, handler);
+                var keyVaultManagementClient = SqlManagementTestUtilities.GetKeyVaultManagementClient(context, handler);
+                var keyVaultClient = SqlManagementTestUtilities.GetKeyVaultClient(context, handler);
+
+                ResourceGroup resourceGroup = null;
+
+                try
+                {
+                    string rgName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    resourceGroup = resourceClient.ResourceGroups.CreateOrUpdate(
+                        rgName,
+                        new ResourceGroup
+                        {
+                            Location = SqlManagementTestUtilities.DefaultLocation,
+                            Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
+                        });
+
+                    string serverNameV12 = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    string login = "dummylogin";
+                    string password = "Un53cuRE!";
+                    string version12 = "12.0";
+                    string location = "northeurope";
+                    Dictionary<string, string> tags = new Dictionary<string, string>()
+                    {
+                        { "tagKey1", "TagValue1" }
+                    };
+
+                    // Create server
+                    var server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverNameV12, new Server()
+                    {
+                        AdministratorLogin = login,
+                        AdministratorLoginPassword = password,
+                        Version = version12,
+                        Tags = tags,
+                        Location = location,
+                        Identity = new ResourceIdentity()
+                        {
+                            Type = "SystemAssigned"
+                        }
+                    });
+                    SqlManagementTestUtilities.ValidateServer(server, serverNameV12, login, version12, tags, location);
+
+                    // Create database
+                    string databaseName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    var database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, databaseName, new Database()
+                    {
+                        Location = location
+                    });
+
+                    // Validate TDE is on by default
+                    TransparentDataEncryption tde = sqlClient.Databases.GetTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, database.Name);
+                    Assert.Equal(TransparentDataEncryptionStatus.Enabled, tde.Status);
+
+                    // Prepare vault permissions for the server
+                    var serverPermissions = new Permissions()
+                    {
+                        Keys = new List<string>() { KeyPermissions.WrapKey, KeyPermissions.UnwrapKey, KeyPermissions.Get, KeyPermissions.List }
+                    };
+                    var aclEntryServer = new AccessPolicyEntry(server.Identity.TenantId.Value, server.Identity.PrincipalId.Value.ToString(), serverPermissions);
+
+                    // Prepare vault permissions for the app used in this test
+                    var appPermissions = new Permissions()
+                    {
+                        Keys = new List<string>() { KeyPermissions.Create, KeyPermissions.Delete, KeyPermissions.Get, KeyPermissions.List }
+                    };
+                    string authObjectId = TryGetEnvironmentOrAppSetting("AuthObjectId");
+                    var aclEntryUser = new AccessPolicyEntry(server.Identity.TenantId.Value, authObjectId, appPermissions);
+
+                    // Create a vault
+                    var accessPolicy = new List<AccessPolicyEntry>() { aclEntryServer, aclEntryUser };
+                    string vaultName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    string vaultLocation = "centralus";
+                    var vault = keyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroup.Name, vaultName, new VaultCreateOrUpdateParameters()
+                    {
+                        Location = vaultLocation,
+                        Properties = new VaultProperties()
+                        {
+                            AccessPolicies = accessPolicy,
+                            TenantId = server.Identity.TenantId.Value
+                        }
+                    });
+
+                    // Create a key
+                    string keyName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    var key = keyVaultClient.CreateKeyAsync(vault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa,
+                        keyOps: JsonWebKeyOperation.AllOperations).GetAwaiter().GetResult();
+
+                    test(resourceClient, sqlClient, resourceGroup, server, key);
+                }
+                finally
+                {
+                    if (resourceGroup != null)
+                    {
+                        resourceClient.ResourceGroups.Delete(resourceGroup.Name);
+                    }
+                }
+            }
+        }
+
+        internal static string GetServerKeyNameFromKeyBundle(KeyBundle keyBundle)
+        {
+            string vaultName = keyBundle.KeyIdentifier.VaultWithoutScheme.Split('.').First();
+            return $"{vaultName}_{keyBundle.KeyIdentifier.Name}_{keyBundle.KeyIdentifier.Version}";
         }
     }
 }
