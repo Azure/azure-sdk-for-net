@@ -10,4 +10,7 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="notice.txt" />
+  </ItemGroup>
 </Project>
