@@ -11,14 +11,14 @@ namespace Microsoft.Azure.Management.Authorization.Models
     using System;
     using System.Linq;
     using System.Collections.Generic;
-    using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
+	using Newtonsoft.Json;
 
-    /// <summary>
-    /// </summary>
-    public partial class SubResource : IResource
+	/// <summary>
+	/// </summary>
+	public partial class SubResource : IResource
     {
         /// <summary>
         /// Initializes a new instance of the SubResource class.
