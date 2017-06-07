@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <remarks>
         /// Check if a domain is available for registration.
         /// </remarks>
-        /// <param name='name'>
-        /// Name of the object.
+        /// <param name='identifier'>
+        /// Name of the domain.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DomainAvailablilityCheckResultInner>> CheckAvailabilityWithHttpMessagesAsync(string name = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DomainAvailablilityCheckResultInner>> CheckAvailabilityWithHttpMessagesAsync(NameIdentifierInner identifier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all domains in a subscription.
         /// </summary>
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NameIdentifier>>> ListRecommendationsWithHttpMessagesAsync(DomainRecommendationSearchParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<NameIdentifierInner>>> ListRecommendationsWithHttpMessagesAsync(DomainRecommendationSearchParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all domains in a resource group.
         /// </summary>
@@ -471,7 +471,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NameIdentifier>>> ListRecommendationsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<NameIdentifierInner>>> ListRecommendationsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all domains in a resource group.
         /// </summary>

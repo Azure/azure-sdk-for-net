@@ -393,8 +393,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name='certificateOrderName'>
         /// Name of the certificate order.
         /// </param>
-        /// <param name='name'>
-        /// Name of the object.
+        /// <param name='nameIdentifier'>
+        /// Email address
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -408,7 +408,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ResendRequestEmailsWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, string name = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ResendRequestEmailsWithHttpMessagesAsync(string resourceGroupName, string certificateOrderName, NameIdentifierInner nameIdentifier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Verify domain ownership for this certificate order.
         /// </summary>

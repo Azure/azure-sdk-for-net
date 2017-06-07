@@ -12,8 +12,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
 
         public string ClientSecret { get; set; }
 
-        public byte[] Certifcate { get; set; }
+        public byte[] Certificate { get; set; }
 
-        public string CertifcatePassword { get; set; }
+        public string CertificatePassword { get; set; }
     }
 }

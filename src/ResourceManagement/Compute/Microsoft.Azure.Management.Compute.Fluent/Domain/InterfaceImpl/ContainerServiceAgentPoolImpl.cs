@@ -26,9 +26,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="vmSize">The size of the VM.</param>
         /// <return>The next stage of the definition.</return>
-        ContainerServiceAgentPool.Definition.IWithLeafDomainLabel<IContainerService> ContainerServiceAgentPool.Definition.IWithVMSize<IContainerService>.WithVMSize(string vmSize)
+        ContainerServiceAgentPool.Definition.IWithLeafDomainLabel<ContainerService.Definition.IWithCreate> ContainerServiceAgentPool.Definition.IWithVMSize<ContainerService.Definition.IWithCreate>.WithVMSize(string vmSize)
         {
-            return this.WithVMSize(vmSize) as ContainerServiceAgentPool.Definition.IWithLeafDomainLabel<IContainerService>;
+            return this.WithVMSize(vmSize) as ContainerServiceAgentPool.Definition.IWithLeafDomainLabel<ContainerService.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -80,18 +80,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="dnsLabel">The Dns label.</param>
         /// <return>The next stage of the definition.</return>
-        ContainerServiceAgentPool.Definition.IWithAttach<IContainerService> ContainerServiceAgentPool.Definition.IWithLeafDomainLabel<IContainerService>.WithLeafDomainLabel(string dnsLabel)
+        ContainerServiceAgentPool.Definition.IWithAttach<ContainerService.Definition.IWithCreate> ContainerServiceAgentPool.Definition.IWithLeafDomainLabel<ContainerService.Definition.IWithCreate>.WithLeafDomainLabel(string dnsLabel)
         {
-            return this.WithLeafDomainLabel(dnsLabel) as ContainerServiceAgentPool.Definition.IWithAttach<IContainerService>;
+            return this.WithLeafDomainLabel(dnsLabel) as ContainerServiceAgentPool.Definition.IWithAttach<ContainerService.Definition.IWithCreate>;
         }
 
         /// <summary>
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <return>The next stage of the parent definition.</return>
-        IContainerService Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<IContainerService>.Attach()
+        ContainerService.Definition.IWithCreate Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ContainerService.Definition.IWithCreate>.Attach()
         {
-            return this.Attach() as IContainerService;
+            return this.Attach() as ContainerService.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -100,9 +100,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         /// <param name="count">The count.</param>
         /// <return>The next stage of the definition.</return>
-        ContainerServiceAgentPool.Definition.IWithVMSize<IContainerService> ContainerServiceAgentPool.Definition.IBlank<IContainerService>.WithVMCount(int count)
+        ContainerServiceAgentPool.Definition.IWithVMSize<ContainerService.Definition.IWithCreate> ContainerServiceAgentPool.Definition.IBlank<ContainerService.Definition.IWithCreate>.WithVMCount(int count)
         {
-            return this.WithVMCount(count) as ContainerServiceAgentPool.Definition.IWithVMSize<IContainerService>;
+            return this.WithVMCount(count) as ContainerServiceAgentPool.Definition.IWithVMSize<ContainerService.Definition.IWithCreate>;
         }
     }
 }

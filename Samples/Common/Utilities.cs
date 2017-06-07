@@ -30,6 +30,8 @@ using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.ServiceBus;
 using System.Threading;
 using System.Net.Http.Headers;
+using Microsoft.Azure.Management.DocumentDB.Fluent;
+using Microsoft.Azure.Management.DocumentDB.Fluent.Models;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -1513,6 +1515,32 @@ namespace Microsoft.Azure.Management.Samples.Common
             Utilities.Log(builder.ToString());
         }
 
+        public static void Print(IDocumentDBAccount documentDBAccount)
+        {
+            StringBuilder builder = new StringBuilder()
+                    .Append("DocumentDB: ").Append(documentDBAccount.Id)
+                    .Append("\n\tName: ").Append(documentDBAccount.Name)
+                    .Append("\n\tResourceGroupName: ").Append(documentDBAccount.ResourceGroupName)
+                    .Append("\n\tKind: ").Append(documentDBAccount.Kind.ToString())
+                    .Append("\n\tDefault consistency level: ").Append(documentDBAccount.ConsistencyPolicy.DefaultConsistencyLevel)
+                    .Append("\n\tIP range filter: ").Append(documentDBAccount.IPRangeFilter);
+
+            foreach (Location writeReplica in documentDBAccount.WritableReplications)
+            {
+                builder.Append("\n\t\tWrite replication: ")
+                        .Append("\n\t\t\tName :").Append(writeReplica.LocationName);
+            }
+
+            builder.Append("\n\tNumber of read replications: ").Append(documentDBAccount.ReadableReplications.Count);
+            foreach (Location readReplica in documentDBAccount.ReadableReplications)
+            {
+                builder.Append("\n\t\tRead replication: ")
+                        .Append("\n\t\t\tName :").Append(readReplica.LocationName);
+            }
+
+            Log(builder.ToString());
+        }
+
         public static void CreateCertificate(string domainName, string pfxPath, string password)
         {
             if (!IsRunningMocked)
@@ -1536,7 +1564,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             }
         }
 
-        public static void UploadFileToFtp(IPublishingProfile profile, string filePath, string fileName = null)
+        public static void UploadFileToWebApp(IPublishingProfile profile, string filePath, string fileName = null)
         {
             if (!IsRunningMocked)
             {
@@ -1566,6 +1594,53 @@ namespace Microsoft.Azure.Management.Samples.Common
                         ftpClient.CreateDirectoryAsync("webapps").GetAwaiter().GetResult();
                     }
                     ftpClient.ChangeWorkingDirectoryAsync("./webapps").GetAwaiter().GetResult();
+
+                    if (fileName == null)
+                    {
+                        fileName = Path.GetFileName(filePath);
+                    }
+                    while (fileName.Contains("/"))
+                    {
+                        int slash = fileName.IndexOf("/");
+                        string subDir = fileName.Substring(0, slash);
+                        ftpClient.CreateDirectoryAsync(subDir).GetAwaiter().GetResult();
+                        ftpClient.ChangeWorkingDirectoryAsync("./" + subDir);
+                        fileName = fileName.Substring(slash + 1);
+                    }
+
+                    using (var writeStream = ftpClient.OpenFileWriteStreamAsync(fileName).GetAwaiter().GetResult())
+                    {
+                        var fileReadStream = fileinfo.OpenRead();
+                        fileReadStream.CopyToAsync(writeStream).GetAwaiter().GetResult();
+                    }
+                }
+            }
+        }
+        public static void UploadFileToFunctionApp(IPublishingProfile profile, string filePath, string fileName = null)
+        {
+            if (!IsRunningMocked)
+            {
+                string host = profile.FtpUrl.Split(new char[] { '/' }, 2)[0];
+
+                using (var ftpClient = new FtpClient(new FtpClientConfiguration
+                {
+                    Host = host,
+                    Username = profile.FtpUsername,
+                    Password = profile.FtpPassword
+                }))
+                {
+                    var fileinfo = new FileInfo(filePath);
+                    ftpClient.LoginAsync().GetAwaiter().GetResult();
+                    if (!ftpClient.ListDirectoriesAsync().GetAwaiter().GetResult().Any(fni => fni.Name == "site"))
+                    {
+                        ftpClient.CreateDirectoryAsync("site").GetAwaiter().GetResult();
+                    }
+                    ftpClient.ChangeWorkingDirectoryAsync("./site").GetAwaiter().GetResult();
+                    if (!ftpClient.ListDirectoriesAsync().GetAwaiter().GetResult().Any(fni => fni.Name == "wwwroot"))
+                    {
+                        ftpClient.CreateDirectoryAsync("wwwroot").GetAwaiter().GetResult();
+                    }
+                    ftpClient.ChangeWorkingDirectoryAsync("./wwwroot").GetAwaiter().GetResult();
 
                     if (fileName == null)
                     {

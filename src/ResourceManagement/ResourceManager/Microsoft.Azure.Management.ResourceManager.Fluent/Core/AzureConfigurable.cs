@@ -57,14 +57,5 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                 .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                 .Build();
         }
-
-        protected RestClient BuildRestClientForGraph(AzureCredentials credentials)
-        {
-            return restClientBuilder
-                .WithCredentials(credentials)
-                .WithBaseUri(credentials.Environment.GraphEndpoint)
-                .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
-                .Build();
-        }
     }
 }

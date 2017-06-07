@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties related to auto storage account.
+    /// The properties related to the auto-storage account.
     /// </summary>
     public partial class AutoStorageBaseProperties
     {
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
         /// Initializes a new instance of the AutoStorageBaseProperties class.
         /// </summary>
         /// <param name="storageAccountId">The resource ID of the storage
-        /// account to be used for auto storage account.</param>
+        /// account to be used for auto-storage account.</param>
         public AutoStorageBaseProperties(string storageAccountId)
         {
             StorageAccountId = storageAccountId;
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent.Models
 
         /// <summary>
         /// Gets or sets the resource ID of the storage account to be used for
-        /// auto storage account.
+        /// auto-storage account.
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountId")]
         public string StorageAccountId { get; set; }

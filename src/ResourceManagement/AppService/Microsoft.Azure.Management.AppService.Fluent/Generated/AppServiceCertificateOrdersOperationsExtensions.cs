@@ -637,12 +637,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='certificateOrderName'>
             /// Name of the certificate order.
             /// </param>
-            /// <param name='name'>
-            /// Name of the object.
+            /// <param name='nameIdentifier'>
+            /// Email address
             /// </param>
-            public static void ResendRequestEmails(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, string name = default(string))
+            public static void ResendRequestEmails(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, NameIdentifierInner nameIdentifier)
             {
-                operations.ResendRequestEmailsAsync(resourceGroupName, certificateOrderName, name).GetAwaiter().GetResult();
+                operations.ResendRequestEmailsAsync(resourceGroupName, certificateOrderName, nameIdentifier).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -660,15 +660,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             /// <param name='certificateOrderName'>
             /// Name of the certificate order.
             /// </param>
-            /// <param name='name'>
-            /// Name of the object.
+            /// <param name='nameIdentifier'>
+            /// Email address
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ResendRequestEmailsAsync(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, string name = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ResendRequestEmailsAsync(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, NameIdentifierInner nameIdentifier, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ResendRequestEmailsWithHttpMessagesAsync(resourceGroupName, certificateOrderName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ResendRequestEmailsWithHttpMessagesAsync(resourceGroupName, certificateOrderName, nameIdentifier, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

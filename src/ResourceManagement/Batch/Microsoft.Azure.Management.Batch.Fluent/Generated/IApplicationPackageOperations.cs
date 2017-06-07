@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <param name='version'>
         /// The version of the application to activate.
         /// </param>
-        /// <param name='format'>
-        /// The format of the application package binary file.
+        /// <param name='parameters'>
+        /// The parameters for the request.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ActivateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, string version, string format, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ActivateWithHttpMessagesAsync(string resourceGroupName, string accountName, string applicationId, string version, ActivateApplicationPackageParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates an application package record.
         /// </summary>

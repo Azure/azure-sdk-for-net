@@ -5,7 +5,10 @@ using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Batch.Fluent;
 using Microsoft.Azure.Management.Cdn.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.ContainerRegistry.Fluent;
+using Microsoft.Azure.Management.DocumentDB.Fluent;
 using Microsoft.Azure.Management.Fluent;
+using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Redis.Fluent;
@@ -197,6 +200,33 @@ namespace Fluent.Tests.Common
                 .WithDelegatingHandlers(GetHandlers())
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
                 .Authenticate(c, c.DefaultSubscriptionId));
+        }
+
+        public static IRegistryManager CreateRegistryManager()
+        {
+            return CreateMockedManager(c => RegistryManager
+                .Configure()
+                .WithDelegatingHandlers(GetHandlers())
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
+                .Authenticate(c, c.DefaultSubscriptionId));
+        }
+
+        public static IDocumentDBManager CreateDocumentDB()
+        {
+            return CreateMockedManager(c => DocumentDBManager
+                .Configure()
+                .WithDelegatingHandlers(GetHandlers())
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
+                .Authenticate(c, c.DefaultSubscriptionId));
+        }
+
+        public static IGraphRbacManager CreateGraphRbacManager()
+        {
+            return CreateMockedManager(c => GraphRbacManager
+                .Configure()
+                .WithDelegatingHandlers(GetHandlers())
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BodyAndHeaders)
+                .Authenticate(c, c.TenantId));
         }
 
         public static Microsoft.Azure.Management.ResourceManager.Fluent.ResourceManager.IAuthenticated Authenticate()

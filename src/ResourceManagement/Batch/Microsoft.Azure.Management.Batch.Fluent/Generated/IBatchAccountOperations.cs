@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// updated with the Update Batch Account API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the new Batch account.
+        /// The name of the resource group that contains the Batch account.
         /// </param>
         /// <param name='accountName'>
         /// A name for the Batch account which must be unique within the
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// The name of the resource group that contains the Batch account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account.
+        /// The name of the Batch account.
         /// </param>
         /// <param name='parameters'>
         /// Additional parameters for account update.
@@ -91,11 +91,10 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// Deletes the specified Batch account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the Batch account to
-        /// be deleted.
+        /// The name of the resource group that contains the Batch account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account to be deleted.
+        /// The name of the Batch account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -117,7 +116,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// The name of the resource group that contains the Batch account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account.
+        /// The name of the Batch account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -156,11 +155,11 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// </exception>
         Task<AzureOperationResponse<IPage<BatchAccountInner>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the Batch accounts associated within the
+        /// Gets information about the Batch accounts associated with the
         /// specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group whose Batch accounts to list.
+        /// The name of the resource group that contains the Batch account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -179,7 +178,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// </exception>
         Task<AzureOperationResponse<IPage<BatchAccountInner>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Synchronizes access keys for the auto storage account configured
+        /// Synchronizes access keys for the auto-storage account configured
         /// for the specified Batch account.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -208,11 +207,10 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// The name of the resource group that contains the Batch account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account.
+        /// The name of the Batch account.
         /// </param>
-        /// <param name='keyName'>
-        /// The type of account key to regenerate. Possible values include:
-        /// 'Primary', 'Secondary'
+        /// <param name='parameters'>
+        /// The type of key to regenerate.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -229,15 +227,22 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BatchAccountKeysInner>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, AccountKeyType keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BatchAccountKeysInner>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string accountName, BatchAccountRegenerateKeyParametersInner parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the account keys for the specified Batch account.
         /// </summary>
+        /// <remarks>
+        /// This operation applies only to Batch accounts created with a
+        /// poolAllocationMode of 'BatchService'. If the Batch account was
+        /// created with a poolAllocationMode of 'UserSubscription', clients
+        /// cannot use access to keys to authenticate, and must use Azure
+        /// Active Directory instead. In this case, getting the keys will fail.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account.
+        /// The name of the Batch account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -261,7 +266,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// updated with the Update Batch Account API.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the new Batch account.
+        /// The name of the resource group that contains the Batch account.
         /// </param>
         /// <param name='accountName'>
         /// A name for the Batch account which must be unique within the
@@ -294,11 +299,10 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// Deletes the specified Batch account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the Batch account to
-        /// be deleted.
+        /// The name of the resource group that contains the Batch account.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the account to be deleted.
+        /// The name of the Batch account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -337,7 +341,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// </exception>
         Task<AzureOperationResponse<IPage<BatchAccountInner>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the Batch accounts associated within the
+        /// Gets information about the Batch accounts associated with the
         /// specified resource group.
         /// </summary>
         /// <param name='nextPageLink'>

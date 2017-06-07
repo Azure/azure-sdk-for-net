@@ -429,10 +429,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <param name='name'>
         /// Name of the top-level domain.
         /// </param>
-        /// <param name='includePrivacy'>
-        /// If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include
-        /// agreements for domain privacy as well; otherwise,
-        /// &lt;code&gt;false&lt;/code&gt;.
+        /// <param name='agreementOption'>
+        /// Domain agreement options.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -455,22 +453,21 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<TldLegalAgreement>>> ListAgreementsWithHttpMessagesAsync(string name, bool? includePrivacy = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<TldLegalAgreement>>> ListAgreementsWithHttpMessagesAsync(string name, TopLevelDomainAgreementOptionInner agreementOption, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (agreementOption == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "agreementOption");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string apiVersion = "2015-04-01";
-            TopLevelDomainAgreementOption agreementOption = new TopLevelDomainAgreementOption();
-            if (includePrivacy != null)
-            {
-                agreementOption.IncludePrivacy = includePrivacy;
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -479,8 +476,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("agreementOption", agreementOption);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListAgreements", tracingParameters);
             }

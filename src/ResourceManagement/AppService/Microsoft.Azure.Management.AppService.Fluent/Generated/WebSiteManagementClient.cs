@@ -118,6 +118,11 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         public virtual IDeletedWebAppsOperations DeletedWebApps { get; private set; }
 
         /// <summary>
+        /// Gets the IProviderOperations.
+        /// </summary>
+        public virtual IProviderOperations Provider { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -327,6 +332,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             TopLevelDomains = new TopLevelDomainsOperations(this);
             WebApps = new WebAppsOperations(this);
             DeletedWebApps = new DeletedWebAppsOperations(this);
+            Provider = new ProviderOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -1301,7 +1307,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// </remarks>
         /// <param name='sku'>
         /// Name of SKU used to filter the regions. Possible values include: 'Free',
-        /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic'
+        /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic', 'Isolated'
         /// </param>
         /// <param name='linuxWorkersEnabled'>
         /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions

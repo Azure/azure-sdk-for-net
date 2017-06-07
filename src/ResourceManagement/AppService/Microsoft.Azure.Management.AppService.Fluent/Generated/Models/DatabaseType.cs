@@ -21,5 +21,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         public const string SqlAzure = "SqlAzure";
         public const string MySql = "MySql";
         public const string LocalMySql = "LocalMySql";
+        public const string PostgreSql = "PostgreSql";
     }
 }

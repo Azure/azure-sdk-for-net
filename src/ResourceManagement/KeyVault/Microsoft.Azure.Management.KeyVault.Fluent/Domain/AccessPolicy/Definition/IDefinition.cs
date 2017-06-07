@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition
         /// </summary>
         /// <param name="user">user the AD user object</param>
         /// <returns>the next stage of access policy definition</returns>
-        IWithAttach<ParentT> ForUser (IUser user);
+        IWithAttach<ParentT> ForUser (IActiveDirectoryUser user);
 
         /// <summary>
         /// Specifies the Active Directory user this access policy is for.

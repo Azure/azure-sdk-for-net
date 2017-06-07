@@ -65,7 +65,7 @@ namespace ManageWebAppSourceControl
 
                 Utilities.Log("Deploying helloworld.War to " + app1Name + " through FTP...");
 
-                Utilities.UploadFileToFtp(
+                Utilities.UploadFileToWebApp(
                     app1.GetPublishingProfile(), 
                     Path.Combine(Utilities.ProjectPath, "Asset", "helloworld.war"));
 

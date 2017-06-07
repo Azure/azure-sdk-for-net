@@ -24,5 +24,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent.Models
         public const string Standard = "Standard";
         public const string Premium = "Premium";
         public const string Dynamic = "Dynamic";
+        public const string Isolated = "Isolated";
     }
 }
