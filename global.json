@@ -22,6 +22,7 @@
     "Samples/ResourceManagement/Batch",
     "Samples/ResourceManagement/Cdn",
     "Samples/ResourceManagement/Compute",
+    "Samples/ResourceManagement/ContainerRegistry",
     "Samples/ResourceManagement/Dns",
     "Samples/ResourceManagement/KeyVault",
     "Samples/ResourceManagement/Network",
@@ -30,7 +31,6 @@
     "Samples/ResourceManagement/ServiceBus",
     "Samples/ResourceManagement/Sql",
     "Samples/ResourceManagement/Storage",
-    "Samples/ResourceManagement/TrafficManager",
-    "Samples/ResourceManagement/ContainerRegistry"
+    "Samples/ResourceManagement/TrafficManager"
   ]
 }
