@@ -23,6 +23,7 @@
     "Samples/ResourceManagement/Cdn",
     "Samples/ResourceManagement/Compute",
     "Samples/ResourceManagement/Dns",
+    "Samples/ResourceManagement/GraphRbac",
     "Samples/ResourceManagement/KeyVault",
     "Samples/ResourceManagement/Network",
     "Samples/ResourceManagement/RedisCache",
