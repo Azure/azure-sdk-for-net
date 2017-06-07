@@ -112,7 +112,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, "Complete"));
+                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.Complete));
             }
         }
 
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, "Abandon"));
+                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.Abandon));
             }
         }
 
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.ServiceBus
 
                     if (!(exception is TimeoutException))
                     {
-                        this.RaiseExceptionRecieved(exception, "AcceptMessageSession");
+                        this.RaiseExceptionRecieved(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession);
                         if (!MessagingUtilities.ShouldRetry(exception))
                         {
                             break;
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.ServiceBus
                             continue;
                         }
 
-                        this.RaiseExceptionRecieved(exception, "Receive Message");
+                        this.RaiseExceptionRecieved(exception, ExceptionReceivedEventArgsAction.Receive);
                         break;
                     }
 
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.ServiceBus
                     catch (Exception exception)
                     {
                         MessagingEventSource.Log.MessageReceivePumpTaskException(this.clientId, session.SessionId, exception);
-                        this.RaiseExceptionRecieved(exception, "User Callback Exception");
+                        this.RaiseExceptionRecieved(exception, ExceptionReceivedEventArgsAction.UserCallback);
                         callbackExceptionOccured = true;
                         await this.AbandonMessageIfNeededAsync(session, message).ConfigureAwait(false);
                     }
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.ServiceBus
                 catch (Exception exception)
                 {
                     MessagingEventSource.Log.SessionReceivePumpSessionCloseException(this.clientId, session.SessionId, exception);
-                    this.RaiseExceptionRecieved(exception, "Session Close Exception");
+                    this.RaiseExceptionRecieved(exception, ExceptionReceivedEventArgsAction.CloseMessageSession);
                 }
             }
         }
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.ServiceBus
                     // Lets not bother user with this exception.
                     if (!(exception is TaskCanceledException))
                     {
-                        this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, "RenewLock"));
+                        this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.RenewLock));
                     }
                     if (!MessagingUtilities.ShouldRetry(exception))
                     {

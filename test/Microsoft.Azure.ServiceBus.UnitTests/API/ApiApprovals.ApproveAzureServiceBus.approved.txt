@@ -23,6 +23,16 @@ namespace Microsoft.Azure.ServiceBus
         public static string FormatSubscriptionPath(string topicPath, string subscriptionName) { }
         public static string FormatTransferDeadLetterPath(string entityPath) { }
     }
+    public class static ExceptionReceivedEventArgsAction
+    {
+        public const string Abandon = "Abandon";
+        public const string AcceptMessageSession = "AcceptMessageSession";
+        public const string CloseMessageSession = "CloseMessageSession";
+        public const string Complete = "Complete";
+        public const string Receive = "Receive";
+        public const string RenewLock = "RenewLock";
+        public const string UserCallback = "UserCallback";
+    }
     public interface IClientEntity
     {
         string ClientId { get; }
