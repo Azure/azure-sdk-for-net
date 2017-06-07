@@ -1,6 +1,6 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
 
-### Changes in 2.2.2
+### Changes in 3.0.0
 - All previous preview changes (below) are now stable and part of the official release
 - Add support for Compute Policy management
     - Compute policies allow an admin to define maximum parallelism and priority for jobs for given users and groups
