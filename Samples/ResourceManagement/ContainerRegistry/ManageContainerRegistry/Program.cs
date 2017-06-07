@@ -66,7 +66,7 @@ namespace ManageContainerRegistry
                 try
                 {
                     Utilities.Log("Deleting Resource Group: " + rgName);
-                    azure.ResourceGroups.DeleteByName(rgName);
+                    azure.ResourceGroups.BeginDeleteByName(rgName);
                     Utilities.Log("Deleted Resource Group: " + rgName);
                 }
                 catch (Exception)
