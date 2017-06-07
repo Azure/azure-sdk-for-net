@@ -216,6 +216,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageLinuxWebAppWithTraffi
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageWebAppWithAuthentication", "ResourceManagement\AppService\ManageWebAppWithAuthentication\ManageWebAppWithAuthentication.xproj", "{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContainerRegistry", "ContainerRegistry", "{496089FF-B41E-4F97-AC11-67A752D3A226}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageContainerRegistry", "ResourceManagement\ContainerRegistry\ManageContainerRegistry\ManageContainerRegistry.xproj", "{A64885FF-B782-4F2A-97C0-21461F555157}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -582,6 +586,10 @@ Global
 		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A64885FF-B782-4F2A-97C0-21461F555157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A64885FF-B782-4F2A-97C0-21461F555157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A64885FF-B782-4F2A-97C0-21461F555157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A64885FF-B782-4F2A-97C0-21461F555157}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -676,5 +684,6 @@ Global
 		{72AF59AF-83B9-481E-AB94-104EE85233ED} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
 		{52C40F51-22ED-4306-B23A-6CE4164794E3} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
 		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{A64885FF-B782-4F2A-97C0-21461F555157} = {496089FF-B41E-4F97-AC11-67A752D3A226}
 	EndGlobalSection
 EndGlobal
