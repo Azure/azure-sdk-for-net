@@ -101,6 +101,14 @@ namespace Fluent.Tests.Common
                 .WithSubscription(c.DefaultSubscriptionId));
         }
 
+        public static Microsoft.Azure.Management.Fluent.Azure.IAuthenticated CreateAuthenticatedClient()
+        {
+            return CreateMockedManager(c => Microsoft.Azure.Management.Fluent.Azure.Configure()
+                .WithDelegatingHandlers(GetHandlers())
+                .Authenticate(c));
+        }
+
+
         public static INetworkManager CreateNetworkManager()
         {
             return CreateMockedManager(c => NetworkManager
