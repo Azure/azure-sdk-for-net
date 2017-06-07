@@ -13,11 +13,10 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Microsoft.Azure.Management.Sql;
 
     /// <summary>
-    /// Defines values for ServerVersion.
+    /// Defines values for IdentityType.
     /// </summary>
-    public static class ServerVersion
+    public static class IdentityType
     {
-        public const string TwoFullStopZero = "2.0";
-        public const string OneTwoFullStopZero = "12.0";
+        public const string SystemAssigned = "SystemAssigned";
     }
 }

@@ -11,20 +11,13 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Sql;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ServerState.
+    /// Defines values for ServerKeyType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ServerState
+    public static class ServerKeyType
     {
-        [EnumMember(Value = "Ready")]
-        Ready,
-        [EnumMember(Value = "Disabled")]
-        Disabled
+        public const string ServiceManaged = "ServiceManaged";
+        public const string AzureKeyVault = "AzureKeyVault";
     }
 }

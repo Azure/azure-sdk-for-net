@@ -87,11 +87,6 @@ namespace Microsoft.Azure.Management.Sql
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        IServersOperations Servers { get; }
-
-        /// <summary>
         /// Gets the IElasticPoolsOperations.
         /// </summary>
         IElasticPoolsOperations ElasticPools { get; }
@@ -107,9 +102,19 @@ namespace Microsoft.Azure.Management.Sql
         IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
 
         /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        IServersOperations Servers { get; }
+
+        /// <summary>
         /// Gets the IFailoverGroupsOperations.
         /// </summary>
         IFailoverGroupsOperations FailoverGroups { get; }
+
+        /// <summary>
+        /// Gets the IServerKeysOperations.
+        /// </summary>
+        IServerKeysOperations ServerKeys { get; }
 
     }
 }
