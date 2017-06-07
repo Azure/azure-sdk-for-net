@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             return new DocumentDBManager(RestClient.Configure()
                     .WithEnvironment(credentials.Environment)
                     .WithCredentials(credentials)
+                    .WithDelegatingHandler(new ProviderRegistrationDelegatingHandler(credentials))
                     .Build(), subscriptionId);
         }
 
