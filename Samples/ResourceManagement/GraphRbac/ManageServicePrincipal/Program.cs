@@ -79,7 +79,7 @@ namespace ManageServicePrincipal
             //create a self-sighed certificate
             var domainName = name + ".com";
             var certPassword = "StrongPass!12";
-            Certificate certificate = Certificate.createSelfSigned(domainName, certPassword);
+            Certificate certificate = Certificate.CreateSelfSigned(domainName, certPassword);
 
             // create Active Directory application
             var activeDirectoryApplication = authenticated.ActiveDirectoryApplications
@@ -113,7 +113,7 @@ namespace ManageServicePrincipal
             //create a self-sighed certificate
             string domainName = name + ".com";
             string certPassword = "StrongPass!12";
-            Certificate certificate = Certificate.createSelfSigned(domainName, certPassword);
+            Certificate certificate = Certificate.CreateSelfSigned(domainName, certPassword);
 
             // create  a Service Principal and assign it to a subscription with the role Contributor
             return authenticated.ServicePrincipals
@@ -180,7 +180,7 @@ namespace ManageServicePrincipal
                 private set;
             }
 
-            public static Certificate createSelfSigned(string domainName, string password)
+            public static Certificate CreateSelfSigned(string domainName, string password)
             {
                 return new Certificate(domainName, password);
             }
