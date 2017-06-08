@@ -52,7 +52,7 @@ namespace ManageUsersGroupsAndRoles
             IRoleAssignment roleAssignment1 = authenticated.RoleAssignments
                 .Define(raName1)
                 .ForUser(adUser)
-                .WithBuiltInRole(BuiltInRole.Reader)
+                .WithBuiltInRole(BuiltInRole.DnsZoneContributor)
                 .WithSubscriptionScope(subscriptionId)
                 .Create();
             Utilities.Log("Created Role Assignment:");
@@ -107,10 +107,12 @@ namespace ManageUsersGroupsAndRoles
                     .Authenticate(credentials);
 
                 RunSample(authenticated);
+                Console.ReadLine();
             }
             catch (Exception ex)
             {
                 Utilities.Log(ex);
+                Console.ReadLine();
             }
         }
     }
