@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// Initializes a new instance of the
         /// CognitiveServicesAccountUpdateParameters class.
         /// </summary>
+        /// <param name="sku">Gets or sets the SKU of the resource.</param>
         /// <param name="tags">Gets or sets a list of key value pairs that
         /// describe the resource. These tags can be used in viewing and
         /// grouping this resource (across resource groups). A maximum of 15
@@ -44,6 +45,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         }
 
         /// <summary>
+        /// Gets or sets the SKU of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }

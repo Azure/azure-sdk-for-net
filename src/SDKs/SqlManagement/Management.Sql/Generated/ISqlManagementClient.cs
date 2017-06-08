@@ -102,6 +102,11 @@ namespace Microsoft.Azure.Management.Sql
         IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
 
         /// <summary>
+        /// Gets the IServerAzureADAdministratorsOperations.
+        /// </summary>
+        IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
+
+        /// <summary>
         /// Gets the IFailoverGroupsOperations.
         /// </summary>
         IFailoverGroupsOperations FailoverGroups { get; }

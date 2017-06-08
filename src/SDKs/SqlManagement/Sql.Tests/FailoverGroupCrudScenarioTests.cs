@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
@@ -23,8 +23,8 @@ namespace Sql.Tests
             {
                 // Create primary and partner servers
                 //
-                Server sourceServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultStagePrimaryLocation);
-                Server targetServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultStageSecondaryLocation);
+                Server sourceServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultLocation);
+                Server targetServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultSecondaryLocation);
 
                 // Create a failover group
                 //
@@ -93,6 +93,8 @@ namespace Sql.Tests
                 Assert.Equal(1, failoverGroupsOnSecondary.Count());
 
                 var primaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, sourceServer.Name, databaseName);
+
+                // Potential race condition here.  If this request fails with 404, put a breakpoint on the previous line, wait a beat, then continue.
                 var secondaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, targetServer.Name, databaseName);
                 Assert.NotNull(primaryDatabase.FailoverGroupId);
                 Assert.NotNull(secondaryDatabase.FailoverGroupId);

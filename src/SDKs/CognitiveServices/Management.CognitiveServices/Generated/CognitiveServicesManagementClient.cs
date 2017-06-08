@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        public Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; private set; }
+        public JsonSerializerSettings SerializationSettings { get; private set; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        public Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; private set; }
+        public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
@@ -53,9 +53,14 @@ namespace Microsoft.Azure.Management.CognitiveServices
 
         /// <summary>
         /// Version of the API to be used with the client request. Current version is
-        /// 2016-02-01-preview
+        /// 2017-04-18
         /// </summary>
         public string ApiVersion { get; private set; }
+
+        /// <summary>
+        /// Resource location.
+        /// </summary>
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -78,6 +83,21 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// Gets the ICognitiveServicesAccountsOperations.
         /// </summary>
         public virtual ICognitiveServicesAccountsOperations CognitiveServicesAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IAccountsOperations.
+        /// </summary>
+        public virtual IAccountsOperations Accounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the ICheckSkuAvailabilityOperations.
+        /// </summary>
+        public virtual ICheckSkuAvailabilityOperations CheckSkuAvailability { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CognitiveServicesManagementClient class.
@@ -281,33 +301,36 @@ namespace Microsoft.Azure.Management.CognitiveServices
         private void Initialize()
         {
             CognitiveServicesAccounts = new CognitiveServicesAccountsOperations(this);
+            Accounts = new AccountsOperations(this);
+            Operations = new Operations(this);
+            CheckSkuAvailability = new CheckSkuAvailabilityOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2016-02-01-preview";
+            ApiVersion = "2017-04-18";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
-            SerializationSettings = new Newtonsoft.Json.JsonSerializerSettings
+            SerializationSettings = new JsonSerializerSettings
             {
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
+                Formatting = Formatting.Indented,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
+                Converters = new List<JsonConverter>
                     {
                         new Iso8601TimeSpanConverter()
                     }
             };
             SerializationSettings.Converters.Add(new TransformationJsonConverter());
-            DeserializationSettings = new Newtonsoft.Json.JsonSerializerSettings
+            DeserializationSettings = new JsonSerializerSettings
             {
-                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
+                Converters = new List<JsonConverter>
                     {
                         new Iso8601TimeSpanConverter()
                     }

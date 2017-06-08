@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             var blobName = BlobName(kind, destinationRelativePath);
             var blob = _jobOutputContainer.GetBlockBlobReference(blobName);
-            await blob.UploadFromFileAsync(sourcePath, cancellationToken);
+            await blob.UploadFromFileAsync(sourcePath, null, null, null, cancellationToken);
         }
 
         // Uploads text to blob storage.
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             var blobName = BlobName(kind, destinationRelativePath);
             var blob = _jobOutputContainer.GetBlockBlobReference(blobName);
-            await blob.UploadTextAsync(text, cancellationToken);
+            await blob.UploadTextAsync(text, null, null, null, null, cancellationToken);
         }
 
         // Uploads a file and tracks appends to that file. The implementation creates an append blob to
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             Validate.IsNotNullOrEmpty(filePath, nameof(filePath));
 
-            var blob = await _jobOutputContainer.GetBlobReferenceFromServerAsync(BlobName(kind, filePath), cancellationToken);
+            var blob = await _jobOutputContainer.GetBlobReferenceFromServerAsync(BlobName(kind, filePath), null, null, null, cancellationToken);
 
             return new OutputFileReference(blob);
         }

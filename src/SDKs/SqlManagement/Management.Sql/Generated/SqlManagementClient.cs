@@ -107,6 +107,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRecommendedElasticPoolsOperations RecommendedElasticPools { get; private set; }
 
         /// <summary>
+        /// Gets the IServerAzureADAdministratorsOperations.
+        /// </summary>
+        public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
+
+        /// <summary>
         /// Gets the IFailoverGroupsOperations.
         /// </summary>
         public virtual IFailoverGroupsOperations FailoverGroups { get; private set; }
@@ -319,6 +324,8 @@ namespace Microsoft.Azure.Management.Sql
             Servers = new ServersOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
+            ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
+
             FailoverGroups = new FailoverGroupsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

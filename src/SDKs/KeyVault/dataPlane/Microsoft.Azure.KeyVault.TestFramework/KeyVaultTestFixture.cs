@@ -17,6 +17,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.ResourceManager;
 using System.Net;
 using Microsoft.Rest.TransientFaultHandling;
+using System.Diagnostics;
 
 namespace KeyVault.TestFramework
 {
@@ -31,11 +32,14 @@ namespace KeyVault.TestFramework
         public KeyIdentifier keyIdentifier;
         public ClientCredential clientCredential;
         public RetryPolicy retryExecutor;
+        public string StorageResourceUrl1;
+        public string StorageResourceUrl2;
 
         // Required for cleaning up at the end of the test
         private string rgName = "", appObjectId = "";
         private bool fromConfig;
         private TokenCache tokenCache;
+        private DeviceCodeResult _deviceCodeForStorageTests;
 
         public KeyVaultTestFixture()
         {
@@ -53,6 +57,7 @@ namespace KeyVault.TestFramework
                 keyName = keyIdentifier.Name;
                 keyVersion = keyIdentifier.Version;
                 tokenCache = new TokenCache();
+                _deviceCodeForStorageTests = null;
                 retryExecutor = new RetryPolicy<SoftDeleteErrorDetectionStrategy>(new ExponentialBackoffRetryStrategy(8, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(5)));
             } else
             {
@@ -127,6 +132,8 @@ namespace KeyVault.TestFramework
             string authSecret = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientSecret");
             string standardVaultOnlyString = TestConfigurationManager.TryGetEnvironmentOrAppSetting("StandardVaultOnly");
             string softDeleteEnabledString = TestConfigurationManager.TryGetEnvironmentOrAppSetting("SoftDeleteEnabled");
+            string storageUrl1 = TestConfigurationManager.TryGetEnvironmentOrAppSetting("StorageResourceUrl1");
+            string storageUrl2 = TestConfigurationManager.TryGetEnvironmentOrAppSetting("StorageResourceUrl2");
             bool standardVaultOnlyresult;
             if (!bool.TryParse(standardVaultOnlyString, out standardVaultOnlyresult))
             {
@@ -139,7 +146,8 @@ namespace KeyVault.TestFramework
                 softDeleteEnabledresult = false;
             }
 
-            if (string.IsNullOrWhiteSpace(vault) || string.IsNullOrWhiteSpace(authClientId) || string.IsNullOrWhiteSpace(authSecret))
+            if (string.IsNullOrWhiteSpace(vault) || string.IsNullOrWhiteSpace(authClientId) || string.IsNullOrWhiteSpace(authSecret) ||
+                string.IsNullOrWhiteSpace(storageUrl1) || string.IsNullOrWhiteSpace(storageUrl2))
                 return false;
             else
             {
@@ -147,6 +155,8 @@ namespace KeyVault.TestFramework
                 this.clientCredential = new ClientCredential(authClientId, authSecret);
                 this.standardVaultOnly = standardVaultOnlyresult;
                 this.softDeleteEnabled = softDeleteEnabledresult;
+                this.StorageResourceUrl1 = storageUrl1;
+                this.StorageResourceUrl2 = storageUrl2;
                 return true;
             }
         }
@@ -159,9 +169,36 @@ namespace KeyVault.TestFramework
             return result.AccessToken;
         }
 
+        public async Task<string> GetUserAccessToken(string authority, string resource, string scope)
+        {
+            string clientId = TestConfigurationManager.TryGetEnvironmentOrAppSetting("NativeClientId");
+            var context = new AuthenticationContext(authority, tokenCache);
+            if (_deviceCodeForStorageTests == null)
+            {
+                _deviceCodeForStorageTests =
+                    await context.AcquireDeviceCodeAsync(resource, clientId).ConfigureAwait(false);
+
+                Debug.WriteLine("############################################################################################");
+                Debug.WriteLine("Test won't run until you perform following steps:");
+                Debug.WriteLine($"1. Go to following url: {_deviceCodeForStorageTests.VerificationUrl}.");
+                Debug.WriteLine($"2. Insert following User Code: {_deviceCodeForStorageTests.UserCode}.");
+                Debug.WriteLine("3. Login with your username and password credentials.");
+                Debug.WriteLine("############################################################################################");
+            }
+
+            var result = await context.AcquireTokenByDeviceCodeAsync(_deviceCodeForStorageTests).ConfigureAwait(false);
+            return result.AccessToken;
+        }
+
         public KeyVaultClient CreateKeyVaultClient()
         {
             var myclient = new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), GetHandlers());
+            return myclient;
+        }
+
+        public KeyVaultClient CreateKeyVaultUserClient()
+        {
+            var myclient = new KeyVaultClient(new TestKeyVaultCredential(GetUserAccessToken), GetHandlers());
             return myclient;
         }
 

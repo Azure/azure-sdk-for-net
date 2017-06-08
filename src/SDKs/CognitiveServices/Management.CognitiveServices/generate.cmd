@@ -3,9 +3,9 @@
 :: Copyright (C) Microsoft Corporation. All Rights Reserved.
 ::
 @echo off
-set autoRestVersion=1.0.0-Nightly20170101
+set autoRestVersion=1.0.0-Nightly20170212
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-cognitiveservices/2016-02-01-preview/swagger/cognitiveservices.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-cognitiveservices/2017-04-18/swagger/cognitiveservices.json"
 ) else (
     set specFile="%1"
 )
