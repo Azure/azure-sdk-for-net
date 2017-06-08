@@ -1068,6 +1068,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     virtualNetworkSiteInstance.State = stateInstance;
                                 }
                                 
+                                XElement inUseElement = virtualNetworkSitesElement.Element(XName.Get("InUse", "http://schemas.microsoft.com/windowsazure"));
+                                if (inUseElement != null)
+                                {
+                                    bool inUseInstance = bool.Parse(inUseElement.Value);
+                                    virtualNetworkSiteInstance.InUse = inUseInstance;
+                                }
+                                
                                 XElement addressSpaceElement = virtualNetworkSitesElement.Element(XName.Get("AddressSpace", "http://schemas.microsoft.com/windowsazure"));
                                 if (addressSpaceElement != null)
                                 {
