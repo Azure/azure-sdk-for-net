@@ -70,6 +70,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
 
         /// <summary>
+        /// Gets the IPipelineOperations.
+        /// </summary>
+        IPipelineOperations Pipeline { get; }
+
+        /// <summary>
+        /// Gets the IRecurrenceOperations.
+        /// </summary>
+        IRecurrenceOperations Recurrence { get; }
+
+        /// <summary>
         /// Gets the IJobOperations.
         /// </summary>
         IJobOperations Job { get; }
