@@ -84,7 +84,8 @@ namespace AzureStackAdmin.Tests
                             }
                         ],
                         'enabled': true,
-                        'provisioningState': 'Succeeded'
+                        'provisioningState': 'Succeeded',
+                        'signature': 'e39843e0490cf8a4c876ce0eb2e35b595cdea663'
                     }
                 }")
             };
@@ -119,6 +120,7 @@ namespace AzureStackAdmin.Tests
             Assert.Equal(ResourceDeletionPolicy.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].ResourceDeletionPolicy);
             Assert.Equal(MarketplaceType.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].MarketplaceType);
             Assert.Equal("Succeeded", result.ProviderRegistration.Properties.ProvisioningState);
+            Assert.Equal("e39843e0490cf8a4c876ce0eb2e35b595cdea663", result.ProviderRegistration.Properties.Signature);
         }
 
         [Fact]
@@ -173,7 +175,8 @@ namespace AzureStackAdmin.Tests
                             }
                         ],
                         'enabled': true,
-                        'provisioningState': 'Succeeded'
+                        'provisioningState': 'Succeeded',
+                        'signature': 'e39843e0490cf8a4c876ce0eb2e35b595cdea663'
                     }
                 }")
             };
@@ -228,7 +231,8 @@ namespace AzureStackAdmin.Tests
                                                     }
                                                 }
                             },
-                            ProvisioningState = "Succeeded"
+                            ProvisioningState = "Succeeded",
+                            Signature = "e39843e0490cf8a4c876ce0eb2e35b595cdea663"
                         }
                     }
                     ));
@@ -257,6 +261,7 @@ namespace AzureStackAdmin.Tests
             Assert.Equal(true, result.ProviderRegistration.Properties.ResourceTypes[0].InGlobalLocation);
             Assert.Equal(ResourceDeletionPolicy.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].ResourceDeletionPolicy);
             Assert.Equal(MarketplaceType.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].MarketplaceType);
+            Assert.Equal(result.ProviderRegistration.Properties.Signature, "e39843e0490cf8a4c876ce0eb2e35b595cdea663");
         }
 
         [Fact]

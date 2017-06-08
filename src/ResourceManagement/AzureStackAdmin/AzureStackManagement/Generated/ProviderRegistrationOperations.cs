@@ -425,6 +425,11 @@ namespace Microsoft.AzureStack.Management
                     {
                         propertiesValue["provisioningState"] = parameters.ProviderRegistration.Properties.ProvisioningState;
                     }
+                    
+                    if (parameters.ProviderRegistration.Properties.Signature != null)
+                    {
+                        propertiesValue["signature"] = parameters.ProviderRegistration.Properties.Signature;
+                    }
                 }
                 
                 if (parameters.ProviderRegistration.Id != null)
@@ -816,6 +821,13 @@ namespace Microsoft.AzureStack.Management
                                 {
                                     string provisioningStateInstance = ((string)provisioningStateValue);
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                }
+                                
+                                JToken signatureValue = propertiesValue3["signature"];
+                                if (signatureValue != null && signatureValue.Type != JTokenType.Null)
+                                {
+                                    string signatureInstance = ((string)signatureValue);
+                                    propertiesInstance.Signature = signatureInstance;
                                 }
                             }
                             
@@ -1478,6 +1490,13 @@ namespace Microsoft.AzureStack.Management
                                     string provisioningStateInstance = ((string)provisioningStateValue);
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
+                                
+                                JToken signatureValue = propertiesValue["signature"];
+                                if (signatureValue != null && signatureValue.Type != JTokenType.Null)
+                                {
+                                    string signatureInstance = ((string)signatureValue);
+                                    propertiesInstance.Signature = signatureInstance;
+                                }
                             }
                             
                             JToken idValue = responseDoc["id"];
@@ -1986,6 +2005,13 @@ namespace Microsoft.AzureStack.Management
                                         {
                                             string provisioningStateInstance = ((string)provisioningStateValue);
                                             propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                        }
+                                        
+                                        JToken signatureValue = propertiesValue["signature"];
+                                        if (signatureValue != null && signatureValue.Type != JTokenType.Null)
+                                        {
+                                            string signatureInstance = ((string)signatureValue);
+                                            propertiesInstance.Signature = signatureInstance;
                                         }
                                     }
                                     

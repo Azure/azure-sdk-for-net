@@ -145,6 +145,17 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._routingResourceManagerType = value; }
         }
         
+        private string _signature;
+        
+        /// <summary>
+        /// Optional. Gets or sets the signature.
+        /// </summary>
+        public string Signature
+        {
+            get { return this._signature; }
+            set { this._signature = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ManifestPropertiesDefinition
         /// class.
