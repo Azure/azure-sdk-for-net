@@ -28,7 +28,7 @@ namespace ManageUsersGroupsAndRoles
         {
             string subscriptionId = authenticated.Subscriptions.List().First().SubscriptionId;
             Utilities.Log("Selected subscription: " + subscriptionId);
-            string raName1 = SdkContext.RandomUuid();
+            string raName1 = SdkContext.RandomGuid();
             // ============================================================
             // List users
 
@@ -107,12 +107,10 @@ namespace ManageUsersGroupsAndRoles
                     .Authenticate(credentials);
 
                 RunSample(authenticated);
-                Console.ReadLine();
             }
             catch (Exception ex)
             {
                 Utilities.Log(ex);
-                Console.ReadLine();
             }
         }
     }
