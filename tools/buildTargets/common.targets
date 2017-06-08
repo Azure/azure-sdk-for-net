@@ -73,7 +73,7 @@
     </PropertyGroup>
     <Message Text="Cleaning Initiated....." />
     <MSBuild Targets="$(LatestProjectDefaultCleanTarget)"
-        Projects="@(SDKProject);@(SDKTestProject)"
+        Projects="@(SDKProject);@(SDKTestProject);@(unsupportedProj)"
         Properties="PackageOutputPath=$(PackageOutputPath)"
         BuildInParallel="$(BuildInParallel)"
         ContinueOnError="ErrorAndStop" />
@@ -92,12 +92,18 @@
     <PropertyGroup>
       <LatestProjectDefaultRestoreTarget Condition=" '$(LatestProjectDefaultRestoreTarget)' == '' ">Restore</LatestProjectDefaultRestoreTarget>
     </PropertyGroup>
-    <Message Text="Now Restoring @(SDKProject);@(SDKTestProject)" />
+    <Message Text="Now Restoring @(SDKProject);@(SDKTestProject);@(unsupportedProj)" />
 
     <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
             Projects="@(SDKProject);@(SDKTestProject)"
             BuildInParallel="$(BuildInParallel)"
             ContinueOnError="ErrorAndStop" />
+	
+	<MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
+            Projects="@(unsupportedProj)"
+            BuildInParallel="$(BuildInParallel)"
+            ContinueOnError="ErrorAndStop" />
+			
   </Target>
 
   <Target Name="BuildLatestProjects" Condition=" '$(SkipBuild)' != 'true' ">

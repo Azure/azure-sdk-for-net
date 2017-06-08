@@ -6,64 +6,81 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
     using System.Collections.Generic;
     using System.Linq;
     using global::TrafficManager.Tests.Helpers;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Management.TrafficManager.Models;
     using Microsoft.Azure.Management.TrafficManager.Testing.Helpers;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
-    public class EndpointScenarioTests : TestBase
+    public partial class EndpointScenarioTests : TestBase
     {
         [Fact]
-        public void CrudEndpointGeographicProfile()
+        public void CrudEndpointsFullCycle()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
 
+                string profileName = TestUtilities.GenerateName();
+                string endpointName = TestUtilities.GenerateName();
                 string resourceGroupName = TrafficManagerHelper.GenerateName();
-                string profileName = TrafficManagerHelper.GenerateName();
                 ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
-                // Create the profile
-                Profile profile = trafficManagerClient.Profiles.CreateOrUpdate(
+                Profile profile = TrafficManagerHelper.GenerateDefaultEmptyProfile(profileName);
+
+                // Create profile without endpoints
+                trafficManagerClient.Profiles.CreateOrUpdate(
                     resourceGroup.Name,
                     profileName,
-                    TrafficManagerHelper.GenerateDefaultEmptyProfile(profileName, "Geographic"));
-
-                Assert.Equal("Geographic", profile.TrafficRoutingMethod);
-
-                Endpoint endpoint = new Endpoint
-                {
-                    Id = null,
-                    Name = "My external endpoint",
-                    Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
-                    TargetResourceId = null,
-                    Target = "foobar.contoso.com",
-                    EndpointStatus = "Enabled",
-                    GeoMapping = new[] { "GEO-AS", "GEO-AF" },
-                };
+                    profile);
 
                 // Create the endpoint
-                Endpoint createEndpointResponse = trafficManagerClient.Endpoints.CreateOrUpdate(
+                Endpoint createEndpoint = trafficManagerClient.Endpoints.CreateOrUpdate(
                     resourceGroup.Name,
                     profileName,
                     "ExternalEndpoints",
-                    endpoint.Name,
-                    endpoint);
+                    endpointName,
+                    TrafficManagerHelper.GenerateDefaultEndpoint(endpointName));
 
-                Assert.Equal("GEO-AS", createEndpointResponse.GeoMapping[0]);
-                Assert.Equal("GEO-AF", createEndpointResponse.GeoMapping[1]);
+                Assert.NotNull(createEndpoint);
 
-                // Get the endpoint
-                Endpoint endpointGetResponse = trafficManagerClient.Endpoints.Get(
+                Endpoint getEndpoint = trafficManagerClient.Endpoints.Get(
                     resourceGroup.Name,
                     profileName,
                     "ExternalEndpoints",
-                    endpoint.Name);
+                    endpointName);
 
-                Assert.Equal("GEO-AS", endpointGetResponse.GeoMapping[0]);
-                Assert.Equal("GEO-AF", endpointGetResponse.GeoMapping[1]);
+                Assert.NotNull(getEndpoint);
+
+                Endpoint endpointToUpdate = getEndpoint;
+
+                string oldTarget = endpointToUpdate.Target;
+                string newTarget = "another." + oldTarget;
+                endpointToUpdate.Target = newTarget;
+
+                // Update the endpoint
+                Endpoint updatedEndpoint = trafficManagerClient.Endpoints.Update(
+                    resourceGroup.Name,
+                    profileName,
+                    "ExternalEndpoints",
+                    endpointName,
+                    endpointToUpdate);
+
+                Assert.NotNull(updatedEndpoint);
+                Assert.Equal(newTarget, updatedEndpoint.Target);
+
+                DeleteOperationResult deleteResponse = trafficManagerClient.Endpoints.Delete(
+                    resourceGroup.Name,
+                    profileName,
+                    "ExternalEndpoints",
+                    endpointName);
+
+                Assert.Throws<Microsoft.Rest.Azure.CloudException>(
+                    () => trafficManagerClient.Endpoints.Get(
+                        resourceGroup.Name,
+                        profileName,
+                        "ExternalEndpoints",
+                        endpointName));
             }
         }
     }

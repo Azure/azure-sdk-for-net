@@ -44,6 +44,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ServiceFabric\Management.ServiceFabric\Microsoft.Azure.Management.ServiceFabric.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)SqlManagement\Management.Sql\Microsoft.Azure.Management.Sql.csproj" />		
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Storage\Management.Storage\Microsoft.Azure.Management.Storage.csproj" />
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)StreamAnalytics\Management.StreamAnalytics\Microsoft.Azure.Management.StreamAnalytics.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TrafficManager\Management.TrafficManager\Microsoft.Azure.Management.TrafficManager.csproj" />
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\Management.Websites\Microsoft.Azure.Management.Websites.csproj" /> 
 		<!--	
@@ -98,6 +99,7 @@
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)ServiceFabric\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)SqlManagement\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)Storage\**\*Tests.csproj" ProjectType="Test"/>
+		<ProjectToBuild Include="$(MSBuildThisFileDirectory)StreamAnalytics\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)TrafficManager\**\*Tests.csproj" ProjectType="Test"/>
 		<ProjectToBuild Include="$(MSBuildThisFileDirectory)WebSites\**\*Tests.csproj" ProjectType="Test"/>		
 	</ItemGroup>

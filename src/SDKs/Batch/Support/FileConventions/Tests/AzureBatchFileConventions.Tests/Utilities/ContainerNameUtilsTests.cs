@@ -25,7 +25,7 @@ using Xunit;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests.Utilities
 {
-    [Arbitrary(typeof(BatchIdGenerator))]
+    [Properties(Arbitrary = new[] { typeof(BatchIdGenerator) })]
     public class ContainerNameUtilsTests
     {
         // Verify generated container names against the Azure blob container naming rules

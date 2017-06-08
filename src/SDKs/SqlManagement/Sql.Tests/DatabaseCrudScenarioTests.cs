@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
@@ -298,13 +298,14 @@ namespace Sql.Tests
                 Assert.NotNull(db1);
 
                 // Get TDE config
+                // Recently changed to be enabled by default
                 var config = sqlClient.Databases.GetTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName);
-                Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
+                Assert.Equal(TransparentDataEncryptionStatus.Enabled, config.Status);
 
                 // Update TDE config
-                config.Status = TransparentDataEncryptionStatus.Enabled;
+                config.Status = TransparentDataEncryptionStatus.Disabled;
                 config = sqlClient.Databases.CreateOrUpdateTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName, config);
-                Assert.Equal(TransparentDataEncryptionStatus.Enabled, config.Status);
+                Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
             });
         }
     }

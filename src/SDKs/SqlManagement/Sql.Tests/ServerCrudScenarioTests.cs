@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
@@ -33,7 +33,7 @@ namespace Sql.Tests
                     };
 
                 // Create server
-                var v12Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverNameV12, new Microsoft.Azure.Management.Sql.Models.Server()
+                var server1 = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverNameV12, new Microsoft.Azure.Management.Sql.Models.Server()
                 {
                     AdministratorLogin = login,
                     AdministratorLoginPassword = password,
@@ -41,28 +41,26 @@ namespace Sql.Tests
                     Tags = tags,
                     Location = SqlManagementTestUtilities.DefaultLocation,
                 });
-                SqlManagementTestUtilities.ValidateServer(v12Server, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(server1, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
 
-                // We ignore the request for v2.0 and create v12.0 anyway unless subscription is whitelisted.
-                string serverNameV2 = SqlManagementTestUtilities.GenerateName(testPrefix);
-                string version2 = "2.0";
-                var v2Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverNameV2, new Microsoft.Azure.Management.Sql.Models.Server()
+                // Create second server
+                string server2 = SqlManagementTestUtilities.GenerateName(testPrefix);
+                var v2Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, server2, new Microsoft.Azure.Management.Sql.Models.Server()
                 {
                     AdministratorLogin = login,
                     AdministratorLoginPassword = password,
-                    Version = version2,
                     Tags = tags,
                     Location = SqlManagementTestUtilities.DefaultLocation,
                 });
-                SqlManagementTestUtilities.ValidateServer(v2Server, serverNameV2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(v2Server, server2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
 
                 // Get first server
-                var getV12Server = sqlClient.Servers.Get(resourceGroup.Name, serverNameV12);
-                SqlManagementTestUtilities.ValidateServer(getV12Server, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                var getServer1 = sqlClient.Servers.Get(resourceGroup.Name, serverNameV12);
+                SqlManagementTestUtilities.ValidateServer(getServer1, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
 
                 // Get second server
-                var getV2Server = sqlClient.Servers.Get(resourceGroup.Name, serverNameV2);
-                SqlManagementTestUtilities.ValidateServer(getV2Server, serverNameV2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                var getServer2 = sqlClient.Servers.Get(resourceGroup.Name, server2);
+                SqlManagementTestUtilities.ValidateServer(getServer2, server2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
 
                 var listServers = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(2, listServers.Count());
