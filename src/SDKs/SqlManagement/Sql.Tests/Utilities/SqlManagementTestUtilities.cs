@@ -134,7 +134,9 @@ namespace Sql.Tests
             Assert.Equal(login, actual.AdministratorLogin);
             Assert.Equal(version, actual.Version);
             SqlManagementTestUtilities.AssertCollection(tags, actual.Tags);
-            Assert.Equal(location, actual.Location);
+
+            // Location is being returned two different ways across different APIs.
+            Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
         }
 
         public static void ValidateDatabase(Database expected, Database actual, string name)

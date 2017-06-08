@@ -87,6 +87,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IFirewallRulesOperations FirewallRules { get; private set; }
 
         /// <summary>
+        /// Gets the IElasticPoolsOperations.
+        /// </summary>
+        public virtual IElasticPoolsOperations ElasticPools { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -95,11 +100,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServersOperations.
         /// </summary>
         public virtual IServersOperations Servers { get; private set; }
-
-        /// <summary>
-        /// Gets the IElasticPoolsOperations.
-        /// </summary>
-        public virtual IElasticPoolsOperations ElasticPools { get; private set; }
 
         /// <summary>
         /// Gets the IRecommendedElasticPoolsOperations.
@@ -330,9 +330,9 @@ namespace Microsoft.Azure.Management.Sql
             Databases = new DatabasesOperations(this);
             Capabilities = new CapabilitiesOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
+            ElasticPools = new ElasticPoolsOperations(this);
             Operations = new Operations(this);
             Servers = new ServersOperations(this);
-            ElasticPools = new ElasticPoolsOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
