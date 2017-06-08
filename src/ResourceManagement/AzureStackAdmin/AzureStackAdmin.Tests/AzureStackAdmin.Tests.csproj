@@ -24,6 +24,7 @@
     <Compile Include="OfferTests.cs" />
     <Compile Include="LocationTests.cs" />
     <Compile Include="ResourceProviderManifest.cs" />
+    <Compile Include="AdminSubscriptionTests.cs" />
     <Compile Include="SubscriptionTests.cs" />
     <Compile Include="PlanTests.cs" />
     <Compile Include="RecordedDelegatingHandler.cs" />

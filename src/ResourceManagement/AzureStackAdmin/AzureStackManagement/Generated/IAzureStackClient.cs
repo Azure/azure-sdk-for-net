@@ -181,6 +181,16 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
+        /// Administrator Operations on the subscription  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
+        /// more information)
+        /// </summary>
+        ISubscriptionOperationsAsAdmin TenantSubscriptions
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Usage connection operations  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
         /// more information)
