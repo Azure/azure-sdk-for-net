@@ -216,9 +216,12 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageLinuxWebAppWithTraffi
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageWebAppWithAuthentication", "ResourceManagement\AppService\ManageWebAppWithAuthentication\ManageWebAppWithAuthentication.xproj", "{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageLinuxWebAppWithContainerRegistry", "ResourceManagement\AppService\ManageLinuxWebAppWithContainerRegistry\ManageLinuxWebAppWithContainerRegistry.xproj", "{719176DA-8E38-4245-83C7-3C163AE81ED5}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphRbac", "GraphRbac", "{4EF685D3-5CA1-4AC2-8E81-FC395E4C9048}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageServicePrincipal", "ResourceManagement\GraphRbac\ManageServicePrincipal\ManageServicePrincipal.xproj", "{F76272C0-D42B-462E-8BBB-499E94A0A55B}"
+EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.ContainerRegistry.Fluent", "..\src\ResourceManagement\ContainerRegistry\Microsoft.Azure.Management.ContainerRegistry.Fluent\Microsoft.Azure.Management.ContainerRegistry.Fluent.xproj", "{B3749CA4-706F-4D61-9B4F-05DD2ECBF1A8}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.DocumentDB.Fluent", "..\src\ResourceManagement\DocumentDB\Microsoft.Azure.Management.DocumentDB.Fluent\Microsoft.Azure.Management.DocumentDB.Fluent.xproj", "{4EF5ECA2-495E-428E-ACEF-EB6C031242C5}"
@@ -599,6 +602,10 @@ Global
 		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{719176DA-8E38-4245-83C7-3C163AE81ED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{719176DA-8E38-4245-83C7-3C163AE81ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{719176DA-8E38-4245-83C7-3C163AE81ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{719176DA-8E38-4245-83C7-3C163AE81ED5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F76272C0-D42B-462E-8BBB-499E94A0A55B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F76272C0-D42B-462E-8BBB-499E94A0A55B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F76272C0-D42B-462E-8BBB-499E94A0A55B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -721,6 +728,7 @@ Global
 		{72AF59AF-83B9-481E-AB94-104EE85233ED} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
 		{52C40F51-22ED-4306-B23A-6CE4164794E3} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
 		{F409AF61-1B4E-4A79-B7EA-11762BD27F5B} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
+		{719176DA-8E38-4245-83C7-3C163AE81ED5} = {3A47CE2D-1D30-419E-B3A1-EB44ACF1DE77}
 		{F76272C0-D42B-462E-8BBB-499E94A0A55B} = {4EF685D3-5CA1-4AC2-8E81-FC395E4C9048}
 		{B3749CA4-706F-4D61-9B4F-05DD2ECBF1A8} = {6CE497E2-B5F8-44C3-99F4-F19EC0097B90}
 		{4EF5ECA2-495E-428E-ACEF-EB6C031242C5} = {6CE497E2-B5F8-44C3-99F4-F19EC0097B90}

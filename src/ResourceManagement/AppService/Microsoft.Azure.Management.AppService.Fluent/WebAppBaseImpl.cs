@@ -565,6 +565,12 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 slotConfigs = await UpdateSlotConfigurationsAsync(slotConfigs, cancellationToken);
             }
 
+            // Wait for previous settings to be effective before deployment
+            if (sourceControlToDelete || sourceControl != null)
+            {
+                await SdkContext.DelayProvider.DelayAsync(30 * 1000, cancellationToken);
+            }
+
             // Delete source control
             if (sourceControlToDelete)
             {
