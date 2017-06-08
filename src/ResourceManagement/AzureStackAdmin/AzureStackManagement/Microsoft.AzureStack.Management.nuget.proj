@@ -5,7 +5,7 @@
     Microsoft.AzureStack.Management
     -->
     <SdkNuGetPackage Include="Microsoft.AzureStack.Management">
-      <PackageVersion>0.10.7-preview</PackageVersion>
+      <PackageVersion>0.10.8-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>
