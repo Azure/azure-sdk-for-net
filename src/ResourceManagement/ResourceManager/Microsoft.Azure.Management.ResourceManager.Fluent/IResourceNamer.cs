@@ -7,6 +7,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     {
         string RandomName(string prefix, int maxLen);
 
-        string RandomUuid();
+        string RandomGuid();
     }
 }

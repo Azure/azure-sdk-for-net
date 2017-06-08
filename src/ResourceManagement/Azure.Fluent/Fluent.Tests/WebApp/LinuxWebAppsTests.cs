@@ -13,7 +13,7 @@ namespace Azure.Tests.WebApp
 {
     public class LinuxWebAppsTests
     {
-        [Fact]
+        [Fact(Skip = "Pending ICM 39157077 & https://github.com/Azure-App-Service/kudu/issues/30")]
         public void CanCRUDLinuxWebApp()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
@@ -77,7 +77,7 @@ namespace Azure.Tests.WebApp
 
                 // Update 2
                 webApp1.Update()
-                    .WithBuiltInImage(RuntimeStack.NodeJS_6_6_0)
+                    .WithBuiltInImage(RuntimeStack.NodeJS_6_6)
                     .DefineSourceControl()
                         .WithPublicGitRepository("https://github.com/jianghaolu/azure-site-test")
                         .WithBranch("master")
