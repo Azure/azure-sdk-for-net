@@ -2,8 +2,8 @@
 using System.Net;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
@@ -31,7 +31,7 @@ namespace Network.Tests.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
                 var computeManagementClient = NetworkManagementTestUtilities.GetComputeManagementClientWithHandler(context, handler3);
 
@@ -49,7 +49,7 @@ namespace Network.Tests.Tests
                 string networkSecurityGroupName = virtualMachineName + "-nsg";
 
                 //Deploy VM with a template
-                Deployments.CreateVm(
+                DeploymentUpdate.CreateVm(
                     resourcesClient: resourcesClient,
                     resourceGroupName: resourceGroupName,
                     location: location,
