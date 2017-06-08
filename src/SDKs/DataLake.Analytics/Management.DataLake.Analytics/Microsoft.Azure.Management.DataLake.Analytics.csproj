@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.DataLake.Analytics</PackageId>
     <Description>Provides Data Lake Analytics account, job and catalog management capabilities for Microsoft Azure.</Description>
-    <VersionPrefix>2.2.1-preview</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.DataLake.Analytics</AssemblyName>
     <PackageTags>Microsoft Azure Data Lake Analytics management;DataLakeAnalytics;Data Lake Analytics management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
     <PackageReleaseNotes>See https://github.com/azure/azure-sdk-for-net/blob/vs17Dev/src/SDKs/DataLake.Analytics/changelog.md for release notes.</PackageReleaseNotes>
