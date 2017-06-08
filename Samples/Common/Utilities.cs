@@ -1564,6 +1564,30 @@ namespace Microsoft.Azure.Management.Samples.Common
             }
         }
 
+        public static void CreateCertificate(string domainName, string pfxName, string cerName, string password)
+        {
+            if (!IsRunningMocked)
+            {
+                string args = string.Format(
+                    @".\createCert1.ps1 -pfxFileName {0} -cerFileName {1} -pfxPassword ""{2}"" -domainName ""{3}""",
+                    pfxName,
+                    cerName,
+                    password,
+                    domainName);
+                ProcessStartInfo info = new ProcessStartInfo("powershell", args);
+                string assetPath = Path.Combine(ProjectPath, "Asset");
+                info.WorkingDirectory = assetPath;
+                Process.Start(info).WaitForExit();
+            }
+            else
+            {
+                File.Copy(
+                    Path.Combine(Utilities.ProjectPath, "Asset", "SampleTestCertificate.pfx"),
+                    Path.Combine(Utilities.ProjectPath, "Asset", pfxName),
+                    overwrite: true);
+            }
+        }
+
         public static void UploadFileToWebApp(IPublishingProfile profile, string filePath, string fileName = null)
         {
             if (!IsRunningMocked)
