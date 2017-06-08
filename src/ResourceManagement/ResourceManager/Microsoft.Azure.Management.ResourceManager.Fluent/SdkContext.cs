@@ -20,5 +20,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             var namer = CreateResourceNamer("");
             return namer.RandomName(prefix, maxLen);
         }
+
+        public static string RandomUuid()
+        {
+            var namer = CreateResourceNamer("");
+            return namer.RandomUuid();
+        }
     }
 }

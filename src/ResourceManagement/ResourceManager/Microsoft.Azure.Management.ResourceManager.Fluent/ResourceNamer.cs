@@ -47,6 +47,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             }
         }
 
+        public string RandomUuid()
+        {
+            return Guid.NewGuid().ToString();
+        }
+
         private string RandomString(int length)
         {
             String str = "";

@@ -28,5 +28,18 @@ namespace Samples.Tests
                     Path.Combine("..", "Common"));
             }
         }
+
+        [Fact]
+        [Trait("Samples", "GraphRbac")]
+        public void ManageUsersGroupsAndRolesTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                RunSampleAsTest(
+                    this.GetType().FullName,
+                    ManageUsersGroupsAndRoles.Program.RunSample,
+                    Path.Combine("..", "Common"));
+            }
+        }
     }
 }
