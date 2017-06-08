@@ -181,30 +181,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Models
     /// <summary>
     /// Your documentation here.
     /// </summary>
-    public partial class AcquisitionGetResponse : AzureOperationResponse
-    {
-        private AcquisitionModel _acquisition;
-        
-        /// <summary>
-        /// Optional. Your documentation here
-        /// </summary>
-        public AcquisitionModel Acquisition
-        {
-            get { return this._acquisition; }
-            set { this._acquisition = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the AcquisitionGetResponse class.
-        /// </summary>
-        public AcquisitionGetResponse()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Your documentation here.
-    /// </summary>
     public partial class AcquisitionListResponse : AzureOperationResponse, IEnumerable<AcquisitionModel>
     {
         private IList<AcquisitionModel> _acquisitions;
@@ -2064,6 +2040,30 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Models
         /// Initializes a new instance of the MigrationResult class.
         /// </summary>
         public MigrationResult()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Your documentation here.
+    /// </summary>
+    public partial class OnDemandGcResponse : AzureOperationResponse
+    {
+        private string _location;
+        
+        /// <summary>
+        /// Optional. Your documentation here.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the OnDemandGcResponse class.
+        /// </summary>
+        public OnDemandGcResponse()
         {
         }
     }
@@ -4336,31 +4336,14 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// </returns>
         internal static WacAccountPermissions ParseWacAccountPermissions(string value)
         {
-            if ("Empty".Equals(value, StringComparison.OrdinalIgnoreCase))
+            WacAccountPermissions wacAccountPermissions = WacAccountPermissions.None;
+
+            if (!Enum.TryParse<WacAccountPermissions>(value, out wacAccountPermissions))
             {
-                return WacAccountPermissions.Empty;
+                throw new ArgumentOutOfRangeException(nameof(value));
             }
-            if ("None".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountPermissions.None;
-            }
-            if ("Read".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountPermissions.Read;
-            }
-            if ("Delete".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountPermissions.Delete;
-            }
-            if ("Write".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountPermissions.Write;
-            }
-            if ("Full".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountPermissions.Full;
-            }
-            throw new ArgumentOutOfRangeException("value");
+
+            return wacAccountPermissions;
         }
         
         /// <summary>
@@ -4374,31 +4357,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// </returns>
         internal static string WacAccountPermissionsToString(WacAccountPermissions value)
         {
-            if (value == WacAccountPermissions.Empty)
-            {
-                return "Empty";
-            }
-            if (value == WacAccountPermissions.None)
-            {
-                return "None";
-            }
-            if (value == WacAccountPermissions.Read)
-            {
-                return "Read";
-            }
-            if (value == WacAccountPermissions.Delete)
-            {
-                return "Delete";
-            }
-            if (value == WacAccountPermissions.Write)
-            {
-                return "Write";
-            }
-            if (value == WacAccountPermissions.Full)
-            {
-                return "Full";
-            }
-            throw new ArgumentOutOfRangeException("value");
+			return value.ToString();
         }
         
         /// <summary>
@@ -4412,31 +4371,13 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// </returns>
         internal static WacAccountStates ParseWacAccountStates(string value)
         {
-            if ("None".Equals(value, StringComparison.OrdinalIgnoreCase))
+            WacAccountStates wacAccountState = WacAccountStates.None;
+            if (!Enum.TryParse<WacAccountStates>(value, out wacAccountState))
             {
-                return WacAccountStates.None;
+                throw new ArgumentOutOfRangeException(nameof(value));
             }
-            if ("Active".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountStates.Active;
-            }
-            if ("Deleted".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountStates.Deleted;
-            }
-            if ("AboveQuota".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountStates.AboveQuota;
-            }
-            if ("Suspended".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountStates.Suspended;
-            }
-            if ("All".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return WacAccountStates.All;
-            }
-            throw new ArgumentOutOfRangeException("value");
+
+            return wacAccountState;
         }
         
         /// <summary>
@@ -4450,31 +4391,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// </returns>
         internal static string WacAccountStatesToString(WacAccountStates value)
         {
-            if (value == WacAccountStates.None)
-            {
-                return "None";
-            }
-            if (value == WacAccountStates.Active)
-            {
-                return "Active";
-            }
-            if (value == WacAccountStates.Deleted)
-            {
-                return "Deleted";
-            }
-            if (value == WacAccountStates.AboveQuota)
-            {
-                return "AboveQuota";
-            }
-            if (value == WacAccountStates.Suspended)
-            {
-                return "Suspended";
-            }
-            if (value == WacAccountStates.All)
-            {
-                return "All";
-            }
-            throw new ArgumentOutOfRangeException("value");
+            return value.ToString();
         }
         
         /// <summary>
@@ -4616,120 +4533,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='farmId'>
         /// Required. Your documentation here.
         /// </param>
-        /// <param name='acquisitionId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static AzureOperationResponse Delete(this IAcquisitionOperations operations, string resourceGroupName, string farmId, string acquisitionId)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IAcquisitionOperations)s).DeleteAsync(resourceGroupName, farmId, acquisitionId);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.AzureConsistentStorage.IAcquisitionOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='farmId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='acquisitionId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<AzureOperationResponse> DeleteAsync(this IAcquisitionOperations operations, string resourceGroupName, string farmId, string acquisitionId)
-        {
-            return operations.DeleteAsync(resourceGroupName, farmId, acquisitionId, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.AzureConsistentStorage.IAcquisitionOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='farmId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='acquisitionId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static AcquisitionGetResponse Get(this IAcquisitionOperations operations, string resourceGroupName, string farmId, string acquisitionId)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IAcquisitionOperations)s).GetAsync(resourceGroupName, farmId, acquisitionId);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.AzureConsistentStorage.IAcquisitionOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='farmId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='acquisitionId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<AcquisitionGetResponse> GetAsync(this IAcquisitionOperations operations, string resourceGroupName, string farmId, string acquisitionId)
-        {
-            return operations.GetAsync(resourceGroupName, farmId, acquisitionId, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.AzureConsistentStorage.IAcquisitionOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='farmId'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='filter'>
         /// Required. Your documentation here.
         /// </param>
@@ -4790,51 +4593,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='farmId'>
         /// Your documentation here.
         /// </param>
-        /// <param name='acquisitionId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string farmId, string acquisitionId, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='farmId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='acquisitionId'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<AcquisitionGetResponse> GetAsync(string resourceGroupName, string farmId, string acquisitionId, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='farmId'>
-        /// Your documentation here.
-        /// </param>
         /// <param name='filter'>
         /// Your documentation here.
         /// </param>
@@ -4874,452 +4632,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         public StorageAdminManagementClient Client
         {
             get { return this._client; }
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='farmId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='acquisitionId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string farmId, string acquisitionId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (farmId == null)
-            {
-                throw new ArgumentNullException("farmId");
-            }
-            if (acquisitionId == null)
-            {
-                throw new ArgumentNullException("acquisitionId");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("farmId", farmId);
-                tracingParameters.Add("acquisitionId", acquisitionId);
-                TracingAdapter.Enter(invocationId, this, "DeleteAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Storage.Admin/farms/";
-            url = url + Uri.EscapeDataString(farmId);
-            url = url + "/acquisitions/";
-            url = url + Uri.EscapeDataString(acquisitionId);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-12-01-preview");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Delete;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    AzureOperationResponse result = null;
-                    // Deserialize Response
-                    result = new AzureOperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='farmId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='acquisitionId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public async Task<AcquisitionGetResponse> GetAsync(string resourceGroupName, string farmId, string acquisitionId, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (farmId == null)
-            {
-                throw new ArgumentNullException("farmId");
-            }
-            if (acquisitionId == null)
-            {
-                throw new ArgumentNullException("acquisitionId");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("farmId", farmId);
-                tracingParameters.Add("acquisitionId", acquisitionId);
-                TracingAdapter.Enter(invocationId, this, "GetAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourcegroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/Microsoft.Storage.Admin/farms/";
-            url = url + Uri.EscapeDataString(farmId);
-            url = url + "/acquisitions/";
-            url = url + Uri.EscapeDataString(acquisitionId);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2015-12-01-preview");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    AcquisitionGetResponse result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new AcquisitionGetResponse();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            AcquisitionModel acquisitionInstance = new AcquisitionModel();
-                            result.Acquisition = acquisitionInstance;
-                            
-                            JToken propertiesValue = responseDoc["properties"];
-                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                            {
-                                Acquisition propertiesInstance = new Acquisition();
-                                acquisitionInstance.Properties = propertiesInstance;
-                                
-                                JToken filePathValue = propertiesValue["filePath"];
-                                if (filePathValue != null && filePathValue.Type != JTokenType.Null)
-                                {
-                                    string filePathInstance = ((string)filePathValue);
-                                    propertiesInstance.FilePath = filePathInstance;
-                                }
-                                
-                                JToken maximumblobsizeValue = propertiesValue["maximumblobsize"];
-                                if (maximumblobsizeValue != null && maximumblobsizeValue.Type != JTokenType.Null)
-                                {
-                                    long maximumblobsizeInstance = ((long)maximumblobsizeValue);
-                                    propertiesInstance.MaximumBlobSize = maximumblobsizeInstance;
-                                }
-                                
-                                JToken statusValue = propertiesValue["status"];
-                                if (statusValue != null && statusValue.Type != JTokenType.Null)
-                                {
-                                    AcquisitionStatus statusInstance = ((AcquisitionStatus)Enum.Parse(typeof(AcquisitionStatus), ((string)statusValue), true));
-                                    propertiesInstance.Status = statusInstance;
-                                }
-                                
-                                JToken susbcriptionidValue = propertiesValue["susbcriptionid"];
-                                if (susbcriptionidValue != null && susbcriptionidValue.Type != JTokenType.Null)
-                                {
-                                    Guid susbcriptionidInstance = Guid.Parse(((string)susbcriptionidValue));
-                                    propertiesInstance.TenantSubscriptionId = susbcriptionidInstance;
-                                }
-                                
-                                JToken storageaccountValue = propertiesValue["storageaccount"];
-                                if (storageaccountValue != null && storageaccountValue.Type != JTokenType.Null)
-                                {
-                                    string storageaccountInstance = ((string)storageaccountValue);
-                                    propertiesInstance.StorageAccountName = storageaccountInstance;
-                                }
-                                
-                                JToken containerValue = propertiesValue["container"];
-                                if (containerValue != null && containerValue.Type != JTokenType.Null)
-                                {
-                                    string containerInstance = ((string)containerValue);
-                                    propertiesInstance.Container = containerInstance;
-                                }
-                                
-                                JToken blobValue = propertiesValue["blob"];
-                                if (blobValue != null && blobValue.Type != JTokenType.Null)
-                                {
-                                    string blobInstance = ((string)blobValue);
-                                    propertiesInstance.Blob = blobInstance;
-                                }
-                                
-                                JToken acquisitionidValue = propertiesValue["acquisitionid"];
-                                if (acquisitionidValue != null && acquisitionidValue.Type != JTokenType.Null)
-                                {
-                                    string acquisitionidInstance = ((string)acquisitionidValue);
-                                    propertiesInstance.AcquisitionId = acquisitionidInstance;
-                                }
-                            }
-                            
-                            JToken idValue = responseDoc["id"];
-                            if (idValue != null && idValue.Type != JTokenType.Null)
-                            {
-                                string idInstance = ((string)idValue);
-                                acquisitionInstance.Id = idInstance;
-                            }
-                            
-                            JToken nameValue = responseDoc["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                acquisitionInstance.Name = nameInstance;
-                            }
-                            
-                            JToken typeValue = responseDoc["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                acquisitionInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = responseDoc["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                acquisitionInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property in tagsSequenceElement)
-                                {
-                                    string tagsKey = ((string)property.Name);
-                                    string tagsValue = ((string)property.Value);
-                                    acquisitionInstance.Tags.Add(tagsKey, tagsValue);
-                                }
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
         }
         
         /// <summary>
@@ -7037,6 +6349,62 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static OnDemandGcResponse GetOnDemandGcStatus(this IFarmOperations operations, string resourceGroupName, string farmId, string operationId)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFarmOperations)s).GetOnDemandGcStatusAsync(resourceGroupName, farmId, operationId);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public static Task<OnDemandGcResponse> GetOnDemandGcStatusAsync(this IFarmOperations operations, string resourceGroupName, string farmId, string operationId)
+        {
+            return operations.GetOnDemandGcStatusAsync(resourceGroupName, farmId, operationId, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.AzureStack.AzureConsistentStorage.IFarmOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
@@ -7085,10 +6453,9 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// Required. Your documentation here.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Your documentation here.
         /// </returns>
-        public static AzureOperationResponse OnDemandGc(this IFarmOperations operations, string resourceGroupName, string farmId)
+        public static OnDemandGcResponse OnDemandGc(this IFarmOperations operations, string resourceGroupName, string farmId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -7113,10 +6480,9 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// Required. Your documentation here.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Your documentation here.
         /// </returns>
-        public static Task<AzureOperationResponse> OnDemandGcAsync(this IFarmOperations operations, string resourceGroupName, string farmId)
+        public static Task<OnDemandGcResponse> OnDemandGcAsync(this IFarmOperations operations, string resourceGroupName, string farmId)
         {
             return operations.OnDemandGcAsync(resourceGroupName, farmId, CancellationToken.None);
         }
@@ -7278,6 +6644,28 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='resourceGroupName'>
         /// Your documentation here.
         /// </param>
+        /// <param name='farmId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='operationId'>
+        /// Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        Task<OnDemandGcResponse> GetOnDemandGcStatusAsync(string resourceGroupName, string farmId, string operationId, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Your documentation here.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -7301,10 +6689,9 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Your documentation here.
         /// </returns>
-        Task<AzureOperationResponse> OnDemandGcAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken);
+        Task<OnDemandGcResponse> OnDemandGcAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken);
         
         /// <summary>
         /// Your documentation here.  (see
@@ -9027,6 +8414,169 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='resourceGroupName'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='farmId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='operationId'>
+        /// Required. Your documentation here.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Your documentation here.
+        /// </returns>
+        public async Task<OnDemandGcResponse> GetOnDemandGcStatusAsync(string resourceGroupName, string farmId, string operationId, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (farmId == null)
+            {
+                throw new ArgumentNullException("farmId");
+            }
+            if (operationId == null)
+            {
+                throw new ArgumentNullException("operationId");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("operationId", operationId);
+                TracingAdapter.Enter(invocationId, this, "GetOnDemandGcStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.Storage.Admin/farms/";
+            url = url + Uri.EscapeDataString(farmId);
+            url = url + "/operationresults/";
+            url = url + Uri.EscapeDataString(operationId);
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-12-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OnDemandGcResponse result = null;
+                    // Deserialize Response
+                    result = new OnDemandGcResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Your documentation here.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Your documentation here.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -9556,10 +9106,9 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Your documentation here.
         /// </returns>
-        public async Task<AzureOperationResponse> OnDemandGcAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken)
+        public async Task<OnDemandGcResponse> OnDemandGcAsync(string resourceGroupName, string farmId, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -9664,10 +9213,14 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
                     }
                     
                     // Create Result
-                    AzureOperationResponse result = null;
+                    OnDemandGcResponse result = null;
                     // Deserialize Response
-                    result = new AzureOperationResponse();
+                    result = new OnDemandGcResponse();
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.Location = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -12929,14 +12482,17 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='maxCount'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='startIndex'>
+        /// Required. Your documentation here.
+        /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static ContainerListResponse GetContainers(this IShareOperations operations, string resourceGroupName, string farmId, string shareName, string migrationIntent, string maxCount)
+        public static ContainerListResponse GetContainers(this IShareOperations operations, string resourceGroupName, string farmId, string shareName, string migrationIntent, string maxCount, string startIndex)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IShareOperations)s).GetContainersAsync(resourceGroupName, farmId, shareName, migrationIntent, maxCount);
+                return ((IShareOperations)s).GetContainersAsync(resourceGroupName, farmId, shareName, migrationIntent, maxCount, startIndex);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -12965,12 +12521,15 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='maxCount'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='startIndex'>
+        /// Required. Your documentation here.
+        /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public static Task<ContainerListResponse> GetContainersAsync(this IShareOperations operations, string resourceGroupName, string farmId, string shareName, string migrationIntent, string maxCount)
+        public static Task<ContainerListResponse> GetContainersAsync(this IShareOperations operations, string resourceGroupName, string farmId, string shareName, string migrationIntent, string maxCount, string startIndex)
         {
-            return operations.GetContainersAsync(resourceGroupName, farmId, shareName, migrationIntent, maxCount, CancellationToken.None);
+            return operations.GetContainersAsync(resourceGroupName, farmId, shareName, migrationIntent, maxCount, startIndex, CancellationToken.None);
         }
         
         /// <summary>
@@ -13429,13 +12988,16 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='maxCount'>
         /// Your documentation here.
         /// </param>
+        /// <param name='startIndex'>
+        /// Your documentation here.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        Task<ContainerListResponse> GetContainersAsync(string resourceGroupName, string farmId, string shareName, string migrationIntent, string maxCount, CancellationToken cancellationToken);
+        Task<ContainerListResponse> GetContainersAsync(string resourceGroupName, string farmId, string shareName, string migrationIntent, string maxCount, string startIndex, CancellationToken cancellationToken);
         
         /// <summary>
         /// Your documentation here.  (see
@@ -13916,13 +13478,16 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
         /// <param name='maxCount'>
         /// Required. Your documentation here.
         /// </param>
+        /// <param name='startIndex'>
+        /// Required. Your documentation here.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Your documentation here.
         /// </returns>
-        public async Task<ContainerListResponse> GetContainersAsync(string resourceGroupName, string farmId, string shareName, string migrationIntent, string maxCount, CancellationToken cancellationToken)
+        public async Task<ContainerListResponse> GetContainersAsync(string resourceGroupName, string farmId, string shareName, string migrationIntent, string maxCount, string startIndex, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -13953,6 +13518,10 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
             {
                 throw new ArgumentNullException("maxCount");
             }
+            if (startIndex == null)
+            {
+                throw new ArgumentNullException("startIndex");
+            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -13966,6 +13535,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
                 tracingParameters.Add("shareName", shareName);
                 tracingParameters.Add("migrationIntent", migrationIntent);
                 tracingParameters.Add("maxCount", maxCount);
+                tracingParameters.Add("startIndex", startIndex);
                 TracingAdapter.Enter(invocationId, this, "GetContainersAsync", tracingParameters);
             }
             
@@ -13987,6 +13557,7 @@ namespace Microsoft.AzureStack.AzureConsistentStorage
             queryParameters.Add("api-version=2015-12-01-preview");
             queryParameters.Add("Intent=" + Uri.EscapeDataString(migrationIntent));
             queryParameters.Add("MaxCount=" + Uri.EscapeDataString(maxCount));
+            queryParameters.Add("StartIndex=" + Uri.EscapeDataString(startIndex));
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

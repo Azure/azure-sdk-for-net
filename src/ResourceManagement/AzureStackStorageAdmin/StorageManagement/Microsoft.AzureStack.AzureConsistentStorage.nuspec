@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.AzureStack.AzureConsistentStorage</id>
-    <title>Microsoft Azure Stack Storage Management Library Preview</title>
-    <releaseNotes>Microsoft Azure Stack Storage Management Library Preview</releaseNotes>
+    <title>Microsoft Azure Stack Storage Management Library</title>
+    <releaseNotes>Microsoft Azure Stack Storage Management Library</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft, Azure Stack Team</authors>
     <owners>azure-sdk, Microsoft</owners>

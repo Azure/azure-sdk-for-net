@@ -23,53 +23,10 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 {
     public class AcquisitionTests : TestBase
     {
-        private const string GetUriTemplate =
-            "{0}/subscriptions/{1}/resourcegroups/{2}/providers/Microsoft.Storage.Admin/farms/{3}/acquisitions/{4}?"
-            + Constants.ApiVersionParameter;
-
         private const string ListUriTemplate =
             "{0}/subscriptions/{1}/resourcegroups/{2}/providers/Microsoft.Storage.Admin/farms/{3}/acquisitions?"
             + Constants.ApiVersionParameter
             + "&$filter={4}";
-
-        [Fact]
-        public void Get()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(ExpectedResults.AcquisitionGetResponse)
-            };
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var subscriptionId = Guid.NewGuid().ToString();
-
-            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
-
-            var client = GetClient(handler, token);
-
-            var result = client.Acquisitions.Get(
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                Constants.AcquisitionId);
-
-            Assert.Equal(handler.Method, HttpMethod.Get);
-
-            var expectedUri = string.Format(
-                GetUriTemplate,
-                Constants.BaseUri,
-                subscriptionId,
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                Constants.AcquisitionId);
-
-            Assert.Equal(expectedUri, handler.Uri.AbsoluteUri );
-
-            CompareExpectedResult(result.Acquisition);
-        }
 
         [Fact]
         public void List()
@@ -110,40 +67,6 @@ namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
             Assert.Equal(expectedUri, handler.Uri.AbsoluteUri);
 
             CompareExpectedResult(result.Acquisitions[0]);
-        }
-
-        [Fact]
-        public void Delete()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK);
-
-            var subscriptionId = Guid.NewGuid().ToString();
-
-            var handler = new RecordedDelegatingHandler(response)
-            {
-                StatusCodeToReturn = HttpStatusCode.OK
-            };
-
-            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
-            var client = GetClient(handler, token);
-            var result = client.Acquisitions.Delete(
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                Constants.AcquisitionId
-                );
-
-            Assert.Equal(handler.Method, HttpMethod.Delete);
-
-            var expectedUri = string.Format(
-                GetUriTemplate,
-                Constants.BaseUri,
-                subscriptionId,
-                Constants.ResourceGroupName,
-                Constants.FarmId,
-                Constants.AcquisitionId);
-
-            Assert.Equal(expectedUri, handler.Uri.AbsoluteUri);
-
         }
 
         private void CompareExpectedResult(AcquisitionModel acquisition)

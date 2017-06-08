@@ -17,22 +17,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExpectedResults.resx</DependentUpon>
     </Compile>
-    <Compile Include="InMemoryTests\FarmTests.cs" />
+    <Compile Include="InMemoryTests\AcquisitionTests.cs" />
     <Compile Include="InMemoryTests\MetricTests.cs" />
-    <!--
-    <Compile Include="InMemoryTests\FaultTests.cs" />
-    <Compile Include="InMemoryTests\NodeTests.cs" />
-    <Compile Include="InMemoryTests\RoleInstanceTests.cs" /> 
-    <Compile Include="EventQueryResultValidator.cs" />
-    -->
+    <Compile Include="InMemoryTests\QuotaTests.cs" />
     <Compile Include="InMemoryTests\ServiceTests.cs" />
-    <Compile Include="InMemoryTests\ShareTests.cs" />
     <Compile Include="InMemoryTests\StorageAccountTests.cs" />
+    <Compile Include="InMemoryTests\ShareTests.cs" />
+    <Compile Include="InMemoryTests\FarmTests.cs" />
     <Compile Include="InMemoryTests\TestBase.cs" />
     <Compile Include="RecordedDelegatingHandler.cs" />
 
-    <Compile Include="InMemoryTests\QuotaTests.cs" />
-    <Compile Include="InMemoryTests\AcquisitionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
