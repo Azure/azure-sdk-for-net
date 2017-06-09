@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Azure.Tests;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System.IO;
 using Xunit;
 using Xunit.Abstractions;
@@ -25,6 +26,20 @@ namespace Samples.Tests
                 RunSampleAsTest(
                     this.GetType().FullName,
                     ManageServicePrincipal.Program.RunSample,
+                    Path.Combine("..", "Common"));
+            }
+        }
+
+        [Fact(Skip = "Do not record - Can contain sensitive auth info")]
+        [Trait("Samples", "GraphRbac")]
+        public void ManageServicePrincipalCredentialsTest()
+        {
+
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                RunSampleAsTest(
+                    this.GetType().FullName,
+                    (authenticated) => ManageServicePrincipalCredentials.Program.RunSample(authenticated, AzureEnvironment.AzureGlobalCloud),
                     Path.Combine("..", "Common"));
             }
         }
