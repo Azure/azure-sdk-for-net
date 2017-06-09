@@ -31,6 +31,11 @@
         "define": [ "NET45" ],
         "debugType": "portable"
       },
+      "frameworkAssemblies": {
+        "System.Net.Http": "",
+        "System.Runtime": "",
+        "System.Runtime.Serialization": ""
+      },
       "dependencies": {
       }
     },
