@@ -33,6 +33,7 @@ using System.Net.Http.Headers;
 using Microsoft.Azure.Management.DocumentDB.Fluent;
 using Microsoft.Azure.Management.DocumentDB.Fluent.Models;
 using Microsoft.Azure.Management.Graph.RBAC.Fluent;
+using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -1542,6 +1543,50 @@ namespace Microsoft.Azure.Management.Samples.Common
             Log(builder.ToString());
         }
 
+        public static void Print(IActiveDirectoryApplication application)
+        {
+            StringBuilder builder = new StringBuilder()
+                .Append("Active Directory Application: ").Append(application.Id)
+                .Append("\n\tName: ").Append(application.Name)
+                .Append("\n\tSign on URL: ").Append(application.SignOnUrl)
+                .Append("\n\tReply URLs:");
+            foreach (string replyUrl in application.ReplyUrls)
+            {
+                builder.Append("\n\t\t").Append(replyUrl);
+            }
+
+            Log(builder.ToString());
+        }
+
+        public static void Print(IServicePrincipal servicePrincipal)
+        {
+            StringBuilder builder = new StringBuilder()
+                    .Append("Service Principal: ").Append(servicePrincipal.Id)
+                    .Append("\n\tName: ").Append(servicePrincipal.Name)
+                    .Append("\n\tApplication Id: ").Append(servicePrincipal.ApplicationId);
+
+            var names = servicePrincipal.ServicePrincipalNames;
+            builder.Append("\n\tNames: ").Append(names.Count);
+            foreach (string name in names)
+            {
+                builder.Append("\n\t\tName: ").Append(name);
+            }
+
+            Log(builder.ToString());
+        }
+
+        public static void Print(IActiveDirectoryGroup group)
+        {
+            StringBuilder builder = new StringBuilder()
+                    .Append("Active Directory Group: ").Append(group.Id)
+                    .Append("\n\tName: ").Append(group.Name)
+                    .Append("\n\tMail: ").Append(group.Mail)
+                    .Append("\n\tSecurity Enabled: ").Append(group.SecurityEnabled);
+
+            Log(builder.ToString());
+        }
+
+
         public static void Print(IActiveDirectoryUser user)
         {
             var builder = new StringBuilder()
@@ -1594,16 +1639,6 @@ namespace Microsoft.Azure.Management.Samples.Common
                 .Append("\n\tScope: ").Append(roleAssignment.Scope)
                 .Append("\n\tPrincipal Id: ").Append(roleAssignment.PrincipalId)
                 .Append("\n\tRole Definition Id: ").Append(roleAssignment.RoleDefinitionId);
-            Utilities.Log(builder.ToString());
-        }
-
-        public static void Print(IActiveDirectoryGroup group)
-        {
-            StringBuilder builder = new StringBuilder()
-                .Append("Active Directory Group: ").Append(group.Id)
-                .Append("\n\tName: ").Append(group.Name)
-                .Append("\n\tMail: ").Append(group.Mail)
-                .Append("\n\tSecurity Enabled: ").Append(group.SecurityEnabled);
             Utilities.Log(builder.ToString());
         }
 

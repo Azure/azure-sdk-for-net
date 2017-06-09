@@ -469,6 +469,8 @@ namespace Microsoft.Azure.Management.Fluent
 
         public interface IAuthenticated : IAuthenticatedBeta
         {
+            string TenantId { get; }
+
             ITenants Tenants { get; }
 
             ISubscriptions Subscriptions { get; }
@@ -485,6 +487,14 @@ namespace Microsoft.Azure.Management.Fluent
             private IGraphRbacManager graphRbacManager;
             private string defaultSubscription;
             private string tenantId;
+
+            public string TenantId
+            {
+                get
+                {
+                    return tenantId;
+                }
+            }
 
             public ITenants Tenants
             {
