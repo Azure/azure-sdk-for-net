@@ -81,7 +81,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
                 
-                var principalId = testContext.Users.ElementAt(4);
+                var principalId = new Guid(testContext.Users.ElementAt(4).ObjectId);
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
@@ -138,7 +138,7 @@ namespace Authorization.Tests
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestListGet");
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
-                var principalId = testContext.Users.ElementAt(5);
+                var principalId = new Guid(testContext.Users.ElementAt(5).ObjectId);
 
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
@@ -191,7 +191,7 @@ namespace Authorization.Tests
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameCreateDeleteTest");
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup; ;
-                var principalId = testContext.Users.ElementAt(3);
+                var principalId = new Guid(testContext.Users.ElementAt(3).ObjectId);
 
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
@@ -263,15 +263,15 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                // Read/write the PrincipalId from Testcontext to enable Playback mode test execution
-                var principalId = GetValueFromTestContext(() => testContext.Users.ElementAt(1), Guid.Parse, "PrincipalId").ToString(); 
+				// Read/write the PrincipalId from Testcontext to enable Playback mode test execution
+				var principalId = GetValueFromTestContext(() => new Guid(testContext.Users.ElementAt(1).ObjectId), Guid.Parse, "PrincipalId").ToString(); 
 
-                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+				var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var roleDefinition = client.RoleDefinitions.List(scope).First();
 
                 for(int i=0; i<testContext.Users.Count; i++)
                 {
-                    var pId = testContext.Users.ElementAt(i);
+                    var pId = new Guid(testContext.Users.ElementAt(i).ObjectId);
                     var newRoleAssignment = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
@@ -449,9 +449,9 @@ namespace Authorization.Tests
                 var roleDefinition = client.RoleDefinitions.List(scope).First();
                 
                 // Get user and group and add the user to the group
-                var userId = testContext.Users.First();
-                var groupId = testContext.Groups.First();
-                testContext.AddMemberToGroup(groupId, userId.ToString());
+                var user = testContext.Users.First();
+                var group = testContext.Groups.First();
+                testContext.AddMemberToGroup(context, group, user);
 
                 // create assignment to group
                 var newRoleAssignmentToGroupParams = new RoleAssignmentCreateParameters()
@@ -459,7 +459,7 @@ namespace Authorization.Tests
                     Properties = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = groupId
+                        PrincipalId = group.ObjectId
                     }
                 };
                 var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_Group");
@@ -474,7 +474,7 @@ namespace Authorization.Tests
                     Properties = new RoleAssignmentProperties()
                     {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = userId.ToString()
+                        PrincipalId = user.ObjectId
                     }
                 };
                 
@@ -485,7 +485,7 @@ namespace Authorization.Tests
 
                 // List role assignments with AssignedTo filter = user id
                 var allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(userId.ToString())));
+                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(user.ObjectId)));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() >= 2);
@@ -503,7 +503,7 @@ namespace Authorization.Tests
                 }
 
                 // Returned assignments contain assignment to group
-                Assert.True(allRoleAssignments.Count(a => a.Properties.PrincipalId.ToString() == groupId) >= 1);
+                Assert.True(allRoleAssignments.Count(a => a.Properties.PrincipalId.ToString() == group.ObjectId) >= 1);
             }
         }
 
