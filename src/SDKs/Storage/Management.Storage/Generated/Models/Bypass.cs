@@ -17,13 +17,19 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Action.
+    /// Defines values for Bypass.
     /// </summary>
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum Action
+    public enum Bypass
     {
-        [EnumMember(Value = "Allow")]
-        Allow
+        [EnumMember(Value = "None")]
+        None,
+        [EnumMember(Value = "Logging")]
+        Logging,
+        [EnumMember(Value = "Metrics")]
+        Metrics,
+        [EnumMember(Value = "AzureServices")]
+        AzureServices
     }
 }
 

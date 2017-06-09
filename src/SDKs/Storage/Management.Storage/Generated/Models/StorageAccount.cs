@@ -85,6 +85,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// include: 'Hot', 'Cool'</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
+        /// <param name="networkAcls">Network ACL</param>
         public StorageAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Kind? kind = default(Kind?), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?), StorageNetworkAcls networkAcls = default(StorageNetworkAcls))
             : base(id, name, type, location, tags)
         {
@@ -226,6 +227,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         public bool? EnableHttpsTrafficOnly { get; set; }
 
         /// <summary>
+        /// Gets network ACL
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkAcls")]
         public StorageNetworkAcls NetworkAcls { get; protected set; }

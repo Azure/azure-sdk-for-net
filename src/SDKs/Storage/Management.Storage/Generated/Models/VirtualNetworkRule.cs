@@ -31,11 +31,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="virtualNetworkResourceId">A URL of vnet, subnet,
         /// classicVnet or classicSubnet.</param>
         /// <param name="action">The action of virtual network ACL rule.
-        /// Possible values include: 'allow'</param>
+        /// Possible values include: 'Allow'</param>
         /// <param name="state">Gets the state of virtual network ACL rule.
         /// Possible values include: 'provisioning', 'deprovisioning',
         /// 'succeeded', 'failed', 'networkSourceDeleted'</param>
-        public VirtualNetworkRule(string virtualNetworkResourceId, Action? action = default(Action?), string state = default(string))
+        public VirtualNetworkRule(string virtualNetworkResourceId, Action? action = default(Action?), State? state = default(State?))
         {
             VirtualNetworkResourceId = virtualNetworkResourceId;
             Action = action;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets the action of virtual network ACL rule. Possible
-        /// values include: 'allow'
+        /// values include: 'Allow'
         /// </summary>
         [JsonProperty(PropertyName = "action")]
         public Action? Action { get; set; }
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'networkSourceDeleted'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public string State { get; set; }
+        public State? State { get; set; }
 
         /// <summary>
         /// Validate the object.

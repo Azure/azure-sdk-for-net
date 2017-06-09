@@ -17,13 +17,21 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Action.
+    /// Defines values for State.
     /// </summary>
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum Action
+    public enum State
     {
-        [EnumMember(Value = "Allow")]
-        Allow
+        [EnumMember(Value = "provisioning")]
+        Provisioning,
+        [EnumMember(Value = "deprovisioning")]
+        Deprovisioning,
+        [EnumMember(Value = "succeeded")]
+        Succeeded,
+        [EnumMember(Value = "failed")]
+        Failed,
+        [EnumMember(Value = "networkSourceDeleted")]
+        NetworkSourceDeleted
     }
 }
 

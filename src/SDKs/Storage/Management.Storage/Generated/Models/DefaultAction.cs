@@ -22,9 +22,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum DefaultAction
     {
-        [EnumMember(Value = "allow")]
+        [EnumMember(Value = "Allow")]
         Allow,
-        [EnumMember(Value = "deny")]
+        [EnumMember(Value = "Deny")]
         Deny
     }
 }

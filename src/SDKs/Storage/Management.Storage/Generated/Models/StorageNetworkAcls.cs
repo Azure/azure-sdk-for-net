@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="defaultAction">Specifies the default action of allow
         /// or deny when no other rules match. Possible values include:
-        /// 'allow', 'deny'</param>
+        /// 'Allow', 'Deny'</param>
         /// <param name="bypass">Specifies whether traffic is bypassed for
         /// Logging/Metrics/AzureServices. Possible values are any combination
         /// of Logging|Metrics|AzureServices (For example, "Logging, Metrics"),
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="virtualNetworkRules">Sets the virtual network ACL
         /// rules</param>
         /// <param name="ipRules">Sets the IP ACL rules</param>
-        public StorageNetworkAcls(DefaultAction defaultAction, string bypass = default(string), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<IpRule> ipRules = default(IList<IpRule>))
+        public StorageNetworkAcls(DefaultAction defaultAction, Bypass? bypass = default(Bypass?), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<IPRule> ipRules = default(IList<IPRule>))
         {
             Bypass = bypass;
             VirtualNetworkRules = virtualNetworkRules;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'None', 'Logging', 'Metrics', 'AzureServices'
         /// </summary>
         [JsonProperty(PropertyName = "bypass")]
-        public string Bypass { get; set; }
+        public Bypass? Bypass { get; set; }
 
         /// <summary>
         /// Gets or sets sets the virtual network ACL rules
@@ -68,11 +68,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets or sets sets the IP ACL rules
         /// </summary>
         [JsonProperty(PropertyName = "ipRules")]
-        public IList<IpRule> IpRules { get; set; }
+        public IList<IPRule> IpRules { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the default action of allow or deny when no
-        /// other rules match. Possible values include: 'allow', 'deny'
+        /// other rules match. Possible values include: 'Allow', 'Deny'
         /// </summary>
         [JsonProperty(PropertyName = "defaultAction")]
         public DefaultAction DefaultAction { get; set; }

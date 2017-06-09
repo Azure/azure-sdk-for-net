@@ -11,19 +11,15 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Azure;
     using Management;
     using Storage;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Action.
+    /// Defines values for SignedResourceTypes.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum Action
+    public static class SignedResourceTypes
     {
-        [EnumMember(Value = "Allow")]
-        Allow
+        public const string S = "s";
+        public const string C = "c";
+        public const string O = "o";
     }
 }
 

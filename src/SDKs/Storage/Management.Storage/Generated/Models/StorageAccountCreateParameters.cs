@@ -60,6 +60,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="encryption">Provides the encryption settings on the
         /// account. If left unspecified the account encryption settings will
         /// remain the same. The default setting is unencrypted.</param>
+        /// <param name="networkAcls">Network ACL</param>
         /// <param name="accessTier">Required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
         /// include: 'Hot', 'Cool'</param>
@@ -137,6 +138,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         public Encryption Encryption { get; set; }
 
         /// <summary>
+        /// Gets or sets network ACL
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkAcls")]
         public StorageNetworkAcls NetworkAcls { get; set; }

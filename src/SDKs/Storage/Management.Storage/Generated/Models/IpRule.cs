@@ -18,21 +18,21 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// <summary>
     /// IP rule with specific IP or IP range in CIDR format.
     /// </summary>
-    public partial class IpRule
+    public partial class IPRule
     {
         /// <summary>
-        /// Initializes a new instance of the IpRule class.
+        /// Initializes a new instance of the IPRule class.
         /// </summary>
-        public IpRule() { }
+        public IPRule() { }
 
         /// <summary>
-        /// Initializes a new instance of the IpRule class.
+        /// Initializes a new instance of the IPRule class.
         /// </summary>
         /// <param name="iPAddressOrRange">Specifies the IP or IP range in CIDR
         /// format. Only IPV4 address is allowed.</param>
         /// <param name="action">The action of IP ACL rule. Possible values
-        /// include: 'allow'</param>
-        public IpRule(string iPAddressOrRange, Action? action = default(Action?))
+        /// include: 'Allow'</param>
+        public IPRule(string iPAddressOrRange, Action? action = default(Action?))
         {
             IPAddressOrRange = iPAddressOrRange;
             Action = action;
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets the action of IP ACL rule. Possible values include:
-        /// 'allow'
+        /// 'Allow'
         /// </summary>
         [JsonProperty(PropertyName = "action")]
         public Action? Action { get; set; }
