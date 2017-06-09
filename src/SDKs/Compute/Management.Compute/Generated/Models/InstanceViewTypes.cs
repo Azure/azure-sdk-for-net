@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for InstanceViewTypes.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum InstanceViewTypes
     {
         [EnumMember(Value = "instanceView")]

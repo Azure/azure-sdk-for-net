@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='name'>
+            /// <param name='availabilitySetName'>
             /// The name of the availability set.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create Availability Set operation.
             /// </param>
-            public static AvailabilitySet CreateOrUpdate(this IAvailabilitySetsOperations operations, string resourceGroupName, string name, AvailabilitySet parameters)
+            public static AvailabilitySet CreateOrUpdate(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, AvailabilitySet parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, availabilitySetName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='name'>
+            /// <param name='availabilitySetName'>
             /// The name of the availability set.
             /// </param>
             /// <param name='parameters'>
@@ -61,9 +61,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AvailabilitySet> CreateOrUpdateAsync(this IAvailabilitySetsOperations operations, string resourceGroupName, string name, AvailabilitySet parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AvailabilitySet> CreateOrUpdateAsync(this IAvailabilitySetsOperations operations, string resourceGroupName, string availabilitySetName, AvailabilitySet parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, availabilitySetName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.Compute
         Task<AzureOperationResponse<OperationStatusResponse>> ReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Allows you to re-image all the disks ( including data disks ) in
-        /// the a virtual machine scale set instance. This operation is only
-        /// supported for managed disks.
+        /// the a VM scale set instance. This operation is only supported for
+        /// managed disks.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -347,8 +347,8 @@ namespace Microsoft.Azure.Management.Compute
         Task<AzureOperationResponse<OperationStatusResponse>> BeginReimageWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Allows you to re-image all the disks ( including data disks ) in
-        /// the a virtual machine scale set instance. This operation is only
-        /// supported for managed disks.
+        /// the a VM scale set instance. This operation is only supported for
+        /// managed disks.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

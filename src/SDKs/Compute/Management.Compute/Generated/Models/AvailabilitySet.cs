@@ -43,17 +43,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="virtualMachines">A list of references to all virtual
         /// machines in the availability set.</param>
         /// <param name="statuses">The resource status information.</param>
-        /// <param name="managed">If the availability set supports managed
-        /// disks.</param>
         /// <param name="sku">Sku of the availability set</param>
-        public AvailabilitySet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), IList<SubResource> virtualMachines = default(IList<SubResource>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), bool? managed = default(bool?), Sku sku = default(Sku))
+        public AvailabilitySet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), IList<SubResource> virtualMachines = default(IList<SubResource>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), Sku sku = default(Sku))
             : base(location, id, name, type, tags)
         {
             PlatformUpdateDomainCount = platformUpdateDomainCount;
             PlatformFaultDomainCount = platformFaultDomainCount;
             VirtualMachines = virtualMachines;
             Statuses = statuses;
-            Managed = managed;
             Sku = sku;
         }
 
@@ -81,12 +78,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.statuses")]
         public IList<InstanceViewStatus> Statuses { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets if the availability set supports managed disks.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.managed")]
-        public bool? Managed { get; set; }
 
         /// <summary>
         /// Gets or sets sku of the availability set

@@ -33,13 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the DiskUpdate class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
-        /// <param name="accountType">the storage account type of the disk.
-        /// Possible values include: 'Standard_LRS', 'Premium_LRS'</param>
         /// <param name="osType">the Operating System type. Possible values
         /// include: 'Windows', 'Linux'</param>
-        /// <param name="creationData">disk source information. CreationData
-        /// information cannot be changed after the disk has been
-        /// created.</param>
         /// <param name="diskSizeGB">If creationData.createOption is Empty,
         /// this field is mandatory and it indicates the size of the VHD to
         /// create. If this field is present for updates or creation with other
@@ -48,22 +43,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk's size.</param>
         /// <param name="encryptionSettings">Encryption settings for disk or
         /// snapshot</param>
-        public DiskUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), StorageAccountTypes? accountType = default(StorageAccountTypes?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), CreationData creationData = default(CreationData), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings))
-            : base(tags)
+        public DiskUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku), OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings))
+            : base(tags, sku)
         {
-            AccountType = accountType;
             OsType = osType;
-            CreationData = creationData;
             DiskSizeGB = diskSizeGB;
             EncryptionSettings = encryptionSettings;
         }
-
-        /// <summary>
-        /// Gets or sets the storage account type of the disk. Possible values
-        /// include: 'Standard_LRS', 'Premium_LRS'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.accountType")]
-        public StorageAccountTypes? AccountType { get; set; }
 
         /// <summary>
         /// Gets or sets the Operating System type. Possible values include:
@@ -71,13 +57,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.osType")]
         public OperatingSystemTypes? OsType { get; set; }
-
-        /// <summary>
-        /// Gets or sets disk source information. CreationData information
-        /// cannot be changed after the disk has been created.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.creationData")]
-        public CreationData CreationData { get; set; }
 
         /// <summary>
         /// Gets or sets if creationData.createOption is Empty, this field is
@@ -103,10 +82,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (CreationData != null)
-            {
-                CreationData.Validate();
-            }
             if (EncryptionSettings != null)
             {
                 EncryptionSettings.Validate();
