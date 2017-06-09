@@ -1586,65 +1586,60 @@ namespace Microsoft.Azure.Management.Samples.Common
             Log(builder.ToString());
         }
 
+
         public static void Print(IActiveDirectoryUser user)
         {
-            StringBuilder builder = new StringBuilder()
-                    .Append("Active Directory User: ").Append(user.Id)
-                    .Append("\n\tName: ").Append(user.Name)
-                    .Append("\n\tMail: ").Append(user.Mail)
-                    .Append("\n\tMail Nickname: ").Append(user.MailNickname)
-                    .Append("\n\tSign In Name: ").Append(user.SignInName)
-                    .Append("\n\tUser Principal Name: ").Append(user.UserPrincipalName);
+            var builder = new StringBuilder()
+                .Append("Active Directory User: ").Append(user.Id)
+                .Append("\n\tName: ").Append(user.Name)
+                .Append("\n\tMail: ").Append(user.Mail)
+                .Append("\n\tMail Nickname: ").Append(user.MailNickname)
+                .Append("\n\tSign In Name: ").Append(user.SignInName)
+                .Append("\n\tUser Principal Name: ").Append(user.UserPrincipalName);
 
-            Log(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void Print(IRoleDefinition role)
         {
             StringBuilder builder = new StringBuilder()
-                    .Append("Role Definition: ").Append(role.Id)
-                    .Append("\n\tName: ").Append(role.Name)
-                    .Append("\n\tRole Name: ").Append(role.RoleName)
-                    .Append("\n\tType: ").Append(role.Type)
-                    .Append("\n\tDescription: ").Append(role.Description)
-                    .Append("\n\tType: ").Append(role.Type);
-
-            var permissions = role.Permissions;
-            builder.Append("\n\tPermissions: ").Append(permissions.Count);
-            foreach (Permission permission in permissions)
+                .Append("Role Definition: ").Append(role.Id)
+                .Append("\n\tName: ").Append(role.Name)
+                .Append("\n\tRole Name: ").Append(role.RoleName)
+                .Append("\n\tType: ").Append(role.Type)
+                .Append("\n\tDescription: ").Append(role.Description)
+                .Append("\n\tType: ").Append(role.Type)
+                .Append("\n\tPermissions: ");
+            foreach (var permission in role.Permissions)
             {
-                builder.Append("\n\t\tPermission Actions: " + permission.Actions.Count);
-                foreach (string action in permission.Actions)
+                builder.Append("\n\t\tPermission Actions: ");
+                foreach (var action in permission.Actions)
                 {
                     builder.Append("\n\t\t\tName :").Append(action);
                 }
-                builder.Append("\n\t\tPermission Not Actions: " + permission.NotActions.Count);
-                foreach (string notAction in permission.NotActions)
+                builder.Append("\n\t\tPermission Not Actions: ");
+                foreach (var notAction in permission.NotActions)
                 {
                     builder.Append("\n\t\t\tName :").Append(notAction);
                 }
             }
-
-            var assignableScopes = role.AssignableScopes;
-            builder.Append("\n\tAssignable scopes: ").Append(assignableScopes.Count);
-            foreach (string scope in assignableScopes)
+            builder.Append("\n\tAssignable scopes: ");
+            foreach (var scope in role.AssignableScopes)
             {
                 builder.Append("\n\t\tAssignable Scope: ")
-                        .Append("\n\t\t\tName :").Append(scope);
+                    .Append("\n\t\t\tName :").Append(scope);
             }
-
-            Log(builder.ToString());
+            Utilities.Log(builder.ToString());
         }
 
         public static void Print(IRoleAssignment roleAssignment)
         {
             StringBuilder builder = new StringBuilder()
-                    .Append("Role Assignment: ")
-                    .Append("\n\tScope: ").Append(roleAssignment.Scope)
-                    .Append("\n\tPrincipal Id: ").Append(roleAssignment.PrincipalId)
-                    .Append("\n\tRole Definition Id: ").Append(roleAssignment.RoleDefinitionId);
-
-            Log(builder.ToString());
+                .Append("Role Assignment: ")
+                .Append("\n\tScope: ").Append(roleAssignment.Scope)
+                .Append("\n\tPrincipal Id: ").Append(roleAssignment.PrincipalId)
+                .Append("\n\tRole Definition Id: ").Append(roleAssignment.RoleDefinitionId);
+            Utilities.Log(builder.ToString());
         }
 
         public static void CreateCertificate(string domainName, string pfxPath, string password)

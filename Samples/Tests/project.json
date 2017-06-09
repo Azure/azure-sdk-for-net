@@ -151,5 +151,6 @@
     "ManageWebAppWithAuthentication": "1.0.0-*",
     "ManageServicePrincipal": "1.0.0-*",
     "ManageServicePrincipalCredentails": "1.0.0-*"
+    "ManageUsersGroupsAndRoles": "1.0.0-*"
   }
 }

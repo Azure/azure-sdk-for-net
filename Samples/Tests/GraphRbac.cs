@@ -34,12 +34,24 @@ namespace Samples.Tests
         [Trait("Samples", "GraphRbac")]
         public void ManageServicePrincipalCredentialsTest()
         {
-
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 RunSampleAsTest(
                     this.GetType().FullName,
                     (authenticated) => ManageServicePrincipalCredentials.Program.RunSample(authenticated, AzureEnvironment.AzureGlobalCloud),
+                    Path.Combine("..", "Common"));
+            }
+        }
+        
+        [Fact]
+        [Trait("Samples", "GraphRbac")]
+        public void ManageUsersGroupsAndRolesTest()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                RunSampleAsTest(
+                    this.GetType().FullName,
+                    ManageUsersGroupsAndRoles.Program.RunSample,
                     Path.Combine("..", "Common"));
             }
         }
