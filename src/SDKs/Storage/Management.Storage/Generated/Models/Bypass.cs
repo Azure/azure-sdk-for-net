@@ -11,25 +11,16 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Azure;
     using Management;
     using Storage;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for Bypass.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum Bypass
+    public static class Bypass
     {
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "Logging")]
-        Logging,
-        [EnumMember(Value = "Metrics")]
-        Metrics,
-        [EnumMember(Value = "AzureServices")]
-        AzureServices
+        public const string None = "None";
+        public const string Logging = "Logging";
+        public const string Metrics = "Metrics";
+        public const string AzureServices = "AzureServices";
     }
 }
 

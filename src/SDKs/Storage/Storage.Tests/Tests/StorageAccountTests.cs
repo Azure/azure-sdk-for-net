@@ -1480,7 +1480,7 @@ namespace Storage.Tests
                 string accountName = TestUtilities.GenerateName("sto");
 
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
-                parameters.NetworkAcls = new StorageNetworkAcls { Bypass = @"Logging,AzureServices", DefaultAction = DefaultAction.Deny, IpRules = new List<IpRule> { new IpRule { IPAddressOrRange = "23.45.67.90" } } };
+                parameters.NetworkAcls = new StorageNetworkAcls { Bypass = @"Logging,AzureServices", DefaultAction = DefaultAction.Deny, IpRules = new List<IPRule> { new IPRule { IPAddressOrRange = "23.45.67.90" } } };
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 var account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
@@ -1501,7 +1501,7 @@ namespace Storage.Tests
                     NetworkAcls = new StorageNetworkAcls
                     {
                         Bypass = @"Logging, Metrics",
-                        IpRules = new List<IpRule> { new IpRule { IPAddressOrRange = "23.45.67.91", Action = Microsoft.Azure.Management.Storage.Models.Action.Allow } },
+                        IpRules = new List<IPRule> { new IPRule { IPAddressOrRange = "23.45.67.91", Action = Microsoft.Azure.Management.Storage.Models.Action.Allow } },
                         DefaultAction = DefaultAction.Deny
                     }
                 };

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="virtualNetworkRules">Sets the virtual network ACL
         /// rules</param>
         /// <param name="ipRules">Sets the IP ACL rules</param>
-        public StorageNetworkAcls(DefaultAction defaultAction, Bypass? bypass = default(Bypass?), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<IPRule> ipRules = default(IList<IPRule>))
+        public StorageNetworkAcls(DefaultAction defaultAction, string bypass = default(string), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<IPRule> ipRules = default(IList<IPRule>))
         {
             Bypass = bypass;
             VirtualNetworkRules = virtualNetworkRules;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'None', 'Logging', 'Metrics', 'AzureServices'
         /// </summary>
         [JsonProperty(PropertyName = "bypass")]
-        public Bypass? Bypass { get; set; }
+        public string Bypass { get; set; }
 
         /// <summary>
         /// Gets or sets sets the virtual network ACL rules
