@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
     /// Class representing a Traffic Manager profile.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Profile : Resource
+    public partial class Profile : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the Profile class.
@@ -35,25 +35,27 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// <summary>
         /// Initializes a new instance of the Profile class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="profileStatus">Gets or sets the status of the Traffic
-        /// Manager profile.  Possible values are 'Enabled' and
-        /// 'Disabled'.</param>
-        /// <param name="trafficRoutingMethod">Gets or sets the traffic routing
-        /// method of the Traffic Manager profile.  Possible values are
-        /// 'Performance', 'Weighted', 'Priority' or 'Geographic'.</param>
-        /// <param name="dnsConfig">Gets or sets the DNS settings of the
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Network/trafficmanagerProfiles.</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="location">The Azure Region where the resource
+        /// lives</param>
+        /// <param name="profileStatus">The status of the Traffic Manager
+        /// profile. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="trafficRoutingMethod">The traffic routing method of
+        /// the Traffic Manager profile. Possible values include:
+        /// 'Performance', 'Priority', 'Weighted', 'Geographic'</param>
+        /// <param name="dnsConfig">The DNS settings of the Traffic Manager
+        /// profile.</param>
+        /// <param name="monitorConfig">The endpoint monitoring settings of the
         /// Traffic Manager profile.</param>
-        /// <param name="monitorConfig">Gets or sets the endpoint monitoring
-        /// settings of the Traffic Manager profile.</param>
-        /// <param name="endpoints">Gets or sets the list of endpoints in the
-        /// Traffic Manager profile.</param>
-        public Profile(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string profileStatus = default(string), string trafficRoutingMethod = default(string), DnsConfig dnsConfig = default(DnsConfig), MonitorConfig monitorConfig = default(MonitorConfig), IList<Endpoint> endpoints = default(IList<Endpoint>))
-            : base(id, name, type, location, tags)
+        /// <param name="endpoints">The list of endpoints in the Traffic
+        /// Manager profile.</param>
+        public Profile(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string profileStatus = default(string), string trafficRoutingMethod = default(string), DnsConfig dnsConfig = default(DnsConfig), MonitorConfig monitorConfig = default(MonitorConfig), IList<Endpoint> endpoints = default(IList<Endpoint>))
+            : base(id, name, type, tags, location)
         {
             ProfileStatus = profileStatus;
             TrafficRoutingMethod = trafficRoutingMethod;
@@ -69,16 +71,16 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the status of the Traffic Manager profile.  Possible
-        /// values are 'Enabled' and 'Disabled'.
+        /// Gets or sets the status of the Traffic Manager profile. Possible
+        /// values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.profileStatus")]
         public string ProfileStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the traffic routing method of the Traffic Manager
-        /// profile.  Possible values are 'Performance', 'Weighted', 'Priority'
-        /// or 'Geographic'.
+        /// profile. Possible values include: 'Performance', 'Priority',
+        /// 'Weighted', 'Geographic'
         /// </summary>
         [JsonProperty(PropertyName = "properties.trafficRoutingMethod")]
         public string TrafficRoutingMethod { get; set; }

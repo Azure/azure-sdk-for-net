@@ -31,26 +31,27 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// <summary>
         /// Initializes a new instance of the MonitorConfig class.
         /// </summary>
-        /// <param name="profileMonitorStatus">Gets or sets the profile-level
-        /// monitoring status of the Traffic Manager profile.</param>
-        /// <param name="protocol">Gets or sets the protocol (HTTP, HTTPS or
-        /// TCP) used to probe for endpoint health.</param>
-        /// <param name="port">Gets or sets the TCP port used to probe for
-        /// endpoint health.</param>
-        /// <param name="path">Gets or sets the path relative to the endpoint
-        /// domain name used to probe for endpoint health.</param>
-        /// <param name="intervalInSeconds">Gets or sets the monitor interval
-        /// for endpoints in this profile. This is the interval at which
-        /// Traffic Manager will check the health of each endpoint in this
-        /// profile.</param>
-        /// <param name="timeoutInSeconds">Gets or sets the monitor timeout for
-        /// endpoints in this profile. This is the time that Traffic Manager
-        /// allows endpoints in this profile to response to the health
+        /// <param name="profileMonitorStatus">The profile-level monitoring
+        /// status of the Traffic Manager profile. Possible values include:
+        /// 'CheckingEndpoints', 'Online', 'Degraded', 'Disabled',
+        /// 'Inactive'</param>
+        /// <param name="protocol">The protocol (HTTP, HTTPS or TCP) used to
+        /// probe for endpoint health. Possible values include: 'HTTP',
+        /// 'HTTPS', 'TCP'</param>
+        /// <param name="port">The TCP port used to probe for endpoint
+        /// health.</param>
+        /// <param name="path">The path relative to the endpoint domain name
+        /// used to probe for endpoint health.</param>
+        /// <param name="intervalInSeconds">The monitor interval for endpoints
+        /// in this profile. This is the interval at which Traffic Manager will
+        /// check the health of each endpoint in this profile.</param>
+        /// <param name="timeoutInSeconds">The monitor timeout for endpoints in
+        /// this profile. This is the time that Traffic Manager allows
+        /// endpoints in this profile to response to the health check.</param>
+        /// <param name="toleratedNumberOfFailures">The number of consecutive
+        /// failed health check that Traffic Manager tolerates before declaring
+        /// an endpoint in this profile Degraded after the next failed health
         /// check.</param>
-        /// <param name="toleratedNumberOfFailures">Gets or sets the number of
-        /// consecutive failed health check that Traffic Manager tolerates
-        /// before declaring an endpoint in this profile Degraded after the
-        /// next failed health check.</param>
         public MonitorConfig(string profileMonitorStatus = default(string), string protocol = default(string), long? port = default(long?), string path = default(string), long? intervalInSeconds = default(long?), long? timeoutInSeconds = default(long?), long? toleratedNumberOfFailures = default(long?))
         {
             ProfileMonitorStatus = profileMonitorStatus;
@@ -70,14 +71,15 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
 
         /// <summary>
         /// Gets or sets the profile-level monitoring status of the Traffic
-        /// Manager profile.
+        /// Manager profile. Possible values include: 'CheckingEndpoints',
+        /// 'Online', 'Degraded', 'Disabled', 'Inactive'
         /// </summary>
         [JsonProperty(PropertyName = "profileMonitorStatus")]
         public string ProfileMonitorStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the protocol (HTTP, HTTPS or TCP) used to probe for
-        /// endpoint health.
+        /// endpoint health. Possible values include: 'HTTP', 'HTTPS', 'TCP'
         /// </summary>
         [JsonProperty(PropertyName = "protocol")]
         public string Protocol { get; set; }

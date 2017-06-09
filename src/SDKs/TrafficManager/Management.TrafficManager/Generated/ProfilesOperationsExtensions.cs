@@ -69,9 +69,9 @@ namespace Microsoft.Azure.Management.TrafficManager
             /// The name of the resource group containing the Traffic Manager profiles to
             /// be listed.
             /// </param>
-            public static IEnumerable<Profile> ListAllInResourceGroup(this IProfilesOperations operations, string resourceGroupName)
+            public static IEnumerable<Profile> ListByResourceGroup(this IProfilesOperations operations, string resourceGroupName)
             {
-                return operations.ListAllInResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -87,9 +87,9 @@ namespace Microsoft.Azure.Management.TrafficManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Profile>> ListAllInResourceGroupAsync(this IProfilesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Profile>> ListByResourceGroupAsync(this IProfilesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllInResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -101,9 +101,9 @@ namespace Microsoft.Azure.Management.TrafficManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<Profile> ListAll(this IProfilesOperations operations)
+            public static IEnumerable<Profile> ListBySubscription(this IProfilesOperations operations)
             {
-                return operations.ListAllAsync().GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -115,9 +115,9 @@ namespace Microsoft.Azure.Management.TrafficManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Profile>> ListAllAsync(this IProfilesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Profile>> ListBySubscriptionAsync(this IProfilesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

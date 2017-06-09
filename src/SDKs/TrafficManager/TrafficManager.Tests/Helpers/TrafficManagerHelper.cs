@@ -40,11 +40,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
             Profile defaultProfile = GenerateDefaultEmptyProfile(profileName, trafficRoutingMethod);
             defaultProfile.Endpoints = new[]
             {
-                new Endpoint
+                new Endpoint(id: null, name: "My external endpoint", type: "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints")
                 {
-                    Id = null,
-                    Name = "My external endpoint",
-                    Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
                     TargetResourceId = null,
                     Target = "foobar.contoso.com",
                     EndpointLocation = "North Europe",
@@ -81,11 +78,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
 
         public static Endpoint GenerateDefaultEndpoint(string name = null)
         {
-            return new Endpoint
+            return new Endpoint(id: null, name: name ?? "My external endpoint", type: "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints")
             {
-                Id = null,
-                Name = name ?? "My external endpoint",
-                Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
                 TargetResourceId = null,
                 Target = "foobar.contoso.com",
                 EndpointLocation = "North Europe",

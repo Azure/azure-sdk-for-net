@@ -11,37 +11,33 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.TrafficManager;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The core properties of ARM resources
+    /// The resource model definition for a ARM proxy resource. It will have
+    /// everything other than required location and tags
     /// </summary>
-    public partial class Resource : IResource
+    public partial class ProxyResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the ProxyResource class.
         /// </summary>
-        public Resource()
+        public ProxyResource()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the ProxyResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Network/trafficmanagerProfiles.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
             CustomInit();
         }
 
@@ -49,26 +45,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets fully qualified resource Id for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the resource
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the resource. Ex-
-        /// Microsoft.Network/trafficmanagerProfiles.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
 
     }
 }

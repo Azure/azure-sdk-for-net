@@ -4,7 +4,7 @@
     <PackageId>TrafficManager.Tests</PackageId>
     <Description>TrafficManager.Tests Class Library</Description>
     <AssemblyName>TrafficManager.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>    
+    <VersionPrefix>3.0.0</VersionPrefix>    
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
@@ -12,8 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
   </ItemGroup>
-  <ItemGroup>
-    <!--<PackageReference Include="Microsoft.Azure.Management.TrafficManager" Version="2.2.0-preview" />-->    
+  <ItemGroup>  
     <ProjectReference Include="..\Management.TrafficManager\Microsoft.Azure.Management.TrafficManager.csproj" />
   </ItemGroup>
   

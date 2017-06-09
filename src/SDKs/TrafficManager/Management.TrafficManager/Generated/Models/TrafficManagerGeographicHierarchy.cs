@@ -14,8 +14,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -23,7 +21,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
     /// traffic routing method.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class TrafficManagerGeographicHierarchy : Resource
+    public partial class TrafficManagerGeographicHierarchy : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the TrafficManagerGeographicHierarchy
@@ -38,16 +36,16 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// Initializes a new instance of the TrafficManagerGeographicHierarchy
         /// class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Network/trafficmanagerProfiles.</param>
         /// <param name="geographicHierarchy">The region at the root of the
         /// hierarchy from all the regions in the hierarchy can be
         /// retrieved.</param>
-        public TrafficManagerGeographicHierarchy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Region geographicHierarchy = default(Region))
-            : base(id, name, type, location, tags)
+        public TrafficManagerGeographicHierarchy(string id = default(string), string name = default(string), string type = default(string), Region geographicHierarchy = default(Region))
+            : base(id, name, type)
         {
             GeographicHierarchy = geographicHierarchy;
             CustomInit();
