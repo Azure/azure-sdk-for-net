@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourcegroups/res6551?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlZ3JvdXBzL3JlczY1NTE/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourcegroups/res4730?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlZ3JvdXBzL3JlczQ3MzA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"eastus2\"\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "29"
         ],
         "x-ms-client-request-id": [
-          "0b9e4d1a-87e1-4b88-9886-bf1ce4c7e151"
+          "866a8fca-7beb-4aa5-bb37-7c3d2f2c754e"
         ],
         "accept-language": [
           "en-US"
@@ -23,7 +23,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551\",\r\n  \"name\": \"res6551\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730\",\r\n  \"name\": \"res4730\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "168"
@@ -38,22 +38,22 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 05 Jun 2017 17:17:20 GMT"
+          "Fri, 09 Jun 2017 07:31:52 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1194"
         ],
         "x-ms-request-id": [
-          "858c214a-db4d-4bde-8046-948a97ba4fc0"
+          "e0a87faa-1f85-4021-8fe0-ea934ca08951"
         ],
         "x-ms-correlation-request-id": [
-          "858c214a-db4d-4bde-8046-948a97ba4fc0"
+          "e0a87faa-1f85-4021-8fe0-ea934ca08951"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20170605T171721Z:858c214a-db4d-4bde-8046-948a97ba4fc0"
+          "JAPANEAST:20170609T073153Z:e0a87faa-1f85-4021-8fe0-ea934ca08951"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -62,19 +62,19 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551/providers/Microsoft.Storage/storageAccounts/sto1277?api-version=2017-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3JlczY1NTEvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMjc3P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
+      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730/providers/Microsoft.Storage/storageAccounts/sto2205?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3JlczQ3MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8yMjA1P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\"\r\n  },\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2(stage)\",\r\n  \"properties\": {\r\n    \"supportsHttpsTrafficOnly\": false\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\"\r\n  },\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2euap\",\r\n  \"properties\": {\r\n    \"supportsHttpsTrafficOnly\": false\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "168"
+          "165"
         ],
         "x-ms-client-request-id": [
-          "3404f9b4-5287-43c9-8fe6-f0197e3e2dc2"
+          "85d90973-7d55-4e7c-8709-47660561db96"
         ],
         "accept-language": [
           "en-US"
@@ -96,13 +96,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 05 Jun 2017 17:17:23 GMT"
+          "Fri, 09 Jun 2017 07:31:55 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/providers/Microsoft.Storage/operations/5499918d-2360-4eb7-9351-c38925f631ff?monitor=true&api-version=2017-06-01"
+          "https://management.azure.com/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/providers/Microsoft.Storage/operations/04ef066a-1aa1-44c4-aad5-9dde4b7c9d4a?monitor=true&api-version=2017-06-01"
         ],
         "Retry-After": [
           "17"
@@ -112,16 +112,16 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1193"
         ],
         "x-ms-request-id": [
-          "a9f3f558-0c32-4140-b84e-5a372f259056"
+          "e3917198-6adf-49c7-a0db-9b7652ccbeb4"
         ],
         "x-ms-correlation-request-id": [
-          "a9f3f558-0c32-4140-b84e-5a372f259056"
+          "e3917198-6adf-49c7-a0db-9b7652ccbeb4"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20170605T171724Z:a9f3f558-0c32-4140-b84e-5a372f259056"
+          "JAPANEAST:20170609T073155Z:e3917198-6adf-49c7-a0db-9b7652ccbeb4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -130,8 +130,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/providers/Microsoft.Storage/operations/5499918d-2360-4eb7-9351-c38925f631ff?monitor=true&api-version=2017-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9vcGVyYXRpb25zLzU0OTk5MThkLTIzNjAtNGViNy05MzUxLWMzODkyNWY2MzFmZj9tb25pdG9yPXRydWUmYXBpLXZlcnNpb249MjAxNy0wNi0wMQ==",
+      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/providers/Microsoft.Storage/operations/04ef066a-1aa1-44c4-aad5-9dde4b7c9d4a?monitor=true&api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9vcGVyYXRpb25zLzA0ZWYwNjZhLTFhYTEtNDRjNC1hYWQ1LTlkZGU0YjdjOWQ0YT9tb25pdG9yPXRydWUmYXBpLXZlcnNpb249MjAxNy0wNi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -140,7 +140,7 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551/providers/Microsoft.Storage/storageAccounts/sto1277\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2(stage)\",\r\n  \"name\": \"sto1277\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-06-05T17:17:24.0016385Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto1277.blob.core.windows.net/\",\r\n      \"file\": \"https://sto1277.file.core.windows.net/\",\r\n      \"queue\": \"https://sto1277.queue.core.windows.net/\",\r\n      \"table\": \"https://sto1277.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2(stage)\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"secondaryLocation\": \"northcentralus(stage)\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"statusOfSecondary\": \"available\",\r\n    \"supportsHttpsTrafficOnly\": false\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730/providers/Microsoft.Storage/storageAccounts/sto2205\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"sto2205\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-06-09T07:31:55.3777057Z\",\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"defaultAction\": \"Allow\",\r\n      \"ipRules\": [],\r\n      \"virtualNetworkRules\": []\r\n    },\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto2205.blob.core.windows.net/\",\r\n      \"file\": \"https://sto2205.file.core.windows.net/\",\r\n      \"queue\": \"https://sto2205.queue.core.windows.net/\",\r\n      \"table\": \"https://sto2205.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2euap\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"secondaryLocation\": \"centraluseuap\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"statusOfSecondary\": \"available\",\r\n    \"supportsHttpsTrafficOnly\": false\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -152,7 +152,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 05 Jun 2017 17:17:55 GMT"
+          "Fri, 09 Jun 2017 07:32:26 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -168,16 +168,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "d2cc93f9-d398-470f-ba23-c8fa354ff5cb"
+          "a427efac-7b41-423e-916b-18b565cf4544"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14973"
         ],
         "x-ms-correlation-request-id": [
-          "d2cc93f9-d398-470f-ba23-c8fa354ff5cb"
+          "a427efac-7b41-423e-916b-18b565cf4544"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20170605T171755Z:d2cc93f9-d398-470f-ba23-c8fa354ff5cb"
+          "JAPANEAST:20170609T073226Z:a427efac-7b41-423e-916b-18b565cf4544"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -186,8 +186,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551/providers/Microsoft.Storage/storageAccounts/sto1277?api-version=2017-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3JlczY1NTEvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMjc3P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
+      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730/providers/Microsoft.Storage/storageAccounts/sto2205?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3JlczQ3MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8yMjA1P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"supportsHttpsTrafficOnly\": true\r\n  }\r\n}",
       "RequestHeaders": {
@@ -198,7 +198,7 @@
           "66"
         ],
         "x-ms-client-request-id": [
-          "0ed634f7-ad36-458c-9849-a062a313e705"
+          "dd9f689f-5707-4e22-85af-6b0a1bafabeb"
         ],
         "accept-language": [
           "en-US"
@@ -208,7 +208,7 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551/providers/Microsoft.Storage/storageAccounts/sto1277\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2(stage)\",\r\n  \"name\": \"sto1277\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-06-05T17:17:24.0016385Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto1277.blob.core.windows.net/\",\r\n      \"file\": \"https://sto1277.file.core.windows.net/\",\r\n      \"queue\": \"https://sto1277.queue.core.windows.net/\",\r\n      \"table\": \"https://sto1277.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2(stage)\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"secondaryLocation\": \"northcentralus(stage)\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"statusOfSecondary\": \"available\",\r\n    \"supportsHttpsTrafficOnly\": true\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730/providers/Microsoft.Storage/storageAccounts/sto2205\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"sto2205\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-06-09T07:31:55.3777057Z\",\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"defaultAction\": \"Allow\",\r\n      \"ipRules\": [],\r\n      \"virtualNetworkRules\": []\r\n    },\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto2205.blob.core.windows.net/\",\r\n      \"file\": \"https://sto2205.file.core.windows.net/\",\r\n      \"queue\": \"https://sto2205.queue.core.windows.net/\",\r\n      \"table\": \"https://sto2205.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2euap\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"secondaryLocation\": \"centraluseuap\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"statusOfSecondary\": \"available\",\r\n    \"supportsHttpsTrafficOnly\": true\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -220,7 +220,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 05 Jun 2017 17:17:55 GMT"
+          "Fri, 09 Jun 2017 07:32:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -236,16 +236,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "655e7818-9223-4542-b97a-677e475d462f"
+          "8277e209-5987-45bf-a3b7-0ed254b1097e"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1192"
         ],
         "x-ms-correlation-request-id": [
-          "655e7818-9223-4542-b97a-677e475d462f"
+          "8277e209-5987-45bf-a3b7-0ed254b1097e"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20170605T171756Z:655e7818-9223-4542-b97a-677e475d462f"
+          "JAPANEAST:20170609T073227Z:8277e209-5987-45bf-a3b7-0ed254b1097e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -254,8 +254,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551/providers/Microsoft.Storage/storageAccounts/sto1277?api-version=2017-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3JlczY1NTEvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMjc3P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
+      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730/providers/Microsoft.Storage/storageAccounts/sto2205?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3JlczQ3MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8yMjA1P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"supportsHttpsTrafficOnly\": false\r\n  }\r\n}",
       "RequestHeaders": {
@@ -266,7 +266,7 @@
           "67"
         ],
         "x-ms-client-request-id": [
-          "abf4eeee-2624-4a56-b0d2-9d1daf5ffdf8"
+          "8701b1fe-6e3a-4323-90e4-4294ca01fe59"
         ],
         "accept-language": [
           "en-US"
@@ -276,7 +276,7 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551/providers/Microsoft.Storage/storageAccounts/sto1277\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2(stage)\",\r\n  \"name\": \"sto1277\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-06-05T17:17:24.0016385Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto1277.blob.core.windows.net/\",\r\n      \"file\": \"https://sto1277.file.core.windows.net/\",\r\n      \"queue\": \"https://sto1277.queue.core.windows.net/\",\r\n      \"table\": \"https://sto1277.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2(stage)\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"secondaryLocation\": \"northcentralus(stage)\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"statusOfSecondary\": \"available\",\r\n    \"supportsHttpsTrafficOnly\": false\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730/providers/Microsoft.Storage/storageAccounts/sto2205\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"sto2205\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-06-09T07:31:55.3777057Z\",\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"defaultAction\": \"Allow\",\r\n      \"ipRules\": [],\r\n      \"virtualNetworkRules\": []\r\n    },\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto2205.blob.core.windows.net/\",\r\n      \"file\": \"https://sto2205.file.core.windows.net/\",\r\n      \"queue\": \"https://sto2205.queue.core.windows.net/\",\r\n      \"table\": \"https://sto2205.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2euap\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"secondaryLocation\": \"centraluseuap\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"statusOfSecondary\": \"available\",\r\n    \"supportsHttpsTrafficOnly\": false\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -288,7 +288,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 05 Jun 2017 17:17:56 GMT"
+          "Fri, 09 Jun 2017 07:32:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -304,16 +304,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "5a2a1049-8fe9-46d7-af15-b6ad9c11ab44"
+          "a313f887-6e35-4cb8-807a-ef569a9501c2"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1191"
         ],
         "x-ms-correlation-request-id": [
-          "5a2a1049-8fe9-46d7-af15-b6ad9c11ab44"
+          "a313f887-6e35-4cb8-807a-ef569a9501c2"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20170605T171757Z:5a2a1049-8fe9-46d7-af15-b6ad9c11ab44"
+          "JAPANEAST:20170609T073228Z:a313f887-6e35-4cb8-807a-ef569a9501c2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -322,13 +322,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551/providers/Microsoft.Storage/storageAccounts/sto1277?api-version=2017-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3JlczY1NTEvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMjc3P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
+      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730/providers/Microsoft.Storage/storageAccounts/sto2205?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3JlczQ3MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8yMjA1P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "30f81f1c-06b9-473e-bf01-a5dd0659d466"
+          "9e1deeda-6337-4051-a6e7-03e1736f2c47"
         ],
         "accept-language": [
           "en-US"
@@ -338,7 +338,7 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551/providers/Microsoft.Storage/storageAccounts/sto1277\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2(stage)\",\r\n  \"name\": \"sto1277\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-06-05T17:17:24.0016385Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto1277.blob.core.windows.net/\",\r\n      \"file\": \"https://sto1277.file.core.windows.net/\",\r\n      \"queue\": \"https://sto1277.queue.core.windows.net/\",\r\n      \"table\": \"https://sto1277.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2(stage)\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"secondaryLocation\": \"northcentralus(stage)\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"statusOfSecondary\": \"available\",\r\n    \"supportsHttpsTrafficOnly\": true\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730/providers/Microsoft.Storage/storageAccounts/sto2205\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"sto2205\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-06-09T07:31:55.3777057Z\",\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"defaultAction\": \"Allow\",\r\n      \"ipRules\": [],\r\n      \"virtualNetworkRules\": []\r\n    },\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto2205.blob.core.windows.net/\",\r\n      \"file\": \"https://sto2205.file.core.windows.net/\",\r\n      \"queue\": \"https://sto2205.queue.core.windows.net/\",\r\n      \"table\": \"https://sto2205.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2euap\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"secondaryLocation\": \"centraluseuap\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"statusOfSecondary\": \"available\",\r\n    \"supportsHttpsTrafficOnly\": true\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -350,7 +350,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 05 Jun 2017 17:17:56 GMT"
+          "Fri, 09 Jun 2017 07:32:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -366,16 +366,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "42fd3f48-1100-45c0-a4e4-53696c73fac1"
+          "540e71d7-52b8-4573-a24d-462976571d6a"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "14972"
         ],
         "x-ms-correlation-request-id": [
-          "42fd3f48-1100-45c0-a4e4-53696c73fac1"
+          "540e71d7-52b8-4573-a24d-462976571d6a"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20170605T171756Z:42fd3f48-1100-45c0-a4e4-53696c73fac1"
+          "JAPANEAST:20170609T073227Z:540e71d7-52b8-4573-a24d-462976571d6a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -384,13 +384,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551/providers/Microsoft.Storage/storageAccounts/sto1277?api-version=2017-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3JlczY1NTEvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8xMjc3P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
+      "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730/providers/Microsoft.Storage/storageAccounts/sto2205?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3JlczQ3MzAvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG8yMjA1P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4e44b2e3-d558-4029-8522-dc99e947cc53"
+          "ffd0eb74-d877-4f8d-bb33-a09964fd8777"
         ],
         "accept-language": [
           "en-US"
@@ -400,7 +400,7 @@
           "Microsoft.Azure.Management.Storage.StorageManagementClient/6.5.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res6551/providers/Microsoft.Storage/storageAccounts/sto1277\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2(stage)\",\r\n  \"name\": \"sto1277\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-06-05T17:17:24.0016385Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto1277.blob.core.windows.net/\",\r\n      \"file\": \"https://sto1277.file.core.windows.net/\",\r\n      \"queue\": \"https://sto1277.queue.core.windows.net/\",\r\n      \"table\": \"https://sto1277.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2(stage)\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"secondaryLocation\": \"northcentralus(stage)\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"statusOfSecondary\": \"available\",\r\n    \"supportsHttpsTrafficOnly\": false\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res4730/providers/Microsoft.Storage/storageAccounts/sto2205\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"sto2205\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-06-09T07:31:55.3777057Z\",\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"defaultAction\": \"Allow\",\r\n      \"ipRules\": [],\r\n      \"virtualNetworkRules\": []\r\n    },\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto2205.blob.core.windows.net/\",\r\n      \"file\": \"https://sto2205.file.core.windows.net/\",\r\n      \"queue\": \"https://sto2205.queue.core.windows.net/\",\r\n      \"table\": \"https://sto2205.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2euap\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"secondaryLocation\": \"centraluseuap\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"statusOfSecondary\": \"available\",\r\n    \"supportsHttpsTrafficOnly\": false\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -412,7 +412,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 05 Jun 2017 17:17:56 GMT"
+          "Fri, 09 Jun 2017 07:32:28 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -428,16 +428,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "c93afa7e-bc35-4c70-a0f2-688ca3b75039"
+          "15b5685b-1ed8-4267-92e3-918af0e3e54c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "14971"
         ],
         "x-ms-correlation-request-id": [
-          "c93afa7e-bc35-4c70-a0f2-688ca3b75039"
+          "15b5685b-1ed8-4267-92e3-918af0e3e54c"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20170605T171757Z:c93afa7e-bc35-4c70-a0f2-688ca3b75039"
+          "JAPANEAST:20170609T073228Z:15b5685b-1ed8-4267-92e3-918af0e3e54c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -448,10 +448,10 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "res6551"
+      "res4730"
     ],
     "StorageAccountUpdateWithHttpsOnlyTest": [
-      "sto1277"
+      "sto2205"
     ]
   },
   "Variables": {
