@@ -17,12 +17,24 @@ The authentication file, referenced as "my.azureauth" in the example above, uses
 ```
 subscription=########-####-####-####-############
 client=########-####-####-####-############
-key=XXXXXXXXXXXXXXXX
 tenant=########-####-####-####-############
 managementURI=https\://management.core.windows.net/
 baseURL=https\://management.azure.com/
 authURL=https\://login.windows.net/
 graphURL=https\://graph.windows.net/
+```
+
+The `client` and `tenant` are from [your service principal registration](#creating-a-service-principal-in-azure). If your service principal uses key authentication, your authentication file must also contain
+
+```
+key=XXXXXXXXXXXXXXXX
+```
+
+If your service principal uses certificate authentication, your authentication file must also contain
+
+```
+certificate=<path to pfx file>
+certifcatePassword=XXXXXXXXXXXXXXXX
 ```
 
 This approach enables unattended authentication for your application (i.e. no interactive user login, no token management needed). The `client`, `key` and `tenant` are from [your service principal registration](#creating-a-service-principal-in-azure). The `subscription` represents the subscription ID you want to use as the default subscription. The remaining URIs and URLs represent the end points for the needed Azure services, and the example above assumes you are using the Azure worldwide cloud.
@@ -32,16 +44,18 @@ This approach enables unattended authentication for your application (i.e. no in
 Similarly to the [file-based approach](#using-an-authentication-file), this method requires a [service principal registration](#creating-a-service-principal-in-azure), but instead of storing the credentials in a local file, the required inputs can be supplied directly via an instance of the `AzureCredentials` class:
 
 ```
-var sp = new ServicePrincipalLoginInformation()
-{
-    ClientId = client,
-    ClientSecret = key
-}
-var creds = new AzureCredentials(sp, tenant, AzureEnvironment.AzureGlobalCloud);
+var creds = new AzureCredentialsFactory().FromServicePrincipal(client, key, tenant, AzureEnvironment.AzureGlobalCloud);
 var azure = Azure.Authenticate(creds).WithSubscription(subscriptionId);
 ```
 
-where `client`, `tenant`, `key` and `subscriptionId` are strings with the required pieces of information about your service principal and subscription. The last parameter, `AzureEnvironment.AzureGlobalCloud` represents the Azure worldwide public cloud. You can use a different value out of the currently supported alternatives in the `AzureEnvironment` enum.
+or
+
+```
+var creds = new AzureCredentialsFactory().FromServicePrincipal(client, pfxCertificatePath, password, tenant, AzureEnvironment.AzureGlobalCloud);
+var azure = Azure.Authenticate(creds).WithSubscription(subscriptionId);
+```
+
+where `client`, `tenant`, `subscriptionId`, and `key` or `pfxCertificatePath` and `password` are strings with the required pieces of information about your service principal and subscription. The last parameter, `AzureEnvironment.AzureGlobalCloud` represents the Azure worldwide public cloud. You can use a different value out of the currently supported alternatives in the `AzureEnvironment` enum.
 
 ## Creating a Service Principal in Azure
 
@@ -53,15 +67,13 @@ If you save such service principal-based credentials as a file, or store them in
 
 You can easily create a service principal and grant it access privileges for a given subscription through Azure CLI 2.0.
 
-1. Install Azure CLI (>=0.1.0b11) by following the [README](https://github.com/Azure/azure-cli/blob/master/README.rst).
-1. Install `jq` (>=1.5) by following the instructions here: https://stedolan.github.io/jq/download/.
-1. Login as a user by running command `az login`. If you are not in Azure public cloud, use `az context create` command to switch to your cloud before login.
-1. Select the subscription you want your service principal to have access to by running `az account set --subscription <subscription name>`. You can view your subscriptions by `az account list --out jsonc`.
-1. Run the following command to create a service principal authentication file.
+1. Install Azure CLI (>=2.0) by following the [README](https://github.com/Azure/azure-cli/blob/master/README.md).
+2. Login as a user by running command `az login`. If you are not in Azure public cloud, use `az cloud set` command to switch to your cloud before login.
+3. Select the subscription you want your service principal to have access to by running `az account set --subscription <subscription name>`. You can view your subscriptions by `az account list --out jsonc`.
+4. Run the following command to create a service principal authentication file.
 
 ```
-az ad sp create-for-rbac --expanded-view -o json --query "{subscription: subscriptionId, client: client, key: password, tenant: tenantId, managementURI: endpoints.management, baseURL: endpoints.resourceManager, authURL: endpoints.activeDirectory, graphURL: endpoints.activeDirectoryGraphResourceId}" | jq -r "to_entries|map(\"\(.key)=\(.value|sub(\"https:(?<x>.+[^/])/?$\";\"https\\\\:\(.x)/\"))\")|.[]"
+curl -L https://raw.githubusercontent.com/Azure/azure-sdk-for-net/Fluent/tools/authgen.py | python > my.azureauth
 ```
 
-Now all the pieces are in place to enable authenticating your code without requiring an interactive login nor the need to manage access tokens.
-
+This will save the output of the command into an Azure service principal-based authentication file which can now be used in the Azure Management Libraries for .NET without requiring an interactive login nor the need to manage access tokens.
