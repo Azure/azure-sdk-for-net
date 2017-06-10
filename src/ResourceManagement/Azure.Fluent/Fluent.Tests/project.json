@@ -22,8 +22,8 @@
     "NETStandard.Library": "1.6.1",
     "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.12, 3.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.6.0, 2.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "2.3.0",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.6.0",
     "Microsoft.Azure.Management.Fluent": {
       "target": "project",
       "type": "build"
