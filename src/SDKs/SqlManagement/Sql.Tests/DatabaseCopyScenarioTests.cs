@@ -14,9 +14,6 @@ namespace Sql.Tests
         [Fact]
         public void TestCopyDatabase()
         {
-            string login = "dummylogin";
-            string password = "Un53cuRE!";
-            string version12 = "12.0";
             string testPrefix = "sqlcrudtest-";
             Dictionary<string, string> tags = new Dictionary<string, string>();
             string suiteName = this.GetType().FullName;
@@ -24,32 +21,13 @@ namespace Sql.Tests
             SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCopyDatabase", testPrefix, (resClient, sqlClient, resourceGroup) =>
             {
                 //Create two servers
-                string serverName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Microsoft.Azure.Management.Sql.Models.Server()
-                {
-                    AdministratorLogin = login,
-                    AdministratorLoginPassword = password,
-                    Version = version12,
-                    Location = SqlManagementTestUtilities.DefaultLocation,
-                    Tags = tags,
-                });
-                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
-
-                string serverName2 = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var server2 = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName2, new Microsoft.Azure.Management.Sql.Models.Server()
-                {
-                    AdministratorLogin = login,
-                    AdministratorLoginPassword = password,
-                    Version = version12,
-                    Location = SqlManagementTestUtilities.DefaultLocation,
-                    Tags = tags,
-                });
-                SqlManagementTestUtilities.ValidateServer(server2, serverName2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                var server = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
+                var server2 = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
 
                 // Create a database with all parameters specified
                 // 
                 string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var dbInput = new Microsoft.Azure.Management.Sql.Models.Database()
+                var dbInput = new Database()
                 {
                     Location = server.Location,
                     Collation = SqlTestConstants.DefaultCollation,
@@ -67,7 +45,7 @@ namespace Sql.Tests
                 // Create a database as copy of the first database
                 //
                 dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var dbInputCopy = new Microsoft.Azure.Management.Sql.Models.Database()
+                var dbInputCopy = new Database()
                 {
                     Location = server2.Location,
                     CreateMode = CreateMode.Copy,

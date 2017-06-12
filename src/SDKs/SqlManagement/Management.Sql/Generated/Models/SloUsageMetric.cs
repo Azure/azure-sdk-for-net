@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a Slo Usage Metric.
+    /// A Slo Usage Metric.
     /// </summary>
     public partial class SloUsageMetric
     {

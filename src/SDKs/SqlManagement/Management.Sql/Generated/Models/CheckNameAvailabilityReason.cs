@@ -11,13 +11,20 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Sql;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ServerVersion.
+    /// Defines values for CheckNameAvailabilityReason.
     /// </summary>
-    public static class ServerVersion
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum CheckNameAvailabilityReason
     {
-        public const string TwoFullStopZero = "2.0";
-        public const string OneTwoFullStopZero = "12.0";
+        [EnumMember(Value = "Invalid")]
+        Invalid,
+        [EnumMember(Value = "AlreadyExists")]
+        AlreadyExists
     }
 }
