@@ -291,5 +291,71 @@ namespace Fluent.Tests.Compute
                 }
             }
         }
+
+        [Fact]
+        public void CanCreateVirtualMachineWithExistingNetworkAndNewPIP()
+        {
+            // Test for https://github.com/Azure/azure-sdk-for-net/issues/3359
+            //
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+                var rgName = TestUtilities.GenerateName("rg");
+                var vnetName = TestUtilities.GenerateName("vnet");
+                var vmName = TestUtilities.GenerateName("vm");
+                var pipName = TestUtilities.GenerateName("pip");
+                var username = "testuser";
+                var password = "12NewPA$$w0rd!";
+                var publicIPDnsLabel = TestUtilities.GenerateName("abc");
+                var region = Region.USEast;
+
+                var azure = TestHelper.CreateRollupClient();
+                try
+                {
+                    var network = azure.Networks.Define(vnetName)
+                        .WithRegion(region)
+                        .WithNewResourceGroup(rgName)
+                        .WithAddressSpace("10.0.0.0/28")
+                        .Create();
+
+                    var subnet = network.Subnets.Values.FirstOrDefault();
+                    Assert.NotNull(subnet);
+
+                    var pipCreatable = azure.PublicIPAddresses.Define(pipName)
+                                .WithRegion(region)
+                                .WithExistingResourceGroup(rgName)
+                                .WithDynamicIP()
+                                .WithLeafDomainLabel(publicIPDnsLabel);
+
+                    var virtualMachine = azure.VirtualMachines.Define(vmName)
+                        .WithRegion(region)
+                        .WithNewResourceGroup(rgName)
+                        .WithExistingPrimaryNetwork(network)
+                        .WithSubnet(subnet.Name)
+                        .WithPrimaryPrivateIPAddressDynamic()
+                        .WithNewPrimaryPublicIPAddress(pipCreatable)
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(username)
+                        .WithRootPassword(password)
+                        .WithSize(VirtualMachineSizeTypes.StandardA0)
+                        .Create();
+
+                    var publicIPAddress = virtualMachine.GetPrimaryPublicIPAddress();
+                    Assert.NotNull(publicIPAddress.Fqdn);
+                    var nic = virtualMachine.GetPrimaryNetworkInterface();
+                    Assert.NotNull(nic);
+                    Assert.NotNull(nic.PrimaryIPConfiguration.NetworkId);
+                    Assert.Equal(nic.PrimaryIPConfiguration.NetworkId, network.Id);
+                }
+                finally
+                {
+                    try
+                    {
+                        azure.ResourceGroups.DeleteByName(rgName);
+                    }
+                    catch
+                    { }
+                }
+            }
+        }
     }
 }
