@@ -974,7 +974,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/private?api-version=1.0",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/private?api-version=1.0&addressfamily=All",
       "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wcml2YXRlP2FwaS12ZXJzaW9uPTEuMA==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -1138,7 +1138,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/public?api-version=1.0",
+      "RequestUri": "/04bc22f5-6269-4309-acc6-fbe9284595cd/services/networking/dedicatedcircuits/26194c0f-628f-4ff9-8fad-a2931b3f955d/bgppeerings/public?api-version=1.0&addressfamily=All",
       "EncodedRequestUri": "LzA0YmMyMmY1LTYyNjktNDMwOS1hY2M2LWZiZTkyODQ1OTVjZC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzLzI2MTk0YzBmLTYyOGYtNGZmOS04ZmFkLWEyOTMxYjNmOTU1ZC9iZ3BwZWVyaW5ncy9wdWJsaWM/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "DELETE",
       "RequestBody": "",
