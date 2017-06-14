@@ -1,43 +1,43 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26507.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Compute.Fluent", "..\Compute\Microsoft.Azure.Management.Compute.Fluent\Microsoft.Azure.Management.Compute.Fluent.xproj", "{CBE97730-45F5-448E-88E9-55DF94D65B87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Fluent", "Microsoft.Azure.Management.Fluent\Microsoft.Azure.Management.Fluent.csproj", "{B1032273-B366-4751-B216-36332A06CBC6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Storage.Fluent", "..\Storage\Microsoft.Azure.Management.Storage.Fluent\Microsoft.Azure.Management.Storage.Fluent.xproj", "{A9B44E1B-C26F-44AB-B13F-F22742371135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.AppService.Fluent", "..\AppService\Microsoft.Azure.Management.AppService.Fluent\Microsoft.Azure.Management.AppService.Fluent.csproj", "{A74046A1-8B13-472B-9748-BFD584988B26}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Network.Fluent", "..\Network\Microsoft.Azure.Management.Network.Fluent\Microsoft.Azure.Management.Network.Fluent.xproj", "{4F22B186-DEB4-4B95-BA58-0187F0E33003}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Batch.Fluent", "..\Batch\Microsoft.Azure.Management.Batch.Fluent\Microsoft.Azure.Management.Batch.Fluent.csproj", "{08699DFA-3F5E-490F-85D5-557695D5D4D0}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.ResourceManager.Fluent", "..\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent\Microsoft.Azure.Management.ResourceManager.Fluent.xproj", "{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Cdn.Fluent", "..\Cdn\Microsoft.Azure.Management.Cdn.Fluent\Microsoft.Azure.Management.Cdn.Fluent.csproj", "{53C34AF7-A6F2-47FA-BD82-61D97D0914D4}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Fluent.Tests", "Fluent.Tests\Fluent.Tests.xproj", "{BF7B919F-53F0-4216-84BC-722786A3AEA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Compute.Fluent", "..\Compute\Microsoft.Azure.Management.Compute.Fluent\Microsoft.Azure.Management.Compute.Fluent.csproj", "{29491B70-142D-4B1C-9D56-8EDE417152EC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent", "Microsoft.Azure.Management.Fluent\Microsoft.Azure.Management.Fluent.xproj", "{B1032273-B366-4751-B216-36332A06CBC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ContainerRegistry.Fluent", "..\ContainerRegistry\Microsoft.Azure.Management.ContainerRegistry.Fluent\Microsoft.Azure.Management.ContainerRegistry.Fluent.csproj", "{85003369-F969-4159-AE2D-F1925B751764}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Graph.RBAC.Fluent", "..\Graph.RBAC\Microsoft.Azure.Management.Graph.RBAC.Fluent\Microsoft.Azure.Management.Graph.RBAC.Fluent.xproj", "{148A7E48-BBB2-4F38-8708-DF0CB128DE50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Dns.Fluent", "..\Dns\Microsoft.Azure.Management.Dns.Fluent\Microsoft.Azure.Management.Dns.Fluent.csproj", "{6CB8BDC4-1A82-43F2-8A9E-7EF9F716509C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.KeyVault.Fluent", "..\KeyVault\Microsoft.Azure.Management.KeyVault.Fluent\Microsoft.Azure.Management.KeyVault.Fluent.xproj", "{6A390125-3757-480E-BB6C-38EC622160D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.DocumentDB.Fluent", "..\DocumentDB\Microsoft.Azure.Management.DocumentDB.Fluent\Microsoft.Azure.Management.DocumentDB.Fluent.csproj", "{63DE4E84-4B80-499F-949E-D48FF2245FDB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Batch.Fluent", "..\Batch\Microsoft.Azure.Management.Batch.Fluent\Microsoft.Azure.Management.Batch.Fluent.xproj", "{08BACF2F-33C9-498D-81DC-377291356F39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Graph.RBAC.Fluent", "..\Graph.RBAC\Microsoft.Azure.Management.Graph.RBAC.Fluent\Microsoft.Azure.Management.Graph.RBAC.Fluent.csproj", "{92B76B25-24F2-444E-B56C-9A80BB7FA9A1}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Dns.Fluent", "..\Dns\Microsoft.Azure.Management.Dns.Fluent\Microsoft.Azure.Management.Dns.Fluent.xproj", "{85B92B95-242F-48A2-899A-1AC42B325396}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.KeyVault.Fluent", "..\KeyVault\Microsoft.Azure.Management.KeyVault.Fluent\Microsoft.Azure.Management.KeyVault.Fluent.csproj", "{DCA3EAD1-19CB-44C7-9082-D4781CC91C34}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.TrafficManager.Fluent", "..\TrafficManager\Microsoft.Azure.Management.TrafficManager.Fluent\Microsoft.Azure.Management.TrafficManager.Fluent.xproj", "{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Network.Fluent", "..\Network\Microsoft.Azure.Management.Network.Fluent\Microsoft.Azure.Management.Network.Fluent.csproj", "{0E7445C4-5C78-45BA-95B3-80618570498E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Sql.Fluent", "..\Sql\Microsoft.Azure.Management.Sql.Fluent\Microsoft.Azure.Management.Sql.Fluent.xproj", "{ECB29486-D22F-46B3-BC85-C49CDE693192}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Redis.Fluent", "..\RedisCache\Microsoft.Azure.Management.Redis.Fluent\Microsoft.Azure.Management.Redis.Fluent.csproj", "{1D671F14-CF18-48A4-A66D-AAE598362C1D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Cdn.Fluent", "..\Cdn\Microsoft.Azure.Management.Cdn.Fluent\Microsoft.Azure.Management.Cdn.Fluent.xproj", "{2DC40302-9436-4B65-BCEB-053D9FA936B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ResourceManager.Fluent", "..\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent\Microsoft.Azure.Management.ResourceManager.Fluent.csproj", "{31A2334F-EA9A-4E79-B3C4-DB9446F32F97}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Redis.Fluent", "..\RedisCache\Microsoft.Azure.Management.Redis.Fluent\Microsoft.Azure.Management.Redis.Fluent.xproj", "{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ServiceBus.Fluent", "..\ServiceBus\Microsoft.Azure.Management.ServiceBus.Fluent\Microsoft.Azure.Management.ServiceBus.Fluent.csproj", "{03EADF9B-4305-4B05-8B54-92F866FBAC6A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.AppService.Fluent", "..\AppService\Microsoft.Azure.Management.AppService.Fluent\Microsoft.Azure.Management.AppService.Fluent.xproj", "{C4D80403-4D5E-48BF-A744-08A785F823D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Sql.Fluent", "..\Sql\Microsoft.Azure.Management.Sql.Fluent\Microsoft.Azure.Management.Sql.Fluent.csproj", "{B6955145-4CD2-4FFB-B1EB-FFDC4D0379E4}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.ServiceBus.Fluent", "..\ServiceBus\Microsoft.Azure.Management.ServiceBus.Fluent\Microsoft.Azure.Management.ServiceBus.Fluent.xproj", "{9C9553CE-5BD4-4E9B-8B2D-4D04AB8D11EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Storage.Fluent", "..\Storage\Microsoft.Azure.Management.Storage.Fluent\Microsoft.Azure.Management.Storage.Fluent.csproj", "{9F55B136-2AEA-41AB-AC1F-395E2635DEC6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.DocumentDB.Fluent", "..\DocumentDB\Microsoft.Azure.Management.DocumentDB.Fluent\Microsoft.Azure.Management.DocumentDB.Fluent.xproj", "{4EF5ECA2-495E-428E-ACEF-EB6C031242C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.TrafficManager.Fluent", "..\TrafficManager\Microsoft.Azure.Management.TrafficManager.Fluent\Microsoft.Azure.Management.TrafficManager.Fluent.csproj", "{9C7DB0BC-54E1-4361-8B57-3A48ED62D1CE}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.ContainerRegistry.Fluent", "..\ContainerRegistry\Microsoft.Azure.Management.ContainerRegistry.Fluent\Microsoft.Azure.Management.ContainerRegistry.Fluent.xproj", "{B3749CA4-706F-4D61-9B4F-05DD2ECBF1A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluent.Tests", "Fluent.Tests\Fluent.Tests.csproj", "{33295531-0018-4EE7-A381-56C24816F5E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,78 +45,78 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CBE97730-45F5-448E-88E9-55DF94D65B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBE97730-45F5-448E-88E9-55DF94D65B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBE97730-45F5-448E-88E9-55DF94D65B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBE97730-45F5-448E-88E9-55DF94D65B87}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9B44E1B-C26F-44AB-B13F-F22742371135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9B44E1B-C26F-44AB-B13F-F22742371135}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9B44E1B-C26F-44AB-B13F-F22742371135}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9B44E1B-C26F-44AB-B13F-F22742371135}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F22B186-DEB4-4B95-BA58-0187F0E33003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F22B186-DEB4-4B95-BA58-0187F0E33003}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F22B186-DEB4-4B95-BA58-0187F0E33003}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F22B186-DEB4-4B95-BA58-0187F0E33003}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF7B919F-53F0-4216-84BC-722786A3AEA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF7B919F-53F0-4216-84BC-722786A3AEA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF7B919F-53F0-4216-84BC-722786A3AEA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF7B919F-53F0-4216-84BC-722786A3AEA0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1032273-B366-4751-B216-36332A06CBC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1032273-B366-4751-B216-36332A06CBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1032273-B366-4751-B216-36332A06CBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1032273-B366-4751-B216-36332A06CBC6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{148A7E48-BBB2-4F38-8708-DF0CB128DE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{148A7E48-BBB2-4F38-8708-DF0CB128DE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{148A7E48-BBB2-4F38-8708-DF0CB128DE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{148A7E48-BBB2-4F38-8708-DF0CB128DE50}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A390125-3757-480E-BB6C-38EC622160D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A390125-3757-480E-BB6C-38EC622160D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A390125-3757-480E-BB6C-38EC622160D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A390125-3757-480E-BB6C-38EC622160D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{08BACF2F-33C9-498D-81DC-377291356F39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08BACF2F-33C9-498D-81DC-377291356F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08BACF2F-33C9-498D-81DC-377291356F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08BACF2F-33C9-498D-81DC-377291356F39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{85B92B95-242F-48A2-899A-1AC42B325396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85B92B95-242F-48A2-899A-1AC42B325396}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85B92B95-242F-48A2-899A-1AC42B325396}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85B92B95-242F-48A2-899A-1AC42B325396}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC0F91B9-FEA6-4CDA-A44C-2291D157991D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ECB29486-D22F-46B3-BC85-C49CDE693192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ECB29486-D22F-46B3-BC85-C49CDE693192}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ECB29486-D22F-46B3-BC85-C49CDE693192}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ECB29486-D22F-46B3-BC85-C49CDE693192}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2DC40302-9436-4B65-BCEB-053D9FA936B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DC40302-9436-4B65-BCEB-053D9FA936B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DC40302-9436-4B65-BCEB-053D9FA936B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DC40302-9436-4B65-BCEB-053D9FA936B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4D80403-4D5E-48BF-A744-08A785F823D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4D80403-4D5E-48BF-A744-08A785F823D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4D80403-4D5E-48BF-A744-08A785F823D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4D80403-4D5E-48BF-A744-08A785F823D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C9553CE-5BD4-4E9B-8B2D-4D04AB8D11EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C9553CE-5BD4-4E9B-8B2D-4D04AB8D11EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C9553CE-5BD4-4E9B-8B2D-4D04AB8D11EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C9553CE-5BD4-4E9B-8B2D-4D04AB8D11EA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4EF5ECA2-495E-428E-ACEF-EB6C031242C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4EF5ECA2-495E-428E-ACEF-EB6C031242C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4EF5ECA2-495E-428E-ACEF-EB6C031242C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4EF5ECA2-495E-428E-ACEF-EB6C031242C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3749CA4-706F-4D61-9B4F-05DD2ECBF1A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3749CA4-706F-4D61-9B4F-05DD2ECBF1A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3749CA4-706F-4D61-9B4F-05DD2ECBF1A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3749CA4-706F-4D61-9B4F-05DD2ECBF1A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A74046A1-8B13-472B-9748-BFD584988B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A74046A1-8B13-472B-9748-BFD584988B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A74046A1-8B13-472B-9748-BFD584988B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A74046A1-8B13-472B-9748-BFD584988B26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08699DFA-3F5E-490F-85D5-557695D5D4D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08699DFA-3F5E-490F-85D5-557695D5D4D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08699DFA-3F5E-490F-85D5-557695D5D4D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08699DFA-3F5E-490F-85D5-557695D5D4D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53C34AF7-A6F2-47FA-BD82-61D97D0914D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53C34AF7-A6F2-47FA-BD82-61D97D0914D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53C34AF7-A6F2-47FA-BD82-61D97D0914D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53C34AF7-A6F2-47FA-BD82-61D97D0914D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29491B70-142D-4B1C-9D56-8EDE417152EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29491B70-142D-4B1C-9D56-8EDE417152EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29491B70-142D-4B1C-9D56-8EDE417152EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29491B70-142D-4B1C-9D56-8EDE417152EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85003369-F969-4159-AE2D-F1925B751764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85003369-F969-4159-AE2D-F1925B751764}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85003369-F969-4159-AE2D-F1925B751764}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85003369-F969-4159-AE2D-F1925B751764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CB8BDC4-1A82-43F2-8A9E-7EF9F716509C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CB8BDC4-1A82-43F2-8A9E-7EF9F716509C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CB8BDC4-1A82-43F2-8A9E-7EF9F716509C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CB8BDC4-1A82-43F2-8A9E-7EF9F716509C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63DE4E84-4B80-499F-949E-D48FF2245FDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63DE4E84-4B80-499F-949E-D48FF2245FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63DE4E84-4B80-499F-949E-D48FF2245FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63DE4E84-4B80-499F-949E-D48FF2245FDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B76B25-24F2-444E-B56C-9A80BB7FA9A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B76B25-24F2-444E-B56C-9A80BB7FA9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B76B25-24F2-444E-B56C-9A80BB7FA9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B76B25-24F2-444E-B56C-9A80BB7FA9A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA3EAD1-19CB-44C7-9082-D4781CC91C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA3EAD1-19CB-44C7-9082-D4781CC91C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA3EAD1-19CB-44C7-9082-D4781CC91C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA3EAD1-19CB-44C7-9082-D4781CC91C34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E7445C4-5C78-45BA-95B3-80618570498E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E7445C4-5C78-45BA-95B3-80618570498E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E7445C4-5C78-45BA-95B3-80618570498E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E7445C4-5C78-45BA-95B3-80618570498E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D671F14-CF18-48A4-A66D-AAE598362C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D671F14-CF18-48A4-A66D-AAE598362C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D671F14-CF18-48A4-A66D-AAE598362C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D671F14-CF18-48A4-A66D-AAE598362C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A2334F-EA9A-4E79-B3C4-DB9446F32F97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A2334F-EA9A-4E79-B3C4-DB9446F32F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A2334F-EA9A-4E79-B3C4-DB9446F32F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A2334F-EA9A-4E79-B3C4-DB9446F32F97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03EADF9B-4305-4B05-8B54-92F866FBAC6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03EADF9B-4305-4B05-8B54-92F866FBAC6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03EADF9B-4305-4B05-8B54-92F866FBAC6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03EADF9B-4305-4B05-8B54-92F866FBAC6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6955145-4CD2-4FFB-B1EB-FFDC4D0379E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6955145-4CD2-4FFB-B1EB-FFDC4D0379E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6955145-4CD2-4FFB-B1EB-FFDC4D0379E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6955145-4CD2-4FFB-B1EB-FFDC4D0379E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F55B136-2AEA-41AB-AC1F-395E2635DEC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F55B136-2AEA-41AB-AC1F-395E2635DEC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F55B136-2AEA-41AB-AC1F-395E2635DEC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F55B136-2AEA-41AB-AC1F-395E2635DEC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C7DB0BC-54E1-4361-8B57-3A48ED62D1CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C7DB0BC-54E1-4361-8B57-3A48ED62D1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7DB0BC-54E1-4361-8B57-3A48ED62D1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C7DB0BC-54E1-4361-8B57-3A48ED62D1CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33295531-0018-4EE7-A381-56C24816F5E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33295531-0018-4EE7-A381-56C24816F5E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33295531-0018-4EE7-A381-56C24816F5E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33295531-0018-4EE7-A381-56C24816F5E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
