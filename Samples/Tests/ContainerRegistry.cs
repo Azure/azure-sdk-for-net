@@ -3,6 +3,7 @@
 
 using Azure.Tests;
 using Fluent.Tests.Common;
+using System;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -22,7 +23,13 @@ namespace Samples.Tests
             using (var context = FluentMockContext.Start(this.GetType().FullName))
             {
                 var rollUpClient = TestHelper.CreateRollupClient();
-                ManageContainerRegistry.Program.RunSample(rollUpClient);
+                if (Microsoft.Azure.Test.HttpRecorder.HttpMockServer.Mode == Microsoft.Azure.Test.HttpRecorder.HttpRecorderMode.Playback)
+                {
+                    ManageContainerRegistry.Program.RunSample(rollUpClient, true);
+                } else
+                {
+                    ManageContainerRegistry.Program.RunSample(rollUpClient, false);
+                }
             }
         }
     }

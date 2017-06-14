@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ManageContainerRegistry")]
+[assembly: AssemblyProduct("ManageContainerServiceUsingDockerSwarm")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -19,4 +19,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4933dd6b-3541-404a-9f32-577039db1830")]
+[assembly: Guid("1fd5e627-b182-47ab-a265-5e3ea19bad63")]

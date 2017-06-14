@@ -4,6 +4,7 @@
 using Renci.SshNet;
 using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Threading;
 
 namespace Microsoft.Azure.Management.Samples.Common
@@ -105,26 +106,50 @@ namespace Microsoft.Azure.Management.Samples.Common
                     path = homeDirectory + path;
                 }
 
-                MemoryStream mstream = new MemoryStream();
-                scpClient.Download(path + "/" + fileName, mstream);
-                mstream.Position = 0;
-                return (new System.IO.StreamReader(mstream)).ReadToEnd();
+                using (var mstream = new MemoryStream())
+                {
+                    scpClient.Download(path + "/" + fileName, mstream);
+                    mstream.Position = 0;
+                    return (new System.IO.StreamReader(mstream)).ReadToEnd();
+                }
             } else
             {
                 return null;
             }
-            // In Java
-            //ChannelSftp channel = (ChannelSftp) this.session.openChannel("sftp");
-            //channel.connect();
-            //ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            //BufferedOutputStream buff = new BufferedOutputStream(outputStream);
-            //String absolutePath = isUserHomeBased ? channel.getHome() + "/" + fromPath : fromPath;
-            //channel.cd(absolutePath);
-            //channel.get(fileName, buff);
+        }
 
-            //channel.disconnect();
+        /**
+         * Downloads the content of a file from the remote host as a String.
+         *
+         * @param fileName the name of the file for which the content will be downloaded
+         * @param fromPath the path of the file for which the content will be downloaded
+         * @param isUserHomeBased true if the path of the file is relative to the user's home directory
+         * @return the content of the file
+         */
+        public int Download(byte[] destBuff, int maxCount, string fileName, string fromPath, bool isUserHomeBased)
+        {
+            if (scpClient != null)
+            {
+                string path = fromPath;
+                if (isUserHomeBased)
+                {
+                    path = homeDirectory + path;
+                }
 
-            //return outputStream.toString();
+                using (MemoryStream mstream = new MemoryStream()) {
+                    scpClient.Download(path + "/" + fileName, mstream);
+                    if (mstream.Position >= maxCount)
+                    {
+                        return -1;
+                    }
+                    mstream.Position = 0;
+                    return mstream.Read(destBuff, 0, maxCount);
+                }
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         /**
@@ -154,8 +179,10 @@ namespace Microsoft.Azure.Management.Samples.Common
 
                 // Create the file containing the uploaded data
                 // byte[] data = System.Text.Encoding.ASCII.GetBytes("");
-                System.IO.MemoryStream mstream = new MemoryStream(data);
-                scpClient.Upload(mstream, path + "/" + fileName);
+                using (var mstream = new MemoryStream(data))
+                {
+                    scpClient.Upload(mstream, path + "/" + fileName);
+                }
             }
             // In Java
             //ChannelSftp channel = (ChannelSftp) this.session.openChannel("sftp");

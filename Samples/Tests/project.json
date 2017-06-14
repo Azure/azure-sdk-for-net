@@ -149,6 +149,8 @@
     "ManageLinuxWebAppWithDomainSsl": "1.0.0-*",
     "ManageLinuxWebAppWithTrafficManager": "1.0.0-*",
     "ManageWebAppWithAuthentication": "1.0.0-*",
-    "ManageContainerRegistry": "1.0.0-*"
+    "ManageContainerRegistry": "1.0.0-*",
+    "ManageContainerServiceUsingDockerSwarm": "1.0.0-*",
+    "ManageContainerServiceUsingKubernetes": "1.0.0-*"
   }
 }

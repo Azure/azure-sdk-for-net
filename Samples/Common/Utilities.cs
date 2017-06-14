@@ -5,6 +5,8 @@ using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.AppService.Fluent.Models;
 using Microsoft.Azure.Management.Batch.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.ContainerRegistry.Fluent;
+using Microsoft.Azure.Management.ContainerRegistry.Fluent.Models;
 using Microsoft.Azure.Management.KeyVault.Fluent;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Redis.Fluent;
@@ -32,6 +34,7 @@ using System.Threading;
 using System.Net.Http.Headers;
 using Microsoft.Azure.Management.DocumentDB.Fluent;
 using Microsoft.Azure.Management.DocumentDB.Fluent.Models;
+using Microsoft.Azure.Management.Compute.Fluent.Models;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -1513,6 +1516,91 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
             }
             Utilities.Log(builder.ToString());
+        }
+
+        public static void Print(IRegistry azureRegistry)
+        {
+            StringBuilder info = new StringBuilder();
+
+            RegistryListCredentialsResultInner acrCredentials = azureRegistry.ListCredentials();
+            info.Append("Azure Container Registry: ").Append(azureRegistry.Id)
+                .Append("\n\tName: ").Append(azureRegistry.Name)
+                .Append("\n\tServer Url: ").Append(azureRegistry.LoginServerUrl)
+                .Append("\n\tUser: ").Append(acrCredentials.Username)
+                .Append("\n\tFirst Password: ").Append(acrCredentials.Passwords[0].Value)
+                .Append("\n\tSecond Password: ").Append(acrCredentials.Passwords[1].Value);
+            Log(info.ToString());
+        }
+
+        /**
+         * Print an Azure Container Service.
+         * @param containerService an Azure Container Service
+         */
+        public static void Print(IContainerService containerService)
+        {
+            StringBuilder info = new StringBuilder();
+
+            info.Append("Azure Container Service: ").Append(containerService.Id)
+                .Append("\n\tName: ").Append(containerService.Name)
+                .Append("\n\tWith orchestration: ").Append(containerService.OrchestratorType.ToString())
+                .Append("\n\tMaster FQDN: ").Append(containerService.MasterFqdn)
+                .Append("\n\tMaster node count: ").Append(containerService.MasterNodeCount)
+                .Append("\n\tMaster leaf domain label: ").Append(containerService.MasterLeafDomainLabel)
+                .Append("\n\t\tWith Agent pool name: ").Append(containerService.AgentPoolName)
+                .Append("\n\t\tAgent pool count: ").Append(containerService.AgentPoolCount)
+                .Append("\n\t\tAgent pool count: ").Append(containerService.AgentPoolVMSize.ToString())
+                .Append("\n\t\tAgent pool FQDN: ").Append(containerService.AgentPoolFqdn)
+                .Append("\n\t\tAgent pool leaf domain label: ").Append(containerService.AgentPoolLeafDomainLabel)
+                .Append("\n\tLinux user name: ").Append(containerService.LinuxRootUsername)
+                .Append("\n\tSSH key: ").Append(containerService.SshKey);
+            if (containerService.OrchestratorType == ContainerServiceOchestratorTypes.Kubernetes)
+            {
+                info.Append("\n\tName: ").Append(containerService.ServicePrincipalClientId);
+            }
+
+            Log(info.ToString());
+        }
+
+        /**
+         * Retrieve the secondary service principal client ID.
+         * @param envSecondaryServicePrincipal an Azure Container Registry
+         * @return a service principal client ID
+         */
+        public static string GetSecondaryServicePrincipalClientID(string envSecondaryServicePrincipal)
+        {
+            string clientId = "";
+            File.ReadAllLines(envSecondaryServicePrincipal).All(line =>
+            {
+                var keyVal = line.Trim().Split(new char[] { '=' }, 2);
+                if (keyVal.Length < 2)
+                    return true; // Ignore lines that don't look like $$$=$$$
+                if (keyVal[0].Equals("client"))
+                    clientId = keyVal[1];
+                return true;
+            });
+
+            return clientId;
+        }
+
+        /**
+         * Retrieve the secondary service principal secret.
+         * @param envSecondaryServicePrincipal an Azure Container Registry
+         * @return a service principal secret
+         */
+        public static string GetSecondaryServicePrincipalSecret(string envSecondaryServicePrincipal)
+        {
+            string secret = "";
+            File.ReadAllLines(envSecondaryServicePrincipal).All(line =>
+            {
+                var keyVal = line.Trim().Split(new char[] { '=' }, 2);
+                if (keyVal.Length < 2)
+                    return true; // Ignore lines that don't look like $$$=$$$
+                if (keyVal[0].Equals("key"))
+                    secret = keyVal[1];
+                return true;
+            });
+
+            return secret;
         }
 
         public static void Print(IDocumentDBAccount documentDBAccount)
