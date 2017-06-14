@@ -92,7 +92,7 @@ namespace Network.Tests
             parameters.Roles[0].ConfigurationSets.Add(new ConfigurationSet
             {
                 AdminUserName = "testuser",
-                AdminPassword = "@zur3R0ck5",
+                AdminPassword = GetRandomPassword(),
                 ConfigurationSetType = ConfigurationSetTypes.WindowsProvisioningConfiguration,
                 ComputerName = serviceName,
                 HostName = string.Format("{0}.cloudapp.net", serviceName),
@@ -248,6 +248,11 @@ namespace Network.Tests
                 var containerClient = blobClient.GetContainerReference(container);
                 containerClient.DeleteIfExists();
             }
+        }
+
+        public static string GetRandomPassword()
+        {
+            return "AzureSDKNetworkTest#" + Guid.NewGuid().ToString().Replace("-", "@");
         }
     }
 }

@@ -228,7 +228,7 @@ namespace Network.Tests
                             new ConfigurationSet()
                             {
                                 AdminUserName = "testuser",
-                                AdminPassword = "@zur3R0ck5",
+                                AdminPassword = Utilities.GetRandomPassword(),
                                 ConfigurationSetType = ConfigurationSetTypes.WindowsProvisioningConfiguration,
                                 ComputerName = serviceName,
                                 HostName = string.Format("{0}.cloudapp.net", serviceName),
