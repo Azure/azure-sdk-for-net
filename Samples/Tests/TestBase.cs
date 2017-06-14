@@ -37,5 +37,24 @@ namespace Samples.Tests
                 runSampleDelegate(rollUpClient);
             }
         }
+
+        protected void RunSampleAsTest(
+            string testTypeName,
+            Action<Microsoft.Azure.Management.Fluent.Azure.IAuthenticated> runSampleDelegate,
+            string assetFolderLocation = null,
+            [CallerMemberName] string methodName = "testframework_failed")
+        {
+            using (var context = FluentMockContext.Start(testTypeName, methodName))
+            {
+                Microsoft.Azure.Management.Samples.Common.Utilities.IsRunningMocked = HttpMockServer.Mode == HttpRecorderMode.Playback;
+                if (assetFolderLocation != null)
+                {
+                    Microsoft.Azure.Management.Samples.Common.Utilities.ProjectPath = assetFolderLocation;
+                }
+
+                var createAuthenticatedClient = TestHelper.CreateAuthenticatedClient();
+                runSampleDelegate(createAuthenticatedClient);
+            }
+        }
     }
 }

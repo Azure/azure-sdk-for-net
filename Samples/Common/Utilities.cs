@@ -35,6 +35,8 @@ using System.Net.Http.Headers;
 using Microsoft.Azure.Management.DocumentDB.Fluent;
 using Microsoft.Azure.Management.DocumentDB.Fluent.Models;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
+using Microsoft.Azure.Management.Graph.RBAC.Fluent;
+using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -1629,6 +1631,105 @@ namespace Microsoft.Azure.Management.Samples.Common
             Log(builder.ToString());
         }
 
+        public static void Print(IActiveDirectoryApplication application)
+        {
+            StringBuilder builder = new StringBuilder()
+                .Append("Active Directory Application: ").Append(application.Id)
+                .Append("\n\tName: ").Append(application.Name)
+                .Append("\n\tSign on URL: ").Append(application.SignOnUrl)
+                .Append("\n\tReply URLs:");
+            foreach (string replyUrl in application.ReplyUrls)
+            {
+                builder.Append("\n\t\t").Append(replyUrl);
+            }
+
+            Log(builder.ToString());
+        }
+
+        public static void Print(IServicePrincipal servicePrincipal)
+        {
+            StringBuilder builder = new StringBuilder()
+                    .Append("Service Principal: ").Append(servicePrincipal.Id)
+                    .Append("\n\tName: ").Append(servicePrincipal.Name)
+                    .Append("\n\tApplication Id: ").Append(servicePrincipal.ApplicationId);
+
+            var names = servicePrincipal.ServicePrincipalNames;
+            builder.Append("\n\tNames: ").Append(names.Count);
+            foreach (string name in names)
+            {
+                builder.Append("\n\t\tName: ").Append(name);
+            }
+
+            Log(builder.ToString());
+        }
+
+        public static void Print(IActiveDirectoryGroup group)
+        {
+            StringBuilder builder = new StringBuilder()
+                    .Append("Active Directory Group: ").Append(group.Id)
+                    .Append("\n\tName: ").Append(group.Name)
+                    .Append("\n\tMail: ").Append(group.Mail)
+                    .Append("\n\tSecurity Enabled: ").Append(group.SecurityEnabled);
+
+            Log(builder.ToString());
+        }
+
+
+        public static void Print(IActiveDirectoryUser user)
+        {
+            var builder = new StringBuilder()
+                .Append("Active Directory User: ").Append(user.Id)
+                .Append("\n\tName: ").Append(user.Name)
+                .Append("\n\tMail: ").Append(user.Mail)
+                .Append("\n\tMail Nickname: ").Append(user.MailNickname)
+                .Append("\n\tSign In Name: ").Append(user.SignInName)
+                .Append("\n\tUser Principal Name: ").Append(user.UserPrincipalName);
+
+            Utilities.Log(builder.ToString());
+        }
+
+        public static void Print(IRoleDefinition role)
+        {
+            StringBuilder builder = new StringBuilder()
+                .Append("Role Definition: ").Append(role.Id)
+                .Append("\n\tName: ").Append(role.Name)
+                .Append("\n\tRole Name: ").Append(role.RoleName)
+                .Append("\n\tType: ").Append(role.Type)
+                .Append("\n\tDescription: ").Append(role.Description)
+                .Append("\n\tType: ").Append(role.Type)
+                .Append("\n\tPermissions: ");
+            foreach (var permission in role.Permissions)
+            {
+                builder.Append("\n\t\tPermission Actions: ");
+                foreach (var action in permission.Actions)
+                {
+                    builder.Append("\n\t\t\tName :").Append(action);
+                }
+                builder.Append("\n\t\tPermission Not Actions: ");
+                foreach (var notAction in permission.NotActions)
+                {
+                    builder.Append("\n\t\t\tName :").Append(notAction);
+                }
+            }
+            builder.Append("\n\tAssignable scopes: ");
+            foreach (var scope in role.AssignableScopes)
+            {
+                builder.Append("\n\t\tAssignable Scope: ")
+                    .Append("\n\t\t\tName :").Append(scope);
+            }
+            Utilities.Log(builder.ToString());
+        }
+
+        public static void Print(IRoleAssignment roleAssignment)
+        {
+            StringBuilder builder = new StringBuilder()
+                .Append("Role Assignment: ")
+                .Append("\n\tScope: ").Append(roleAssignment.Scope)
+                .Append("\n\tPrincipal Id: ").Append(roleAssignment.PrincipalId)
+                .Append("\n\tRole Definition Id: ").Append(roleAssignment.RoleDefinitionId);
+            Utilities.Log(builder.ToString());
+        }
+
         public static void CreateCertificate(string domainName, string pfxPath, string password)
         {
             if (!IsRunningMocked)
@@ -1648,6 +1749,30 @@ namespace Microsoft.Azure.Management.Samples.Common
                 File.Copy(
                     Path.Combine(Utilities.ProjectPath, "Asset", "SampleTestCertificate.pfx"),
                     Path.Combine(Utilities.ProjectPath, "Asset", pfxPath),
+                    overwrite: true);
+            }
+        }
+
+        public static void CreateCertificate(string domainName, string pfxName, string cerName, string password)
+        {
+            if (!IsRunningMocked)
+            {
+                string args = string.Format(
+                    @".\createCert1.ps1 -pfxFileName {0} -cerFileName {1} -pfxPassword ""{2}"" -domainName ""{3}""",
+                    pfxName,
+                    cerName,
+                    password,
+                    domainName);
+                ProcessStartInfo info = new ProcessStartInfo("powershell", args);
+                string assetPath = Path.Combine(ProjectPath, "Asset");
+                info.WorkingDirectory = assetPath;
+                Process.Start(info).WaitForExit();
+            }
+            else
+            {
+                File.Copy(
+                    Path.Combine(Utilities.ProjectPath, "Asset", "SampleTestCertificate.pfx"),
+                    Path.Combine(Utilities.ProjectPath, "Asset", pfxName),
                     overwrite: true);
             }
         }

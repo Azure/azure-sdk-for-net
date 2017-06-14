@@ -35,5 +35,22 @@ namespace Azure.Tests
                 return randomName;
             }
         }
+
+        public override string RandomGuid()
+        {
+            lock (assetNames)
+            {
+                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                {
+                    return assetNames[testName].Dequeue();
+                }
+
+                var randomName = base.RandomGuid();
+
+                assetNames.Enqueue(testName, randomName);
+
+                return randomName;
+            }
+        }
     }
 }

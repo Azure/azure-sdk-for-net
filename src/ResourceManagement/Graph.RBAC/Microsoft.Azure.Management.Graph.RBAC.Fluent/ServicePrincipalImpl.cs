@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 {
                     try
                     {
-                        IRoleAssignment roleAssignment = await manager.RoleAssignments.Define(Guid.NewGuid().ToString())
+                        IRoleAssignment roleAssignment = await manager.RoleAssignments.Define(SdkContext.RandomGuid())
                             .ForServicePrincipal(sp)
                             .WithBuiltInRole(role.Value)
                             .WithScope(role.Key)

@@ -70,7 +70,7 @@ namespace ManageLinuxWebAppSqlConnection
                         .WithRegion(Region.USWest)
                         .WithExistingResourceGroup(rgName)
                         .WithNewLinuxPlan(PricingTier.StandardS1)
-                        .WithBuiltInImage(RuntimeStack.PHP_5_6_23)
+                        .WithBuiltInImage(RuntimeStack.PHP_5_6)
                         .DefineSourceControl()
                             .WithPublicGitRepository("https://github.com/ProjectNami/projectnami")
                             .WithBranch("master")

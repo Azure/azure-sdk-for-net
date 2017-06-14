@@ -23,8 +23,8 @@
     "SSH.NET": "2016.0.0",
     "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.12, 3.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.6.0, 2.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "2.3.0",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "1.6.0",
     "Microsoft.Azure.Management.Fluent": {
       "target": "project",
       "type": "build"
@@ -151,6 +151,9 @@
     "ManageWebAppWithAuthentication": "1.0.0-*",
     "ManageContainerRegistry": "1.0.0-*",
     "ManageContainerServiceUsingDockerSwarm": "1.0.0-*",
-    "ManageContainerServiceUsingKubernetes": "1.0.0-*"
+    "ManageContainerServiceUsingKubernetes": "1.0.0-*",
+    "ManageServicePrincipal": "1.0.0-*",
+    "ManageServicePrincipalCredentails": "1.0.0-*",
+    "ManageUsersGroupsAndRoles": "1.0.0-*"
   }
 }

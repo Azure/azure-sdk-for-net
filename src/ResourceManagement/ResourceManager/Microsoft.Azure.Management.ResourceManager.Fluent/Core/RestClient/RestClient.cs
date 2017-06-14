@@ -215,11 +215,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
             public RestClient Build()
             {
-#if NET45
-                HttpClientHandler httpClientHandler = new WebRequestHandler();
-#else
                 HttpClientHandler httpClientHandler = new HttpClientHandler();
-#endif
+
                 return new RestClient(httpClientHandler, handlers)
                 {
                     BaseUri = baseUri,

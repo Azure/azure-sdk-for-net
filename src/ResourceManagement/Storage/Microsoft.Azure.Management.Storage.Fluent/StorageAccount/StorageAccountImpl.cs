@@ -220,7 +220,10 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         #region WithSku
         internal StorageAccountImpl WithSku(SkuName skuName)
         {
-            var sku = new Sku();
+            var sku = new Sku()
+            {
+                Name = skuName
+            };
             if (IsInCreateMode)
             {
                 createParameters.Sku = sku;

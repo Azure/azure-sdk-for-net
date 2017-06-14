@@ -256,7 +256,7 @@ namespace ManageLinuxWebAppWithTrafficManager
             return azure.WebApps.Define(name)
                     .WithExistingLinuxPlan(plan)
                     .WithExistingResourceGroup(rgName)
-                    .WithBuiltInImage(RuntimeStack.NodeJS_4_5_0)
+                    .WithBuiltInImage(RuntimeStack.NodeJS_4_5)
                     .WithManagedHostnameBindings(domain, name)
                     .DefineSslBinding()
                         .ForHostname(name + "." + domain.Name)
