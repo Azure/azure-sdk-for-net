@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Network.Tests.Helpers
 {
+    using Networks.Tests.Helpers;
+
     public static class DeploymentUpdate
     {
         public static void CreateVm(
@@ -33,7 +35,7 @@ namespace Network.Tests.Helpers
                 @"'virtualNetworkName': { 'value': '" + resourceGroupName + "-vnet'}," +
                 @"'networkInterfaceName': { 'value': '" + networkInterfaceName + "'}," +
                 @"'networkSecurityGroupName': { 'value': '" + networkSecurityGroupName + "'}," +
-                @"'adminPassword': { 'value': 'netanalytics-32!'}," +
+                @"'adminPassword': { 'value': '" + NetworkManagementTestUtilities.GetRandomPassword() + "'}," +
                 @"'storageAccountType': { 'value': 'Premium_LRS'}," +
                 @"'diagnosticsStorageAccountName': { 'value': '" + diagnosticsStorageAccountName + "'}," +
                 @"'diagnosticsStorageAccountId': { 'value': 'Microsoft.Storage/storageAccounts/" + diagnosticsStorageAccountName + "'}," +
