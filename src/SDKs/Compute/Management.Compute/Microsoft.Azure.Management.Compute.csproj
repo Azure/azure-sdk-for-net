@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Compute</PackageId>
     <Description>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.</Description>
-    <VersionPrefix>14.1.0-prerelease</VersionPrefix>
+    <VersionPrefix>15.0.0</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>Microsoft Azure resource management;virtual machine;compute;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
   </PropertyGroup>

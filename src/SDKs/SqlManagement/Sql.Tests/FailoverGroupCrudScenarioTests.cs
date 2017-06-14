@@ -23,8 +23,8 @@ namespace Sql.Tests
             {
                 // Create primary and partner servers
                 //
-                Server sourceServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultLocation);
-                Server targetServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultSecondaryLocation);
+                var sourceServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
+                var targetServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultSecondaryLocationId);
 
                 // Create a failover group
                 //

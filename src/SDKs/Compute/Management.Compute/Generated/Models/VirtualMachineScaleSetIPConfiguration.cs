@@ -36,19 +36,28 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VirtualMachineScaleSetIPConfiguration class.
         /// </summary>
         /// <param name="name">The IP configuration name.</param>
-        /// <param name="subnet">The subnet.</param>
         /// <param name="id">Resource Id</param>
+        /// <param name="subnet">The subnet.</param>
+        /// <param name="publicIPAddressConfiguration">The
+        /// publicIPAddressConfiguration.</param>
+        /// <param name="privateIPAddressVersion">Available from Api-Version
+        /// 2017-03-30 onwards, it represents whether the specific
+        /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.
+        /// Possible values are: 'IPv4' and 'IPv6'. Possible values include:
+        /// 'IPv4', 'IPv6'</param>
         /// <param name="applicationGatewayBackendAddressPools">The application
         /// gateway backend address pools.</param>
         /// <param name="loadBalancerBackendAddressPools">The load balancer
         /// backend address pools.</param>
         /// <param name="loadBalancerInboundNatPools">The load balancer inbound
         /// nat pools.</param>
-        public VirtualMachineScaleSetIPConfiguration(string name, ApiEntityReference subnet, string id = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
+        public VirtualMachineScaleSetIPConfiguration(string name, string id = default(string), ApiEntityReference subnet = default(ApiEntityReference), VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetPublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
             : base(id)
         {
             Name = name;
             Subnet = subnet;
+            PublicIPAddressConfiguration = publicIPAddressConfiguration;
+            PrivateIPAddressVersion = privateIPAddressVersion;
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
             LoadBalancerInboundNatPools = loadBalancerInboundNatPools;
@@ -65,6 +74,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public ApiEntityReference Subnet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the publicIPAddressConfiguration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicIPAddressConfiguration")]
+        public VirtualMachineScaleSetPublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets available from Api-Version 2017-03-30 onwards, it
+        /// represents whether the specific ipconfiguration is IPv4 or IPv6.
+        /// Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'.
+        /// Possible values include: 'IPv4', 'IPv6'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
+        public string PrivateIPAddressVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the application gateway backend address pools.
@@ -96,9 +120,9 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (Subnet == null)
+            if (PublicIPAddressConfiguration != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Subnet");
+                PublicIPAddressConfiguration.Validate();
             }
         }
     }

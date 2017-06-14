@@ -5,8 +5,6 @@ using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Xunit;
 
@@ -45,7 +43,7 @@ namespace Sql.Tests
                 // Create a new database that is the first database restored to an earlier point in time
                 // 
                 dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var db2Input = new Microsoft.Azure.Management.Sql.Models.Database()
+                var db2Input = new Database()
                 {
                     Location = server.Location,
                     CreateMode = "PointInTimeRestore",

@@ -2,14 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
+using Microsoft.Azure.Management.Sql.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
@@ -33,34 +29,34 @@ namespace Sql.Tests
                     };
 
                 // Create server
-                var server1 = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverNameV12, new Microsoft.Azure.Management.Sql.Models.Server()
+                var server1 = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverNameV12, new Server()
                 {
                     AdministratorLogin = login,
                     AdministratorLoginPassword = password,
                     Version = version12,
                     Tags = tags,
-                    Location = SqlManagementTestUtilities.DefaultLocation,
+                    Location = SqlManagementTestUtilities.DefaultLocationId,
                 });
-                SqlManagementTestUtilities.ValidateServer(server1, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(server1, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocationId);
 
                 // Create second server
                 string server2 = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var v2Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, server2, new Microsoft.Azure.Management.Sql.Models.Server()
+                var v2Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, server2, new Server()
                 {
                     AdministratorLogin = login,
                     AdministratorLoginPassword = password,
                     Tags = tags,
-                    Location = SqlManagementTestUtilities.DefaultLocation,
+                    Location = SqlManagementTestUtilities.DefaultLocationId,
                 });
-                SqlManagementTestUtilities.ValidateServer(v2Server, server2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(v2Server, server2, login, version12, tags, SqlManagementTestUtilities.DefaultLocationId);
 
                 // Get first server
                 var getServer1 = sqlClient.Servers.Get(resourceGroup.Name, serverNameV12);
-                SqlManagementTestUtilities.ValidateServer(getServer1, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(getServer1, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocationId);
 
                 // Get second server
                 var getServer2 = sqlClient.Servers.Get(resourceGroup.Name, server2);
-                SqlManagementTestUtilities.ValidateServer(getServer2, server2, login, version12, tags, SqlManagementTestUtilities.DefaultLocation);
+                SqlManagementTestUtilities.ValidateServer(getServer2, server2, login, version12, tags, SqlManagementTestUtilities.DefaultLocationId);
 
                 var listServers = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(2, listServers.Count());

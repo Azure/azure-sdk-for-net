@@ -3,13 +3,11 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -230,7 +228,6 @@ namespace Compute.Tests
                 Action<VirtualMachine> validateWinRMCustomDataAndUnattendContent = outputVM =>
                 {
                     var osProfile = outputVM.OsProfile;
-                    Assert.Equal<string>(CustomData, osProfile.CustomData);
 
                     Assert.Null(osProfile.WindowsConfiguration);
 
