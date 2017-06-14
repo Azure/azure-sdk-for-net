@@ -64,9 +64,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
-    <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Condition=" '$(Scope)' == 'all'  " />
-    <SamplesToBuild Include="$(SamplesFolder)\**\project.json" />
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
   </ItemGroup>
@@ -92,90 +89,46 @@
   <Import Condition=" $(OnPremiseBuild) " Project="$(CIToolsPath)\Microsoft.WindowsAzure.Build.OnPremise.msbuild" />
 
   <Target Name="PrepareForAutoRestLibraries">
-    <FilterOutAutoRestLibraries AllLibraries="@(LibrariesToBuild)" AutoRestMark="AutoRestProjects">
-      <Output TaskParameter="Non_NetCore_AutoRestLibraries" ItemName="Non_NetCore_AutoRestLibraries" />
-      <Output TaskParameter="NetCore_AutoRestLibraries" ItemName="NetCore_AutoRestLibraries" />
-    </FilterOutAutoRestLibraries>
-    <Message Text="Non NetCore based AutoRest Libraries: @(Non_NetCore_AutoRestLibraries)" />
-    <Message Text="NetCore AutoRest Libraries: @(NetCore_AutoRestLibraries)" />
-    
-    <Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />
-     
     <Message Text="Ensure 7zip is available" />
     <Exec
       Command="$(LibraryToolsFolder)\AzCopy\AzCopy.exe /Source:https://azuresdktools.blob.core.windows.net/7-zip  /S /Dest:$(ZipExeFolder) /Y"
       Condition="!Exists('$(ZipExe)')" />
   </Target>
   
-  <Target Name="Build" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
+  <Target Name="Build" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries">
     <PropertyGroup>
       <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
       <_TemporaryNetCoreFeeds>-s https://api.nuget.org/v3/index.json -s https://dotnet.myget.org/F/cli-deps/api/v3/index.json</_TemporaryNetCoreFeeds>
     </PropertyGroup>
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
-    <MSBuild Projects="@(NonAutoRestLibraries)"
-             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Build" />
+    <Exec Command="dotnet restore src\ResourceManagement\Azure.Fluent\Fluent.sln" WorkingDirectory="$(LibraryRoot)" />
+    <Exec Command="dotnet restore Samples\Samples.sln" WorkingDirectory="$(LibraryRoot)"  Condition=" '$(Configuration)' != 'Release' "/>    
 
-    <MSBuild Projects="@(Non_NetCore_AutoRestLibraries)"
-             Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Build" />
-    
-    <!-- Restoring everyting from the root folder wipes out Storage nuget references and adds Storage project reference to all projects. -->
-    <!-- <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/> 
-    <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' and '$(Configuration)' != 'Release' "/>
-    <Exec Command="dotnet restore" WorkingDirectory="$(SamplesFolder)" Condition=" '$(Configuration)' != 'Release' "/> -->
-    <Exec Command="dotnet restore" WorkingDirectory="$(LibraryRoot)" />
-    
-
-    <CallTarget Targets="BuildNetCoreLibraries" Condition=" @(NetCore_AutoRestLibraries) != '' " />
+    <CallTarget Targets="BuildNetCoreLibraries" />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
   </Target>
 
   <Target Name="BuildNetCoreLibraries">
-    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" '%(NetCore_AutoRestLibraries.Library)'!= '' "/>
-    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
-    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(SamplesToBuild.RelativeDir)" Condition=" '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet build src\ResourceManagement\Azure.Fluent\Fluent.sln --configuration $(Configuration)"/>
+    <Exec Command="dotnet build Samples\Samples.sln --configuration $(Configuration)" Condition=" '$(Configuration)' != 'Release' "/>
   </Target>
  
-  <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
-    <!--<MSBuild Projects="@(NonAutoRestLibraries)"
-             Properties="Configuration=%(LibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU"
-             Targets="Clean" />-->
-    
-    <MSBuild Projects="@(Non_NetCore_AutoRestLibraries)"
-             Properties="Configuration=%(AutoRestLibraryFxTargetList.Identity)-$(Configuration);Platform=Any CPU;$(_ExtraPropertyList)"
-             Targets="Clean" />
+  <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;">
     <RemoveDir Directories="$(BinariesFolder)" />
   </Target>
 
   <Target Name="Test" DependsOnTargets="PrepareForAutoRestLibraries">
-     <PropertyGroup>
-       <!--Extrat out service name from 'Scope' to use as test dll filter-->
-       <!--For example, from 'ServiceManagement\Storage', get 'Storage'.-->
-       <TestPartialName>$([System.IO.Path]::GetFileName($(Scope)))</TestPartialName>
-     </PropertyGroup>
-    <ItemGroup>
-      <!--TODO: improve the logic to be more explicit -->
-      <TestDlls Include=".\src\**\*.Tests\bin\net45-$(Configuration)\*.Tests.dll" Condition=" '$(Scope)' == 'All' " />
-      <TestDlls Include=".\src\$(Scope)\**\*.Tests\bin\net45-$(Configuration)\*.Tests.dll"
-                Condition=" '$(Scope)' != 'All' " />
-    </ItemGroup>
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
-    <Message Text="%(TestDlls.Filename)" />
-    <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(TestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(TestDlls.Filename).html&quot;"
-      Condition=" '@(TestDlls)' != '' "  
-      ContinueOnError="false"/>
 
     <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
-    <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(NetCore_AutoRestLibraries.Filename).xml&quot;" 
-          WorkingDirectory="%(NetCore_AutoRestLibraries.Test)"
-          Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' and $(ExcludeTests) != 'unit' "/>
+    <Exec Command="dotnet test src\ResourceManagement\Azure.Fluent\Fluent.sln -xml &quot;$(MSBuildProjectDirectory)\TestResults\Fluent.Tests.xml&quot;" 
+          WorkingDirectory="src\ResourceManagement\Azure.Fluent\Fluent.Tests"
+          Condition=" $(ExcludeTests) != 'unit' "/>
 
-    <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\Sample.Tests.xml&quot;" 
+    <Exec Command="dotnet test Samples\Samples.sln -xml &quot;$(MSBuildProjectDirectory)\TestResults\Sample.Tests.xml&quot;" 
           WorkingDirectory="$(SamplesTestsFolder)"
-          Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' and $(ExcludeTests) != 'sample' "/>
+          Condition=" $(ExcludeTests) != 'sample' "/>
   </Target>
   
   <PropertyGroup>
@@ -257,15 +210,6 @@
     <MSBuild Projects="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
              Targets="Build"
              Properties="Configuration=Debug;Platform=AnyCPU" />
-  </Target>
-
-  <Target Name="RestoreNugetPackages">
-    <PropertyGroup>
-      <NuGetRestoreConfigSwitch>-PackagesDirectory $(LibraryNugetPackageFolder)</NuGetRestoreConfigSwitch>
-    </PropertyGroup>
-    <Exec Command="$(NuGetCommand) restore %(Non_NetCore_AutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(Non_NetCore_AutoRestLibraries) != '' "/>
-    <Exec Command="$(NuGetCommand) restore %(NonAutoRestLibraries.Identity) $(NuGetRestoreConfigSwitch)" Condition=" @(NonAutoRestLibraries) != '' "/>
-    <Exec Command="$(NuGetCommand) install xunit.runner.console -Version 2.0.0 -o $(LibraryNugetPackageFolder)" />
   </Target>
   
   <!--

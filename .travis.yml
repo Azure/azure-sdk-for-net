@@ -16,7 +16,7 @@ install:
   - sudo apt-get update
   - sudo apt-get install dotnet-dev-1.0.3 -y
 script: 
-  - ./testSdkOnLinux.sh
+  - ./test_on_linux.sh
 after_script:
   - echo "========== Server log: ============"
   - pwd
