@@ -23,17 +23,17 @@ namespace Microsoft.Azure.ServiceBus
         /// Creates a new Message
         /// </summary>
         public Message()
-            : this(default(byte[]))
+            : this(null)
         {
         }
 
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
-        /// <param name="array"></param>
-        public Message(byte[] array)
+        /// <param name="body"></param>
+        public Message(byte[] body)
         {
-            this.Body = array;
+            this.Body = body;
             this.SystemProperties = new SystemPropertiesCollection();
             this.UserProperties = new Dictionary<string, object>();
         }

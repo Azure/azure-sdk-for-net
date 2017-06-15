@@ -90,6 +90,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var sendReceivePlugin = new SendReceivePlugin();
                 messageSender.RegisterPlugin(sendReceivePlugin);
+                messageReceiver.RegisterPlugin(sendReceivePlugin);
 
                 var sendMessage = new Message(Encoding.UTF8.GetBytes("Test message"))
                 {
@@ -180,21 +181,22 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     internal class SendReceivePlugin : ServiceBusPlugin
     {
         // Null the body on send, and replace it when received.
-        Dictionary<string, byte[]> MessageBodies = new Dictionary<string, byte[]>();
+        Dictionary<string, byte[]> MessageBodies = new Dictionary<string,byte[]>();
 
         public override string Name => nameof(SendReceivePlugin);
 
         public override Task<Message> BeforeMessageSend(Message message)
         {
-            MessageBodies.Add(message.MessageId, message.Body);
-            message.Body = null;
-            return Task.FromResult(message);
+            this.MessageBodies.Add(message.MessageId, message.Body);
+            var clonedMessage = message.Clone();
+            clonedMessage.Body = null;
+            return Task.FromResult(clonedMessage);
         }
 
         public override Task<Message> AfterMessageReceive(Message message)
         {
             Assert.Null(message.Body);
-            message.Body = MessageBodies[message.MessageId];
+            message.Body = this.MessageBodies[message.MessageId];
             return Task.FromResult(message);
         }
     }
