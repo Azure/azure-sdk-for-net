@@ -1514,7 +1514,429 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Regenerate gateway key.
+        /// List gateway authentication keys.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// Required. The name of the gateway to list auth keys.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list gateway auth keys operation response.
+        /// </returns>
+        public async Task<GatewayListAuthKeysResponse> ListAuthKeysAsync(string resourceGroupName, string dataFactoryName, string gatewayName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (dataFactoryName == null)
+            {
+                throw new ArgumentNullException("dataFactoryName");
+            }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException("gatewayName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("dataFactoryName", dataFactoryName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                TracingAdapter.Enter(invocationId, this, "ListAuthKeysAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/gateways/";
+            url = url + Uri.EscapeDataString(gatewayName);
+            url = url + "/listauthkeys";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-10-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayListAuthKeysResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayListAuthKeysResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken key1Value = responseDoc["key1"];
+                            if (key1Value != null && key1Value.Type != JTokenType.Null)
+                            {
+                                string key1Instance = ((string)key1Value);
+                                result.Key1 = key1Instance;
+                            }
+                            
+                            JToken key2Value = responseDoc["key2"];
+                            if (key2Value != null && key2Value.Type != JTokenType.Null)
+                            {
+                                string key2Instance = ((string)key2Value);
+                                result.Key2 = key2Instance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Regenerate gateway authentication key.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// Required. The name of the gateway to regenerate key.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The name of the authentication key to be regenerated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The regenerate gateway auth key operation response.
+        /// </returns>
+        public async Task<GatewayRegenerateAuthKeyResponse> RegenerateAuthKeyAsync(string resourceGroupName, string dataFactoryName, string gatewayName, GatewayRegenerateAuthKeyParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (dataFactoryName == null)
+            {
+                throw new ArgumentNullException("dataFactoryName");
+            }
+            if (dataFactoryName != null && dataFactoryName.Length > 63)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (Regex.IsMatch(dataFactoryName, "^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$") == false)
+            {
+                throw new ArgumentOutOfRangeException("dataFactoryName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException("gatewayName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.KeyName == null)
+            {
+                throw new ArgumentNullException("parameters.KeyName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("dataFactoryName", dataFactoryName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "RegenerateAuthKeyAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourcegroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/Microsoft.DataFactory/datafactories/";
+            url = url + Uri.EscapeDataString(dataFactoryName);
+            url = url + "/gateways/";
+            url = url + Uri.EscapeDataString(gatewayName);
+            url = url + "/regenerateauthkey";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-10-01");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-client-request-id", Guid.NewGuid().ToString());
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject gatewayRegenerateAuthKeyParametersValue = new JObject();
+                requestDoc = gatewayRegenerateAuthKeyParametersValue;
+                
+                gatewayRegenerateAuthKeyParametersValue["keyname"] = parameters.KeyName;
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GatewayRegenerateAuthKeyResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new GatewayRegenerateAuthKeyResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken key1Value = responseDoc["key1"];
+                            if (key1Value != null && key1Value.Type != JTokenType.Null)
+                            {
+                                string key1Instance = ((string)key1Value);
+                                result.Key1 = key1Instance;
+                            }
+                            
+                            JToken key2Value = responseDoc["key2"];
+                            if (key2Value != null && key2Value.Type != JTokenType.Null)
+                            {
+                                string key2Instance = ((string)key2Value);
+                                result.Key2 = key2Instance;
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Regenerate gateway key. This API has been deprecated and
+        /// RegenerateAuthKey should be used instead.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The resource group name of the data factory.

@@ -391,7 +391,118 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Regenerate gateway key.
+        /// List gateway authentication keys.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataFactories.Core.IGatewayOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// Required. The name of the gateway to list auth keys.
+        /// </param>
+        /// <returns>
+        /// The list gateway auth keys operation response.
+        /// </returns>
+        public static GatewayListAuthKeysResponse ListAuthKeys(this IGatewayOperations operations, string resourceGroupName, string dataFactoryName, string gatewayName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).ListAuthKeysAsync(resourceGroupName, dataFactoryName, gatewayName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// List gateway authentication keys.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataFactories.Core.IGatewayOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// Required. The name of the gateway to list auth keys.
+        /// </param>
+        /// <returns>
+        /// The list gateway auth keys operation response.
+        /// </returns>
+        public static Task<GatewayListAuthKeysResponse> ListAuthKeysAsync(this IGatewayOperations operations, string resourceGroupName, string dataFactoryName, string gatewayName)
+        {
+            return operations.ListAuthKeysAsync(resourceGroupName, dataFactoryName, gatewayName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Regenerate gateway authentication key.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataFactories.Core.IGatewayOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// Required. The name of the gateway to regenerate key.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The name of the authentication key to be regenerated.
+        /// </param>
+        /// <returns>
+        /// The regenerate gateway auth key operation response.
+        /// </returns>
+        public static GatewayRegenerateAuthKeyResponse RegenerateAuthKey(this IGatewayOperations operations, string resourceGroupName, string dataFactoryName, string gatewayName, GatewayRegenerateAuthKeyParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).RegenerateAuthKeyAsync(resourceGroupName, dataFactoryName, gatewayName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Regenerate gateway authentication key.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataFactories.Core.IGatewayOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// Required. A unique data factory instance name.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// Required. The name of the gateway to regenerate key.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The name of the authentication key to be regenerated.
+        /// </param>
+        /// <returns>
+        /// The regenerate gateway auth key operation response.
+        /// </returns>
+        public static Task<GatewayRegenerateAuthKeyResponse> RegenerateAuthKeyAsync(this IGatewayOperations operations, string resourceGroupName, string dataFactoryName, string gatewayName, GatewayRegenerateAuthKeyParameters parameters)
+        {
+            return operations.RegenerateAuthKeyAsync(resourceGroupName, dataFactoryName, gatewayName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Regenerate gateway key. This API has been deprecated and
+        /// RegenerateAuthKey should be used instead.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -419,7 +530,8 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         }
         
         /// <summary>
-        /// Regenerate gateway key.
+        /// Regenerate gateway key. This API has been deprecated and
+        /// RegenerateAuthKey should be used instead.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

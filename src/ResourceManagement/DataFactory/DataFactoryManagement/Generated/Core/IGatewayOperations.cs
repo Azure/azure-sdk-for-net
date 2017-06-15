@@ -170,7 +170,51 @@ namespace Microsoft.Azure.Management.DataFactories.Core
         Task<GatewayListResponse> ListAsync(string resourceGroupName, string dataFactoryName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Regenerate gateway key.
+        /// List gateway authentication keys.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// A unique data factory instance name.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway to list auth keys.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The list gateway auth keys operation response.
+        /// </returns>
+        Task<GatewayListAuthKeysResponse> ListAuthKeysAsync(string resourceGroupName, string dataFactoryName, string gatewayName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Regenerate gateway authentication key.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// A unique data factory instance name.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway to regenerate key.
+        /// </param>
+        /// <param name='parameters'>
+        /// The name of the authentication key to be regenerated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The regenerate gateway auth key operation response.
+        /// </returns>
+        Task<GatewayRegenerateAuthKeyResponse> RegenerateAuthKeyAsync(string resourceGroupName, string dataFactoryName, string gatewayName, GatewayRegenerateAuthKeyParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Regenerate gateway key. This API has been deprecated and
+        /// RegenerateAuthKey should be used instead.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name of the data factory.

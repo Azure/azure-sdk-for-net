@@ -187,6 +187,58 @@ namespace Microsoft.Azure.Management.DataFactories
             CancellationToken cancellationToken);
 
         /// <summary>
+        /// Regenerate gateway auth key.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// A unique data factory instance name.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway to regenerate auth key.
+        /// </param>
+        /// <param name='parameters'>
+        /// Name of the gateway auth key to be regenerated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The regenerate gateway auth key operation response.
+        /// </returns>
+        Task<GatewayRegenerateAuthKeyResponse> RegenerateAuthKeyAsync(
+            string resourceGroupName,
+            string dataFactoryName,
+            string gatewayName,
+            GatewayRegenerateAuthKeyParameters parameters,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// List auth keys of the gateway.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the data factory.
+        /// </param>
+        /// <param name='dataFactoryName'>
+        /// A unique data factory instance name.
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway to list auth keys.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List data factory gateway auth keys operation response.
+        /// </returns>
+        Task<GatewayListAuthKeysResponse> ListAuthKeysAsync(
+            string resourceGroupName,
+            string dataFactoryName,
+            string gatewayName,
+            CancellationToken cancellationToken);
+
+        /// <summary>
         /// Regenerate gateway key.
         /// </summary>
         /// <param name='resourceGroupName'>
