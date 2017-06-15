@@ -204,6 +204,19 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._dataMasking; }
         }
         
+        private IDataSyncOperations _dataSync;
+        
+        /// <summary>
+        /// Represents all the operations for Azure SQL Data Sync. Contains
+        /// operations to: Create, Retrieve, Update, and Delete sync groups,
+        /// sync members and sync agents, and also includes the ability to get
+        /// the synchronization logs.
+        /// </summary>
+        public virtual IDataSyncOperations DataSync
+        {
+            get { return this._dataSync; }
+        }
+        
         private IElasticPoolAdvisorOperations _elasticPoolAdvisors;
         
         /// <summary>
@@ -492,6 +505,7 @@ namespace Microsoft.Azure.Management.Sql
             this._databases = new DatabaseOperations(this);
             this._databaseRecommendedActions = new DatabaseRecommendedActionOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
+            this._dataSync = new DataSyncOperations(this);
             this._elasticPoolAdvisors = new ElasticPoolAdvisorOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._elasticPoolRecommendedActions = new ElasticPoolRecommendedActionOperations(this);
@@ -589,6 +603,7 @@ namespace Microsoft.Azure.Management.Sql
             this._databases = new DatabaseOperations(this);
             this._databaseRecommendedActions = new DatabaseRecommendedActionOperations(this);
             this._dataMasking = new DataMaskingOperations(this);
+            this._dataSync = new DataSyncOperations(this);
             this._elasticPoolAdvisors = new ElasticPoolAdvisorOperations(this);
             this._elasticPools = new ElasticPoolOperations(this);
             this._elasticPoolRecommendedActions = new ElasticPoolRecommendedActionOperations(this);
