@@ -22,6 +22,7 @@
     "Samples/ResourceManagement/Batch",
     "Samples/ResourceManagement/Cdn",
     "Samples/ResourceManagement/Compute",
+    "Samples/ResourceManagement/ContainerRegistry",
     "Samples/ResourceManagement/Dns",
     "Samples/ResourceManagement/GraphRbac",
     "Samples/ResourceManagement/KeyVault",

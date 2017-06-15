@@ -8,7 +8,9 @@
     },
     "CoreFTP": "1.2.0",
     "Microsoft.Azure.ServiceBus": "0.0.2-preview",
-    "SSH.NET": "2016.0.0"
+    "SSH.NET": "2016.0.0",
+    "Docker.DotNet": "2.124.3",
+    "Docker.DotNet.X509": "2.124.3"
   },
   
   "frameworks": {
