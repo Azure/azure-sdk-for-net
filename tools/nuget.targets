@@ -173,7 +173,7 @@
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
 
     <PropertyGroup>
-      <ActualSource Condition=" '$(NuGetPublishingSource)' == '' "></ActualSource>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' == '' ">-Source https://www.nuget.org/api/v2/package/</ActualSource>
       <ActualSource Condition=" '$(NuGetPublishingSource)' != '' "> -Source $(NuGetPublishingSource)</ActualSource>
     </PropertyGroup>
 
