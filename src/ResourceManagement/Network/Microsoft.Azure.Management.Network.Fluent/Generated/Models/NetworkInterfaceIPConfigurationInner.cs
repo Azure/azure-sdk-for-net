@@ -9,6 +9,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
     using Newtonsoft.Json;
+    using ResourceManager.Fluent;
     using System.Collections.Generic;
 
     /// <summary>
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkInterfaceIPConfigurationInner(string id = default(string), IList<ApplicationGatewayBackendAddressPoolInner> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPoolInner>), IList<BackendAddressPoolInner> loadBalancerBackendAddressPools = default(IList<BackendAddressPoolInner>), IList<InboundNatRuleInner> loadBalancerInboundNatRules = default(IList<InboundNatRuleInner>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), SubnetInner subnet = default(SubnetInner), bool? primary = default(bool?), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public NetworkInterfaceIPConfigurationInner(string id = default(string), IList<ApplicationGatewayBackendAddressPoolInner> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPoolInner>), IList<BackendAddressPoolInner> loadBalancerBackendAddressPools = default(IList<BackendAddressPoolInner>), IList<InboundNatRuleInner> loadBalancerInboundNatRules = default(IList<InboundNatRuleInner>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), SubnetInner subnet = default(SubnetInner), bool? primary = default(bool?), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
@@ -62,6 +63,8 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
             PrivateIPAddressVersion = privateIPAddressVersion;
             Subnet = subnet;
             Primary = primary;
+            // Changed type from PublicIPAddressInner to SubResource
+            // https://github.com/Azure/azure-sdk-for-java/blob/master/azure-mgmt-network/src/main/java/com/microsoft/azure/management/network/implementation/NetworkInterfaceIPConfigurationInner.java#L276
             PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
             Name = name;
@@ -129,9 +132,11 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         public bool? Primary { get; set; }
 
         /// <summary>
+        /// Changed type from PublicIpAddressInner to SubResource
+        /// https://github.com/Azure/azure-sdk-for-java/blob/master/azure-mgmt-network/src/main/java/com/microsoft/azure/management/network/implementation/NetworkInterfaceIPConfigurationInner.java#L80
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
-        public PublicIPAddressInner PublicIPAddress { get; set; }
+        public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
         /// </summary>
