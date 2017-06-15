@@ -173,7 +173,7 @@
     <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
 
     <PropertyGroup>
-      <ActualSource Condition=" '$(NuGetPublishingSource)' == '' ">-Source https://www.nuget.org/api/v2/package/</ActualSource>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' == '' "> -Source https://www.nuget.org/api/v2/package/</ActualSource>
       <ActualSource Condition=" '$(NuGetPublishingSource)' != '' "> -Source $(NuGetPublishingSource)</ActualSource>
     </PropertyGroup>
 
@@ -181,7 +181,7 @@
     <Message Importance="high" Text="Publishing main and symbols packages to the cloud at $(NuGetPublishingSource)" />
     <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputDir)\%(SdkNuGetPackage.Identity).%(SdkNuGetPackage.PackageVersion).nupkg&quot; $(NuGetKey)$(ActualSource)"
           IgnoreExitCode="true"
-          Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />
+          Condition=" '%(SdkNuGetPackage.Publish)' != 'false' AND '%(SdkNuGetPackage.Identity)' != ''" />
 
     <Message Text="Not publishing package %(SdkNuGetPackage.Identity) as Publish is set to 'false' for the component."
              Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
@@ -192,6 +192,7 @@
   </Target>
 
   <Target Name="PublishDnxPackage">
+    <Message Importance="high" Text="Publishing main and symbols packages to the cloud at $(ActualSource)" />
     <ItemGroup>
       <_DnxPackagesToPublish Include="$(PackageOutputDir)\$(DnxPackageName)*.nupkg"
                              Exclude="$(PackageOutputDir)\$(DnxPackageName)*.symbols.nupkg">
