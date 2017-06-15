@@ -71,11 +71,10 @@
     
     <Message Text="Generating NuGet library" Importance="high" />
 
-    <Exec Command="dotnet pack src\ResourceManagement\Azure.Fluent\Fluent.sln --configuration $(Configuration) --include-symbols" />
+    <Exec Command="dotnet pack FluentSDK.sln --configuration $(Configuration) --include-symbols" />
 
     <ItemGroup>
-      <_NetCorePackages Include="src\ResourceManagement\**\bin\$(Configuration)\*.nupkg" 
-                        Exclude="src\ResourceManagement\**\*.Tests.*.nupkg"/>
+      <_NetCorePackages Include="src\ResourceManagement\**\bin\$(Configuration)\*.nupkg" />
     </ItemGroup>
     <Copy SourceFiles="@(_NetCorePackages)" DestinationFolder="$(PackageOutputDir)" />
     <CallTarget Targets="SignAssembliesInNetCorePackages" Condition=" '$(CodeSign)' == 'true' " />

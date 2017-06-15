@@ -102,16 +102,19 @@
     </PropertyGroup>
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
-    <Exec Command="dotnet restore src\ResourceManagement\Azure.Fluent\Fluent.sln" WorkingDirectory="$(LibraryRoot)" />
-    <Exec Command="dotnet restore Samples\Samples.sln" WorkingDirectory="$(LibraryRoot)"  Condition=" '$(Configuration)' != 'Release' "/>    
+    <Exec Command="dotnet --info" WorkingDirectory="$(LibraryRoot)" />
+    <Exec Command="dotnet restore FluentSDK.sln" WorkingDirectory="$(LibraryRoot)" />
+    <Exec Command="dotnet restore FluentSamples.sln" WorkingDirectory="$(LibraryRoot)" Condition=" '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet restore FluentTests.sln" WorkingDirectory="$(LibraryRoot)" Condition=" '$(Configuration)' != 'Release' "/>    
 
     <CallTarget Targets="BuildNetCoreLibraries" />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
   </Target>
 
   <Target Name="BuildNetCoreLibraries">
-    <Exec Command="dotnet build src\ResourceManagement\Azure.Fluent\Fluent.sln --configuration $(Configuration)"/>
-    <Exec Command="dotnet build Samples\Samples.sln --configuration $(Configuration)" Condition=" '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet build FluentSDK.sln --configuration $(Configuration)"/>
+    <Exec Command="dotnet build FluentSamples.sln --configuration $(Configuration)" Condition=" '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet build FluentTests.sln --configuration $(Configuration)" Condition=" '$(Configuration)' != 'Release' "/>
   </Target>
  
   <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;">
@@ -122,12 +125,12 @@
     <MakeDir Directories="$(LibraryRoot)TestResults"/>
 
     <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
-    <Exec Command="dotnet test src\ResourceManagement\Azure.Fluent\Fluent.sln -xml &quot;$(MSBuildProjectDirectory)\TestResults\Fluent.Tests.xml&quot;" 
-          WorkingDirectory="src\ResourceManagement\Azure.Fluent\Fluent.Tests"
+    <Exec Command="dotnet test Tests\Fluent.Tests\Fluent.Tests.csproj -l &quot;trx;LogFileName=$(MSBuildProjectDirectory)\TestResults\Fluent.Tests.trx&quot;" 
+          WorkingDirectory="$(LibraryRoot)"
           Condition=" $(ExcludeTests) != 'unit' "/>
 
-    <Exec Command="dotnet test Samples\Samples.sln -xml &quot;$(MSBuildProjectDirectory)\TestResults\Sample.Tests.xml&quot;" 
-          WorkingDirectory="$(SamplesTestsFolder)"
+    <Exec Command="dotnet test Tests\Samples.Tests\Samples.Tests.csproj -l &quot;trx;LogFileName=$(MSBuildProjectDirectory)\TestResults\Sample.Tests.trx&quot;" 
+          WorkingDirectory="$(LibraryRoot)"
           Condition=" $(ExcludeTests) != 'sample' "/>
   </Target>
   
