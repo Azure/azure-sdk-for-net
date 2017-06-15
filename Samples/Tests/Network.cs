@@ -22,8 +22,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                ManageApplicationGateway.Program.RunSample,
-                Path.Combine("..", "Common"));
+                ManageApplicationGateway.Program.RunSample);
         }
 
         [Fact]
@@ -76,8 +75,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                ManageSimpleApplicationGateway.Program.RunSample,
-                Path.Combine("..", "Common"));
+                ManageSimpleApplicationGateway.Program.RunSample);
         }
 
         [Fact]

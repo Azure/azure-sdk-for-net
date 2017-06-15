@@ -23,8 +23,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                ManageTrafficManager.Program.RunSample,
-                Path.Combine("..", "Common"));
+                ManageTrafficManager.Program.RunSample);
         }
     }
 }

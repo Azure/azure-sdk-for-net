@@ -22,8 +22,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                DeployUsingARMTemplate.Program.RunSample,
-                Path.Combine("..", "Common"));
+                DeployUsingARMTemplate.Program.RunSample);
         }
 
         [Fact]
@@ -32,8 +31,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                DeployUsingARMTemplateWithProgress.Program.RunSample,
-                Path.Combine("..", "Common"));
+                DeployUsingARMTemplateWithProgress.Program.RunSample);
         }
 
         [Fact]
@@ -60,8 +58,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                DeployVirtualMachineUsingARMTemplate.Program.RunSample,
-                Path.Combine("..", "Common"));
+                DeployVirtualMachineUsingARMTemplate.Program.RunSample);
         }
     }
 }

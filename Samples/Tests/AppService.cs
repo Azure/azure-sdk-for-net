@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Azure.Tests;
-using Fluent.Tests.Common;
 using System.IO;
 using Xunit;
 using Xunit.Abstractions;
@@ -71,8 +69,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                this.GetType().FullName,
-               ManageWebAppStorageAccountConnection.Program.RunSample,
-               Path.Combine("..", "Common"));
+               ManageWebAppStorageAccountConnection.Program.RunSample);
         }
 
         [Fact]
@@ -81,8 +78,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                ManageWebAppWithDomainSsl.Program.RunSample,
-                Path.Combine("..", "Common"));
+                ManageWebAppWithDomainSsl.Program.RunSample);
         }
 
         [Fact]
@@ -91,8 +87,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                ManageWebAppWithTrafficManager.Program.RunSample,
-                Path.Combine("..", "Common"));
+                ManageWebAppWithTrafficManager.Program.RunSample);
         }
 
         [Fact]
@@ -129,8 +124,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                this.GetType().FullName,
-               ManageLinuxWebAppStorageAccountConnection.Program.RunSample,
-               Path.Combine("..", "Common"));
+               ManageLinuxWebAppStorageAccountConnection.Program.RunSample);
         }
 
         [Fact]
@@ -139,8 +133,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                ManageLinuxWebAppWithDomainSsl.Program.RunSample,
-                Path.Combine("..", "Common"));
+                ManageLinuxWebAppWithDomainSsl.Program.RunSample);
         }
         
         [Fact]
@@ -149,8 +142,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                ManageLinuxWebAppWithTrafficManager.Program.RunSample,
-                Path.Combine("..", "Common"));
+                ManageLinuxWebAppWithTrafficManager.Program.RunSample);
         }
 
         [Fact]
@@ -178,8 +170,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                ManageFunctionAppWithAuthentication.Program.RunSample,
-                Path.Combine("..", "Common"));
+                ManageFunctionAppWithAuthentication.Program.RunSample);
         }
 
         [Fact]
@@ -188,8 +179,7 @@ namespace Samples.Tests
         {
             RunSampleAsTest(
                 this.GetType().FullName,
-                ManageFunctionAppWithDomainSsl.Program.RunSample,
-                Path.Combine("..", "Common"));
+                ManageFunctionAppWithDomainSsl.Program.RunSample);
         }
     }
 }
