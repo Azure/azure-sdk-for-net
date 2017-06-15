@@ -6,7 +6,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     using System;
     using System.Threading.Tasks;
 
-    class TaskExtensionHelper
+    static class TaskExtensionHelper
     {
         public static void Schedule(Func<Task> func)
         {

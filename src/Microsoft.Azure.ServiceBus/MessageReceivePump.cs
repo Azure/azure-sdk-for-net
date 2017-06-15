@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus
 
         public async Task StartPumpAsync()
         {
-            var initialMessage = await this.messageReceiver.ReceiveAsync().ConfigureAwait(false);
+            var initialMessage = await this.messageReceiver.ReceiveAsync(Constants.MessageReceiverStartPumpInitialReceiveTimeout).ConfigureAwait(false);
             if (initialMessage != null)
             {
                 MessagingEventSource.Log.MessageReceiverPumpInitialMessageReceived(this.messageReceiver.ClientId, initialMessage);
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.ServiceBus
 
         void CancelAutoRenewlock(object state)
         {
-            CancellationTokenSource renewLockCancellationTokenSource = (CancellationTokenSource)state;
+            var renewLockCancellationTokenSource = (CancellationTokenSource)state;
             try
             {
                 renewLockCancellationTokenSource.Cancel();

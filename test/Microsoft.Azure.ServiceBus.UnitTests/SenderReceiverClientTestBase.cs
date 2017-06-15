@@ -268,5 +268,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
             Assert.True(count == messageCount);
         }
+
+        internal void OnMessageRegistrationWithoutPendingMessagesTestCase(
+            IMessageReceiver messageReceiver,
+            int maxConcurrentCalls,
+            bool autoComplete)
+        {
+            var stopwatch = Stopwatch.StartNew();
+
+            messageReceiver.RegisterMessageHandler(
+                (message, token) => throw new Exception("Was not supposed to receive any messages"),
+                new MessageHandlerOptions { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+
+            stopwatch.Stop();
+            Assert.True(stopwatch.Elapsed.TotalSeconds < 10, "OnMessage handler registration took longer than 10 seconds.");
+        }
     }
 }
