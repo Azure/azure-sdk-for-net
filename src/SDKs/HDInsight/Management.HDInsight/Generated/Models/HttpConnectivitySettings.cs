@@ -32,7 +32,7 @@ namespace Microsoft.HDInsight.Models
         /// authorization is enabled.</param>
         /// <param name="username">The HTTP username.</param>
         /// <param name="password">The HTTP user password.</param>
-        public HttpConnectivitySettings(string enabledCredential = default(string), string username = default(string), string password = default(string))
+        public HttpConnectivitySettings(bool? enabledCredential = default(bool?), string username = default(string), string password = default(string))
         {
             EnabledCredential = enabledCredential;
             Username = username;
@@ -50,7 +50,7 @@ namespace Microsoft.HDInsight.Models
         /// enabled.
         /// </summary>
         [JsonProperty(PropertyName = "restAuthCredential.isEnabled")]
-        public string EnabledCredential { get; set; }
+        public bool? EnabledCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the HTTP username.

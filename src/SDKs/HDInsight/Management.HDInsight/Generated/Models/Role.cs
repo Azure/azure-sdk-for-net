@@ -39,9 +39,11 @@ namespace Microsoft.HDInsight.Models
         /// <param name="osProfile">The operating system profile.</param>
         /// <param name="virtualNetworkProfile">The virtual network
         /// profile.</param>
+        /// <param name="dataDisksGroups">The data disks groups for the
+        /// role.</param>
         /// <param name="scriptActions">The list of script actions on the
         /// role.</param>
-        public Role(string name = default(string), int? minInstanceCount = default(int?), int? targetInstanceCount = default(int?), HardwareProfile hardwareProfile = default(HardwareProfile), OsProfile osProfile = default(OsProfile), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IList<ScriptAction> scriptActions = default(IList<ScriptAction>))
+        public Role(string name = default(string), int? minInstanceCount = default(int?), int? targetInstanceCount = default(int?), HardwareProfile hardwareProfile = default(HardwareProfile), OsProfile osProfile = default(OsProfile), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IList<DataDisksGroups> dataDisksGroups = default(IList<DataDisksGroups>), IList<ScriptAction> scriptActions = default(IList<ScriptAction>))
         {
             Name = name;
             MinInstanceCount = minInstanceCount;
@@ -49,6 +51,7 @@ namespace Microsoft.HDInsight.Models
             HardwareProfile = hardwareProfile;
             OsProfile = osProfile;
             VirtualNetworkProfile = virtualNetworkProfile;
+            DataDisksGroups = dataDisksGroups;
             ScriptActions = scriptActions;
             CustomInit();
         }
@@ -93,6 +96,12 @@ namespace Microsoft.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "virtualNetworkProfile")]
         public VirtualNetworkProfile VirtualNetworkProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the data disks groups for the role.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataDisksGroups")]
+        public IList<DataDisksGroups> DataDisksGroups { get; set; }
 
         /// <summary>
         /// Gets or sets the list of script actions on the role.

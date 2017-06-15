@@ -9,7 +9,6 @@
 namespace Microsoft.HDInsight.Models
 {
     using Microsoft.HDInsight;
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -37,7 +36,7 @@ namespace Microsoft.HDInsight.Models
         /// be persisted.</param>
         /// <param name="scriptActions">The list of run time script
         /// actions.</param>
-        public ExecuteScriptActionParameters(string persistOnSuccess, IList<RuntimeScriptAction> scriptActions = default(IList<RuntimeScriptAction>))
+        public ExecuteScriptActionParameters(bool persistOnSuccess, IList<RuntimeScriptAction> scriptActions = default(IList<RuntimeScriptAction>))
         {
             ScriptActions = scriptActions;
             PersistOnSuccess = persistOnSuccess;
@@ -59,20 +58,16 @@ namespace Microsoft.HDInsight.Models
         /// Gets or sets if the scripts needs to be persisted.
         /// </summary>
         [JsonProperty(PropertyName = "persistOnSuccess")]
-        public string PersistOnSuccess { get; set; }
+        public bool PersistOnSuccess { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (PersistOnSuccess == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PersistOnSuccess");
-            }
             if (ScriptActions != null)
             {
                 foreach (var element in ScriptActions)
