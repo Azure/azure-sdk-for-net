@@ -63,7 +63,7 @@ namespace ManageContainerRegistry
                     //=============================================================
                     // Create a Docker client that will be used to push/pull images to/from the Azure Container Registry
 
-                    using (DockerClient dockerClient = DockerUtils.createDockerClient(azure, rgName, region))
+                    using (DockerClient dockerClient = DockerUtils.CreateDockerClient(azure, rgName, region))
                     {
                         var pullImgResult = dockerClient.Images.PullImage(
                             new Docker.DotNet.Models.ImagesPullParameters()

@@ -1,4 +1,7 @@
-﻿using Docker.DotNet;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Docker.DotNet;
 using Docker.DotNet.X509;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent;
@@ -77,7 +80,7 @@ namespace Microsoft.Azure.Management.Samples.Common
          * @param region - region to be used when creating a virtual machine
          * @return an instance of DockerClient
          */
-        public static DockerClient createDockerClient(IAzure azure, String rgName, Region region)
+        public static DockerClient CreateDockerClient(IAzure azure, String rgName, Region region)
         {
             string envDockerHost = Environment.GetEnvironmentVariable("DOCKER_HOST");
             string envDockerCertPath = Environment.GetEnvironmentVariable("DOCKER_CERT_PATH");
@@ -88,11 +91,10 @@ namespace Microsoft.Azure.Management.Samples.Common
             {
                 // Could not find a Docker environment; presume that there is no local Docker engine running and
                 //    attempt to configure a Docker engine running inside a new    Azure virtual machine
-                dockerClient = fromNewDockerVM(azure, rgName, region);
+                dockerClient = FromNewDockerVM(azure, rgName, region);
             }
             else
             {
-                // || String.IsNullOrWhiteSpace(envDockerCertPath)
                 dockerHostUrl = envDockerHost;
                 Utilities.Log("Using local settings to connect to a Docker service: " + dockerHostUrl);
 
@@ -132,7 +134,7 @@ namespace Microsoft.Azure.Management.Samples.Common
          * @param region - region to be used when creating a virtual machine
          * @return an instance of DockerClient
          */
-        public static DockerClient fromNewDockerVM(IAzure azure, String rgName, Region region)
+        public static DockerClient FromNewDockerVM(IAzure azure, String rgName, Region region)
         {
             string dockerVMName = SdkContext.RandomResourceName("dockervm", 15);
             string publicIPDnsLabel = SdkContext.RandomResourceName("pip", 10);
@@ -162,7 +164,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             IPublicIPAddress publicIp = nicIPConfiguration.GetPublicIPAddress();
             string dockerHostIP = publicIp.IPAddress;
 
-            DockerClient dockerClient = installDocker(dockerHostIP, vmUserName, vmPassword);
+            DockerClient dockerClient = InstallDocker(dockerHostIP, vmUserName, vmPassword);
 
             return dockerClient;
         }
@@ -174,11 +176,8 @@ namespace Microsoft.Azure.Management.Samples.Common
          * @param vmPassword - password to connect with to the Docker host machine
          * @return an instance of DockerClient
          */
-        public static DockerClient installDocker(string dockerHostIP, string vmUserName, string vmPassword)
+        public static DockerClient InstallDocker(string dockerHostIP, string vmUserName, string vmPassword)
         {
-            string keyPemContent = ""; // it stores the content of the key.pem certificate file
-            string certPemContent = ""; // it stores the content of the cert.pem certificate file
-            string caPemContent = ""; // it stores the content of the ca.pem certificate file
             int keyPfxBuffLength = 10000;
             byte[] keyPfxContent = new byte[keyPfxBuffLength]; // it stores the content of the key.pfx certificate file
             bool dockerHostTlsEnabled = false;
@@ -187,79 +186,78 @@ namespace Microsoft.Azure.Management.Samples.Common
 
             try
             {
-                Utilities.Log("Copy Docker setup scripts to remote host: " + dockerHostIP);
-                sshShell = SSHShell.Open(dockerHostIP, 22, vmUserName, vmPassword);
+                using (sshShell = SSHShell.Open(dockerHostIP, 22, vmUserName, vmPassword))
+                {
 
-                sshShell.Upload(Encoding.ASCII.GetBytes(INSTALL_DOCKER_FOR_UBUNTU_SERVER_16_04_LTS),
+                    Utilities.Log("Copy Docker setup scripts to remote host: " + dockerHostIP);
+                    sshShell.Upload(Encoding.ASCII.GetBytes(INSTALL_DOCKER_FOR_UBUNTU_SERVER_16_04_LTS),
                         "INSTALL_DOCKER_FOR_UBUNTU_SERVER_16_04_LTS.sh",
                         ".azuredocker",
                         true);
 
-                sshShell.Upload(Encoding.ASCII.GetBytes(CREATE_OPENSSL_TLS_CERTS_FOR_UBUNTU.Replace("HOST_IP", dockerHostIP)),
-                        "CREATE_OPENSSL_TLS_CERTS_FOR_UBUNTU.sh",
-                        ".azuredocker",
-                        true);
-                sshShell.Upload(Encoding.ASCII.GetBytes(INSTALL_DOCKER_TLS_CERTS_FOR_UBUNTU),
-                        "INSTALL_DOCKER_TLS_CERTS_FOR_UBUNTU.sh",
-                        ".azuredocker",
-                        true);
-                sshShell.Upload(Encoding.ASCII.GetBytes(DEFAULT_DOCKERD_CONFIG_TLS_ENABLED),
-                        "dockerd_tls.config",
-                        ".azuredocker",
-                        true);
-                sshShell.Upload(Encoding.ASCII.GetBytes(CREATE_DEFAULT_DOCKERD_OPTS_TLS_ENABLED),
-                        "CREATE_DEFAULT_DOCKERD_OPTS_TLS_ENABLED.sh",
-                        ".azuredocker",
-                        true);
-                sshShell.Upload(Encoding.ASCII.GetBytes(DEFAULT_DOCKERD_CONFIG_TLS_DISABLED),
-                        "dockerd_notls.config",
-                        ".azuredocker",
-                        true);
-                sshShell.Upload(Encoding.ASCII.GetBytes(CREATE_DEFAULT_DOCKERD_OPTS_TLS_DISABLED),
-                        "CREATE_DEFAULT_DOCKERD_OPTS_TLS_DISABLED.sh",
-                        ".azuredocker",
-                        true);
+                    sshShell.Upload(Encoding.ASCII.GetBytes(CREATE_OPENSSL_TLS_CERTS_FOR_UBUNTU.Replace("HOST_IP", dockerHostIP)),
+                            "CREATE_OPENSSL_TLS_CERTS_FOR_UBUNTU.sh",
+                            ".azuredocker",
+                            true);
+                    sshShell.Upload(Encoding.ASCII.GetBytes(INSTALL_DOCKER_TLS_CERTS_FOR_UBUNTU),
+                            "INSTALL_DOCKER_TLS_CERTS_FOR_UBUNTU.sh",
+                            ".azuredocker",
+                            true);
+                    sshShell.Upload(Encoding.ASCII.GetBytes(DEFAULT_DOCKERD_CONFIG_TLS_ENABLED),
+                            "dockerd_tls.config",
+                            ".azuredocker",
+                            true);
+                    sshShell.Upload(Encoding.ASCII.GetBytes(CREATE_DEFAULT_DOCKERD_OPTS_TLS_ENABLED),
+                            "CREATE_DEFAULT_DOCKERD_OPTS_TLS_ENABLED.sh",
+                            ".azuredocker",
+                            true);
+                    sshShell.Upload(Encoding.ASCII.GetBytes(DEFAULT_DOCKERD_CONFIG_TLS_DISABLED),
+                            "dockerd_notls.config",
+                            ".azuredocker",
+                            true);
+                    sshShell.Upload(Encoding.ASCII.GetBytes(CREATE_DEFAULT_DOCKERD_OPTS_TLS_DISABLED),
+                            "CREATE_DEFAULT_DOCKERD_OPTS_TLS_DISABLED.sh",
+                            ".azuredocker",
+                            true);
 
-                Utilities.Log("Trying to install Docker host at: " + dockerHostIP);
-                string output = sshShell.ExecuteCommand("chmod +x ~/.azuredocker/INSTALL_DOCKER_FOR_UBUNTU_SERVER_16_04_LTS.sh");
-                Utilities.Log(output);
-                output = sshShell.ExecuteCommand("bash -c ~/.azuredocker/INSTALL_DOCKER_FOR_UBUNTU_SERVER_16_04_LTS.sh");
-                Utilities.Log(output);
+                    Utilities.Log("Trying to install Docker host at: " + dockerHostIP);
+                    string output = sshShell.ExecuteCommand("chmod +x ~/.azuredocker/INSTALL_DOCKER_FOR_UBUNTU_SERVER_16_04_LTS.sh");
+                    Utilities.Log(output);
+                    output = sshShell.ExecuteCommand("bash -c ~/.azuredocker/INSTALL_DOCKER_FOR_UBUNTU_SERVER_16_04_LTS.sh");
+                    Utilities.Log(output);
 
-                Utilities.Log("Trying to create OPENSSL certificates");
-                output = sshShell.ExecuteCommand("chmod +x ~/.azuredocker/CREATE_OPENSSL_TLS_CERTS_FOR_UBUNTU.sh");
-                Utilities.Log(output);
-                output = sshShell.ExecuteCommand("bash -c ~/.azuredocker/CREATE_OPENSSL_TLS_CERTS_FOR_UBUNTU.sh");
-                Utilities.Log(output);
+                    Utilities.Log("Trying to create OPENSSL certificates");
+                    output = sshShell.ExecuteCommand("chmod +x ~/.azuredocker/CREATE_OPENSSL_TLS_CERTS_FOR_UBUNTU.sh");
+                    Utilities.Log(output);
+                    output = sshShell.ExecuteCommand("bash -c ~/.azuredocker/CREATE_OPENSSL_TLS_CERTS_FOR_UBUNTU.sh");
+                    Utilities.Log(output);
 
-                Utilities.Log("Trying to install TLS certificates");
+                    Utilities.Log("Trying to install TLS certificates");
 
-                output = sshShell.ExecuteCommand("chmod +x ~/.azuredocker/INSTALL_DOCKER_TLS_CERTS_FOR_UBUNTU.sh");
-                Utilities.Log(output);
-                output = sshShell.ExecuteCommand("bash -c ~/.azuredocker/INSTALL_DOCKER_TLS_CERTS_FOR_UBUNTU.sh");
-                Utilities.Log(output);
-                Utilities.Log("Download Docker client TLS certificates from: " + dockerHostIP);
-                //keyPemContent = sshShell.Download("key.pem", ".azuredocker/tls", true);
-                //certPemContent = sshShell.Download("cert.pem", ".azuredocker/tls", true);
-                //caPemContent = sshShell.Download("ca.pem", ".azuredocker/tls", true);
-                sshShell.Download(keyPfxContent, keyPfxBuffLength, "key.pfx", ".azuredocker/tls", true);
+                    output = sshShell.ExecuteCommand("chmod +x ~/.azuredocker/INSTALL_DOCKER_TLS_CERTS_FOR_UBUNTU.sh");
+                    Utilities.Log(output);
+                    output = sshShell.ExecuteCommand("bash -c ~/.azuredocker/INSTALL_DOCKER_TLS_CERTS_FOR_UBUNTU.sh");
+                    Utilities.Log(output);
+                    Utilities.Log("Download Docker client TLS certificates from: " + dockerHostIP);
+                    sshShell.Download(keyPfxContent, keyPfxBuffLength, "key.pfx", ".azuredocker/tls", true);
 
-                Utilities.Log("Trying to setup Docker config: " + dockerHostIP);
+                    Utilities.Log("Trying to setup Docker config: " + dockerHostIP);
 
-                //// Setup Docker daemon to allow connection from any Docker clients
-                //output = sshShell.ExecuteCommand("bash -c ~/.azuredocker/CREATE_DEFAULT_DOCKERD_OPTS_TLS_DISABLED.sh");
-                //Utilities.Log(output);
-                //string dockerHostPort = "2375"; // Default Docker port when secured connection is disabled
-                //dockerHostTlsEnabled = false;
+                    //// Setup Docker daemon to allow connection from any Docker clients
+                    //output = sshShell.ExecuteCommand("bash -c ~/.azuredocker/CREATE_DEFAULT_DOCKERD_OPTS_TLS_DISABLED.sh");
+                    //Utilities.Log(output);
+                    //string dockerHostPort = "2375"; // Default Docker port when secured connection is disabled
+                    //dockerHostTlsEnabled = false;
 
-                // Setup Docker daemon to allow connection from authorized Docker clients only
-                output = sshShell.ExecuteCommand("chmod +x ~/.azuredocker/CREATE_DEFAULT_DOCKERD_OPTS_TLS_ENABLED.sh");
-                output = sshShell.ExecuteCommand("bash -c ~/.azuredocker/CREATE_DEFAULT_DOCKERD_OPTS_TLS_ENABLED.sh");
-                Utilities.Log(output);
-                string dockerHostPort = "2376"; // Default Docker port when secured connection is enabled
-                dockerHostTlsEnabled = true;
+                    // Setup Docker daemon to allow connection from authorized Docker clients only
+                    output = sshShell.ExecuteCommand("chmod +x ~/.azuredocker/CREATE_DEFAULT_DOCKERD_OPTS_TLS_ENABLED.sh");
+                    output = sshShell.ExecuteCommand("bash -c ~/.azuredocker/CREATE_DEFAULT_DOCKERD_OPTS_TLS_ENABLED.sh");
+                    Utilities.Log(output);
+                    string dockerHostPort = "2376"; // Default Docker port when secured connection is enabled
+                    dockerHostTlsEnabled = true;
 
-                dockerHostUrl = "tcp://" + dockerHostIP + ":" + dockerHostPort;
+                    dockerHostUrl = "tcp://" + dockerHostIP + ":" + dockerHostPort;
+                }
             }
             catch (Exception exception)
             {
@@ -304,105 +302,105 @@ namespace Microsoft.Azure.Management.Samples.Common
             + "echo Running: sudo usermod -aG docker $USER \n"
             + "sudo usermod -aG docker $USER \n";
 
-    /**
-     * Linux bash script that creates the TLS certificates for a secured Docker connection.
-     */
-    public static string CREATE_OPENSSL_TLS_CERTS_FOR_UBUNTU = ""
-            + "echo Running: \"if [ ! -d ~/.azuredocker/tls ]; then rm -f -r ~/.azuredocker/tls ; fi\" \n"
-            + "if [ ! -d ~/.azuredocker/tls ]; then rm -f -r ~/.azuredocker/tls ; fi \n"
-            + "echo Running: mkdir -p ~/.azuredocker/tls \n"
-            + "mkdir -p ~/.azuredocker/tls \n"
-            + "echo Running: cd ~/.azuredocker/tls \n"
-            + "cd ~/.azuredocker/tls \n"
-            // Generate CA certificate
-            + "echo Running: openssl genrsa -passout pass:$CERT_CA_PWD_PARAM$ -aes256 -out ca-key.pem 2048 \n"
-            + "openssl genrsa -passout pass:$CERT_CA_PWD_PARAM$ -aes256 -out ca-key.pem 2048 \n"
-            // Generate Server certificates
-            + "echo Running: openssl req -passin pass:$CERT_CA_PWD_PARAM$ -subj '/CN=Docker Host CA/C=US' -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem \n"
-            + "openssl req -passin pass:$CERT_CA_PWD_PARAM$ -subj '/CN=Docker Host CA/C=US' -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem \n"
-            + "echo Running: openssl genrsa -out server-key.pem 2048 \n"
-            + "openssl genrsa -out server-key.pem 2048 \n"
-            + "echo Running: openssl req -subj '/CN=HOST_IP' -sha256 -new -key server-key.pem -out server.csr \n"
-            + "openssl req -subj '/CN=HOST_IP' -sha256 -new -key server-key.pem -out server.csr \n"
-            + "echo Running: \"echo subjectAltName = DNS:HOST_IP IP:127.0.0.1 > extfile.cnf \" \n"
-            + "echo subjectAltName = DNS:HOST_IP IP:127.0.0.1 > extfile.cnf \n"
-            + "echo Running: openssl x509 -req -passin pass:$CERT_CA_PWD_PARAM$ -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out server.pem -extfile extfile.cnf \n"
-            + "openssl x509 -req -passin pass:$CERT_CA_PWD_PARAM$ -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out server.pem -extfile extfile.cnf \n"
-            // Generate Client certificates
-            + "echo Running: openssl genrsa -passout pass:$CERT_CA_PWD_PARAM$ -out key.pem \n"
-            + "openssl genrsa -passout pass:$CERT_CA_PWD_PARAM$ -out key.pem \n"
-            + "echo Running: openssl req -passin pass:$CERT_CA_PWD_PARAM$ -subj '/CN=client' -new -key key.pem -out client.csr \n"
-            + "openssl req -passin pass:$CERT_CA_PWD_PARAM$ -subj '/CN=client' -new -key key.pem -out client.csr \n"
-            + "echo Running: \"echo extendedKeyUsage = clientAuth,serverAuth > extfile.cnf \" \n"
-            + "echo extendedKeyUsage = clientAuth,serverAuth > extfile.cnf \n"
-            + "echo Running: openssl x509 -req -passin pass:$CERT_CA_PWD_PARAM$ -days 365 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out cert.pem -extfile extfile.cnf \n"
-            + "openssl x509 -req -passin pass:$CERT_CA_PWD_PARAM$ -days 365 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out cert.pem -extfile extfile.cnf \n"
-            // Generate .PFX key file to be used when connecting with the .Net Docker client
-            + "echo Running: openssl pkcs12 -export -inkey key.pem -in cert.pem -out key.pfx -passout pass: -CAfile ca.pem \n"
-            + "openssl pkcs12 -export -inkey key.pem -in cert.pem -out key.pfx -passout pass: -CAfile ca.pem \n"
-            + "echo Running: cd ~ \n"
-            + "cd ~ \n";
+        /**
+         * Linux bash script that creates the TLS certificates for a secured Docker connection.
+         */
+        public static string CREATE_OPENSSL_TLS_CERTS_FOR_UBUNTU = ""
+                + "echo Running: \"if [ ! -d ~/.azuredocker/tls ]; then rm -f -r ~/.azuredocker/tls ; fi\" \n"
+                + "if [ ! -d ~/.azuredocker/tls ]; then rm -f -r ~/.azuredocker/tls ; fi \n"
+                + "echo Running: mkdir -p ~/.azuredocker/tls \n"
+                + "mkdir -p ~/.azuredocker/tls \n"
+                + "echo Running: cd ~/.azuredocker/tls \n"
+                + "cd ~/.azuredocker/tls \n"
+                // Generate CA certificate
+                + "echo Running: openssl genrsa -passout pass:$CERT_CA_PWD_PARAM$ -aes256 -out ca-key.pem 2048 \n"
+                + "openssl genrsa -passout pass:$CERT_CA_PWD_PARAM$ -aes256 -out ca-key.pem 2048 \n"
+                // Generate Server certificates
+                + "echo Running: openssl req -passin pass:$CERT_CA_PWD_PARAM$ -subj '/CN=Docker Host CA/C=US' -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem \n"
+                + "openssl req -passin pass:$CERT_CA_PWD_PARAM$ -subj '/CN=Docker Host CA/C=US' -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem \n"
+                + "echo Running: openssl genrsa -out server-key.pem 2048 \n"
+                + "openssl genrsa -out server-key.pem 2048 \n"
+                + "echo Running: openssl req -subj '/CN=HOST_IP' -sha256 -new -key server-key.pem -out server.csr \n"
+                + "openssl req -subj '/CN=HOST_IP' -sha256 -new -key server-key.pem -out server.csr \n"
+                + "echo Running: \"echo subjectAltName = DNS:HOST_IP IP:127.0.0.1 > extfile.cnf \" \n"
+                + "echo subjectAltName = DNS:HOST_IP IP:127.0.0.1 > extfile.cnf \n"
+                + "echo Running: openssl x509 -req -passin pass:$CERT_CA_PWD_PARAM$ -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out server.pem -extfile extfile.cnf \n"
+                + "openssl x509 -req -passin pass:$CERT_CA_PWD_PARAM$ -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out server.pem -extfile extfile.cnf \n"
+                // Generate Client certificates
+                + "echo Running: openssl genrsa -passout pass:$CERT_CA_PWD_PARAM$ -out key.pem \n"
+                + "openssl genrsa -passout pass:$CERT_CA_PWD_PARAM$ -out key.pem \n"
+                + "echo Running: openssl req -passin pass:$CERT_CA_PWD_PARAM$ -subj '/CN=client' -new -key key.pem -out client.csr \n"
+                + "openssl req -passin pass:$CERT_CA_PWD_PARAM$ -subj '/CN=client' -new -key key.pem -out client.csr \n"
+                + "echo Running: \"echo extendedKeyUsage = clientAuth,serverAuth > extfile.cnf \" \n"
+                + "echo extendedKeyUsage = clientAuth,serverAuth > extfile.cnf \n"
+                + "echo Running: openssl x509 -req -passin pass:$CERT_CA_PWD_PARAM$ -days 365 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out cert.pem -extfile extfile.cnf \n"
+                + "openssl x509 -req -passin pass:$CERT_CA_PWD_PARAM$ -days 365 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out cert.pem -extfile extfile.cnf \n"
+                // Generate .PFX key file to be used when connecting with the .Net Docker client
+                + "echo Running: openssl pkcs12 -export -inkey key.pem -in cert.pem -out key.pfx -passout pass: -CAfile ca.pem \n"
+                + "openssl pkcs12 -export -inkey key.pem -in cert.pem -out key.pfx -passout pass: -CAfile ca.pem \n"
+                + "echo Running: cd ~ \n"
+                + "cd ~ \n";
 
-    /**
-     * Bash script that sets up the TLS certificates to be used in a secured Docker configuration file; must be run on the Docker dockerHostUrl after the VM is provisioned.
-     */
-    public static string INSTALL_DOCKER_TLS_CERTS_FOR_UBUNTU = ""
-            + "echo \"if [ ! -d /etc/docker/tls ]; then sudo mkdir -p /etc/docker/tls ; fi\" \n"
-            + "if [ ! -d /etc/docker/tls ]; then sudo mkdir -p /etc/docker/tls ; fi \n"
-            + "echo sudo cp -f ~/.azuredocker/tls/ca.pem /etc/docker/tls/ca.pem \n"
-            + "sudo cp -f ~/.azuredocker/tls/ca.pem /etc/docker/tls/ca.pem \n"
-            + "echo sudo cp -f ~/.azuredocker/tls/server.pem /etc/docker/tls/server.pem \n"
-            + "sudo cp -f ~/.azuredocker/tls/server.pem /etc/docker/tls/server.pem \n"
-            + "echo sudo cp -f ~/.azuredocker/tls/server-key.pem /etc/docker/tls/server-key.pem \n"
-            + "sudo cp -f ~/.azuredocker/tls/server-key.pem /etc/docker/tls/server-key.pem \n"
-            + "echo sudo chmod -R 755 /etc/docker \n"
-            + "sudo chmod -R 755 /etc/docker \n";
+        /**
+         * Bash script that sets up the TLS certificates to be used in a secured Docker configuration file; must be run on the Docker dockerHostUrl after the VM is provisioned.
+         */
+        public static string INSTALL_DOCKER_TLS_CERTS_FOR_UBUNTU = ""
+                + "echo \"if [ ! -d /etc/docker/tls ]; then sudo mkdir -p /etc/docker/tls ; fi\" \n"
+                + "if [ ! -d /etc/docker/tls ]; then sudo mkdir -p /etc/docker/tls ; fi \n"
+                + "echo sudo cp -f ~/.azuredocker/tls/ca.pem /etc/docker/tls/ca.pem \n"
+                + "sudo cp -f ~/.azuredocker/tls/ca.pem /etc/docker/tls/ca.pem \n"
+                + "echo sudo cp -f ~/.azuredocker/tls/server.pem /etc/docker/tls/server.pem \n"
+                + "sudo cp -f ~/.azuredocker/tls/server.pem /etc/docker/tls/server.pem \n"
+                + "echo sudo cp -f ~/.azuredocker/tls/server-key.pem /etc/docker/tls/server-key.pem \n"
+                + "sudo cp -f ~/.azuredocker/tls/server-key.pem /etc/docker/tls/server-key.pem \n"
+                + "echo sudo chmod -R 755 /etc/docker \n"
+                + "sudo chmod -R 755 /etc/docker \n";
 
-    /**
-     * Docker daemon config file allowing connections from any Docker client.
-     */
-    public static string DEFAULT_DOCKERD_CONFIG_TLS_ENABLED = ""
-            + "[Service]\n"
-            + "ExecStart=\n"
-            + "ExecStart=/usr/bin/dockerd --tlsverify --tlscacert=/etc/docker/tls/ca.pem --tlscert=/etc/docker/tls/server.pem --tlskey=/etc/docker/tls/server-key.pem -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock\n";
+        /**
+         * Docker daemon config file allowing connections from any Docker client.
+         */
+        public static string DEFAULT_DOCKERD_CONFIG_TLS_ENABLED = ""
+                + "[Service]\n"
+                + "ExecStart=\n"
+                + "ExecStart=/usr/bin/dockerd --tlsverify --tlscacert=/etc/docker/tls/ca.pem --tlscert=/etc/docker/tls/server.pem --tlskey=/etc/docker/tls/server-key.pem -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock\n";
 
-    /**
-     * Bash script that creates a default TLS secured Docker configuration file; must be run on the Docker dockerHostUrl after the VM is provisioned.
-     */
-    public static string CREATE_DEFAULT_DOCKERD_OPTS_TLS_ENABLED = ""
-            + "echo Running: sudo service docker stop \n"
-            + "sudo service docker stop \n"
-            + "echo \"if [ ! -d /etc/systemd/system/docker.service.d ]; then sudo mkdir -p /etc/systemd/system/docker.service.d ; fi\" \n"
-            + "if [ ! -d /etc/systemd/system/docker.service.d ]; then sudo mkdir -p /etc/systemd/system/docker.service.d ; fi \n"
-            + "echo sudo cp -f ~/.azuredocker/dockerd_tls.config /etc/systemd/system/docker.service.d/custom.conf \n"
-            + "sudo cp -f ~/.azuredocker/dockerd_tls.config /etc/systemd/system/docker.service.d/custom.conf \n"
-            + "echo Running: sudo systemctl daemon-reload \n"
-            + "sudo systemctl daemon-reload \n"
-            + "echo Running: sudo service docker start \n"
-            + "sudo service docker start \n";
+        /**
+         * Bash script that creates a default TLS secured Docker configuration file; must be run on the Docker dockerHostUrl after the VM is provisioned.
+         */
+        public static string CREATE_DEFAULT_DOCKERD_OPTS_TLS_ENABLED = ""
+                + "echo Running: sudo service docker stop \n"
+                + "sudo service docker stop \n"
+                + "echo \"if [ ! -d /etc/systemd/system/docker.service.d ]; then sudo mkdir -p /etc/systemd/system/docker.service.d ; fi\" \n"
+                + "if [ ! -d /etc/systemd/system/docker.service.d ]; then sudo mkdir -p /etc/systemd/system/docker.service.d ; fi \n"
+                + "echo sudo cp -f ~/.azuredocker/dockerd_tls.config /etc/systemd/system/docker.service.d/custom.conf \n"
+                + "sudo cp -f ~/.azuredocker/dockerd_tls.config /etc/systemd/system/docker.service.d/custom.conf \n"
+                + "echo Running: sudo systemctl daemon-reload \n"
+                + "sudo systemctl daemon-reload \n"
+                + "echo Running: sudo service docker start \n"
+                + "sudo service docker start \n";
 
-    /**
-     * Docker daemon config file allowing connections from any Docker client.
-     */
-    public static string DEFAULT_DOCKERD_CONFIG_TLS_DISABLED = ""
-            + "[Service]\n"
-            + "ExecStart=\n"
-            + "ExecStart=/usr/bin/dockerd --tls=false -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock\n";
+        /**
+         * Docker daemon config file allowing connections from any Docker client.
+         */
+        public static string DEFAULT_DOCKERD_CONFIG_TLS_DISABLED = ""
+                + "[Service]\n"
+                + "ExecStart=\n"
+                + "ExecStart=/usr/bin/dockerd --tls=false -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock\n";
 
-    /**
-     * Bash script that creates a default unsecured Docker configuration file; must be run on the Docker dockerHostUrl after the VM is provisioned.
-     */
-    public static string CREATE_DEFAULT_DOCKERD_OPTS_TLS_DISABLED = ""
-            + "echo Running: sudo service docker stop\n"
-            + "sudo service docker stop\n"
-            + "echo \"if [ ! -d /etc/systemd/system/docker.service.d ]; then sudo mkdir -p /etc/systemd/system/docker.service.d ; fi\" \n"
-            + "if [ ! -d /etc/systemd/system/docker.service.d ]; then sudo mkdir -p /etc/systemd/system/docker.service.d ; fi \n"
-            + "echo sudo cp -f ~/.azuredocker/dockerd_notls.config /etc/systemd/system/docker.service.d/custom.conf \n"
-            + "sudo cp -f ~/.azuredocker/dockerd_notls.config /etc/systemd/system/docker.service.d/custom.conf \n"
-            + "echo Running: sudo systemctl daemon-reload \n"
-            + "sudo systemctl daemon-reload \n"
-            + "echo Running: sudo service docker start \n"
-            + "sudo service docker start \n";
+        /**
+         * Bash script that creates a default unsecured Docker configuration file; must be run on the Docker dockerHostUrl after the VM is provisioned.
+         */
+        public static string CREATE_DEFAULT_DOCKERD_OPTS_TLS_DISABLED = ""
+                + "echo Running: sudo service docker stop\n"
+                + "sudo service docker stop\n"
+                + "echo \"if [ ! -d /etc/systemd/system/docker.service.d ]; then sudo mkdir -p /etc/systemd/system/docker.service.d ; fi\" \n"
+                + "if [ ! -d /etc/systemd/system/docker.service.d ]; then sudo mkdir -p /etc/systemd/system/docker.service.d ; fi \n"
+                + "echo sudo cp -f ~/.azuredocker/dockerd_notls.config /etc/systemd/system/docker.service.d/custom.conf \n"
+                + "sudo cp -f ~/.azuredocker/dockerd_notls.config /etc/systemd/system/docker.service.d/custom.conf \n"
+                + "echo Running: sudo systemctl daemon-reload \n"
+                + "sudo systemctl daemon-reload \n"
+                + "echo Running: sudo service docker start \n"
+                + "sudo service docker start \n";
 
     }
 }

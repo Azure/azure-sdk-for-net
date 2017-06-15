@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Renci.SshNet;
 using System;
 using System.IO;
-using System.Security.Cryptography;
-using System.Threading;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
-    public class SSHShell
+    public class SSHShell : IDisposable
     {
         const string UBUNTU_HOME_DIRECTORY = "/home/";
         private SshClient sshClient;
@@ -49,7 +48,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                         throw exception;
                     }
                 }
-                Thread.Sleep(backoffTime);
+                SdkContext.DelayProvider.Delay(backoffTime);
             }
         }
 
@@ -82,7 +81,8 @@ namespace Microsoft.Azure.Management.Samples.Common
                 {
                     return command.Execute();
                 }
-            } else
+            }
+            else
             {
                 return null;
             }
@@ -112,7 +112,8 @@ namespace Microsoft.Azure.Management.Samples.Common
                     mstream.Position = 0;
                     return (new System.IO.StreamReader(mstream)).ReadToEnd();
                 }
-            } else
+            }
+            else
             {
                 return null;
             }
@@ -136,7 +137,8 @@ namespace Microsoft.Azure.Management.Samples.Common
                     path = homeDirectory + path;
                 }
 
-                using (MemoryStream mstream = new MemoryStream()) {
+                using (MemoryStream mstream = new MemoryStream())
+                {
                     scpClient.Download(path + "/" + fileName, mstream);
                     if (mstream.Position >= maxCount)
                     {
@@ -184,40 +186,30 @@ namespace Microsoft.Azure.Management.Samples.Common
                     scpClient.Upload(mstream, path + "/" + fileName);
                 }
             }
-            // In Java
-            //ChannelSftp channel = (ChannelSftp) this.session.openChannel("sftp");
-            //channel.connect();
-            //String absolutePath = isUserHomeBased ? channel.getHome() + "/" + toPath : toPath;
-
-            //String path = "";
-            //for (String dir : absolutePath.split("/")) {
-            //    path = path + "/" + dir;
-            //    try
-            //    {
-            //        channel.mkdir(path);
-            //    }
-            //    catch (Exception ee)
-            //    {
-            //    }
-            //}
-            //channel.cd(absolutePath);
-            //channel.put(from, fileName);
-            //if (filePerm != null) {
-            //    channel.chmod(Integer.parseInt(filePerm), absolutePath + "/" + fileName);
-            //}
-            //channel.disconnect();
         }
 
-        ~SSHShell()
+        public void Dispose()
         {
-            if (sshClient != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                sshClient.Disconnect();
+                if (sshClient != null)
+                {
+                    sshClient.Disconnect();
+                    sshClient.Dispose();
+                }
+                if (scpClient != null)
+                {
+                    scpClient.Disconnect();
+                    scpClient.Dispose();
+                }
             }
-            if (scpClient != null)
-            {
-                scpClient.Disconnect();
-            }
+            // free native resources if there are any.
         }
     }
 }
