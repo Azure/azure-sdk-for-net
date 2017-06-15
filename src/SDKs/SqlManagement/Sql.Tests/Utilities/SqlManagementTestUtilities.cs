@@ -38,6 +38,8 @@ namespace Sql.Tests
 
         public const string DefaultStageSecondaryLocation = "SouthEast Asia";
 
+        public const string DefaultEuapPrimaryLocation = "East US 2 EUAP";
+
         public static SqlManagementClient GetSqlManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
             if (handler != null)
@@ -333,6 +335,12 @@ namespace Sql.Tests
             Assert.Equal(expectedUri, actual.Uri);
         }
 
+        public static void ValidateVirtualNetworkRule(VirtualNetworkRule expected, VirtualNetworkRule actual, string name)
+        {
+            Assert.NotNull(actual.Id);
+            Assert.Equal(expected.VirtualNetworkSubnetId, actual.VirtualNetworkSubnetId);
+        }
+
         public static void RunTest(string suiteName, string testName, Action<ResourceManagementClient, SqlManagementClient> test)
         {
             using (MockContext context = MockContext.Start(suiteName, testName))
@@ -345,7 +353,7 @@ namespace Sql.Tests
             }
         }
 
-        public static void RunTestInNewResourceGroup(string suiteName, string testName, string resourcePrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup> test)
+        public static void RunTestInNewResourceGroup(string suiteName, string testName, string resourcePrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup> test, string location = DefaultLocationId)
         {
             RunTest(suiteName, testName, (resourceClient, sqlClient) =>
             {
@@ -375,7 +383,7 @@ namespace Sql.Tests
             });
         }
 
-        internal static void RunTestInNewV12Server(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server> test)
+        internal static void RunTestInNewV12Server(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server> test, string location = DefaultLocationId)
         {
             RunTestInNewResourceGroup(suiteName, testName, testPrefix, (resClient, sqlClient, resGroup) =>
             {
