@@ -209,16 +209,28 @@ namespace Sql.Tests
                         RecoveryServicesVaultResourceId = vault.Id
                     });
 
+                // Get server LTR backup vault
+                serverVault = sqlClient.Servers.GetBackupLongTermRetentionVault(resourceGroup.Name, server.Name);
+
                 // Create database LTR policy
                 Database db = sqlClient.Databases.CreateOrUpdate(
                     resourceGroup.Name, 
                     server.Name,
                     databaseName: SqlManagementTestUtilities.GenerateName(), 
                     parameters: new Database(resourceGroup.Location));
-                sqlClient.Databases.CreateLongTermRetentionPolicy(
+                BackupLongTermRetentionPolicy databasePolicy = sqlClient.Databases.CreateOrUpdateLongTermRetentionPolicy(
                     resourceGroup.Name, server.Name, db.Name, new BackupLongTermRetentionPolicy(
                         BackupLongTermRetentionPolicyState.Enabled,
                         policy.Id));
+
+                // Get database LTR policy
+                databasePolicy = sqlClient.Databases.GetBackupLongTermRetentionPolicy(resourceGroup.Name, server.Name, db.Name);
+
+                // Update database LTR policy
+                databasePolicy = sqlClient.Databases.CreateOrUpdateLongTermRetentionPolicy(
+                    resourceGroup.Name, server.Name, db.Name, new BackupLongTermRetentionPolicy(
+                        BackupLongTermRetentionPolicyState.Disabled,
+                        policy.Id /* policy Id must be set even when disabling */));
             }
         }
     }

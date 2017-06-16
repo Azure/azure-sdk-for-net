@@ -913,7 +913,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<BackupLongTermRetentionPolicy>> GetBackupLongTermRetentionPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a database backup long term retention policy
+        /// Creates or updates a database backup long term retention policy
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -945,7 +945,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupLongTermRetentionPolicy>> CreateLongTermRetentionPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupLongTermRetentionPolicy>> CreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns database usages.
         /// </summary>
@@ -1293,7 +1293,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<Database>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a database backup long term retention policy
+        /// Creates or updates a database backup long term retention policy
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -1325,6 +1325,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupLongTermRetentionPolicy>> BeginCreateLongTermRetentionPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupLongTermRetentionPolicy>> BeginCreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

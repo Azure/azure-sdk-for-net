@@ -4486,7 +4486,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Updates a database backup long term retention policy
+        /// Creates or updates a database backup long term retention policy
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -4507,10 +4507,10 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupLongTermRetentionPolicy>> CreateLongTermRetentionPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupLongTermRetentionPolicy>> CreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<BackupLongTermRetentionPolicy> _response = await BeginCreateLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<BackupLongTermRetentionPolicy> _response = await BeginCreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -6822,7 +6822,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Updates a database backup long term retention policy
+        /// Creates or updates a database backup long term retention policy
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -6858,7 +6858,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BackupLongTermRetentionPolicy>> BeginCreateLongTermRetentionPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupLongTermRetentionPolicy>> BeginCreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -6900,7 +6900,7 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("backupLongTermRetentionPolicyName", backupLongTermRetentionPolicyName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateLongTermRetentionPolicy", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdateLongTermRetentionPolicy", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;

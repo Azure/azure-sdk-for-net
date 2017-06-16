@@ -1456,7 +1456,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Updates a database backup long term retention policy
+            /// Creates or updates a database backup long term retention policy
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1474,13 +1474,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The required parameters to update a backup long term retention policy
             /// </param>
-            public static BackupLongTermRetentionPolicy CreateLongTermRetentionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
+            public static BackupLongTermRetentionPolicy CreateOrUpdateLongTermRetentionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
             {
-                return operations.CreateLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates a database backup long term retention policy
+            /// Creates or updates a database backup long term retention policy
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1501,9 +1501,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupLongTermRetentionPolicy> CreateLongTermRetentionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupLongTermRetentionPolicy> CreateOrUpdateLongTermRetentionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2074,7 +2074,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Updates a database backup long term retention policy
+            /// Creates or updates a database backup long term retention policy
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2092,13 +2092,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The required parameters to update a backup long term retention policy
             /// </param>
-            public static BackupLongTermRetentionPolicy BeginCreateLongTermRetentionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
+            public static BackupLongTermRetentionPolicy BeginCreateOrUpdateLongTermRetentionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
             {
-                return operations.BeginCreateLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates a database backup long term retention policy
+            /// Creates or updates a database backup long term retention policy
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2119,9 +2119,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupLongTermRetentionPolicy> BeginCreateLongTermRetentionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupLongTermRetentionPolicy> BeginCreateOrUpdateLongTermRetentionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
