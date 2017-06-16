@@ -35,14 +35,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the BackupLongTermRetentionVault
         /// class.
         /// </summary>
+        /// <param name="recoveryServicesVaultResourceId">The azure recovery
+        /// services vault resource id</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="recoveryServicesVaultResourceId">The azure recovery
-        /// services vault resource id</param>
-        public BackupLongTermRetentionVault(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string recoveryServicesVaultResourceId = default(string))
+        public BackupLongTermRetentionVault(string recoveryServicesVaultResourceId, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
             : base(id, name, type)
         {
             Location = location;
@@ -67,5 +67,18 @@ namespace Microsoft.Azure.Management.Sql.Models
         [JsonProperty(PropertyName = "properties.recoveryServicesVaultResourceId")]
         public string RecoveryServicesVaultResourceId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RecoveryServicesVaultResourceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RecoveryServicesVaultResourceId");
+            }
+        }
     }
 }

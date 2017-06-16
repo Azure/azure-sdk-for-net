@@ -55,6 +55,11 @@ namespace Microsoft.Azure.Management.Sql
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The name of the geo backup policy.
+        /// </summary>
+        public string GeoBackupPolicyName { get; private set; }
+
+        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -87,11 +92,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; private set; }
 
         /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        public virtual IServersOperations Servers { get; private set; }
-
-        /// <summary>
         /// Gets the ICapabilitiesOperations.
         /// </summary>
         public virtual ICapabilitiesOperations Capabilities { get; private set; }
@@ -110,6 +110,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        public virtual IServersOperations Servers { get; private set; }
 
         /// <summary>
         /// Gets the IRecommendedElasticPoolsOperations.
@@ -340,17 +345,18 @@ namespace Microsoft.Azure.Management.Sql
             Databases = new DatabasesOperations(this);
             RecoverableDatabases = new RecoverableDatabasesOperations(this);
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
-            Servers = new ServersOperations(this);
             Capabilities = new CapabilitiesOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
             Operations = new Operations(this);
+            Servers = new ServersOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
             ServerKeys = new ServerKeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            GeoBackupPolicyName = "Default";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

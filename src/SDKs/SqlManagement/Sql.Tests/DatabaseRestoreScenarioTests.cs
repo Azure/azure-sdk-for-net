@@ -211,16 +211,14 @@ namespace Sql.Tests
 
                 // Create database LTR policy
                 Database db = sqlClient.Databases.CreateOrUpdate(
-                    resourceGroup.Name, server.Name, databaseName: SqlManagementTestUtilities.GenerateName(), parameters: new Database
-                    {
-                        Location = resourceGroup.Location
-                    });
+                    resourceGroup.Name, 
+                    server.Name,
+                    databaseName: SqlManagementTestUtilities.GenerateName(), 
+                    parameters: new Database(resourceGroup.Location));
                 sqlClient.Databases.CreateLongTermRetentionPolicy(
-                    resourceGroup.Name, server.Name, db.Name, new BackupLongTermRetentionPolicy
-                    {
-                        RecoveryServicesBackupPolicyResourceId = policy.Id,
-                        State = BackupLongTermRetentionPolicyState.Enabled
-                    });
+                    resourceGroup.Name, server.Name, db.Name, new BackupLongTermRetentionPolicy(
+                        BackupLongTermRetentionPolicyState.Enabled,
+                        policy.Id));
             }
         }
     }
