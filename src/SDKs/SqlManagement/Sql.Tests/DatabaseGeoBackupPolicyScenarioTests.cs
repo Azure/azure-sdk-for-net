@@ -38,7 +38,7 @@ namespace Sql.Tests
                 Assert.Equal("Premium", policy.StorageType);
 
                 // Get Geo Backup Policy
-                policy = sqlClient.Databases.GetGeoBackupPolicy(resourceGroup.Name, server.Name, dbName, "Default");
+                policy = sqlClient.Databases.GetGeoBackupPolicy(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal("Default", policy.Name);
                 Assert.Equal(GeoBackupPolicyState.Enabled, policy.State);
                 Assert.Equal("Premium", policy.StorageType);
@@ -59,7 +59,7 @@ namespace Sql.Tests
                 Assert.Equal("Premium", policy.StorageType);
 
                 // Get Geo Backup Policy
-                policy = sqlClient.Databases.GetGeoBackupPolicy(resourceGroup.Name, server.Name, dbName, "Default");
+                policy = sqlClient.Databases.GetGeoBackupPolicy(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal("Default", policy.Name);
                 Assert.Equal(GeoBackupPolicyState.Disabled, policy.State);
                 Assert.Equal("Premium", policy.StorageType);
