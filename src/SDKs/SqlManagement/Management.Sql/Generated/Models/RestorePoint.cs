@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="earliestRestoreDate">Earliest restore time (ISO8601
         /// format). Populated when restorePointType = DISCRETE. Null
         /// otherwise.</param>
-        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), RestorePointTypes? restorePointType = default(RestorePointTypes?), System.DateTime? restorePointCreationDate = default(System.DateTime?), System.DateTime? earliestRestoreDate = default(System.DateTime?))
+        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), RestorePointType? restorePointType = default(RestorePointType?), System.DateTime? restorePointCreationDate = default(System.DateTime?), System.DateTime? earliestRestoreDate = default(System.DateTime?))
             : base(id, name, type)
         {
             RestorePointType = restorePointType;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// values include: 'DISCRETE', 'CONTINUOUS'
         /// </summary>
         [JsonProperty(PropertyName = "properties.restorePointType")]
-        public RestorePointTypes? RestorePointType { get; private set; }
+        public RestorePointType? RestorePointType { get; private set; }
 
         /// <summary>
         /// Gets restore point creation time (ISO8601 format). Populated when

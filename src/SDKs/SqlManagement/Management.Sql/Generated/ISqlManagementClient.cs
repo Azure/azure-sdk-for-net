@@ -72,6 +72,16 @@ namespace Microsoft.Azure.Management.Sql
         IDatabasesOperations Databases { get; }
 
         /// <summary>
+        /// Gets the IRecoverableDatabasesOperations.
+        /// </summary>
+        IRecoverableDatabasesOperations RecoverableDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedDatabasesOperations.
+        /// </summary>
+        IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
+
+        /// <summary>
         /// Gets the ICapabilitiesOperations.
         /// </summary>
         ICapabilitiesOperations Capabilities { get; }
