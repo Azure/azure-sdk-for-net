@@ -28,7 +28,7 @@ namespace ManageContainerRegistry
          *      to/from an Azure Container Registry
          *  - Create a new Docker container from an image that was pulled from Azure Container Registry
          */
-        public static void RunSample(IAzure azure, bool testMode)
+        public static void RunSample(IAzure azure)
         {
             string rgName = SdkContext.RandomResourceName("rgACR", 15);
             string acrName = SdkContext.RandomResourceName("acrsample", 20);
@@ -57,124 +57,120 @@ namespace ManageContainerRegistry
 
                 RegistryListCredentialsResultInner acrCredentials = azureRegistry.ListCredentials();
 
-                // Skip the remaining of the sample when running in test mode (mocked)
-                if (!testMode)
+                //=============================================================
+                // Create a Docker client that will be used to push/pull images to/from the Azure Container Registry
+
+                using (DockerClient dockerClient = DockerUtils.CreateDockerClient(azure, rgName, region))
                 {
-                    //=============================================================
-                    // Create a Docker client that will be used to push/pull images to/from the Azure Container Registry
+                    var pullImgResult = dockerClient.Images.PullImage(
+                        new Docker.DotNet.Models.ImagesPullParameters()
+                        {
+                            Parent = dockerImageName,
+                            Tag = dockerImageTag
+                        },
+                        new Docker.DotNet.Models.AuthConfig());
 
-                    using (DockerClient dockerClient = DockerUtils.CreateDockerClient(azure, rgName, region))
+                    Utilities.Log("List Docker images for: " + dockerClient.Configuration.EndpointBaseUri.AbsoluteUri);
+                    var listImages = dockerClient.Images.ListImages(
+                        new Docker.DotNet.Models.ImagesListParameters()
+                        {
+                            All = true
+                        });
+                    foreach (var img in listImages)
                     {
-                        var pullImgResult = dockerClient.Images.PullImage(
-                            new Docker.DotNet.Models.ImagesPullParameters()
-                            {
-                                Parent = dockerImageName,
-                                Tag = dockerImageTag
-                            },
-                            new Docker.DotNet.Models.AuthConfig());
+                        Utilities.Log("\tFound image " + img.RepoTags[0] + " (id:" + img.ID + ")");
+                    }
 
-                        Utilities.Log("List Docker images for: " + dockerClient.Configuration.EndpointBaseUri.AbsoluteUri);
-                        var listImages = dockerClient.Images.ListImages(
-                            new Docker.DotNet.Models.ImagesListParameters()
-                            {
-                                All = true
-                            });
-                        foreach (var img in listImages)
+                    var createContainerResult = dockerClient.Containers.CreateContainer(
+                        new Docker.DotNet.Models.CreateContainerParameters()
                         {
-                            Utilities.Log("\tFound image " + img.RepoTags[0] + " (id:" + img.ID + ")");
-                        }
-
-                        var createContainerResult = dockerClient.Containers.CreateContainer(
-                            new Docker.DotNet.Models.CreateContainerParameters()
-                            {
-                                Name = dockerContainerName,
-                                Image = dockerImageName + ":" + dockerImageTag
-                            });
-                        Utilities.Log("List Docker containers for: " + dockerClient.Configuration.EndpointBaseUri.AbsoluteUri);
-                        var listContainers = dockerClient.Containers.ListContainers(
-                            new Docker.DotNet.Models.ContainersListParameters()
-                            {
-                                All = true
-                            });
-                        foreach (var container in listContainers)
+                            Name = dockerContainerName,
+                            Image = dockerImageName + ":" + dockerImageTag
+                        });
+                    Utilities.Log("List Docker containers for: " + dockerClient.Configuration.EndpointBaseUri.AbsoluteUri);
+                    var listContainers = dockerClient.Containers.ListContainers(
+                        new Docker.DotNet.Models.ContainersListParameters()
                         {
-                            Utilities.Log("\tFound container " + container.Names[0] + " (id:" + container.ID + ")");
-                        }
+                            All = true
+                        });
+                    foreach (var container in listContainers)
+                    {
+                        Utilities.Log("\tFound container " + container.Names[0] + " (id:" + container.ID + ")");
+                    }
 
-                        //=============================================================
-                        // Commit the new container
+                    //=============================================================
+                    // Commit the new container
 
-                        string privateRepoUrl = azureRegistry.LoginServerUrl + "/" + dockerImageRelPath + "/" + dockerContainerName;
-                        Utilities.Log("Commiting image at: " + privateRepoUrl);
+                    string privateRepoUrl = azureRegistry.LoginServerUrl + "/" + dockerImageRelPath + "/" + dockerContainerName;
+                    Utilities.Log("Commiting image at: " + privateRepoUrl);
 
-                        var commitContainerResult = dockerClient.Miscellaneous.CommitContainerChanges(
-                            new Docker.DotNet.Models.CommitContainerChangesParameters()
-                            {
-                                ContainerID = dockerContainerName,
-                                RepositoryName = privateRepoUrl,
-                                Tag = dockerImageTag
-                            });
-
-                        //=============================================================
-                        // Push the new Docker image to the Azure Container Registry
-
-                        var pushImageResult = dockerClient.Images.PushImage(privateRepoUrl,
-                            new Docker.DotNet.Models.ImagePushParameters()
-                            {
-                                ImageID = privateRepoUrl,
-                                Tag = dockerImageTag
-                            },
-                            new Docker.DotNet.Models.AuthConfig()
-                            {
-                                Username = acrCredentials.Username,
-                                Password = acrCredentials.Passwords[0].Value,
-                                ServerAddress = azureRegistry.LoginServerUrl
-                            });
-
-                        //=============================================================
-                        // Verify that the image we saved in the Azure Container registry can be pulled and instantiated locally
-
-                        var pullAcrImgResult = dockerClient.Images.PullImage(
-                            new Docker.DotNet.Models.ImagesPullParameters()
-                            {
-                                Parent = privateRepoUrl,
-                                Tag = dockerImageTag
-                            },
-                            new Docker.DotNet.Models.AuthConfig()
-                            {
-                                Username = acrCredentials.Username,
-                                Password = acrCredentials.Passwords[0].Value,
-                                ServerAddress = azureRegistry.LoginServerUrl
-                            });
-
-                        Utilities.Log("List Docker images for: " + dockerClient.Configuration.EndpointBaseUri.AbsoluteUri);
-                        listImages = dockerClient.Images.ListImages(
-                            new Docker.DotNet.Models.ImagesListParameters()
-                            {
-                                All = true
-                            });
-                        foreach (var img in listImages)
+                    var commitContainerResult = dockerClient.Miscellaneous.CommitContainerChanges(
+                        new Docker.DotNet.Models.CommitContainerChangesParameters()
                         {
-                            Utilities.Log("\tFound image " + img.RepoTags[0] + " (id:" + img.ID + ")");
-                        }
+                            ContainerID = dockerContainerName,
+                            RepositoryName = privateRepoUrl,
+                            Tag = dockerImageTag
+                        });
 
-                        var createAcrContainerResult = dockerClient.Containers.CreateContainer(
-                            new Docker.DotNet.Models.CreateContainerParameters()
-                            {
-                                Name = dockerContainerName + "fromazure",
-                                Image = privateRepoUrl + ":" + dockerImageTag
-                            });
+                    //=============================================================
+                    // Push the new Docker image to the Azure Container Registry
 
-                        Utilities.Log("List Docker containers for: " + dockerClient.Configuration.EndpointBaseUri.AbsoluteUri);
-                        listContainers = dockerClient.Containers.ListContainers(
-                            new Docker.DotNet.Models.ContainersListParameters()
-                            {
-                                All = true
-                            });
-                        foreach (var container in listContainers)
+                    var pushImageResult = dockerClient.Images.PushImage(privateRepoUrl,
+                        new Docker.DotNet.Models.ImagePushParameters()
                         {
-                            Utilities.Log("\tFound container " + container.Names[0] + " (id:" + container.ID + ")");
-                        }
+                            ImageID = privateRepoUrl,
+                            Tag = dockerImageTag
+                        },
+                        new Docker.DotNet.Models.AuthConfig()
+                        {
+                            Username = acrCredentials.Username,
+                            Password = acrCredentials.Passwords[0].Value,
+                            ServerAddress = azureRegistry.LoginServerUrl
+                        });
+
+                    //=============================================================
+                    // Verify that the image we saved in the Azure Container registry can be pulled and instantiated locally
+
+                    var pullAcrImgResult = dockerClient.Images.PullImage(
+                        new Docker.DotNet.Models.ImagesPullParameters()
+                        {
+                            Parent = privateRepoUrl,
+                            Tag = dockerImageTag
+                        },
+                        new Docker.DotNet.Models.AuthConfig()
+                        {
+                            Username = acrCredentials.Username,
+                            Password = acrCredentials.Passwords[0].Value,
+                            ServerAddress = azureRegistry.LoginServerUrl
+                        });
+
+                    Utilities.Log("List Docker images for: " + dockerClient.Configuration.EndpointBaseUri.AbsoluteUri);
+                    listImages = dockerClient.Images.ListImages(
+                        new Docker.DotNet.Models.ImagesListParameters()
+                        {
+                            All = true
+                        });
+                    foreach (var img in listImages)
+                    {
+                        Utilities.Log("\tFound image " + img.RepoTags[0] + " (id:" + img.ID + ")");
+                    }
+
+                    var createAcrContainerResult = dockerClient.Containers.CreateContainer(
+                        new Docker.DotNet.Models.CreateContainerParameters()
+                        {
+                            Name = dockerContainerName + "fromazure",
+                            Image = privateRepoUrl + ":" + dockerImageTag
+                        });
+
+                    Utilities.Log("List Docker containers for: " + dockerClient.Configuration.EndpointBaseUri.AbsoluteUri);
+                    listContainers = dockerClient.Containers.ListContainers(
+                        new Docker.DotNet.Models.ContainersListParameters()
+                        {
+                            All = true
+                        });
+                    foreach (var container in listContainers)
+                    {
+                        Utilities.Log("\tFound container " + container.Names[0] + " (id:" + container.ID + ")");
                     }
                 }
             }
@@ -210,7 +206,7 @@ namespace ManageContainerRegistry
                 // Print selected subscription
                 Utilities.Log("Selected subscription: " + azure.SubscriptionId);
 
-                RunSample(azure, false);
+                RunSample(azure);
             }
             catch (Exception ex)
             {
