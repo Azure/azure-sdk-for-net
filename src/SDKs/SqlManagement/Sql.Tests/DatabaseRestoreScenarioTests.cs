@@ -253,9 +253,37 @@ namespace Sql.Tests
         {
             // There can be a delay of several hours before the fist geo recoverable database backup
             // is available, which is not appropriate for a scenario test. Therefore this test
-            // must run against a pre-created database.
+            // must run against a pre-created server that should have at least one database that
+            // was created a few hours ago.
+
+            // Pre-created database info
+            string resourceGroupName = "jaredmoo_cli";
+            string serverName = "jaredmoocli";
+
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // List geo recoverable database backups
+                IEnumerable<RecoverableDatabase> recoverableDatabases = 
+                    sqlClient.RecoverableDatabases.ListByServer(resourceGroupName, serverName);
+                Assert.True(recoverableDatabases.Any(), "No recoverable databases found.");
+
+                // Get geo recoverable database backup
+                RecoverableDatabase recoverableDatabase = sqlClient.RecoverableDatabases.Get(
+                    resourceGroupName, serverName, recoverableDatabases.First().Name);
+
+                // Create database from geo recoverable database backup
+                Server server = sqlClient.Servers.Get(resourceGroupName, serverName);
+                Database newDatabase = sqlClient.Databases.CreateOrUpdate(
+                    resourceGroupName, serverName, databaseName: SqlManagementTestUtilities.GenerateName(),
+                    parameters: new Database
+                    {
+                        Location = server.Location,
+                        CreateMode = CreateMode.Recovery,
+                        SourceDatabaseId = recoverableDatabase.Id
+                    });
             }
+        }
     }
 }
