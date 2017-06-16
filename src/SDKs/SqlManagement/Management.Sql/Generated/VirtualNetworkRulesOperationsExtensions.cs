@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='vnetFirewallRuleName'>
+            /// <param name='virtualNetworkRuleName'>
             /// The name of the virtual network rule.
             /// </param>
-            public static VirtualNetworkRule Get(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string vnetFirewallRuleName)
+            public static VirtualNetworkRule Get(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string virtualNetworkRuleName)
             {
-                return operations.GetAsync(resourceGroupName, serverName, vnetFirewallRuleName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serverName, virtualNetworkRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -55,15 +55,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='vnetFirewallRuleName'>
+            /// <param name='virtualNetworkRuleName'>
             /// The name of the virtual network rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkRule> GetAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string vnetFirewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkRule> GetAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string virtualNetworkRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, vnetFirewallRuleName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, virtualNetworkRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -82,15 +82,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='vnetFirewallRuleName'>
+            /// <param name='virtualNetworkRuleName'>
             /// The name of the virtual network rule.
             /// </param>
             /// <param name='parameters'>
-            /// The requested vnetFirewall Resource state.
+            /// The requested virtual Network Rule Resource state.
             /// </param>
-            public static VirtualNetworkRule CreateOrUpdate(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string vnetFirewallRuleName, VirtualNetworkRule parameters)
+            public static VirtualNetworkRule CreateOrUpdate(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRule parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, vnetFirewallRuleName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, virtualNetworkRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -106,18 +106,18 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='vnetFirewallRuleName'>
+            /// <param name='virtualNetworkRuleName'>
             /// The name of the virtual network rule.
             /// </param>
             /// <param name='parameters'>
-            /// The requested vnetFirewall Resource state.
+            /// The requested virtual Network Rule Resource state.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkRule> CreateOrUpdateAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string vnetFirewallRuleName, VirtualNetworkRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkRule> CreateOrUpdateAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRule parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, vnetFirewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, virtualNetworkRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -136,12 +136,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='vnetFirewallRuleName'>
+            /// <param name='virtualNetworkRuleName'>
             /// The name of the virtual network rule.
             /// </param>
-            public static void Delete(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string vnetFirewallRuleName)
+            public static void Delete(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string virtualNetworkRuleName)
             {
-                operations.DeleteAsync(resourceGroupName, serverName, vnetFirewallRuleName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serverName, virtualNetworkRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -157,15 +157,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='vnetFirewallRuleName'>
+            /// <param name='virtualNetworkRuleName'>
             /// The name of the virtual network rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string vnetFirewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string virtualNetworkRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, vnetFirewallRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, virtualNetworkRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -223,15 +223,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='vnetFirewallRuleName'>
+            /// <param name='virtualNetworkRuleName'>
             /// The name of the virtual network rule.
             /// </param>
             /// <param name='parameters'>
-            /// The requested vnetFirewall Resource state.
+            /// The requested virtual Network Rule Resource state.
             /// </param>
-            public static VirtualNetworkRule BeginCreateOrUpdate(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string vnetFirewallRuleName, VirtualNetworkRule parameters)
+            public static VirtualNetworkRule BeginCreateOrUpdate(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRule parameters)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, vnetFirewallRuleName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, virtualNetworkRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -247,18 +247,18 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='vnetFirewallRuleName'>
+            /// <param name='virtualNetworkRuleName'>
             /// The name of the virtual network rule.
             /// </param>
             /// <param name='parameters'>
-            /// The requested vnetFirewall Resource state.
+            /// The requested virtual Network Rule Resource state.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkRule> BeginCreateOrUpdateAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string vnetFirewallRuleName, VirtualNetworkRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkRule> BeginCreateOrUpdateAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRule parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, vnetFirewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, virtualNetworkRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -277,12 +277,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='vnetFirewallRuleName'>
+            /// <param name='virtualNetworkRuleName'>
             /// The name of the virtual network rule.
             /// </param>
-            public static void BeginDelete(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string vnetFirewallRuleName)
+            public static void BeginDelete(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string virtualNetworkRuleName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, serverName, vnetFirewallRuleName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, serverName, virtualNetworkRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -298,15 +298,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='serverName'>
             /// The name of the server.
             /// </param>
-            /// <param name='vnetFirewallRuleName'>
+            /// <param name='virtualNetworkRuleName'>
             /// The name of the virtual network rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string vnetFirewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string serverName, string virtualNetworkRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, vnetFirewallRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, virtualNetworkRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

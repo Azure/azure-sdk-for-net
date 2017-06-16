@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='vnetFirewallRuleName'>
+        /// <param name='virtualNetworkRuleName'>
         /// The name of the virtual network rule.
         /// </param>
         /// <param name='customHeaders'>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VirtualNetworkRule>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string vnetFirewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkRule>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string virtualNetworkRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -94,9 +94,9 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
-            if (vnetFirewallRuleName == null)
+            if (virtualNetworkRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetFirewallRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualNetworkRuleName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -112,17 +112,17 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("vnetFirewallRuleName", vnetFirewallRuleName);
+                tracingParameters.Add("virtualNetworkRuleName", virtualNetworkRuleName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{vnetFirewallRuleName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
-            _url = _url.Replace("{vnetFirewallRuleName}", System.Uri.EscapeDataString(vnetFirewallRuleName));
+            _url = _url.Replace("{virtualNetworkRuleName}", System.Uri.EscapeDataString(virtualNetworkRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -264,11 +264,11 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='vnetFirewallRuleName'>
+        /// <param name='virtualNetworkRuleName'>
         /// The name of the virtual network rule.
         /// </param>
         /// <param name='parameters'>
-        /// The requested vnetFirewall Resource state.
+        /// The requested virtual Network Rule Resource state.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -276,10 +276,10 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualNetworkRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string vnetFirewallRuleName, VirtualNetworkRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<VirtualNetworkRule> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, vnetFirewallRuleName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<VirtualNetworkRule> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, virtualNetworkRuleName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='vnetFirewallRuleName'>
+        /// <param name='virtualNetworkRuleName'>
         /// The name of the virtual network rule.
         /// </param>
         /// <param name='customHeaders'>
@@ -302,10 +302,10 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string vnetFirewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string virtualNetworkRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, vnetFirewallRuleName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, virtualNetworkRuleName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -514,11 +514,11 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='vnetFirewallRuleName'>
+        /// <param name='virtualNetworkRuleName'>
         /// The name of the virtual network rule.
         /// </param>
         /// <param name='parameters'>
-        /// The requested vnetFirewall Resource state.
+        /// The requested virtual Network Rule Resource state.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -541,7 +541,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VirtualNetworkRule>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string vnetFirewallRuleName, VirtualNetworkRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkRule>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -551,9 +551,9 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
-            if (vnetFirewallRuleName == null)
+            if (virtualNetworkRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetFirewallRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualNetworkRuleName");
             }
             if (parameters == null)
             {
@@ -573,7 +573,7 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("vnetFirewallRuleName", vnetFirewallRuleName);
+                tracingParameters.Add("virtualNetworkRuleName", virtualNetworkRuleName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -581,10 +581,10 @@ namespace Microsoft.Azure.Management.Sql
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{vnetFirewallRuleName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
-            _url = _url.Replace("{vnetFirewallRuleName}", System.Uri.EscapeDataString(vnetFirewallRuleName));
+            _url = _url.Replace("{virtualNetworkRuleName}", System.Uri.EscapeDataString(virtualNetworkRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -750,7 +750,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='vnetFirewallRuleName'>
+        /// <param name='virtualNetworkRuleName'>
         /// The name of the virtual network rule.
         /// </param>
         /// <param name='customHeaders'>
@@ -771,7 +771,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string vnetFirewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string virtualNetworkRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -781,9 +781,9 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
-            if (vnetFirewallRuleName == null)
+            if (virtualNetworkRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetFirewallRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualNetworkRuleName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -799,17 +799,17 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("vnetFirewallRuleName", vnetFirewallRuleName);
+                tracingParameters.Add("virtualNetworkRuleName", virtualNetworkRuleName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{vnetFirewallRuleName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
-            _url = _url.Replace("{vnetFirewallRuleName}", System.Uri.EscapeDataString(vnetFirewallRuleName));
+            _url = _url.Replace("{virtualNetworkRuleName}", System.Uri.EscapeDataString(virtualNetworkRuleName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
