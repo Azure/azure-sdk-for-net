@@ -49,11 +49,6 @@ namespace Microsoft.Azure.Management.Sql
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The name of the geo backup policy.
-        /// </summary>
-        string GeoBackupPolicyName { get; }
-
-        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -87,6 +82,11 @@ namespace Microsoft.Azure.Management.Sql
         IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
 
         /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        IServersOperations Servers { get; }
+
+        /// <summary>
         /// Gets the ICapabilitiesOperations.
         /// </summary>
         ICapabilitiesOperations Capabilities { get; }
@@ -105,11 +105,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        IServersOperations Servers { get; }
 
         /// <summary>
         /// Gets the IRecommendedElasticPoolsOperations.

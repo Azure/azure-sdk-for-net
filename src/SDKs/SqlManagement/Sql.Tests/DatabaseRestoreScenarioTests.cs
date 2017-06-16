@@ -248,7 +248,7 @@ namespace Sql.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Manual test. Remove this Skip property and edit ")]
         public void TestDatabaseGeoRecovery()
         {
             // There can be a delay of several hours before the fist geo recoverable database backup
