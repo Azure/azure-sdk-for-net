@@ -387,7 +387,7 @@ namespace Sql.Tests
         {
             RunTestInNewResourceGroup(suiteName, testName, testPrefix, (resClient, sqlClient, resGroup) =>
             {
-                var v12Server = CreateServer(sqlClient, resGroup, testPrefix);
+                var v12Server = CreateServer(sqlClient, resGroup, testPrefix, location);
                 test(resClient, sqlClient, resGroup, v12Server);
             });
         }
