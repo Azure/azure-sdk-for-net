@@ -55,5 +55,16 @@ namespace Network.Tests.Helpers
 
             var deployment = resourcesClient.Deployments.CreateOrUpdate(resourceGroupName, deploymentName, new Deployment(deploymentProperties));
         }
+
+        public static void CreateVmss(ResourceManagementClient resourcesClient, string resourceGroupName, string deploymentName)
+        {
+            var deploymentProperties = new DeploymentProperties
+            {
+                Template = JObject.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "TestData", "VmssDeploymentTemplate.json"))),
+                Mode = DeploymentMode.Incremental
+            };
+
+            var deployment = resourcesClient.Deployments.CreateOrUpdate(resourceGroupName, deploymentName, new Deployment(deploymentProperties));
+        }
     }
 }
