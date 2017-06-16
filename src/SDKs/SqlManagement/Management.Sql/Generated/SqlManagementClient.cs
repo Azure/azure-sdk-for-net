@@ -87,6 +87,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; private set; }
 
         /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        public virtual IServersOperations Servers { get; private set; }
+
+        /// <summary>
         /// Gets the ICapabilitiesOperations.
         /// </summary>
         public virtual ICapabilitiesOperations Capabilities { get; private set; }
@@ -107,11 +112,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        public virtual IServersOperations Servers { get; private set; }
-
-        /// <summary>
         /// Gets the IRecommendedElasticPoolsOperations.
         /// </summary>
         public virtual IRecommendedElasticPoolsOperations RecommendedElasticPools { get; private set; }
@@ -122,14 +122,14 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
 
         /// <summary>
+        /// Gets the IServerCommunicationLinksOperations.
+        /// </summary>
+        public virtual IServerCommunicationLinksOperations ServerCommunicationLinks { get; private set; }
+
+        /// <summary>
         /// Gets the IFailoverGroupsOperations.
         /// </summary>
         public virtual IFailoverGroupsOperations FailoverGroups { get; private set; }
-
-        /// <summary>
-        /// Gets the IVnetFirewallRulesOperations.
-        /// </summary>
-        public virtual IVnetFirewallRulesOperations VnetFirewallRules { get; private set; }
 
         /// <summary>
         /// Gets the IServerKeysOperations.
@@ -340,15 +340,15 @@ namespace Microsoft.Azure.Management.Sql
             Databases = new DatabasesOperations(this);
             RecoverableDatabases = new RecoverableDatabasesOperations(this);
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
+            Servers = new ServersOperations(this);
             Capabilities = new CapabilitiesOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
             Operations = new Operations(this);
-            Servers = new ServersOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
+            ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
-            VnetFirewallRules = new VnetFirewallRulesOperations(this);
             ServerKeys = new ServerKeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

@@ -82,6 +82,11 @@ namespace Microsoft.Azure.Management.Sql
         IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
 
         /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        IServersOperations Servers { get; }
+
+        /// <summary>
         /// Gets the ICapabilitiesOperations.
         /// </summary>
         ICapabilitiesOperations Capabilities { get; }
@@ -102,11 +107,6 @@ namespace Microsoft.Azure.Management.Sql
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        IServersOperations Servers { get; }
-
-        /// <summary>
         /// Gets the IRecommendedElasticPoolsOperations.
         /// </summary>
         IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
@@ -117,14 +117,14 @@ namespace Microsoft.Azure.Management.Sql
         IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
 
         /// <summary>
+        /// Gets the IServerCommunicationLinksOperations.
+        /// </summary>
+        IServerCommunicationLinksOperations ServerCommunicationLinks { get; }
+
+        /// <summary>
         /// Gets the IFailoverGroupsOperations.
         /// </summary>
         IFailoverGroupsOperations FailoverGroups { get; }
-
-        /// <summary>
-        /// Gets the IVnetFirewallRulesOperations.
-        /// </summary>
-        IVnetFirewallRulesOperations VnetFirewallRules { get; }
 
         /// <summary>
         /// Gets the IServerKeysOperations.

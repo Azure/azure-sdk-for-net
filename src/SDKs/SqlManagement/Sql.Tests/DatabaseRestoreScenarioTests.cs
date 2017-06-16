@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.RecoveryServices;
+using Microsoft.Azure.Management.RecoveryServices.Models;
+using Microsoft.Azure.Management.RecoveryServices.Backup;
+using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
@@ -157,6 +161,63 @@ namespace Sql.Tests
         [Fact]
         public void TestLongTermRetentionCrud()
         {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                RecoveryServicesClient recoveryClient = context.GetClient<RecoveryServicesClient>();
+                RecoveryServicesBackupClient backupClient = context.GetClient<RecoveryServicesBackupClient>();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Create recovery services vault
+                Vault vault = recoveryClient.Vaults.CreateOrUpdate(
+                    resourceGroup.Name,
+                    vaultName: SqlManagementTestUtilities.GenerateName(),
+                    vault: new Vault(resourceGroup.Location)
+                    {
+                        Sku = new Microsoft.Azure.Management.RecoveryServices.Models.Sku(SkuName.Standard),
+                        Properties = new VaultProperties()
+                    });
+
+                // Get recovery services default backup policy
+                ProtectionPolicyResource policy = backupClient.ProtectionPolicies.Get(
+                    vault.Name, resourceGroup.Name, "DefaultPolicy");
+                //AzureOperationResponse<ProtectionPolicyResource> policyResponse = 
+                //    backupClient.ProtectionPolicies.CreateOrUpdateWithHttpMessagesAsync(
+                //        vault.Name,
+                //        resourceGroup.Name,
+                //        policyName: SqlManagementTestUtilities.GenerateName(),
+                //        resourceProtectionPolicy: new ProtectionPolicyResource
+                //        {
+                //            Properties = new ProtectionPolicy
+                //            {
+                //            }
+                //        }).Result;
+                //ProtectionPolicyResource policy = backupClient.GetPutOrPatchOperationResultAsync(
+                //    policyResponse, new Dictionary<string, List<string>>(), CancellationToken.None).Result.Body;
+
+                // Create server LTR backup vault
+                Server server = context.CreateServer(resourceGroup);
+                BackupLongTermRetentionVault serverVault = sqlClient.Servers.CreateBackupLongTermRetentionVault(
+                    resourceGroup.Name, server.Name, new BackupLongTermRetentionVault
+                    {
+                        // TODO: SHOULD BE REQUIRED?
+                        RecoveryServicesVaultResourceId = vault.Id
+                    });
+
+                // Create database LTR policy
+                Database db = sqlClient.Databases.CreateOrUpdate(
+                    resourceGroup.Name, server.Name, databaseName: SqlManagementTestUtilities.GenerateName(), parameters: new Database
+                    {
+                        Location = resourceGroup.Location
+                    });
+                sqlClient.Databases.CreateLongTermRetentionPolicy(
+                    resourceGroup.Name, server.Name, db.Name, new BackupLongTermRetentionPolicy
+                    {
+                        // TODO: SHOULD BE REQUIRED?
+                        RecoveryServicesBackupPolicyResourceId = policy.Id,
+                        State = BackupLongTermRetentionPolicyState.Enabled
+                    });
+            }
         }
     }
 }
