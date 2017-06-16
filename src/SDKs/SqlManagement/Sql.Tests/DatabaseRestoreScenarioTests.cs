@@ -231,7 +231,31 @@ namespace Sql.Tests
                     resourceGroup.Name, server.Name, db.Name, new BackupLongTermRetentionPolicy(
                         BackupLongTermRetentionPolicyState.Disabled,
                         policy.Id /* policy Id must be set even when disabling */));
+
+                // Restore from LTR
+                // Commented out because there can be a delay of several hours before the first
+                // LTR backup is created. This code is just to show example.
+                /*
+                Database restoredDatabase = sqlClient.Databases.CreateOrUpdate(
+                    resourceGroup.Name, server.Name, databaseName: SqlManagementTestUtilities.GenerateName(),
+                    parameters: new Database
+                    {
+                        Location = resourceGroup.Location,
+                        CreateMode = CreateMode.RestoreLongTermRetentionBackup,
+                        RecoveryServicesRecoveryPointResourceId = // recovery point resource id
+                    });
+                */
             }
         }
+
+        [Fact]
+        public void TestDatabaseGeoRecovery()
+        {
+            // There can be a delay of several hours before the fist geo recoverable database backup
+            // is available, which is not appropriate for a scenario test. Therefore this test
+            // must run against a pre-created database.
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+            }
     }
 }
