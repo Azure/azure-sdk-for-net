@@ -338,8 +338,8 @@ namespace Sql.Tests
             using (MockContext context = MockContext.Start(suiteName, testName))
             {
                 var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-                var resourceClient = SqlManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var sqlClient = SqlManagementTestUtilities.GetSqlManagementClient(context, handler);
+                var resourceClient = GetResourceManagementClient(context, handler);
+                var sqlClient = GetSqlManagementClient(context, handler);
 
                 test(resourceClient, sqlClient);
             }

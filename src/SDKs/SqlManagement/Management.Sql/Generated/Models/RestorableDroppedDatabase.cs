@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// (ISO8601 format)</param>
         /// <param name="earliestRestoreDate">The earliest restore date of the
         /// database (ISO8601 format)</param>
-        public RestorableDroppedDatabase(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string databaseName = default(string), string edition = default(string), long? maxSizeBytes = default(long?), string serviceLevelObjective = default(string), string elasticPoolName = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? deletionDate = default(System.DateTime?), System.DateTime? earliestRestoreDate = default(System.DateTime?))
+        public RestorableDroppedDatabase(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string databaseName = default(string), string edition = default(string), string maxSizeBytes = default(string), string serviceLevelObjective = default(string), string elasticPoolName = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? deletionDate = default(System.DateTime?), System.DateTime? earliestRestoreDate = default(System.DateTime?))
             : base(id, name, type)
         {
             Location = location;
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets the max size in bytes of the database
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxSizeBytes")]
-        public long? MaxSizeBytes { get; private set; }
+        public string MaxSizeBytes { get; private set; }
 
         /// <summary>
         /// Gets the service level objective name of the database
