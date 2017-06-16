@@ -107,7 +107,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Testing
                     {
                         using (ExpressRouteManagementClient expressRouteClient = GetClientFromOperations(client))
                         {
-                            expressRouteClient.BorderGatewayProtocolPeerings.Remove(serviceKey, accessType);
+                            expressRouteClient.BorderGatewayProtocolPeerings.Remove(serviceKey, accessType, BgpPeerAddressType.All);
                         }
                     };
                 return true;

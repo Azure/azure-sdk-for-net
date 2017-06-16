@@ -42,6 +42,19 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._advertisedCommunities = value; }
         }
         
+        private string _advertisedCommunitiesIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies the communities that will be advertised by the
+        /// Ipv6 peer over this BGP peering. Specific to Microsoft type of
+        /// peering.
+        /// </summary>
+        public string AdvertisedCommunitiesIpv6
+        {
+            get { return this._advertisedCommunitiesIpv6; }
+            set { this._advertisedCommunitiesIpv6 = value; }
+        }
+        
         private string _advertisedPublicPrefixes;
         
         /// <summary>
@@ -53,6 +66,19 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._advertisedPublicPrefixes; }
             set { this._advertisedPublicPrefixes = value; }
+        }
+        
+        private string _advertisedPublicPrefixesIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies the public prefixes that will be advertised by
+        /// the Ipv6 peer over this BGP peering. Specific to Microsoft type of
+        /// peering.
+        /// </summary>
+        public string AdvertisedPublicPrefixesIpv6
+        {
+            get { return this._advertisedPublicPrefixesIpv6; }
+            set { this._advertisedPublicPrefixesIpv6 = value; }
         }
         
         private string _advertisedPublicPrefixesState;
@@ -67,6 +93,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._advertisedPublicPrefixesState; }
             set { this._advertisedPublicPrefixesState = value; }
+        }
+        
+        private string _advertisedPublicPrefixesStateIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies whether the Azure network has been configured
+        /// to accept the Ipv6 public prefixes specified as will be advertised
+        /// by the peer over this BGP peering. Specific to Mirosoft type of
+        /// peering.
+        /// </summary>
+        public string AdvertisedPublicPrefixesStateIpv6
+        {
+            get { return this._advertisedPublicPrefixesStateIpv6; }
+            set { this._advertisedPublicPrefixesStateIpv6 = value; }
         }
         
         private uint _azureAsn;
@@ -91,6 +131,19 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._customerAutonomousSystemNumber; }
             set { this._customerAutonomousSystemNumber = value; }
+        }
+        
+        private uint _customerAutonomousSystemNumberIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies the numeric identifier of the public autonomous
+        /// system (AS) in which the device of the customer is configured for
+        /// Ipv6.
+        /// </summary>
+        public uint CustomerAutonomousSystemNumberIpv6
+        {
+            get { return this._customerAutonomousSystemNumberIpv6; }
+            set { this._customerAutonomousSystemNumberIpv6 = value; }
         }
         
         private uint _legacyMode;
@@ -141,6 +194,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._primaryPeerSubnet = value; }
         }
         
+        private string _primaryPeerSubnetIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies the subnet addresses of the interface to be
+        /// used for establishing the Ipv6 BGP session on the primary port.
+        /// </summary>
+        public string PrimaryPeerSubnetIpv6
+        {
+            get { return this._primaryPeerSubnetIpv6; }
+            set { this._primaryPeerSubnetIpv6 = value; }
+        }
+        
         private string _routingRegistryName;
         
         /// <summary>
@@ -151,6 +216,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._routingRegistryName; }
             set { this._routingRegistryName = value; }
+        }
+        
+        private string _routingRegistryNameIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies the Routing Registry to look up to validate the
+        /// prefixes specified in AdvertisedPublicPrefixesIpv6
+        /// </summary>
+        public string RoutingRegistryNameIpv6
+        {
+            get { return this._routingRegistryNameIpv6; }
+            set { this._routingRegistryNameIpv6 = value; }
         }
         
         private string _secondaryAzurePort;
@@ -176,6 +253,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._secondaryPeerSubnet = value; }
         }
         
+        private string _secondaryPeerSubnetIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies the subnet addresses of the interface to be
+        /// used for establishing the Ipv6 BGP session on the secondary port.
+        /// </summary>
+        public string SecondaryPeerSubnetIpv6
+        {
+            get { return this._secondaryPeerSubnetIpv6; }
+            set { this._secondaryPeerSubnetIpv6 = value; }
+        }
+        
         private BgpPeeringState _state;
         
         /// <summary>
@@ -186,6 +275,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._state; }
             set { this._state = value; }
+        }
+        
+        private BgpPeeringState _stateIpv6;
+        
+        /// <summary>
+        /// Optional. The current state of the Ipv6 BGP session. Possible
+        /// values are Disabled, Enabled.
+        /// </summary>
+        public BgpPeeringState StateIpv6
+        {
+            get { return this._stateIpv6; }
+            set { this._stateIpv6 = value; }
         }
         
         private uint _vlanId;

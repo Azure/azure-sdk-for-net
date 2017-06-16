@@ -21,33 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure;
-using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The Get DedicatedCircuitPeeringStats operation response.
+    /// The BGP Peer Address types available
     /// </summary>
-    public partial class DedicatedCircuitPeeringStatsGetResponse : AzureOperationResponse
+    public enum BgpPeerAddressType
     {
-        private AzureDedicatedCircuitStats _dedicatedCircuitStats;
+        IPv4 = 0,
         
-        /// <summary>
-        /// Optional. Stats of the requested dedicated circuit at peering level.
-        /// </summary>
-        public AzureDedicatedCircuitStats DedicatedCircuitStats
-        {
-            get { return this._dedicatedCircuitStats; }
-            set { this._dedicatedCircuitStats = value; }
-        }
+        IPv6 = 1,
         
-        /// <summary>
-        /// Initializes a new instance of the
-        /// DedicatedCircuitPeeringStatsGetResponse class.
-        /// </summary>
-        public DedicatedCircuitPeeringStatsGetResponse()
-        {
-        }
+        All = 2,
     }
 }
