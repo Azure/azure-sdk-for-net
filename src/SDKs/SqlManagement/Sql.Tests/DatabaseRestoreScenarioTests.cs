@@ -206,7 +206,6 @@ namespace Sql.Tests
                 BackupLongTermRetentionVault serverVault = sqlClient.Servers.CreateBackupLongTermRetentionVault(
                     resourceGroup.Name, server.Name, new BackupLongTermRetentionVault
                     {
-                        // TODO: SHOULD BE REQUIRED?
                         RecoveryServicesVaultResourceId = vault.Id
                     });
 
@@ -219,7 +218,6 @@ namespace Sql.Tests
                 sqlClient.Databases.CreateLongTermRetentionPolicy(
                     resourceGroup.Name, server.Name, db.Name, new BackupLongTermRetentionPolicy
                     {
-                        // TODO: SHOULD BE REQUIRED?
                         RecoveryServicesBackupPolicyResourceId = policy.Id,
                         State = BackupLongTermRetentionPolicyState.Enabled
                     });
