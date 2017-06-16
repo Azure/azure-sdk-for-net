@@ -178,22 +178,28 @@ namespace Sql.Tests
                         Properties = new VaultProperties()
                     });
 
-                // Get recovery services default backup policy
-                ProtectionPolicyResource policy = backupClient.ProtectionPolicies.Get(
-                    vault.Name, resourceGroup.Name, "DefaultPolicy");
-                //AzureOperationResponse<ProtectionPolicyResource> policyResponse = 
-                //    backupClient.ProtectionPolicies.CreateOrUpdateWithHttpMessagesAsync(
-                //        vault.Name,
-                //        resourceGroup.Name,
-                //        policyName: SqlManagementTestUtilities.GenerateName(),
-                //        resourceProtectionPolicy: new ProtectionPolicyResource
-                //        {
-                //            Properties = new ProtectionPolicy
-                //            {
-                //            }
-                //        }).Result;
-                //ProtectionPolicyResource policy = backupClient.GetPutOrPatchOperationResultAsync(
-                //    policyResponse, new Dictionary<string, List<string>>(), CancellationToken.None).Result.Body;
+                // Create recovery services backup policy
+                AzureOperationResponse<ProtectionPolicyResource> policyResponse =
+                    backupClient.ProtectionPolicies.CreateOrUpdateWithHttpMessagesAsync(
+                        vault.Name,
+                        resourceGroup.Name,
+                        policyName: SqlManagementTestUtilities.GenerateName(),
+                        resourceProtectionPolicy: new ProtectionPolicyResource
+                        {
+                            Properties = new AzureSqlProtectionPolicy
+                            {
+                                RetentionPolicy = new SimpleRetentionPolicy
+                                {
+                                    RetentionDuration = new RetentionDuration
+                                    {
+                                        Count = 3,
+                                        DurationType = RetentionDurationType.Weeks
+                                    }
+                                }
+                            }
+                        }).Result;
+                ProtectionPolicyResource policy = backupClient.GetPutOrPatchOperationResultAsync(
+                    policyResponse, new Dictionary<string, List<string>>(), CancellationToken.None).Result.Body;
 
                 // Create server LTR backup vault
                 Server server = context.CreateServer(resourceGroup);
