@@ -130,5 +130,10 @@ namespace Sql.Tests
                 Thread.Sleep(waitDelay);
             }
         }
+
+        [Fact]
+        public void TestLongTermRetentionCrud()
+        {
+        }
     }
 }
