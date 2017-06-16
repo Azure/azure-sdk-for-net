@@ -1501,7 +1501,10 @@ namespace Storage.Tests
                     NetworkAcls = new StorageNetworkAcls
                     {
                         Bypass = @"Logging, Metrics",
-                        IpRules = new List<IPRule> { new IPRule { IPAddressOrRange = "23.45.67.91", Action = Microsoft.Azure.Management.Storage.Models.Action.Allow } },
+                        IpRules = new List<IPRule> {
+                            new IPRule { IPAddressOrRange = "23.45.67.91", Action = Microsoft.Azure.Management.Storage.Models.Action.Allow },
+                            new IPRule { IPAddressOrRange = "23.45.67.92" }
+                        },
                         DefaultAction = DefaultAction.Deny
                     }
                 };
@@ -1516,7 +1519,8 @@ namespace Storage.Tests
                 Assert.NotEmpty(account.NetworkAcls.IpRules);
                 Assert.Equal("23.45.67.91", account.NetworkAcls.IpRules[0].IPAddressOrRange);
                 Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[0].Action);
-
+                Assert.Equal("23.45.67.92", account.NetworkAcls.IpRules[1].IPAddressOrRange);
+                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[1].Action);
 
                 // Delete vnet.
                 updateParameters = new StorageAccountUpdateParameters
