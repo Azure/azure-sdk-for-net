@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -19,38 +20,47 @@ namespace Sql.Tests
         [Fact]
         public void TestDatabasePointInTimeRestore()
         {
-            // Warning: This test takes around 35 minutes to run in record mode.
+            // Warning: This test takes around 20 minutes to run in record mode.
 
             string testPrefix = "sqlrestoretest-";
             string suiteName = this.GetType().FullName;
             SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestDatabasePointInTimeRestore", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
-                // Create database with only required parameters
-                string db2Name = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, db2Name, new Database()
-                {
-                    Location = server.Location,
-                });
-                Assert.NotNull(db1);
-
-                // If earliest restore time is in the future, we need to wait until then.
-                // Add some padding in case of clock skew between Azure and this machine.
-                // Beware this wait is at least 10 minutes long. Note that this is specifically
-                // written so that it will actually be 0 wait when in playback mode.
-                WaitUntil(db1.EarliestRestoreDate.Value.AddMinutes(1));
+                Database db1 = CreateDatabaseAndWaitUntilBackupCreated(
+                    sqlClient,
+                    resourceGroup,
+                    server,
+                    dbName: SqlManagementTestUtilities.GenerateName(testPrefix));
 
                 // Create a new database that is the first database restored to an earlier point in time
-                db2Name = SqlManagementTestUtilities.GenerateName(testPrefix);
-                var db2Input = new Database()
+                string db2Name = SqlManagementTestUtilities.GenerateName(testPrefix);
+                Database db2Input = new Database
                 {
                     Location = server.Location,
                     CreateMode = CreateMode.PointInTimeRestore,
                     RestorePointInTime = db1.EarliestRestoreDate.Value,
                     SourceDatabaseId = db1.Id
                 };
-                var db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, db2Name, db2Input);
+                Database db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, db2Name, db2Input);
                 Assert.NotNull(db2);
                 SqlManagementTestUtilities.ValidateDatabase(db2Input, db2, db2Name);
+            });
+        }
+
+        [Fact]
+        public void TestDatabaseRestore()
+        {
+            // Warning: This test takes around 20 minutes to run in record mode.
+
+            string testPrefix = "sqlrestoretest-";
+            string suiteName = this.GetType().FullName;
+            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestDatabaseRestore", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            {
+                Database db1 = CreateDatabaseAndWaitUntilBackupCreated(
+                    sqlClient,
+                    resourceGroup,
+                    server,
+                    dbName: SqlManagementTestUtilities.GenerateName(testPrefix));
 
                 // Delete the original database
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db1.Name);
@@ -117,18 +127,31 @@ namespace Sql.Tests
             });
         }
 
-        private static void WaitUntil(DateTime dateTime)
+        private static Database CreateDatabaseAndWaitUntilBackupCreated(
+            SqlManagementClient sqlClient,
+            ResourceGroup resourceGroup,
+            Server server,
+            string dbName)
         {
-            if (dateTime.Kind != DateTimeKind.Utc)
+            // Create database with only required parameters
+            var db = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database
             {
-                throw new ArgumentException("Invalid DateTimeKind. Expected DateTimeKind.Utc, actual " + dateTime.Kind);
-            }
+                Location = server.Location,
+            });
+            Assert.NotNull(db);
 
-            TimeSpan waitDelay = dateTime.Subtract(DateTime.UtcNow);
+            // If earliest restore time is in the future, we need to wait until then.
+            // Add some padding in case of clock skew between Azure and this machine.
+            // Beware this wait is at least 10 minutes long. Note that this is specifically
+            // written so that it will actually be 0 wait when in playback mode.
+            DateTime waitUntilTime = db.EarliestRestoreDate.Value.AddMinutes(1);
+            TimeSpan waitDelay = waitUntilTime.Subtract(DateTime.UtcNow);
             if (waitDelay > TimeSpan.Zero)
             {
                 Thread.Sleep(waitDelay);
             }
+
+            return db;
         }
 
         [Fact]
