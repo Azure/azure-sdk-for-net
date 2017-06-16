@@ -6,7 +6,7 @@
     <VersionPrefix>2.2.1</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.DataLake.Store</AssemblyName>
     <PackageTags>Microsoft Azure Data Lake Store management;DataLakeStore;Data Lake Store management</PackageTags>
-    <PackageReleaseNotes>See <href>https://aka.ms/adlsdotnetsdkchangelog</href> for release notes.</PackageReleaseNotes>
+    <PackageReleaseNotes>See https://aka.ms/adlsdotnetsdkchangelog for release notes.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

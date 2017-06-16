@@ -6,7 +6,7 @@
     <VersionPrefix>3.0.1</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.DataLake.Analytics</AssemblyName>
     <PackageTags>Microsoft Azure Data Lake Analytics management;DataLakeAnalytics;Data Lake Analytics management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
-    <PackageReleaseNotes>See <href>https://aka.ms/adladotnetsdkchangelog</href> for release notes.</PackageReleaseNotes>
+    <PackageReleaseNotes>See https://aka.ms/adladotnetsdkchangelog for release notes.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
