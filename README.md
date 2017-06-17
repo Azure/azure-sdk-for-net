@@ -426,7 +426,7 @@ If you are migrating your code to 1.0.0, you can use these notes for [preparing 
 
 If you encounter any bugs with these libraries, please file issues via [Issues](https://github.com/Azure/azure-sdk-for-net/issues) and tag them [Fluent](https://github.com/Azure/azure-sdk-for-net/labels/Fluent) or checkout [StackOverflow for Azure Management Libraries for .NET](http://stackoverflow.com/questions/tagged/azure-sdk).
 
-#Contribute Code
+# Contribute Code
 
 If you would like to become an active contributor to this project please follow the instructions provided in [Microsoft Azure Projects Contribution Guidelines](http://azure.github.io/guidelines.html).
 
@@ -436,7 +436,7 @@ If you would like to become an active contributor to this project please follow 
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-#More Information
+# More Information
 * [https://azure.microsoft.com/en-us/develop/net/](https://azure.microsoft.com/en-us/develop/net/)
 * If you don't have a Microsoft Azure subscription you can get a FREE trial account [here](http://go.microsoft.com/fwlink/?LinkId=330212).
 
