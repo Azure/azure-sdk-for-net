@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent

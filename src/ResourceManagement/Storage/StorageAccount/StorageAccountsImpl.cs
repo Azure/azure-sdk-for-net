@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Rest.Azure;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
 namespace Microsoft.Azure.Management.Storage.Fluent
 {

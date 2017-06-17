@@ -8,7 +8,6 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System;
 
 namespace Microsoft.Azure.Management.ResourceManager.Fluent

@@ -4,7 +4,6 @@
 using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System.Collections.Generic;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
