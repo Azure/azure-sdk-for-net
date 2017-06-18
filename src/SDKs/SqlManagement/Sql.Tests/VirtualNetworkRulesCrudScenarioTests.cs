@@ -16,6 +16,9 @@ namespace Sql.Tests
         [Fact]
         public void TestGetAndListVirtualNetworkRule()
         {
+            // TODO Update SQL VirtualNetworkRules test to be fully automated
+            // TODO https://github.com/Azure/azure-sdk-for-net/issues/3388
+
             string testPrefix = "virtualnetworkrulescrudtest-";
             string suiteName = this.GetType().FullName;
             SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListVirtualNetworkRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
@@ -56,6 +59,9 @@ namespace Sql.Tests
         [Fact]
         public void TestCreateAndDropVirtualNetworkRule()
         {
+            // TODO Update SQL VirtualNetworkRules test to be fully automated
+            // TODO https://github.com/Azure/azure-sdk-for-net/issues/3388
+
             string testPrefix = "virtualnetworkrulecrudtest-";
             string suiteName = this.GetType().FullName;
             SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateAndDropVirtualNetworkRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
@@ -78,6 +84,9 @@ namespace Sql.Tests
         [Fact]
         public void TestCreateAndUpdateVirtualNetworkRule()
         {
+            // TODO Update SQL VirtualNetworkRules test to be fully automated
+            // TODO https://github.com/Azure/azure-sdk-for-net/issues/3388
+
             string testPrefix = "virtualnetworkrulecrudtest-";
             string suiteName = this.GetType().FullName;
             SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateAndUpdateVirtualNetworkRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
