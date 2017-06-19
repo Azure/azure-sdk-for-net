@@ -6,6 +6,8 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Tracing;
+    using System.Reflection;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
 
     [EventSource(Name = "Microsoft-Azure-ServiceBus")]
@@ -714,10 +716,7 @@ namespace Microsoft.Azure.ServiceBus
         [Event(63, Level = EventLevel.Error, Message = "{0}: Register OnMessageHandler Exception: {1}")]
         void RegisterOnMessageHandlerException(string clientId, string exception)
         {
-            if (this.IsEnabled())
-            {
-                this.WriteEvent(63, clientId, exception);
-            }
+            this.WriteEvent(63, clientId, exception);
         }
 
         [NonEvent]
@@ -732,10 +731,7 @@ namespace Microsoft.Azure.ServiceBus
         [Event(64, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump Received Initial Message: SequenceNumber: {1}")]
         void MessageReceiverPumpInitialMessageReceived(string clientId, long sequenceNumber)
         {
-            if (this.IsEnabled())
-            {
-                this.WriteEvent(64, clientId, sequenceNumber);
-            }
+            this.WriteEvent(64, clientId, sequenceNumber);
         }
 
         [NonEvent]
@@ -750,10 +746,7 @@ namespace Microsoft.Azure.ServiceBus
         [Event(65, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump Receive Initial Message Exception: RetryCount: {1}, Exception: {2}")]
         void MessageReceiverPumpInitialMessageReceiveException(string clientId, int retryCount, string exception)
         {
-            if (this.IsEnabled())
-            {
-                this.WriteEvent(65, clientId, retryCount, exception);
-            }
+            this.WriteEvent(65, clientId, retryCount, exception);
         }
 
         [NonEvent]
@@ -774,7 +767,10 @@ namespace Microsoft.Azure.ServiceBus
         [Event(67, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump PumpTask done: Available Semaphore Count: {1}")]
         public void MessageReceiverPumpTaskStop(string clientId, int currentSemaphoreCount)
         {
-            this.WriteEvent(67, clientId, currentSemaphoreCount);
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(67, clientId, currentSemaphoreCount); 
+            }
         }
 
         [NonEvent]
@@ -963,10 +959,7 @@ namespace Microsoft.Azure.ServiceBus
         [Event(80, Level = EventLevel.Error, Message = "{0}: Register OnSessionHandler Exception: {1}")]
         void RegisterOnSessionHandlerException(string clientId, string exception)
         {
-            if (this.IsEnabled())
-            {
-                this.WriteEvent(80, clientId, exception);
-            }
+            this.WriteEvent(80, clientId, exception);
         }
 
         [NonEvent]
@@ -1074,7 +1067,10 @@ namespace Microsoft.Azure.ServiceBus
         [Event(89, Level = EventLevel.Informational, Message = "{0}: AcceptMessageSession done: EntityPath: {1}, SessionId: {2}")]
         public void AmqpSessionClientAcceptMessageSessionStop(string clientId, string entityPath, string sessionId)
         {
-            this.WriteEvent(89, clientId, entityPath, sessionId);
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(89, clientId, entityPath, sessionId); 
+            }
         }
 
         [NonEvent]
@@ -1110,7 +1106,10 @@ namespace Microsoft.Azure.ServiceBus
         [NonEvent]
         public void AmqpConnectionCreated(string hostName, AmqpConnection connection)
         {
-            this.AmqpConnectionCreated(hostName, connection.ToString(), connection.State.ToString());
+            if (this.IsEnabled())
+            {
+                this.AmqpConnectionCreated(hostName, connection.ToString(), connection.State.ToString()); 
+            }
         }
 
         [Event(92, Level = EventLevel.Verbose, Message = "AmqpConnectionCreated: HostName: {0}, ConnectionInfo: {1}, ConnectionState: {2}")]
@@ -1152,19 +1151,49 @@ namespace Microsoft.Azure.ServiceBus
         [Event(95, Level = EventLevel.Verbose, Message = "User plugin {0} called on message {1}")]
         public void PluginCallStarted(string pluginName, string messageId)
         {
-            this.WriteEvent(95, pluginName, messageId);
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(95, pluginName, messageId); 
+            }
         }
 
         [Event(96, Level = EventLevel.Verbose, Message = "User plugin {0} completed on message {1}")]
         public void PluginCallCompleted(string pluginName, string messageId)
         {
-            this.WriteEvent(96, pluginName, messageId);
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(96, pluginName, messageId); 
+            }
+        }
+
+        [NonEvent]
+        public void PluginCallFailed(string pluginName, string messageId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.PluginCallFailed(pluginName, messageId, exception.ToString());
+            }
         }
 
         [Event(97, Level = EventLevel.Error, Message = "Exception during {0} plugin execution. MessageId: {1}, Exception {2}")]
-        public void PluginCallFailed(string pluginName, string messageId, string exception)
+        void PluginCallFailed(string pluginName, string messageId, string exception)
         {
-            this.WriteEvent(97, pluginName, messageId, exception);
+            this.WriteEvent(97, pluginName, messageId, exception); 
+        }
+
+        [NonEvent]
+        public void ScheduleTaskFailed(Func<Task> task, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.ScheduleTaskFailed(task.Target.GetType().FullName, task.GetMethodInfo().Name, exception.ToString());
+            }
+        }
+
+        [Event(98, Level = EventLevel.Error, Message = "Exception during Schedule Task. FunctionTargetName: {0}, MethodInfoName: {1}, Exception:{2}")]
+        void ScheduleTaskFailed(string funcTargetName, string methodInfoName, string exception)
+        {
+            WriteEvent(98, funcTargetName, methodInfoName, exception);
         }
     }
 }

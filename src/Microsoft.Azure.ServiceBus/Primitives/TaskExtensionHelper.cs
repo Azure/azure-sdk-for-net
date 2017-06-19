@@ -16,9 +16,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 {
                     await func().ConfigureAwait(false);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // TODO: Log any unexpected exception here.
+                    MessagingEventSource.Log.ScheduleTaskFailed(func, ex);
                 }
             });
         }

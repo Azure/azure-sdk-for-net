@@ -127,7 +127,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
                 catch (Exception ex)
                 {
-                    MessagingEventSource.Log.PluginCallFailed(plugin.Name, message.MessageId, ex.Message);
+                    MessagingEventSource.Log.PluginCallFailed(plugin.Name, message.MessageId, ex);
                     if (!plugin.ShouldContinueOnException)
                     {
                         throw;

@@ -44,10 +44,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        void OnMessageRegistrationWithoutPendingMessagesReceiveAndDelete(string queueName, int maxConcurrentCalls)
+        async Task OnMessageRegistrationWithoutPendingMessagesReceiveAndDelete(string queueName, int maxConcurrentCalls)
         {
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-            this.OnMessageRegistrationWithoutPendingMessagesTestCase(queueClient.InnerReceiver, maxConcurrentCalls, true);
+            try
+            {
+                this.OnMessageRegistrationWithoutPendingMessagesTestCase(queueClient.InnerReceiver, maxConcurrentCalls, true);
+            }
+            finally
+            {
+                await queueClient.CloseAsync();
+            }
         }
 
         async Task OnMessageTestAsync(string queueName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
