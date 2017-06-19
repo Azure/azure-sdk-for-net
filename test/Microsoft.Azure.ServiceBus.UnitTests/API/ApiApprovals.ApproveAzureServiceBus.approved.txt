@@ -449,4 +449,5 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         public string Action { get; }
         public System.Exception Exception { get; }
     }
+    public class ServiceBusTimeoutException : Microsoft.Azure.ServiceBus.ServiceBusException { }
 }

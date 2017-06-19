@@ -56,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus
 
                 // MessagingEventSource.Log.SessionReceiverPumpInitialSessionReceived(this.client.ClientId, initialSession);
             }
-            catch (TimeoutException)
+            catch (ServiceBusTimeoutException)
             {
             }
 
@@ -169,17 +169,17 @@ namespace Microsoft.Azure.ServiceBus
                         this.maxConcurrentSessionsSemaphoreSlim.Release();
                     }
 
-                    if (!(exception is TimeoutException))
+                    if (exception is ServiceBusTimeoutException)
+                    {
+                        await Task.Delay(Constants.NoMessageBackoffTimeSpan, this.pumpCancellationToken).ConfigureAwait(false);
+                    }
+                    else
                     {
                         this.RaiseExceptionRecieved(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession);
                         if (!MessagingUtilities.ShouldRetry(exception))
                         {
                             break;
                         }
-                    }
-                    else
-                    {
-                        await Task.Delay(Constants.NoMessageBackoffTimeSpan, this.pumpCancellationToken).ConfigureAwait(false);
                     }
                 }
                 finally
@@ -210,8 +210,7 @@ namespace Microsoft.Azure.ServiceBus
 
             try
             {
-                while (!this.pumpCancellationToken.IsCancellationRequested &&
-                       !session.IsClosedOrClosing)
+                while (!this.pumpCancellationToken.IsCancellationRequested && !session.IsClosedOrClosing)
                 {
                     Message message;
                     try
@@ -221,7 +220,7 @@ namespace Microsoft.Azure.ServiceBus
                     catch (Exception exception)
                     {
                         MessagingEventSource.Log.MessageReceivePumpTaskException(this.clientId, session.SessionId, exception);
-                        if (exception is TimeoutException)
+                        if (exception is ServiceBusTimeoutException)
                         {
                             // Timeout Exceptions are pretty common. Not alerting the User on this.
                             continue;

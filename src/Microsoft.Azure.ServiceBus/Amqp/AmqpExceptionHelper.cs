@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Microsoft.Azure.ServiceBus.Primitives;
+
 namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using System;
@@ -191,8 +193,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 case OperationCanceledException _:
                     return new ServiceBusException(true, message, exception);
 
-                case TimeoutException _ when referenceId != null:
-                    return new TimeoutException(message, exception);
+                case TimeoutException _:
+                    return new ServiceBusTimeoutException(message, exception);
             }
 
             return exception;
