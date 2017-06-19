@@ -1,4 +1,6 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
+### Changes in 3.0.1
+- Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.
 
 ### Changes in 3.0.0
 - All previous preview changes (below) are now stable and part of the official release

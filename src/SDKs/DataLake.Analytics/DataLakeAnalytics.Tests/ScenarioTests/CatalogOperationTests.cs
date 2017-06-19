@@ -51,9 +51,18 @@ namespace DataLakeAnalytics.Tests
                         commonData.DatabaseName, CommonTestFixture.SchemaName);
 
                     Assert.True(tableListResponse.Count() >= 1);
+                    Assert.True(tableListResponse.ElementAt(0).ColumnList != null && tableListResponse.ElementAt(0).ColumnList.Count() > 0);
 
                     // look for the table we created
                     Assert.True(tableListResponse.Any(table => table.Name.Equals(commonData.TableName)));
+
+                    // Get the table list with only basic info
+                    tableListResponse = clientToUse.Catalog.ListTables(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, CommonTestFixture.SchemaName, basic: true);
+
+                    Assert.True(tableListResponse.Count() >= 1);
+                    Assert.True(tableListResponse.ElementAt(0).ColumnList == null || tableListResponse.ElementAt(0).ColumnList.Count() == 0);
 
                     // get the table list in just the db
                     tableListResponse = clientToUse.Catalog.ListTablesByDatabase(
@@ -61,9 +70,18 @@ namespace DataLakeAnalytics.Tests
                         commonData.DatabaseName);
 
                     Assert.True(tableListResponse.Count() >= 1);
+                    Assert.True(tableListResponse.ElementAt(0).ColumnList != null && tableListResponse.ElementAt(0).ColumnList.Count > 0);
                     
                     // look for the table we created
                     Assert.True(tableListResponse.Any(table => table.Name.Equals(commonData.TableName)));
+                    
+                    // Get the table list in the db with only basic info
+                    tableListResponse = clientToUse.Catalog.ListTablesByDatabase(
+                        commonData.SecondDataLakeAnalyticsAccountName,
+                        commonData.DatabaseName, basic: true);
+
+                    Assert.True(tableListResponse.Count() >= 1);
+                    Assert.True(tableListResponse.ElementAt(0).ColumnList == null || tableListResponse.ElementAt(0).ColumnList.Count() == 0);
 
                     // Get the specific table as well
                     var tableGetResponse = clientToUse.Catalog.GetTable(
