@@ -71,7 +71,7 @@
     
     <Message Text="Generating NuGet library" Importance="high" />
 
-    <Exec Command="dotnet pack FluentSDK.sln --configuration $(Configuration) --include-symbols" />
+    <Exec Command="dotnet pack Fluent.SDK.sln --configuration $(Configuration) --include-symbols" />
 
     <ItemGroup>
       <_NetCorePackages Include="src\ResourceManagement\**\bin\$(Configuration)\*.nupkg" />

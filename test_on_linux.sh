@@ -12,7 +12,7 @@ nugetOrgSource="https://api.nuget.org/v3/index.json"
 dotnet --info
 
 echo Restoring... $ubuntu1404
-dotnet restore FluentTests.sln -r $ubuntu1404
+dotnet restore Fluent.Tests.sln -r $ubuntu1404
 echo Building... $netcore11
 
 dotnet build src/ResourceManagement/ResourceManager/Microsoft.Azure.Management.ResourceManager.Fluent.csproj -f $netstd13

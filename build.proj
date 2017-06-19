@@ -103,18 +103,18 @@
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
     <Exec Command="dotnet --info" WorkingDirectory="$(LibraryRoot)" />
-    <Exec Command="dotnet restore FluentSDK.sln" WorkingDirectory="$(LibraryRoot)" />
-    <Exec Command="dotnet restore FluentSamples.sln" WorkingDirectory="$(LibraryRoot)" Condition=" '$(Configuration)' != 'Release' "/>
-    <Exec Command="dotnet restore FluentTests.sln" WorkingDirectory="$(LibraryRoot)" Condition=" '$(Configuration)' != 'Release' "/>    
+    <Exec Command="dotnet restore Fluent.SDK.sln" WorkingDirectory="$(LibraryRoot)" />
+    <Exec Command="dotnet restore Fluent.Samples.sln" WorkingDirectory="$(LibraryRoot)" Condition=" '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet restore Fluent.Tests.sln" WorkingDirectory="$(LibraryRoot)" Condition=" '$(Configuration)' != 'Release' "/>    
 
     <CallTarget Targets="BuildNetCoreLibraries" />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
   </Target>
 
   <Target Name="BuildNetCoreLibraries">
-    <Exec Command="dotnet build FluentSDK.sln --configuration $(Configuration)"/>
-    <Exec Command="dotnet build FluentSamples.sln --configuration $(Configuration)" Condition=" '$(Configuration)' != 'Release' "/>
-    <Exec Command="dotnet build FluentTests.sln --configuration $(Configuration)" Condition=" '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet build Fluent.SDK.sln --configuration $(Configuration)"/>
+    <Exec Command="dotnet build Fluent.Samples.sln --configuration $(Configuration)" Condition=" '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet build Fluent.Tests.sln --configuration $(Configuration)" Condition=" '$(Configuration)' != 'Release' "/>
   </Target>
  
   <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;">
