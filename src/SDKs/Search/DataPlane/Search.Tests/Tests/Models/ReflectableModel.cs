@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Spatial;
+    using Newtonsoft.Json;
 
     public class ReflectableModel
     {
@@ -69,5 +70,15 @@ namespace Microsoft.Azure.Search.Tests
         public int? NullableInt { get; set; }
 
         public GeographyPoint GeographyPoint { get; set; }
+
+        [JsonIgnore]
+        [IsRetrievable(false)]
+        public RecordEnum recordEnum { get; set; }
+    }
+
+    public enum RecordEnum
+    {
+        Test1,
+        Test2
     }
 }
