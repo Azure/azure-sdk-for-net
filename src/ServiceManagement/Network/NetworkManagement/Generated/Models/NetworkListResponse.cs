@@ -372,6 +372,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
                 set { this._id = value; }
             }
             
+            private bool _inUse;
+            
+            /// <summary>
+            /// Optional. Shows if the virtual networks is in use.
+            /// </summary>
+            public bool InUse
+            {
+                get { return this._inUse; }
+                set { this._inUse = value; }
+            }
+            
             private string _label;
             
             /// <summary>
