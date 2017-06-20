@@ -41,6 +41,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._advertisedPublicPrefixes = value; }
         }
         
+        private string _advertisedPublicPrefixesIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies a comma separated list of Ipv6 public prefixes
+        /// that the customer would like to announce over the peering.
+        /// </summary>
+        public string AdvertisedPublicPrefixesIpv6
+        {
+            get { return this._advertisedPublicPrefixesIpv6; }
+            set { this._advertisedPublicPrefixesIpv6 = value; }
+        }
+        
         private uint _customerAutonomousSystemNumber;
         
         /// <summary>
@@ -51,6 +63,19 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._customerAutonomousSystemNumber; }
             set { this._customerAutonomousSystemNumber = value; }
+        }
+        
+        private uint _customerAutonomousSystemNumberIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies the numeric identifier of the public autonomous
+        /// system (AS) in which the device of the customer is configured for
+        /// Ipv6.
+        /// </summary>
+        public uint CustomerAutonomousSystemNumberIpv6
+        {
+            get { return this._customerAutonomousSystemNumberIpv6; }
+            set { this._customerAutonomousSystemNumberIpv6 = value; }
         }
         
         private uint _peerAutonomousSystemNumber;
@@ -78,6 +103,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._primaryPeerSubnet = value; }
         }
         
+        private string _primaryPeerSubnetIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies the subnet addresses of the interface to be
+        /// used for establishing the Ipv6 BGP session on the primary port.
+        /// </summary>
+        public string PrimaryPeerSubnetIpv6
+        {
+            get { return this._primaryPeerSubnetIpv6; }
+            set { this._primaryPeerSubnetIpv6 = value; }
+        }
+        
         private string _routingRegistryName;
         
         /// <summary>
@@ -90,6 +127,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._routingRegistryName = value; }
         }
         
+        private string _routingRegistryNameIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies the Routing Registry to look up to validate the
+        /// prefixes specified in AdvertisedPublicPrefixesIpv6
+        /// </summary>
+        public string RoutingRegistryNameIpv6
+        {
+            get { return this._routingRegistryNameIpv6; }
+            set { this._routingRegistryNameIpv6 = value; }
+        }
+        
         private string _secondaryPeerSubnet;
         
         /// <summary>
@@ -100,6 +149,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         {
             get { return this._secondaryPeerSubnet; }
             set { this._secondaryPeerSubnet = value; }
+        }
+        
+        private string _secondaryPeerSubnetIpv6;
+        
+        /// <summary>
+        /// Optional. Specifies the subnet addresses of the interface to be
+        /// used for establishing the Ipv6 BGP session on the secondary port.
+        /// </summary>
+        public string SecondaryPeerSubnetIpv6
+        {
+            get { return this._secondaryPeerSubnetIpv6; }
+            set { this._secondaryPeerSubnetIpv6 = value; }
         }
         
         private string _sharedKey;

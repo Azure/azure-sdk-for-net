@@ -120,14 +120,6 @@
                 Assert.Equal(getResponse.BgpPeering.SecondaryPeerSubnet, updatePublicPeeringParams.SecondaryPeerSubnet);
                 Assert.Equal(getResponse.BgpPeering.VlanId, updatePublicPeeringParams.VirtualLanId);
                 Assert.Equal(getResponse.BgpPeering.State, BgpPeeringState.Enabled);
-
-                var removeResponse = expressRouteClient.BorderGatewayProtocolPeerings.Remove(serviceKey.ToString(),
-                                                                                             BgpPeeringAccessType
-                                                                                                 .Private);
-                TestUtilities.ValidateOperationResponse(removeResponse);
-                removeResponse = expressRouteClient.BorderGatewayProtocolPeerings.Remove(serviceKey.ToString(),
-                                                                                         BgpPeeringAccessType.Public);
-                TestUtilities.ValidateOperationResponse(removeResponse);
             }
         }
 
