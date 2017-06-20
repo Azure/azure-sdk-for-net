@@ -1,0 +1,391 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Fluent Unit Tests</Description>
+    <AssemblyName>Fluent.Unit.Tests</AssemblyName>
+    <PackageId>Fluent.Unit.Tests</PackageId>
+    <VersionPrefix>1.0.0</VersionPrefix>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TestProjectType>true</TestProjectType>
+  </PropertyGroup>
+ 
+ <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
+    <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
+    <SkipBuildingTestProject>false</SkipBuildingTestProject>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>../../tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">  
+    <PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta1-build1309" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-preview-20170106-08" />    
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)'=='net452' ">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+  </ItemGroup>
+   <ItemGroup> 
+     <Compile Include="../../tools/DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" /> 
+   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.8,3.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.6.0" />
+    <PackageReference Include="SSH.NET" Version="2016.0.0" />
+    <PackageReference Include="WindowsAzure.Storage" Version="8.1.4" />
+    <PackageReference Include="System.Net.Http" Version="4.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.AppService.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.Batch.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.Cdn.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.Compute.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.Dns.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.DocumentDB.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.Graph.RBAC.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.KeyVault.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.Network.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.Redis.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.ServiceBus.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.Sql.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage.Fluent" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.TrafficManager.Fluent" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ResourceManagement\Azure.Fluent\Microsoft.Azure.Management.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\AppService\Microsoft.Azure.Management.AppService.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\Batch\Microsoft.Azure.Management.Batch.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\Cdn\Microsoft.Azure.Management.Cdn.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\Compute\Microsoft.Azure.Management.Compute.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\ContainerRegistry\Microsoft.Azure.Management.ContainerRegistry.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\Dns\Microsoft.Azure.Management.Dns.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\DocumentDB\Microsoft.Azure.Management.DocumentDB.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\Graph.RBAC\Microsoft.Azure.Management.Graph.RBAC.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\KeyVault\Microsoft.Azure.Management.KeyVault.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\Network\Microsoft.Azure.Management.Network.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\RedisCache\Microsoft.Azure.Management.Redis.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\ServiceBus\Microsoft.Azure.Management.ServiceBus.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\Sql\Microsoft.Azure.Management.Sql.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\Storage\Microsoft.Azure.Management.Storage.Fluent.csproj" />
+    <ProjectReference Include="..\..\src\ResourceManagement\TrafficManager\Microsoft.Azure.Management.TrafficManager.Fluent.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\install_apache.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\myTest.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\myTest._pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\myTest2._pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.AzureTests\TestAppGatewaysInParallel.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.AzureTests\TestAppGatewaysPrivateComplex.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.AzureTests\TestAppGatewaysPrivateMinimal.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.AzureTests\TestAppGatewaysPublicComplex.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.AzureTests\TestAppGatewaysPublicMinimal.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.AzureTests\TestLoadBalancersInternalMinimum.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.AzureTests\TestLoadBalancersInternetMinimum.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.AzureTests\TestLoadBalancersNatPools.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.AzureTests\TestLoadBalancersNatRules.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Cdn.CdnTests\CanCRUDCdn.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Dns.DnsTests\CanCreateUpdateDnsZone.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Redis.RedisCacheTests\CanCRUDRedisCache.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.ServiceBus.ServiceBusTests\CanCreateDeleteQueueWithNamespace.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.ServiceBus.ServiceBusTests\CanCreateDeleteTopicWithNamespace.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.ServiceBus.ServiceBusTests\CanCreateNamespaceThenCRUDOnQueue.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.ServiceBus.ServiceBusTests\CanCreateNamespaceThenCRUDOnTopic.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.ServiceBus.ServiceBusTests\CanCRUDOnSimpleNamespace.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.ServiceBus.ServiceBusTests\CanOperateOnAuthorizationRules.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.ServiceBus.ServiceBusTests\CanPerformCRUDOnSubscriptions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.ServiceBus.ServiceBusTests\CanPerformOnNamespaceActions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Sql.SqlTests\CanCRUDSqlDatabase.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Sql.SqlTests\CanCRUDSqlDatabaseWithElasticPool.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Sql.SqlTests\CanCRUDSqlElasticPool.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Sql.SqlTests\CanCRUDSqlFirewallRule.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Sql.SqlTests\CanCRUDSqlServer.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Sql.SqlTests\CanDoOperationsOnDataWarehouse.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Sql.SqlTests\CanManageReplicationLinks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Sql.SqlTests\CanOperateSqlFromRollUpClient.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Sql.SqlTests\CanUseCoolShortcutsForResourceCreation.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.TrafficManager.TrafficManagerTests\CanCreateUpdateTrafficManagerProfile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.AppServicePlansTests\CanCRUDAppServicePlan.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.CertificateOrdersTests\CanCRUDCertificateOrder.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.CertificatesTests\CanCRDCertificate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.DeploymentSlotsTests\CanCRUDSwapSlots.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.DomainsTests\CanCRUDDomain.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.FunctionAppsTests\CanCRUDFunctionApp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.HostnameSslTests\CanBindHostnameAndSsl.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.LinuxWebAppsTests\CanCRUDLinuxWebApp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.SourceControlTests\CanDeploySourceControl.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.WebAppConfigTests\CanCRUDWebAppConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.WebApp.WebAppsTests\CanCRUDWebApp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Batch.BatchTests\CanCreateBatchAccountWithApplication.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Batch.BatchTests\CanCRUDBatchAccounts.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.AvailabilitySetsTests\CanCRUDAvailabilitySet.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.ManagedDiskOperationsTests\CanOperateOnEmptyManagedDisk.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.ManagedDiskOperationsTests\CanOperateOnManagedDiskFromDisk.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.ManagedDiskOperationsTests\CanOperateOnManagedDiskFromSnapshot.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineCustomImageOperationsTest\CanCreateImageByCapturingVM.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineCustomImageOperationsTest\CanCreateImageFromManagedDisk.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineCustomImageOperationsTest\CanCreateImageFromNativeVhd.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineExtensionImageTests\CanGetExtensionTypeVersionAndImage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineExtensionImageTests\CanListExtensionImages.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineExtensionTests\CanHandleExtensionReference.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineExtensionTests\CanInstallUninstallCustomExtension.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineExtensionTests\CanResetPasswordUsingVMAccessExtension.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineManagedDiskOperationsTests\CanCreateUpdateVirtualMachineWithEmptyManagedDataDisks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineManagedDiskOperationsTests\CanCreateVirtualMachineByAttachingManagedOsDisk.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineManagedDiskOperationsTests\CanCreateVirtualMachineFromCustomImageWithManagedDisks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineManagedDiskOperationsTests\CanCreateVirtualMachineFromPIRImageWithManagedOsDisk.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineManagedDiskOperationsTests\CanUpdateVirtualMachineByAddingAndRemovingManagedDisks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineScaleSetManagedDiskOperationsTests\CanCreateUpdateVirtualMachineScaleSetFromPIRWithManagedDisk.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineScaleSetManagedDiskOperationsTests\CanCreateVirtualMachineScaleSetFromCustomImageWithManagedDisk.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineScaleSetTests\CanCreateUpdateVirtualMachineScaleSet.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineScaleSetTests\CanCreateVirtualMachineScaleSetWithCustomScriptExtension.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineScaleSetTests\CanUpdateVirtualMachineScaleSetWithExtensionProtectedSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineTests\CanCreateVirtualMachine.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineTests\CanCreateVirtualMachinesAndRelatedResourcesInParallel.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineTests\CanCreateVirtualMachineWithCustomData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineTests\CanCreateVirtualMachineWithExistingNetworkAndNewPIP.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Compute.VirtualMachineTests\CanSShConnectToVirtualMachine.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Graph.RBAC.ApplicationsTests\CanCRUDApplication.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Graph.RBAC.ServicePrincipalsTests\CanCRUDServicePrincipal.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Graph.RBAC.UsersTests\CanGetUserByDisplayName.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Graph.RBAC.UsersTests\CanGetUserByEmail.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Graph.RBAC.UsersTests\CanGetUserByForeignEmail.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.KeyVault.ManageKeyVault\CanCRUDKeyVault.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Miscellaneous.RestClientTests\CanSetMultipleDelegateHandlers.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Network.IPublicIPAddressTests\CreateUpdateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Network.NetworkInterfaceTests\CreateBatchOfNetworkInterfaces.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Network.NetworkInterfaceTests\CreateUpdateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Network.NetworkTests\CreateUpdateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Network.NSGTests\CreateUpdateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Network.RouteTableTests\CreateUpdateTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.ResourceManager.DeploymentTests\CanCancelVirtualNetworkDeployment.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.ResourceManager.DeploymentTests\CanCreateVirtualNetwork.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.ResourceManager.DeploymentTests\CanUpdateVirtualNetworkDeployment.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.ResourceManager.GenericResourcesTests\CanCreateUpdateMoveResource.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.ResourceManager.ProvidersTests\CanRegisterAndUnRegisterProvider.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.ResourceManager.ResourceGroupsTests\CanCRUDResourceGroup.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.ResourceManager.SubscriptionsTests\CanListLocations.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.ResourceManager.SubscriptionsTests\CanListSubscriptions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.ResourceManager.TenantsTests\CanListTenants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.ResourceManager.TestProviderInterceptor\CanAutomaticallyRegisterProvider.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Storage.StorageAccountsTests\CanCRUDStorageAccount.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Fluent.Tests.Storage.StorageUsagesTests\CanListUsages.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
