@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// resource.</param>
         /// <param name="tags">Key-value pairs of additional resource
         /// provisioning properties.</param>
+        /// <param name="backupBlobContainerUri">The container URI of backup
+        /// blob.</param>
         /// <param name="state">The current state of Analysis Services
         /// resource. The state is to indicate more states outside of
         /// resource provisioning. Possible values include: 'Deleting',
@@ -50,11 +52,11 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// 'Preparing', 'Scaling'</param>
         /// <param name="serverFullName">The full name of the Analysis
         /// Services resource.</param>
-        public AnalysisServicesServer(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), BackupConfiguration backupConfiguration = default(BackupConfiguration), string state = default(string), string provisioningState = default(string), string serverFullName = default(string))
+        public AnalysisServicesServer(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), string backupBlobContainerUri = default(string), string state = default(string), string provisioningState = default(string), string serverFullName = default(string))
             : base(location, sku, id, name, type, tags)
         {
             AsAdministrators = asAdministrators;
-            BackupConfiguration = backupConfiguration;
+            BackupBlobContainerUri = backupBlobContainerUri;
             State = state;
             ProvisioningState = provisioningState;
             ServerFullName = serverFullName;
@@ -66,9 +68,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public ServerAdministrators AsAdministrators { get; set; }
 
         /// <summary>
+        /// Gets or sets the container URI of backup blob.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backupConfiguration")]
-        public BackupConfiguration BackupConfiguration { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backupBlobContainerUri")]
+        public string BackupBlobContainerUri { get; set; }
 
         /// <summary>
         /// Gets the current state of Analysis Services resource. The state is
@@ -105,10 +108,6 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public override void Validate()
         {
             base.Validate();
-            if (this.BackupConfiguration != null)
-            {
-                this.BackupConfiguration.Validate();
-            }
         }
     }
 }

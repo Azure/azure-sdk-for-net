@@ -599,5 +599,79 @@ namespace Microsoft.Azure.Management.Analysis
                 }
             }
 
+            /// <summary>
+            /// Lists eligible SKUs for Analysis Services resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static SkuEnumerationForNewResourceResult ListSkusForNew(this IServersOperations operations)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).ListSkusForNewAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists eligible SKUs for Analysis Services resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<SkuEnumerationForNewResourceResult> ListSkusForNewAsync(this IServersOperations operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListSkusForNewWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists eligible SKUs for an Analysis Services resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure Resource group of which a given Analysis Services
+            /// server is part. This name must be at least 1 character in length, and no
+            /// more than 90.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Analysis Services server. It must be at least 3 characters
+            /// in length, and no more than 63.
+            /// </param>
+            public static SkuEnumerationForExistingResourceResult ListSkusForExisting(this IServersOperations operations, string resourceGroupName, string serverName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).ListSkusForExistingAsync(resourceGroupName, serverName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists eligible SKUs for an Analysis Services resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure Resource group of which a given Analysis Services
+            /// server is part. This name must be at least 1 character in length, and no
+            /// more than 90.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the Analysis Services server. It must be at least 3 characters
+            /// in length, and no more than 63.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<SkuEnumerationForExistingResourceResult> ListSkusForExistingAsync(this IServersOperations operations, string resourceGroupName, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListSkusForExistingWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

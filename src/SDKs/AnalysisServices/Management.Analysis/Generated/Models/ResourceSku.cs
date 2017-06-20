@@ -24,9 +24,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// <summary>
         /// Initializes a new instance of the ResourceSku class.
         /// </summary>
-        /// <param name="name">Name of the SKU level for the server being
-        /// provisioned. Possible values include: 'B1', 'B2', 'S0', 'S1',
-        /// 'S2', 'S4', 'D1'</param>
+        /// <param name="name">Name of the SKU level.</param>
         /// <param name="tier">The name of the Azure pricing tier to which the
         /// SKU applies. Possible values include: 'Development', 'Basic',
         /// 'Standard'</param>
@@ -37,9 +35,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         }
 
         /// <summary>
-        /// Gets or sets name of the SKU level for the server being
-        /// provisioned. Possible values include: 'B1', 'B2', 'S0', 'S1',
-        /// 'S2', 'S4', 'D1'
+        /// Gets or sets name of the SKU level.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
