@@ -127,6 +127,11 @@ namespace Microsoft.Azure.Management.Sql
         IFailoverGroupsOperations FailoverGroups { get; }
 
         /// <summary>
+        /// Gets the IVirtualNetworkRulesOperations.
+        /// </summary>
+        IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
+
+        /// <summary>
         /// Gets the IServerKeysOperations.
         /// </summary>
         IServerKeysOperations ServerKeys { get; }

@@ -132,6 +132,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IFailoverGroupsOperations FailoverGroups { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualNetworkRulesOperations.
+        /// </summary>
+        public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
+
+        /// <summary>
         /// Gets the IServerKeysOperations.
         /// </summary>
         public virtual IServerKeysOperations ServerKeys { get; private set; }
@@ -349,6 +354,7 @@ namespace Microsoft.Azure.Management.Sql
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
+            VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             ServerKeys = new ServerKeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
