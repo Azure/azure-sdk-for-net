@@ -75,14 +75,13 @@ namespace AnalysisServices.Tests.ScenarioTests
 
                 var updatedAdministrators = AnalysisServicesTestUtilities.DefaultAdministrators;
                 updatedAdministrators.Add("aztest2@stabletest.ccsctp.net");
-                string updatedBackupBlobContainerUri = Environment.GetEnvironmentVariable("AAS_SECOND_BACKUP_BLOB_CONTAINER_URI");
 
                 AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
                     {
                         Sku = resultGet.Sku,
                         Tags = updatedTags,
                         AsAdministrators = new ServerAdministrators(updatedAdministrators),
-                        BackupBlobContainerUri = updatedBackupBlobContainerUri
+                        BackupBlobContainerUri = AnalysisServicesTestUtilities.UpdatedBackupBlobContainerUri
                 };
 
                 AnalysisServicesServer resultUpdate = null;
@@ -111,7 +110,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.Equal(1, resultGet.Tags.Count);
                 Assert.True(resultGet.Tags.ContainsKey("updated1"));
                 Assert.Equal(3, resultGet.AsAdministrators.Members.Count);
-                Assert.Equal(updatedBackupBlobContainerUri.Split('?')[0], resultGet.BackupBlobContainerUri);
+                Assert.Equal(AnalysisServicesTestUtilities.UpdatedBackupBlobContainerUri.Split('?')[0], resultGet.BackupBlobContainerUri);
 
                 // Create another server and ensure that list account returns both
                 var secondServer = AnalysisServicesTestUtilities.DefaultServerName + '2';

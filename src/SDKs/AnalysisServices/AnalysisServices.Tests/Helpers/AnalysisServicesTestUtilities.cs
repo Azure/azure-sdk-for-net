@@ -57,7 +57,9 @@ namespace AnalysisServices.Tests.Helpers
             "aztest1@stabletest.ccsctp.net"
         };
 
-        public static string DefaultBackupBlobContainerUri = Environment.GetEnvironmentVariable("AAS_DEFAULT_BACKUP_BLOB_CONTAINER_URI");
+        public static string DefaultBackupBlobContainerUri = Environment.GetEnvironmentVariable("AAS_DEFAULT_BACKUP_BLOB_CONTAINER_URI") ?? "https://aassdk1.blob.core.windows.net/azsdktest?dummykey1";
+
+        public static string UpdatedBackupBlobContainerUri = Environment.GetEnvironmentVariable("AAS_SECOND_BACKUP_BLOB_CONTAINER_URI") ?? "https://aassdk1.blob.core.windows.net/azsdktest2?dummykey2";
 
         public static string GetDefaultCreatedResponse(string provisioningState, string state)
         {
