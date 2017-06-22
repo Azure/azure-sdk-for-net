@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.8" /> 
-    <PackageReference Include="Microsoft.Azure.Management.Fluent" Version="1.1.1" />
     <PackageReference Include="CoreFTP" Version="1.2.0" />
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="0.0.2-preview" />
     <PackageReference Include="SSH.NET" Version="2016.0.0" />

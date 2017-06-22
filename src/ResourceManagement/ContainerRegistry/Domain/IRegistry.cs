@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         /// </summary>
         /// <param name="passwordName">The password name.</param>
         /// <return>The result of the regeneration.</return>
-        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner RegenerateCredential(Models.PasswordName passwordName);
+        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials RegenerateCredential(Models.PasswordName passwordName);
 
         /// <summary>
         /// Gets the creation date of the container registry in ISO8601 format.
@@ -41,17 +41,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         string StorageAccountName { get; }
 
         /// <return>The login credentials for the specified container registry.</return>
-        Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner> ListCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials> ListCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <return>The login credentials for the specified container registry.</return>
-        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner ListCredentials();
+        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials ListCredentials();
 
         /// <summary>
         /// Regenerates one of the login credentials for the specified container registry.
         /// </summary>
         /// <param name="passwordName">The password name.</param>
         /// <return>The result of the regeneration.</return>
-        Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner> RegenerateCredentialAsync(Models.PasswordName passwordName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials> RegenerateCredentialAsync(Models.PasswordName passwordName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the SKU of the container registry.

@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public FrontendIPConfigurationInner(string id = default(string), IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource> inboundNatRules = default(IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource>), IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource> inboundNatPools = default(IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource>), IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource> outboundNatRules = default(IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource>), IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource> loadBalancingRules = default(IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public FrontendIPConfigurationInner(string id = default(string), IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource> inboundNatRules = default(IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource>), IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource> inboundNatPools = default(IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource>), IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource> outboundNatRules = default(IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource>), IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource> loadBalancingRules = default(IList<Microsoft.Azure.Management.ResourceManager.Fluent.SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), Microsoft.Azure.Management.ResourceManager.Fluent.SubResource subnet = default(Microsoft.Azure.Management.ResourceManager.Fluent.SubResource), Microsoft.Azure.Management.ResourceManager.Fluent.SubResource publicIPAddress = default(Microsoft.Azure.Management.ResourceManager.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             InboundNatRules = inboundNatRules;
@@ -118,13 +118,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets the reference of the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
-        public SubnetInner Subnet { get; set; }
+        public Microsoft.Azure.Management.ResourceManager.Fluent.SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the Public IP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
-        public PublicIPAddressInner PublicIPAddress { get; set; }
+        public Microsoft.Azure.Management.ResourceManager.Fluent.SubResource PublicIPAddress { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the public IP resource. Possible

@@ -104,22 +104,22 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
             return new RegistryImpl(name, new Models.RegistryInner(), Manager, this.storageManager);
         }
 
-        public RegistryListCredentialsResultInner RegenerateCredential(string groupName, string registryName, PasswordName passwordName)
+        public RegistryListCredentials RegenerateCredential(string groupName, string registryName, PasswordName passwordName)
         {
             return this.RegenerateCredential(groupName, registryName, passwordName);
         }
 
-        public async Task<RegistryListCredentialsResultInner> ListCredentialsAsync(string groupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<RegistryListCredentials> ListCredentialsAsync(string groupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.Inner.ListCredentialsAsync(groupName, registryName, cancellationToken);
         }
 
-        public RegistryListCredentialsResultInner ListCredentials(string groupName, string registryName)
+        public RegistryListCredentials ListCredentials(string groupName, string registryName)
         {
             return this.Inner.ListCredentialsAsync(groupName, registryName).GetAwaiter().GetResult();
         }
 
-        public async Task<RegistryListCredentialsResultInner> RegenerateCredentialAsync(string groupName, string registryName, PasswordName passwordName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<RegistryListCredentials> RegenerateCredentialAsync(string groupName, string registryName, PasswordName passwordName, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.RegenerateCredentialAsync(groupName, registryName, passwordName, cancellationToken);
         }

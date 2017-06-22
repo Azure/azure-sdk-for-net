@@ -55,7 +55,7 @@ namespace ManageContainerRegistry
 
                 Utilities.Print(azureRegistry);
 
-                RegistryListCredentialsResultInner acrCredentials = azureRegistry.ListCredentials();
+                RegistryListCredentials acrCredentials = azureRegistry.ListCredentials();
 
                 //=============================================================
                 // Create a Docker client that will be used to push/pull images to/from the Azure Container Registry

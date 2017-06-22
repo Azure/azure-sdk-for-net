@@ -28,9 +28,6 @@ namespace ManageWebAppWithAuthentication
 
     public class Program
     {
-        private static string CERT_PASSWORD = "StrongPass!12";
-        private static string pfxPath;
-
         public static void RunSample(IAzure azure)
         {
             string suffix = ".azurewebsites.net";

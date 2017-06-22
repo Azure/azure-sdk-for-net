@@ -1525,7 +1525,7 @@ namespace Microsoft.Azure.Management.Samples.Common
         {
             StringBuilder info = new StringBuilder();
 
-            RegistryListCredentialsResultInner acrCredentials = azureRegistry.ListCredentials();
+            RegistryListCredentials acrCredentials = azureRegistry.ListCredentials();
             info.Append("Azure Container Registry: ").Append(azureRegistry.Id)
                 .Append("\n\tName: ").Append(azureRegistry.Name)
                 .Append("\n\tServer Url: ").Append(azureRegistry.LoginServerUrl)

@@ -20,13 +20,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent.Models
     /// <summary>
     /// The response from the ListCredentials operation.
     /// </summary>
-    public partial class RegistryListCredentialsResultInner
+    public partial class RegistryListCredentials
     {
         /// <summary>
         /// Initializes a new instance of the
         /// RegistryListCredentialsResultInner class.
         /// </summary>
-        public RegistryListCredentialsResultInner()
+        public RegistryListCredentials()
         {
           CustomInit();
         }
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent.Models
         /// registry.</param>
         /// <param name="passwords">The list of passwords for a container
         /// registry.</param>
-        public RegistryListCredentialsResultInner(string username = default(string), IList<RegistryPassword> passwords = default(IList<RegistryPassword>))
+        public RegistryListCredentials(string username = default(string), IList<RegistryPassword> passwords = default(IList<RegistryPassword>))
         {
             Username = username;
             Passwords = passwords;

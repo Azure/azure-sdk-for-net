@@ -36,7 +36,8 @@ namespace ManageServicePrincipalCredentials
             string certName1 = SdkContext.RandomResourceName("cert", 20);
             string raName = SdkContext.RandomGuid();
             string applicationId = "";
-            try {
+            try
+            {
 
                 // ============================================================
                 // Create application
@@ -101,24 +102,30 @@ namespace ManageServicePrincipalCredentials
 
                 AzureCredentials testCredential = new AzureCredentialsFactory().FromServicePrincipal(
                         servicePrincipal.ApplicationId, password1, authenticated.TenantId, environment);
-                try {
+                try
+                {
                     Azure.Authenticate(testCredential).WithDefaultSubscription();
 
                     Utilities.Log("Verified " + passwordName1 + " is valid.");
-                } catch (Exception e) {
-                    Utilities.Log("Failed to verify " + passwordName1 + " is valid.");
+                }
+                catch (Exception e)
+                {
+                    Utilities.Log("Failed to verify " + passwordName1 + " is valid. Exception: " + e.Message);
                 }
 
                 Utilities.Log("Verifying password credential " + passwordName2 + " is valid...");
 
                 testCredential = new AzureCredentialsFactory().FromServicePrincipal(
                         servicePrincipal.ApplicationId, password2, authenticated.TenantId, environment);
-                try {
+                try
+                {
                     Azure.Authenticate(testCredential).WithDefaultSubscription();
 
                     Utilities.Log("Verified " + passwordName2 + " is valid.");
-                } catch (Exception e) {
-                    Utilities.Log("Failed to verify " + passwordName2 + " is valid.");
+                }
+                catch (Exception e)
+                {
+                    Utilities.Log("Failed to verify " + passwordName2 + " is valid. Exception: " + e.Message);
                 }
 
                 Utilities.Log("Verifying certificate credential " + certName1 + " is valid...");
@@ -129,12 +136,15 @@ namespace ManageServicePrincipalCredentials
                         "Abc123",
                         authenticated.TenantId,
                         environment);
-                try {
+                try
+                {
                     Azure.Authenticate(testCredential).WithDefaultSubscription();
 
                     Utilities.Log("Verified " + certName1 + " is valid.");
-                } catch (Exception e) {
-                    Utilities.Log("Failed to verify " + certName1 + " is valid.");
+                }
+                catch (Exception e)
+                {
+                    Utilities.Log("Failed to verify " + certName1 + " is valid. Exception: " + e.Message);
                 }
 
                 // ============================================================
@@ -156,12 +166,15 @@ namespace ManageServicePrincipalCredentials
 
                 testCredential = new AzureCredentialsFactory().FromServicePrincipal(
                         servicePrincipal.ApplicationId, password1, authenticated.TenantId, environment);
-                try {
+                try
+                {
                     Azure.Authenticate(testCredential).WithDefaultSubscription();
 
                     Utilities.Log("Failed to verify " + passwordName1 + " is revoked.");
-                } catch (Exception e) {
-                    Utilities.Log("Verified " + passwordName1 + " is revoked.");
+                }
+                catch (Exception e)
+                {
+                    Utilities.Log("Verified " + passwordName1 + " is revoked. Exception: " + e.Message);
                 }
 
                 // ============================================================
@@ -180,25 +193,34 @@ namespace ManageServicePrincipalCredentials
 
                 testCredential = new AzureCredentialsFactory().FromServicePrincipal(
                         servicePrincipal.ApplicationId, password2, authenticated.TenantId, environment);
-                try {
+                try
+                {
                     Azure.Authenticate(testCredential).WithDefaultSubscription()
                             .ResourceGroups.List();
 
                     Utilities.Log("Failed to verify " + passwordName2 + " has no access to subscription.");
-                } catch (Exception e) {
-                    Utilities.Log("Verified " + passwordName2 + " has no access to subscription.");
+                }
+                catch (Exception e)
+                {
+                    Utilities.Log("Verified " + passwordName2 + " has no access to subscription. Exception: " + e.Message);
                 }
 
-            } catch (Exception f) {
+            }
+            catch (Exception f)
+            {
                 Utilities.Log(f.Message);
-            } finally {
-                try {
+            }
+            finally
+            {
+                try
+                {
                     Utilities.Log("Deleting application: " + appName);
                     authenticated.ActiveDirectoryApplications.DeleteById(applicationId);
                     Utilities.Log("Deleted application: " + appName);
                 }
-                catch (Exception e) {
-                    Utilities.Log("Did not create applications in Azure. No clean up is necessary");
+                catch (Exception e)
+                {
+                    Utilities.Log("Did not create applications in Azure. No clean up is necessary. Exception: " + e.Message);
                 }
             }
         }

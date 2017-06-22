@@ -495,9 +495,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             // Associate an NSG if needed
             if (networkSecurityGroup != null)
             {
-                Inner.NetworkSecurityGroup =
-                    ///GENMHASH:B6961E0C7CB3A9659DE0E1489F44A936:0B871D5CC01C5634C2C9305DF6429EF2
-                    Manager.NetworkSecurityGroups.GetById(networkSecurityGroup.Id).Inner;
+                Inner.NetworkSecurityGroup = new SubResource(networkSecurityGroup.Id);
             }
 
             NicIPConfigurationImpl.EnsureConfigurations(new List<INicIPConfiguration>(nicIPConfigurations.Values));
