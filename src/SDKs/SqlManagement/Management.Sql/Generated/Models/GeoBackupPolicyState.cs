@@ -27,4 +27,32 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Enabled")]
         Enabled
     }
+    internal static class GeoBackupPolicyStateEnumExtension
+    {
+        internal static string ToSerializedValue(this GeoBackupPolicyState? value )  =>
+            value == null ? null : (( GeoBackupPolicyState )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this GeoBackupPolicyState value )
+        {
+            switch( value )
+            {
+                case GeoBackupPolicyState.Disabled:
+                    return "Disabled";
+                case GeoBackupPolicyState.Enabled:
+                    return "Enabled";
+            }
+            return null;
+        }
+
+        internal static GeoBackupPolicyState? ParseGeoBackupPolicyState( this string value )
+        {
+            switch( value )
+            {
+                case "Disabled":
+                    return GeoBackupPolicyState.Disabled;
+                case "Enabled":
+                    return GeoBackupPolicyState.Enabled;            }
+            return null;
+        }
+    }
 }

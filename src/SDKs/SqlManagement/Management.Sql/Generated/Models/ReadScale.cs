@@ -27,4 +27,32 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Disabled")]
         Disabled
     }
+    internal static class ReadScaleEnumExtension
+    {
+        internal static string ToSerializedValue(this ReadScale? value )  =>
+            value == null ? null : (( ReadScale )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ReadScale value )
+        {
+            switch( value )
+            {
+                case ReadScale.Enabled:
+                    return "Enabled";
+                case ReadScale.Disabled:
+                    return "Disabled";
+            }
+            return null;
+        }
+
+        internal static ReadScale? ParseReadScale( this string value )
+        {
+            switch( value )
+            {
+                case "Enabled":
+                    return ReadScale.Enabled;
+                case "Disabled":
+                    return ReadScale.Disabled;            }
+            return null;
+        }
+    }
 }

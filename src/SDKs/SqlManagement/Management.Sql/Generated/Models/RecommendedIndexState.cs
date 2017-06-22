@@ -45,4 +45,68 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Success")]
         Success
     }
+    internal static class RecommendedIndexStateEnumExtension
+    {
+        internal static string ToSerializedValue(this RecommendedIndexState? value )  =>
+            value == null ? null : (( RecommendedIndexState )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this RecommendedIndexState value )
+        {
+            switch( value )
+            {
+                case RecommendedIndexState.Active:
+                    return "Active";
+                case RecommendedIndexState.Pending:
+                    return "Pending";
+                case RecommendedIndexState.Executing:
+                    return "Executing";
+                case RecommendedIndexState.Verifying:
+                    return "Verifying";
+                case RecommendedIndexState.PendingRevert:
+                    return "Pending Revert";
+                case RecommendedIndexState.Reverting:
+                    return "Reverting";
+                case RecommendedIndexState.Reverted:
+                    return "Reverted";
+                case RecommendedIndexState.Ignored:
+                    return "Ignored";
+                case RecommendedIndexState.Expired:
+                    return "Expired";
+                case RecommendedIndexState.Blocked:
+                    return "Blocked";
+                case RecommendedIndexState.Success:
+                    return "Success";
+            }
+            return null;
+        }
+
+        internal static RecommendedIndexState? ParseRecommendedIndexState( this string value )
+        {
+            switch( value )
+            {
+                case "Active":
+                    return RecommendedIndexState.Active;
+                case "Pending":
+                    return RecommendedIndexState.Pending;
+                case "Executing":
+                    return RecommendedIndexState.Executing;
+                case "Verifying":
+                    return RecommendedIndexState.Verifying;
+                case "Pending Revert":
+                    return RecommendedIndexState.PendingRevert;
+                case "Reverting":
+                    return RecommendedIndexState.Reverting;
+                case "Reverted":
+                    return RecommendedIndexState.Reverted;
+                case "Ignored":
+                    return RecommendedIndexState.Ignored;
+                case "Expired":
+                    return RecommendedIndexState.Expired;
+                case "Blocked":
+                    return RecommendedIndexState.Blocked;
+                case "Success":
+                    return RecommendedIndexState.Success;            }
+            return null;
+        }
+    }
 }

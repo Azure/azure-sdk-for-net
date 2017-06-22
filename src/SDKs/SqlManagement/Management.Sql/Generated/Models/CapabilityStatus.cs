@@ -31,4 +31,40 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Disabled")]
         Disabled
     }
+    internal static class CapabilityStatusEnumExtension
+    {
+        internal static string ToSerializedValue(this CapabilityStatus? value )  =>
+            value == null ? null : (( CapabilityStatus )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this CapabilityStatus value )
+        {
+            switch( value )
+            {
+                case CapabilityStatus.Visible:
+                    return "Visible";
+                case CapabilityStatus.Available:
+                    return "Available";
+                case CapabilityStatus.Default:
+                    return "Default";
+                case CapabilityStatus.Disabled:
+                    return "Disabled";
+            }
+            return null;
+        }
+
+        internal static CapabilityStatus? ParseCapabilityStatus( this string value )
+        {
+            switch( value )
+            {
+                case "Visible":
+                    return CapabilityStatus.Visible;
+                case "Available":
+                    return CapabilityStatus.Available;
+                case "Default":
+                    return CapabilityStatus.Default;
+                case "Disabled":
+                    return CapabilityStatus.Disabled;            }
+            return null;
+        }
+    }
 }

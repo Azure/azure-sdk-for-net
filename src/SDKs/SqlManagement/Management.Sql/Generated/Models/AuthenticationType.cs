@@ -27,4 +27,32 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "ADPassword")]
         ADPassword
     }
+    internal static class AuthenticationTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this AuthenticationType? value )  =>
+            value == null ? null : (( AuthenticationType )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this AuthenticationType value )
+        {
+            switch( value )
+            {
+                case AuthenticationType.SQL:
+                    return "SQL";
+                case AuthenticationType.ADPassword:
+                    return "ADPassword";
+            }
+            return null;
+        }
+
+        internal static AuthenticationType? ParseAuthenticationType( this string value )
+        {
+            switch( value )
+            {
+                case "SQL":
+                    return AuthenticationType.SQL;
+                case "ADPassword":
+                    return AuthenticationType.ADPassword;            }
+            return null;
+        }
+    }
 }

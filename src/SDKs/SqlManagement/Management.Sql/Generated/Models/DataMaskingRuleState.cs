@@ -17,41 +17,41 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for TransparentDataEncryptionStatus.
+    /// Defines values for DataMaskingRuleState.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum TransparentDataEncryptionStatus
+    public enum DataMaskingRuleState
     {
-        [EnumMember(Value = "Enabled")]
-        Enabled,
         [EnumMember(Value = "Disabled")]
-        Disabled
+        Disabled,
+        [EnumMember(Value = "Enabled")]
+        Enabled
     }
-    internal static class TransparentDataEncryptionStatusEnumExtension
+    internal static class DataMaskingRuleStateEnumExtension
     {
-        internal static string ToSerializedValue(this TransparentDataEncryptionStatus? value )  =>
-            value == null ? null : (( TransparentDataEncryptionStatus )value).ToSerializedValue();
+        internal static string ToSerializedValue(this DataMaskingRuleState? value )  =>
+            value == null ? null : (( DataMaskingRuleState )value).ToSerializedValue();
 
-        internal static string ToSerializedValue(this TransparentDataEncryptionStatus value )
+        internal static string ToSerializedValue(this DataMaskingRuleState value )
         {
             switch( value )
             {
-                case TransparentDataEncryptionStatus.Enabled:
-                    return "Enabled";
-                case TransparentDataEncryptionStatus.Disabled:
+                case DataMaskingRuleState.Disabled:
                     return "Disabled";
+                case DataMaskingRuleState.Enabled:
+                    return "Enabled";
             }
             return null;
         }
 
-        internal static TransparentDataEncryptionStatus? ParseTransparentDataEncryptionStatus( this string value )
+        internal static DataMaskingRuleState? ParseDataMaskingRuleState( this string value )
         {
             switch( value )
             {
-                case "Enabled":
-                    return TransparentDataEncryptionStatus.Enabled;
                 case "Disabled":
-                    return TransparentDataEncryptionStatus.Disabled;            }
+                    return DataMaskingRuleState.Disabled;
+                case "Enabled":
+                    return DataMaskingRuleState.Enabled;            }
             return null;
         }
     }

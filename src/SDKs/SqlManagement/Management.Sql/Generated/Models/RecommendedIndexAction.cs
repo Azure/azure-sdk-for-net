@@ -29,4 +29,36 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Rebuild")]
         Rebuild
     }
+    internal static class RecommendedIndexActionEnumExtension
+    {
+        internal static string ToSerializedValue(this RecommendedIndexAction? value )  =>
+            value == null ? null : (( RecommendedIndexAction )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this RecommendedIndexAction value )
+        {
+            switch( value )
+            {
+                case RecommendedIndexAction.Create:
+                    return "Create";
+                case RecommendedIndexAction.Drop:
+                    return "Drop";
+                case RecommendedIndexAction.Rebuild:
+                    return "Rebuild";
+            }
+            return null;
+        }
+
+        internal static RecommendedIndexAction? ParseRecommendedIndexAction( this string value )
+        {
+            switch( value )
+            {
+                case "Create":
+                    return RecommendedIndexAction.Create;
+                case "Drop":
+                    return RecommendedIndexAction.Drop;
+                case "Rebuild":
+                    return RecommendedIndexAction.Rebuild;            }
+            return null;
+        }
+    }
 }

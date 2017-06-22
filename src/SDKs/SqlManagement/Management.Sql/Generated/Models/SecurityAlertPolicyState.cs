@@ -29,4 +29,36 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Disabled")]
         Disabled
     }
+    internal static class SecurityAlertPolicyStateEnumExtension
+    {
+        internal static string ToSerializedValue(this SecurityAlertPolicyState? value )  =>
+            value == null ? null : (( SecurityAlertPolicyState )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this SecurityAlertPolicyState value )
+        {
+            switch( value )
+            {
+                case SecurityAlertPolicyState.New:
+                    return "New";
+                case SecurityAlertPolicyState.Enabled:
+                    return "Enabled";
+                case SecurityAlertPolicyState.Disabled:
+                    return "Disabled";
+            }
+            return null;
+        }
+
+        internal static SecurityAlertPolicyState? ParseSecurityAlertPolicyState( this string value )
+        {
+            switch( value )
+            {
+                case "New":
+                    return SecurityAlertPolicyState.New;
+                case "Enabled":
+                    return SecurityAlertPolicyState.Enabled;
+                case "Disabled":
+                    return SecurityAlertPolicyState.Disabled;            }
+            return null;
+        }
+    }
 }

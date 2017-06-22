@@ -33,4 +33,44 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Copy")]
         Copy
     }
+    internal static class ReplicationRoleEnumExtension
+    {
+        internal static string ToSerializedValue(this ReplicationRole? value )  =>
+            value == null ? null : (( ReplicationRole )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ReplicationRole value )
+        {
+            switch( value )
+            {
+                case ReplicationRole.Primary:
+                    return "Primary";
+                case ReplicationRole.Secondary:
+                    return "Secondary";
+                case ReplicationRole.NonReadableSecondary:
+                    return "NonReadableSecondary";
+                case ReplicationRole.Source:
+                    return "Source";
+                case ReplicationRole.Copy:
+                    return "Copy";
+            }
+            return null;
+        }
+
+        internal static ReplicationRole? ParseReplicationRole( this string value )
+        {
+            switch( value )
+            {
+                case "Primary":
+                    return ReplicationRole.Primary;
+                case "Secondary":
+                    return ReplicationRole.Secondary;
+                case "NonReadableSecondary":
+                    return ReplicationRole.NonReadableSecondary;
+                case "Source":
+                    return ReplicationRole.Source;
+                case "Copy":
+                    return ReplicationRole.Copy;            }
+            return null;
+        }
+    }
 }
