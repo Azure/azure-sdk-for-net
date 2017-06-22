@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:DD83F863BB3E548AA6773EF2F2FDD700:488D62DEC18443445C34B6C753A0435A
         internal LoadBalancerFrontendImpl WithExistingPublicIPAddress (string resourceId)
         {
-            var pipRef = new PublicIPAddressInner(id: resourceId);
+            var pipRef = new Microsoft.Azure.Management.ResourceManager.Fluent.SubResource(id: resourceId);
             Inner.PublicIPAddress = pipRef;
 
             // Ensure no conflicting public and private settings
