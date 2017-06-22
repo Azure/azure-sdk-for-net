@@ -46,26 +46,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.AppService.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.Batch.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.Cdn.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.Compute.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.Dns.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.DocumentDB.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.Graph.RBAC.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.KeyVault.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.Network.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.Redis.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.ServiceBus.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.Sql.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.Storage.Fluent" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Azure.Management.TrafficManager.Fluent" Version="1.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\ResourceManagement\Azure.Fluent\Microsoft.Azure.Management.Fluent.csproj" />
     <ProjectReference Include="..\..\src\ResourceManagement\AppService\Microsoft.Azure.Management.AppService.Fluent.csproj" />
     <ProjectReference Include="..\..\src\ResourceManagement\Batch\Microsoft.Azure.Management.Batch.Fluent.csproj" />
