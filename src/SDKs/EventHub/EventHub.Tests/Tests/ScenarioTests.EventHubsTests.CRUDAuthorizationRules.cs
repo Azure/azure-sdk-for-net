@@ -37,13 +37,18 @@ namespace EventHub.Tests.ScenarioTests
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new EHNamespace()
                     {
                         Location = location,                        
                         Sku = new Sku
                         {
-                            Name = "Standard",
-                            Tier = "Standard"
+                            Name = SkuName.Standard,
+                            Tier = SkuTier.Standard
+                        },
+                        Tags = new Dictionary<string, string>()
+                        {
+                            {"tag1", "value1"},
+                            {"tag2", "value2"}
                         }
                     });
 
@@ -60,16 +65,12 @@ namespace EventHub.Tests.ScenarioTests
                 getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Create Eventhub
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);                
                 var createEventhubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
-                new EventHubCreateOrUpdateParameters()
-                {
-                    Location = location
-                });
+                new EventHubModel() { MessageRetentionInDays = 5 });
 
                 Assert.NotNull(createEventhubResponse);
                 Assert.Equal(createEventhubResponse.Name, eventhubName);
@@ -83,10 +84,9 @@ namespace EventHub.Tests.ScenarioTests
                 // Create a EventHub AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(EventHubManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
-                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
+                var createAutorizationRuleParameter = new AuthorizationRule()
                 {
-                    Name = authorizationRuleName,
-                    Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
+                    Rights = new List<string>() { AccessRights.Listen, AccessRights.Send }
                 };
 
                 var jsonStr = EventHubManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
@@ -117,8 +117,8 @@ namespace EventHub.Tests.ScenarioTests
 
                 // Update Eventhub authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
-                SharedAccessAuthorizationRuleCreateOrUpdateParameters updateEventhubAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
-                updateEventhubAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
+                AuthorizationRule updateEventhubAuthorizationRuleParameter = new AuthorizationRule();
+                updateEventhubAuthorizationRuleParameter.Rights = new List<string>() { AccessRights.Listen };
 
                 var updateEventhubAuthorizationRuleResponse = EventHubManagementClient.EventHubs.CreateOrUpdateAuthorizationRule(resourceGroup,
                     namespaceName,eventhubName, authorizationRuleName, updateEventhubAuthorizationRuleParameter);
@@ -148,41 +148,31 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
+                //New connection string 
+                var regenerateConnection_primary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.PrimaryKey));
+                Assert.NotNull(regenerateConnection_primary);
+                Assert.NotEqual(listKeysResponse.PrimaryConnectionString, regenerateConnection_primary.PrimaryConnectionString);
+                Assert.Equal(listKeysResponse.SecondaryConnectionString, regenerateConnection_primary.SecondaryConnectionString);
+
+                var regenerateConnection_Secondary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, new RegenerateAccessKeyParameters(KeyType.SecondaryKey));
+                Assert.NotNull(regenerateConnection_Secondary);
+                Assert.NotEqual(listKeysResponse.SecondaryConnectionString, regenerateConnection_Secondary.SecondaryConnectionString);
+                Assert.Equal(regenerateConnection_primary.PrimaryConnectionString, regenerateConnection_Secondary.PrimaryConnectionString);
+
+
                 // Delete Eventhub authorizationRule
                 EventHubManagementClient.EventHubs.DeleteAuthorizationRule(resourceGroup, namespaceName, eventhubName, authorizationRuleName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
-                try
-                {
-                    EventHubManagementClient.EventHubs.GetAuthorizationRule(resourceGroup, namespaceName, eventhubName, authorizationRuleName);
-                    Assert.True(false, "this step should have failed");
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
+                
 
                 // Delete Eventhub and check for the NotFound exception 
                 EventHubManagementClient.EventHubs.Delete(resourceGroup, namespaceName, eventhubName);
-                try
-                {
-                    var getEventhubResponse_chkDelete = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound,ex.Response.StatusCode);
-                }
+               
 
                 // Delete namespace and check for the NotFound exception 
                 EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
-                try
-                {
-                    var getNamespaceResponse_chkDelete = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
+                
             }
         }
     }

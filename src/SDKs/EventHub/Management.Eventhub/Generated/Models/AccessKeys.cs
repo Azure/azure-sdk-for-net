@@ -17,27 +17,27 @@ namespace Microsoft.Azure.Management.EventHub.Models
     /// <summary>
     /// Namespace/EventHub Connection String
     /// </summary>
-    public partial class ResourceListKeys
+    public partial class AccessKeys
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceListKeys class.
+        /// Initializes a new instance of the AccessKeys class.
         /// </summary>
-        public ResourceListKeys() { }
+        public AccessKeys() { }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceListKeys class.
+        /// Initializes a new instance of the AccessKeys class.
         /// </summary>
         /// <param name="primaryConnectionString">Primary connection string of
-        /// the created Namespace AuthorizationRule.</param>
+        /// the created namespace AuthorizationRule.</param>
         /// <param name="secondaryConnectionString">Secondary connection string
-        /// of the created Namespace AuthorizationRule.</param>
+        /// of the created namespace AuthorizationRule.</param>
         /// <param name="primaryKey">A base64-encoded 256-bit primary key for
         /// signing and validating the SAS token.</param>
         /// <param name="secondaryKey">A base64-encoded 256-bit primary key for
         /// signing and validating the SAS token.</param>
         /// <param name="keyName">A string that describes the
         /// AuthorizationRule.</param>
-        public ResourceListKeys(string primaryConnectionString = default(string), string secondaryConnectionString = default(string), string primaryKey = default(string), string secondaryKey = default(string), string keyName = default(string))
+        public AccessKeys(string primaryConnectionString = default(string), string secondaryConnectionString = default(string), string primaryKey = default(string), string secondaryKey = default(string), string keyName = default(string))
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
@@ -47,14 +47,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
         }
 
         /// <summary>
-        /// Gets primary connection string of the created Namespace
+        /// Gets primary connection string of the created namespace
         /// AuthorizationRule.
         /// </summary>
         [JsonProperty(PropertyName = "primaryConnectionString")]
         public string PrimaryConnectionString { get; protected set; }
 
         /// <summary>
-        /// Gets secondary connection string of the created Namespace
+        /// Gets secondary connection string of the created namespace
         /// AuthorizationRule.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryConnectionString")]

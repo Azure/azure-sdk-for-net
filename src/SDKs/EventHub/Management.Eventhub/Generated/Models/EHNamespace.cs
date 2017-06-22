@@ -22,25 +22,21 @@ namespace Microsoft.Azure.Management.EventHub.Models
     /// Single Namespace item in List or Get Operation
     /// </summary>
     [JsonTransformation]
-    public partial class NamespaceResource : TrackedResource
+    public partial class EHNamespace : TrackedResource
     {
         /// <summary>
-        /// Initializes a new instance of the NamespaceResource class.
+        /// Initializes a new instance of the EHNamespace class.
         /// </summary>
-        public NamespaceResource() { }
+        public EHNamespace() { }
 
         /// <summary>
-        /// Initializes a new instance of the NamespaceResource class.
+        /// Initializes a new instance of the EHNamespace class.
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="status">State of the Namespace. Possible values
-        /// include: 'Unknown', 'Creating', 'Created', 'Activating',
-        /// 'Enabling', 'Active', 'Disabling', 'Disabled', 'SoftDeleting',
-        /// 'SoftDeleted', 'Removing', 'Removed', 'Failed'</param>
         /// <param name="provisioningState">Provisioning state of the
         /// Namespace.</param>
         /// <param name="createdAt">The time the Namespace was created.</param>
@@ -48,20 +44,23 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="serviceBusEndpoint">Endpoint you can use to perform
         /// Service Bus operations.</param>
         /// <param name="metricId">Identifier for Azure Insights
-        /// metrics</param>
-        /// <param name="enabled">Specifies whether this instance is
-        /// enabled.</param>
-        public NamespaceResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), NamespaceState? status = default(NamespaceState?), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? enabled = default(bool?))
+        /// metrics.</param>
+        /// <param name="isAutoInflateEnabled">Value that indicates whether
+        /// AutoInflate is enabled for eventhub namespace.</param>
+        /// <param name="maximumThroughputUnits">Upper limit of throughput
+        /// units when AutoInflate is enabled, vaule should be within 1 to 20
+        /// throughput units.</param>
+        public EHNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), int? maximumThroughputUnits = default(int?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
-            Status = status;
             ProvisioningState = provisioningState;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
             MetricId = metricId;
-            Enabled = enabled;
+            IsAutoInflateEnabled = isAutoInflateEnabled;
+            MaximumThroughputUnits = maximumThroughputUnits;
         }
 
         /// <summary>
@@ -70,50 +69,48 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets state of the Namespace. Possible values include:
-        /// 'Unknown', 'Creating', 'Created', 'Activating', 'Enabling',
-        /// 'Active', 'Disabling', 'Disabled', 'SoftDeleting', 'SoftDeleted',
-        /// 'Removing', 'Removed', 'Failed'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public NamespaceState? Status { get; set; }
-
-        /// <summary>
-        /// Gets or sets provisioning state of the Namespace.
+        /// Gets provisioning state of the Namespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the time the Namespace was created.
+        /// Gets the time the Namespace was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public System.DateTime? CreatedAt { get; set; }
+        public System.DateTime? CreatedAt { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the time the Namespace was updated.
+        /// Gets the time the Namespace was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public System.DateTime? UpdatedAt { get; set; }
+        public System.DateTime? UpdatedAt { get; protected set; }
 
         /// <summary>
-        /// Gets or sets endpoint you can use to perform Service Bus
-        /// operations.
+        /// Gets endpoint you can use to perform Service Bus operations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceBusEndpoint")]
-        public string ServiceBusEndpoint { get; set; }
+        public string ServiceBusEndpoint { get; protected set; }
 
         /// <summary>
-        /// Gets identifier for Azure Insights metrics
+        /// Gets identifier for Azure Insights metrics.
         /// </summary>
         [JsonProperty(PropertyName = "properties.metricId")]
         public string MetricId { get; protected set; }
 
         /// <summary>
-        /// Gets or sets specifies whether this instance is enabled.
+        /// Gets or sets value that indicates whether AutoInflate is enabled
+        /// for eventhub namespace.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
-        public bool? Enabled { get; set; }
+        [JsonProperty(PropertyName = "properties.isAutoInflateEnabled")]
+        public bool? IsAutoInflateEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets upper limit of throughput units when AutoInflate is
+        /// enabled, vaule should be within 1 to 20 throughput units.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maximumThroughputUnits")]
+        public int? MaximumThroughputUnits { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -127,6 +124,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (MaximumThroughputUnits > 20)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaximumThroughputUnits", 20);
+            }
+            if (MaximumThroughputUnits < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaximumThroughputUnits", 1);
             }
         }
     }

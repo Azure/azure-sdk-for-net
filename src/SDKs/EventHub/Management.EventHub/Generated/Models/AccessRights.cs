@@ -11,23 +11,15 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using Azure;
     using Management;
     using EventHub;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AccessRights.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum AccessRights
+    public static class AccessRights
     {
-        [EnumMember(Value = "Manage")]
-        Manage,
-        [EnumMember(Value = "Send")]
-        Send,
-        [EnumMember(Value = "Listen")]
-        Listen
+        public const string Manage = "Manage";
+        public const string Send = "Send";
+        public const string Listen = "Listen";
     }
 }
 
