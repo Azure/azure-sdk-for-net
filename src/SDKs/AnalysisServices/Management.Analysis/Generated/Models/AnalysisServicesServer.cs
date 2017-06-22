@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// resource.</param>
         /// <param name="tags">Key-value pairs of additional resource
         /// provisioning properties.</param>
+        /// <param name="asAdministrators">A collection of AS server
+        /// administrators</param>
         /// <param name="backupBlobContainerUri">The container URI of backup
         /// blob.</param>
         /// <param name="state">The current state of Analysis Services
@@ -63,6 +65,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         }
 
         /// <summary>
+        /// Gets or sets a collection of AS server administrators
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.asAdministrators")]
         public ServerAdministrators AsAdministrators { get; set; }

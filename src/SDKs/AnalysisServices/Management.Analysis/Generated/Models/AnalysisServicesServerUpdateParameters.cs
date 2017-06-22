@@ -30,6 +30,8 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// resource.</param>
         /// <param name="tags">Key-value pairs of additional provisioning
         /// properties.</param>
+        /// <param name="asAdministrators">A collection of AS server
+        /// administrators</param>
         /// <param name="backupBlobContainerUri">The container URI of backup
         /// blob.</param>
         public AnalysisServicesServerUpdateParameters(ResourceSku sku = default(ResourceSku), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), string backupBlobContainerUri = default(string))
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
+        /// Gets or sets a collection of AS server administrators
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.asAdministrators")]
         public ServerAdministrators AsAdministrators { get; set; }
