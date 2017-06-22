@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         /// <param name="registryName">The registry name.</param>
         /// <param name="passwordName">The password name to regenerate login credentials for.</param>
         /// <return>The list of credentials.</return>
-        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner RegenerateCredential(string groupName, string registryName, Models.PasswordName passwordName);
+        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials RegenerateCredential(string groupName, string registryName, Models.PasswordName passwordName);
 
         /// <summary>
         /// Lists the login credentials for the specified container registry.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         /// <param name="groupName">The group name.</param>
         /// <param name="registryName">The registry name.</param>
         /// <return>The list of credentials.</return>
-        Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner> ListCredentialsAsync(string groupName, string registryName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials> ListCredentialsAsync(string groupName, string registryName, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Lists the login credentials for the specified container registry.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         /// <param name="groupName">The group name.</param>
         /// <param name="registryName">The registry name.</param>
         /// <return>The list of credentials.</return>
-        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner ListCredentials(string groupName, string registryName);
+        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials ListCredentials(string groupName, string registryName);
 
         /// <summary>
         /// Regenerates one of the login credentials for the specified container registry.
@@ -61,6 +61,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         /// <param name="registryName">The registry name.</param>
         /// <param name="passwordName">The password name to regenerate login credentials for.</param>
         /// <return>The list of credentials.</return>
-        Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner> RegenerateCredentialAsync(string groupName, string registryName, Models.PasswordName passwordName, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials> RegenerateCredentialAsync(string groupName, string registryName, Models.PasswordName passwordName, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

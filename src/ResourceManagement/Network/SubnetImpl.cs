@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:749BD8C1D070A6DAE2D9F29DAE294FAE:9DD0E90F3B1A067185751A1074341EAF
         internal SubnetImpl WithExistingNetworkSecurityGroup(string resourceId)
         {
-            Inner.NetworkSecurityGroup = new NetworkSecurityGroupInner(id: resourceId);
+            Inner.NetworkSecurityGroup = new SubResource(id: resourceId);
             return this;
         }
 
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:C142A0234F22048E67709B65DD642261:61C2A1A23D6BCA62D6705980C8D1BECE
         public SubnetImpl WithExistingRouteTable(string resourceId)
         {
-            Inner.RouteTable = new RouteTableInner(id: resourceId);
+            Inner.RouteTable = new SubResource(id: resourceId);
             return this;
         }
 

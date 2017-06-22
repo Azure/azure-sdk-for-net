@@ -1311,7 +1311,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistryListCredentialsResultInner>> ListCredentialsWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegistryListCredentials>> ListCredentialsWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1460,7 +1460,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<RegistryListCredentialsResultInner>();
+            var _result = new AzureOperationResponse<RegistryListCredentials>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1473,7 +1473,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RegistryListCredentialsResultInner>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RegistryListCredentials>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1527,7 +1527,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistryListCredentialsResultInner>> RegenerateCredentialWithHttpMessagesAsync(string resourceGroupName, string registryName, PasswordName name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegistryListCredentials>> RegenerateCredentialWithHttpMessagesAsync(string resourceGroupName, string registryName, PasswordName name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1685,7 +1685,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<RegistryListCredentialsResultInner>();
+            var _result = new AzureOperationResponse<RegistryListCredentials>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1698,7 +1698,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RegistryListCredentialsResultInner>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RegistryListCredentials>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

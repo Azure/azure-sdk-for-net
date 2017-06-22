@@ -135,6 +135,12 @@
     <None Update="SessionRecords\Azure.Tests.Dns.DnsTests\CanCreateUpdateDnsZone.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="SessionRecords\Azure.Tests.Network.LoadBalancer.LoadBalancerBugFixes\WithExistingNetworkSecurityGroupTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Azure.Tests.Network.LoadBalancer.LoadBalancerBugFixes\WithExistingPublicIpAddressTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="SessionRecords\Azure.Tests.Redis.RedisCacheTests\CanCRUDRedisCache.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

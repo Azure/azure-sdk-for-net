@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
             /// <param name='registryName'>
             /// The name of the container registry.
             /// </param>
-            public static RegistryListCredentialsResultInner ListCredentials(this IRegistriesOperations operations, string resourceGroupName, string registryName)
+            public static RegistryListCredentials ListCredentials(this IRegistriesOperations operations, string resourceGroupName, string registryName)
             {
                 return operations.ListCredentialsAsync(resourceGroupName, registryName).GetAwaiter().GetResult();
             }
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistryListCredentialsResultInner> ListCredentialsAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegistryListCredentials> ListCredentialsAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListCredentialsWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
             /// Specifies name of the password which should be regenerated -- password or
             /// password2. Possible values include: 'password', 'password2'
             /// </param>
-            public static RegistryListCredentialsResultInner RegenerateCredential(this IRegistriesOperations operations, string resourceGroupName, string registryName, PasswordName name)
+            public static RegistryListCredentials RegenerateCredential(this IRegistriesOperations operations, string resourceGroupName, string registryName, PasswordName name)
             {
                 return operations.RegenerateCredentialAsync(resourceGroupName, registryName, name).GetAwaiter().GetResult();
             }
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistryListCredentialsResultInner> RegenerateCredentialAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, PasswordName name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegistryListCredentials> RegenerateCredentialAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, PasswordName name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateCredentialWithHttpMessagesAsync(resourceGroupName, registryName, name, null, cancellationToken).ConfigureAwait(false))
                 {

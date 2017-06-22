@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public SubnetInner(string id = default(string), string addressPrefix = default(string), NetworkSecurityGroupInner networkSecurityGroup = default(NetworkSecurityGroupInner), RouteTableInner routeTable = default(RouteTableInner), IList<IPConfigurationInner> ipConfigurations = default(IList<IPConfigurationInner>), IList<ResourceNavigationLinkInner> resourceNavigationLinks = default(IList<ResourceNavigationLinkInner>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public SubnetInner(string id = default(string), string addressPrefix = default(string), Microsoft.Azure.Management.ResourceManager.Fluent.SubResource networkSecurityGroup = default(Microsoft.Azure.Management.ResourceManager.Fluent.SubResource), Microsoft.Azure.Management.ResourceManager.Fluent.SubResource routeTable = default(Microsoft.Azure.Management.ResourceManager.Fluent.SubResource), IList<IPConfigurationInner> ipConfigurations = default(IList<IPConfigurationInner>), IList<ResourceNavigationLinkInner> resourceNavigationLinks = default(IList<ResourceNavigationLinkInner>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AddressPrefix = addressPrefix;
@@ -74,13 +74,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets the reference of the NetworkSecurityGroup resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
-        public NetworkSecurityGroupInner NetworkSecurityGroup { get; set; }
+        public Microsoft.Azure.Management.ResourceManager.Fluent.SubResource NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the RouteTable resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.routeTable")]
-        public RouteTableInner RouteTable { get; set; }
+        public Microsoft.Azure.Management.ResourceManager.Fluent.SubResource RouteTable { get; set; }
 
         /// <summary>
         /// Gets an array of references to the network interface IP

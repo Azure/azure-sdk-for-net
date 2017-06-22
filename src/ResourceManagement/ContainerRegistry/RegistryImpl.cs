@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         private IStorageAccount storageAccount;
         private string creatableStorageAccountKey;
 
-        public RegistryListCredentialsResultInner RegenerateCredential(PasswordName passwordName)
+        public RegistryListCredentials RegenerateCredential(PasswordName passwordName)
         {
             return this.RegenerateCredentialAsync(passwordName).GetAwaiter().GetResult();
         }
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
              return this.Inner.StorageAccount.Name;
         }
 
-        public async Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner> ListCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials> ListCredentialsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
              return await this.Manager.Inner.Registries.ListCredentialsAsync(this.ResourceGroupName, this.Name);
         }
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
             return this;
         }
 
-        public async Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner> RegenerateCredentialAsync(PasswordName passwordName, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials> RegenerateCredentialAsync(PasswordName passwordName, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.Manager.Inner.Registries.RegenerateCredentialAsync(this.ResourceGroupName, this.Name, passwordName);
         }
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
             this.storageManager = storageManager;
         }
 
-        public RegistryListCredentialsResultInner ListCredentials()
+        public RegistryListCredentials ListCredentials()
         {
             return this.ListCredentialsAsync().GetAwaiter().GetResult();
         }

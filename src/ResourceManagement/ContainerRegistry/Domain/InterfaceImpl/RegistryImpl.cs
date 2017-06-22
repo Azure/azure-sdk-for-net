@@ -120,9 +120,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         }
 
         /// <return>The login credentials for the specified container registry.</return>
-        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner Microsoft.Azure.Management.ContainerRegistry.Fluent.IRegistry.ListCredentials()
+        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials Microsoft.Azure.Management.ContainerRegistry.Fluent.IRegistry.ListCredentials()
         {
-            return this.ListCredentials() as Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner;
+            return this.ListCredentials() as Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials;
         }
 
         /// <summary>
@@ -148,9 +148,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         }
 
         /// <return>The login credentials for the specified container registry.</return>
-        async Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner> Microsoft.Azure.Management.ContainerRegistry.Fluent.IRegistry.ListCredentialsAsync(CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials> Microsoft.Azure.Management.ContainerRegistry.Fluent.IRegistry.ListCredentialsAsync(CancellationToken cancellationToken)
         {
-            return await this.ListCredentialsAsync(cancellationToken) as Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner;
+            return await this.ListCredentialsAsync(cancellationToken) as Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials;
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         /// </summary>
         /// <param name="passwordName">The password name.</param>
         /// <return>The result of the regeneration.</return>
-        async Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner> Microsoft.Azure.Management.ContainerRegistry.Fluent.IRegistry.RegenerateCredentialAsync(PasswordName passwordName, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials> Microsoft.Azure.Management.ContainerRegistry.Fluent.IRegistry.RegenerateCredentialAsync(PasswordName passwordName, CancellationToken cancellationToken)
         {
-            return await this.RegenerateCredentialAsync(passwordName, cancellationToken) as Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner;
+            return await this.RegenerateCredentialAsync(passwordName, cancellationToken) as Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials;
         }
 
         /// <summary>
@@ -168,9 +168,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
         /// </summary>
         /// <param name="passwordName">The password name.</param>
         /// <return>The result of the regeneration.</return>
-        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner Microsoft.Azure.Management.ContainerRegistry.Fluent.IRegistry.RegenerateCredential(PasswordName passwordName)
+        Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials Microsoft.Azure.Management.ContainerRegistry.Fluent.IRegistry.RegenerateCredential(PasswordName passwordName)
         {
-            return this.RegenerateCredential(passwordName) as Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentialsResultInner;
+            return this.RegenerateCredential(passwordName) as Microsoft.Azure.Management.ContainerRegistry.Fluent.Models.RegistryListCredentials;
         }
     }
 }
