@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Xunit;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -17,10 +18,14 @@ namespace Sql.Tests
         [Fact]
         public void TestCreateUpdateGetDataMaskingRules()
         {
-            string testPrefix = "sqlcrudtest-";
+            string testPrefix = "sqldatamaskingcrudtest-";
             string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateUpdateGetDataMaskingRules", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Server server = context.CreateServer(resourceGroup);
+
                 // Create database
                 //
                 string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
@@ -38,13 +43,14 @@ namespace Sql.Tests
                 });
 
                 // Create test table with columns
+                // This is not needed in playback because in playback, there is no actual database to execute against
                 HttpRecorderMode testMode = HttpMockServer.GetCurrentMode();
 
                 if (testMode != HttpRecorderMode.Playback)
                 {
                     SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder()
                     {
-                        DataSource = string.Format("{0}.database.windows.net", server.Name),
+                        DataSource = string.Format(server.FullyQualifiedDomainName, server.Name),
                         UserID = SqlManagementTestUtilities.DefaultLogin,
                         Password = SqlManagementTestUtilities.DefaultPassword,
                         InitialCatalog = dbName
@@ -140,7 +146,7 @@ namespace Sql.Tests
                 // Verify no rules are returned
                 rules = sqlClient.Databases.ListDataMaskingRules(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(0, rules.Count());
-            });
+            };
         }
     }
 }

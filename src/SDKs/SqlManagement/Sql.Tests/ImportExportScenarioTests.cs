@@ -33,8 +33,8 @@ namespace Sql.Tests
             string suiteName = this.GetType().FullName;
             SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, testName, testPrefix, (resClient, sqlClient, resourceGroup, server) =>
             {
-                string login = "dummylogin";
-                string password = "Un53cuRE!";
+                string login = SqlManagementTestUtilities.DefaultLogin;
+                string password = SqlManagementTestUtilities.DefaultPassword;
                 string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
                 string dbName2 = SqlManagementTestUtilities.GenerateName(testPrefix);
                 string storageAccountName = SqlManagementTestUtilities.GenerateName("sqlcrudstorage");
