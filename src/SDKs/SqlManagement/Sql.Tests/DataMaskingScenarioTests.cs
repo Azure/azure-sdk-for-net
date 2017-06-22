@@ -19,7 +19,6 @@ namespace Sql.Tests
         public void TestCreateUpdateGetDataMaskingRules()
         {
             string testPrefix = "sqldatamaskingcrudtest-";
-            string suiteName = this.GetType().FullName;
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
                 ResourceGroup resourceGroup = context.CreateResourceGroup();
