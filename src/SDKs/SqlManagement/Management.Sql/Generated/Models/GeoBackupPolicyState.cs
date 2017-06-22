@@ -17,14 +17,14 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for RestorePointTypes.
+    /// Defines values for GeoBackupPolicyState.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum RestorePointTypes
+    public enum GeoBackupPolicyState
     {
-        [EnumMember(Value = "DISCRETE")]
-        DISCRETE,
-        [EnumMember(Value = "CONTINUOUS")]
-        CONTINUOUS
+        [EnumMember(Value = "Disabled")]
+        Disabled,
+        [EnumMember(Value = "Enabled")]
+        Enabled
     }
 }

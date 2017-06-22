@@ -100,12 +100,21 @@ namespace Sql.Tests
             return value ?? defaultValue;
         }
 
+        public const string TestPrefix = "sqlcrudtest-";
+
         public static string GenerateName(
-            string prefix = null,
+            string prefix = TestPrefix,
             [System.Runtime.CompilerServices.CallerMemberName]
             string methodName="GenerateName_failed")
         {
-            return HttpMockServer.GetAssetName(methodName, prefix);
+            try
+            {
+                return HttpMockServer.GetAssetName(methodName, prefix);
+            }
+            catch (KeyNotFoundException e)
+            {
+                throw new KeyNotFoundException(string.Format("Generated name not found for calling method: {0}", methodName), e);
+            }
         }
 
         public static string GenerateIpAddress()
@@ -346,8 +355,8 @@ namespace Sql.Tests
             using (MockContext context = MockContext.Start(suiteName, testName))
             {
                 var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-                var resourceClient = SqlManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var sqlClient = SqlManagementTestUtilities.GetSqlManagementClient(context, handler);
+                var resourceClient = GetResourceManagementClient(context, handler);
+                var sqlClient = GetSqlManagementClient(context, handler);
 
                 test(resourceClient, sqlClient);
             }
@@ -369,7 +378,6 @@ namespace Sql.Tests
                             Location = SqlManagementTestUtilities.DefaultLocation,
                             Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                         });
-
 
                     test(resourceClient, sqlClient, resourceGroup);
                 }
@@ -402,7 +410,7 @@ namespace Sql.Tests
             List<Task<Database>> createDbTasks = new List<Task<Database>>();
             for (int i = 0; i < count; i++)
             {
-                string name = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string name = SqlManagementTestUtilities.GenerateName();
                 createDbTasks.Add(sqlClient.Databases.CreateOrUpdateAsync(
                     resourceGroupName,
                     server.Name,
@@ -417,12 +425,12 @@ namespace Sql.Tests
             return Task.WhenAll(createDbTasks);
         }
 
-        internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string serverPrefix, string location = DefaultLocationId)
+        internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string testPrefix = TestPrefix, string location = DefaultLocationId)
         {
             string login = "dummylogin";
             string password = "Un53cuRE!";
             string version12 = "12.0";
-            string serverName = GenerateName(serverPrefix);
+            string serverName = GenerateName(testPrefix);
             Dictionary<string, string> tags = new Dictionary<string, string>();
 
             var v12Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
@@ -451,7 +459,7 @@ namespace Sql.Tests
 
                 try
                 {
-                    string rgName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    string rgName = SqlManagementTestUtilities.GenerateName();
                     resourceGroup = resourceClient.ResourceGroups.CreateOrUpdate(
                         rgName,
                         new ResourceGroup
@@ -460,7 +468,7 @@ namespace Sql.Tests
                             Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                         });
 
-                    string serverNameV12 = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    string serverNameV12 = SqlManagementTestUtilities.GenerateName();
                     string login = "dummylogin";
                     string password = "Un53cuRE!";
                     string version12 = "12.0";
@@ -486,7 +494,7 @@ namespace Sql.Tests
                     SqlManagementTestUtilities.ValidateServer(server, serverNameV12, login, version12, tags, location);
 
                     // Create database
-                    string databaseName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    string databaseName = SqlManagementTestUtilities.GenerateName();
                     var database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, databaseName, new Database()
                     {
                         Location = location
@@ -513,7 +521,7 @@ namespace Sql.Tests
 
                     // Create a vault
                     var accessPolicy = new List<AccessPolicyEntry>() { aclEntryServer, aclEntryUser };
-                    string vaultName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    string vaultName = SqlManagementTestUtilities.GenerateName();
                     string vaultLocation = "centralus";
                     var vault = keyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroup.Name, vaultName, new VaultCreateOrUpdateParameters()
                     {
@@ -526,7 +534,7 @@ namespace Sql.Tests
                     });
 
                     // Create a key
-                    string keyName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    string keyName = SqlManagementTestUtilities.GenerateName();
                     var key = keyVaultClient.CreateKeyAsync(vault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa,
                         keyOps: JsonWebKeyOperation.AllOperations).GetAwaiter().GetResult();
 

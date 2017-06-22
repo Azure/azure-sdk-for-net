@@ -77,6 +77,16 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
+        /// Gets the IRecoverableDatabasesOperations.
+        /// </summary>
+        public virtual IRecoverableDatabasesOperations RecoverableDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedDatabasesOperations.
+        /// </summary>
+        public virtual IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; private set; }
+
+        /// <summary>
         /// Gets the ICapabilitiesOperations.
         /// </summary>
         public virtual ICapabilitiesOperations Capabilities { get; private set; }
@@ -110,6 +120,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerAzureADAdministratorsOperations.
         /// </summary>
         public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerCommunicationLinksOperations.
+        /// </summary>
+        public virtual IServerCommunicationLinksOperations ServerCommunicationLinks { get; private set; }
 
         /// <summary>
         /// Gets the IFailoverGroupsOperations.
@@ -328,6 +343,8 @@ namespace Microsoft.Azure.Management.Sql
         private void Initialize()
         {
             Databases = new DatabasesOperations(this);
+            RecoverableDatabases = new RecoverableDatabasesOperations(this);
+            RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
             Capabilities = new CapabilitiesOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
@@ -335,6 +352,7 @@ namespace Microsoft.Azure.Management.Sql
             Servers = new ServersOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
+            ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             ServerKeys = new ServerKeysOperations(this);
