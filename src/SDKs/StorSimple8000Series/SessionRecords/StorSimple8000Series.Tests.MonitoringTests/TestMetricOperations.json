@@ -1,0 +1,757 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcz9hcGktdmVyc2lvbj0yMDE3LTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d783d5f5-1e6d-4418-ada4-25650d4d0227"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"friendlyName\": \"sugattdeviceforSDK\",\r\n        \"activationTime\": \"2017-06-14T07:01:51.8964712Z\",\r\n        \"culture\": \"en-US\",\r\n        \"deviceSoftwareVersion\": \"6.3.9600.17802\",\r\n        \"deviceConfigurationStatus\": \"Complete\",\r\n        \"targetIqn\": \"iqn.1991-05.com.microsoft:storsimple100-123456789-target\",\r\n        \"modelDescription\": \"100\",\r\n        \"status\": \"Offline\",\r\n        \"serialNumber\": \"123456789\",\r\n        \"deviceType\": \"Series8000PhysicalAppliance\",\r\n        \"activeController\": \"Controller0\",\r\n        \"friendlySoftwareVersion\": \"StorSimple 8000 Series Update 4.0\",\r\n        \"availableLocalStorageInBytes\": 43980464128,\r\n        \"availableTieredStorageInBytes\": 1099511627776,\r\n        \"provisionedTieredStorageInBytes\": 0,\r\n        \"provisionedLocalStorageInBytes\": 0,\r\n        \"provisionedVolumeSizeInBytes\": 0,\r\n        \"usingStorageInBytes\": 0,\r\n        \"totalTieredStorageInBytes\": 1099511627776,\r\n        \"agentGroupVersion\": 7,\r\n        \"networkInterfaceCardCount\": 6\r\n      },\r\n      \"id\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/sugattdeviceforSDK\",\r\n      \"name\": \"sugattdeviceforSDK\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices\",\r\n      \"kind\": \"Series8000\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"friendlyName\": \"jemdeviceforsdk\",\r\n        \"activationTime\": \"2017-06-13T05:03:25.8680622Z\",\r\n        \"culture\": \"en-US\",\r\n        \"deviceSoftwareVersion\": \"6.3.9600.17802\",\r\n        \"deviceConfigurationStatus\": \"Complete\",\r\n        \"targetIqn\": \"Test-Target-IQN\",\r\n        \"modelDescription\": \"100\",\r\n        \"status\": \"Online\",\r\n        \"serialNumber\": \"123456789\",\r\n        \"deviceType\": \"Series8000PhysicalAppliance\",\r\n        \"activeController\": \"Controller0\",\r\n        \"friendlySoftwareVersion\": \"StorSimple 8000 Series Update 4.0\",\r\n        \"availableLocalStorageInBytes\": 43765715760,\r\n        \"availableTieredStorageInBytes\": 1094142918656,\r\n        \"provisionedTieredStorageInBytes\": 5368709120,\r\n        \"provisionedLocalStorageInBytes\": 0,\r\n        \"provisionedVolumeSizeInBytes\": 5368709120,\r\n        \"usingStorageInBytes\": 0,\r\n        \"totalTieredStorageInBytes\": 1099511627776,\r\n        \"agentGroupVersion\": 7,\r\n        \"networkInterfaceCardCount\": 6\r\n      },\r\n      \"id\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/jemdeviceforsdk\",\r\n      \"name\": \"jemdeviceforsdk\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices\",\r\n      \"kind\": \"Series8000\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"friendlyName\": \"Device05ForSDKTest\",\r\n        \"activationTime\": \"2017-06-07T18:28:31.6616632Z\",\r\n        \"culture\": \"en-US\",\r\n        \"deviceSoftwareVersion\": \"6.3.9600.17802\",\r\n        \"deviceConfigurationStatus\": \"Complete\",\r\n        \"targetIqn\": \"iqn.1991-05.com.microsoft:storsimple100-123456789-target\",\r\n        \"modelDescription\": \"100\",\r\n        \"status\": \"Online\",\r\n        \"serialNumber\": \"123456789\",\r\n        \"deviceType\": \"Series8000PhysicalAppliance\",\r\n        \"activeController\": \"Controller0\",\r\n        \"friendlySoftwareVersion\": \"StorSimple 8000 Series Update 4.0\",\r\n        \"availableLocalStorageInBytes\": 42262477184,\r\n        \"availableTieredStorageInBytes\": 1056561954816,\r\n        \"provisionedTieredStorageInBytes\": 42949672960,\r\n        \"provisionedLocalStorageInBytes\": 0,\r\n        \"provisionedVolumeSizeInBytes\": 42949672960,\r\n        \"usingStorageInBytes\": 0,\r\n        \"totalTieredStorageInBytes\": 1099511627776,\r\n        \"agentGroupVersion\": 7,\r\n        \"networkInterfaceCardCount\": 6\r\n      },\r\n      \"id\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"name\": \"Device05ForSDKTest\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices\",\r\n      \"kind\": \"Series8000\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:06:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "d7c82f0d-b226-4947-b703-30d35d85df92"
+        ],
+        "x-ms-client-request-id": [
+          "d783d5f5-1e6d-4418-ada4-25650d4d0227",
+          "d783d5f5-1e6d-4418-ada4-25650d4d0227"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14854"
+        ],
+        "x-ms-correlation-request-id": [
+          "d7c82f0d-b226-4947-b703-30d35d85df92"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130645Z:d7c82f0d-b226-4947-b703-30d35d85df92"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycz9hcGktdmVyc2lvbj0yMDE3LTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6e70ca52-cebf-49ac-b8f6-7e07533a6d4e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"encryptionStatus\": \"Disabled\",\r\n        \"volumeCount\": 4,\r\n        \"storageAccountCredentialId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/storageAccountCredentials/safortestrecording\",\r\n        \"ownerShipStatus\": \"Owned\",\r\n        \"bandWidthRateInMbps\": 0,\r\n        \"totalCloudStorageUsageInBytes\": 188940\r\n      },\r\n      \"id\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n      \"name\": \"vcForOdataFilterTest\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers\",\r\n      \"kind\": \"Series8000\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:06:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "c5280fbb-fba8-4e94-b72d-5c3ff5119a74"
+        ],
+        "x-ms-client-request-id": [
+          "6e70ca52-cebf-49ac-b8f6-7e07533a6d4e",
+          "6e70ca52-cebf-49ac-b8f6-7e07533a6d4e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14853"
+        ],
+        "x-ms-correlation-request-id": [
+          "c5280fbb-fba8-4e94-b72d-5c3ff5119a74"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130649Z:c5280fbb-fba8-4e94-b72d-5c3ff5119a74"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycy92Y0Zvck9kYXRhRmlsdGVyVGVzdC92b2x1bWVzP2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "76b8480d-99ed-467c-b2e3-bf06328f58dc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"sizeInBytes\": 10737418240,\r\n        \"volumeType\": \"Tiered\",\r\n        \"volumeContainerId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n        \"accessControlRecordIds\": [],\r\n        \"volumeStatus\": \"Online\",\r\n        \"operationStatus\": \"None\",\r\n        \"backupStatus\": \"Disabled\",\r\n        \"monitoringStatus\": \"Disabled\"\r\n      },\r\n      \"id\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"name\": \"CloneVolForSDKTest890836587\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes\",\r\n      \"kind\": \"Series8000\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"sizeInBytes\": 10737418240,\r\n        \"volumeType\": \"Tiered\",\r\n        \"volumeContainerId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n        \"accessControlRecordIds\": [],\r\n        \"volumeStatus\": \"Online\",\r\n        \"operationStatus\": \"None\",\r\n        \"backupStatus\": \"Disabled\",\r\n        \"monitoringStatus\": \"Disabled\"\r\n      },\r\n      \"id\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest614631299\",\r\n      \"name\": \"CloneVolForSDKTest614631299\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes\",\r\n      \"kind\": \"Series8000\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"sizeInBytes\": 10737418240,\r\n        \"volumeType\": \"Tiered\",\r\n        \"volumeContainerId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n        \"accessControlRecordIds\": [],\r\n        \"volumeStatus\": \"Online\",\r\n        \"operationStatus\": \"None\",\r\n        \"backupStatus\": \"Enabled\",\r\n        \"monitoringStatus\": \"Enabled\",\r\n        \"backupPolicyIds\": [\r\n          \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/backupPolicies/BkUpPolicyForSDKTest429326237\",\r\n          \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/backupPolicies/BkUpPolicyForSDKTest1032280949\"\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/vol01\",\r\n      \"name\": \"vol01\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes\",\r\n      \"kind\": \"Series8000\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"sizeInBytes\": 10737418240,\r\n        \"volumeType\": \"Tiered\",\r\n        \"volumeContainerId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n        \"accessControlRecordIds\": [],\r\n        \"volumeStatus\": \"Online\",\r\n        \"operationStatus\": \"None\",\r\n        \"backupStatus\": \"Enabled\",\r\n        \"monitoringStatus\": \"Enabled\",\r\n        \"backupPolicyIds\": [\r\n          \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/backupPolicies/BkUpPolicyForSDKTest429326237\"\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/vol%2540123\",\r\n      \"name\": \"vol@123\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes\",\r\n      \"kind\": \"Series8000\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:06:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "d8378bec-bc5b-45bc-9f38-039a891e16a9"
+        ],
+        "x-ms-client-request-id": [
+          "76b8480d-99ed-467c-b2e3-bf06328f58dc",
+          "76b8480d-99ed-467c-b2e3-bf06328f58dc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14852"
+        ],
+        "x-ms-correlation-request-id": [
+          "d8378bec-bc5b-45bc-9f38-039a891e16a9"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130652Z:d8378bec-bc5b-45bc-9f38-039a891e16a9"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/metricsDefinitions?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvbWV0cmljc0RlZmluaXRpb25zP2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ff82c49a-2c08-44cb-98a5-d3cebf7831b4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": {\r\n        \"value\": \"PrimaryStorageTieredUsed\",\r\n        \"localizedValue\": \"Primary Tiered Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Manager\",\r\n          \"value\": \"ManagerForSDKTest1\"\r\n        }\r\n      ],\r\n      \"category\": \"CapacityUtilization\",\r\n      \"type\": \"Microsoft.StorSimple/managers/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"PrimaryStorageLocallyPinnedUsed\",\r\n        \"localizedValue\": \"Primary Locally Pinned Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Manager\",\r\n          \"value\": \"ManagerForSDKTest1\"\r\n        }\r\n      ],\r\n      \"category\": \"CapacityUtilization\",\r\n      \"type\": \"Microsoft.StorSimple/managers/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"CloudStorageUsed\",\r\n        \"localizedValue\": \"Cloud Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Manager\",\r\n          \"value\": \"ManagerForSDKTest1\"\r\n        }\r\n      ],\r\n      \"category\": \"CapacityUtilization\",\r\n      \"type\": \"Microsoft.StorSimple/managers/metricsDefinitions\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:06:54 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "30064a55-2086-4c29-86cd-8edbff91d25d"
+        ],
+        "x-ms-client-request-id": [
+          "ff82c49a-2c08-44cb-98a5-d3cebf7831b4",
+          "ff82c49a-2c08-44cb-98a5-d3cebf7831b4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14851"
+        ],
+        "x-ms-correlation-request-id": [
+          "30064a55-2086-4c29-86cd-8edbff91d25d"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130654Z:30064a55-2086-4c29-86cd-8edbff91d25d"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/metrics?$filter=name/value%20eq%20'PrimaryStorageTieredUsed'%20and%20timeGrain%20eq%20'PT1H'%20and%20startTime%20ge%20'2017-06-17T18:30:00Z'%20and%20endTime%20le%20'2017-06-21T18:30:00Z'%20and%20category%20eq%20'CapacityUtilization'&$expand=name&api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvbWV0cmljcz8kZmlsdGVyPW5hbWUvdmFsdWUlMjBlcSUyMCdQcmltYXJ5U3RvcmFnZVRpZXJlZFVzZWQnJTIwYW5kJTIwdGltZUdyYWluJTIwZXElMjAnUFQxSCclMjBhbmQlMjBzdGFydFRpbWUlMjBnZSUyMCcyMDE3LTA2LTE3VDE4JTNBMzAlM0EwMFonJTIwYW5kJTIwZW5kVGltZSUyMGxlJTIwJzIwMTctMDYtMjFUMTglM0EzMCUzQTAwWiclMjBhbmQlMjBjYXRlZ29yeSUyMGVxJTIwJ0NhcGFjaXR5VXRpbGl6YXRpb24nJiRleHBhbmQ9bmFtZSZhcGktdmVyc2lvbj0yMDE3LTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b2910849-d1d4-4c99-8aa7-4168e2ae64d0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1\",\r\n      \"startTime\": \"2017-06-17T18:30:00Z\",\r\n      \"endTime\": \"2017-06-21T18:30:00Z\",\r\n      \"timeGrain\": \"01:00:00\",\r\n      \"primaryAggregation\": \"Average\",\r\n      \"name\": {\r\n        \"value\": \"PrimaryStorageTieredUsed\",\r\n        \"localizedValue\": \"Primary Tiered Storage Used\"\r\n      },\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Manager\",\r\n          \"value\": \"ManagerForSDKTest1\"\r\n        }\r\n      ],\r\n      \"unit\": \"Bytes\",\r\n      \"type\": \"Microsoft.StorSimple/managers/metrics\",\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:06:56 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "255ab71b-b0bb-49ba-a13a-af441b25366f"
+        ],
+        "x-ms-client-request-id": [
+          "b2910849-d1d4-4c99-8aa7-4168e2ae64d0",
+          "b2910849-d1d4-4c99-8aa7-4168e2ae64d0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14850"
+        ],
+        "x-ms-correlation-request-id": [
+          "255ab71b-b0bb-49ba-a13a-af441b25366f"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130657Z:255ab71b-b0bb-49ba-a13a-af441b25366f"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/metricsDefinitions?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3QvbWV0cmljc0RlZmluaXRpb25zP2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "01d3aeff-73b5-45ed-a7e0-477df3075144"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": {\r\n        \"value\": \"PrimaryStorageTieredUsed\",\r\n        \"localizedValue\": \"Primary Tiered Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"CapacityUtilization\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"PrimaryStorageLocallyPinnedUsed\",\r\n        \"localizedValue\": \"Primary Locally Pinned Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"CapacityUtilization\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"CloudStorageUsed\",\r\n        \"localizedValue\": \"Cloud Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"CapacityUtilization\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"LocalStorageUsed\",\r\n        \"localizedValue\": \"Local Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"CapacityUtilization\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceReadOperations\",\r\n        \"localizedValue\": \"Read I/O Operations/s\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceWriteOperations\",\r\n        \"localizedValue\": \"Write I/O Operations/s\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceReadBytes\",\r\n        \"localizedValue\": \"Read Bytes/s\"\r\n      },\r\n      \"unit\": \"BytesPerSecond\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceWriteBytes\",\r\n        \"localizedValue\": \"Write Bytes/s\"\r\n      },\r\n      \"unit\": \"BytesPerSecond\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceReadLatency\",\r\n        \"localizedValue\": \"Read Latency\"\r\n      },\r\n      \"unit\": \"Seconds\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceWriteLatency\",\r\n        \"localizedValue\": \"Write Latency\"\r\n      },\r\n      \"unit\": \"Seconds\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceOutStandingIO\",\r\n        \"localizedValue\": \"Outstanding I/O\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudReadOperations\",\r\n        \"localizedValue\": \"Read I/O Operations/s\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudWriteOperations\",\r\n        \"localizedValue\": \"Write I/O Operations/s\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudReadBytes\",\r\n        \"localizedValue\": \"Read Bytes/s\"\r\n      },\r\n      \"unit\": \"BytesPerSecond\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudWriteBytes\",\r\n        \"localizedValue\": \"Write Bytes/s\"\r\n      },\r\n      \"unit\": \"BytesPerSecond\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudReadLatency\",\r\n        \"localizedValue\": \"Read Latency\"\r\n      },\r\n      \"unit\": \"Seconds\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudWriteLatency\",\r\n        \"localizedValue\": \"Write Latency\"\r\n      },\r\n      \"unit\": \"Seconds\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudOutStandingIO\",\r\n        \"localizedValue\": \"Outstanding I/O\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"CPUUsage\",\r\n        \"localizedValue\": \"CPU Utilization\"\r\n      },\r\n      \"unit\": \"Percent\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DevicePerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"NetworkOut\",\r\n        \"localizedValue\": \"Network Out\"\r\n      },\r\n      \"unit\": \"BytesPerSecond\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"NetworkInterface\",\r\n          \"value\": \"data0\"\r\n        }\r\n      ],\r\n      \"category\": \"NetworkThroughput\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"NetworkIn\",\r\n        \"localizedValue\": \"Network In\"\r\n      },\r\n      \"unit\": \"BytesPerSecond\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"NetworkInterface\",\r\n          \"value\": \"data0\"\r\n        }\r\n      ],\r\n      \"category\": \"NetworkThroughput\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metricsDefinitions\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:06:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "5a457afe-19b0-4bfb-a710-83a761a5c088"
+        ],
+        "x-ms-client-request-id": [
+          "01d3aeff-73b5-45ed-a7e0-477df3075144",
+          "01d3aeff-73b5-45ed-a7e0-477df3075144"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14849"
+        ],
+        "x-ms-correlation-request-id": [
+          "5a457afe-19b0-4bfb-a710-83a761a5c088"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130659Z:5a457afe-19b0-4bfb-a710-83a761a5c088"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/metrics?$filter=name/value%20eq%20'PrimaryStorageTieredUsed'%20and%20timeGrain%20eq%20'PT1H'%20and%20startTime%20ge%20'2017-06-17T18:30:00Z'%20and%20endTime%20le%20'2017-06-21T18:30:00Z'%20and%20category%20eq%20'CapacityUtilization'&$expand=name&api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3QvbWV0cmljcz8kZmlsdGVyPW5hbWUvdmFsdWUlMjBlcSUyMCdQcmltYXJ5U3RvcmFnZVRpZXJlZFVzZWQnJTIwYW5kJTIwdGltZUdyYWluJTIwZXElMjAnUFQxSCclMjBhbmQlMjBzdGFydFRpbWUlMjBnZSUyMCcyMDE3LTA2LTE3VDE4JTNBMzAlM0EwMFonJTIwYW5kJTIwZW5kVGltZSUyMGxlJTIwJzIwMTctMDYtMjFUMTglM0EzMCUzQTAwWiclMjBhbmQlMjBjYXRlZ29yeSUyMGVxJTIwJ0NhcGFjaXR5VXRpbGl6YXRpb24nJiRleHBhbmQ9bmFtZSZhcGktdmVyc2lvbj0yMDE3LTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "bab2da6f-54b1-4e92-bcb2-3f3fd9aef7d4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest\",\r\n      \"startTime\": \"2017-06-17T18:30:00Z\",\r\n      \"endTime\": \"2017-06-21T18:30:00Z\",\r\n      \"timeGrain\": \"01:00:00\",\r\n      \"primaryAggregation\": \"Average\",\r\n      \"name\": {\r\n        \"value\": \"PrimaryStorageTieredUsed\",\r\n        \"localizedValue\": \"Primary Tiered Storage Used\"\r\n      },\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Device\",\r\n          \"value\": \"Device05ForSDKTest\"\r\n        }\r\n      ],\r\n      \"unit\": \"Bytes\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/metrics\",\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:07:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "92241fc8-9683-4bb4-ae37-076fe998ba21"
+        ],
+        "x-ms-client-request-id": [
+          "bab2da6f-54b1-4e92-bcb2-3f3fd9aef7d4",
+          "bab2da6f-54b1-4e92-bcb2-3f3fd9aef7d4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14848"
+        ],
+        "x-ms-correlation-request-id": [
+          "92241fc8-9683-4bb4-ae37-076fe998ba21"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130701Z:92241fc8-9683-4bb4-ae37-076fe998ba21"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/metricsDefinitions?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycy92Y0Zvck9kYXRhRmlsdGVyVGVzdC9tZXRyaWNzRGVmaW5pdGlvbnM/YXBpLXZlcnNpb249MjAxNy0wNi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4c16b1f2-32e6-42ea-8afd-3c983fd780c2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": {\r\n        \"value\": \"CloudConsumedStorage\",\r\n        \"localizedValue\": \"Cloud Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"VolumeContainer\",\r\n          \"value\": \"vcForOdataFilterTest\"\r\n        }\r\n      ],\r\n      \"category\": \"CapacityUtilization\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudReadOperations\",\r\n        \"localizedValue\": \"Read I/O Operations/s\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"VolumeContainer\",\r\n          \"value\": \"vcForOdataFilterTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudWriteOperations\",\r\n        \"localizedValue\": \"Write I/O Operations/s\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"VolumeContainer\",\r\n          \"value\": \"vcForOdataFilterTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudReadBytes\",\r\n        \"localizedValue\": \"Read Bytes/s\"\r\n      },\r\n      \"unit\": \"BytesPerSecond\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"VolumeContainer\",\r\n          \"value\": \"vcForOdataFilterTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudWriteBytes\",\r\n        \"localizedValue\": \"Write Bytes/s\"\r\n      },\r\n      \"unit\": \"BytesPerSecond\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"VolumeContainer\",\r\n          \"value\": \"vcForOdataFilterTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudReadLatency\",\r\n        \"localizedValue\": \"Read Latency\"\r\n      },\r\n      \"unit\": \"Seconds\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"VolumeContainer\",\r\n          \"value\": \"vcForOdataFilterTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudWriteLatency\",\r\n        \"localizedValue\": \"Write Latency\"\r\n      },\r\n      \"unit\": \"Seconds\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"VolumeContainer\",\r\n          \"value\": \"vcForOdataFilterTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"DeviceToCloudOutStandingIO\",\r\n        \"localizedValue\": \"Outstanding I/O\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"VolumeContainer\",\r\n          \"value\": \"vcForOdataFilterTest\"\r\n        }\r\n      ],\r\n      \"category\": \"DeviceToCloudIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/metricsDefinitions\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:07:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "a80e75b8-6116-4f5d-9ea3-1f7f53742512"
+        ],
+        "x-ms-client-request-id": [
+          "4c16b1f2-32e6-42ea-8afd-3c983fd780c2",
+          "4c16b1f2-32e6-42ea-8afd-3c983fd780c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14847"
+        ],
+        "x-ms-correlation-request-id": [
+          "a80e75b8-6116-4f5d-9ea3-1f7f53742512"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130703Z:a80e75b8-6116-4f5d-9ea3-1f7f53742512"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/metrics?$filter=name/value%20eq%20'CloudConsumedStorage'%20and%20timeGrain%20eq%20'PT1M'%20and%20startTime%20ge%20'2017-06-17T18:30:00Z'%20and%20endTime%20le%20'2017-06-21T18:30:00Z'%20and%20category%20eq%20'CapacityUtilization'&$expand=name&api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycy92Y0Zvck9kYXRhRmlsdGVyVGVzdC9tZXRyaWNzPyRmaWx0ZXI9bmFtZS92YWx1ZSUyMGVxJTIwJ0Nsb3VkQ29uc3VtZWRTdG9yYWdlJyUyMGFuZCUyMHRpbWVHcmFpbiUyMGVxJTIwJ1BUMU0nJTIwYW5kJTIwc3RhcnRUaW1lJTIwZ2UlMjAnMjAxNy0wNi0xN1QxOCUzQTMwJTNBMDBaJyUyMGFuZCUyMGVuZFRpbWUlMjBsZSUyMCcyMDE3LTA2LTIxVDE4JTNBMzAlM0EwMFonJTIwYW5kJTIwY2F0ZWdvcnklMjBlcSUyMCdDYXBhY2l0eVV0aWxpemF0aW9uJyYkZXhwYW5kPW5hbWUmYXBpLXZlcnNpb249MjAxNy0wNi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ebdc8e15-631d-4c3c-9b3e-afe907ae8436"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest\",\r\n      \"startTime\": \"2017-06-17T18:30:00Z\",\r\n      \"endTime\": \"2017-06-21T18:30:00Z\",\r\n      \"timeGrain\": \"00:01:00\",\r\n      \"primaryAggregation\": \"Average\",\r\n      \"name\": {\r\n        \"value\": \"CloudConsumedStorage\",\r\n        \"localizedValue\": \"Cloud Storage Used\"\r\n      },\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"VolumeContainer\",\r\n          \"value\": \"vcForOdataFilterTest\"\r\n        }\r\n      ],\r\n      \"unit\": \"Bytes\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/metrics\",\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:07:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "d40cefce-caf8-476e-9d68-a2ee4ab1d4eb"
+        ],
+        "x-ms-client-request-id": [
+          "ebdc8e15-631d-4c3c-9b3e-afe907ae8436",
+          "ebdc8e15-631d-4c3c-9b3e-afe907ae8436"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14846"
+        ],
+        "x-ms-correlation-request-id": [
+          "d40cefce-caf8-476e-9d68-a2ee4ab1d4eb"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130705Z:d40cefce-caf8-476e-9d68-a2ee4ab1d4eb"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587/metricsDefinitions?api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycy92Y0Zvck9kYXRhRmlsdGVyVGVzdC92b2x1bWVzL0Nsb25lVm9sRm9yU0RLVGVzdDg5MDgzNjU4Ny9tZXRyaWNzRGVmaW5pdGlvbnM/YXBpLXZlcnNpb249MjAxNy0wNi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "09ba8ccb-fb49-4504-a8b8-6cf0a50bf06d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": {\r\n        \"value\": \"PrimaryStorageTieredUsed\",\r\n        \"localizedValue\": \"Primary Tiered Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Volume\",\r\n          \"value\": \"CloneVolForSDKTest890836587\"\r\n        }\r\n      ],\r\n      \"category\": \"CapacityUtilization\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"PrimaryStorageLocallyPinnedUsed\",\r\n        \"localizedValue\": \"Primary Locally Pinned Storage Used\"\r\n      },\r\n      \"unit\": \"Bytes\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Volume\",\r\n          \"value\": \"CloneVolForSDKTest890836587\"\r\n        }\r\n      ],\r\n      \"category\": \"CapacityUtilization\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceReadOperations\",\r\n        \"localizedValue\": \"Read I/O Operations/s\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Volume\",\r\n          \"value\": \"CloneVolForSDKTest890836587\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceWriteOperations\",\r\n        \"localizedValue\": \"Write I/O Operations/s\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Volume\",\r\n          \"value\": \"CloneVolForSDKTest890836587\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceReadBytes\",\r\n        \"localizedValue\": \"Read Bytes/s\"\r\n      },\r\n      \"unit\": \"BytesPerSecond\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Volume\",\r\n          \"value\": \"CloneVolForSDKTest890836587\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceWriteBytes\",\r\n        \"localizedValue\": \"Write Bytes/s\"\r\n      },\r\n      \"unit\": \"BytesPerSecond\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Volume\",\r\n          \"value\": \"CloneVolForSDKTest890836587\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceReadLatency\",\r\n        \"localizedValue\": \"Read Latency\"\r\n      },\r\n      \"unit\": \"Seconds\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Volume\",\r\n          \"value\": \"CloneVolForSDKTest890836587\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceWriteLatency\",\r\n        \"localizedValue\": \"Write Latency\"\r\n      },\r\n      \"unit\": \"Seconds\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Volume\",\r\n          \"value\": \"CloneVolForSDKTest890836587\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes/metricsDefinitions\"\r\n    },\r\n    {\r\n      \"name\": {\r\n        \"value\": \"InitiatorToDeviceOutStandingIO\",\r\n        \"localizedValue\": \"Outstanding I/O\"\r\n      },\r\n      \"unit\": \"Count\",\r\n      \"primaryAggregationType\": \"Average\",\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"metricAvailabilities\": [\r\n        {\r\n          \"timeGrain\": \"PT1M\",\r\n          \"retention\": \"PT6H\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P1D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"PT1H\",\r\n          \"retention\": \"P7D\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P3M\"\r\n        },\r\n        {\r\n          \"timeGrain\": \"P1D\",\r\n          \"retention\": \"P1Y\"\r\n        }\r\n      ],\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Volume\",\r\n          \"value\": \"CloneVolForSDKTest890836587\"\r\n        }\r\n      ],\r\n      \"category\": \"InitiatorToDeviceIOPerformance\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes/metricsDefinitions\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:07:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "b627e143-2846-4de5-9aa5-0dfe3d90ed81"
+        ],
+        "x-ms-client-request-id": [
+          "09ba8ccb-fb49-4504-a8b8-6cf0a50bf06d",
+          "09ba8ccb-fb49-4504-a8b8-6cf0a50bf06d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14845"
+        ],
+        "x-ms-correlation-request-id": [
+          "b627e143-2846-4de5-9aa5-0dfe3d90ed81"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130707Z:b627e143-2846-4de5-9aa5-0dfe3d90ed81"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587/metrics?$filter=name/value%20eq%20'PrimaryStorageTieredUsed'%20and%20timeGrain%20eq%20'PT1H'%20and%20startTime%20ge%20'2017-06-17T18:30:00Z'%20and%20endTime%20le%20'2017-06-21T18:30:00Z'%20and%20category%20eq%20'CapacityUtilization'&$expand=name&api-version=2017-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycy92Y0Zvck9kYXRhRmlsdGVyVGVzdC92b2x1bWVzL0Nsb25lVm9sRm9yU0RLVGVzdDg5MDgzNjU4Ny9tZXRyaWNzPyRmaWx0ZXI9bmFtZS92YWx1ZSUyMGVxJTIwJ1ByaW1hcnlTdG9yYWdlVGllcmVkVXNlZCclMjBhbmQlMjB0aW1lR3JhaW4lMjBlcSUyMCdQVDFIJyUyMGFuZCUyMHN0YXJ0VGltZSUyMGdlJTIwJzIwMTctMDYtMTdUMTglM0EzMCUzQTAwWiclMjBhbmQlMjBlbmRUaW1lJTIwbGUlMjAnMjAxNy0wNi0yMVQxOCUzQTMwJTNBMDBaJyUyMGFuZCUyMGNhdGVnb3J5JTIwZXElMjAnQ2FwYWNpdHlVdGlsaXphdGlvbicmJGV4cGFuZD1uYW1lJmFwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1ab0db05-52b9-49c8-8a1c-b51b6d551e8b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceId\": \"/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/vcForOdataFilterTest/volumes/CloneVolForSDKTest890836587\",\r\n      \"startTime\": \"2017-06-17T18:30:00Z\",\r\n      \"endTime\": \"2017-06-21T18:30:00Z\",\r\n      \"timeGrain\": \"01:00:00\",\r\n      \"primaryAggregation\": \"Average\",\r\n      \"name\": {\r\n        \"value\": \"PrimaryStorageTieredUsed\",\r\n        \"localizedValue\": \"Primary Tiered Storage Used\"\r\n      },\r\n      \"dimensions\": [\r\n        {\r\n          \"name\": \"Volume\",\r\n          \"value\": \"CloneVolForSDKTest890836587\"\r\n        }\r\n      ],\r\n      \"unit\": \"Bytes\",\r\n      \"type\": \"Microsoft.StorSimple/managers/devices/volumeContainers/volumes/metrics\",\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Jun 2017 13:07:09 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "442a2336-2c60-41ad-a9ad-2017346f6547"
+        ],
+        "x-ms-client-request-id": [
+          "1ab0db05-52b9-49c8-8a1c-b51b6d551e8b",
+          "1ab0db05-52b9-49c8-8a1c-b51b6d551e8b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14844"
+        ],
+        "x-ms-correlation-request-id": [
+          "442a2336-2c60-41ad-a9ad-2017346f6547"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170622T130709Z:442a2336-2c60-41ad-a9ad-2017346f6547"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4385cf00-2d3a-425a-832f-f4285b1c9dce",
+    "SubId": "4385cf00-2d3a-425a-832f-f4285b1c9dce"
+  }
+}

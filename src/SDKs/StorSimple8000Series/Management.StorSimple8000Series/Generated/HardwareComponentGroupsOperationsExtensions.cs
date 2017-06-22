@@ -22,15 +22,18 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<HardwareComponentGroup> ListByDevice(this IHardwareComponentGroupsOperations operations, string resourceGroupName, string managerName)
+            public static IEnumerable<HardwareComponentGroup> ListByDevice(this IHardwareComponentGroupsOperations operations, string deviceName, string resourceGroupName, string managerName)
             {
-                return operations.ListByDeviceAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.ListByDeviceAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -38,6 +41,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
@@ -48,9 +54,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<HardwareComponentGroup>> ListByDeviceAsync(this IHardwareComponentGroupsOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<HardwareComponentGroup>> ListByDeviceAsync(this IHardwareComponentGroupsOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByDeviceWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByDeviceWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -62,6 +68,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='hardwareComponentGroupName'>
             /// The hardware component group name.
             /// </param>
@@ -74,9 +83,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void ChangeControllerPowerState(this IHardwareComponentGroupsOperations operations, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName)
+            public static void ChangeControllerPowerState(this IHardwareComponentGroupsOperations operations, string deviceName, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName)
             {
-                operations.ChangeControllerPowerStateAsync(hardwareComponentGroupName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.ChangeControllerPowerStateAsync(deviceName, hardwareComponentGroupName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -84,6 +93,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='hardwareComponentGroupName'>
             /// The hardware component group name.
@@ -100,9 +112,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ChangeControllerPowerStateAsync(this IHardwareComponentGroupsOperations operations, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ChangeControllerPowerStateAsync(this IHardwareComponentGroupsOperations operations, string deviceName, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.ChangeControllerPowerStateWithHttpMessagesAsync(hardwareComponentGroupName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.ChangeControllerPowerStateWithHttpMessagesAsync(deviceName, hardwareComponentGroupName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -110,6 +122,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='hardwareComponentGroupName'>
             /// The hardware component group name.
@@ -123,9 +138,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void BeginChangeControllerPowerState(this IHardwareComponentGroupsOperations operations, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName)
+            public static void BeginChangeControllerPowerState(this IHardwareComponentGroupsOperations operations, string deviceName, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName)
             {
-                operations.BeginChangeControllerPowerStateAsync(hardwareComponentGroupName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.BeginChangeControllerPowerStateAsync(deviceName, hardwareComponentGroupName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -133,6 +148,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='hardwareComponentGroupName'>
             /// The hardware component group name.
@@ -149,9 +167,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginChangeControllerPowerStateAsync(this IHardwareComponentGroupsOperations operations, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginChangeControllerPowerStateAsync(this IHardwareComponentGroupsOperations operations, string deviceName, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginChangeControllerPowerStateWithHttpMessagesAsync(hardwareComponentGroupName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginChangeControllerPowerStateWithHttpMessagesAsync(deviceName, hardwareComponentGroupName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
     }

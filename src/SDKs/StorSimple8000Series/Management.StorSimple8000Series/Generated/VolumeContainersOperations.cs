@@ -47,6 +47,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Gets all the volume containers in a device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -74,11 +77,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<VolumeContainer>>> ListByDeviceWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<VolumeContainer>>> ListByDeviceWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -114,6 +117,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -122,7 +126,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/volumeContainers").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);
             _url = _url.Replace("{managerName}", managerName);
@@ -257,6 +261,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Gets the properties of the specified volume container name.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The name of the volume container.
         /// </param>
@@ -287,11 +294,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VolumeContainer>> GetWithHttpMessagesAsync(string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VolumeContainer>> GetWithHttpMessagesAsync(string deviceName, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (volumeContainerName == null)
             {
@@ -331,6 +338,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("volumeContainerName", volumeContainerName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
@@ -340,7 +348,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/volumeContainers/{volumeContainerName}").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{volumeContainerName}", volumeContainerName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);
@@ -476,6 +484,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Creates or updates the volume container.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The name of the volume container.
         /// </param>
@@ -494,16 +505,19 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VolumeContainer>> CreateOrUpdateWithHttpMessagesAsync(string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VolumeContainer>> CreateOrUpdateWithHttpMessagesAsync(string deviceName, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<VolumeContainer> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(volumeContainerName, parameters, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<VolumeContainer> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(deviceName, volumeContainerName, parameters, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Deletes the volume container.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The name of the volume container.
         /// </param>
@@ -519,10 +533,10 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string deviceName, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(volumeContainerName, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(deviceName, volumeContainerName, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -531,6 +545,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='deviceName'>
+        /// The device name
         /// </param>
         /// <param name='volumeContainerName'>
         /// The volume container name.
@@ -562,15 +579,15 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<MetricList>> ListMetricsWithHttpMessagesAsync(ODataQuery<MetricFilter> odataQuery, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<Metrics>>> ListMetricsWithHttpMessagesAsync(ODataQuery<MetricFilter> odataQuery, string deviceName, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (odataQuery == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "odataQuery");
             }
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (volumeContainerName == null)
             {
@@ -611,6 +628,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("volumeContainerName", volumeContainerName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
@@ -620,7 +638,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/volumeContainers/{volumeContainerName}/metrics").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{volumeContainerName}", volumeContainerName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);
@@ -729,7 +747,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<MetricList>();
+            var _result = new AzureOperationResponse<IEnumerable<Metrics>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -742,7 +760,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MetricList>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Metrics>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (Newtonsoft.Json.JsonException ex)
                 {
@@ -764,6 +782,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Gets the metric definitions for the specified volume container.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The volume container name.
         /// </param>
@@ -794,11 +815,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListMetricDefinitionWithHttpMessagesAsync(string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListMetricDefinitionWithHttpMessagesAsync(string deviceName, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (volumeContainerName == null)
             {
@@ -838,6 +859,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("volumeContainerName", volumeContainerName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
@@ -847,7 +869,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/volumeContainers/{volumeContainerName}/metricsDefinitions").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{volumeContainerName}", volumeContainerName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);
@@ -983,6 +1005,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Creates or updates the volume container.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The name of the volume container.
         /// </param>
@@ -1016,11 +1041,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VolumeContainer>> BeginCreateOrUpdateWithHttpMessagesAsync(string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VolumeContainer>> BeginCreateOrUpdateWithHttpMessagesAsync(string deviceName, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (volumeContainerName == null)
             {
@@ -1068,6 +1093,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("volumeContainerName", volumeContainerName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
@@ -1078,7 +1104,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/volumeContainers/{volumeContainerName}").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{volumeContainerName}", volumeContainerName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);
@@ -1220,6 +1246,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Deletes the volume container.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The name of the volume container.
         /// </param>
@@ -1247,11 +1276,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string deviceName, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (volumeContainerName == null)
             {
@@ -1291,6 +1320,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("volumeContainerName", volumeContainerName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
@@ -1300,7 +1330,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/volumeContainers/{volumeContainerName}").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{volumeContainerName}", volumeContainerName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);

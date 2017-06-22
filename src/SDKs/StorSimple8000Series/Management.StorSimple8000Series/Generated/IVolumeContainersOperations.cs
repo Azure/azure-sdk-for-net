@@ -20,6 +20,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Gets all the volume containers in a device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -41,10 +44,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<VolumeContainer>>> ListByDeviceWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<VolumeContainer>>> ListByDeviceWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the properties of the specified volume container name.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The name of the volume container.
         /// </param>
@@ -69,10 +75,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VolumeContainer>> GetWithHttpMessagesAsync(string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VolumeContainer>> GetWithHttpMessagesAsync(string deviceName, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates the volume container.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The name of the volume container.
         /// </param>
@@ -100,10 +109,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VolumeContainer>> CreateOrUpdateWithHttpMessagesAsync(string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VolumeContainer>> CreateOrUpdateWithHttpMessagesAsync(string deviceName, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the volume container.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The name of the volume container.
         /// </param>
@@ -125,13 +137,16 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string deviceName, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the metrics for the specified volume container.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The volume container name.
         /// </param>
@@ -156,10 +171,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<MetricList>> ListMetricsWithHttpMessagesAsync(ODataQuery<MetricFilter> odataQuery, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Metrics>>> ListMetricsWithHttpMessagesAsync(ODataQuery<MetricFilter> odataQuery, string deviceName, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the metric definitions for the specified volume container.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The volume container name.
         /// </param>
@@ -184,10 +202,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListMetricDefinitionWithHttpMessagesAsync(string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListMetricDefinitionWithHttpMessagesAsync(string deviceName, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates the volume container.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The name of the volume container.
         /// </param>
@@ -215,10 +236,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VolumeContainer>> BeginCreateOrUpdateWithHttpMessagesAsync(string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VolumeContainer>> BeginCreateOrUpdateWithHttpMessagesAsync(string deviceName, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the volume container.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='volumeContainerName'>
         /// The name of the volume container.
         /// </param>
@@ -240,7 +264,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string deviceName, string volumeContainerName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
 

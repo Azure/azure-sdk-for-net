@@ -21,6 +21,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// Gets all the jobs for specified device. With optional OData query
         /// parameters, a filtered set of jobs is returned.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -45,10 +48,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Job>>> ListByDeviceWithHttpMessagesAsync(string resourceGroupName, string managerName, ODataQuery<JobFilter> odataQuery = default(ODataQuery<JobFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Job>>> ListByDeviceWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, ODataQuery<JobFilter> odataQuery = default(ODataQuery<JobFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the details of the specified job name.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='jobName'>
         /// The job Name.
         /// </param>
@@ -73,10 +79,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Job>> GetWithHttpMessagesAsync(string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Job>> GetWithHttpMessagesAsync(string deviceName, string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Cancels a job on the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='jobName'>
         /// The jobName.
         /// </param>
@@ -98,7 +107,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string deviceName, string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the jobs for the specified manager. With optional OData
         /// query parameters, a filtered set of jobs is returned.
@@ -131,6 +140,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Cancels a job on the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='jobName'>
         /// The jobName.
         /// </param>
@@ -152,7 +164,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginCancelWithHttpMessagesAsync(string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginCancelWithHttpMessagesAsync(string deviceName, string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the jobs for specified device. With optional OData query
         /// parameters, a filtered set of jobs is returned.

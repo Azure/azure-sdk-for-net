@@ -47,6 +47,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Retrieves all the backups in a device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -77,11 +80,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Backup>>> ListByDeviceWithHttpMessagesAsync(string resourceGroupName, string managerName, ODataQuery<BackupFilter> odataQuery = default(ODataQuery<BackupFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Backup>>> ListByDeviceWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, ODataQuery<BackupFilter> odataQuery = default(ODataQuery<BackupFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -118,6 +121,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -126,7 +130,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/backups").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);
             _url = _url.Replace("{managerName}", managerName);
@@ -269,6 +273,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Deletes the backup.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='backupName'>
         /// The backup name.
         /// </param>
@@ -284,16 +291,19 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string backupName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string deviceName, string backupName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(backupName, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(deviceName, backupName, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Clones the backup element as a new volume.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='backupName'>
         /// The backup name.
         /// </param>
@@ -315,16 +325,19 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> CloneWithHttpMessagesAsync(string backupName, string backupElementName, CloneRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CloneWithHttpMessagesAsync(string deviceName, string backupName, string backupElementName, CloneRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginCloneWithHttpMessagesAsync(backupName, backupElementName, parameters, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginCloneWithHttpMessagesAsync(deviceName, backupName, backupElementName, parameters, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Restores the backup on the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='backupName'>
         /// The backupSet name
         /// </param>
@@ -340,16 +353,19 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> RestoreWithHttpMessagesAsync(string backupName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> RestoreWithHttpMessagesAsync(string deviceName, string backupName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginRestoreWithHttpMessagesAsync(backupName, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginRestoreWithHttpMessagesAsync(deviceName, backupName, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Deletes the backup.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='backupName'>
         /// The backup name.
         /// </param>
@@ -377,11 +393,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string backupName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string deviceName, string backupName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (backupName == null)
             {
@@ -421,6 +437,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("backupName", backupName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
@@ -430,7 +447,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/backups/{backupName}").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{backupName}", backupName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);
@@ -540,6 +557,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Clones the backup element as a new volume.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='backupName'>
         /// The backup name.
         /// </param>
@@ -573,11 +593,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginCloneWithHttpMessagesAsync(string backupName, string backupElementName, CloneRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginCloneWithHttpMessagesAsync(string deviceName, string backupName, string backupElementName, CloneRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (backupName == null)
             {
@@ -629,6 +649,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("backupName", backupName);
                 tracingParameters.Add("backupElementName", backupElementName);
                 tracingParameters.Add("parameters", parameters);
@@ -640,7 +661,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/backups/{backupName}/elements/{backupElementName}/clone").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{backupName}", backupName);
             _url = _url.Replace("{backupElementName}", backupElementName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
@@ -757,6 +778,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Restores the backup on the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='backupName'>
         /// The backupSet name
         /// </param>
@@ -784,11 +808,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginRestoreWithHttpMessagesAsync(string backupName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginRestoreWithHttpMessagesAsync(string deviceName, string backupName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (backupName == null)
             {
@@ -828,6 +852,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("backupName", backupName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
@@ -837,7 +862,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/backups/{backupName}/restore").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{backupName}", backupName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);

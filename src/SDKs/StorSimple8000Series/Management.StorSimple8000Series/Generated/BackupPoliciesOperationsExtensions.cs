@@ -22,15 +22,18 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<BackupPolicy> ListByDevice(this IBackupPoliciesOperations operations, string resourceGroupName, string managerName)
+            public static IEnumerable<BackupPolicy> ListByDevice(this IBackupPoliciesOperations operations, string deviceName, string resourceGroupName, string managerName)
             {
-                return operations.ListByDeviceAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.ListByDeviceAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -39,6 +42,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
@@ -48,9 +54,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<BackupPolicy>> ListByDeviceAsync(this IBackupPoliciesOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<BackupPolicy>> ListByDeviceAsync(this IBackupPoliciesOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByDeviceWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByDeviceWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -62,6 +68,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='backupPolicyName'>
             /// The name of backup policy to be fetched.
             /// </param>
@@ -71,9 +80,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static BackupPolicy Get(this IBackupPoliciesOperations operations, string backupPolicyName, string resourceGroupName, string managerName)
+            public static BackupPolicy Get(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, string resourceGroupName, string managerName)
             {
-                return operations.GetAsync(backupPolicyName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.GetAsync(deviceName, backupPolicyName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -82,6 +91,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='backupPolicyName'>
             /// The name of backup policy to be fetched.
             /// </param>
@@ -94,9 +106,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupPolicy> GetAsync(this IBackupPoliciesOperations operations, string backupPolicyName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupPolicy> GetAsync(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(backupPolicyName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(deviceName, backupPolicyName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -108,6 +120,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='backupPolicyName'>
             /// The name of the backup policy to be created/updated.
             /// </param>
@@ -120,9 +135,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static BackupPolicy CreateOrUpdate(this IBackupPoliciesOperations operations, string backupPolicyName, BackupPolicy parameters, string resourceGroupName, string managerName)
+            public static BackupPolicy CreateOrUpdate(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, BackupPolicy parameters, string resourceGroupName, string managerName)
             {
-                return operations.CreateOrUpdateAsync(backupPolicyName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(deviceName, backupPolicyName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,6 +145,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='backupPolicyName'>
             /// The name of the backup policy to be created/updated.
@@ -146,9 +164,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupPolicy> CreateOrUpdateAsync(this IBackupPoliciesOperations operations, string backupPolicyName, BackupPolicy parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupPolicy> CreateOrUpdateAsync(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, BackupPolicy parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(backupPolicyName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(deviceName, backupPolicyName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -160,6 +178,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='backupPolicyName'>
             /// The name of the backup policy.
             /// </param>
@@ -169,9 +190,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void Delete(this IBackupPoliciesOperations operations, string backupPolicyName, string resourceGroupName, string managerName)
+            public static void Delete(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, string resourceGroupName, string managerName)
             {
-                operations.DeleteAsync(backupPolicyName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.DeleteAsync(deviceName, backupPolicyName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -180,6 +201,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='backupPolicyName'>
             /// The name of the backup policy.
             /// </param>
@@ -192,9 +216,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IBackupPoliciesOperations operations, string backupPolicyName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(backupPolicyName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(deviceName, backupPolicyName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -202,6 +226,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='backupPolicyName'>
             /// The backup policy name.
@@ -215,9 +242,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void BackupNow(this IBackupPoliciesOperations operations, string backupPolicyName, string backupType, string resourceGroupName, string managerName)
+            public static void BackupNow(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, string backupType, string resourceGroupName, string managerName)
             {
-                operations.BackupNowAsync(backupPolicyName, backupType, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.BackupNowAsync(deviceName, backupPolicyName, backupType, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -225,6 +252,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='backupPolicyName'>
             /// The backup policy name.
@@ -241,9 +271,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BackupNowAsync(this IBackupPoliciesOperations operations, string backupPolicyName, string backupType, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BackupNowAsync(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, string backupType, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BackupNowWithHttpMessagesAsync(backupPolicyName, backupType, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.BackupNowWithHttpMessagesAsync(deviceName, backupPolicyName, backupType, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -251,6 +281,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='backupPolicyName'>
             /// The name of the backup policy to be created/updated.
@@ -264,9 +297,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static BackupPolicy BeginCreateOrUpdate(this IBackupPoliciesOperations operations, string backupPolicyName, BackupPolicy parameters, string resourceGroupName, string managerName)
+            public static BackupPolicy BeginCreateOrUpdate(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, BackupPolicy parameters, string resourceGroupName, string managerName)
             {
-                return operations.BeginCreateOrUpdateAsync(backupPolicyName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(deviceName, backupPolicyName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -274,6 +307,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='backupPolicyName'>
             /// The name of the backup policy to be created/updated.
@@ -290,9 +326,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupPolicy> BeginCreateOrUpdateAsync(this IBackupPoliciesOperations operations, string backupPolicyName, BackupPolicy parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupPolicy> BeginCreateOrUpdateAsync(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, BackupPolicy parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(backupPolicyName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(deviceName, backupPolicyName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -304,6 +340,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='backupPolicyName'>
             /// The name of the backup policy.
             /// </param>
@@ -313,9 +352,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void BeginDelete(this IBackupPoliciesOperations operations, string backupPolicyName, string resourceGroupName, string managerName)
+            public static void BeginDelete(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, string resourceGroupName, string managerName)
             {
-                operations.BeginDeleteAsync(backupPolicyName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(deviceName, backupPolicyName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -324,6 +363,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='backupPolicyName'>
             /// The name of the backup policy.
             /// </param>
@@ -336,9 +378,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IBackupPoliciesOperations operations, string backupPolicyName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithHttpMessagesAsync(backupPolicyName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(deviceName, backupPolicyName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -346,6 +388,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='backupPolicyName'>
             /// The backup policy name.
@@ -359,9 +404,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void BeginBackupNow(this IBackupPoliciesOperations operations, string backupPolicyName, string backupType, string resourceGroupName, string managerName)
+            public static void BeginBackupNow(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, string backupType, string resourceGroupName, string managerName)
             {
-                operations.BeginBackupNowAsync(backupPolicyName, backupType, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.BeginBackupNowAsync(deviceName, backupPolicyName, backupType, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -369,6 +414,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='backupPolicyName'>
             /// The backup policy name.
@@ -385,9 +433,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginBackupNowAsync(this IBackupPoliciesOperations operations, string backupPolicyName, string backupType, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginBackupNowAsync(this IBackupPoliciesOperations operations, string deviceName, string backupPolicyName, string backupType, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginBackupNowWithHttpMessagesAsync(backupPolicyName, backupType, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginBackupNowWithHttpMessagesAsync(deviceName, backupPolicyName, backupType, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
     }

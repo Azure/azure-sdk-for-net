@@ -75,6 +75,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Returns the properties of the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -101,10 +104,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Device>> GetWithHttpMessagesAsync(string resourceGroupName, string managerName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Device>> GetWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -123,10 +129,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Patches the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='parameters'>
         /// Patch representation of the device.
         /// </param>
@@ -151,11 +160,14 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Device>> UpdateWithHttpMessagesAsync(DevicePatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Device>> UpdateWithHttpMessagesAsync(string deviceName, DevicePatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Authorizes the specified device for service data encryption key
         /// rollover.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -174,10 +186,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> AuthorizeForServiceEncryptionKeyRolloverWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> AuthorizeForServiceEncryptionKeyRolloverWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deactivates the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -196,10 +211,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeactivateWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeactivateWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Downloads and installs the updates on the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -218,13 +236,16 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> InstallUpdatesWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> InstallUpdatesWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns all failover sets for a given device and their eligibility
         /// for participating in a failover. A failover set refers to a set of
         /// volume containers that need to be failed-over as a single unit to
         /// maintain data integrity.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -246,13 +267,16 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<FailoverSet>>> ListFailoverSetsWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<FailoverSet>>> ListFailoverSetsWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the metrics for the specified device.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -274,10 +298,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<Metrics>>> ListMetricsWithHttpMessagesAsync(ODataQuery<MetricFilter> odataQuery, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Metrics>>> ListMetricsWithHttpMessagesAsync(ODataQuery<MetricFilter> odataQuery, string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the metric definitions for the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -299,35 +326,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListMetricDefinitionWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Triggers collection of support package on a device.
-        /// </summary>
-        /// <param name='parameters'>
-        /// The publish support package request.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='managerName'>
-        /// The manager name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> PublishSupportPackageWithHttpMessagesAsync(SupportPackageRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListMetricDefinitionWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Scans for updates on the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -346,10 +351,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ScanForUpdatesWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ScanForUpdatesWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns the update summary of the specified device name.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -371,7 +379,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Updates>> GetUpdateSummaryWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Updates>> GetUpdateSummaryWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Failovers a set of volume containers from a specified source device
         /// to a target device.
@@ -464,6 +472,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Deletes the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -482,10 +493,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deactivates the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -504,34 +518,12 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeactivateWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeactivateWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Downloads and installs the updates on the device.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='managerName'>
-        /// The manager name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> BeginInstallUpdatesWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Triggers collection of support package on a device.
-        /// </summary>
-        /// <param name='parameters'>
-        /// The publish support package request.
+        /// <param name='deviceName'>
+        /// The device name
         /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
@@ -551,10 +543,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginPublishSupportPackageWithHttpMessagesAsync(SupportPackageRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginInstallUpdatesWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Scans for updates on the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -573,7 +568,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginScanForUpdatesWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginScanForUpdatesWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Failovers a set of volume containers from a specified source device
         /// to a target device.

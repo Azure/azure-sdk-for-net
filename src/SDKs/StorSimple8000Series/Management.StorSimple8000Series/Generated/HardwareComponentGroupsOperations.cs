@@ -46,6 +46,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Lists the hardware component groups at device-level.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -73,11 +76,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<HardwareComponentGroup>>> ListByDeviceWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<HardwareComponentGroup>>> ListByDeviceWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -113,6 +116,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -121,7 +125,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/hardwareComponentGroups").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);
             _url = _url.Replace("{managerName}", managerName);
@@ -256,6 +260,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Changes the power state of the controller.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='hardwareComponentGroupName'>
         /// The hardware component group name.
         /// </param>
@@ -274,16 +281,19 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> ChangeControllerPowerStateWithHttpMessagesAsync(string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ChangeControllerPowerStateWithHttpMessagesAsync(string deviceName, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginChangeControllerPowerStateWithHttpMessagesAsync(hardwareComponentGroupName, parameters, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginChangeControllerPowerStateWithHttpMessagesAsync(deviceName, hardwareComponentGroupName, parameters, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Changes the power state of the controller.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='hardwareComponentGroupName'>
         /// The hardware component group name.
         /// </param>
@@ -314,11 +324,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginChangeControllerPowerStateWithHttpMessagesAsync(string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginChangeControllerPowerStateWithHttpMessagesAsync(string deviceName, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (hardwareComponentGroupName == null)
             {
@@ -366,6 +376,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("hardwareComponentGroupName", hardwareComponentGroupName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
@@ -376,7 +387,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/hardwareComponentGroups/{hardwareComponentGroupName}/changeControllerPowerState").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{hardwareComponentGroupName}", hardwareComponentGroupName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);

@@ -110,6 +110,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The send test alert email request.
             /// </param>
@@ -119,9 +122,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void SendTestEmail(this IAlertsOperations operations, SendTestAlertEmailRequest parameters, string resourceGroupName, string managerName)
+            public static void SendTestEmail(this IAlertsOperations operations, string deviceName, SendTestAlertEmailRequest parameters, string resourceGroupName, string managerName)
             {
-                operations.SendTestEmailAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.SendTestEmailAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -129,6 +132,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='parameters'>
             /// The send test alert email request.
@@ -142,9 +148,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SendTestEmailAsync(this IAlertsOperations operations, SendTestAlertEmailRequest parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SendTestEmailAsync(this IAlertsOperations operations, string deviceName, SendTestAlertEmailRequest parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.SendTestEmailWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.SendTestEmailWithHttpMessagesAsync(deviceName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

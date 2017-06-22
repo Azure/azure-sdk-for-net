@@ -22,6 +22,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
@@ -31,9 +34,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<Job> ListByDevice(this IJobsOperations operations, string resourceGroupName, string managerName, ODataQuery<JobFilter> odataQuery = default(ODataQuery<JobFilter>))
+            public static IPage<Job> ListByDevice(this IJobsOperations operations, string deviceName, string resourceGroupName, string managerName, ODataQuery<JobFilter> odataQuery = default(ODataQuery<JobFilter>))
             {
-                return operations.ListByDeviceAsync(resourceGroupName, managerName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByDeviceAsync(deviceName, resourceGroupName, managerName, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -43,6 +46,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
@@ -55,9 +61,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Job>> ListByDeviceAsync(this IJobsOperations operations, string resourceGroupName, string managerName, ODataQuery<JobFilter> odataQuery = default(ODataQuery<JobFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Job>> ListByDeviceAsync(this IJobsOperations operations, string deviceName, string resourceGroupName, string managerName, ODataQuery<JobFilter> odataQuery = default(ODataQuery<JobFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByDeviceWithHttpMessagesAsync(resourceGroupName, managerName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByDeviceWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -69,6 +75,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='jobName'>
             /// The job Name.
             /// </param>
@@ -78,9 +87,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static Job Get(this IJobsOperations operations, string jobName, string resourceGroupName, string managerName)
+            public static Job Get(this IJobsOperations operations, string deviceName, string jobName, string resourceGroupName, string managerName)
             {
-                return operations.GetAsync(jobName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.GetAsync(deviceName, jobName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -88,6 +97,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='jobName'>
             /// The job Name.
@@ -101,9 +113,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Job> GetAsync(this IJobsOperations operations, string jobName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Job> GetAsync(this IJobsOperations operations, string deviceName, string jobName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(jobName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(deviceName, jobName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -115,6 +127,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='jobName'>
             /// The jobName.
             /// </param>
@@ -124,9 +139,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void Cancel(this IJobsOperations operations, string jobName, string resourceGroupName, string managerName)
+            public static void Cancel(this IJobsOperations operations, string deviceName, string jobName, string resourceGroupName, string managerName)
             {
-                operations.CancelAsync(jobName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.CancelAsync(deviceName, jobName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -134,6 +149,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='jobName'>
             /// The jobName.
@@ -147,9 +165,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelAsync(this IJobsOperations operations, string jobName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CancelAsync(this IJobsOperations operations, string deviceName, string jobName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.CancelWithHttpMessagesAsync(jobName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.CancelWithHttpMessagesAsync(deviceName, jobName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -206,6 +224,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='jobName'>
             /// The jobName.
             /// </param>
@@ -215,9 +236,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void BeginCancel(this IJobsOperations operations, string jobName, string resourceGroupName, string managerName)
+            public static void BeginCancel(this IJobsOperations operations, string deviceName, string jobName, string resourceGroupName, string managerName)
             {
-                operations.BeginCancelAsync(jobName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.BeginCancelAsync(deviceName, jobName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -225,6 +246,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='jobName'>
             /// The jobName.
@@ -238,9 +262,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginCancelAsync(this IJobsOperations operations, string jobName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginCancelAsync(this IJobsOperations operations, string deviceName, string jobName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginCancelWithHttpMessagesAsync(jobName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginCancelWithHttpMessagesAsync(deviceName, jobName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

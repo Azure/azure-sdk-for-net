@@ -23,15 +23,18 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<VolumeContainer> ListByDevice(this IVolumeContainersOperations operations, string resourceGroupName, string managerName)
+            public static IEnumerable<VolumeContainer> ListByDevice(this IVolumeContainersOperations operations, string deviceName, string resourceGroupName, string managerName)
             {
-                return operations.ListByDeviceAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.ListByDeviceAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -40,6 +43,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
@@ -49,9 +55,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<VolumeContainer>> ListByDeviceAsync(this IVolumeContainersOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<VolumeContainer>> ListByDeviceAsync(this IVolumeContainersOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByDeviceWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByDeviceWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -63,6 +69,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='volumeContainerName'>
             /// The name of the volume container.
             /// </param>
@@ -72,9 +81,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static VolumeContainer Get(this IVolumeContainersOperations operations, string volumeContainerName, string resourceGroupName, string managerName)
+            public static VolumeContainer Get(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName)
             {
-                return operations.GetAsync(volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.GetAsync(deviceName, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -83,6 +92,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='volumeContainerName'>
             /// The name of the volume container.
             /// </param>
@@ -95,9 +107,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VolumeContainer> GetAsync(this IVolumeContainersOperations operations, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VolumeContainer> GetAsync(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(deviceName, volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -108,6 +120,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='volumeContainerName'>
             /// The name of the volume container.
@@ -121,9 +136,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static VolumeContainer CreateOrUpdate(this IVolumeContainersOperations operations, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName)
+            public static VolumeContainer CreateOrUpdate(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName)
             {
-                return operations.CreateOrUpdateAsync(volumeContainerName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(deviceName, volumeContainerName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -131,6 +146,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='volumeContainerName'>
             /// The name of the volume container.
@@ -147,9 +165,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VolumeContainer> CreateOrUpdateAsync(this IVolumeContainersOperations operations, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VolumeContainer> CreateOrUpdateAsync(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(volumeContainerName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(deviceName, volumeContainerName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -161,6 +179,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='volumeContainerName'>
             /// The name of the volume container.
             /// </param>
@@ -170,9 +191,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void Delete(this IVolumeContainersOperations operations, string volumeContainerName, string resourceGroupName, string managerName)
+            public static void Delete(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName)
             {
-                operations.DeleteAsync(volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.DeleteAsync(deviceName, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -180,6 +201,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='volumeContainerName'>
             /// The name of the volume container.
@@ -193,9 +217,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IVolumeContainersOperations operations, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(deviceName, volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -207,6 +231,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='volumeContainerName'>
             /// The volume container name.
             /// </param>
@@ -216,9 +243,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static MetricList ListMetrics(this IVolumeContainersOperations operations, ODataQuery<MetricFilter> odataQuery, string volumeContainerName, string resourceGroupName, string managerName)
+            public static IEnumerable<Metrics> ListMetrics(this IVolumeContainersOperations operations, ODataQuery<MetricFilter> odataQuery, string deviceName, string volumeContainerName, string resourceGroupName, string managerName)
             {
-                return operations.ListMetricsAsync(odataQuery, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.ListMetricsAsync(odataQuery, deviceName, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -230,6 +257,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='volumeContainerName'>
             /// The volume container name.
             /// </param>
@@ -242,9 +272,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<MetricList> ListMetricsAsync(this IVolumeContainersOperations operations, ODataQuery<MetricFilter> odataQuery, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Metrics>> ListMetricsAsync(this IVolumeContainersOperations operations, ODataQuery<MetricFilter> odataQuery, string deviceName, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListMetricsWithHttpMessagesAsync(odataQuery, volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListMetricsWithHttpMessagesAsync(odataQuery, deviceName, volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -256,6 +286,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='volumeContainerName'>
             /// The volume container name.
             /// </param>
@@ -265,9 +298,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<MetricDefinition> ListMetricDefinition(this IVolumeContainersOperations operations, string volumeContainerName, string resourceGroupName, string managerName)
+            public static IEnumerable<MetricDefinition> ListMetricDefinition(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName)
             {
-                return operations.ListMetricDefinitionAsync(volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.ListMetricDefinitionAsync(deviceName, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -275,6 +308,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='volumeContainerName'>
             /// The volume container name.
@@ -288,9 +324,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<MetricDefinition>> ListMetricDefinitionAsync(this IVolumeContainersOperations operations, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<MetricDefinition>> ListMetricDefinitionAsync(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListMetricDefinitionWithHttpMessagesAsync(volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListMetricDefinitionWithHttpMessagesAsync(deviceName, volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -301,6 +337,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='volumeContainerName'>
             /// The name of the volume container.
@@ -314,9 +353,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static VolumeContainer BeginCreateOrUpdate(this IVolumeContainersOperations operations, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName)
+            public static VolumeContainer BeginCreateOrUpdate(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName)
             {
-                return operations.BeginCreateOrUpdateAsync(volumeContainerName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(deviceName, volumeContainerName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -324,6 +363,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='volumeContainerName'>
             /// The name of the volume container.
@@ -340,9 +382,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VolumeContainer> BeginCreateOrUpdateAsync(this IVolumeContainersOperations operations, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VolumeContainer> BeginCreateOrUpdateAsync(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, VolumeContainer parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(volumeContainerName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(deviceName, volumeContainerName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -354,6 +396,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='volumeContainerName'>
             /// The name of the volume container.
             /// </param>
@@ -363,9 +408,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void BeginDelete(this IVolumeContainersOperations operations, string volumeContainerName, string resourceGroupName, string managerName)
+            public static void BeginDelete(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName)
             {
-                operations.BeginDeleteAsync(volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(deviceName, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -373,6 +418,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='volumeContainerName'>
             /// The name of the volume container.
@@ -386,9 +434,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IVolumeContainersOperations operations, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.BeginDeleteWithHttpMessagesAsync(volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(deviceName, volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
             }
 
     }

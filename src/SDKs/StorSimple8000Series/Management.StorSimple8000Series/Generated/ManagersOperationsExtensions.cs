@@ -203,10 +203,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             }
 
             /// <summary>
-            /// Returns the public encryption key of the device.
+            /// Updates the StorSimple Manager.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// The manager update parameters.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
@@ -214,16 +217,19 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static PublicKey GetDevicePublicEncryptionKey(this IManagersOperations operations, string resourceGroupName, string managerName)
+            public static Manager Update(this IManagersOperations operations, ManagerPatch parameters, string resourceGroupName, string managerName)
             {
-                return operations.GetDevicePublicEncryptionKeyAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.UpdateAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns the public encryption key of the device.
+            /// Updates the StorSimple Manager.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// The manager update parameters.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
@@ -234,9 +240,55 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PublicKey> GetDevicePublicEncryptionKeyAsync(this IManagersOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Manager> UpdateAsync(this IManagersOperations operations, ManagerPatch parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetDevicePublicEncryptionKeyWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns the public encryption key of the device.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='managerName'>
+            /// The manager name
+            /// </param>
+            public static PublicKey GetDevicePublicEncryptionKey(this IManagersOperations operations, string deviceName, string resourceGroupName, string managerName)
+            {
+                return operations.GetDevicePublicEncryptionKeyAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns the public encryption key of the device.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='managerName'>
+            /// The manager name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PublicKey> GetDevicePublicEncryptionKeyAsync(this IManagersOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDevicePublicEncryptionKeyWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -589,18 +641,18 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IEnumerable<Metrics> ListMetrics(this IManagersOperations operations, string resourceGroupName, string managerName, ODataQuery<MetricFilter> odataQuery = default(ODataQuery<MetricFilter>))
+            public static IEnumerable<Metrics> ListMetrics(this IManagersOperations operations, ODataQuery<MetricFilter> odataQuery, string resourceGroupName, string managerName)
             {
-                return operations.ListMetricsAsync(resourceGroupName, managerName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListMetricsAsync(odataQuery, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -609,21 +661,21 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Metrics>> ListMetricsAsync(this IManagersOperations operations, string resourceGroupName, string managerName, ODataQuery<MetricFilter> odataQuery = default(ODataQuery<MetricFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Metrics>> ListMetricsAsync(this IManagersOperations operations, ODataQuery<MetricFilter> odataQuery, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListMetricsWithHttpMessagesAsync(resourceGroupName, managerName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListMetricsWithHttpMessagesAsync(odataQuery, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

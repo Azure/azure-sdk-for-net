@@ -127,34 +127,6 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string storageAccountCredentialName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns the encrypted storage account access key.
-        /// </summary>
-        /// <param name='storageAccountCredentialName'>
-        /// Name of the storage account credential.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='managerName'>
-        /// The manager name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AsymmetricEncryptedSecret>> ListAccessKeyWithHttpMessagesAsync(string storageAccountCredentialName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Creates or updates the storage account credential.
         /// </summary>
         /// <param name='storageAccountCredentialName'>

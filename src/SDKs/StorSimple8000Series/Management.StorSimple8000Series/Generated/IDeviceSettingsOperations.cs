@@ -19,6 +19,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Gets the alert settings of the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -40,10 +43,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AlertSettings>> GetAlertSettingsWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AlertSettings>> GetAlertSettingsWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates the alert settings of the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='parameters'>
         /// The alert settings to be added or updated.
         /// </param>
@@ -68,10 +74,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AlertSettings>> CreateOrUpdateAlertSettingsWithHttpMessagesAsync(AlertSettings parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AlertSettings>> CreateOrUpdateAlertSettingsWithHttpMessagesAsync(string deviceName, AlertSettings parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the network settings of the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -93,10 +102,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NetworkSettings>> GetNetworkSettingsWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkSettings>> GetNetworkSettingsWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the network settings on the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='parameters'>
         /// The network settings to be updated.
         /// </param>
@@ -121,10 +133,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NetworkSettings>> UpdateNetworkSettingsWithHttpMessagesAsync(NetworkSettingsPatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkSettings>> UpdateNetworkSettingsWithHttpMessagesAsync(string deviceName, NetworkSettingsPatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns the Security properties of the specified device name.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -146,10 +161,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SecuritySettings>> GetSecuritySettingsWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecuritySettings>> GetSecuritySettingsWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Patch Security properties of the specified device name.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='parameters'>
         /// The security settings properties to be patched.
         /// </param>
@@ -174,10 +192,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SecuritySettings>> UpdateSecuritySettingsWithHttpMessagesAsync(SecuritySettingsPatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecuritySettings>> UpdateSecuritySettingsWithHttpMessagesAsync(string deviceName, SecuritySettingsPatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// sync Remote management Certificate between appliance and Service
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -196,10 +217,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> SyncRemotemanagementCertificateWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> SyncRemotemanagementCertificateWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the time settings of the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -221,10 +245,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TimeSettings>> GetTimeSettingsWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TimeSettings>> GetTimeSettingsWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates the time settings of the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='parameters'>
         /// The time settings to be added or updated.
         /// </param>
@@ -249,10 +276,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TimeSettings>> CreateOrUpdateTimeSettingsWithHttpMessagesAsync(TimeSettings parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TimeSettings>> CreateOrUpdateTimeSettingsWithHttpMessagesAsync(string deviceName, TimeSettings parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates the alert settings of the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='parameters'>
         /// The alert settings to be added or updated.
         /// </param>
@@ -277,10 +307,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AlertSettings>> BeginCreateOrUpdateAlertSettingsWithHttpMessagesAsync(AlertSettings parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AlertSettings>> BeginCreateOrUpdateAlertSettingsWithHttpMessagesAsync(string deviceName, AlertSettings parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the network settings on the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='parameters'>
         /// The network settings to be updated.
         /// </param>
@@ -305,10 +338,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NetworkSettings>> BeginUpdateNetworkSettingsWithHttpMessagesAsync(NetworkSettingsPatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkSettings>> BeginUpdateNetworkSettingsWithHttpMessagesAsync(string deviceName, NetworkSettingsPatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Patch Security properties of the specified device name.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='parameters'>
         /// The security settings properties to be patched.
         /// </param>
@@ -333,10 +369,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SecuritySettings>> BeginUpdateSecuritySettingsWithHttpMessagesAsync(SecuritySettingsPatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecuritySettings>> BeginUpdateSecuritySettingsWithHttpMessagesAsync(string deviceName, SecuritySettingsPatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// sync Remote management Certificate between appliance and Service
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -355,10 +394,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginSyncRemotemanagementCertificateWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginSyncRemotemanagementCertificateWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates the time settings of the specified device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='parameters'>
         /// The time settings to be added or updated.
         /// </param>
@@ -383,7 +425,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TimeSettings>> BeginCreateOrUpdateTimeSettingsWithHttpMessagesAsync(TimeSettings parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TimeSettings>> BeginCreateOrUpdateTimeSettingsWithHttpMessagesAsync(string deviceName, TimeSettings parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
 

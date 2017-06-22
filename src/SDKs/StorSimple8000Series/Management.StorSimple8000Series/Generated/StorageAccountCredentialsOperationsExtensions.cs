@@ -198,52 +198,6 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             }
 
             /// <summary>
-            /// Returns the encrypted storage account access key.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='storageAccountCredentialName'>
-            /// Name of the storage account credential.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static AsymmetricEncryptedSecret ListAccessKey(this IStorageAccountCredentialsOperations operations, string storageAccountCredentialName, string resourceGroupName, string managerName)
-            {
-                return operations.ListAccessKeyAsync(storageAccountCredentialName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the encrypted storage account access key.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='storageAccountCredentialName'>
-            /// Name of the storage account credential.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<AsymmetricEncryptedSecret> ListAccessKeyAsync(this IStorageAccountCredentialsOperations operations, string storageAccountCredentialName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListAccessKeyWithHttpMessagesAsync(storageAccountCredentialName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Creates or updates the storage account credential.
             /// </summary>
             /// <param name='operations'>

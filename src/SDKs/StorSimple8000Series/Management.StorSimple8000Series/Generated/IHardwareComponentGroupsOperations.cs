@@ -19,6 +19,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Lists the hardware component groups at device-level.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -40,10 +43,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<HardwareComponentGroup>>> ListByDeviceWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<HardwareComponentGroup>>> ListByDeviceWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Changes the power state of the controller.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='hardwareComponentGroupName'>
         /// The hardware component group name.
         /// </param>
@@ -68,10 +74,13 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ChangeControllerPowerStateWithHttpMessagesAsync(string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ChangeControllerPowerStateWithHttpMessagesAsync(string deviceName, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Changes the power state of the controller.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='hardwareComponentGroupName'>
         /// The hardware component group name.
         /// </param>
@@ -96,7 +105,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginChangeControllerPowerStateWithHttpMessagesAsync(string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginChangeControllerPowerStateWithHttpMessagesAsync(string deviceName, string hardwareComponentGroupName, ControllerPowerStateChangeRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
 

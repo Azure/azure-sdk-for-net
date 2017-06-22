@@ -42,11 +42,6 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// The device name
-        /// </summary>
-        public string DeviceName { get; set; }
-
-        /// <summary>
         /// The subscription id
         /// </summary>
         public string SubscriptionId { get; set; }

@@ -134,8 +134,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns the public encryption key of the device.
+        /// Updates the StorSimple Manager.
         /// </summary>
+        /// <param name='parameters'>
+        /// The manager update parameters.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -157,7 +160,35 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PublicKey>> GetDevicePublicEncryptionKeyWithHttpMessagesAsync(string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Manager>> UpdateWithHttpMessagesAsync(ManagerPatch parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Returns the public encryption key of the device.
+        /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='managerName'>
+        /// The manager name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PublicKey>> GetDevicePublicEncryptionKeyWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns the encryption settings of the manager.
         /// </summary>
@@ -371,14 +402,14 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Gets the metrics for the specified manager.
         /// </summary>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
         /// <param name='managerName'>
         /// The manager name
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -395,7 +426,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<Metrics>>> ListMetricsWithHttpMessagesAsync(string resourceGroupName, string managerName, ODataQuery<MetricFilter> odataQuery = default(ODataQuery<MetricFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Metrics>>> ListMetricsWithHttpMessagesAsync(ODataQuery<MetricFilter> odataQuery, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the metric definitions for the specified manager.
         /// </summary>

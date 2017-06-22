@@ -20,15 +20,18 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static AlertSettings GetAlertSettings(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName)
+            public static AlertSettings GetAlertSettings(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
             {
-                return operations.GetAlertSettingsAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.GetAlertSettingsAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -37,6 +40,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
@@ -46,9 +52,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AlertSettings> GetAlertSettingsAsync(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AlertSettings> GetAlertSettingsAsync(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAlertSettingsWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAlertSettingsWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -60,6 +66,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The alert settings to be added or updated.
             /// </param>
@@ -69,9 +78,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static AlertSettings CreateOrUpdateAlertSettings(this IDeviceSettingsOperations operations, AlertSettings parameters, string resourceGroupName, string managerName)
+            public static AlertSettings CreateOrUpdateAlertSettings(this IDeviceSettingsOperations operations, string deviceName, AlertSettings parameters, string resourceGroupName, string managerName)
             {
-                return operations.CreateOrUpdateAlertSettingsAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAlertSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -79,6 +88,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='parameters'>
             /// The alert settings to be added or updated.
@@ -92,9 +104,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AlertSettings> CreateOrUpdateAlertSettingsAsync(this IDeviceSettingsOperations operations, AlertSettings parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AlertSettings> CreateOrUpdateAlertSettingsAsync(this IDeviceSettingsOperations operations, string deviceName, AlertSettings parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateAlertSettingsWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateAlertSettingsWithHttpMessagesAsync(deviceName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -106,15 +118,18 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static NetworkSettings GetNetworkSettings(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName)
+            public static NetworkSettings GetNetworkSettings(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
             {
-                return operations.GetNetworkSettingsAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.GetNetworkSettingsAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -123,6 +138,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
@@ -132,9 +150,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NetworkSettings> GetNetworkSettingsAsync(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkSettings> GetNetworkSettingsAsync(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetNetworkSettingsWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetNetworkSettingsWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -146,6 +164,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The network settings to be updated.
             /// </param>
@@ -155,9 +176,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static NetworkSettings UpdateNetworkSettings(this IDeviceSettingsOperations operations, NetworkSettingsPatch parameters, string resourceGroupName, string managerName)
+            public static NetworkSettings UpdateNetworkSettings(this IDeviceSettingsOperations operations, string deviceName, NetworkSettingsPatch parameters, string resourceGroupName, string managerName)
             {
-                return operations.UpdateNetworkSettingsAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.UpdateNetworkSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -165,6 +186,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='parameters'>
             /// The network settings to be updated.
@@ -178,9 +202,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NetworkSettings> UpdateNetworkSettingsAsync(this IDeviceSettingsOperations operations, NetworkSettingsPatch parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkSettings> UpdateNetworkSettingsAsync(this IDeviceSettingsOperations operations, string deviceName, NetworkSettingsPatch parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateNetworkSettingsWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateNetworkSettingsWithHttpMessagesAsync(deviceName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -192,15 +216,18 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static SecuritySettings GetSecuritySettings(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName)
+            public static SecuritySettings GetSecuritySettings(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
             {
-                return operations.GetSecuritySettingsAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.GetSecuritySettingsAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -209,6 +236,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
@@ -218,9 +248,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecuritySettings> GetSecuritySettingsAsync(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecuritySettings> GetSecuritySettingsAsync(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetSecuritySettingsWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetSecuritySettingsWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -232,6 +262,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The security settings properties to be patched.
             /// </param>
@@ -241,9 +274,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static SecuritySettings UpdateSecuritySettings(this IDeviceSettingsOperations operations, SecuritySettingsPatch parameters, string resourceGroupName, string managerName)
+            public static SecuritySettings UpdateSecuritySettings(this IDeviceSettingsOperations operations, string deviceName, SecuritySettingsPatch parameters, string resourceGroupName, string managerName)
             {
-                return operations.UpdateSecuritySettingsAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.UpdateSecuritySettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -252,6 +285,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The security settings properties to be patched.
             /// </param>
@@ -264,9 +300,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecuritySettings> UpdateSecuritySettingsAsync(this IDeviceSettingsOperations operations, SecuritySettingsPatch parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecuritySettings> UpdateSecuritySettingsAsync(this IDeviceSettingsOperations operations, string deviceName, SecuritySettingsPatch parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateSecuritySettingsWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateSecuritySettingsWithHttpMessagesAsync(deviceName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -278,15 +314,18 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void SyncRemotemanagementCertificate(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName)
+            public static void SyncRemotemanagementCertificate(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
             {
-                operations.SyncRemotemanagementCertificateAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.SyncRemotemanagementCertificateAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -295,42 +334,8 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task SyncRemotemanagementCertificateAsync(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.SyncRemotemanagementCertificateWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Gets the time settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static TimeSettings GetTimeSettings(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.GetTimeSettingsAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the time settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
@@ -341,9 +346,52 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TimeSettings> GetTimeSettingsAsync(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SyncRemotemanagementCertificateAsync(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTimeSettingsWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                await operations.SyncRemotemanagementCertificateWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Gets the time settings of the specified device.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='managerName'>
+            /// The manager name
+            /// </param>
+            public static TimeSettings GetTimeSettings(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
+            {
+                return operations.GetTimeSettingsAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the time settings of the specified device.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='managerName'>
+            /// The manager name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TimeSettings> GetTimeSettingsAsync(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetTimeSettingsWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -355,6 +403,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The time settings to be added or updated.
             /// </param>
@@ -364,9 +415,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static TimeSettings CreateOrUpdateTimeSettings(this IDeviceSettingsOperations operations, TimeSettings parameters, string resourceGroupName, string managerName)
+            public static TimeSettings CreateOrUpdateTimeSettings(this IDeviceSettingsOperations operations, string deviceName, TimeSettings parameters, string resourceGroupName, string managerName)
             {
-                return operations.CreateOrUpdateTimeSettingsAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateTimeSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -374,6 +425,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='parameters'>
             /// The time settings to be added or updated.
@@ -387,9 +441,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TimeSettings> CreateOrUpdateTimeSettingsAsync(this IDeviceSettingsOperations operations, TimeSettings parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TimeSettings> CreateOrUpdateTimeSettingsAsync(this IDeviceSettingsOperations operations, string deviceName, TimeSettings parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateTimeSettingsWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateTimeSettingsWithHttpMessagesAsync(deviceName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -401,6 +455,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The alert settings to be added or updated.
             /// </param>
@@ -410,9 +467,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static AlertSettings BeginCreateOrUpdateAlertSettings(this IDeviceSettingsOperations operations, AlertSettings parameters, string resourceGroupName, string managerName)
+            public static AlertSettings BeginCreateOrUpdateAlertSettings(this IDeviceSettingsOperations operations, string deviceName, AlertSettings parameters, string resourceGroupName, string managerName)
             {
-                return operations.BeginCreateOrUpdateAlertSettingsAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAlertSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -421,6 +478,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The alert settings to be added or updated.
             /// </param>
@@ -433,9 +493,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AlertSettings> BeginCreateOrUpdateAlertSettingsAsync(this IDeviceSettingsOperations operations, AlertSettings parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AlertSettings> BeginCreateOrUpdateAlertSettingsAsync(this IDeviceSettingsOperations operations, string deviceName, AlertSettings parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateAlertSettingsWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateAlertSettingsWithHttpMessagesAsync(deviceName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -447,6 +507,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The network settings to be updated.
             /// </param>
@@ -456,9 +519,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static NetworkSettings BeginUpdateNetworkSettings(this IDeviceSettingsOperations operations, NetworkSettingsPatch parameters, string resourceGroupName, string managerName)
+            public static NetworkSettings BeginUpdateNetworkSettings(this IDeviceSettingsOperations operations, string deviceName, NetworkSettingsPatch parameters, string resourceGroupName, string managerName)
             {
-                return operations.BeginUpdateNetworkSettingsAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.BeginUpdateNetworkSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -467,6 +530,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The network settings to be updated.
             /// </param>
@@ -479,9 +545,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NetworkSettings> BeginUpdateNetworkSettingsAsync(this IDeviceSettingsOperations operations, NetworkSettingsPatch parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkSettings> BeginUpdateNetworkSettingsAsync(this IDeviceSettingsOperations operations, string deviceName, NetworkSettingsPatch parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateNetworkSettingsWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateNetworkSettingsWithHttpMessagesAsync(deviceName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -493,6 +559,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='parameters'>
             /// The security settings properties to be patched.
             /// </param>
@@ -502,9 +571,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static SecuritySettings BeginUpdateSecuritySettings(this IDeviceSettingsOperations operations, SecuritySettingsPatch parameters, string resourceGroupName, string managerName)
+            public static SecuritySettings BeginUpdateSecuritySettings(this IDeviceSettingsOperations operations, string deviceName, SecuritySettingsPatch parameters, string resourceGroupName, string managerName)
             {
-                return operations.BeginUpdateSecuritySettingsAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+                return operations.BeginUpdateSecuritySettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -512,6 +581,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='parameters'>
             /// The security settings properties to be patched.
@@ -525,9 +597,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecuritySettings> BeginUpdateSecuritySettingsAsync(this IDeviceSettingsOperations operations, SecuritySettingsPatch parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecuritySettings> BeginUpdateSecuritySettingsAsync(this IDeviceSettingsOperations operations, string deviceName, SecuritySettingsPatch parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateSecuritySettingsWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateSecuritySettingsWithHttpMessagesAsync(deviceName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -539,15 +611,18 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void BeginSyncRemotemanagementCertificate(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName)
+            public static void BeginSyncRemotemanagementCertificate(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
             {
-                operations.BeginSyncRemotemanagementCertificateAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
+                operations.BeginSyncRemotemanagementCertificateAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -556,48 +631,8 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginSyncRemotemanagementCertificateAsync(this IDeviceSettingsOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.BeginSyncRemotemanagementCertificateWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Creates or updates the time settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The time settings to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static TimeSettings BeginCreateOrUpdateTimeSettings(this IDeviceSettingsOperations operations, TimeSettings parameters, string resourceGroupName, string managerName)
-            {
-                return operations.BeginCreateOrUpdateTimeSettingsAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the time settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The time settings to be added or updated.
+            /// <param name='deviceName'>
+            /// The device name
             /// </param>
             /// <param name='resourceGroupName'>
             /// The resource group name
@@ -608,9 +643,58 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TimeSettings> BeginCreateOrUpdateTimeSettingsAsync(this IDeviceSettingsOperations operations, TimeSettings parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginSyncRemotemanagementCertificateAsync(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateTimeSettingsWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
+                await operations.BeginSyncRemotemanagementCertificateWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Creates or updates the time settings of the specified device.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
+            /// <param name='parameters'>
+            /// The time settings to be added or updated.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='managerName'>
+            /// The manager name
+            /// </param>
+            public static TimeSettings BeginCreateOrUpdateTimeSettings(this IDeviceSettingsOperations operations, string deviceName, TimeSettings parameters, string resourceGroupName, string managerName)
+            {
+                return operations.BeginCreateOrUpdateTimeSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates the time settings of the specified device.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deviceName'>
+            /// The device name
+            /// </param>
+            /// <param name='parameters'>
+            /// The time settings to be added or updated.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='managerName'>
+            /// The manager name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TimeSettings> BeginCreateOrUpdateTimeSettingsAsync(this IDeviceSettingsOperations operations, string deviceName, TimeSettings parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateTimeSettingsWithHttpMessagesAsync(deviceName, parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

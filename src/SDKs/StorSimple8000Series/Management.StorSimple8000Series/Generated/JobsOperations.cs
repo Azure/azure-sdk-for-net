@@ -48,6 +48,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// Gets all the jobs for specified device. With optional OData query
         /// parameters, a filtered set of jobs is returned.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The resource group name
         /// </param>
@@ -78,11 +81,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Job>>> ListByDeviceWithHttpMessagesAsync(string resourceGroupName, string managerName, ODataQuery<JobFilter> odataQuery = default(ODataQuery<JobFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Job>>> ListByDeviceWithHttpMessagesAsync(string deviceName, string resourceGroupName, string managerName, ODataQuery<JobFilter> odataQuery = default(ODataQuery<JobFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -119,6 +122,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("odataQuery", odataQuery);
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -127,7 +131,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/jobs").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);
             _url = _url.Replace("{managerName}", managerName);
@@ -270,6 +274,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Gets the details of the specified job name.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='jobName'>
         /// The job Name.
         /// </param>
@@ -300,11 +307,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Job>> GetWithHttpMessagesAsync(string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Job>> GetWithHttpMessagesAsync(string deviceName, string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (jobName == null)
             {
@@ -344,6 +351,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
@@ -353,7 +361,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/jobs/{jobName}").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{jobName}", jobName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);
@@ -489,6 +497,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Cancels a job on the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='jobName'>
         /// The jobName.
         /// </param>
@@ -504,10 +515,10 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string deviceName, string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginCancelWithHttpMessagesAsync(jobName, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginCancelWithHttpMessagesAsync(deviceName, jobName, resourceGroupName, managerName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -732,6 +743,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Cancels a job on the device.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='jobName'>
         /// The jobName.
         /// </param>
@@ -759,11 +773,11 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginCancelWithHttpMessagesAsync(string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginCancelWithHttpMessagesAsync(string deviceName, string jobName, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.DeviceName == null)
+            if (deviceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.DeviceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceName");
             }
             if (jobName == null)
             {
@@ -803,6 +817,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("deviceName", deviceName);
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("managerName", managerName);
@@ -812,7 +827,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorSimple/managers/{managerName}/devices/{deviceName}/jobs/{jobName}/cancel").ToString();
-            _url = _url.Replace("{deviceName}", Client.DeviceName);
+            _url = _url.Replace("{deviceName}", deviceName);
             _url = _url.Replace("{jobName}", jobName);
             _url = _url.Replace("{subscriptionId}", Client.SubscriptionId);
             _url = _url.Replace("{resourceGroupName}", resourceGroupName);

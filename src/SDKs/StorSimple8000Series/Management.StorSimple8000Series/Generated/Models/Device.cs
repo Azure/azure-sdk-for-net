@@ -65,7 +65,10 @@ namespace Microsoft.Azure.Management.StorSimple8000Series.Models
         /// <param name="provisionedTieredStorageInBytes">The storage in bytes
         /// that has been provisioned on the device for tiered volumes.</param>
         /// <param name="provisionedLocalStorageInBytes">The storage in bytes
-        /// that has been provisioned on the device.</param>
+        /// used for locally pinned volumes on the device (including additional
+        /// local reservation).</param>
+        /// <param name="provisionedVolumeSizeInBytes">Total capacity in bytes
+        /// of tiered and locally pinned volumes on the device</param>
         /// <param name="usingStorageInBytes">The storage in bytes that is
         /// currently being used on the device, including both local and
         /// cloud.</param>
@@ -83,7 +86,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series.Models
         /// end point count and volume container count.</param>
         /// <param name="rolloverDetails">The additional device details for the
         /// service data encryption key rollover.</param>
-        public Device(string friendlyName, System.DateTime activationTime, string culture, string deviceDescription, string deviceSoftwareVersion, DeviceConfigurationStatus deviceConfigurationStatus, string targetIqn, string modelDescription, DeviceStatus status, string serialNumber, DeviceType deviceType, ControllerId activeController, string friendlySoftwareVersion, string id = default(string), string name = default(string), string type = default(string), Kind? kind = default(Kind?), string friendlySoftwareName = default(string), long? availableLocalStorageInBytes = default(long?), long? availableTieredStorageInBytes = default(long?), long? provisionedTieredStorageInBytes = default(long?), long? provisionedLocalStorageInBytes = default(long?), long? usingStorageInBytes = default(long?), long? totalTieredStorageInBytes = default(long?), int? agentGroupVersion = default(int?), int? networkInterfaceCardCount = default(int?), string deviceLocation = default(string), VirtualMachineApiType? virtualMachineApiType = default(VirtualMachineApiType?), DeviceDetails details = default(DeviceDetails), DeviceRolloverDetails rolloverDetails = default(DeviceRolloverDetails))
+        public Device(string friendlyName, System.DateTime activationTime, string culture, string deviceDescription, string deviceSoftwareVersion, DeviceConfigurationStatus deviceConfigurationStatus, string targetIqn, string modelDescription, DeviceStatus status, string serialNumber, DeviceType deviceType, ControllerId activeController, string friendlySoftwareVersion, string id = default(string), string name = default(string), string type = default(string), Kind? kind = default(Kind?), string friendlySoftwareName = default(string), long? availableLocalStorageInBytes = default(long?), long? availableTieredStorageInBytes = default(long?), long? provisionedTieredStorageInBytes = default(long?), long? provisionedLocalStorageInBytes = default(long?), long? provisionedVolumeSizeInBytes = default(long?), long? usingStorageInBytes = default(long?), long? totalTieredStorageInBytes = default(long?), int? agentGroupVersion = default(int?), int? networkInterfaceCardCount = default(int?), string deviceLocation = default(string), VirtualMachineApiType? virtualMachineApiType = default(VirtualMachineApiType?), DeviceDetails details = default(DeviceDetails), DeviceRolloverDetails rolloverDetails = default(DeviceRolloverDetails))
             : base(id, name, type, kind)
         {
             FriendlyName = friendlyName;
@@ -104,6 +107,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series.Models
             AvailableTieredStorageInBytes = availableTieredStorageInBytes;
             ProvisionedTieredStorageInBytes = provisionedTieredStorageInBytes;
             ProvisionedLocalStorageInBytes = provisionedLocalStorageInBytes;
+            ProvisionedVolumeSizeInBytes = provisionedVolumeSizeInBytes;
             UsingStorageInBytes = usingStorageInBytes;
             TotalTieredStorageInBytes = totalTieredStorageInBytes;
             AgentGroupVersion = agentGroupVersion;
@@ -231,11 +235,18 @@ namespace Microsoft.Azure.Management.StorSimple8000Series.Models
         public long? ProvisionedTieredStorageInBytes { get; set; }
 
         /// <summary>
-        /// Gets or sets the storage in bytes that has been provisioned on the
-        /// device.
+        /// Gets or sets the storage in bytes used for locally pinned volumes
+        /// on the device (including additional local reservation).
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisionedLocalStorageInBytes")]
         public long? ProvisionedLocalStorageInBytes { get; set; }
+
+        /// <summary>
+        /// Gets or sets total capacity in bytes of tiered and locally pinned
+        /// volumes on the device
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisionedVolumeSizeInBytes")]
+        public long? ProvisionedVolumeSizeInBytes { get; set; }
 
         /// <summary>
         /// Gets or sets the storage in bytes that is currently being used on

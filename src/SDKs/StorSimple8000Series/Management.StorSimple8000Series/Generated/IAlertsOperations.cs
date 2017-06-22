@@ -73,6 +73,9 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <summary>
         /// Sends a test alert email.
         /// </summary>
+        /// <param name='deviceName'>
+        /// The device name
+        /// </param>
         /// <param name='parameters'>
         /// The send test alert email request.
         /// </param>
@@ -94,7 +97,7 @@ namespace Microsoft.Azure.Management.StorSimple8000Series
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> SendTestEmailWithHttpMessagesAsync(SendTestAlertEmailRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> SendTestEmailWithHttpMessagesAsync(string deviceName, SendTestAlertEmailRequest parameters, string resourceGroupName, string managerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves all the alerts in a manager.
         /// </summary>
