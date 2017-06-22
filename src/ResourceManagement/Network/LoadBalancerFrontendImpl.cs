@@ -141,9 +141,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:E8683B20FED733D23930E96CCD1EB0A2:E6CC43D15A29B0635E7C303E592E8569
         internal LoadBalancerFrontendImpl WithExistingSubnet (string parentNetworkResourceId, string subnetName)
         {
-            var subnetRef = new SubnetInner();
-            subnetRef.Id = parentNetworkResourceId + "/subnets/" + subnetName;
-            Inner.Subnet = subnetRef;
+            Inner.Subnet = new ResourceManager.Fluent.SubResource(parentNetworkResourceId + "/subnets/" + subnetName);
             Inner.PublicIPAddress = null; // Ensure no conflicting public and private settings
             return this;
         }
