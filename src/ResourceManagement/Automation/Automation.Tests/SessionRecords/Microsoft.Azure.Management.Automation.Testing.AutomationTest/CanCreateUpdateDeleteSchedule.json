@@ -727,8 +727,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/7bca9f7d-b734-435e-a37d-dd2d50897a8e/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/schedules/hourlySche293?api-version=2015-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2JjYTlmN2QtYjczNC00MzVlLWEzN2QtZGQyZDUwODk3YThlL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGUyOTM/YXBpLXZlcnNpb249MjAxNS0xMC0zMQ==",
+      "RequestUri": "/subscriptions/7bca9f7d-b734-435e-a37d-dd2d50897a8e/resourceGroups/SDKTestResourceGroup/providers/Microsoft.Automation/automationAccounts/SDKTestAccount/schedules/hourlySche293?api-version=2015-10-31&convertTimesFromTimeZone=false",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvN2JjYTlmN2QtYjczNC00MzVlLWEzN2QtZGQyZDUwODk3YThlL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZXNvdXJjZUdyb3VwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0b21hdGlvbi9hdXRvbWF0aW9uQWNjb3VudHMvU0RLVGVzdEFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGUyOTM/YXBpLXZlcnNpb249MjAxNS0xMC0zMSZjb252ZXJ0VGltZXNGcm9tVGltZVpvbmU9ZmFsc2U=",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"name\": \"hourlySche293\",\r\n  \"properties\": {\r\n    \"description\": \"hourly schedule\",\r\n    \"isEnabled\": false\r\n  }\r\n}",
       "RequestHeaders": {
