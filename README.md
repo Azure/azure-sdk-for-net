@@ -1,7 +1,7 @@
 
 # Azure Management Libraries for .NET #
 
-This README is based on the released stable version (1.0.0). If you are looking for other releases, see [More Information](#more-information)
+This README is based on the released stable version (1.1). If you are looking for other releases, see [More Information](#more-information)
 
 The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources. Libraries are built on the lower-level, request-response style [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest) and can run side-by-side with [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest).
 
@@ -17,8 +17,8 @@ The Azure Management Libraries for .NET is a higher-level, object-oriented API f
   <tr>
     <td>Compute</td>
     <td>Virtual machines and VM extensions<br>Virtual machine scale sets<br>Managed disks</td>
-    <td></td>
     <td valign="top">Azure container services<br>Azure container registry</td>
+    <td valign="top"></td>
   </tr>
   <tr>
     <td>Storage</td>
@@ -30,31 +30,31 @@ The Azure Management Libraries for .NET is a higher-level, object-oriented API f
     <td>SQL Database</td>
     <td>Databases<br>Firewalls<br>Elastic pools</td>
     <td></td>
-    <td valign="top"></td>
+    <td valign="top">More features</td>
   </tr>
   <tr>
     <td>Networking</td>
-    <td>Virtual networks<br>Network interfaces<br>IP addresses<br>Routing table<br>Network security groups<br>DNS<br>Traffic managers</td>
-    <td valign="top">Load balancers<br>Application gateways</td>
-    <td valign="top"></td>
+    <td>Virtual networks<br>Network interfaces<br>IP addresses<br>Routing table<br>Network security groups<br>Application gateways<br>DNS<br>Traffic managers</td>
+    <td valign="top">Load balancers</td>
+    <td valign="top">VPN<br>Network watchers<br>More application gateway features</td>
   </tr>
   <tr>
     <td>More services</td>
     <td>Resource Manager<br>Key Vault<br>Redis<br>CDN<br>Batch</td>
-    <td valign="top">App service - Web apps<br>Functions<br>Service bus</td>
-    <td valign="top">Monitor<br>Graph RBAC<br>DocumentDB<br>Scheduler</td>
+    <td valign="top">Web apps<br>Function Apps<br>Service bus<br>Graph RBAC<br>DocumentDB</td>
+    <td valign="top">Monitor<br>Scheduler<br>Functions management<br>Search<br>More Graph RBAC features</td>
   </tr>
   <tr>
     <td>Fundamentals</td>
-    <td>Authentication - core</td>
-    <td>Async methods</td>
+    <td>Authentication - core<br>Async methods</td>
+    <td></td>
     <td valign="top"></td>
   </tr>
 </table>
 
 > *Preview* features are flagged in documentation comments in libraries. These features are subject to change. They can be modified in any way, or even removed, in the future.
 
-**Azure Authentication**
+#### Azure Authentication
 
 The `Azure` class is the simplest entry point for creating and interacting with Azure resources.
 
@@ -62,7 +62,22 @@ The `Azure` class is the simplest entry point for creating and interacting with 
 IAzure azure = Azure.Authenticate(credFile).WithDefaultSubscription();
 ``` 
 
-**Create a Virtual Machine**
+#### Create a Cosmos DB with DocumentDB Programming Model
+
+You can create a Cosmos DB account by using a `define() … create()` method chain.
+
+```csharp
+var documentDBAccount = azure.DocumentDBAccounts.Define(docDBName)
+    .WithRegion(Region.USEast)
+    .WithNewResourceGroup(rgName)
+    .WithKind(DatabaseAccountKind.GlobalDocumentDB)
+    .WithSessionConsistency()
+    .WithWriteReplication(Region.USWest)
+    .WithReadReplication(Region.USCentral)
+    .Create();
+```
+
+#### Create a Virtual Machine
 
 You can create a virtual machine instance by using a `Define() … Create()` method chain.
 
@@ -84,7 +99,7 @@ var windowsVM = azure.VirtualMachines.Define("myWindowsVM")
 Console.WriteLine("Created a Windows VM: " + windowsVM.Id);
 ```
 
-**Update a Virtual Machine**
+#### Update a Virtual Machine
 
 You can update a virtual machine instance by using an `Update() … Apply()` method chain.
 
@@ -93,7 +108,7 @@ windowsVM.Update()
     .WithNewDataDisk(20, lun, CachingTypes.ReadWrite)
     .Apply();
 ```
-**Create a Virtual Machine Scale Set**
+#### Create a Virtual Machine Scale Set
 
 You can create a virtual machine scale set instance by using another `Define() … Create()` method chain.
 
@@ -117,7 +132,7 @@ var virtualMachineScaleSet = azure.VirtualMachineScaleSets.Define(vmssName)
     .Create();
 ```
 
-**Create a Network Security Group**
+#### Create a Network Security Group
 
 You can create a network security group instance by using another `Define() … Create()` method chain.
 
@@ -148,7 +163,7 @@ var frontEndNSG = azure.NetworkSecurityGroups.Define(frontEndNSGName)
     .Create();
 ```
 
-**Create an Application Gateway**
+#### Create an Application Gateway
 
 You can create a application gateway instance by using another `define() … create()` method chain.
 
@@ -170,7 +185,7 @@ var applicationGateway = azure.ApplicationGateways.Define("myFirstAppGateway")
     .Create();
 ```
 
-**Create a Web App**
+#### Create a Web App
 
 You can create a Web App instance by using another `define() … create()` method chain.
 
@@ -182,7 +197,7 @@ var webApp = azure.WebApps.Define(appName)
     .Create();
 ```
 
-**Create a SQL Database**
+#### Create a SQL Database
 
 You can create a SQL server instance by using another `define() … create()` method chain.
 
@@ -206,7 +221,7 @@ var database = sqlServer.Databases.Define(databaseName)
 
 # Sample Code #
 
-You can find plenty of sample code that illustrates management scenarios (69+ end-to-end scenarios) for Azure Virtual Machines, Virtual Machine Scale Sets, Managed Disks, Storage, Networking, Resource Manager, SQL Database, App Service (Web Apps on Windows and Linux), Key Vault, Redis, CDN and Batch … 
+You can find plenty of sample code that illustrates management scenarios (80+ end-to-end scenarios) for Azure Virtual Machines, Virtual Machine Scale Sets, Managed Disks, Active Directory Azure Container Service and Registry, Storage, Networking, Resource Manager, SQL Database, Cosmos DB, App Service (Web Apps on Windows and Linux), Functions, Service Bus, Key Vault, Redis, CDN and Batch … 
 
 <table>
   <tr>
@@ -246,6 +261,25 @@ You can find plenty of sample code that illustrates management scenarios (69+ en
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-scale-sets">Manage virtual machine scale sets (behind an Internet facing load balancer)</a></li>
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-scale-sets-async">Manage virtual machine scale sets (behind an Internet facing load balancer) asynchronously</a></li>
 <li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-scale-set-with-unmanaged-disks">Manage virtual machine scale sets with unmanaged disks</a></li>
+</ul></td>
+  </tr>
+<tr>
+    <td>Active Directory</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/aad-dotnet-manage-service-principals">Manage service principals using Java</a></li>
+<li><a href="https://github.com/Azure-Samples/aad-dotnet-browse-graph-and-manage-roles">Browse graph (users, groups and members) and managing roles</a></li>
+<li><a href="https://github.com/Azure-Samples/aad-dotnet-manage-passwords">Manage passwords</li>
+</ul></td>
+  </tr>
+<tr>
+    <td>Container Service and Container Registry</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/acr-dotnet-manage-azure-container-registry">Manage container registry</a></li>
+<li><a href="https://github.com/Azure-Samples/acs-dotnet-deploy-image-from-acr-to-kubernetes">Deploy an image from container registry to Kubernetes cluster</a></li>
+<li><a href="https://github.com/Azure-Samples/acs-dotnet-deploy-image-from-acr-to-swarm">Deploy an image from container registry to Swarm cluster</li>
+<li><a href="https://github.com/Azure-Samples/acs-dotnet-deploy-image-from-docker-hub-to-kubernetes">Deploy an image from Docker hub to Kubernetes cluster</a></li>
+<li><a href="https://github.com/Azure-Samples/acs-dotnet-deploy-image-from-docker-hub-to-swarm">Deploy an image from Docker hub to Swarm cluster</li>
+<li><a href="https://github.com/Azure-Samples/acs-dotnet-manage-azure-container-service">Manage container service</li>
 </ul></td>
   </tr>
   <tr>
@@ -327,6 +361,7 @@ You can find plenty of sample code that illustrates management scenarios (69+ en
     <td>App Service - Web Apps on <b>Linux</b></td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-web-apps-on-linux">Manage Web apps</a></li>
+<li><a href="https://github.com/Azure-Samples/app-service-dotnet-deploy-image-from-acr-to-linux">Deploy a container image from Azure Container Registry to Linux containers</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-web-apps-on-linux-with-custom-domains">Manage Web apps with custom domains</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-configure-deployment-sources-for-web-apps-on-linux">Configure deployment sources for Web apps</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-scale-web-apps-on-linux">Scale Web apps</a></li>
@@ -342,6 +377,16 @@ You can find plenty of sample code that illustrates management scenarios (69+ en
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-functions-with-custom-domains">Manage functions with custom domains</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-configure-deployment-sources-for-functions">Configure deployment sources for functions</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-authentication-for-functions">Manage authentication for functions</a></li>
+</ul></td>
+  </tr>
+
+<tr>
+    <td>Cosmos DB</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/cosmosdb-dotnet-create-documentdb-and-configure-for-high-availability">Create a DocumentDB and configure it for high availability</a></li>
+<li><a href="https://github.com/Azure-Samples/cosmosdb-dotnet-create-documentdb-and-configure-for-eventual-consistency">Create a DocumentDB and configure it with eventual consistency</a></li>
+<li><a href="https://github.com/Azure-Samples/cosmosdb-dotnet-create-documentdb-and-configure-firewall">Create a DocumentDB, configure it for high availability and create a firewall to limit access from an approved set of IP addresses</li>
+<li><a href="https://github.com/Azure-Samples/cosmosdb-dotnet-create-documentdb-and-get-mongodb-connection-string">Create a DocumentDB and get MongoDB connection string</li>
 </ul></td>
   </tr>
 
@@ -394,9 +439,9 @@ You can find plenty of sample code that illustrates management scenarios (69+ en
 
 # Download #
 
-**1.0.0** release builds are available on NuGet:
+**1.1** release builds are available on NuGet:
 
-|Azure Management Library                     | Package name                                        | Stable (1.0.0 release) |
+|Azure Management Library                     | Package name                                        | Stable (1.1 release) |
 |---------------------------------------------|-----------------------------------------------------|------------------------|
 |Azure Management Client (wrapper package)    | `Microsoft.Azure.Management.Fluent`                 | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/) |
 |App Service (Web Apps)                       | `Microsoft.Azure.Management.AppService.Fluent`      | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.AppService.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.AppService.Fluent/) |
@@ -422,9 +467,11 @@ You can find plenty of sample code that illustrates management scenarios (69+ en
 
 # Help
 
-If you are migrating your code to 1.0.0, you can use these notes for [preparing your code for 1.0.0 from 1.0.0 beta 5](./notes/prepare-for-1.0.0.md).
+If you are migrating your code to 1.1, you can use these notes for [preparing your code for 1.1 from 1.0](./notes/prepare-for-1.1.md).
 
 If you encounter any bugs with these libraries, please file issues via [Issues](https://github.com/Azure/azure-sdk-for-net/issues) and tag them [Fluent](https://github.com/Azure/azure-sdk-for-net/labels/Fluent) or checkout [StackOverflow for Azure Management Libraries for .NET](http://stackoverflow.com/questions/tagged/azure-sdk).
+
+To enable Http message tracing in your code please check [this article](https://github.com/Azure/autorest/blob/master/docs/client/tracing.md#tracing).
 
 # Contribute Code
 
@@ -444,6 +491,7 @@ If you would like to become an active contributor to this project please follow 
 
 | Version           | SHA1                                                                                      | Remarks                                               |
 |-------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| 1.0               | [1.0](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-stable)           | Tagged release for 1.0 version of Azure management libraries |
 | 1.0.0-beta5       | [1.0.0-beta5](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta5)           | Tagged release for 1.0.0-beta5 version of Azure management libraries |
 | 1.0.0-beta4       | [1.0.0-beta4](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta4)           | Tagged release for 1.0.0-beta4 version of Azure management libraries |
 | 1.0.0-beta3       | [1.0.0-beta3](https://github.com/Azure/azure-sdk-for-net/releases/tag/Fluent-v1.0.0-beta3)           | Tagged release for 1.0.0-beta3 version of Azure management libraries |
