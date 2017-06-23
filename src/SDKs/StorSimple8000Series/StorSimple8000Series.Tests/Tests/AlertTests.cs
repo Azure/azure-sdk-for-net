@@ -46,8 +46,8 @@ namespace StorSimple8000Series.Tests
 
         private IPage<Alert> GetAlertsBySeverity(AlertSeverity severity)
         {
-            var minTime = new DateTime(2017, 06, 10);
-            var maxTime = new DateTime(2017, 06, 20);
+            var minTime = TestConstants.MinTimeForAlert;
+            var maxTime = TestConstants.MaxTimeForAlert;
 
             Expression<Func<AlertFilter, bool>> filterExp = filter =>
                 filter.AppearedOnTime >= minTime &&
@@ -66,8 +66,8 @@ namespace StorSimple8000Series.Tests
 
         private IPage<Alert> GetActiveAlertsForDevice(string deviceName)
         {
-            var minTime = new DateTime(2017, 06, 10);
-            var maxTime = new DateTime(2017, 06, 20);
+            var minTime = TestConstants.MinTimeForAlert;
+            var maxTime = TestConstants.MaxTimeForAlert;
 
             Expression<Func<AlertFilter, bool>> filterExp = filter =>
                 filter.Status == AlertStatus.Active &&
@@ -88,8 +88,9 @@ namespace StorSimple8000Series.Tests
 
         private IPage<Alert> GetClearedAlerts()
         {
-            var minTime = new DateTime(2017,06,10);
-            var maxTime = new DateTime(2017,06,20);
+            var minTime = TestConstants.MinTimeForAlert;
+            var maxTime = TestConstants.MaxTimeForAlert;
+
             Expression<Func<AlertFilter, bool>> filterExp = filter =>
                 filter.Status == AlertStatus.Cleared &&
                 filter.AppearedOnTime >= minTime &&
