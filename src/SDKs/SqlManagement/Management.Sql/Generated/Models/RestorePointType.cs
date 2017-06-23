@@ -27,4 +27,32 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "CONTINUOUS")]
         CONTINUOUS
     }
+    internal static class RestorePointTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this RestorePointType? value )  =>
+            value == null ? null : (( RestorePointType )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this RestorePointType value )
+        {
+            switch( value )
+            {
+                case RestorePointType.DISCRETE:
+                    return "DISCRETE";
+                case RestorePointType.CONTINUOUS:
+                    return "CONTINUOUS";
+            }
+            return null;
+        }
+
+        internal static RestorePointType? ParseRestorePointType( this string value )
+        {
+            switch( value )
+            {
+                case "DISCRETE":
+                    return RestorePointType.DISCRETE;
+                case "CONTINUOUS":
+                    return RestorePointType.CONTINUOUS;            }
+            return null;
+        }
+    }
 }

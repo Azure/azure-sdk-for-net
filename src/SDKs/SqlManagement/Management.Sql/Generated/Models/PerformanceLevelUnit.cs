@@ -25,4 +25,28 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "DTU")]
         DTU
     }
+    internal static class PerformanceLevelUnitEnumExtension
+    {
+        internal static string ToSerializedValue(this PerformanceLevelUnit? value )  =>
+            value == null ? null : (( PerformanceLevelUnit )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this PerformanceLevelUnit value )
+        {
+            switch( value )
+            {
+                case PerformanceLevelUnit.DTU:
+                    return "DTU";
+            }
+            return null;
+        }
+
+        internal static PerformanceLevelUnit? ParsePerformanceLevelUnit( this string value )
+        {
+            switch( value )
+            {
+                case "DTU":
+                    return PerformanceLevelUnit.DTU;            }
+            return null;
+        }
+    }
 }

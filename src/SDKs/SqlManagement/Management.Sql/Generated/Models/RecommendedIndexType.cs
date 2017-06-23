@@ -31,4 +31,40 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "CLUSTERED COLUMNSTORE")]
         CLUSTEREDCOLUMNSTORE
     }
+    internal static class RecommendedIndexTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this RecommendedIndexType? value )  =>
+            value == null ? null : (( RecommendedIndexType )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this RecommendedIndexType value )
+        {
+            switch( value )
+            {
+                case RecommendedIndexType.CLUSTERED:
+                    return "CLUSTERED";
+                case RecommendedIndexType.NONCLUSTERED:
+                    return "NONCLUSTERED";
+                case RecommendedIndexType.COLUMNSTORE:
+                    return "COLUMNSTORE";
+                case RecommendedIndexType.CLUSTEREDCOLUMNSTORE:
+                    return "CLUSTERED COLUMNSTORE";
+            }
+            return null;
+        }
+
+        internal static RecommendedIndexType? ParseRecommendedIndexType( this string value )
+        {
+            switch( value )
+            {
+                case "CLUSTERED":
+                    return RecommendedIndexType.CLUSTERED;
+                case "NONCLUSTERED":
+                    return RecommendedIndexType.NONCLUSTERED;
+                case "COLUMNSTORE":
+                    return RecommendedIndexType.COLUMNSTORE;
+                case "CLUSTERED COLUMNSTORE":
+                    return RecommendedIndexType.CLUSTEREDCOLUMNSTORE;            }
+            return null;
+        }
+    }
 }

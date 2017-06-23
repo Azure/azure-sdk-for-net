@@ -27,4 +27,32 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "AlreadyExists")]
         AlreadyExists
     }
+    internal static class CheckNameAvailabilityReasonEnumExtension
+    {
+        internal static string ToSerializedValue(this CheckNameAvailabilityReason? value )  =>
+            value == null ? null : (( CheckNameAvailabilityReason )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this CheckNameAvailabilityReason value )
+        {
+            switch( value )
+            {
+                case CheckNameAvailabilityReason.Invalid:
+                    return "Invalid";
+                case CheckNameAvailabilityReason.AlreadyExists:
+                    return "AlreadyExists";
+            }
+            return null;
+        }
+
+        internal static CheckNameAvailabilityReason? ParseCheckNameAvailabilityReason( this string value )
+        {
+            switch( value )
+            {
+                case "Invalid":
+                    return CheckNameAvailabilityReason.Invalid;
+                case "AlreadyExists":
+                    return CheckNameAvailabilityReason.AlreadyExists;            }
+            return null;
+        }
+    }
 }

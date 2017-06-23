@@ -40,6 +40,10 @@ namespace Sql.Tests
 
         public const string DefaultEuapPrimaryLocation = "East US 2 EUAP";
 
+        public const string DefaultLogin = "dummylogin";
+
+        public const string DefaultPassword = "Un53cuRE!";
+
         public static SqlManagementClient GetSqlManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
         {
             if (handler != null)
@@ -378,7 +382,7 @@ namespace Sql.Tests
                             Location = SqlManagementTestUtilities.DefaultLocation,
                             Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                         });
-
+                    
                     test(resourceClient, sqlClient, resourceGroup);
                 }
                 finally
@@ -427,21 +431,19 @@ namespace Sql.Tests
 
         internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string testPrefix = TestPrefix, string location = DefaultLocationId)
         {
-            string login = "dummylogin";
-            string password = "Un53cuRE!";
             string version12 = "12.0";
             string serverName = GenerateName(testPrefix);
             Dictionary<string, string> tags = new Dictionary<string, string>();
 
             var v12Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
             {
-                AdministratorLogin = login,
-                AdministratorLoginPassword = password,
+                AdministratorLogin = DefaultLogin,
+                AdministratorLoginPassword = DefaultPassword,
                 Version = version12,
                 Tags = tags,
                 Location = location,
             });
-            ValidateServer(v12Server, serverName, login, version12, tags, location);
+            ValidateServer(v12Server, serverName, DefaultLogin, version12, tags, location);
             return v12Server;
         }
 
@@ -469,8 +471,6 @@ namespace Sql.Tests
                         });
 
                     string serverNameV12 = SqlManagementTestUtilities.GenerateName();
-                    string login = "dummylogin";
-                    string password = "Un53cuRE!";
                     string version12 = "12.0";
                     string location = "northeurope";
                     Dictionary<string, string> tags = new Dictionary<string, string>()
@@ -481,8 +481,8 @@ namespace Sql.Tests
                     // Create server
                     var server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverNameV12, new Server()
                     {
-                        AdministratorLogin = login,
-                        AdministratorLoginPassword = password,
+                        AdministratorLogin = DefaultLogin,
+                        AdministratorLoginPassword = DefaultPassword,
                         Version = version12,
                         Tags = tags,
                         Location = location,
@@ -491,7 +491,7 @@ namespace Sql.Tests
                             Type = "SystemAssigned"
                         }
                     });
-                    SqlManagementTestUtilities.ValidateServer(server, serverNameV12, login, version12, tags, location);
+                    SqlManagementTestUtilities.ValidateServer(server, serverNameV12, DefaultLogin, version12, tags, location);
 
                     // Create database
                     string databaseName = SqlManagementTestUtilities.GenerateName();

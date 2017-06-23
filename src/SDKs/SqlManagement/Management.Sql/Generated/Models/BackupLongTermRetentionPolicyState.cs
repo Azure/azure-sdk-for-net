@@ -27,4 +27,32 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Enabled")]
         Enabled
     }
+    internal static class BackupLongTermRetentionPolicyStateEnumExtension
+    {
+        internal static string ToSerializedValue(this BackupLongTermRetentionPolicyState? value )  =>
+            value == null ? null : (( BackupLongTermRetentionPolicyState )value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this BackupLongTermRetentionPolicyState value )
+        {
+            switch( value )
+            {
+                case BackupLongTermRetentionPolicyState.Disabled:
+                    return "Disabled";
+                case BackupLongTermRetentionPolicyState.Enabled:
+                    return "Enabled";
+            }
+            return null;
+        }
+
+        internal static BackupLongTermRetentionPolicyState? ParseBackupLongTermRetentionPolicyState( this string value )
+        {
+            switch( value )
+            {
+                case "Disabled":
+                    return BackupLongTermRetentionPolicyState.Disabled;
+                case "Enabled":
+                    return BackupLongTermRetentionPolicyState.Enabled;            }
+            return null;
+        }
+    }
 }
