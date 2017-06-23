@@ -404,3 +404,4 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<IPage<ApplicationGateway>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
+
