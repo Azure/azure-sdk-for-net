@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// container service cluster resources. Valid values are Swarm, DCOS,
         /// and Custom. Possible values include: 'Swarm', 'DCOS', 'Custom',
         /// 'Kubernetes'</param>
-        public ContainerServiceOrchestratorProfile(ContainerServiceOchestratorTypes orchestratorType)
+        public ContainerServiceOrchestratorProfile(ContainerServiceOrchestratorTypes orchestratorType)
         {
             OrchestratorType = orchestratorType;
         }
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Possible values include: 'Swarm', 'DCOS', 'Custom', 'Kubernetes'
         /// </summary>
         [JsonProperty(PropertyName = "orchestratorType")]
-        public ContainerServiceOchestratorTypes OrchestratorType { get; set; }
+        public ContainerServiceOrchestratorTypes OrchestratorType { get; set; }
 
         /// <summary>
         /// Validate the object.

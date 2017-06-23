@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public const string BingSpellCheck = "Bing.SpellCheck";
         public const string ComputerVision = "ComputerVision";
         public const string ContentModerator = "ContentModerator";
+        public const string CustomSpeech = "CustomSpeech";
         public const string Emotion = "Emotion";
         public const string Face = "Face";
         public const string LUIS = "LUIS";

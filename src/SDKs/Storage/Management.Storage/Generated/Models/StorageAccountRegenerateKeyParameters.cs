@@ -30,12 +30,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the
         /// StorageAccountRegenerateKeyParameters class.
         /// </summary>
+        /// <param name="keyName">The name of storage keys that want to be
+        /// regenerated, possible vaules are key1, key2.</param>
         public StorageAccountRegenerateKeyParameters(string keyName)
         {
             KeyName = keyName;
         }
 
         /// <summary>
+        /// Gets or sets the name of storage keys that want to be regenerated,
+        /// possible vaules are key1, key2.
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
         public string KeyName { get; set; }

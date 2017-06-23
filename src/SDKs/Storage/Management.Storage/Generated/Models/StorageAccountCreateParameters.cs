@@ -51,6 +51,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// tags can be provided for a resource. Each tag must have a key with
         /// a length no greater than 128 characters and a value with a length
         /// no greater than 256 characters.</param>
+        /// <param name="identity">The identity of the resource.</param>
         /// <param name="customDomain">User domain assigned to the storage
         /// account. Name is the CNAME source. Only one custom domain is
         /// supported per storage account at this time. To clear the existing
@@ -59,19 +60,22 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="encryption">Provides the encryption settings on the
         /// account. If left unspecified the account encryption settings will
         /// remain the same. The default setting is unencrypted.</param>
+        /// <param name="networkAcls">Network ACL</param>
         /// <param name="accessTier">Required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
         /// include: 'Hot', 'Cool'</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
-        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?))
+        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), StorageNetworkAcls networkAcls = default(StorageNetworkAcls), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?))
         {
             Sku = sku;
             Kind = kind;
             Location = location;
             Tags = tags;
+            Identity = identity;
             CustomDomain = customDomain;
             Encryption = encryption;
+            NetworkAcls = networkAcls;
             AccessTier = accessTier;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
         }
@@ -111,6 +115,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
+        /// Gets or sets the identity of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
+
+        /// <summary>
         /// Gets or sets user domain assigned to the storage account. Name is
         /// the CNAME source. Only one custom domain is supported per storage
         /// account at this time. To clear the existing custom domain, use an
@@ -126,6 +136,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets network ACL
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAcls")]
+        public StorageNetworkAcls NetworkAcls { get; set; }
 
         /// <summary>
         /// Gets or sets required for storage accounts where kind =
@@ -165,6 +181,14 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (CustomDomain != null)
             {
                 CustomDomain.Validate();
+            }
+            if (Encryption != null)
+            {
+                Encryption.Validate();
+            }
+            if (NetworkAcls != null)
+            {
+                NetworkAcls.Validate();
             }
         }
     }

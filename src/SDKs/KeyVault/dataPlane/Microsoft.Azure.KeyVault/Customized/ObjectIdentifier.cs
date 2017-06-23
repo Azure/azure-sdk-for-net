@@ -535,4 +535,127 @@ namespace Microsoft.Azure.KeyVault
             Identifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", Vault, "certificates/issuers", Identifier);
         }
     }
+
+    /// <summary>
+    /// The Key Vault storage account identifier.
+    /// </summary>
+    public sealed class StorageAccountIdentifier : ObjectIdentifier
+    {
+        /// <summary>
+        /// Verifies whether the identifier belongs to a key vault storage account.
+        /// </summary>
+        /// <param name="identifier">The key vault storage account identifier.</param>
+        /// <returns>True if the identifier belongs to a key vault storage account. False otherwise.</returns>
+        public static bool IsStorageAccountIdentifier(string identifier)
+        {
+            return ObjectIdentifier.IsObjectIdentifier("storage", identifier);
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="vaultBaseUrl">The vault base URL.</param>
+        /// <param name="name">The name of the storage account.</param>
+        public StorageAccountIdentifier(string vaultBaseUrl, string name)
+            : base(vaultBaseUrl, "storage", name)
+        {
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="identifier">The Key Vault storage account identifier.</param>
+        public StorageAccountIdentifier(string identifier)
+            : base("storage", identifier)
+        {
+        }
+    }
+
+    /// <summary>
+    /// The Key Vault storage SAS definition identifier.
+    /// </summary>
+    public sealed class SasDefinitionIdentifier : ObjectIdentifier
+    {
+        public string StorageAccount { get; set; }
+
+        /// <summary>
+        /// Verifies whether the identifier belongs to a key vault storage SAS definition.
+        /// </summary>
+        /// <param name="identifier">The key vault storage SAS definition identifier.</param>
+        /// <returns>True if the identifier belongs to a key vault storage SAS definition. False otherwise.</returns>
+        public static bool IsSasDefinitionIdentifier(string identifier)
+        {
+            if (string.IsNullOrEmpty(identifier))
+                return false;
+
+            var baseUri = new Uri(identifier, UriKind.Absolute);
+
+            return baseUri.Segments.Length == 5 &&
+                   string.Equals(baseUri.Segments[1], "storage/") &&
+                   string.Equals(baseUri.Segments[3], "sas/");
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="vaultBaseUrl">The vault base URL.</param>
+        /// <param name="storageAccountName">The name of the storage account.</param>
+        /// <param name="sasDefinitionName">The name of the storage SAS definition.</param>
+        public SasDefinitionIdentifier(string vaultBaseUrl, string storageAccountName, string sasDefinitionName)
+        {
+            if (string.IsNullOrEmpty(vaultBaseUrl))
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+
+            if (string.IsNullOrEmpty(storageAccountName))
+                throw new ArgumentNullException(nameof(storageAccountName));
+
+            if (string.IsNullOrEmpty(sasDefinitionName))
+                throw new ArgumentNullException(nameof(sasDefinitionName));
+
+            var baseUri = new Uri(vaultBaseUrl, UriKind.Absolute);
+
+            StorageAccount = storageAccountName;
+            Name = sasDefinitionName;
+            Version = string.Empty;
+            Vault = string.Format(CultureInfo.InvariantCulture, "{0}://{1}", baseUri.Scheme, baseUri.FullAuthority());
+            VaultWithoutScheme = baseUri.Authority;
+            BaseIdentifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}/{3}/{4}", Vault, "storage", StorageAccount, "sas", Name);
+            Identifier = BaseIdentifier;
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="identifier">The key vault storage SAS definition identifier.</param>
+        public SasDefinitionIdentifier(string identifier)
+        {
+            if (string.IsNullOrEmpty(identifier))
+                throw new ArgumentNullException(nameof(identifier));
+
+            var baseUri = new Uri(identifier, UriKind.Absolute);
+
+            // We expect an identifier with 5 segments: host + "storage" + storageName + "sas" + name
+            if (baseUri.Segments.Length != 5)
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                    "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", identifier, baseUri.Segments.Length));
+
+            if (!string.Equals(baseUri.Segments[1], "storage/"))
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                    "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}', found '{2}'", identifier,
+                    "storage/", baseUri.Segments[1]));
+
+            if (!string.Equals(baseUri.Segments[3], "sas/"))
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                    "Invalid ObjectIdentifier: {0}. segment [3] should be '{1}', found '{2}'", identifier, "sas/",
+                    baseUri.Segments[3]));
+
+            StorageAccount = baseUri.Segments[2].Substring(0, baseUri.Segments[2].Length).TrimEnd('/');
+            Name = baseUri.Segments[4].Substring(0, baseUri.Segments[4].Length).TrimEnd('/');
+            Version = string.Empty;
+            Vault = string.Format(CultureInfo.InvariantCulture, "{0}://{1}", baseUri.Scheme, baseUri.FullAuthority());
+            VaultWithoutScheme = baseUri.Authority;
+            BaseIdentifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}/{3}/{4}", Vault, "storage", StorageAccount, "sas", Name);
+            Identifier = BaseIdentifier;
+        }
+    }
 }

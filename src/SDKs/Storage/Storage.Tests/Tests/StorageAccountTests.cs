@@ -13,6 +13,14 @@ using Storage.Tests.Helpers;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.Azure;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Management.KeyVault;
+using Microsoft.Rest.Azure.Authentication;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Threading.Tasks;
+using Microsoft.Azure.Test.HttpRecorder;
+using System.Net.Http;
+using Microsoft.Azure.KeyVault.WebKey;
 
 namespace Storage.Tests
 {
@@ -73,6 +81,7 @@ namespace Storage.Tests
                 parameters.Encryption = new Encryption
                 {
                     Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                    KeySource = KeySource.MicrosoftStorage
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, true);
@@ -358,6 +367,7 @@ namespace Storage.Tests
                 parameters.Encryption = new Encryption()
                 {
                     Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                    KeySource = KeySource.MicrosoftStorage
                 };
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
@@ -590,7 +600,8 @@ namespace Storage.Tests
                     Kind = Kind.Storage,
                     Encryption = new Encryption()
                     {
-                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } }
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                        KeySource = KeySource.MicrosoftStorage
                     }
                 };
                 account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
@@ -855,7 +866,6 @@ namespace Storage.Tests
                     Services = "bftq",
                     ResourceTypes = "sco",
                     Permissions = "rdwlacup",
-                    IPAddressOrRange = "0.0.0.0-255.255.255.255",
                     Protocols = HttpProtocol.Httpshttp,
                     SharedAccessStartTime = DateTime.UtcNow,
                     SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
@@ -868,7 +878,6 @@ namespace Storage.Tests
                 Assert.Equal(accountSasParameters.Services, resultCredentials.Services);
                 Assert.Equal(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
                 Assert.Equal(accountSasParameters.Permissions, resultCredentials.Permissions);
-                Assert.Equal(accountSasParameters.IPAddressOrRange, resultCredentials.IPAddressOrRange);
                 Assert.Equal(accountSasParameters.Protocols, resultCredentials.Protocols);
 
                 //Assert.Equal(accountSasParameters.SharedAccessStartTime, resultCredentials.SharedAccessStartTime);
@@ -975,7 +984,6 @@ namespace Storage.Tests
                     CanonicalizedResource = "/blob/" + accountName + "/music",
                     Resource = "c",
                     Permissions = "rdwlacup",
-                    IPAddressOrRange = "0.0.0.0-255.255.255.255",
                     Protocols = HttpProtocol.Httpshttp,
                     SharedAccessStartTime = DateTime.UtcNow,
                     SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
@@ -987,7 +995,6 @@ namespace Storage.Tests
 
                 Assert.Equal(serviceSasParameters.Resource, resultCredentials.Resource);
                 Assert.Equal(serviceSasParameters.Permissions, resultCredentials.Permissions);
-                Assert.Equal(serviceSasParameters.IPAddressOrRange, resultCredentials.IPAddressOrRange);
                 Assert.Equal(serviceSasParameters.Protocols, resultCredentials.Protocols);
 
                 Assert.NotNull(serviceSasParameters.SharedAccessStartTime);
@@ -1286,6 +1293,247 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
                 Assert.False(account.EnableHttpsTrafficOnly);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountCMKTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var keyVaultMgmtClient = StorageManagementTestUtilities.GetKeyVaultManagementClient(context, handler);
+                var keyVaultClient = StorageManagementTestUtilities.CreateKeyVaultClient();
+
+                string accountName = TestUtilities.GenerateName("sto");
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                string vaultName = TestUtilities.GenerateName("keyvault");
+                string keyName = TestUtilities.GenerateName("keyvaultkey");
+
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Identity = new Identity {};
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.NotNull(account.Identity);
+
+                var accessPolicies = new List<Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry>();
+                accessPolicies.Add(new Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry
+                {
+                    TenantId = System.Guid.Parse(account.Identity.TenantId),
+                    ObjectId = account.Identity.PrincipalId,
+                    Permissions = new Microsoft.Azure.Management.KeyVault.Models.Permissions(new List<string> { "wrapkey", "unwrapkey" })
+                });
+
+                string servicePrincipalObjectId = StorageManagementTestUtilities.GetServicePrincipalObjectId();
+                accessPolicies.Add(new Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry
+                {
+                    TenantId = System.Guid.Parse(account.Identity.TenantId),
+                    ObjectId = servicePrincipalObjectId,
+                    Permissions = new Microsoft.Azure.Management.KeyVault.Models.Permissions(new List<string> { "all" })
+                });
+
+                var keyVault = keyVaultMgmtClient.Vaults.CreateOrUpdate(rgname, vaultName, new Microsoft.Azure.Management.KeyVault.Models.VaultCreateOrUpdateParameters
+                {
+                    Location = account.Location,
+                    Properties = new Microsoft.Azure.Management.KeyVault.Models.VaultProperties
+                    {
+                        TenantId = System.Guid.Parse(account.Identity.TenantId),
+                        AccessPolicies = accessPolicies,
+                        Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku(Microsoft.Azure.Management.KeyVault.Models.SkuName.Standard),
+                        EnabledForDiskEncryption = false,
+                        EnabledForDeployment = false,
+                        EnabledForTemplateDeployment = false
+                    }
+                });
+
+                var keyVaultKey = keyVaultClient.CreateKeyAsync(keyVault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa, 2048,
+                    JsonWebKeyOperation.AllOperations, new Microsoft.Azure.KeyVault.Models.KeyAttributes()).GetAwaiter().GetResult();
+
+                // Enable encryption.
+                var updateParameters = new StorageAccountUpdateParameters
+                {
+                    Encryption = new Encryption
+                    {
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                        KeySource = "Microsoft.Keyvault",
+                        KeyVaultProperties =
+                            new KeyVaultProperties
+                            {
+                                KeyName = keyVaultKey.KeyIdentifier.Name,
+                                KeyVaultUri = keyVault.Properties.VaultUri,
+                                KeyVersion = keyVaultKey.KeyIdentifier.Version
+                            }
+                    }
+                };
+
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.NotNull(account.Encryption);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
+                Assert.Equal("Microsoft.Keyvault", account.Encryption.KeySource);
+
+                // Disable Encryption.
+                updateParameters = new StorageAccountUpdateParameters
+                {
+                    Encryption = new Encryption
+                    {
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
+                        KeySource = "Microsoft.Storage"
+                    }
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.NotNull(account.Encryption);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
+                Assert.True(account.Encryption.Services.File.Enabled);
+                Assert.Equal("Microsoft.Storage", account.Encryption.KeySource);
+
+                updateParameters = new StorageAccountUpdateParameters
+                {
+                    Encryption = new Encryption
+                    {
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = false }, File = new EncryptionService { Enabled = false } },
+                    }
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.Null(account.Encryption);
+            }
+        }
+        [Fact]
+        public void StorageAccountOperationsTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+                var keyVaultMgmtClient = StorageManagementTestUtilities.GetKeyVaultManagementClient(context, handler);
+
+                // Create storage account with hot
+                string accountName = TestUtilities.GenerateName("sto");
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                var ops = storageMgmtClient.Operations.List();
+                var op1 = new Operation
+                {
+                    Name = "Microsoft.Storage/storageAccounts/write",
+                    Display = new OperationDisplay
+                    {
+                        Provider = "Microsoft Storage",
+                        Resource = "Storage Accounts",
+                        Operation = "Create/Update Storage Account"
+                    }
+                };
+                var op2 = new Operation
+                {
+                    Name = "Microsoft.Storage/storageAccounts/delete",
+                    Display = new OperationDisplay
+                    {
+                        Provider = "Microsoft Storage",
+                        Resource = "Storage Accounts",
+                        Operation = "Delete Storage Account"
+                    }
+                };
+                bool exists1 = false;
+                bool exists2 = false;
+                Assert.NotNull(ops);
+                Assert.NotNull(ops.GetEnumerator());
+                var operation = ops.GetEnumerator();
+
+                while (operation.MoveNext())
+                {
+                    if (operation.Current.ToString().Equals(op1.ToString()))
+                    {
+                        exists1 = true;
+                    }
+                    if (operation.Current.ToString().Equals(op2.ToString()))
+                        {
+                        exists2 = true;
+                    }
+                }
+                Assert.True(exists1);
+                Assert.True(exists2);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountVnetACLTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account with Vnet
+                string accountName = TestUtilities.GenerateName("sto");
+
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.NetworkAcls = new StorageNetworkAcls { Bypass = @"Logging,AzureServices", DefaultAction = DefaultAction.Deny, IpRules = new List<IPRule> { new IPRule { IPAddressOrRange = "23.45.67.90" } } };
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                var account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                // Verify the vnet acl properties.
+                Assert.NotNull(account.NetworkAcls);
+                Assert.Equal(@"Logging, AzureServices", account.NetworkAcls.Bypass);
+                Assert.Equal(DefaultAction.Deny, account.NetworkAcls.DefaultAction);
+                Assert.Empty(account.NetworkAcls.VirtualNetworkRules);
+                Assert.NotNull(account.NetworkAcls.IpRules);
+                Assert.NotEmpty(account.NetworkAcls.IpRules);
+                Assert.Equal("23.45.67.90", account.NetworkAcls.IpRules[0].IPAddressOrRange);
+                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[0].Action);
+
+                // Update Vnet
+                var updateParameters = new StorageAccountUpdateParameters
+                {
+                    NetworkAcls = new StorageNetworkAcls
+                    {
+                        Bypass = @"Logging, Metrics",
+                        IpRules = new List<IPRule> {
+                            new IPRule { IPAddressOrRange = "23.45.67.91", Action = Microsoft.Azure.Management.Storage.Models.Action.Allow },
+                            new IPRule { IPAddressOrRange = "23.45.67.92" }
+                        },
+                        DefaultAction = DefaultAction.Deny
+                    }
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                Assert.NotNull(account.NetworkAcls);
+                Assert.Equal(@"Logging, Metrics", account.NetworkAcls.Bypass);
+                Assert.Equal(DefaultAction.Deny, account.NetworkAcls.DefaultAction);
+                Assert.Empty(account.NetworkAcls.VirtualNetworkRules);
+                Assert.NotNull(account.NetworkAcls.IpRules);
+                Assert.NotEmpty(account.NetworkAcls.IpRules);
+                Assert.Equal("23.45.67.91", account.NetworkAcls.IpRules[0].IPAddressOrRange);
+                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[0].Action);
+                Assert.Equal("23.45.67.92", account.NetworkAcls.IpRules[1].IPAddressOrRange);
+                Assert.Equal(Microsoft.Azure.Management.Storage.Models.Action.Allow, account.NetworkAcls.IpRules[1].Action);
+
+                // Delete vnet.
+                updateParameters = new StorageAccountUpdateParameters
+                {
+                    NetworkAcls = new StorageNetworkAcls { }
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                Assert.NotNull(account.NetworkAcls);
+                Assert.Equal(@"AzureServices", account.NetworkAcls.Bypass);
+                Assert.Equal(DefaultAction.Allow, account.NetworkAcls.DefaultAction);
             }
         }
     }

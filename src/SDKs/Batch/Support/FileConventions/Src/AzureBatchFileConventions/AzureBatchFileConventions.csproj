@@ -10,6 +10,7 @@ by task and job id and the type of output.
     <AssemblyName>Microsoft.Azure.Batch.Conventions.Files</AssemblyName>
     <VersionPrefix>3.0.0</VersionPrefix>
     <PackageTags>Microsoft, Azure, Batch, windowsazureofficial</PackageTags>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <PackageReleaseNotes>
 Updated dependent libraries.
     </PackageReleaseNotes>
