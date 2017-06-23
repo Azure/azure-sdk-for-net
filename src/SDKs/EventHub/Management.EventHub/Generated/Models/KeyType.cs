@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Policykey.
+    /// Defines values for KeyType.
     /// </summary>
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum Policykey
+    public enum KeyType
     {
         [EnumMember(Value = "PrimaryKey")]
         PrimaryKey,

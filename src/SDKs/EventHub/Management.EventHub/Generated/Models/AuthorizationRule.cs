@@ -22,23 +22,21 @@ namespace Microsoft.Azure.Management.EventHub.Models
     /// Single item in a List or Get AuthorizationRule operation
     /// </summary>
     [JsonTransformation]
-    public partial class SharedAccessAuthorizationRuleResource : Resource
+    public partial class AuthorizationRule : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// SharedAccessAuthorizationRuleResource class.
+        /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
-        public SharedAccessAuthorizationRuleResource() { }
+        public AuthorizationRule() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// SharedAccessAuthorizationRuleResource class.
+        /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
-        /// <param name="rights">The rights associated with the rule.</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public SharedAccessAuthorizationRuleResource(IList<AccessRights?> rights, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="rights">The rights associated with the rule.</param>
+        public AuthorizationRule(string id = default(string), string name = default(string), string type = default(string), IList<string> rights = default(IList<string>))
             : base(id, name, type)
         {
             Rights = rights;
@@ -48,21 +46,8 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// Gets or sets the rights associated with the rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.rights")]
-        public IList<AccessRights?> Rights { get; set; }
+        public IList<string> Rights { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Rights == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Rights");
-            }
-        }
     }
 }
 

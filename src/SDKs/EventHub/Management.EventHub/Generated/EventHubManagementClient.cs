@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.EventHub
             EventHubs = new EventHubsOperations(this);
             ConsumerGroups = new ConsumerGroupsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2015-08-01";
+            ApiVersion = "2017-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
