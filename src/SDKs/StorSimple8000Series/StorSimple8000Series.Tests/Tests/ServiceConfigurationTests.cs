@@ -1,23 +1,10 @@
 ﻿using System;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.StorSimple8000Series;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Management.Compute;
-using Microsoft.Azure.Management.Network;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.StorSimple8000Series.Models;
-using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Compute.Models;
-using System.Text;
 using Xunit;
 using System.Linq;
 using Xunit.Abstractions;
-using Xunit.Sdk;
-using System.Reflection;
-using Microsoft.Rest.Azure;
-using System.Threading;
-using System.Linq.Expressions;
-using Microsoft.Rest.Azure.OData;
 using SSModels = Microsoft.Azure.Management.StorSimple8000Series.Models;
 
 namespace StorSimple8000Series.Tests

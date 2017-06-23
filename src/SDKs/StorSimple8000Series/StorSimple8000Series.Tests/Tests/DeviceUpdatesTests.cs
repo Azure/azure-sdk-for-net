@@ -1,19 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Threading;
-using Xunit;
-using Xunit.Sdk;
+﻿using Xunit;
 using Xunit.Abstractions;
-using Microsoft.Rest.Azure;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.StorSimple8000Series;
 using Microsoft.Azure.Management.StorSimple8000Series.Models;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Management.Compute;
-using Microsoft.Azure.Management.Network;
 
 namespace StorSimple8000Series.Tests
 {
