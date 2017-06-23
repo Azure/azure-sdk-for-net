@@ -10,7 +10,7 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Management.StorSimple8000Series\Microsoft.Azure.Management.StorSimple8000series.csproj" />
+    <ProjectReference Include="..\Management.StorSimple8000Series\Microsoft.Azure.Management.StorSimple8000Series.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
