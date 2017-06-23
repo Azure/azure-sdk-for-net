@@ -35,8 +35,8 @@ namespace StorSimple8000Series.Tests
                 // Get Cleared Alerts
                 GetClearedAlerts();
 
-                //Test Severity Filters - Get Informational Alerts
-                GetAlertsBySeverity(AlertSeverity.Informational);
+                //Test Severity Filters - Get warning alerts
+                GetAlertsBySeverity(AlertSeverity.Warning);
             }
             catch (Exception e)
             {

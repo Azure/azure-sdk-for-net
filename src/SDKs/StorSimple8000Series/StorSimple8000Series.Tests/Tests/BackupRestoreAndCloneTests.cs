@@ -84,24 +84,10 @@ namespace StorSimple8000Series.Tests
                 "schedule2",
             };
 
-            Dictionary<string, BackupSchedule> schNameToObject =
-                new Dictionary<string, BackupSchedule>();
-
-            int hour = 10; //10am
-            foreach (string schName in scheduleNames)
-            {
-                
-                // Create a backup schedule
-                BackupSchedule bs = CreateBackupSchedule(                                        
-                                        deviceName,
-                                        backupPolicy.Name,
-                                        schName,
-                                        RecurrenceType.Daily,
-                                        new DateTime(2017, 06, 21, hour, 00, 00));
-                schNameToObject.Add(schName, bs);
-                hour++;
-            }
-
+            // Create a backup schedule
+            BackupSchedule bs1 = CreateBackupSchedule(deviceName, backupPolicy.Name, scheduleNames.ElementAt(0), RecurrenceType.Daily, TestConstants.Schedule1StartTime);
+            BackupSchedule bs2 = CreateBackupSchedule(deviceName, backupPolicy.Name, scheduleNames.ElementAt(1), RecurrenceType.Weekly, TestConstants.Schedule2StartTime);
+ 
             //validate one of the schedules
             var schedule = this.Client.BackupSchedules.Get(
                 deviceName.GetDoubleEncoded(),
@@ -129,7 +115,7 @@ namespace StorSimple8000Series.Tests
                 this.ManagerName);
 
             // Take the backup
-            var jobStartTime = new DateTime(2017, 06, 21);
+            var jobStartTime = TestConstants.TimeBeforeBackupRestoreJobStart;
             this.Client.BackupPolicies.BackupNow(
                 deviceName.GetDoubleEncoded(),
                 policyName.GetDoubleEncoded(),
@@ -177,7 +163,7 @@ namespace StorSimple8000Series.Tests
             Assert.NotNull(backup);
 
             //restore the backup
-            var jobStartTime = new DateTime(2017, 06, 21);//21st June, 2017
+            var jobStartTime = TestConstants.TimeBeforeBackupRestoreJobStart;
             this.Client.Backups.Restore(
                                 deviceName.GetDoubleEncoded(),
                                 backup.Name.GetDoubleEncoded(),
@@ -262,9 +248,8 @@ namespace StorSimple8000Series.Tests
                 this.ManagerName);
 
             //create oDataQuery
-            var startTime = DateTime.MinValue;
-            var endTime = new DateTime(2017, 06, 23);
-            Expression<Func<BackupFilter, bool>> filter = f => f.CreatedTime >= startTime && f.CreatedTime <= endTime && f.BackupPolicyId == bp.Id;
+            var startTime = TestConstants.TimeBeforeBackupRestoreJobStart;
+            Expression<Func<BackupFilter, bool>> filter = f => f.CreatedTime >= startTime && f.BackupPolicyId == bp.Id;
             var oDataQuery = new ODataQuery<BackupFilter>(filter);
 
             //get backups for the backup-policy and delete

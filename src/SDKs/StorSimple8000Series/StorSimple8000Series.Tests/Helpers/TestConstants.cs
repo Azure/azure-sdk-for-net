@@ -21,5 +21,8 @@ namespace StorSimple8000Series.Tests
 
         public static readonly DateTime MetricsStartTime = new DateTime(2017, 06, 18);
         public static readonly DateTime MetricsEndTime = new DateTime(2017, 06, 22);
+        public static readonly DateTime TimeBeforeBackupRestoreJobStart = new DateTime(2017, 06, 23);
+        public static readonly DateTime Schedule1StartTime = new DateTime(2017, 06, 24);
+        public static readonly DateTime Schedule2StartTime = new DateTime(2017, 06, 24, 01, 00, 00);
     }
 }
