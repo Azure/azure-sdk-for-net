@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         public QueueClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
-            : this(connectionStringBuilder.GetNamespaceConnectionString(), connectionStringBuilder.EntityPath, receiveMode, retryPolicy)
+            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, receiveMode, retryPolicy)
         {
         }
 
@@ -61,10 +61,10 @@ namespace Microsoft.Azure.ServiceBus
         QueueClient(ServiceBusNamespaceConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode, RetryPolicy retryPolicy)
             : base($"{nameof(QueueClient)}{ClientEntity.GetNextId()}({entityPath})", retryPolicy)
         {
+            this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();
             this.QueueName = entityPath;
             this.ReceiveMode = receiveMode;
-            this.ServiceBusConnection = serviceBusConnection;
             this.TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(
                 serviceBusConnection.SasKeyName,
                 serviceBusConnection.SasKey);

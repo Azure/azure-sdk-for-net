@@ -30,7 +30,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public MessageSender(
             ServiceBusConnectionStringBuilder connectionStringBuilder,
             RetryPolicy retryPolicy = null)
-            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder.EntityPath, retryPolicy)
+            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, retryPolicy)
         {
         }
 
@@ -70,10 +70,10 @@ namespace Microsoft.Azure.ServiceBus.Core
             RetryPolicy retryPolicy)
             : base(nameof(MessageSender) + StringUtility.GetRandomString(), retryPolicy ?? RetryPolicy.Default)
         {
+            this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.OperationTimeout = serviceBusConnection.OperationTimeout;
             this.Path = entityPath;
             this.EntityType = entityType;
-            this.ServiceBusConnection = serviceBusConnection;
             this.CbsTokenProvider = cbsTokenProvider;
             this.SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(this.CreateLinkAsync, this.CloseSession);
             this.RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(this.CreateRequestResponseLinkAsync, this.CloseRequestResponseSession);

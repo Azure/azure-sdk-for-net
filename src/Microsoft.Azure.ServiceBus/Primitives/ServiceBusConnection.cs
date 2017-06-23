@@ -51,7 +51,7 @@ namespace Microsoft.Azure.ServiceBus
 
         protected void InitializeConnection(ServiceBusConnectionStringBuilder builder)
         {
-            this.Endpoint = builder.Endpoint;
+            this.Endpoint = new Uri(builder.Endpoint);
             this.SasKeyName = builder.SasKeyName;
             this.SasKey = builder.SasKey;
             this.ConnectionManager = new FaultTolerantAmqpObject<AmqpConnection>(this.CreateConnectionAsync, CloseConnection);

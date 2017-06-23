@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
     using System.Text;
 
     /// <summary>
@@ -14,11 +15,19 @@ namespace Microsoft.Azure.ServiceBus
         const char KeyValueSeparator = '=';
         const char KeyValuePairDelimiter = ';';
         static readonly string EndpointScheme = "amqps";
-        static readonly string EndpointFormat = EndpointScheme + "://{0}.servicebus.windows.net";
         static readonly string EndpointConfigName = "Endpoint";
         static readonly string SharedAccessKeyNameConfigName = "SharedAccessKeyName";
         static readonly string SharedAccessKeyConfigName = "SharedAccessKey";
         static readonly string EntityPathConfigName = "EntityPath";
+
+        string entityPath, sasKeyName, sasKey, endpoint;
+
+        /// <summary>
+        /// Instantiates a new <see cref="ServiceBusConnectionStringBuilder"/>
+        /// </summary>
+        public ServiceBusConnectionStringBuilder()
+        {
+        }
 
         /// <summary>
         /// Instatiates a new <see cref="ServiceBusConnectionStringBuilder"/>.
@@ -35,56 +44,89 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Instantiates a new <see cref="ServiceBusConnectionStringBuilder"/>.
         /// </summary>
-        /// <param name="namespaceName">Namespace name.</param>
+        /// <example>
+        /// <code>
+        /// var connectionStringBuilder = new ServiceBusConnectionStringBuilder(
+        ///     "contoso.servicebus.windows.net",
+        ///     "myQueue",
+        ///     "RootManageSharedAccessKey",
+        ///     "&amp;lt;sharedAccessKey&amp;gt;
+        /// );
+        /// </code>
+        /// </example>
+        /// <param name="endpoint">Fully qualified endpoint.</param>
         /// <param name="entityPath">Path to the entity.</param>
         /// <param name="sharedAccessKeyName">Shared access key name.</param>
         /// <param name="sharedAccessKey">Shared access key.</param>
-        public ServiceBusConnectionStringBuilder(string namespaceName, string entityPath, string sharedAccessKeyName, string sharedAccessKey)
+        public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey)
         {
-            if (string.IsNullOrWhiteSpace(namespaceName))
+            if (string.IsNullOrWhiteSpace(endpoint))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(namespaceName));
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(endpoint));
             }
             if (string.IsNullOrWhiteSpace(sharedAccessKeyName) || string.IsNullOrWhiteSpace(sharedAccessKey))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(string.IsNullOrWhiteSpace(sharedAccessKeyName) ? nameof(sharedAccessKeyName) : nameof(sharedAccessKey));
             }
 
-            if (namespaceName.Contains("."))
-            {
-                // It appears to be a fully qualified host name, use it.
-                this.Endpoint = new Uri(EndpointScheme + "://" + namespaceName);
-            }
-            else
-            {
-                this.Endpoint = new Uri(EndpointFormat.FormatInvariant(namespaceName));
-            }
-
+            this.Endpoint = endpoint;
             this.EntityPath = entityPath;
             this.SasKeyName = sharedAccessKeyName;
             this.SasKey = sharedAccessKey;
         }
 
         /// <summary>
-        /// Gets or sets the Service Bus endpoint.
+        /// Fully qualified domain name of the endpoint.
         /// </summary>
-        public Uri Endpoint { get; set; }
+        /// <example>
+        /// <code>this.Endpoint = contoso.servicebus.windows.net</code>
+        /// </example>
+        /// <exception cref="ArgumentException">Throws when endpoint is not fully qualified endpoint.</exception>
+        /// <exception cref="UriFormatException">Throws when the hostname cannot be parsed</exception>
+        public string Endpoint
+        {
+            get => this.endpoint;
+            set
+            {
+                if (!value.Contains("."))
+                {
+                    throw Fx.Exception.Argument(nameof(Endpoint), "Endpoint should be fully qualified endpoint");
+                }
+
+                var uriBuilder = new UriBuilder(value.Trim());
+                this.endpoint = EndpointScheme + "://" + uriBuilder.Host;
+            }
+        }
 
         /// <summary>
         /// Get the entity path value from the connection string
         /// </summary>
-        public string EntityPath { get; set; }
+        public string EntityPath
+        {
+            get => this.entityPath;
+            set => this.entityPath = value.Trim();
+        }
 
         /// <summary>
         /// Get the shared access policy owner name from the connection string
         /// </summary>
-        public string SasKeyName { get; set; }
+        public string SasKeyName
+        {
+            get => this.sasKeyName;
+            set => this.sasKeyName = value.Trim();
+        }
 
         /// <summary>
         /// Get the shared access policy key value from the connection string
         /// </summary>
         /// <value>Shared Access Signature key</value>
-        public string SasKey { get; set; }
+        public string SasKey
+        {
+            get => this.sasKey;
+            set => this.sasKey = value.Trim();
+        }
+
+        internal Dictionary<string, string> ConnectionStringProperties = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
 
         /// <summary>
         /// Returns an interoperable connection string that can be used to connect to ServiceBus Namespace
@@ -108,7 +150,7 @@ namespace Microsoft.Azure.ServiceBus
                 connectionStringBuilder.Append($"{SharedAccessKeyConfigName}{KeyValueSeparator}{this.SasKey}");
             }
 
-            return connectionStringBuilder.ToString();
+            return connectionStringBuilder.ToString().Trim(';');
         }
 
         /// <summary>
@@ -122,7 +164,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(this.EntityPath));
             }
 
-            return $"{this.GetNamespaceConnectionString()}{KeyValuePairDelimiter}{EntityPathConfigName}{KeyValueSeparator}{this.EntityPath}{KeyValuePairDelimiter}";
+            return $"{this.GetNamespaceConnectionString()}{KeyValuePairDelimiter}{EntityPathConfigName}{KeyValueSeparator}{this.EntityPath}";
         }
 
         /// <summary>
@@ -153,10 +195,10 @@ namespace Microsoft.Azure.ServiceBus
                     throw Fx.Exception.Argument(nameof(connectionString), $"Value for the connection string parameter name '{key}' was not found.");
                 }
 
-                string value = keyAndValue[1];
+                string value = keyAndValue[1].Trim();
                 if (key.Equals(EndpointConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.Endpoint = new Uri(value);
+                    this.Endpoint = value;
                 }
                 else if (key.Equals(SharedAccessKeyNameConfigName, StringComparison.OrdinalIgnoreCase))
                 {
@@ -172,7 +214,7 @@ namespace Microsoft.Azure.ServiceBus
                 }
                 else
                 {
-                    throw Fx.Exception.Argument(nameof(connectionString), $"Illegal connection string parameter name '{key}'");
+                    ConnectionStringProperties[key] = value;
                 }
             }
         }

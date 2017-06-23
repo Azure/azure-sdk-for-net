@@ -25,7 +25,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
         /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         public TopicClient(ServiceBusConnectionStringBuilder connectionStringBuilder, RetryPolicy retryPolicy = null)
-            : this(connectionStringBuilder.GetNamespaceConnectionString(), connectionStringBuilder.EntityPath, retryPolicy)
+            : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, retryPolicy)
         {
         }
 
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.ServiceBus
         TopicClient(ServiceBusNamespaceConnection serviceBusConnection, string entityPath, RetryPolicy retryPolicy)
             : base($"{nameof(TopicClient)}{GetNextId()}({entityPath})", retryPolicy)
         {
+            this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();
             this.TopicName = entityPath;
-            this.ServiceBusConnection = serviceBusConnection;
             this.TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(
                 serviceBusConnection.SasKeyName,
                 serviceBusConnection.SasKey);

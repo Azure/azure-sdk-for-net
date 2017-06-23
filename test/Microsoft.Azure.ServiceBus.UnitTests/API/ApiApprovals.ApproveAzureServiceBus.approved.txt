@@ -186,9 +186,10 @@ namespace Microsoft.Azure.ServiceBus
     }
     public class ServiceBusConnectionStringBuilder
     {
+        public ServiceBusConnectionStringBuilder() { }
         public ServiceBusConnectionStringBuilder(string connectionString) { }
-        public ServiceBusConnectionStringBuilder(string namespaceName, string entityPath, string sharedAccessKeyName, string sharedAccessKey) { }
-        public System.Uri Endpoint { get; set; }
+        public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey) { }
+        public string Endpoint { get; set; }
         public string EntityPath { get; set; }
         public string SasKey { get; set; }
         public string SasKeyName { get; set; }
