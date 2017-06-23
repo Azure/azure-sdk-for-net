@@ -12,9 +12,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Redis" Version="3.1.1-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.Compute" Version="[13.0.3-prerelease,14.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Management.Compute" Version="15.0.0" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="[6.0.0-preview,7.0)" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="6.5.0-preview" />
     
     <!--<PackageReference Include="Microsoft.Azure.Management.Network" Version="10.0.0-preview" />-->    
     <ProjectReference Include="..\Management.Network\Microsoft.Azure.Management.Network.csproj" />
@@ -34,5 +34,13 @@
   
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.8" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.2" />
+    <PackageReference Update="xunit" Version="2.3.0-beta3-build3705" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="2.3.0-beta3-build3705" />
   </ItemGroup>
 </Project>
