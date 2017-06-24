@@ -1106,6 +1106,11 @@ namespace Networks.Tests
                                 addressPrefixes
                             }
                         }
+                    },
+                    Sku = new VirtualNetworkGatewaySku()
+                    {
+                        Name = VirtualNetworkGatewaySkuName.VpnGw1,
+                        Tier = VirtualNetworkGatewaySkuTier.VpnGw1
                     }
                 };
 
@@ -1173,10 +1178,26 @@ namespace Networks.Tests
                 {
                     ProcessorArchitecture = ProcessorArchitecture.Amd64
                 };
+
                 string packageUrl = networkManagementClient.VirtualNetworkGateways.Generatevpnclientpackage(resourceGroupName, virtualNetworkGatewayName, vpnClientParameters);
                 //Assert.NotNull(packageUrl);
                 //Assert.NotEmpty(packageUrl);
                 //Console.WriteLine("Vpn client package Url = {0}", packageUrl);
+
+                // 5b. GenerateVpnProfile
+                // First update the gateway with IKEV2 tunneling protocol
+                getVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
+                Console.WriteLine("Gateway details:- GatewayLocation:{0}, GatewayId:{1}, GatewayName:{2}, GatewayType:{3}, VpnType={4} GatewaySku: name-{5} Tier-{6}",
+                    getVirtualNetworkGatewayResponse.Location,
+                    getVirtualNetworkGatewayResponse.Id, getVirtualNetworkGatewayResponse.Name,
+                    getVirtualNetworkGatewayResponse.GatewayType, getVirtualNetworkGatewayResponse.VpnType,
+                    getVirtualNetworkGatewayResponse.Sku.Name, getVirtualNetworkGatewayResponse.Sku.Tier);
+
+                getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientProtocols.Add(VpnClientProtocol.IkeV2);
+                putVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse);
+                Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
+                packageUrl = networkManagementClient.VirtualNetworkGateways.Generatevpnclientpackage(resourceGroupName, virtualNetworkGatewayName, vpnClientParameters);
+
 
                 // 6.Delete client Root certificate
                 getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientRootCertificates.Clear();
