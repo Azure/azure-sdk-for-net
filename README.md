@@ -5,7 +5,7 @@ This README is based on the released stable version (1.1). If you are looking fo
 
 The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources. Libraries are built on the lower-level, request-response style [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest) and can run side-by-side with [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest).
 
-## Feature Availability and Road Map as of Version 1.0.0 ##
+## Feature Availability and Road Map as of Version 1.1 ##
 
 <table>
   <tr>
