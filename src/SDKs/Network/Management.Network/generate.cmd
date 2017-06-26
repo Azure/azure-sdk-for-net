@@ -4,9 +4,9 @@
 ::
 
 @echo off
-set autoRestVersion=1.0.0-Nightly20170202
+set autoRestVersion=1.0.4
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/fb9b0cc66ee580cdfadc03ab6a981bf5bd066f86/arm-network/compositeNetworkClient.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b7b2953189fd46e135e59076a059073e130b78d9/arm-network/compositeNetworkClient.json"
 ) else (
     set specFile="%1"
 )

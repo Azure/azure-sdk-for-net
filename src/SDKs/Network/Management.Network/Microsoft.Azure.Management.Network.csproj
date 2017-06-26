@@ -9,5 +9,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <Version>10.1.2-preview</Version>
   </PropertyGroup>  
 </Project>
