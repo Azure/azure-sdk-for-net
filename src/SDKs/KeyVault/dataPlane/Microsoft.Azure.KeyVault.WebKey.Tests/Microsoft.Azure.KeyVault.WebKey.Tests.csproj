@@ -10,7 +10,7 @@
     <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>  
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp"/>
+    <Reference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\Microsoft.Azure.KeyVault.WebKey\Microsoft.Azure.KeyVault.WebKey.csproj" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
@@ -25,5 +25,11 @@
   
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>6.0.8</Version>
+    </PackageReference>
   </ItemGroup>
 </Project>
