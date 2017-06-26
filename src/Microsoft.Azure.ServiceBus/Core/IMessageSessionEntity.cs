@@ -8,6 +8,8 @@ namespace Microsoft.Azure.ServiceBus.Core
 
     internal interface IMessageSessionEntity
     {
+        string EntityPath { get; }
+
         Task<IMessageSession> AcceptMessageSessionAsync();
 
         Task<IMessageSession> AcceptMessageSessionAsync(TimeSpan serverWaitTime);

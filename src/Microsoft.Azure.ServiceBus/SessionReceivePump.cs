@@ -15,28 +15,27 @@ namespace Microsoft.Azure.ServiceBus
         readonly IMessageSessionEntity client;
         readonly Func<IMessageSession, Message, CancellationToken, Task> userOnSessionCallback;
         readonly SessionHandlerOptions sessionHandlerOptions;
+        readonly string endpoint;
+        readonly string entityPath;
         readonly CancellationToken pumpCancellationToken;
         readonly SemaphoreSlim maxConcurrentSessionsSemaphoreSlim;
         readonly SemaphoreSlim maxPendingAcceptSessionsSemaphoreSlim;
 
-        public SessionReceivePump(
-            string clientId,
-            IMessageSessionEntity client,
-            ReceiveMode receiveMode,
-            SessionHandlerOptions sessionHandlerOptions,
-            Func<IMessageSession, Message, CancellationToken, Task> callback,
+        public SessionReceivePump(string clientId, 
+            IMessageSessionEntity client, 
+            ReceiveMode receiveMode, 
+            SessionHandlerOptions sessionHandlerOptions, 
+            Func<IMessageSession, Message, CancellationToken, Task> callback, 
+            string endpoint, 
             CancellationToken token)
         {
-            if (client == null)
-            {
-                throw new ArgumentException(nameof(client));
-            }
-
-            this.client = client;
+            this.client = client ?? throw new ArgumentException(nameof(client));
             this.clientId = clientId;
             this.ReceiveMode = receiveMode;
             this.sessionHandlerOptions = sessionHandlerOptions;
             this.userOnSessionCallback = callback;
+            this.endpoint = endpoint;
+            this.entityPath = client.EntityPath;
             this.pumpCancellationToken = token;
             this.maxConcurrentSessionsSemaphoreSlim = new SemaphoreSlim(this.sessionHandlerOptions.MaxConcurrentSessions);
             this.maxPendingAcceptSessionsSemaphoreSlim = new SemaphoreSlim(this.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls);
@@ -94,9 +93,9 @@ namespace Microsoft.Azure.ServiceBus
                 this.sessionHandlerOptions.AutoRenewLock;
         }
 
-        void RaiseExceptionRecieved(Exception e, string action)
+        void RaiseExceptionReceived(Exception e, string action)
         {
-            var eventArgs = new ExceptionReceivedEventArgs(e, action);
+            var eventArgs = new ExceptionReceivedEventArgs(e, action, this.endpoint, this.entityPath);
             this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
@@ -112,7 +111,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.Complete));
+                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.Complete, this.endpoint, this.entityPath));
             }
         }
 
@@ -127,7 +126,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.Abandon));
+                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.Abandon, this.endpoint, this.entityPath));
             }
         }
 
@@ -175,7 +174,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                     else
                     {
-                        this.RaiseExceptionRecieved(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession);
+                        this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession);
                         if (!MessagingUtilities.ShouldRetry(exception))
                         {
                             break;
@@ -226,7 +225,7 @@ namespace Microsoft.Azure.ServiceBus
                             continue;
                         }
 
-                        this.RaiseExceptionRecieved(exception, ExceptionReceivedEventArgsAction.Receive);
+                        this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive);
                         break;
                     }
 
@@ -246,7 +245,7 @@ namespace Microsoft.Azure.ServiceBus
                     catch (Exception exception)
                     {
                         MessagingEventSource.Log.MessageReceivePumpTaskException(this.clientId, session.SessionId, exception);
-                        this.RaiseExceptionRecieved(exception, ExceptionReceivedEventArgsAction.UserCallback);
+                        this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback);
                         callbackExceptionOccured = true;
                         await this.AbandonMessageIfNeededAsync(session, message).ConfigureAwait(false);
                     }
@@ -287,7 +286,7 @@ namespace Microsoft.Azure.ServiceBus
                 catch (Exception exception)
                 {
                     MessagingEventSource.Log.SessionReceivePumpSessionCloseException(this.clientId, session.SessionId, exception);
-                    this.RaiseExceptionRecieved(exception, ExceptionReceivedEventArgsAction.CloseMessageSession);
+                    this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.CloseMessageSession);
                 }
             }
         }
@@ -323,7 +322,7 @@ namespace Microsoft.Azure.ServiceBus
                     // Lets not bother user with this exception.
                     if (!(exception is TaskCanceledException))
                     {
-                        this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.RenewLock));
+                        this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.RenewLock, this.endpoint, this.entityPath));
                     }
                     if (!MessagingUtilities.ShouldRetry(exception))
                     {

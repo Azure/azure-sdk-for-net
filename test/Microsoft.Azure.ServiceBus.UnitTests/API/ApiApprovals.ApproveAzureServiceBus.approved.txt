@@ -444,11 +444,18 @@ namespace Microsoft.Azure.ServiceBus.Filters
 namespace Microsoft.Azure.ServiceBus.Primitives
 {
     
+    public class ExceptionReceivedContext
+    {
+        public ExceptionReceivedContext(string action, string endpoint, string entityPath) { }
+        public string Action { get; }
+        public string Endpoint { get; }
+        public string EntityPath { get; }
+    }
     public sealed class ExceptionReceivedEventArgs : System.EventArgs
     {
-        public ExceptionReceivedEventArgs(System.Exception exception, string action) { }
-        public string Action { get; }
+        public ExceptionReceivedEventArgs(System.Exception exception, string action, string endpoint, string entityName) { }
         public System.Exception Exception { get; }
+        public Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedContext ExceptionReceivedContext { get; }
     }
     public class ServiceBusTimeoutException : Microsoft.Azure.ServiceBus.ServiceBusException { }
 }

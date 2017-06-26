@@ -34,7 +34,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         string ClientId { get; }
 
-        string EntityPath { get; }
+        public string EntityPath { get; }
 
         MessagingEntityType EntityType { get; }
 
