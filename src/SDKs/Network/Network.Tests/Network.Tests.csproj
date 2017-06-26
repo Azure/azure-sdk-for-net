@@ -35,12 +35,4 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.8" />
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.2" />
-    <PackageReference Update="xunit" Version="2.3.0-beta3-build3705" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.3.0-beta3-build3705" />
-  </ItemGroup>
 </Project>
