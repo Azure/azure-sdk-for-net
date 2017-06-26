@@ -24,7 +24,8 @@ namespace Authorization.Tests
 {
     public class BasicTests : TestBase, IClassFixture<TestExecutionContext>
     {
-        private readonly ITestOutputHelper _output;
+		public const string ResourceGroup = "resourcegroups/AzureAuthzSDK";
+		private readonly ITestOutputHelper _output;
         private TestExecutionContext testContext;
         private const int RoleAssignmentPageSize = 20;
         private const string RESOURCE_TEST_LOCATION = "westus";
@@ -82,7 +83,7 @@ namespace Authorization.Tests
                 
                 var principalId = testContext.Users.ElementAt(4);
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var roleDefinition = client.RoleDefinitions.List(scope, null).ElementAt(1);
                 var newRoleAssignment = new RoleAssignmentProperties()
                 {
@@ -90,7 +91,7 @@ namespace Authorization.Tests
                     PrincipalId = principalId.ToString()
                 };
 
-                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName");
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestById");
 
                 var assignmentId = string.Format(
                     "{0}/providers/Microsoft.Authorization/roleAssignments/{1}",
@@ -134,9 +135,9 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName");
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameTestListGet");
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var principalId = testContext.Users.ElementAt(5);
 
                 Assert.NotNull(client);
@@ -158,16 +159,19 @@ namespace Authorization.Tests
 
                 foreach (var assignment in allRoleAssignments)
                 {
-                    var singleAssignment = client.RoleAssignments.Get(assignment.Properties.Scope, assignment.Name);
+					if (assignment.Properties.Scope.Contains(ResourceGroup))
+					{
+						var singleAssignment = client.RoleAssignments.Get(assignment.Properties.Scope, assignment.Name);
 
-                    Assert.NotNull(singleAssignment);
-                    Assert.NotNull(singleAssignment.Id);
-                    Assert.NotNull(singleAssignment.Name);
-                    Assert.NotNull(singleAssignment.Type);
-                    Assert.NotNull(singleAssignment.Properties);
-                    Assert.NotNull(singleAssignment.Properties.PrincipalId);
-                    Assert.NotNull(singleAssignment.Properties.RoleDefinitionId);
-                    Assert.NotNull(singleAssignment.Properties.Scope);
+						Assert.NotNull(singleAssignment);
+						Assert.NotNull(singleAssignment.Id);
+						Assert.NotNull(singleAssignment.Name);
+						Assert.NotNull(singleAssignment.Type);
+						Assert.NotNull(singleAssignment.Properties);
+						Assert.NotNull(singleAssignment.Properties.PrincipalId);
+						Assert.NotNull(singleAssignment.Properties.RoleDefinitionId);
+						Assert.NotNull(singleAssignment.Properties.Scope);
+					}
                 }
 
                 var deleteResult = client.RoleAssignments.Delete(scope, assignmentName.ToString());
@@ -184,9 +188,9 @@ namespace Authorization.Tests
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
 
-                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName");
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentNameCreateDeleteTest");
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup; ;
                 var principalId = testContext.Users.ElementAt(3);
 
                 Assert.NotNull(client);
@@ -262,7 +266,7 @@ namespace Authorization.Tests
                 // Read/write the PrincipalId from Testcontext to enable Playback mode test execution
                 var principalId = GetValueFromTestContext(() => testContext.Users.ElementAt(1), Guid.Parse, "PrincipalId").ToString(); 
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var roleDefinition = client.RoleDefinitions.List(scope).First();
 
                 for(int i=0; i<testContext.Users.Count; i++)
@@ -309,7 +313,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var allBuiltInRoles = client.RoleDefinitions.List(scope).Where(r => r.Properties.Type.Equals("BuiltInRole", StringComparison.OrdinalIgnoreCase));
                 var allBuiltInRolesList = allBuiltInRoles as IList<RoleDefinition> ?? allBuiltInRoles.ToList();
                 int roleCount = allBuiltInRolesList.Count();
@@ -410,7 +414,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var allRoleAssignments = client.RoleAssignments.ListForScope(
-                    "subscriptions/" + client.SubscriptionId,
+                    "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup,
                     new ODataQuery<RoleAssignmentFilter>(f => f.AtScope()));
 
 
@@ -441,8 +445,8 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var scope = "subscriptions/" + client.SubscriptionId;
-                var roleDefinition = client.RoleDefinitions.List(scope).First();
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+				var roleDefinition = client.RoleDefinitions.List(scope).First();
                 
                 // Get user and group and add the user to the group
                 var userId = testContext.Users.First();
@@ -516,8 +520,8 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var scope = "subscriptions/" + client.SubscriptionId;
-                var allRoleDefinitions = client.RoleDefinitions.List(scope);
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+				var allRoleDefinitions = client.RoleDefinitions.List(scope);
                 
                 Assert.NotNull(allRoleDefinitions);
 
@@ -607,7 +611,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var scope = "subscriptions/" + client.SubscriptionId;
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
                 var allRoleDefinitions = client.RoleDefinitions.List(scope);
 
                 Assert.NotNull(allRoleDefinitions);
@@ -643,10 +647,10 @@ namespace Authorization.Tests
 
                 RoleDefinition createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
-                string currentSubscriptionId = "/subscriptions/" + client.SubscriptionId;
+                string currentSubscriptionId = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
 
-                // Create a custom role definition
-                try
+				// Create a custom role definition
+				try
                 {
                     createOrUpdateParams = new RoleDefinition()
                         {
@@ -729,15 +733,26 @@ namespace Authorization.Tests
 
                 RoleDefinition createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition1");
-                string currentSubscriptionId = "/subscriptions/" + client.SubscriptionId;
-                string fullRoleId = currentSubscriptionId + RoleDefIdPrefix + roleDefinitionId;
+                string currentSubscriptionId = "/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                string fullRoleId = "/subscriptions/" + client.SubscriptionId + RoleDefIdPrefix + roleDefinitionId;
 
                 Guid newRoleId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2"); 
-                var resourceGroup = "newtestrg";   
-                string resourceGroupScope = currentSubscriptionId + "/resourceGroups/" + resourceGroup;
+                string resourceGroupScope = currentSubscriptionId;
+				
+				// create resource group,This works only if logged in using Username/Password method
+				var resourceClient = PermissionsTests.GetResourceManagementClient(context);
+				try
+				{
+					resourceClient.ResourceGroups.CreateOrUpdate(
+						"AzureAuthzSDK1",
+						new ResourceGroup
+						{ Location = "westus" });
+				}
+				catch
+				{ }
 
-                // Create a custom role definition
-                try
+				// Create a custom role definition
+				try
                 {
                     createOrUpdateParams = new RoleDefinition()
                         {
@@ -772,13 +787,7 @@ namespace Authorization.Tests
                     Assert.NotEmpty(roleDefinition.Properties.Permissions);
                     Assert.Equal("Microsoft.Authorization/*/Read", roleDefinition.Properties.Permissions.Single().Actions.Single());
 
-                    // create resource group
-                    var resourceClient = PermissionsTests.GetResourceManagementClient(context);                    
-                    resourceClient.ResourceGroups.CreateOrUpdate(
-                        resourceGroup, 
-                        new ResourceGroup
-                        { Location = "westus"});
-                    createOrUpdateParams.Properties.AssignableScopes = new List<string> { resourceGroupScope };
+					createOrUpdateParams.Properties.AssignableScopes = new List<string> { resourceGroupScope };
                     createOrUpdateParams.Properties.RoleName = "NewRoleName_" + newRoleId.ToString();
 
                     roleDefinition = client.RoleDefinitions.CreateOrUpdate(
@@ -793,8 +802,8 @@ namespace Authorization.Tests
                     var deleteResult = client.RoleDefinitions.Delete(currentSubscriptionId, roleDefinitionId.ToString());
                     Assert.NotNull(deleteResult);
 
-                    deleteResult = client.RoleDefinitions.Delete(resourceGroupScope, newRoleId.ToString());
-                    Assert.NotNull(deleteResult);
+                   deleteResult = client.RoleDefinitions.Delete(resourceGroupScope, newRoleId.ToString());
+                   Assert.NotNull(deleteResult);
                 }
 
                 
@@ -920,7 +929,42 @@ namespace Authorization.Tests
             }
         }
 
-        private static T GetValueFromTestContext<T>(Func<T> constructor, Func<string, T> parser, string mockName)
+		[Fact]
+		public void ProviderOperationsMetadataListGetTests()
+		{
+			using (MockContext context = MockContext.Start(this.GetType().FullName))
+			{
+				var client = testContext.GetAuthorizationManagementClient(context);
+
+				Assert.NotNull(client);
+				Assert.NotNull(client.HttpClient);
+				var allProviderOperationsMetadatas = client.ProviderOperationsMetadata.List("2015-07-01");
+
+				Assert.NotNull(allProviderOperationsMetadatas);
+
+				foreach (var operationsMetadata in allProviderOperationsMetadatas)
+				{
+					Assert.NotNull(operationsMetadata);
+					Assert.NotNull(operationsMetadata.Id);
+					Assert.NotNull(operationsMetadata.Name);
+					Assert.NotNull(operationsMetadata.Operations);
+					Assert.NotNull(operationsMetadata.ResourceTypes);
+					Assert.NotNull(operationsMetadata.Type);
+				}
+
+				var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("Microsoft.Web", "2015-07-01");
+				Assert.NotNull(providerOperationsMetadata);
+				Assert.NotNull(providerOperationsMetadata.DisplayName);
+				Assert.NotNull(providerOperationsMetadata.Id);
+				Assert.NotNull(providerOperationsMetadata.Name);
+				Assert.NotNull(providerOperationsMetadata.Operations);
+				Assert.NotNull(providerOperationsMetadata.ResourceTypes);
+				Assert.NotNull(providerOperationsMetadata.Type);
+
+			}
+		}
+
+		private static T GetValueFromTestContext<T>(Func<T> constructor, Func<string, T> parser, string mockName)
         {
             T retValue = default(T);
 

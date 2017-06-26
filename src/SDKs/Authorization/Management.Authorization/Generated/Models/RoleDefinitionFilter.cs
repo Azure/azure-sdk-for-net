@@ -8,13 +8,11 @@
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+	using System.Linq;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Authorization;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Role Definitions filter
@@ -24,18 +22,29 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Initializes a new instance of the RoleDefinitionFilter class.
         /// </summary>
-        public RoleDefinitionFilter() { }
+        public RoleDefinitionFilter()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RoleDefinitionFilter class.
         /// </summary>
+        /// <param name="roleName">Returns role definition with the specific
+        /// name.</param>
         public RoleDefinitionFilter(string roleName = default(string))
         {
             RoleName = roleName;
+            CustomInit();
         }
 
         /// <summary>
-        /// Returns role definition with the specific name.
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets returns role definition with the specific name.
         /// </summary>
         [JsonProperty(PropertyName = "roleName")]
         public string RoleName { get; set; }
