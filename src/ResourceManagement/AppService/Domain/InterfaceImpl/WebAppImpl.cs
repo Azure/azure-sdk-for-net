@@ -1129,6 +1129,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <summary>
+        /// Gets the Linux app framework and version if this is a Linux web app.
+        /// </summary>
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.LinuxFxVersion
+        {
+            get
+            {
+                return this.LinuxFxVersion() as string;
+            }
+        }
+
+        /// <summary>
         /// Gets the version of Node.JS.
         /// </summary>
         string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.NodeVersion

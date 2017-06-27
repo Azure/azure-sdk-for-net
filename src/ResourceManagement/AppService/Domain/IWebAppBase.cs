@@ -348,5 +348,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         /// rules for databases accessed by this web app.
         /// </summary>
         System.Collections.Generic.ISet<string> OutboundIPAddresses { get; }
+
+        /// <summary>
+        /// Gets the Linux app framework and version if this is a Linux web app.
+        /// </summary>
+        string LinuxFxVersion { get; }
     }
 }
