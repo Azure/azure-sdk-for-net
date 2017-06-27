@@ -2588,7 +2588,7 @@
       "RequestUri": "/subscriptions/70a5cb48-f9db-44e5-b819-936d54cc83d4/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default?api-version=2017-06-01",
       "EncodedRequestUri": null,
       "RequestMethod": "GET",
-      "RequestBody": "dasd",
+      "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "390f1906-b4f9-484d-8e43-684b20efa06b"
@@ -2650,7 +2650,7 @@
       "RequestUri": "/subscriptions/70a5cb48-f9db-44e5-b819-936d54cc83d4/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies?api-version=2017-06-01",
       "EncodedRequestUri": null,
       "RequestMethod": "GET",
-      "RequestBody": "zxsdsc",
+      "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "390f1906-b4f9-484d-8e43-684b20efa06b"
@@ -2712,7 +2712,7 @@
       "RequestUri": "/subscriptions/70a5cb48-f9db-44e5-b819-936d54cc83d4/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/AppGwSslPolicy20150501?api-version=2017-06-01",
       "EncodedRequestUri": null,
       "RequestMethod": "GET",
-      "RequestBody": "zxc",
+      "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "390f1906-b4f9-484d-8e43-684b20efa06b"
