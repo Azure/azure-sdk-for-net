@@ -22,24 +22,25 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// Description of a namespace resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SBNamespace : TrackedResource
+    public partial class SBNamespaceUpdateParameters : ResourceNamespacePatch
     {
         /// <summary>
-        /// Initializes a new instance of the SBNamespace class.
+        /// Initializes a new instance of the SBNamespaceUpdateParameters
+        /// class.
         /// </summary>
-        public SBNamespace()
+        public SBNamespaceUpdateParameters()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SBNamespace class.
+        /// Initializes a new instance of the SBNamespaceUpdateParameters
+        /// class.
         /// </summary>
-        /// <param name="location">The Geo-location where the resource
-        /// live</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="location">Resource location</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="sku">Porperties of Sku</param>
         /// <param name="provisioningState">Provisioning state of the
@@ -50,8 +51,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Service Bus operations.</param>
         /// <param name="metricId">Identifier for Azure Insights
         /// metrics</param>
-        public SBNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string))
-            : base(location, id, name, type, tags)
+        public SBNamespaceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string))
+            : base(id, name, type, location, tags)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
@@ -109,9 +110,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (Sku != null)
             {
                 Sku.Validate();

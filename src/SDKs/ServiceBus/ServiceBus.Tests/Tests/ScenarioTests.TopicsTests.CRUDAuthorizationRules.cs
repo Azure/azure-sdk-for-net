@@ -81,7 +81,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new SBAuthorizationRule()
                 {
-                    Name = authorizationRuleName,
                     Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
                 };
 

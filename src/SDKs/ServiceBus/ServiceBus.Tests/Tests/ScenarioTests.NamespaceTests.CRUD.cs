@@ -80,7 +80,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
 
                 //Update namespace tags
-                var updateNamespaceParameter = new SBNamespace()
+                var updateNamespaceParameter = new SBNamespaceUpdateParameters()
                 {
                     Location = location,
                     Tags = new Dictionary<string, string>()

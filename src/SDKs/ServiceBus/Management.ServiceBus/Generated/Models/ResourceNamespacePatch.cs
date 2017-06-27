@@ -11,38 +11,37 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ServiceBus;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Description of a namespace authorization rule.
+    /// The Resource definition.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class SBAuthorizationRule : Resource
+    public partial class ResourceNamespacePatch : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the SBAuthorizationRule class.
+        /// Initializes a new instance of the ResourceNamespacePatch class.
         /// </summary>
-        public SBAuthorizationRule()
+        public ResourceNamespacePatch()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SBAuthorizationRule class.
+        /// Initializes a new instance of the ResourceNamespacePatch class.
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="rights">The rights associated with the rule.</param>
-        public SBAuthorizationRule(string id = default(string), string name = default(string), string type = default(string), IList<AccessRights?> rights = default(IList<AccessRights?>))
+        /// <param name="location">Resource location</param>
+        /// <param name="tags">Resource tags</param>
+        public ResourceNamespacePatch(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type)
         {
-            Rights = rights;
+            Location = location;
+            Tags = tags;
             CustomInit();
         }
 
@@ -52,10 +51,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the rights associated with the rule.
+        /// Gets or sets resource location
         /// </summary>
-        [JsonProperty(PropertyName = "properties.rights")]
-        public IList<AccessRights?> Rights { get; set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }
