@@ -39,7 +39,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         public void RegisterSessionHandler(SessionHandlerOptions handlerOptions)
         {
-            this.sessionPumpHost.OnSessionHandlerAsync(this.OnSessionHandler, this.sessionHandlerOptions).GetAwaiter().GetResult();
+            this.sessionPumpHost.OnSessionHandler(this.OnSessionHandler, this.sessionHandlerOptions);
         }
 
         public async Task SendSessionMessages()

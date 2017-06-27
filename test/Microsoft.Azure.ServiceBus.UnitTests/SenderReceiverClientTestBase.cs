@@ -10,6 +10,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Text;
     using System.Threading.Tasks;
     using Core;
+    using Microsoft.Azure.ServiceBus.Primitives;
     using Xunit;
 
     public abstract class SenderReceiverClientTestBase
@@ -250,7 +251,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
                     }
                 },
-                new MessageHandlerOptions() { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+                new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
 
             // Wait for the OnMessage Tasks to finish
             Stopwatch stopwatch = Stopwatch.StartNew();
@@ -278,10 +279,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             messageReceiver.RegisterMessageHandler(
                 (message, token) => throw new Exception("Was not supposed to receive any messages"),
-                new MessageHandlerOptions { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+                new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
 
             stopwatch.Stop();
             Assert.True(stopwatch.Elapsed.TotalSeconds < 10, "OnMessage handler registration took longer than 10 seconds.");
+        }
+
+        void ExceptionReceivedHandler(object sender, ExceptionReceivedEventArgs eventArgs)
+        {
+            TestUtility.Log($"Exception Received: ClientId: {((ClientEntity)sender).ClientId}, Exception: {eventArgs.Exception.Message}");
         }
     }
 }

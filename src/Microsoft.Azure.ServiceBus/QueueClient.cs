@@ -291,9 +291,10 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Asynchronously processes a message.</summary>
         /// <param name="handler"></param>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler)
+        /// <param name="exceptionReceivedHandler"></param>
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Action<object, ExceptionReceivedEventArgs> exceptionReceivedHandler)
         {
-            this.InnerReceiver.RegisterMessageHandler(handler);
+            this.InnerReceiver.RegisterMessageHandler(handler, new MessageHandlerOptions(exceptionReceivedHandler));
         }
 
         /// <summary>Asynchronously processes a message.</summary>
@@ -317,7 +318,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="sessionHandlerOptions">Options associated with session pump processing.</param>
         public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
         {
-            this.SessionPumpHost.OnSessionHandlerAsync(handler, sessionHandlerOptions).GetAwaiter().GetResult();
+            this.SessionPumpHost.OnSessionHandler(handler, sessionHandlerOptions);
         }
 
         /// <summary>

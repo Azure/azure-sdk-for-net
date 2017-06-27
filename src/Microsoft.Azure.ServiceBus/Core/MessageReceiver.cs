@@ -584,9 +584,10 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Registers a message handler and begins a new thread to receive messages.
         /// </summary>
         /// <param name="handler">A <see cref="Func{T1, T2, TResult}"/> that processes messages.</param>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler)
+        /// <param name="exceptionReceivedHandler"></param>
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Action<object, ExceptionReceivedEventArgs> exceptionReceivedHandler)
         {
-            this.RegisterMessageHandler(handler, new MessageHandlerOptions());
+            this.RegisterMessageHandler(handler, new MessageHandlerOptions(exceptionReceivedHandler));
         }
 
         /// <summary>
@@ -597,7 +598,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
             messageHandlerOptions.MessageClientEntity = this;
-            this.OnMessageHandlerAsync(messageHandlerOptions, handler).GetAwaiter().GetResult();
+            this.OnMessageHandler(messageHandlerOptions, handler);
         }
 
         /// <summary></summary>
@@ -1095,7 +1096,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        async Task OnMessageHandlerAsync(
+        void OnMessageHandler(
             MessageHandlerOptions registerHandlerOptions,
             Func<Message, CancellationToken, Task> callback)
         {
@@ -1114,7 +1115,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             try
             {
-                await this.receivePump.StartPumpAsync().ConfigureAwait(false);
+                this.receivePump.StartPump();
             }
             catch (Exception exception)
             {

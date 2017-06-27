@@ -5,7 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
 
-    /// <summary>Provides data for the <see cref="MessageHandlerOptions.ExceptionReceived" /> event.</summary>
+    /// <summary>Provides data for the <see cref="MessageHandlerOptions.ExceptionReceivedHandler" /> event.</summary>
     public sealed class ExceptionReceivedEventArgs : EventArgs
     {
         /// <summary>Initializes a new instance of the <see cref="ExceptionReceivedEventArgs" /> class.</summary>

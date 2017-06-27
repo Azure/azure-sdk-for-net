@@ -40,7 +40,5 @@ namespace Microsoft.Azure.ServiceBus
         public static readonly int DefaultClientPumpPrefetchCount = 5;
 
         public static readonly TimeSpan NoMessageBackoffTimeSpan = TimeSpan.FromSeconds(5);
-
-        public static readonly TimeSpan MessageReceiverStartPumpInitialReceiveTimeout = TimeSpan.FromSeconds(1);
     }
 }

@@ -720,36 +720,6 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiverPumpInitialMessageReceived(string clientId, Message message)
-        {
-            if (this.IsEnabled())
-            {
-                this.MessageReceiverPumpInitialMessageReceived(clientId, message.SystemProperties.SequenceNumber);
-            }
-        }
-
-        [Event(64, Level = EventLevel.Informational, Message = "{0}: MessageReceiverPump Received Initial Message: SequenceNumber: {1}")]
-        void MessageReceiverPumpInitialMessageReceived(string clientId, long sequenceNumber)
-        {
-            this.WriteEvent(64, clientId, sequenceNumber);
-        }
-
-        [NonEvent]
-        public void MessageReceiverPumpInitialMessageReceiveException(string clientId, int retryCount, Exception exception)
-        {
-            if (this.IsEnabled())
-            {
-                this.MessageReceiverPumpInitialMessageReceiveException(clientId, retryCount, exception.ToString());
-            }
-        }
-
-        [Event(65, Level = EventLevel.Error, Message = "{0}: MessageReceiverPump Receive Initial Message Exception: RetryCount: {1}, Exception: {2}")]
-        void MessageReceiverPumpInitialMessageReceiveException(string clientId, int retryCount, string exception)
-        {
-            this.WriteEvent(65, clientId, retryCount, exception);
-        }
-
-        [NonEvent]
         public void MessageReceiverPumpTaskStart(string clientId, Message message, int currentSemaphoreCount)
         {
             if (this.IsEnabled())

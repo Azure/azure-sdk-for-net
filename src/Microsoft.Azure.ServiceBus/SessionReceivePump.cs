@@ -43,33 +43,12 @@ namespace Microsoft.Azure.ServiceBus
 
         ReceiveMode ReceiveMode { get; }
 
-        public async Task StartPumpAsync()
+        public void StartPump()
         {
-            IMessageSession initialSession = null;
-
-            // Do a first receive of a Session on entity to flush any non-transient errors.
-            // Timeout is a valid exception.
-            try
-            {
-                initialSession = await this.client.AcceptMessageSessionAsync().ConfigureAwait(false);
-
-                // MessagingEventSource.Log.SessionReceiverPumpInitialSessionReceived(this.client.ClientId, initialSession);
-            }
-            catch (ServiceBusTimeoutException)
-            {
-            }
-
             // Schedule Tasks for doing PendingAcceptSession calls
             for (int i = 0; i < this.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls; i++)
             {
-                if (i == 0)
-                {
-                    TaskExtensionHelper.Schedule(() => this.SessionPumpTaskAsync(initialSession));
-                }
-                else
-                {
-                    TaskExtensionHelper.Schedule(() => this.SessionPumpTaskAsync(null));
-                }
+                TaskExtensionHelper.Schedule(() => this.SessionPumpTaskAsync());
             }
         }
 
@@ -130,7 +109,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task SessionPumpTaskAsync(IMessageSession initialSession)
+        async Task SessionPumpTaskAsync()
         {
             IMessageSession session;
             while (!this.pumpCancellationToken.IsCancellationRequested)
@@ -141,23 +120,15 @@ namespace Microsoft.Azure.ServiceBus
                     await this.maxConcurrentSessionsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
                     concurrentSessionSemaphoreAquired = true;
 
-                    if (initialSession != null)
+                    await this.maxPendingAcceptSessionsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
+                    session = await this.client.AcceptMessageSessionAsync().ConfigureAwait(false);
+                    if (session == null)
                     {
-                        session = initialSession;
-                        TaskExtensionHelper.Schedule(() => this.MessagePumpTaskAsync(session));
-                        initialSession = null;
+                        await Task.Delay(Constants.NoMessageBackoffTimeSpan, this.pumpCancellationToken).ConfigureAwait(false);
+                        continue;
                     }
-                    else
-                    {
-                        await this.maxPendingAcceptSessionsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
-                        session = await this.client.AcceptMessageSessionAsync().ConfigureAwait(false);
-                        if (session == null)
-                        {
-                            await Task.Delay(Constants.NoMessageBackoffTimeSpan, this.pumpCancellationToken).ConfigureAwait(false);
-                            continue;
-                        }
-                        TaskExtensionHelper.Schedule(() => this.MessagePumpTaskAsync(session));
-                    }
+
+                    TaskExtensionHelper.Schedule(() => this.MessagePumpTaskAsync(session));
                 }
                 catch (Exception exception)
                 {

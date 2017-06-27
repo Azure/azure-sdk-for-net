@@ -21,17 +21,18 @@ namespace Microsoft.Azure.ServiceBus
         ///     <see cref="ReceiveTimeOut"/> = 1 minute
         ///     <see cref="MaxAutoRenewDuration"/> = 5 minutes
         /// </summary>
-        public MessageHandlerOptions()
+        public MessageHandlerOptions(Action<object, ExceptionReceivedEventArgs> exceptionReceivedHandler)
         {
             this.MaxConcurrentCalls = 1;
             this.AutoComplete = true;
             this.ReceiveTimeOut = Constants.DefaultOperationTimeout;
             this.MaxAutoRenewDuration = Constants.ClientPumpRenewLockTimeout;
+            this.ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
         }
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the message pump.
         /// When errors are received calls will automatically be retried, so this is informational. </summary>
-        public event EventHandler<ExceptionReceivedEventArgs> ExceptionReceived;
+        public Action<object, ExceptionReceivedEventArgs> ExceptionReceivedHandler { get; set; }
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
         /// <value>The maximum number of concurrent calls to the callback.</value>
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.ServiceBus
 
         internal void RaiseExceptionReceived(ExceptionReceivedEventArgs e)
         {
-            this.ExceptionReceived?.Invoke(this.MessageClientEntity, e);
+            this.ExceptionReceivedHandler(this.MessageClientEntity, e);
         }
     }
 }

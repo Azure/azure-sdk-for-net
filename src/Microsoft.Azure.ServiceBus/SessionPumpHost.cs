@@ -40,7 +40,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        public async Task OnSessionHandlerAsync(
+        public void OnSessionHandler(
             Func<IMessageSession, Message, CancellationToken, Task> callback,
             SessionHandlerOptions sessionHandlerOptions)
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.ServiceBus
 
             try
             {
-                await this.sessionReceivePump.StartPumpAsync().ConfigureAwait(false);
+                this.sessionReceivePump.StartPump();
             }
             catch (Exception exception)
             {

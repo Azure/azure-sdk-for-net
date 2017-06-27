@@ -32,15 +32,9 @@ namespace Microsoft.Azure.ServiceBus
             this.maxConcurrentCallsSemaphoreSlim = new SemaphoreSlim(this.registerHandlerOptions.MaxConcurrentCalls);
         }
 
-        public async Task StartPumpAsync()
+        public void StartPump()
         {
-            var initialMessage = await this.messageReceiver.ReceiveAsync(Constants.MessageReceiverStartPumpInitialReceiveTimeout).ConfigureAwait(false);
-            if (initialMessage != null)
-            {
-                MessagingEventSource.Log.MessageReceiverPumpInitialMessageReceived(this.messageReceiver.ClientId, initialMessage);
-            }
-
-            TaskExtensionHelper.Schedule(() => this.MessagePumpTask(initialMessage));
+            TaskExtensionHelper.Schedule(() => this.MessagePumpTaskAsync());
         }
 
         bool ShouldRenewLock()
@@ -50,7 +44,7 @@ namespace Microsoft.Azure.ServiceBus
                 this.registerHandlerOptions.AutoRenewLock;
         }
 
-        async Task MessagePumpTask(Message initialMessage)
+        async Task MessagePumpTaskAsync()
         {
             while (!this.pumpCancellationToken.IsCancellationRequested)
             {
@@ -58,16 +52,7 @@ namespace Microsoft.Azure.ServiceBus
                 try
                 {
                     await this.maxConcurrentCallsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
-
-                    if (initialMessage == null)
-                    {
-                        message = await this.messageReceiver.ReceiveAsync(this.registerHandlerOptions.ReceiveTimeOut).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        message = initialMessage;
-                        initialMessage = null;
-                    }
+                    message = await this.messageReceiver.ReceiveAsync(this.registerHandlerOptions.ReceiveTimeOut).ConfigureAwait(false);                  
 
                     if (message != null)
                     {
