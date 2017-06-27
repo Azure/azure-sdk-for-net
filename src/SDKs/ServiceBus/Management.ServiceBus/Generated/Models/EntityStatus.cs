@@ -24,20 +24,20 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     {
         [EnumMember(Value = "Active")]
         Active,
-        [EnumMember(Value = "Creating")]
-        Creating,
-        [EnumMember(Value = "Deleting")]
-        Deleting,
         [EnumMember(Value = "Disabled")]
         Disabled,
-        [EnumMember(Value = "ReceiveDisabled")]
-        ReceiveDisabled,
-        [EnumMember(Value = "Renaming")]
-        Renaming,
         [EnumMember(Value = "Restoring")]
         Restoring,
         [EnumMember(Value = "SendDisabled")]
         SendDisabled,
+        [EnumMember(Value = "ReceiveDisabled")]
+        ReceiveDisabled,
+        [EnumMember(Value = "Creating")]
+        Creating,
+        [EnumMember(Value = "Deleting")]
+        Deleting,
+        [EnumMember(Value = "Renaming")]
+        Renaming,
         [EnumMember(Value = "Unknown")]
         Unknown
     }

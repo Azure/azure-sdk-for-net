@@ -11,15 +11,23 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Azure;
     using Management;
     using ServiceBus;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SkuName.
     /// </summary>
-    public static class SkuName
+    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum SkuName
     {
-        public const string Basic = "Basic";
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
+        [EnumMember(Value = "Basic")]
+        Basic,
+        [EnumMember(Value = "Standard")]
+        Standard,
+        [EnumMember(Value = "Premium")]
+        Premium
     }
 }
 

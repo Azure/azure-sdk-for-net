@@ -12,35 +12,28 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Management;
     using ServiceBus;
     using Rest;
-    using Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Description of a namespace authorization rule.
+    /// AuthorizationRule properties.
     /// </summary>
-    [JsonTransformation]
-    public partial class SharedAccessAuthorizationRuleResource : Resource
+    public partial class AuthorizationRuleProperties
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// SharedAccessAuthorizationRuleResource class.
+        /// Initializes a new instance of the AuthorizationRuleProperties
+        /// class.
         /// </summary>
-        public SharedAccessAuthorizationRuleResource() { }
+        public AuthorizationRuleProperties() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// SharedAccessAuthorizationRuleResource class.
+        /// Initializes a new instance of the AuthorizationRuleProperties
+        /// class.
         /// </summary>
         /// <param name="rights">The rights associated with the rule.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="location">Resource location.</param>
-        /// <param name="type">Resource type</param>
-        public SharedAccessAuthorizationRuleResource(IList<AccessRights?> rights, string id = default(string), string name = default(string), string location = default(string), string type = default(string))
-            : base(id, name, location, type)
+        public AuthorizationRuleProperties(IList<AccessRights?> rights)
         {
             Rights = rights;
         }
@@ -48,7 +41,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Gets or sets the rights associated with the rule.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.rights")]
+        [JsonProperty(PropertyName = "rights")]
         public IList<AccessRights?> Rights { get; set; }
 
         /// <summary>

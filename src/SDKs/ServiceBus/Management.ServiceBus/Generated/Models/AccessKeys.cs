@@ -17,15 +17,15 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// <summary>
     /// Namespace/ServiceBus Connection String
     /// </summary>
-    public partial class ResourceListKeys
+    public partial class AccessKeys
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceListKeys class.
+        /// Initializes a new instance of the AccessKeys class.
         /// </summary>
-        public ResourceListKeys() { }
+        public AccessKeys() { }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceListKeys class.
+        /// Initializes a new instance of the AccessKeys class.
         /// </summary>
         /// <param name="primaryConnectionString">Primary connection string of
         /// the created namespace authorization rule.</param>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// signing and validating the SAS token.</param>
         /// <param name="keyName">A string that describes the authorization
         /// rule.</param>
-        public ResourceListKeys(string primaryConnectionString = default(string), string secondaryConnectionString = default(string), string primaryKey = default(string), string secondaryKey = default(string), string keyName = default(string))
+        public AccessKeys(string primaryConnectionString = default(string), string secondaryConnectionString = default(string), string primaryKey = default(string), string secondaryKey = default(string), string keyName = default(string))
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
@@ -47,38 +47,38 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// Gets or sets primary connection string of the created namespace
+        /// Gets primary connection string of the created namespace
         /// authorization rule.
         /// </summary>
         [JsonProperty(PropertyName = "primaryConnectionString")]
-        public string PrimaryConnectionString { get; set; }
+        public string PrimaryConnectionString { get; protected set; }
 
         /// <summary>
-        /// Gets or sets secondary connection string of the created namespace
+        /// Gets secondary connection string of the created namespace
         /// authorization rule.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryConnectionString")]
-        public string SecondaryConnectionString { get; set; }
+        public string SecondaryConnectionString { get; protected set; }
 
         /// <summary>
-        /// Gets or sets a base64-encoded 256-bit primary key for signing and
+        /// Gets a base64-encoded 256-bit primary key for signing and
         /// validating the SAS token.
         /// </summary>
         [JsonProperty(PropertyName = "primaryKey")]
-        public string PrimaryKey { get; set; }
+        public string PrimaryKey { get; protected set; }
 
         /// <summary>
-        /// Gets or sets a base64-encoded 256-bit primary key for signing and
+        /// Gets a base64-encoded 256-bit primary key for signing and
         /// validating the SAS token.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryKey")]
-        public string SecondaryKey { get; set; }
+        public string SecondaryKey { get; protected set; }
 
         /// <summary>
-        /// Gets or sets a string that describes the authorization rule.
+        /// Gets a string that describes the authorization rule.
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
-        public string KeyName { get; set; }
+        public string KeyName { get; protected set; }
 
     }
 }

@@ -95,6 +95,11 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </summary>
         ISubscriptionsOperations Subscriptions { get; }
 
+        /// <summary>
+        /// Gets the IRulesOperations.
+        /// </summary>
+        IRulesOperations Rules { get; }
+
     }
 }
 

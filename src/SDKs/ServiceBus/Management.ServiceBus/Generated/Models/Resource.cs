@@ -31,39 +31,31 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
-        /// <param name="location">Resource location.</param>
         /// <param name="type">Resource type</param>
-        public Resource(string id = default(string), string name = default(string), string location = default(string), string type = default(string))
+        public Resource(string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
             Name = name;
-            Location = location;
             Type = type;
         }
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets or sets resource Id
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; protected set; }
+        public string Id { get; set; }
 
         /// <summary>
-        /// Gets resource name
+        /// Gets or sets resource name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; protected set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets resource location.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets resource type
+        /// Gets or sets resource type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; protected set; }
+        public string Type { get; set; }
 
     }
 }
