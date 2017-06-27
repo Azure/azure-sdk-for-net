@@ -69,7 +69,6 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 createSub.EnableBatchedOperations = true;
                     createSub.LockDuration = TimeSpan.Parse("00:03:00");
-                   createSub.RequiresSession = true;
                     createSub.DefaultMessageTimeToLive = TimeSpan.Parse("00:05:00");
                     createSub.DeadLetteringOnMessageExpiration = true;
                     createSub.MaxDeliveryCount = 14;

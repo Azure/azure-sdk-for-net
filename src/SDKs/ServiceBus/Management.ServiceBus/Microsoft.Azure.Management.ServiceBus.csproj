@@ -7,5 +7,6 @@
     <PackageTags>Microsoft Azure ServiceBus Management;ServiceBus;ServiceBus management</PackageTags>      
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
     <VersionPrefix>0.2.0-preview</VersionPrefix>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 </Project>
