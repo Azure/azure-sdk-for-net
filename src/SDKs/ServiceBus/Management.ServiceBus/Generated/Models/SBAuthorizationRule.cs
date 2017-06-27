@@ -12,34 +12,37 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ServiceBus;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The Resource definition for other than namespace.
+    /// Description of a namespace authorization rule.
     /// </summary>
-    public partial class Resource : IResource
+    [Rest.Serialization.JsonTransformation]
+    public partial class SBAuthorizationRule : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the SBAuthorizationRule class.
         /// </summary>
-        public Resource()
+        public SBAuthorizationRule()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the SBAuthorizationRule class.
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="rights">The rights associated with the rule.</param>
+        public SBAuthorizationRule(string id = default(string), string name = default(string), string type = default(string), IList<AccessRights?> rights = default(IList<AccessRights?>))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
+            Rights = rights;
             CustomInit();
         }
 
@@ -49,22 +52,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets or sets the rights associated with the rule.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets resource name
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets resource type
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "properties.rights")]
+        public IList<AccessRights?> Rights { get; set; }
 
     }
 }

@@ -11,35 +11,37 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.ServiceBus;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The Resource definition for other than namespace.
+    /// The Resource definition.
     /// </summary>
-    public partial class Resource : IResource
+    public partial class ResourceNamespacePatch : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the ResourceNamespacePatch class.
         /// </summary>
-        public Resource()
+        public ResourceNamespacePatch()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the ResourceNamespacePatch class.
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="location">Resource location</param>
+        /// <param name="tags">Resource tags</param>
+        public ResourceNamespacePatch(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
+            Location = location;
+            Tags = tags;
             CustomInit();
         }
 
@@ -49,22 +51,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets or sets resource location
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
-        /// Gets resource name
+        /// Gets or sets resource tags
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets resource type
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }

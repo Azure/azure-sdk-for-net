@@ -19,13 +19,12 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SubscriptionsOperations operations.
+    /// RulesOperations operations.
     /// </summary>
-    public partial interface ISubscriptionsOperations
+    public partial interface IRulesOperations
     {
         /// <summary>
-        /// List all the subscriptions under a specified topic.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639400.aspx" />
+        /// List all the rules within given topic-subscription
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -35,6 +34,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         /// <param name='topicName'>
         /// The topic name.
+        /// </param>
+        /// <param name='subscriptionName'>
+        /// The subscription name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -51,10 +53,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SBSubscription>>> ListByTopicWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Rule>>> ListBySubscriptionsWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a topic subscription.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639385.aspx" />
+        /// Creates a new rule and updates an existing rule
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -67,9 +68,12 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         /// <param name='subscriptionName'>
         /// The subscription name.
+        /// </param>
+        /// <param name='ruleName'>
+        /// The rule name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a subscription resource.
+        /// Parameters supplied to create a rule.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -86,10 +90,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SBSubscription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SBSubscription parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Rule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, Rule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a subscription from the specified topic.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639381.aspx" />
+        /// Deletes an existing rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -102,6 +105,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         /// <param name='subscriptionName'>
         /// The subscription name.
+        /// </param>
+        /// <param name='ruleName'>
+        /// The rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -115,10 +121,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a subscription description for the specified topic.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639402.aspx" />
+        /// Retrieves the description for the specified rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -131,6 +136,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         /// <param name='subscriptionName'>
         /// The subscription name.
+        /// </param>
+        /// <param name='ruleName'>
+        /// The rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -147,10 +155,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SBSubscription>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Rule>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all the subscriptions under a specified topic.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639400.aspx" />
+        /// List all the rules within given topic-subscription
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -170,6 +177,6 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SBSubscription>>> ListByTopicNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Rule>>> ListBySubscriptionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

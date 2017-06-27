@@ -17,16 +17,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SkuName.
+    /// Defines values for FilterType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum SkuName
+    public enum FilterType
     {
-        [EnumMember(Value = "Basic")]
-        Basic,
-        [EnumMember(Value = "Standard")]
-        Standard,
-        [EnumMember(Value = "Premium")]
-        Premium
+        [EnumMember(Value = "SqlFilter")]
+        SqlFilter,
+        [EnumMember(Value = "CorrelationFilter")]
+        CorrelationFilter
     }
 }
