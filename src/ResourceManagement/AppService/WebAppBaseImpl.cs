@@ -243,6 +243,15 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             return outboundIpAddressesSet;
         }
 
+        public string LinuxFxVersion()
+        {
+            if (this.SiteConfig == null)
+            {
+                return null;
+            }
+            return SiteConfig.LinuxFxVersion;
+        }
+
         ///GENMHASH:4380B7AB34BB7338E16329242A2DB73A:ACAB6B8E224E0172DCF3037479B95B0A
         public bool WebSocketsEnabled()
         {
@@ -612,13 +621,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 {
                     appSettings.Properties = new Dictionary<string, string>();
                 }
-                foreach (var appSetting in appSettingsToAdd)
-                {
-                    appSettings.Properties[appSetting.Key] = appSetting.Value;
-                }
                 foreach (var appSetting in appSettingsToRemove)
                 {
                     appSettings.Properties.Remove(appSetting);
+                }
+                foreach (var appSetting in appSettingsToAdd)
+                {
+                    appSettings.Properties[appSetting.Key] = appSetting.Value;
                 }
                 await UpdateAppSettingsAsync(appSettings, cancellationToken);
             }
@@ -997,8 +1006,21 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             IAppServiceManager manager)
             : base (name, innerObject, manager)
         {
+            if (innerObject != null && innerObject.Kind != null)
+            {
+                innerObject.Kind = innerObject.Kind.Replace(";", ",");
+            }
             this.SiteConfig = configObject;
             NormalizeProperties();
+        }
+
+        public override void SetInner(SiteInner innerObject)
+        {
+            if (innerObject != null && innerObject.Kind != null)
+            {
+                innerObject.Kind = innerObject.Kind.Replace(";", ",");
+            }
+            base.SetInner(innerObject);
         }
 
         ///GENMHASH:3A1ECB38842D1F307BEAA5CE89B8D9A9:5C42B8D5EC49CB7A6DE06E65978C67FF

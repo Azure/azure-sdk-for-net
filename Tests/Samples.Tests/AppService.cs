@@ -132,7 +132,7 @@ namespace Samples.Tests
                 this.GetType().FullName,
                 ManageLinuxWebAppWithDomainSsl.Program.RunSample);
         }
-        
+
         [Fact]
         [Trait("Samples", "AppService")]
         public void ManageLinuxWebAppWithTrafficManagerTest()
@@ -140,6 +140,16 @@ namespace Samples.Tests
             RunSampleAsTest(
                 this.GetType().FullName,
                 ManageLinuxWebAppWithTrafficManager.Program.RunSample);
+        }
+
+        [Fact(Skip = "Docker .Net client and SSHShell require real network connections to be made")]
+        [Trait("Samples", "AppService")]
+        public void ManageLinuxWebAppWithContainerRegistryTest()
+        {
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageLinuxWebAppWithContainerRegistry.Program.RunSample,
+                Path.Combine("..", "Common"));
         }
 
         [Fact]

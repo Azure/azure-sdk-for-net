@@ -1080,6 +1080,17 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         }
 
         /// <summary>
+        /// Gets the Linux app framework and version if this is a Linux web app.
+        /// </summary>
+        string Microsoft.Azure.Management.AppService.Fluent.IWebAppBase.LinuxFxVersion
+        {
+            get
+            {
+                return this.LinuxFxVersion() as string;
+            }
+        }
+
+        /// <summary>
         /// Gets list of Azure Traffic manager host names associated with web
         /// app.
         /// </summary>
