@@ -6,11 +6,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Security.Cryptography;
 using Xunit;
 
 namespace Microsoft.Azure.KeyVault.WebKey.Tests
 {
-    public class WebKeyClearMemoryTest
+    public class WebKeyOperationsTest
     {
         [Fact]
         public void ClearMemoryTest()
@@ -19,6 +20,37 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             {
                 CheckInstance(new JsonWebKey(), kty);
             }
+        }
+
+        [Fact]
+        public void JwkEqualsTests()
+        {
+            // Not equal keys, second key is null
+            JsonWebKey key1 = new JsonWebKey();
+            JsonWebKey key2 = null;
+            Assert.False(key1.Equals(key2));
+
+            // Not equal keys, their operations are different and need to handle null
+            key2 = new JsonWebKey();
+            key1.KeyOps = new[] { "ops" };
+            key2.KeyOps = null;
+            Assert.False(key1.Equals(key2));
+            key1.KeyOps = null;
+            key2.KeyOps = new[] { "ops" };
+            Assert.False(key1.Equals(key2));
+
+            // Equal keys, fields are null
+            key1 = new JsonWebKey();
+            key2 = new JsonWebKey();
+            Assert.True(key1.Equals(key2));
+
+            // Equal keys with most fields are set to a value.
+            var param = RSA.Create().ExportParameters(true);
+            key1 = new JsonWebKey(param);
+            key2 = new JsonWebKey(param);
+            key1.KeyOps = new[] { "ops1", "ops2" };
+            key2.KeyOps = new[] { "ops1", "ops2" };
+            Assert.True(key1.Equals(key2));
         }
 
         private static void CheckInstance(object key, string kty)
