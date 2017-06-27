@@ -28,5 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\EventHub.Tests.ScenarioTests.ScenarioTests\" />
+    <Folder Include="SessionRecords\EventHub.Tests.ScenarioTests.ScenarioTests\" />
   </ItemGroup>
 </Project>
