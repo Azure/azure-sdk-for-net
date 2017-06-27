@@ -64,5 +64,18 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "servers")]
         public IList<ApplicationGatewayBackendHealthServer> Servers { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (BackendHttpSettings != null)
+            {
+                BackendHttpSettings.Validate();
+            }
+        }
     }
 }

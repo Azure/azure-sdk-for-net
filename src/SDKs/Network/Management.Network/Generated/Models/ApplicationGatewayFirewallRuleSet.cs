@@ -92,5 +92,36 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.ruleGroups")]
         public IList<ApplicationGatewayFirewallRuleGroup> RuleGroups { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RuleSetType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RuleSetType");
+            }
+            if (RuleSetVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RuleSetVersion");
+            }
+            if (RuleGroups == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RuleGroups");
+            }
+            if (RuleGroups != null)
+            {
+                foreach (var element in RuleGroups)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

@@ -191,5 +191,34 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Protocol == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Protocol");
+            }
+            if (SourceAddressPrefix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SourceAddressPrefix");
+            }
+            if (DestinationAddressPrefix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DestinationAddressPrefix");
+            }
+            if (Access == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Access");
+            }
+            if (Direction == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Direction");
+            }
+        }
     }
 }

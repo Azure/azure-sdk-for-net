@@ -120,5 +120,22 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.routeFilterRuleType")]
         public static string RouteFilterRuleType { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Access == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Access");
+            }
+            if (Communities == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Communities");
+            }
+        }
     }
 }
