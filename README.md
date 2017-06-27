@@ -17,7 +17,7 @@ The Azure Management Libraries for .NET is a higher-level, object-oriented API f
   <tr>
     <td>Compute</td>
     <td>Virtual machines and VM extensions<br>Virtual machine scale sets<br>Managed disks</td>
-    <td valign="top">Azure container services<br>Azure container registry</td>
+    <td valign="top">Azure container service and registry</td>
     <td valign="top"></td>
   </tr>
   <tr>
@@ -275,10 +275,10 @@ You can find plenty of sample code that illustrates management scenarios (80+ en
     <td>Container Service and Container Registry</td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/acr-dotnet-manage-azure-container-registry">Manage container registry</a></li>
-<li><a href="https://github.com/Azure-Samples/acs-dotnet-deploy-image-from-acr-to-kubernetes">Deploy an image from container registry to Kubernetes cluster</a></li>
+<!-- <li><a href="https://github.com/Azure-Samples/acs-dotnet-deploy-image-from-acr-to-kubernetes">Deploy an image from container registry to Kubernetes cluster</a></li>
 <li><a href="https://github.com/Azure-Samples/acs-dotnet-deploy-image-from-acr-to-swarm">Deploy an image from container registry to Swarm cluster</li>
 <li><a href="https://github.com/Azure-Samples/acs-dotnet-deploy-image-from-docker-hub-to-kubernetes">Deploy an image from Docker hub to Kubernetes cluster</a></li>
-<li><a href="https://github.com/Azure-Samples/acs-dotnet-deploy-image-from-docker-hub-to-swarm">Deploy an image from Docker hub to Swarm cluster</li>
+<li><a href="https://github.com/Azure-Samples/acs-dotnet-deploy-image-from-docker-hub-to-swarm">Deploy an image from Docker hub to Swarm cluster</li> -->
 <li><a href="https://github.com/Azure-Samples/acs-dotnet-manage-azure-container-service">Manage container service</li>
 </ul></td>
   </tr>
@@ -361,7 +361,7 @@ You can find plenty of sample code that illustrates management scenarios (80+ en
     <td>App Service - Web Apps on <b>Linux</b></td>
     <td><ul style="list-style-type:circle">
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-web-apps-on-linux">Manage Web apps</a></li>
-<li><a href="https://github.com/Azure-Samples/app-service-dotnet-deploy-image-from-acr-to-linux">Deploy a container image from Azure Container Registry to Linux containers</a></li>
+<!-- <li><a href="https://github.com/Azure-Samples/app-service-dotnet-deploy-image-from-acr-to-linux">Deploy a container image from Azure Container Registry to Linux containers</a></li> -->
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-manage-web-apps-on-linux-with-custom-domains">Manage Web apps with custom domains</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-configure-deployment-sources-for-web-apps-on-linux">Configure deployment sources for Web apps</a></li>
 <li><a href="https://github.com/Azure-Samples/app-service-dotnet-scale-web-apps-on-linux">Scale Web apps</a></li>
