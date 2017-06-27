@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System.Collections.Generic;
@@ -14,19 +15,18 @@ namespace Sql.Tests
         [Fact]
         public void TestCopyDatabase()
         {
-            string testPrefix = "sqlcrudtest-";
-            Dictionary<string, string> tags = new Dictionary<string, string>();
-            string suiteName = this.GetType().FullName;
-
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCopyDatabase", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 //Create two servers
-                var server = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
-                var server2 = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
+                var server = context.CreateServer(resourceGroup);
+                var server2 = context.CreateServer(resourceGroup);
 
                 // Create a database with all parameters specified
                 // 
-                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string dbName = SqlManagementTestUtilities.GenerateName();
                 var dbInput = new Database()
                 {
                     Location = server.Location,
@@ -44,7 +44,7 @@ namespace Sql.Tests
 
                 // Create a database as copy of the first database
                 //
-                dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                dbName = SqlManagementTestUtilities.GenerateName();
                 var dbInputCopy = new Database()
                 {
                     Location = server2.Location,
@@ -53,7 +53,7 @@ namespace Sql.Tests
                 };
                 var dbCopy = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server2.Name, dbName, dbInputCopy);
                 SqlManagementTestUtilities.ValidateDatabase(db, dbCopy, dbCopy.Name);
-            });
+            }
         }
     }
 }

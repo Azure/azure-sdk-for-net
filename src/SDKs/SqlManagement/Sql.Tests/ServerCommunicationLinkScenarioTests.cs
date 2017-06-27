@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System.Collections.Generic;
@@ -15,16 +16,17 @@ namespace Sql.Tests
         [Fact]
         public void TestCreateGetListCommunicationLinks()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCreateGetListCommunicationLinks", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create two servers
-                Server server1 = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
-                Server server2 = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
+                Server server1 = context.CreateServer(resourceGroup);
+                Server server2 = context.CreateServer(resourceGroup);
 
                 // Create communication link on server 1
-                string linkName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string linkName = SqlManagementTestUtilities.GenerateName();
                 ServerCommunicationLink link = new ServerCommunicationLink()
                 {
                     PartnerServer = server2.Name
@@ -48,22 +50,23 @@ namespace Sql.Tests
                 link = links.First();
                 Assert.Equal(linkName, link.Name);
                 Assert.Equal(server2.Name, link.PartnerServer);
-            });
+            }
         }
 
         [Fact]
         public void TestDeleteCommunicationLinks()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestDeleteCommunicationLinks", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create two servers
-                Server server1 = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
-                Server server2 = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix);
+                Server server1 = context.CreateServer(resourceGroup);
+                Server server2 = context.CreateServer(resourceGroup);
 
                 // Create communication link on server 1
-                string linkName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string linkName = SqlManagementTestUtilities.GenerateName();
                 ServerCommunicationLink link = new ServerCommunicationLink()
                 {
                     PartnerServer = server2.Name
@@ -88,7 +91,7 @@ namespace Sql.Tests
 
                 // Assert that no links found
                 Assert.Equal(0, links.Count());
-            });
+            }
         }
     }
 }

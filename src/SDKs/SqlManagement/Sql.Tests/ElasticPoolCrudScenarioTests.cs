@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
@@ -16,10 +17,12 @@ namespace Sql.Tests
         [Fact]
         public void TestCreateDropElasticPool()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateDropElasticPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
                         { "tagKey1", "TagValue1" }
@@ -28,7 +31,7 @@ namespace Sql.Tests
 
                 // Create elastic pool
                 //
-                string epName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string epName = SqlManagementTestUtilities.GenerateName();
                 names.Add(epName);
                 sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, new ElasticPool()
                 { 
@@ -37,7 +40,7 @@ namespace Sql.Tests
 
                 // Create a elasticPool with Tags and Basic Edition specified
                 // 
-                epName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                epName = SqlManagementTestUtilities.GenerateName();
                 names.Add(epName);
                 var ep2Input = new ElasticPool()
                 {
@@ -48,7 +51,7 @@ namespace Sql.Tests
 
                 // Create a elasticPool with all parameters specified
                 // 
-                epName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                epName = SqlManagementTestUtilities.GenerateName();
                 names.Add(epName);
                 var ep3Input = new ElasticPool()
                 {
@@ -62,16 +65,18 @@ namespace Sql.Tests
                 {
                     sqlClient.ElasticPools.Delete(resourceGroup.Name, server.Name, name);
                 }
-            });
+            }
         }
 
         [Fact]
         public void TestUpdateElasticPoolAndListActivity()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestUpdateElasticPoolAndListActivity", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
                         { "tagKey1", "TagValue1" }
@@ -140,22 +145,24 @@ namespace Sql.Tests
                 Assert.Equal(4, epa.Count());
                 Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
                 Assert.Equal(3, epa.Where(a => a.Operation == "UPDATE").Count());
-            });
+            }
         }
 
         [Fact]
         public void TestGetAndListElasticPool()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListElasticPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 Dictionary<string, ElasticPool> inputs = new Dictionary<string, ElasticPool>();
 
                 // Create elastic pools to run the get/List tests on.
                 for (int i = 0; i < 3; i++)
                 {
-                    string name = SqlManagementTestUtilities.GenerateName(testPrefix);
+                    string name = SqlManagementTestUtilities.GenerateName();
                     inputs.Add(name, new ElasticPool()
                     {
                         Location = server.Location,
@@ -184,7 +191,7 @@ namespace Sql.Tests
                 {
                     SqlManagementTestUtilities.ValidateElasticPool(ep.Value, listResponse.Single(e => e.Name == ep.Key), ep.Key);
                 }
-            });
+            }
         }
     }
 }
