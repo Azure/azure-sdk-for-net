@@ -887,7 +887,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 Publisher = publisher,
                 Offer = offer,
                 Sku = sku,
-                Version = "version"
+                Version = "latest"
             };
             return WithSpecificWindowsImageVersion(imageReference);
         }
