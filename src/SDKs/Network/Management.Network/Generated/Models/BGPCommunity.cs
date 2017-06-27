@@ -54,6 +54,7 @@ namespace Microsoft.Azure.Management.Network.Models
             CommunityPrefixes = communityPrefixes;
             IsAuthorizedToUse = isAuthorizedToUse;
             ServiceGroup = serviceGroup;
+	    CustomInit();
         }
 
         /// <summary>
