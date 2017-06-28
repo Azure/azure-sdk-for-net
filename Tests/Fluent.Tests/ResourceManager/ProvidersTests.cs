@@ -10,6 +10,7 @@ using Fluent.Tests.Common;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Azure.Tests;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Models;
+using System;
 
 namespace Fluent.Tests.ResourceManager
 {
@@ -22,7 +23,7 @@ namespace Fluent.Tests.ResourceManager
             {
                 var resourceManager = TestHelper.CreateResourceManager();
                 var providers = resourceManager.Providers.List();
-                IProvider provider = providers.FirstOrDefault();
+                IProvider provider = providers.FirstOrDefault(p=> p.Namespace.Equals("Microsoft.CognitiveServices", StringComparison.OrdinalIgnoreCase));
                 Assert.NotNull(provider);
 
                 provider = resourceManager.Providers.Unregister(provider.Namespace);
