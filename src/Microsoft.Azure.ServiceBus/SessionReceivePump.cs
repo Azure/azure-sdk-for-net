@@ -72,10 +72,10 @@ namespace Microsoft.Azure.ServiceBus
                 this.sessionHandlerOptions.AutoRenewLock;
         }
 
-        async Task RaiseExceptionReceived(Exception e, string action)
+        Task RaiseExceptionReceived(Exception e, string action)
         {
             var eventArgs = new ExceptionReceivedEventArgs(e, action, this.endpoint, this.entityPath, this.clientId);
-            await this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs).ConfigureAwait(false);
+            return this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
         async Task CompleteMessageIfNeededAsync(IMessageSession session, Message message)

@@ -44,10 +44,10 @@ namespace Microsoft.Azure.ServiceBus
                 this.registerHandlerOptions.AutoRenewLock;
         }
 
-        async Task RaiseExceptionReceived(Exception e, string action)
+        Task RaiseExceptionReceived(Exception e, string action)
         {
             var eventArgs = new ExceptionReceivedEventArgs(e, action, this.endpoint, this.messageReceiver.Path, this.messageReceiver.ClientId);
-            await this.registerHandlerOptions.RaiseExceptionReceived(eventArgs).ConfigureAwait(false);
+            return this.registerHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
         async Task MessagePumpTaskAsync()
