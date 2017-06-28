@@ -3,7 +3,11 @@
 
 namespace Microsoft.Azure.ServiceBus.Core
 {
-    internal interface IMessageSender : ISenderClient
+    /// <summary>
+    /// The interface used to describe common functionality for sending messages to Queues and Topics.
+    /// </summary>
+    /// <seealso cref="MessageSender"/>
+    public interface IMessageSender : ISenderClient
     {
     }
 }

@@ -17,16 +17,32 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <summary>
     /// The MessageSender can be used to send messages to Queues or Topics.
     /// </summary>
+    /// <example>
+    /// Create a new MessageSender to send to a Queue
+    /// <code>
+    /// IMessageSender messageSender = new MessageSender(
+    ///     namespaceConnectionString,
+    ///     queueName)
+    /// </code>
+    /// 
+    /// Send message
+    /// <code>
+    /// byte[] data = GetData();
+    /// await messageSender.SendAsync(data);
+    /// </code>
+    /// </example>
+    /// <remarks>This uses AMQP protocol to communicate with service.</remarks>
     public class MessageSender : ClientEntity, IMessageSender
     {
         int deliveryCount;
         readonly bool ownsConnection;
 
         /// <summary>
-        /// Creates a new MessageSender.
+        /// Creates a new AMQP MessageSender.
         /// </summary>
-        /// <param name="connectionStringBuilder">The <see cref="ServiceBusConnectionStringBuilder"/> used for the connection details</param>
-        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus</param>
+        /// <param name="connectionStringBuilder">The <see cref="ServiceBusConnectionStringBuilder"/> having entity level connection details.</param>
+        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         public MessageSender(
             ServiceBusConnectionStringBuilder connectionStringBuilder,
             RetryPolicy retryPolicy = null)
@@ -35,11 +51,12 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Creates a new MessageSender.
+        /// Creates a new AMQP MessageSender.
         /// </summary>
-        /// <param name="connectionString">The connection string used to communicate with Service Bus.</param>
-        /// <param name="entityPath">The path of the entity for this sender.</param>
-        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus</param>
+        /// <param name="connectionString">Namespace connection string used to communicate with Service Bus. Must not contain Entity details.</param>
+        /// <param name="entityPath">The path of the entity this sender should connect to.</param>
+        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
         public MessageSender(
             string connectionString, 
             string entityPath, 
@@ -80,18 +97,19 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Gets a list of currently registered plugins.
+        /// Gets a list of currently registered plugins for this sender.
         /// </summary>
+        /// <seealso cref="RegisterPlugin"/>
         public IList<ServiceBusPlugin> RegisteredPlugins { get; } = new List<ServiceBusPlugin>();
+
+        /// <summary>
+        /// Gets the entity path of the MessageSender.
+        /// </summary>
+        public virtual string Path { get; private set; }
 
         internal TimeSpan OperationTimeout { get; }
 
         internal MessagingEntityType? EntityType { get; private set; }
-
-        /// <summary>
-        /// Gets the path of the MessageSender.
-        /// </summary>
-        public virtual string Path { get; private set; }
 
         ServiceBusConnection ServiceBusConnection { get; }
 
@@ -101,8 +119,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         FaultTolerantAmqpObject<RequestResponseAmqpLink> RequestResponseLinkManager { get; }
 
-        /// <summary></summary>
-        /// <returns></returns>
+        /// <summary>Closes the connection.</summary>
         protected override async Task OnClosingAsync()
         {
             await this.SendLinkManager.CloseAsync().ConfigureAwait(false);
@@ -155,7 +172,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Sends a message to the path of the <see cref="MessageSender"/>.
+        /// Sends a message to the entity as described by <see cref="Path"/>.
         /// </summary>
         /// <param name="message">The <see cref="Message"/> to send</param>
         /// <returns>An asynchronous operation</returns>
@@ -165,7 +182,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Sends a list of messages to the path of the <see cref="MessageSender"/>.
+        /// Sends a list of messages to the entity as described by <see cref="Path"/>.
         /// </summary>
         /// <param name="messageList">The <see cref="IList{Message}"/> to send</param>
         /// <returns>An asynchronous operation</returns>
@@ -197,9 +214,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Schedules a message to appear on Service Bus.
         /// </summary>
-        /// <param name="message">The <see cref="Message"/></param>
-        /// <param name="scheduleEnqueueTimeUtc">The UTC time that the message should be available for processing</param>
-        /// <returns>An asynchronous operation</returns>
+        /// <param name="message">The <see cref="Message"/> that needs to be scheduled.</param>
+        /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing</param>
+        /// <returns>The sequence number of the message that was scheduled.</returns>
         public async Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
         {
             if (message == null)
@@ -471,7 +488,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used for sending messages to Service Bus.
         /// </summary>
-        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register</param>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
         public void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
         {
             if (serviceBusPlugin == null)

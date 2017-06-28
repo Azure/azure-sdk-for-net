@@ -106,6 +106,11 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        /// <summary>
+        /// Gets a list of currently registered plugins for this QueueClient.
+        /// </summary>
+        public IList<ServiceBusPlugin> RegisteredPlugins => this.InnerSender.RegisteredPlugins;
+
         internal MessageSender InnerSender
         {
             get

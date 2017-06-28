@@ -10,21 +10,16 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     /// <example>
     /// <code>
-    ///
     /// // Create the TopicClient
     /// ITopicClient myTopicClient = new TopicClient(
     ///     serviceBusConnectionString,
     ///     topicName);
     ///
-    /// //********************************************************************************
-    /// //                          Sending messages to a Topic
-    /// //********************************************************************************
-    ///
-    /// // Send messages
+    /// // Send messages to topic
     /// List &lt;byte[]&gt; Issues = GetIssues();
     /// foreach (var issue in Issues)
     /// {
-    ///    myTopicClient.SendAsync(new Message(issue));
+    ///    await myTopicClient.SendAsync(new Message(issue));
     /// }
     /// </code>
     /// </example>

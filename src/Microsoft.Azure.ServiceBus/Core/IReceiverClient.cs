@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.Core
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Primitives;
@@ -19,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         string Path { get; }
 
         /// <summary>
-        /// Gets the <see cref="ReceiveMode.ReceiveMode"/> of the current receiver.
+        /// Gets the <see cref="ServiceBus.ReceiveMode"/> of the current receiver.
         /// </summary>
         ReceiveMode ReceiveMode { get; }
 
@@ -61,5 +62,22 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path. You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.</remarks>
         /// <returns>The asynchronous operation.</returns>
         Task DeadLetterAsync(string lockToken);
+
+        /// <summary>
+        /// Gets a list of currently registered plugins for this sender.
+        /// </summary>
+        IList<ServiceBusPlugin> RegisteredPlugins { get; }
+
+        /// <summary>
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used for sending messages to Service Bus.
+        /// </summary>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register</param>
+        void RegisterPlugin(ServiceBusPlugin serviceBusPlugin);
+
+        /// <summary>
+        /// Unregisters a <see cref="ServiceBusPlugin"/>.
+        /// </summary>
+        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
+        void UnregisterPlugin(string serviceBusPluginName);
     }
 }

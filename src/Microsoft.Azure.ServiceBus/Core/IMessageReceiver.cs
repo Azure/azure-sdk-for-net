@@ -51,9 +51,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Receives a message using the <see cref="MessageReceiver" />.
         /// </summary>
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
-        /// <param name="serverWaitTime">The time span the server waits for receiving a message before it times out.</param>
+        /// <param name="operationTimeout">The time span the server waits for receiving a message before it times out.</param>
         /// <returns>The asynchronous operation.</returns>
-        Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime);
+        Task<IList<Message>> ReceiveAsync(int maxMessageCount, TimeSpan operationTimeout);
 
         /// <summary>
         /// Receives a message using the <see cref="MessageReceiver" />.

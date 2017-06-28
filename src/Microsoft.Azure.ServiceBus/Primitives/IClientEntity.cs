@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
+    using System;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -19,6 +20,11 @@ namespace Microsoft.Azure.ServiceBus
         /// Determines whether or not the ClientEntity is closed or being closed.
         /// </summary>
         bool IsClosedOrClosing { get; }
+
+        /// <summary>
+        /// Duration after which individual operations will timeout.
+        /// </summary>
+        TimeSpan OperationTimeout { get; }
 
         /// <summary>
         /// Closes the ClientEntity.

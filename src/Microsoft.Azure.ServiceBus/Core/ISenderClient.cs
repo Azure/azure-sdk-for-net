@@ -40,5 +40,22 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <param name="sequenceNumber">The <see cref="Message.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
         /// <returns>An asynchronous operation</returns>
         Task CancelScheduledMessageAsync(long sequenceNumber);
+
+        /// <summary>
+        /// Gets a list of currently registered plugins for this sender.
+        /// </summary>
+        IList<ServiceBusPlugin> RegisteredPlugins { get; }
+
+        /// <summary>
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used for sending messages to Service Bus.
+        /// </summary>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register</param>
+        void RegisterPlugin(ServiceBusPlugin serviceBusPlugin);
+
+        /// <summary>
+        /// Unregisters a <see cref="ServiceBusPlugin"/>.
+        /// </summary>
+        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
+        void UnregisterPlugin(string serviceBusPluginName);
     }
 }

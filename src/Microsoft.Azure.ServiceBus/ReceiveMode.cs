@@ -8,11 +8,11 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public enum ReceiveMode
     {
-        /// <summary>Allows a message to be received, and only deleted from Service Bus when <see cref="Microsoft.Azure.ServiceBus.Core.IMessageReceiver.CompleteAsync(System.Collections.Generic.IEnumerable{string})"/> is called.</summary>
-        /// <remarks>This is the default value for <see cref="ReceiveMode.ReceiveMode" />.</remarks>
+        /// <summary>Allows a message to be received, and only deleted from Service Bus when <see cref="Core.IReceiverClient.CompleteAsync(string)"/> is called.</summary>
+        /// <remarks>This is the default value for <see cref="ReceiveMode" />, and should be used for guaranteed delivery.</remarks>
         PeekLock,
 
-        /// <summary>ReceiveAndDelete will delete the message from Service Bus as soon as the message is received.</summary>
+        /// <summary>ReceiveAndDelete will delete the message from Service Bus as soon as the message is delivered.</summary>
         ReceiveAndDelete
     }
 }
