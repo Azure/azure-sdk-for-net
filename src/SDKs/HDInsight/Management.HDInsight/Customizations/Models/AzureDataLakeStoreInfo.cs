@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         {
             if(string.IsNullOrWhiteSpace(storageRootPath))
             {
-                throw new ArgumentException(Constants.ERROR_INPUT_CANNOT_BE_EMPTY, "storageRootPath");
+                throw new ArgumentException(Constants.Errors.ERROR_INPUT_CANNOT_BE_EMPTY, "storageRootPath");
             }
 
             if (!storageAccountName.Contains("."))

@@ -20,6 +20,128 @@ namespace Microsoft.HDInsight
     public static partial class ExtensionOperationsExtensions
     {
             /// <summary>
+            /// Enables the Operations Management Suite (OMS) on the HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The Operations Management Suite (OMS) workspace parameters.
+            /// </param>
+            public static void EnableMonitoring(this IExtensionOperations operations, string resourceGroupName, string clusterName, ClusterMonitoringRequest parameters)
+            {
+                operations.EnableMonitoringAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Enables the Operations Management Suite (OMS) on the HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='parameters'>
+            /// The Operations Management Suite (OMS) workspace parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task EnableMonitoringAsync(this IExtensionOperations operations, string resourceGroupName, string clusterName, ClusterMonitoringRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.EnableMonitoringWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the status of Operations Management Suite (OMS) on the HDInsight
+            /// cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            public static ClusterMonitoringResponse GetMonitoringStatus(this IExtensionOperations operations, string resourceGroupName, string clusterName)
+            {
+                return operations.GetMonitoringStatusAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the status of Operations Management Suite (OMS) on the HDInsight
+            /// cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClusterMonitoringResponse> GetMonitoringStatusAsync(this IExtensionOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetMonitoringStatusWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Disables the Operations Management Suite (OMS) on the HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            public static void DisableMonitoring(this IExtensionOperations operations, string resourceGroupName, string clusterName)
+            {
+                operations.DisableMonitoringAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disables the Operations Management Suite (OMS) on the HDInsight cluster.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='clusterName'>
+            /// The name of the cluster.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisableMonitoringAsync(this IExtensionOperations operations, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisableMonitoringWithHttpMessagesAsync(resourceGroupName, clusterName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates an HDInsight cluster extension.
             /// </summary>
             /// <param name='operations'>

@@ -13,27 +13,26 @@ namespace Microsoft.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// The Windows operation system settings.
+    /// The Operations Management Suite (OMS) status response
     /// </summary>
-    public partial class WindowsOperatingSystemProfile
+    public partial class ClusterMonitoringResponse
     {
         /// <summary>
-        /// Initializes a new instance of the WindowsOperatingSystemProfile
-        /// class.
+        /// Initializes a new instance of the ClusterMonitoringResponse class.
         /// </summary>
-        public WindowsOperatingSystemProfile()
+        public ClusterMonitoringResponse()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WindowsOperatingSystemProfile
-        /// class.
+        /// Initializes a new instance of the ClusterMonitoringResponse class.
         /// </summary>
-        /// <param name="rdpSettings">The RDP settings.</param>
-        public WindowsOperatingSystemProfile(RdpSettings rdpSettings = default(RdpSettings))
+        /// <param name="clusterMonitoringEnabled">The status of the Operations
+        /// Management Suite (OMS) on the HDInsight cluster.</param>
+        public ClusterMonitoringResponse(string clusterMonitoringEnabled = default(string))
         {
-            RdpSettings = rdpSettings;
+            ClusterMonitoringEnabled = clusterMonitoringEnabled;
             CustomInit();
         }
 
@@ -43,10 +42,11 @@ namespace Microsoft.HDInsight.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the RDP settings.
+        /// Gets or sets the status of the Operations Management Suite (OMS) on
+        /// the HDInsight cluster.
         /// </summary>
-        [JsonProperty(PropertyName = "rdpSettings")]
-        public RdpSettings RdpSettings { get; set; }
+        [JsonProperty(PropertyName = "ClusterMonitoringEnabled")]
+        public string ClusterMonitoringEnabled { get; set; }
 
     }
 }

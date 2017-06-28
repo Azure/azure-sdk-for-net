@@ -9,7 +9,6 @@
 namespace Microsoft.HDInsight.Models
 {
     using Microsoft.HDInsight;
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,7 +17,7 @@ namespace Microsoft.HDInsight.Models
     /// <summary>
     /// The execution details of a script action.
     /// </summary>
-    public partial class RuntimeScriptActionDetail
+    public partial class RuntimeScriptActionDetail : RuntimeScriptAction
     {
         /// <summary>
         /// Initializes a new instance of the RuntimeScriptActionDetail class.
@@ -35,6 +34,9 @@ namespace Microsoft.HDInsight.Models
         /// <param name="uri">The URI to the script.</param>
         /// <param name="roles">The list of roles where script will be
         /// executed.</param>
+        /// <param name="parameters">The parameters for the script</param>
+        /// <param name="applicationName">The application name of the script
+        /// action, if any.</param>
         /// <param name="scriptExecutionId">The execution id of the script
         /// action.</param>
         /// <param name="startTime">The start time of script action
@@ -49,10 +51,8 @@ namespace Microsoft.HDInsight.Models
         /// execution result.</param>
         /// <param name="debugInformation">The script action execution debug
         /// information.</param>
-        /// <param name="parameters">The parameters for the script</param>
-        /// <param name="applicationName">The application name of the script
-        /// action, if any.</param>
-        public RuntimeScriptActionDetail(string name, string uri, IList<string> roles, long? scriptExecutionId = default(long?), string startTime = default(string), string endTime = default(string), string status = default(string), string operation = default(string), IList<ScriptActionExecutionSummary> executionSummary = default(IList<ScriptActionExecutionSummary>), string debugInformation = default(string), string parameters = default(string), string applicationName = default(string))
+        public RuntimeScriptActionDetail(string name, string uri, IList<string> roles, string parameters = default(string), string applicationName = default(string), long? scriptExecutionId = default(long?), string startTime = default(string), string endTime = default(string), string status = default(string), string operation = default(string), IList<ScriptActionExecutionSummary> executionSummary = default(IList<ScriptActionExecutionSummary>), string debugInformation = default(string))
+            : base(name, uri, roles, parameters, applicationName)
         {
             ScriptExecutionId = scriptExecutionId;
             StartTime = startTime;
@@ -61,11 +61,6 @@ namespace Microsoft.HDInsight.Models
             Operation = operation;
             ExecutionSummary = executionSummary;
             DebugInformation = debugInformation;
-            Name = name;
-            Uri = uri;
-            Parameters = parameters;
-            Roles = roles;
-            ApplicationName = applicationName;
             CustomInit();
         }
 
@@ -117,55 +112,14 @@ namespace Microsoft.HDInsight.Models
         public string DebugInformation { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the script action.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URI to the script.
-        /// </summary>
-        [JsonProperty(PropertyName = "uri")]
-        public string Uri { get; set; }
-
-        /// <summary>
-        /// Gets or sets the parameters for the script
-        /// </summary>
-        [JsonProperty(PropertyName = "parameters")]
-        public string Parameters { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of roles where script will be executed.
-        /// </summary>
-        [JsonProperty(PropertyName = "roles")]
-        public IList<string> Roles { get; set; }
-
-        /// <summary>
-        /// Gets the application name of the script action, if any.
-        /// </summary>
-        [JsonProperty(PropertyName = "applicationName")]
-        public string ApplicationName { get; private set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Uri == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Uri");
-            }
-            if (Roles == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Roles");
-            }
+            base.Validate();
         }
     }
 }

@@ -15,10 +15,10 @@ namespace Microsoft.HDInsight.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Configurationname.
+    /// Defines values for ConfigurationName.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Configurationname
+    public enum ConfigurationName
     {
         [EnumMember(Value = "gateway")]
         Gateway,

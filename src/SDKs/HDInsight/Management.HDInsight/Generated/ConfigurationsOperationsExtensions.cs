@@ -78,7 +78,7 @@ namespace Microsoft.HDInsight
             /// The constant for configuration type of gateway. Possible values include:
             /// 'gateway', 'core-site'
             /// </param>
-            public static HttpConnectivitySettings Get(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, Configurationname configurationName)
+            public static HttpConnectivitySettings Get(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, ConfigurationName configurationName)
             {
                 return operations.GetAsync(resourceGroupName, clusterName, configurationName).GetAwaiter().GetResult();
             }
@@ -102,7 +102,7 @@ namespace Microsoft.HDInsight
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HttpConnectivitySettings> GetAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, Configurationname configurationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HttpConnectivitySettings> GetAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, ConfigurationName configurationName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, null, cancellationToken).ConfigureAwait(false))
                 {

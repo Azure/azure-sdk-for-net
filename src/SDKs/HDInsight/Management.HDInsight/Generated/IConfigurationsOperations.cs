@@ -74,7 +74,7 @@ namespace Microsoft.HDInsight
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<HttpConnectivitySettings>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, Configurationname configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HttpConnectivitySettings>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, ConfigurationName configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Configures the HTTP settings on the specified cluster.
         /// </summary>

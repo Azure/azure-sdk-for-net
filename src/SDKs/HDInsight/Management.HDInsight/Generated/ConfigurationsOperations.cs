@@ -107,7 +107,7 @@ namespace Microsoft.HDInsight
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<HttpConnectivitySettings>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, Configurationname configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HttpConnectivitySettings>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, ConfigurationName configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {

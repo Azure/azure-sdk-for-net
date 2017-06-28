@@ -24,20 +24,12 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Creates a new HDInsight cluster with the specified parameters.
         /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the cluster.
-        /// </param>
-        /// <param name='parameters'>
-        /// The cluster create request.
-        /// </param>
-        public static AzureOperationResponse<Cluster> Create(this IClustersOperations operations, string resourceGroupName, string clusterName,
-            ClusterCreateParameters parameters)
+        /// <param name="operations">The operations group for this extension method.</param>
+        /// <param name="resourceGroupName">The name of the resource group.</param>
+        /// <param name="clusterName">The name of the cluster.</param>
+        /// <param name="parameters">The cluster create request.</param>
+        /// <returns></returns>
+        public static Cluster Create(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterCreateParameters parameters)
         {
             return operations.CreateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
         }
@@ -45,29 +37,19 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Creates a new HDInsight cluster with the specified parameters.
         /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the cluster.
-        /// </param>
-        /// <param name='parameters'>
-        /// The cluster create request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">The name of the resource group.</param>
+        /// <param name="clusterName">The name of the cluster.</param>
+        /// <param name="parameters">The cluster create request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// The GetCluster operation response.
         /// </returns>
-        public static async Task<Cluster> CreateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName,
-            ClusterCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<Cluster> CreateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterCreateParameters parameters,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var _result = await operations.CreateAsync(resourceGroupName, clusterName, parameters, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -76,25 +58,11 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Begins creating a new HDInsight cluster with the specified parameters.
         /// </summary>
-        /// <summary>
-        /// Creates a new HDInsight cluster with the specified parameters.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The cluster create request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">Required. The name of the resource group.</param>
+        /// <param name="clusterName">Required. The name of the cluster.</param>
+        /// <param name="parameters">Required. The cluster create request.</param>
         /// <returns>
         /// The CreateCluster operation response.
         /// </returns>
@@ -107,19 +75,12 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Begins creating a new HDInsight cluster with the specified parameters.
         /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. The cluster create request.
-        /// </param>
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">Required. The name of the resource group.</param>
+        /// <param name="clusterName">Required. The name of the cluster.</param>
+        /// <param name="parameters">Required. The cluster create request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// The CreateCluster operation response.
         /// </returns>
@@ -135,25 +96,12 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Executes script actions on specified HDInsight Running cluster.
         /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='scriptActions'>
-        /// Required. The list of script actions that needs to be executed.
-        /// </param>      
-        /// <param name='persistOnSuccess'>
-        /// Required. Flag indicating if the script needs to be persisted.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">Required. The name of the resource group.</param>
+        /// <param name="clusterName">Required. The name of the cluster.</param>
+        /// <param name="scriptActions">Required. The list of script actions that needs to be executed.</param>
+        /// <param name="persistOnSuccess">Required. Flag indicating if the script needs to be persisted.</param>
         public static void ExecuteScriptActions(this IClustersOperations operations, string resourceGroupName, string clusterName, IList<RuntimeScriptAction> scriptActions, bool persistOnSuccess)
         {
             operations.ExecuteScriptActionsAsync(resourceGroupName, clusterName, scriptActions, persistOnSuccess).GetAwaiter().GetResult();
@@ -161,22 +109,13 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Executes script actions on specified HDInsight Running cluster.
         /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='scriptActions'>
-        /// Required. The list of script actions that needs to be executed.
-        /// </param>      
-        /// <param name='persistOnSuccess'>
-        /// Required. Flag indicating if the script needs to be persisted.
-        /// </param>
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">Required. The name of the resource group.</param>
+        /// <param name="clusterName">Required. The name of the cluster.</param>
+        /// <param name="scriptActions">Required. The list of script actions that needs to be executed.</param>
+        /// <param name="persistOnSuccess">Required. Flag indicating if the script needs to be persisted.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
@@ -190,25 +129,12 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Begins Executing script actions on specified HDInsight Running cluster.
         /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='scriptActions'>
-        /// Required. The list of script actions that needs to be executed.
-        /// </param>      
-        /// <param name='persistOnSuccess'>
-        /// Required. Flag indicating if the script needs to be persisted.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">Required. The name of the resource group.</param>
+        /// <param name="clusterName">Required. The name of the cluster.</param>
+        /// <param name="scriptActions">Required. The list of script actions that needs to be executed.</param>
+        /// <param name="persistOnSuccess">Required. Flag indicating if the script needs to be persisted.</param>
         public static void BeginExecuteScriptActions(this IClustersOperations operations, string resourceGroupName, string clusterName,
             IList<RuntimeScriptAction> scriptActions, bool persistOnSuccess)
         {
@@ -218,22 +144,13 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Begins Executing script actions on specified HDInsight Running cluster.
         /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='scriptActions'>
-        /// Required. The list of script actions that needs to be executed.
-        /// </param>      
-        /// <param name='persistOnSuccess'>
-        /// Required. Flag indicating if the script needs to be persisted.
-        /// </param>   
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">Required. The name of the resource group.</param>
+        /// <param name="clusterName">Required. The name of the cluster.</param>
+        /// <param name="scriptActions">Required. The list of script actions that needs to be executed.</param>
+        /// <param name="persistOnSuccess">Required. Flag indicating if the script needs to be persisted.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
@@ -245,236 +162,13 @@ namespace Microsoft.HDInsight
         }
 
         /// <summary>
-        /// Enables RDP on the specified cluster.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='rdpUsername'>
-        /// Required. The RDP Username.
-        /// </param>
-        /// <param name='rdpPassword'>
-        /// Required. The RDP password.
-        /// </param>
-        /// <param name='rdpExpiryDate'>
-        /// Required. The expiry date of the RDP user.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
-        public static void EnableRdp(this IClustersOperations operations, string resourceGroupName, string clusterName, string rdpUsername, string rdpPassword,
-            DateTime rdpExpiryDate)
-        {
-            operations.EnableRdpAsync(resourceGroupName, clusterName, rdpUsername, rdpPassword, rdpExpiryDate).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Enables RDP on the specified cluster.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='rdpUsername'>
-        /// Required. The RDP Username.
-        /// </param>
-        /// <param name='rdpPassword'>
-        /// Required. The RDP password.
-        /// </param>
-        /// <param name='rdpExpiryDate'>
-        /// Required. The expiry date of the RDP user.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
-        public static async Task EnableRdpAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, string rdpUsername,
-            string rdpPassword, DateTime rdpExpiryDate, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            (await operations.EnableRdpAsync(resourceGroupName, clusterName, rdpUsername, rdpPassword, rdpExpiryDate, cancellationToken).ConfigureAwait(false))
-                .Dispose();
-        }
-
-        /// <summary>
-        /// Begins enabling RDP on the specified cluster.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='rdpUsername'>
-        /// Required. The RDP Username.
-        /// </param>
-        /// <param name='rdpPassword'>
-        /// Required. The RDP password.
-        /// </param>
-        /// <param name='rdpExpiryDate'>
-        /// Required. The expiry date of the RDP user.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
-        public static void BeginEnablingRdp(this IClustersOperations operations,
-            string resourceGroupName, string clusterName, string rdpUsername, string rdpPassword, DateTime rdpExpiryDate)
-        {
-            operations.BeginEnablingRdpAsync(resourceGroupName, clusterName, rdpUsername, rdpPassword, rdpExpiryDate).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Begins enabling RDP on the specified cluster.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='rdpUsername'>
-        /// Required. The RDP Username.
-        /// </param>
-        /// <param name='rdpPassword'>
-        /// Required. The RDP password.
-        /// </param>
-        /// <param name='rdpExpiryDate'>
-        /// Required. The expiry date of the RDP user.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
-        public static async Task BeginEnablingRdpAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, string rdpUsername, 
-            string rdpPassword, DateTime rdpExpiryDate, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            (await operations.BeginEnablingRdpAsync(resourceGroupName, clusterName, rdpUsername, rdpPassword, rdpExpiryDate, cancellationToken).ConfigureAwait(false))
-                .Dispose();
-        }
-
-        /// <summary>
-        /// Disables RDP on the specified cluster.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
-        public static void DisableRdp(this IClustersOperations operations, string resourceGroupName, string clusterName)
-        {
-            operations.DisableRdpAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Disables RDP on the specified cluster.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
-        public static async Task DisableRdpAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, 
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            (await operations.DisableRdpAsync(resourceGroupName, clusterName, cancellationToken).ConfigureAwait(false)).Dispose();
-        }
-
-        /// <summary>
-        /// Begins disabling RDP on the specified cluster.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
-        public static void BeginDisablingRdp(this IClustersOperations operations, string resourceGroupName, string clusterName)
-        {
-            operations.BeginDisablingRdpAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Begins disabling RDP on the specified cluster.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
-        public static async Task BeginDisablingRdpAsync(this IClustersOperations operations, string resourceGroupName, string clusterName,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            (await operations.BeginDisablingRdpAsync(resourceGroupName, clusterName, cancellationToken).ConfigureAwait(false)).Dispose();
-        }
-
-        /// <summary>
         /// Resizes the specified HDInsight cluster.
         /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='targetInstanceCount'>
-        /// Required. The target instance count.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">Required. The name of the resource group.</param>
+        /// <param name="clusterName">Required. The name of the cluster.</param>
+        /// <param name="targetInstanceCount">Required. The target instance count.</param>
         public static void Resize(this IClustersOperations operations, string resourceGroupName, string clusterName, int targetInstanceCount)
         {
             operations.ResizeAsync(resourceGroupName, clusterName, targetInstanceCount).GetAwaiter().GetResult();
@@ -483,19 +177,12 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Resizes the specified HDInsight cluster.
         /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='targetInstanceCount'>
-        /// Required. The target instance count.
-        /// </param>
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">Required. The name of the resource group.</param>
+        /// <param name="clusterName">Required. The name of the cluster.</param>
+        /// <param name="targetInstanceCount">Required. The target instance count.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
@@ -508,22 +195,11 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Begins resizing the specified HDInsight cluster.
         /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='targetInstanceCount'>
-        /// Required. The target instance count.
-        /// </param>
-        /// <returns>
-        /// The cluster long running operation response.
-        /// </returns>
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">Required. The name of the resource group.</param>
+        /// <param name="clusterName">Required. The name of the cluster.</param>
+        /// <param name="targetInstanceCount">Required. The target instance count.</param>
         public static void BeginResizing(this IClustersOperations operations, string resourceGroupName, string clusterName, int targetInstanceCount)
         {
             operations.BeginResizingAsync(resourceGroupName, clusterName, targetInstanceCount).GetAwaiter().GetResult();
@@ -532,19 +208,12 @@ namespace Microsoft.HDInsight
         /// <summary>
         /// Begins resizing the specified HDInsight cluster.
         /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// Required. The name of the cluster.
-        /// </param>
-        /// <param name='targetInstanceCount'>
-        /// Required. The target instance count.
-        /// </param>
+        /// <param name="operations">Reference to the
+        /// Microsoft.Azure.Management.HDInsight.IClusterOperations.</param>
+        /// <param name="resourceGroupName">Required. The name of the resource group.</param>
+        /// <param name="clusterName">Required. The name of the cluster.</param>
+        /// <param name="targetInstanceCount">Required. The target instance count.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>

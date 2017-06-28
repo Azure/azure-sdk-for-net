@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.HDInsight.Tests</PackageId>
+    <Description>HDInsight.Tests Class Library</Description>
+    <AssemblyName>Microsoft.Azure.Management.HDInsight.Tests</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>    
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WindowsAzure.Storage" Version="8.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Management.HDInsight\Management.HDInsight.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateHumboldtCluster.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithCustomVMSizes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithPremiumTier.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateKafkaClusterWithManagedDisks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateLinuxSparkClusterWithComponentVersion.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateWithEmptyExtendedParameters.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.CreateClusterTests\TestCreateWithEmptyParameters.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.HttpTests\CanDisableEnableDisableHttpCustom.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.HttpTests\CanDisableEnableDisableHttpExtended.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.ListTests\TestListClustersInResourceGroup.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.ListTests\TestListClustersInSubscription.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.ResizeTests\TestResizeCluster.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\Management.HDInsight.Tests.ScriptActionsTests\TestScriptActionsOnRunningCluster.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\FailingScriptAction.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

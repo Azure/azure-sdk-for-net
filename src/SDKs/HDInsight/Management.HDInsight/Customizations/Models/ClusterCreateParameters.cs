@@ -20,30 +20,6 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the StorageName for the default Azure Storage Account.
-        /// This account will be used for schemaless paths and the cluster will 
-        /// leverage to store some cluster level files.
-        /// </summary>
-        [ObsoleteAttribute("This property is deprecated. Please use AzureStorageInfo with the DefaultStorageInfo parameter instead.", true)]
-        public string DefaultStorageAccountName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the StorageKey for the default Azure Storage Account.
-        /// This account will be used for schemaless paths and the cluster will 
-        /// leverage to store some cluster level files.
-        /// </summary>
-        [ObsoleteAttribute("This property is deprecated. Please use AzureStorageInfo with the DefaultStorageInfo parameter instead.", true)]
-        public string DefaultStorageAccountKey { get; set; }
-
-        /// <summary>
-        /// Gets or sets the StorageContainer for the default Azure Storage Account.
-        /// This account will be used for schemaless paths and the cluster will 
-        /// leverage to store some cluster level files.
-        /// </summary>
-        [ObsoleteAttribute("This property is deprecated. Please use AzureStorageInfo with the DefaultStorageInfo parameter instead.", true)]
-        public string DefaultStorageContainer { get; set; }
-
-        /// <summary>
         /// Gets or sets the login for the cluster's user.
         /// </summary>
         public string UserName { get; set; }
@@ -151,11 +127,6 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public string SubnetName { get; set; }
         
         /// <summary>
-        /// Gets or sets the type of operating system installed on cluster nodes.
-        /// </summary>
-        public OSType OSType { get; set; }
-        
-        /// <summary>
         /// Gets or sets the cluster tier.
         /// </summary>
         public Tier ClusterTier { get; set; }
@@ -193,7 +164,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Gets or sets the component versions for each service in this HDInsight cluster.
         /// </summary>
-        public Dictionary<string, string> ComponentVersion { get; set; }
+        public Dictionary<string, string> ComponentVersion { get; private set; }
         
         /// <summary>
         /// The information for default storage account for the cluster.
@@ -201,6 +172,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// leverage to store some cluster level files.
         /// </summary>
         public StorageInfo DefaultStorageInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags.
+        /// </summary>
+        public Dictionary<string, string> Tags { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
@@ -211,10 +187,45 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             this.Configurations = new Dictionary<string, Dictionary<string, string>>();
             this.ScriptActions =  new Dictionary<ClusterNodeType, List<ScriptAction>>();
             this.ComponentVersion = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
 
             //set defaults
             this.Version = "default";
-            this.OSType = OSType.Windows;
+            this.ClusterType = "Hadoop";
+        }
+
+        public ClusterCreateParameters(ClusterCreateParameters parameters)
+        {
+            this.Location = parameters.Location;
+            this.UserName = parameters.UserName;
+            this.Password = parameters.Password;
+            this.RdpUsername = parameters.RdpUsername;
+            this.RdpPassword = parameters.RdpPassword;
+            this.RdpAccessExpiry = parameters.RdpAccessExpiry;
+            this.ClusterSizeInNodes = parameters.ClusterSizeInNodes;
+            this.Version = parameters.Version;
+            this.HeadNodeSize = parameters.HeadNodeSize;
+            this.WorkerNodeSize = parameters.WorkerNodeSize;
+            this.ZookeeperNodeSize = parameters.ZookeeperNodeSize;
+            this.EdgeNodeSize = parameters.EdgeNodeSize;
+            this.AdditionalStorageAccounts = parameters.AdditionalStorageAccounts;
+            this.ScriptActions = parameters.ScriptActions;
+            this.OozieMetastore = parameters.OozieMetastore;
+            this.HiveMetastore = parameters.HiveMetastore;
+            this.Configurations = parameters.Configurations;
+            this.ClusterType = parameters.ClusterType;
+            this.VirtualNetworkId = parameters.VirtualNetworkId;
+            this.SubnetName = parameters.SubnetName;
+            this.ClusterTier = parameters.ClusterTier;
+            this.SshUserName = parameters.SshUserName;
+            this.SshPassword = parameters.SshPassword;
+            this.SshPublicKey = parameters.SshPublicKey;
+            this.Principal = parameters.Principal;
+            this.SecurityProfile = parameters.SecurityProfile;
+            this.WorkerNodeDataDisksGroups = parameters.WorkerNodeDataDisksGroups;
+            this.ComponentVersion = parameters.ComponentVersion;
+            this.DefaultStorageInfo = parameters.DefaultStorageInfo;
+            this.Tags = parameters.Tags;
         }
     }
 }

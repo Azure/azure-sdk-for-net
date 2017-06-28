@@ -10,573 +10,370 @@ namespace Microsoft.HDInsight
 {
     using Microsoft.Azure.Management.HDInsight.Models;
     using Microsoft.HDInsight.Models;
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
 
-    internal static class CreateParametersConverter
+    public static class CreateParametersConverter
     {
-        private static string _wasbStorageAccountKeyFormat = "fs.azure.account.key.{0}";
-
-        public static ClusterCreateParametersExtended GetExtendedClusterCreateParameters(string clusterName, ClusterCreateParameters clusterCreateParameters)
+        public static ClusterCreateParametersExtended GetExtendedClusterCreateParameters(string clusterName, ClusterCreateParameters createParameters)
         {
-            var createParamsExtended = new ClusterCreateParametersExtended
+            //Deep copy so the createParameters object isn't touched.
+            ClusterCreateParameters clusterCreateParameters = new ClusterCreateParameters(createParameters);
+
+            //Convert to extended spec.
+            ClusterCreateParametersExtended extendedParams = new ClusterCreateParametersExtended
             {
                 Location = clusterCreateParameters.Location,
+                Tags = clusterCreateParameters.Tags,
                 Properties = new ClusterCreateProperties
                 {
                     ClusterDefinition = new ClusterDefinition
                     {
-                        Kind = clusterCreateParameters.ClusterType
+                        Kind = clusterCreateParameters.ClusterType,
+                        ComponentVersion = clusterCreateParameters.ComponentVersion,
+                        Configurations = GetConfigurations(clusterName, clusterCreateParameters)
                     },
+                    Tier = clusterCreateParameters.ClusterTier,
                     ClusterVersion = clusterCreateParameters.Version,
-                    OsType = clusterCreateParameters.OSType,
-                    Tier = clusterCreateParameters.ClusterTier
+                    ComputeProfile = new ComputeProfile
+                    {
+                        Roles = GetRoleCollection(clusterCreateParameters)
+                    },
+                    OsType = OSType.Linux,
+                    SecurityProfile = clusterCreateParameters.SecurityProfile
                 }
             };
 
-            createParamsExtended.Properties.ClusterDefinition.ComponentVersion = new Dictionary<string, string>(clusterCreateParameters.ComponentVersion);
-
-            var configurations = GetConfigurations(clusterName, clusterCreateParameters);
-
-            if (clusterCreateParameters.HiveMetastore != null)
-            {
-                var metastoreConfig = GetMetastoreConfig(clusterCreateParameters.HiveMetastore, clusterCreateParameters.OSType, "Hive");
-                foreach (var configSet in metastoreConfig)
-                {
-                    if (configurations.ContainsKey(configSet.Key))
-                    {
-                        foreach (var config in configSet.Value)
-                        {
-                            configurations[configSet.Key].Add(config.Key, config.Value);
-                        }
-                    }
-                    else
-                    {
-                        configurations.Add(configSet.Key, configSet.Value);
-                    }
-                }
-            }
-            if (clusterCreateParameters.OozieMetastore != null)
-            {
-                var metastoreConfig = GetMetastoreConfig(clusterCreateParameters.OozieMetastore, clusterCreateParameters.OSType, "oozie");
-                foreach (var configSet in metastoreConfig)
-                {
-                    if (configurations.ContainsKey(configSet.Key))
-                    {
-                        foreach (var config in configSet.Value)
-                        {
-                            configurations[configSet.Key].Add(config.Key, config.Value);
-                        }
-                    }
-                    else
-                    {
-                        configurations.Add(configSet.Key, configSet.Value);
-                    }
-                }
-            }
-
-            var serializedConfig = JsonConvert.SerializeObject(configurations);
-            createParamsExtended.Properties.ClusterDefinition.Configurations = serializedConfig;
-
-            if (clusterCreateParameters.SecurityProfile != null)
-            {
-                createParamsExtended.Properties.SecurityProfile = clusterCreateParameters.SecurityProfile;
-            }
-
-            var roles = GetRoleCollection(clusterCreateParameters);
-
-            createParamsExtended.Properties.ComputeProfile = new ComputeProfile();
-            foreach (var role in roles)
-            {
-                createParamsExtended.Properties.ComputeProfile.Roles.Add(role);
-            }
-
-            return createParamsExtended;
+            return extendedParams;
         }
 
-        internal static Dictionary<string, Dictionary<string, string>> GetMetastoreConfig(Metastore metastore,
-            OSType osType, string metastoreType)
+        internal static string GetNodeSize(ClusterCreateParameters createProperties, ClusterNodeType nodeType)
         {
-            var server = "";
-            if (metastore.Server != null)
+            switch (nodeType)
             {
-                server = metastore.Server;
-            }
-
-            var index = server.LastIndexOf(".database.windows.net", StringComparison.OrdinalIgnoreCase);
-            if (index > 0)
-            {
-                server = server.Substring(0, index);
-            }
-
-            var connectionUrl =
-                string.Format(
-                    "jdbc:sqlserver://{0}.database.windows.net;database={1};encrypt=true;trustServerCertificate=true;create=false;loginTimeout=300;sendStringParametersAsUnicode=true;prepareSQL=0",
-                    server, metastore.Database);
-            var configurations = new Dictionary<string, Dictionary<string, string>>();
-            if (metastoreType.Equals("hive", StringComparison.OrdinalIgnoreCase))
-            {
-                configurations.Add(ConfigurationKey.HiveSite, new Dictionary<string, string>
-                {
-                    {"javax.jdo.option.ConnectionURL", connectionUrl},
-                    {"javax.jdo.option.ConnectionUserName", metastore.User},
-                    {"javax.jdo.option.ConnectionPassword", metastore.Password},
-                    {"javax.jdo.option.ConnectionDriverName", "com.microsoft.sqlserver.jdbc.SQLServerDriver"}
-                });
-
-                if (osType == OSType.Windows)
-                {
-                    return configurations;
-                }
-
-                configurations.Add(ConfigurationKey.HiveEnv, new Dictionary<string, string>
+                case ClusterNodeType.HeadNode:
+                    if (!string.IsNullOrEmpty(createProperties.HeadNodeSize))
                     {
-                        {"hive_database", "Existing MSSQL Server database with SQL authentication"},
-                        {"hive_database_name", metastore.Database},
-                        {"hive_database_type", "mssql"},
-                        {"hive_existing_mssql_server_database", metastore.Database},
-                        {"hive_existing_mssql_server_host", string.Format("{0}.database.windows.net", server)},
-                        {"hive_hostname", string.Format("{0}.database.windows.net", server)}
-                    });
+                        return createProperties.HeadNodeSize;
+                    }
+                    return DefaultVmSizes.HeadNode.GetSize(createProperties.ClusterType);
+                case ClusterNodeType.WorkerNode:
+                    if (!string.IsNullOrEmpty(createProperties.WorkerNodeSize))
+                    {
+                        return createProperties.WorkerNodeSize;
+                    }
+                    return DefaultVmSizes.WorkerNode.GetSize(createProperties.ClusterType);
+                case ClusterNodeType.ZookeeperNode:
+                    if (!string.IsNullOrEmpty(createProperties.ZookeeperNodeSize))
+                    {
+                        return createProperties.ZookeeperNodeSize;
+                    }
+                    return DefaultVmSizes.ZookeeperNode.GetSize(createProperties.ClusterType);
+                case ClusterNodeType.EdgeNode:
+                    if (!string.IsNullOrEmpty(createProperties.EdgeNodeSize))
+                    {
+                        return createProperties.EdgeNodeSize;
+                    }
+                    return DefaultVmSizes.EdgeNode.GetSize(createProperties.ClusterType);
+                default:
+                    throw new ArgumentOutOfRangeException("nodeType");
             }
-            else
-            {
-                configurations.Add(ConfigurationKey.OozieSite, new Dictionary<string, string>
-                {
-                    {"oozie.service.JPAService.jdbc.url", connectionUrl},
-                    {"oozie.service.JPAService.jdbc.username", metastore.User},
-                    {"oozie.service.JPAService.jdbc.password", metastore.Password},
-                    {"oozie.service.JPAService.jdbc.driver", "com.microsoft.sqlserver.jdbc.SQLServerDriver"}
-                });
+        }
 
-                if (osType == OSType.Windows)
-                {
-                    return configurations;
-                }
+        private static Dictionary<string, Dictionary<string, string>> GetConfigurations(string clusterName, ClusterCreateParameters createProperties)
+        {
+            Dictionary<string, Dictionary<string, string>> configurations = new Dictionary<string, Dictionary<string, string>>(createProperties.Configurations);
 
-                configurations[ConfigurationKey.OozieSite].Add("oozie.db.schema.name", "oozie");
-                configurations.Add(ConfigurationKey.OozieEnv, new Dictionary<string, string>
-                {
-                    {"oozie_database", "Existing MSSQL Server database with SQL authentication"},
-                    {"oozie_database_name", metastore.Database},
-                    {"oozie_database_type", "mssql"},
-                    {"oozie_existing_mssql_server_database", metastore.Database},
-                    {"oozie_existing_mssql_server_host", string.Format("{0}.database.windows.net", server)},
-                    {"oozie_hostname", string.Format("{0}.database.windows.net", server)}
-                });
-            }
+            //Add storage account info to core config.
+            AddStorageAccountsToCoreConfig(clusterName, createProperties, configurations);
+
+            //Add cluster username/password to gateway config.
+            AddClusterCredentialToGatewayConfig(createProperties, configurations);
+
+            //Add ADL configurations if necessary.
+            AddDataLakePropertiesIfNecessary(createProperties, configurations);
+
+            //Add metastore configurations if necessary.
+            AddMetastoreConfigsToConfigurations(createProperties, configurations);
+
             return configurations;
         }
 
-        private static Dictionary<string, Dictionary<string, string>> GetConfigurations(string clusterName,
-            ClusterCreateParameters clusterCreateParameters)
+        private static void AddStorageAccountsToCoreConfig(string clusterName, ClusterCreateParameters createProperties, IDictionary<string, Dictionary<string, string>> configurations)
         {
-            var configurations = clusterCreateParameters.Configurations;
+            //Note: Only HDI >v2.1 is supported.
 
-            //Core Config
-            var coreConfigExists = true;
-            Dictionary<string, string> coreConfig;
-            configurations.TryGetValue(ConfigurationKey.CoreSite, out coreConfig);
+            //Get existing core configs.
+            Dictionary<string, string> coreConfig = GetExistingConfigurationsForType(configurations, ConfigurationKey.CoreSite);
 
-            if (coreConfig == null)
-            {
-                coreConfigExists = false;
-                coreConfig = new Dictionary<string, string>();
-            }
-
-            AddDefaultStorageAccountToCoreConfig(clusterName, clusterCreateParameters, coreConfig);
-
-            AddWasbStorageAccountKeyToCoreConfig(clusterCreateParameters, coreConfig);
-
-            AddAdditionalStorageAcountsToCoreConfig(clusterCreateParameters, coreConfig);
-
-            if (!coreConfigExists)
-            {
-                configurations.Add(ConfigurationKey.CoreSite, coreConfig);
-            }
-            else
-            {
-                configurations[ConfigurationKey.CoreSite] = coreConfig;
-            }
-
-            //Gateway Config
-            Dictionary<string, string> gatewayConfig;
-            configurations.TryGetValue(ConfigurationKey.Gateway, out gatewayConfig);
-
-            if (gatewayConfig == null)
-            {
-                gatewayConfig = new Dictionary<string, string>();
-            }
-
-            if (!string.IsNullOrEmpty(clusterCreateParameters.UserName))
-            {
-                gatewayConfig.Add("restAuthCredential.isEnabled", "true");
-                gatewayConfig.Add("restAuthCredential.username", clusterCreateParameters.UserName);
-                gatewayConfig.Add("restAuthCredential.password", clusterCreateParameters.Password);
-            }
-            else
-            {
-                gatewayConfig.Add("restAuthCredential.isEnabled", "false");
-            }
-
-            configurations.Add(ConfigurationKey.Gateway, gatewayConfig);
-
-            //datalake configs
-            var datalakeConfigExists = true;
-            Dictionary<string, string> datalakeConfig;
-            configurations.TryGetValue(ConfigurationKey.ClusterIdentity, out datalakeConfig);
-
-            if (datalakeConfig == null)
-            {
-                datalakeConfigExists = false;
-            }
-
-            //Add/override datalake config if principal is provided by user
-            if (clusterCreateParameters.Principal != null)
-            {
-                datalakeConfig = new Dictionary<string, string>();
-                ServicePrincipal servicePrincipalObj = (ServicePrincipal)clusterCreateParameters.Principal;
-
-                datalakeConfig.Add("clusterIdentity.applicationId", servicePrincipalObj.ApplicationId.ToString());
-                // converting the tenant Id to URI as RP expects this to be URI
-                datalakeConfig.Add("clusterIdentity.aadTenantId", "https://login.windows.net/" + servicePrincipalObj.AADTenantId.ToString());
-                datalakeConfig.Add("clusterIdentity.certificate", Convert.ToBase64String(servicePrincipalObj.CertificateFileBytes));
-                datalakeConfig.Add("clusterIdentity.certificatePassword", servicePrincipalObj.CertificatePassword);
-                datalakeConfig.Add("clusterIdentity.resourceUri", servicePrincipalObj.ResourceUri.ToString());
-
-                if (!datalakeConfigExists)
-                {
-                    configurations.Add(ConfigurationKey.ClusterIdentity, datalakeConfig);
-                }
-                else
-                {
-                    configurations[ConfigurationKey.ClusterIdentity] = datalakeConfig;
-                }
-            }
-            return configurations;
-        }
-
-        private static void AddAdditionalStorageAcountsToCoreConfig(ClusterCreateParameters clusterCreateParameters, Dictionary<string, string> coreConfig)
-        {
-            foreach (var storageAccount in clusterCreateParameters.AdditionalStorageAccounts)
-            {
-                var configKey = string.Format(_wasbStorageAccountKeyFormat, storageAccount.Key);
-                if (!string.IsNullOrEmpty(storageAccount.Value) && !coreConfig.ContainsKey(configKey))
-                {
-                    coreConfig.Add(configKey, storageAccount.Value);
-                }
-            }
-        }
-
-        private static void AddWasbStorageAccountKeyToCoreConfig(ClusterCreateParameters clusterCreateParameters, Dictionary<string, string> coreConfig)
-        {
-            var storageAccountInfo = clusterCreateParameters.DefaultStorageInfo as AzureStorageInfo;
-            if (storageAccountInfo != null)
-            {
-                string defaultStorageConfigKey = string.Format(_wasbStorageAccountKeyFormat, clusterCreateParameters.DefaultStorageInfo.StorageAccountName);
-                string storageAccountKey = storageAccountInfo.StorageAccountKey;
-
-                if (!string.IsNullOrEmpty(storageAccountKey) && !coreConfig.ContainsKey(defaultStorageConfigKey))
-                {
-                    coreConfig.Add(defaultStorageConfigKey, storageAccountKey);
-                }
-            }
-        }
-
-        private static void AddDefaultStorageAccountToCoreConfig(string clusterName, ClusterCreateParameters clusterCreateParameters, Dictionary<string, string> coreConfig)
-        {
-            string coreConfigDefaultFSKey = "fs.defaultFS";
-            string coreConfigDefaultFSKeyFor_2_1_Clusters = "fs.default.name";
-
-            var defaultStorageAccountKey = (clusterCreateParameters.Version != null && clusterCreateParameters.Version.Equals("2.1"))
-                                                ? coreConfigDefaultFSKeyFor_2_1_Clusters
-                                                : coreConfigDefaultFSKey;
-
-            var azureStorageAccountInfo = clusterCreateParameters.DefaultStorageInfo as AzureStorageInfo;
-            var azureDataLakeStorageInfo = clusterCreateParameters.DefaultStorageInfo as AzureDataLakeStoreInfo;
+            AzureStorageInfo azureStorageAccountInfo = createProperties.DefaultStorageInfo as AzureStorageInfo;
+            AzureDataLakeStoreInfo azureDataLakeStorageInfo = createProperties.DefaultStorageInfo as AzureDataLakeStoreInfo;
 
             if (azureStorageAccountInfo != null)
             {
-                if (string.IsNullOrWhiteSpace(azureStorageAccountInfo.StorageContainer))
+                //Add configurations for default WASB storage.
+                string container = string.IsNullOrWhiteSpace(azureStorageAccountInfo.StorageContainer)
+                    ? clusterName
+                    : azureStorageAccountInfo.StorageContainer;
+
+                coreConfig[Constants.StorageConfigurations.DefaultFsKey] = string.Format(Constants.StorageConfigurations.DefaultFsWasbValueFormat,
+                    container, azureStorageAccountInfo.StorageAccountName);
+
+                string defaultStorageConfigKey = string.Format(Constants.StorageConfigurations.WasbStorageAccountKeyFormat, azureStorageAccountInfo.StorageAccountName);
+                if (!string.IsNullOrEmpty(azureStorageAccountInfo.StorageAccountKey))
                 {
-                    var storageInfoWithContainerName = new AzureStorageInfo(azureStorageAccountInfo.StorageAccountName, azureStorageAccountInfo.StorageAccountKey, clusterName);
-                    clusterCreateParameters.DefaultStorageInfo = storageInfoWithContainerName;
-                    coreConfig[defaultStorageAccountKey] = storageInfoWithContainerName.StorageAccountUri;
-                }
-                else
-                {
-                    coreConfig[defaultStorageAccountKey] = azureStorageAccountInfo.StorageAccountUri;
+                    coreConfig[defaultStorageConfigKey] = azureStorageAccountInfo.StorageAccountKey;
                 }
             }
             else if (azureDataLakeStorageInfo != null)
             {
-                // setup the parameters required for DataLake containers
-                coreConfig[defaultStorageAccountKey] = "adl://home";
-                coreConfig["dfs.adls.home.hostname"] = azureDataLakeStorageInfo.StorageAccountName;
-                coreConfig["dfs.adls.home.mountpoint"] = azureDataLakeStorageInfo.StorageRootPath;
+                //Add configurations for default ADL storage.
+                coreConfig[Constants.StorageConfigurations.DefaultFsKey] = Constants.StorageConfigurations.DefaultFsAdlValue;
+                coreConfig[Constants.StorageConfigurations.AdlHostNameKey] = azureDataLakeStorageInfo.StorageAccountName;
+                coreConfig[Constants.StorageConfigurations.AdlMountPointKey] = azureDataLakeStorageInfo.StorageRootPath;
+            }
+
+            //Add additional storage accounts.
+            Dictionary<string, string> additionalStorageAccounts = createProperties.AdditionalStorageAccounts ?? new Dictionary<string, string>();
+            foreach (KeyValuePair<string, string> storageAccount in additionalStorageAccounts)
+            {
+                string configKey = string.Format(Constants.StorageConfigurations.WasbStorageAccountKeyFormat, storageAccount.Key);
+                coreConfig[configKey] = storageAccount.Value;
+            }
+            
+            configurations[ConfigurationKey.CoreSite] = coreConfig;
+        }
+
+        private static void AddClusterCredentialToGatewayConfig(ClusterCreateParameters createProperties, IDictionary<string, Dictionary<string, string>> configurations)
+        {
+            Dictionary<string, string> gatewayConfig = GetExistingConfigurationsForType(configurations, ConfigurationKey.Gateway);
+
+            if (!string.IsNullOrEmpty(createProperties.UserName))
+            {
+                gatewayConfig[Constants.GatewayConfigurations.CredentialIsEnabledKey] = "true";
+                gatewayConfig[Constants.GatewayConfigurations.UserNameKey] = createProperties.UserName;
+                gatewayConfig[Constants.GatewayConfigurations.PasswordKey] = createProperties.Password;
+            }
+            else
+            {
+                gatewayConfig[Constants.GatewayConfigurations.CredentialIsEnabledKey] = "false";
+            }
+
+            configurations[ConfigurationKey.Gateway] = gatewayConfig;
+        }
+
+        private static Dictionary<string, string> GetExistingConfigurationsForType(IDictionary<string, Dictionary<string, string>> configurations, string configurationType)
+        {
+            Dictionary<string, string> config;
+            if (!configurations.TryGetValue(configurationType, out config))
+            {
+                config = new Dictionary<string, string>();
+            }
+
+            return config;
+        }
+        
+        private static void AddDataLakePropertiesIfNecessary(ClusterCreateParameters createProperties, IDictionary<string, Dictionary<string, string>> configurations)
+        {
+            ServicePrincipal servicePrincipal = createProperties.Principal as ServicePrincipal;
+            if (servicePrincipal == null) return;
+
+            Dictionary<string, string> datalakeConfig = new Dictionary<string, string>
+            {
+                {Constants.DataLakeConfigurations.ApplicationIdKey, servicePrincipal.ApplicationId.ToString()},
+                {
+                    // Converting the Tenant ID to URI as RP expects this to be URI.
+                    // ADL is only supported in a handful of regions in public Azure. We should be on the next API version before this goes to sovereign clouds.
+                    Constants.DataLakeConfigurations.TenantIdKey, string.Format("{0}{1}", "https://login.windows.net", servicePrincipal.AADTenantId)
+                },
+                {Constants.DataLakeConfigurations.CertificateKey, Convert.ToBase64String(servicePrincipal.CertificateFileBytes)},
+                {Constants.DataLakeConfigurations.CertificatePasswordKey, servicePrincipal.CertificatePassword},
+                {Constants.DataLakeConfigurations.ResourceUriKey, servicePrincipal.ResourceUri.ToString()}
+            };
+
+            configurations[ConfigurationKey.ClusterIdentity] = datalakeConfig;
+        }
+
+        private static void AddMetastoreConfigsToConfigurations(ClusterCreateParameters createProperties, IDictionary<string, Dictionary<string, string>> configurations)
+        {
+            Metastore hiveMetastore = createProperties.HiveMetastore;
+            if (hiveMetastore != null)
+            {
+                if (!hiveMetastore.Server.Contains("."))
+                {
+                    throw new ArgumentException("Please provide the fully qualified metastore name.");
+                }
+
+                string connectionUrl =
+                    string.Format(Constants.MetastoreConfigurations.ConnectionUrlFormat, hiveMetastore.Server, hiveMetastore.Database);
+
+                configurations.Add(ConfigurationKey.HiveSite, new Dictionary<string, string>
+                {
+                    {Constants.MetastoreConfigurations.HiveSite.ConnectionUrlKey, connectionUrl},
+                    {Constants.MetastoreConfigurations.HiveSite.ConnectionUserNameKey, hiveMetastore.User},
+                    {Constants.MetastoreConfigurations.HiveSite.ConnectionPasswordKey, hiveMetastore.Password},
+                    {Constants.MetastoreConfigurations.HiveSite.ConnectionDriverNameKey, Constants.MetastoreConfigurations.HiveSite.ConnectionDriverNameValue}
+                });
+
+                configurations.Add(ConfigurationKey.HiveEnv, new Dictionary<string, string>
+                {
+                    {Constants.MetastoreConfigurations.HiveEnv.DatabaseKey, Constants.MetastoreConfigurations.DatabaseValue},
+                    {Constants.MetastoreConfigurations.HiveEnv.DatabaseNameKey, hiveMetastore.Database},
+                    {Constants.MetastoreConfigurations.HiveEnv.DatabaseTypeKey, Constants.MetastoreConfigurations.DatabaseTypeValue},
+                    {Constants.MetastoreConfigurations.HiveEnv.ExistingDatabaseKey, hiveMetastore.Database},
+                    {Constants.MetastoreConfigurations.HiveEnv.ExistingHostKey, hiveMetastore.Server},
+                    {Constants.MetastoreConfigurations.HiveEnv.HostNameKey, hiveMetastore.Server}
+                });
+            }
+
+            Metastore oozieMetastore = createProperties.OozieMetastore;
+            if (oozieMetastore != null)
+            {
+                if (Uri.CheckHostName(oozieMetastore.Server) != UriHostNameType.Dns)
+                {
+                    throw new ArgumentException("Please provide the fully qualified metastore name.");
+                }
+                string connectionUrl = string.Format(Constants.MetastoreConfigurations.ConnectionUrlFormat, oozieMetastore.Server, oozieMetastore.Database);
+
+                configurations.Add(ConfigurationKey.OozieSite, new Dictionary<string, string>
+                {
+                    {Constants.MetastoreConfigurations.OozieSite.UrlKey, connectionUrl},
+                    {Constants.MetastoreConfigurations.OozieSite.UserNameKey, oozieMetastore.User},
+                    {Constants.MetastoreConfigurations.OozieSite.PasswordKey, oozieMetastore.Password},
+                    {Constants.MetastoreConfigurations.OozieSite.DriverKey, Constants.MetastoreConfigurations.OozieSite.DriverValue},
+                    {Constants.MetastoreConfigurations.OozieSite.SchemaKey, Constants.MetastoreConfigurations.OozieSite.SchemaValue}
+                });
+
+                configurations.Add(ConfigurationKey.OozieEnv, new Dictionary<string, string>
+                {
+                    {Constants.MetastoreConfigurations.OozieEnv.DatabaseKey, Constants.MetastoreConfigurations.DatabaseValue},
+                    {Constants.MetastoreConfigurations.OozieEnv.DatabaseNameKey, oozieMetastore.Database},
+                    {Constants.MetastoreConfigurations.OozieEnv.DatabaseTypeKey, Constants.MetastoreConfigurations.DatabaseTypeValue},
+                    {Constants.MetastoreConfigurations.OozieEnv.ExistingDatabaseKey, oozieMetastore.Database},
+                    {Constants.MetastoreConfigurations.OozieEnv.ExistingHostKey, oozieMetastore.Server},
+                    {Constants.MetastoreConfigurations.OozieEnv.HostNameKey, oozieMetastore.Server}
+                });
             }
         }
 
-        private static IEnumerable<Role> GetRoleCollection(ClusterCreateParameters clusterCreateParameters)
+        private static IList<Role> GetRoleCollection(ClusterCreateParameters createProperties)
         {
-            //OS Profile
-            var osProfile = new OsProfile();
-            if (clusterCreateParameters.OSType == OSType.Windows)
-            {
-                RdpSettings rdpSettings = null;
-                if (!string.IsNullOrEmpty(clusterCreateParameters.RdpUsername))
-                {
-                    rdpSettings = new RdpSettings
-                    {
-                        Username = clusterCreateParameters.RdpUsername,
-                        Password = clusterCreateParameters.RdpPassword,
-                        ExpiryDate = clusterCreateParameters.RdpAccessExpiry
-                    };
-                }
+            List<Role> roles = new List<Role>();
 
-                osProfile = new OsProfile
-                {
-                    WindowsOperatingSystemProfile = new WindowsOperatingSystemProfile
-                    {
-                        RdpSettings = rdpSettings
-                    }
-                };
-            }
-            else if (clusterCreateParameters.OSType == OSType.Linux)
-            {
-                var sshPublicKeys = new List<SshPublicKey>();
-                if (!string.IsNullOrEmpty(clusterCreateParameters.SshPublicKey))
-                {
-                    var sshPublicKey = new SshPublicKey
-                    {
-                        CertificateData = clusterCreateParameters.SshPublicKey
-                    };
-                    sshPublicKeys.Add(sshPublicKey);
-                }
+            OsProfile osProfile = GetOsProfile(createProperties);
+            VirtualNetworkProfile vnetProfile = GetVnetProfile(createProperties);
 
-                SshProfile sshProfile;
-                if (sshPublicKeys.Count > 0)
-                {
-                    sshProfile = new SshProfile
-                    {
-                        PublicKeys = sshPublicKeys
-                    };
-                }
-                else
-                {
-                    sshProfile = null;
-                }
-
-                osProfile = new OsProfile
-                {
-                    LinuxOperatingSystemProfile = new LinuxOperatingSystemProfile
-                    {
-                        Username = clusterCreateParameters.SshUserName,
-                        Password = clusterCreateParameters.SshPassword,
-                        SshProfile = sshProfile
-                    }
-                };
-            }
-
-            //VNet Profile
-            var vnetProfile = new VirtualNetworkProfile();
-            if (!string.IsNullOrEmpty(clusterCreateParameters.VirtualNetworkId))
-            {
-                vnetProfile.Id = clusterCreateParameters.VirtualNetworkId;
-            }
-            if (!string.IsNullOrEmpty(clusterCreateParameters.SubnetName))
-            {
-                vnetProfile.Subnet = clusterCreateParameters.SubnetName;
-            }
-            if (string.IsNullOrEmpty(vnetProfile.Id) && string.IsNullOrEmpty(vnetProfile.Subnet))
-            {
-                vnetProfile = null;
-            }
-
-            List<ScriptAction> workernodeactions = null;
-            List<ScriptAction> headnodeactions = null;
-            List<ScriptAction> zookeepernodeactions = null;
-            //Script Actions
-            foreach (var scriptAction in clusterCreateParameters.ScriptActions)
-            {
-                if (scriptAction.Key.ToString().ToLower().Equals("workernode"))
-                {
-                    workernodeactions = scriptAction.Value;
-                }
-                else if (scriptAction.Key.ToString().ToLower().Equals("headnode"))
-                {
-                    headnodeactions = scriptAction.Value;
-                }
-                else if (scriptAction.Key.ToString().ToLower().Equals("zookeepernode"))
-                {
-                    zookeepernodeactions = scriptAction.Value;
-                }
-            }
-
-            //Roles
-            var roles = new List<Role>();
-            if ((clusterCreateParameters.OSType == OSType.Linux) &&
-                (clusterCreateParameters.ClusterType.Equals("Sandbox", StringComparison.OrdinalIgnoreCase)))
-            {
-                var sandboxHeadNode = new Role
-                {
-                    Name = "headnode",
-                    TargetInstanceCount = 1,
-                    HardwareProfile = new HardwareProfile
-                    {
-                        VmSize = "Standard_D13_V2"
-                    },
-                    OsProfile = osProfile,
-                    VirtualNetworkProfile = vnetProfile,
-                    ScriptActions = headnodeactions
-                };
-                roles.Add(sandboxHeadNode);
-                return roles;
-            }
-            var headNodeSize = GetHeadNodeSize(clusterCreateParameters);
-            var headNode = new Role
-            {
-                Name = "headnode",
-                TargetInstanceCount = 2,
-                HardwareProfile = new HardwareProfile
-                {
-                    VmSize = headNodeSize
-                },
-                OsProfile = osProfile,
-                VirtualNetworkProfile = vnetProfile,
-                ScriptActions = headnodeactions
-            };
+            //Set up headnode and add to collection.
+            List<ScriptAction> headNodeScriptActions = GetScriptActionsForRoleType(createProperties, ClusterNodeType.HeadNode);
+            string headNodeSize = GetNodeSize(createProperties, ClusterNodeType.HeadNode);
+            int headNodeInstanceCount = createProperties.ClusterType.Equals("Sandbox", StringComparison.OrdinalIgnoreCase) ? 1 : 2;
+            Role headNode = GetRole(osProfile, vnetProfile, ClusterNodeType.HeadNode, headNodeScriptActions, headNodeInstanceCount, headNodeSize);
             roles.Add(headNode);
 
-            var workerNodeSize = GetWorkerNodeSize(clusterCreateParameters);
-            var workerNode = new Role
+            //Sandbox clusters only contain a headnode. Return here.
+            if (createProperties.ClusterType.Equals("Sandbox", StringComparison.OrdinalIgnoreCase))
             {
-                Name = "workernode",
-                TargetInstanceCount = clusterCreateParameters.ClusterSizeInNodes,
-                HardwareProfile = new HardwareProfile
-                {
-                    VmSize = workerNodeSize
-                },
-                OsProfile = osProfile,
-                ScriptActions = workernodeactions,
-                DataDisksGroups = clusterCreateParameters.WorkerNodeDataDisksGroups
-            };
+                return roles;
+            }
+
+            //Set up workernode and add to collection.
+            List<ScriptAction> workerNodeScriptActions = GetScriptActionsForRoleType(createProperties, ClusterNodeType.WorkerNode);
+            string workerNodeSize = GetNodeSize(createProperties, ClusterNodeType.WorkerNode);
+            Role workerNode = GetRole(osProfile, vnetProfile, ClusterNodeType.WorkerNode, workerNodeScriptActions, createProperties.ClusterSizeInNodes, workerNodeSize);
+            workerNode.DataDisksGroups = createProperties.WorkerNodeDataDisksGroups;
             roles.Add(workerNode);
 
-            if (clusterCreateParameters.OSType == OSType.Windows)
+            //Set up zookeepernode and add to collection.
+            List<ScriptAction> zookeeperNodeScriptActions = GetScriptActionsForRoleType(createProperties, ClusterNodeType.ZookeeperNode);
+            string zookeeperNodeSize = GetNodeSize(createProperties, ClusterNodeType.ZookeeperNode);
+            Role zookeeperNode = GetRole(osProfile, vnetProfile, ClusterNodeType.ZookeeperNode, zookeeperNodeScriptActions, 3, zookeeperNodeSize);
+            roles.Add(zookeeperNode);
+
+            //RServer clusters contain an additional edge node. Return here for all other types.
+            if (!createProperties.ClusterType.Equals("RServer", StringComparison.OrdinalIgnoreCase))
             {
-                if (clusterCreateParameters.ClusterType.Equals("Hadoop", StringComparison.OrdinalIgnoreCase) ||
-                    clusterCreateParameters.ClusterType.Equals("Spark", StringComparison.OrdinalIgnoreCase))
-                {
-                    return roles;
-                }
+                return roles;
             }
 
-            if (clusterCreateParameters.OSType == OSType.Linux)
-            {
-                if (clusterCreateParameters.ClusterType.Equals("Hadoop", StringComparison.OrdinalIgnoreCase) ||
-                    clusterCreateParameters.ClusterType.Equals("Spark", StringComparison.OrdinalIgnoreCase))
-                {
-                    clusterCreateParameters.ZookeeperNodeSize = "Small";
-                }
-            }
-
-            string zookeeperNodeSize = clusterCreateParameters.ZookeeperNodeSize ?? "Medium";
-            var zookeepernode = new Role
-            {
-                Name = "zookeepernode",
-                ScriptActions = zookeepernodeactions,
-                TargetInstanceCount = 3,
-                OsProfile = osProfile,
-                HardwareProfile = new HardwareProfile
-                {
-                    VmSize = zookeeperNodeSize
-                }
-            };
-
-            roles.Add(zookeepernode);
-
-            if (clusterCreateParameters.ClusterType.Equals("RServer", StringComparison.OrdinalIgnoreCase))
-            {
-                var EdgeNodeSize = GetEdgeNodeSize(clusterCreateParameters);
-                var EdgeNode = new Role
-                {
-                    Name = "edgenode",
-                    TargetInstanceCount = 1,
-                    HardwareProfile = new HardwareProfile
-                    {
-                        VmSize = EdgeNodeSize
-                    },
-                    OsProfile = osProfile
-                };
-                roles.Add(EdgeNode);
-            }
+            //Set up edgenode and add to collection.
+            string edgeNodeSize = GetNodeSize(createProperties, ClusterNodeType.EdgeNode);
+            Role edgeNode = GetRole(osProfile, vnetProfile, ClusterNodeType.EdgeNode, null, 1, edgeNodeSize);
+            roles.Add(edgeNode);
 
             return roles;
         }
 
-        private static readonly Dictionary<string, string> HeadNodeDefaultSizes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
-                    {"hadoop", "Standard_D3" },
-                    {"spark", "Standard_D12"},
-                    {"rserver", "Standard_D12_v2"},
-                    {"InteractiveHive", "Standard_D13_v2"},
-                };
-
-        internal static string GetHeadNodeSize(ClusterCreateParameters clusterCreateParameters)
+        private static OsProfile GetOsProfile(ClusterCreateParameters createProperties)
         {
-            string headNodeSize;
-            if (clusterCreateParameters.HeadNodeSize != null)
+            List<SshPublicKey> sshPublicKeys = new List<SshPublicKey>();
+            if (!string.IsNullOrEmpty(createProperties.SshPublicKey))
             {
-                headNodeSize = clusterCreateParameters.HeadNodeSize;
-            }
-            else
-            {
-                if (!HeadNodeDefaultSizes.TryGetValue(clusterCreateParameters.ClusterType, out headNodeSize))
+                sshPublicKeys.Add(new SshPublicKey
                 {
-                    headNodeSize = "Large";
-                }
+                    CertificateData = createProperties.SshPublicKey
+                });
+            }
+            SshProfile sshProfile = null;
+            if (sshPublicKeys.Count > 0)
+            {
+                sshProfile = new SshProfile
+                {
+                    PublicKeys = sshPublicKeys.ToArray()
+                };
             }
 
-            return headNodeSize;
+            return new OsProfile
+            {
+                LinuxOperatingSystemProfile = new LinuxOperatingSystemProfile
+                {
+                    SshProfile = sshProfile,
+                    Password = createProperties.SshPassword,
+                    Username = createProperties.SshUserName
+                }
+            };
         }
 
-        private static readonly Dictionary<string, string> WorkerNodeDefaultSizes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
-                    {"spark", "Standard_D12"},
-                    {"rserver", "Standard_D4_v2"},
-                    {"InteractiveHive", "Standard_D13_v2"},
-                };
-
-        internal static string GetWorkerNodeSize(ClusterCreateParameters clusterCreateParameters)
+        private static List<ScriptAction> GetScriptActionsForRoleType(ClusterCreateParameters createProperties, ClusterNodeType nodeType)
         {
-            string workerNodeSize;
-            if (clusterCreateParameters.WorkerNodeSize != null)
-            {
-                workerNodeSize = clusterCreateParameters.WorkerNodeSize;
-            }
-            else
-            {
-                if (!WorkerNodeDefaultSizes.TryGetValue(clusterCreateParameters.ClusterType, out workerNodeSize))
-                {
-                    workerNodeSize = "Standard_D3";
-                }
-            }
-
-            return workerNodeSize;
+            if (createProperties.ScriptActions == null) return null;
+            List<ScriptAction> scriptActions;
+            createProperties.ScriptActions.TryGetValue(nodeType, out scriptActions);
+            return scriptActions;
         }
 
-        private static string GetEdgeNodeSize(ClusterCreateParameters clusterCreateParameters)
+        private static VirtualNetworkProfile GetVnetProfile(ClusterCreateParameters createProperties)
         {
-            string edgeNodeSize;
-            if (!String.IsNullOrEmpty(clusterCreateParameters.EdgeNodeSize))
+            VirtualNetworkProfile vnetProfile = new VirtualNetworkProfile();
+            if (!string.IsNullOrEmpty(createProperties.VirtualNetworkId))
             {
-                edgeNodeSize = clusterCreateParameters.EdgeNodeSize;
+                vnetProfile.Id = createProperties.VirtualNetworkId;
             }
-            else
+            if (!string.IsNullOrEmpty(createProperties.SubnetName))
             {
-                edgeNodeSize = "Standard_D4_v2";
+                vnetProfile.Subnet = createProperties.SubnetName;
             }
-            return edgeNodeSize;
+            if (string.IsNullOrEmpty(createProperties.VirtualNetworkId) && string.IsNullOrEmpty(createProperties.SubnetName))
+            {
+                vnetProfile = null;
+            }
+            return vnetProfile;
+        }
+
+        private static Role GetRole(OsProfile osProfile, VirtualNetworkProfile vnetProfile, ClusterNodeType nodeType, List<ScriptAction> scriptActions, int instanceCount,
+            string vmSize)
+        {
+            return new Role
+            {
+                Name = nodeType.ToString().ToLower(),
+                TargetInstanceCount = instanceCount,
+                HardwareProfile = new HardwareProfile
+                {
+                    VmSize = vmSize
+                },
+                VirtualNetworkProfile = vnetProfile,
+                OsProfile = osProfile,
+                ScriptActions = scriptActions
+            };
         }
     }
 }

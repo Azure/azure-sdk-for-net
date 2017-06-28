@@ -163,31 +163,6 @@ namespace Microsoft.HDInsight
         /// </exception>
         Task<AzureOperationResponse<IPage<Cluster>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the RDP settings on the specified cluster.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the cluster.
-        /// </param>
-        /// <param name='parameters'>
-        /// The OS profile for RDP.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> ChangeRdpSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, RDPSettingsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Executes script actions on the specified HDInsight cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -287,31 +262,6 @@ namespace Microsoft.HDInsight
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginResizeWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterResizeParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates the RDP settings on the specified cluster.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the cluster.
-        /// </param>
-        /// <param name='parameters'>
-        /// The OS profile for RDP.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> BeginChangeRdpSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, RDPSettingsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Executes script actions on the specified HDInsight cluster.
         /// </summary>

@@ -13,8 +13,7 @@ namespace Microsoft.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// The Windows operation systems profile, and configure remote desktop
-    /// settings.
+    /// The Linux operation systems profile.
     /// </summary>
     public partial class OsProfile
     {
@@ -29,13 +28,10 @@ namespace Microsoft.HDInsight.Models
         /// <summary>
         /// Initializes a new instance of the OsProfile class.
         /// </summary>
-        /// <param name="windowsOperatingSystemProfile">The Windows OS
-        /// profile.</param>
         /// <param name="linuxOperatingSystemProfile">The Linux OS
         /// profile.</param>
-        public OsProfile(WindowsOperatingSystemProfile windowsOperatingSystemProfile = default(WindowsOperatingSystemProfile), LinuxOperatingSystemProfile linuxOperatingSystemProfile = default(LinuxOperatingSystemProfile))
+        public OsProfile(LinuxOperatingSystemProfile linuxOperatingSystemProfile = default(LinuxOperatingSystemProfile))
         {
-            WindowsOperatingSystemProfile = windowsOperatingSystemProfile;
             LinuxOperatingSystemProfile = linuxOperatingSystemProfile;
             CustomInit();
         }
@@ -44,12 +40,6 @@ namespace Microsoft.HDInsight.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the Windows OS profile.
-        /// </summary>
-        [JsonProperty(PropertyName = "windowsOperatingSystemProfile")]
-        public WindowsOperatingSystemProfile WindowsOperatingSystemProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the Linux OS profile.

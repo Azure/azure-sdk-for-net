@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         {
             if (string.IsNullOrWhiteSpace(storageAccountKey))
             {
-                throw new ArgumentException(Constants.ERROR_INPUT_CANNOT_BE_EMPTY, "storageAccountKey");
+                throw new ArgumentException(Constants.Errors.ERROR_INPUT_CANNOT_BE_EMPTY, "storageAccountKey");
             }
 
             if (!storageAccountName.Contains("."))
