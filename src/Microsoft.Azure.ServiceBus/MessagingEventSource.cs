@@ -1165,5 +1165,20 @@ namespace Microsoft.Azure.ServiceBus
         {
             WriteEvent(98, funcTargetName, methodInfoName, exception);
         }
+
+        [NonEvent]
+        public void ExceptionReceivedHandlerThrewException(Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.ExceptionReceivedHandlerThrewException(exception.ToString());
+            }
+        }
+
+        [Event(99, Level = EventLevel.Error, Message = "ExceptionReceivedHandler threw exception. Exception:{0}")]
+        void ExceptionReceivedHandlerThrewException(string exception)
+        {
+            WriteEvent(99, exception);
+        }
     }
 }

@@ -103,11 +103,11 @@ namespace Microsoft.Azure.ServiceBus
     }
     public sealed class MessageHandlerOptions
     {
-        public MessageHandlerOptions() { }
+        public MessageHandlerOptions(System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public bool AutoComplete { get; set; }
+        public System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> ExceptionReceivedHandler { get; set; }
         public System.TimeSpan MaxAutoRenewDuration { get; set; }
         public int MaxConcurrentCalls { get; set; }
-        public event System.EventHandler<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs> ExceptionReceived;
     }
     public sealed class MessageLockLostException : Microsoft.Azure.ServiceBus.ServiceBusException { }
     public sealed class MessagingEntityDisabledException : Microsoft.Azure.ServiceBus.ServiceBusException { }
@@ -130,10 +130,10 @@ namespace Microsoft.Azure.ServiceBus
         public System.Threading.Tasks.Task CompleteAsync(string lockToken) { }
         public System.Threading.Tasks.Task DeadLetterAsync(string lockToken) { }
         protected override System.Threading.Tasks.Task OnClosingAsync() { }
-        public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler) { }
+        public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.MessageHandlerOptions messageHandlerOptions) { }
         public void RegisterPlugin(Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin serviceBusPlugin) { }
-        public void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler) { }
+        public void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.SessionHandlerOptions sessionHandlerOptions) { }
         public System.Threading.Tasks.Task<long> ScheduleMessageAsync(Microsoft.Azure.ServiceBus.Message message, System.DateTimeOffset scheduleEnqueueTimeUtc) { }
         public System.Threading.Tasks.Task SendAsync(Microsoft.Azure.ServiceBus.Message message) { }
@@ -209,12 +209,12 @@ namespace Microsoft.Azure.ServiceBus
     }
     public sealed class SessionHandlerOptions
     {
-        public SessionHandlerOptions() { }
+        public SessionHandlerOptions(System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public bool AutoComplete { get; set; }
+        public System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> ExceptionReceivedHandler { get; set; }
         public System.TimeSpan MaxAutoRenewDuration { get; set; }
         public int MaxConcurrentSessions { get; set; }
         public System.TimeSpan MessageWaitTimeout { get; set; }
-        public event System.EventHandler<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs> ExceptionReceived;
     }
     public sealed class SessionLockLostException : Microsoft.Azure.ServiceBus.ServiceBusException { }
     public class SharedAccessSignatureTokenProvider : Microsoft.Azure.ServiceBus.TokenProvider
@@ -240,10 +240,10 @@ namespace Microsoft.Azure.ServiceBus
         public System.Threading.Tasks.Task CompleteAsync(string lockToken) { }
         public System.Threading.Tasks.Task DeadLetterAsync(string lockToken) { }
         protected override System.Threading.Tasks.Task OnClosingAsync() { }
-        public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler) { }
+        public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.MessageHandlerOptions registerHandlerOptions) { }
         public void RegisterPlugin(Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin serviceBusPlugin) { }
-        public void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler) { }
+        public void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.SessionHandlerOptions sessionHandlerOptions) { }
         public System.Threading.Tasks.Task RemoveRuleAsync(string ruleName) { }
         public void UnregisterPlugin(string serviceBusPluginName) { }
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         System.Threading.Tasks.Task AbandonAsync(string lockToken);
         System.Threading.Tasks.Task CompleteAsync(string lockToken);
         System.Threading.Tasks.Task DeadLetterAsync(string lockToken);
-        void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler);
+        void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler);
         void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.MessageHandlerOptions registerHandlerOptions);
     }
     public interface ISenderClient : Microsoft.Azure.ServiceBus.IClientEntity
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> ReceiveAsync(int maxMessageCount, System.TimeSpan serverWaitTime) { }
         public System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Message> ReceiveBySequenceNumberAsync(long sequenceNumber) { }
         public System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Message>> ReceiveBySequenceNumberAsync(System.Collections.Generic.IEnumerable<long> sequenceNumbers) { }
-        public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler) { }
+        public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.MessageHandlerOptions messageHandlerOptions) { }
         public void RegisterPlugin(Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin serviceBusPlugin) { }
         public System.Threading.Tasks.Task<System.DateTime> RenewLockAsync(string lockToken) { }
@@ -446,14 +446,15 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     
     public class ExceptionReceivedContext
     {
-        public ExceptionReceivedContext(string action, string endpoint, string entityPath) { }
+        public ExceptionReceivedContext(string action, string endpoint, string entityPath, string clientId) { }
         public string Action { get; }
+        public string ClientId { get; }
         public string Endpoint { get; }
         public string EntityPath { get; }
     }
     public sealed class ExceptionReceivedEventArgs : System.EventArgs
     {
-        public ExceptionReceivedEventArgs(System.Exception exception, string action, string endpoint, string entityName) { }
+        public ExceptionReceivedEventArgs(System.Exception exception, string action, string endpoint, string entityName, string clientId) { }
         public System.Exception Exception { get; }
         public Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedContext ExceptionReceivedContext { get; }
     }

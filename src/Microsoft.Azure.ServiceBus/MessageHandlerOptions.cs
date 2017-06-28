@@ -85,7 +85,14 @@ namespace Microsoft.Azure.ServiceBus
 
         internal async Task RaiseExceptionReceived(ExceptionReceivedEventArgs eventArgs)
         {
-            await this.ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
+            try
+            {
+                await this.ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.ExceptionReceivedHandlerThrewException(exception);
+            }
         }
     }
 }

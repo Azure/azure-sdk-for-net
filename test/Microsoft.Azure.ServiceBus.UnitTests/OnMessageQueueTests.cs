@@ -3,8 +3,11 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Threading.Tasks;
+    using Microsoft.Azure.ServiceBus.Primitives;
     using Xunit;
 
     public class OnMessageQueueTests : SenderReceiverClientTestBase
@@ -55,6 +58,41 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 await queueClient.CloseAsync();
             }
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        void OnMessageExceptionHandlerCalledTest()
+        {
+            string queueName = "nonexistentqueuename";
+            bool exceptionReceivedHandlerCalled = false;
+
+            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+            queueClient.RegisterMessageHandler(
+                (message, token) => throw new Exception("Unexpected exception: Did not expect messages here"),
+                (eventArgs) =>
+                {
+                    Assert.NotNull(eventArgs);
+                    Assert.NotNull(eventArgs.Exception);
+                    if (eventArgs.Exception is MessagingEntityNotFoundException)
+                    {
+                        exceptionReceivedHandlerCalled = true;
+                    }
+                    return Task.CompletedTask;
+                });
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 5)
+            {
+                if(exceptionReceivedHandlerCalled)
+                {
+                    break;
+                }
+
+                Task.Delay(TimeSpan.FromSeconds(1));
+            }
+
+            Assert.True(exceptionReceivedHandlerCalled);
         }
 
         async Task OnMessageTestAsync(string queueName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
