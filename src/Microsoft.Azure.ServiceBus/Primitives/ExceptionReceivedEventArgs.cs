@@ -13,10 +13,11 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <param name="action">The action associated with the event.</param>
         /// <param name="endpoint">The endpoint used when this exception occurred.</param>
         /// <param name="entityName">The entity path used when this exception occurred.</param>
-        public ExceptionReceivedEventArgs(Exception exception, string action, string endpoint, string entityName)
+        /// <param name="clientId">The Client Id associated with the sender, receiver or session when this exception occured.</param>
+        public ExceptionReceivedEventArgs(Exception exception, string action, string endpoint, string entityName, string clientId)
         {
             this.Exception = exception;
-            this.ExceptionReceivedContext = new ExceptionReceivedContext(action, endpoint, entityName);
+            this.ExceptionReceivedContext = new ExceptionReceivedContext(action, endpoint, entityName, clientId);
         }
 
         /// <summary>Gets the parent class exception to which this event data belongs.</summary>

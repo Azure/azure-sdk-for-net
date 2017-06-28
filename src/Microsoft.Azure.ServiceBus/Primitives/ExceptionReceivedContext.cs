@@ -12,11 +12,13 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <param name="action">The action associated with the exception.</param>
         /// <param name="endpoint">The endpoint associated with the exception.</param>
         /// <param name="entityPath">The entity path associated with the exception.</param>
-        public ExceptionReceivedContext(string action, string endpoint, string entityPath)
+        /// <param name="clientId">The Client Id associated with the sender, receiver or session when this exception occured.</param>
+        public ExceptionReceivedContext(string action, string endpoint, string entityPath, string clientId)
         {
             Action = action ?? throw new ArgumentNullException(nameof(action));
             Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             EntityPath = entityPath ?? throw new ArgumentNullException(nameof(entityPath));
+            ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
         }
 
         /// <summary>Gets the action associated with the event.</summary>
@@ -28,5 +30,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         /// <summary>The entity path used when this exception occured.</summary>
         public string EntityPath { get; private set; }
+
+        /// <summary>The Client Id associated with the sender, receiver or session when this exception occured.</summary>
+        public string ClientId { get; private set; }
     }
 }

@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Threading.Tasks;
     using Primitives;
 
     /// <summary>Provides options associated with message pump processing using
@@ -21,7 +22,8 @@ namespace Microsoft.Azure.ServiceBus
         ///     <see cref="ReceiveTimeOut"/> = 1 minute
         ///     <see cref="MaxAutoRenewDuration"/> = 5 minutes
         /// </summary>
-        public MessageHandlerOptions(Action<object, ExceptionReceivedEventArgs> exceptionReceivedHandler)
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is used to notify exceptions.</param>
+        public MessageHandlerOptions(Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
             this.MaxConcurrentCalls = 1;
             this.AutoComplete = true;
@@ -32,7 +34,7 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the message pump.
         /// When errors are received calls will automatically be retried, so this is informational. </summary>
-        public Action<object, ExceptionReceivedEventArgs> ExceptionReceivedHandler { get; set; }
+        public Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; set; }
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
         /// <value>The maximum number of concurrent calls to the callback.</value>
@@ -77,15 +79,13 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        internal bool AutoRenewLock => this.MaxAutoRenewDuration > TimeSpan.Zero;
-
-        internal ClientEntity MessageClientEntity { get; set; }
+        internal bool AutoRenewLock => this.MaxAutoRenewDuration > TimeSpan.Zero;        
 
         internal TimeSpan ReceiveTimeOut { get; set; }
 
-        internal void RaiseExceptionReceived(ExceptionReceivedEventArgs e)
+        internal async Task RaiseExceptionReceived(ExceptionReceivedEventArgs eventArgs)
         {
-            this.ExceptionReceivedHandler(this.MessageClientEntity, e);
+            await this.ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
         }
     }
 }

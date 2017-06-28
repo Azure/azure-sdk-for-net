@@ -72,10 +72,10 @@ namespace Microsoft.Azure.ServiceBus
                 this.sessionHandlerOptions.AutoRenewLock;
         }
 
-        void RaiseExceptionReceived(Exception e, string action)
+        async Task RaiseExceptionReceived(Exception e, string action)
         {
-            var eventArgs = new ExceptionReceivedEventArgs(e, action, this.endpoint, this.entityPath);
-            this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs);
+            var eventArgs = new ExceptionReceivedEventArgs(e, action, this.endpoint, this.entityPath, this.clientId);
+            await this.sessionHandlerOptions.RaiseExceptionReceived(eventArgs).ConfigureAwait(false);
         }
 
         async Task CompleteMessageIfNeededAsync(IMessageSession session, Message message)
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.Complete, this.endpoint, this.entityPath));
+                await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Complete).ConfigureAwait(false);                    
             }
         }
 
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception exception)
             {
-                this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.Abandon, this.endpoint, this.entityPath));
+                await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Abandon).ConfigureAwait(false);
             }
         }
 
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                     else
                     {
-                        this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession);
+                        await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.AcceptMessageSession).ConfigureAwait(false);
                         if (!MessagingUtilities.ShouldRetry(exception))
                         {
                             break;
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.ServiceBus
                             continue;
                         }
 
-                        this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive);
+                        await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
                         break;
                     }
 
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.ServiceBus
                     catch (Exception exception)
                     {
                         MessagingEventSource.Log.MessageReceivePumpTaskException(this.clientId, session.SessionId, exception);
-                        this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback);
+                        await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.UserCallback).ConfigureAwait(false);
                         callbackExceptionOccured = true;
                         await this.AbandonMessageIfNeededAsync(session, message).ConfigureAwait(false);
                     }
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.ServiceBus
                 catch (Exception exception)
                 {
                     MessagingEventSource.Log.SessionReceivePumpSessionCloseException(this.clientId, session.SessionId, exception);
-                    this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.CloseMessageSession);
+                    await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.CloseMessageSession).ConfigureAwait(false);
                 }
             }
         }
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.ServiceBus
                     // Lets not bother user with this exception.
                     if (!(exception is TaskCanceledException))
                     {
-                        this.sessionHandlerOptions.RaiseExceptionReceived(new ExceptionReceivedEventArgs(exception, ExceptionReceivedEventArgsAction.RenewLock, this.endpoint, this.entityPath));
+                        await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.RenewLock).ConfigureAwait(false);
                     }
                     if (!MessagingUtilities.ShouldRetry(exception))
                     {

@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Primitives;
 
     /// <summary>Provides options associated with session pump processing using
@@ -22,18 +23,20 @@ namespace Microsoft.Azure.ServiceBus
         ///     <see cref="MessageWaitTimeout"/> = 1 minute
         ///     <see cref="MaxAutoRenewDuration"/> = 5 minutes
         /// </summary>
-        public SessionHandlerOptions()
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is used to notify exceptions.</param>
+        public SessionHandlerOptions(Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
             // These are default values
             this.AutoComplete = true;
             this.MaxConcurrentSessions = 2000;
             this.MessageWaitTimeout = TimeSpan.FromMinutes(1);
             this.MaxAutoRenewDuration = Constants.ClientPumpRenewLockTimeout;
+            this.ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
         }
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the session pump.
         /// When errors are received calls will automatically be retried, so this is informational. </summary>
-        public event EventHandler<ExceptionReceivedEventArgs> ExceptionReceived;
+        public Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; set; }
 
         /// <summary>Gets or sets the duration for which the session lock will be renewed automatically.</summary>
         /// <value>The duration for which the session renew its state.</value>
@@ -96,9 +99,9 @@ namespace Microsoft.Azure.ServiceBus
 
         internal int MaxConcurrentAcceptSessionCalls { get; set; }
 
-        internal void RaiseExceptionReceived(ExceptionReceivedEventArgs e)
+        internal async Task RaiseExceptionReceived(ExceptionReceivedEventArgs eventArgs)
         {
-            this.ExceptionReceived?.Invoke(this, e);
+            await this.ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
         }
     }
 }

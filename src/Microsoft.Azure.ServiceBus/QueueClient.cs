@@ -291,8 +291,8 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Asynchronously processes a message.</summary>
         /// <param name="handler"></param>
-        /// <param name="exceptionReceivedHandler"></param>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Action<object, ExceptionReceivedEventArgs> exceptionReceivedHandler)
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is used to notify exceptions.</param>
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
             this.InnerReceiver.RegisterMessageHandler(handler, new MessageHandlerOptions(exceptionReceivedHandler));
         }
@@ -307,9 +307,10 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>Register a session handler.</summary>
         /// <param name="handler"></param>
-        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler)
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is used to notify exceptions.</param>
+        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
-            var sessionHandlerOptions = new SessionHandlerOptions();
+            var sessionHandlerOptions = new SessionHandlerOptions(exceptionReceivedHandler);
             this.RegisterSessionHandler(handler, sessionHandlerOptions);
         }
 

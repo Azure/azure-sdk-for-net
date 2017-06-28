@@ -584,8 +584,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Registers a message handler and begins a new thread to receive messages.
         /// </summary>
         /// <param name="handler">A <see cref="Func{T1, T2, TResult}"/> that processes messages.</param>
-        /// <param name="exceptionReceivedHandler"></param>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Action<object, ExceptionReceivedEventArgs> exceptionReceivedHandler)
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is used to notify exceptions.</param>
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
             this.RegisterMessageHandler(handler, new MessageHandlerOptions(exceptionReceivedHandler));
         }
@@ -597,7 +597,6 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <param name="messageHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to register a message handler.</param>
         public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
-            messageHandlerOptions.MessageClientEntity = this;
             this.OnMessageHandler(messageHandlerOptions, handler);
         }
 

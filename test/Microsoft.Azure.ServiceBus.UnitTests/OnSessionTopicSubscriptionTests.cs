@@ -6,6 +6,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.Azure.ServiceBus.Primitives;
     using Xunit;
 
     public class OnSessionTopicSubscriptionTests
@@ -52,7 +53,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                (session, message, token) =>
                {
                    return Task.CompletedTask;
-               }));
+               }, ExceptionReceivedHandler));
         }
 
         async Task OnSessionTestAsync(string topicName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             try
             {
                 SessionHandlerOptions handlerOptions =
-                    new SessionHandlerOptions()
+                    new SessionHandlerOptions(ExceptionReceivedHandler)
                     {
                         MaxConcurrentSessions = 5,
                         MessageWaitTimeout = TimeSpan.FromSeconds(5),
@@ -95,6 +96,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await subscriptionClient.CloseAsync();
                 await topicClient.CloseAsync();
             }
+        }
+
+        Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)
+        {
+            TestUtility.Log($"Exception Received: ClientId: {eventArgs.ExceptionReceivedContext.ClientId}, EntityPath: {eventArgs.ExceptionReceivedContext.EntityPath}, Exception: {eventArgs.Exception.Message}");
+            return Task.CompletedTask;
         }
     }
 }

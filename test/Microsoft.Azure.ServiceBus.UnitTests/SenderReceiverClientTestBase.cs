@@ -270,24 +270,45 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(count == messageCount);
         }
 
-        internal void OnMessageRegistrationWithoutPendingMessagesTestCase(
+        internal async Task OnMessageRegistrationWithoutPendingMessagesTestCase(
+            IMessageSender messageSender,
             IMessageReceiver messageReceiver,
             int maxConcurrentCalls,
             bool autoComplete)
         {
-            var stopwatch = Stopwatch.StartNew();
-
+            int count = 0;
             messageReceiver.RegisterMessageHandler(
-                (message, token) => throw new Exception("Was not supposed to receive any messages"),
+                async (message, token) => 
+                {
+                    TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    count++;
+                    await Task.CompletedTask;
+                },
                 new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
 
-            stopwatch.Stop();
-            Assert.True(stopwatch.Elapsed.TotalSeconds < 10, "OnMessage handler registration took longer than 10 seconds.");
+            await TestUtility.SendMessagesAsync(messageSender, 1);
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 5)
+            {
+                if (count == 1)
+                {
+                    TestUtility.Log($"All messages Received.");
+                    break;
+                }
+                else
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                }
+            }
+
+            Assert.True(count == 1);
         }
 
-        void ExceptionReceivedHandler(object sender, ExceptionReceivedEventArgs eventArgs)
+        Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)
         {
-            TestUtility.Log($"Exception Received: ClientId: {((ClientEntity)sender).ClientId}, Exception: {eventArgs.Exception.Message}");
+            TestUtility.Log($"Exception Received: ClientId: {eventArgs.ExceptionReceivedContext.ClientId}, EntityPath: {eventArgs.ExceptionReceivedContext.EntityPath}, Exception: {eventArgs.Exception.Message}");
+            return Task.CompletedTask;
         }
     }
 }

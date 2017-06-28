@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Xunit.Sdk;
-
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System.Collections.Generic;
@@ -43,7 +41,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             await this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
         }
 
-        [Theory(Skip = "Flaky. Needs work.")]
+        [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
         async Task OnMessageRegistrationWithoutPendingMessagesReceiveAndDelete(string queueName, int maxConcurrentCalls)
@@ -51,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
             try
             {
-                this.OnMessageRegistrationWithoutPendingMessagesTestCase(queueClient.InnerReceiver, maxConcurrentCalls, true);
+                await this.OnMessageRegistrationWithoutPendingMessagesTestCase(queueClient.InnerSender, queueClient.InnerReceiver, maxConcurrentCalls, true);
             }
             finally
             {
