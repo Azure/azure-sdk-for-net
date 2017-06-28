@@ -88,6 +88,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
             }, tenantId, environment);
         }
 
+#if NET45
+        /// <summary>
+        /// Creates a credentials object from a service principal.
+        /// </summary>
+        /// <param name="clientId">the client ID of the application the service principal is associated with</param>
+        /// <param name="certificate">the X509 certificate for the client ID</param>
+        /// <param name="tenantId">the tenant ID or domain the application is in</param>
+        /// <param name="environment">the environment to authenticate to</param>
+        /// <returns></returns>
+        public AzureCredentials FromServicePrincipal(string clientId, X509Certificate2 certificate, string tenantId, AzureEnvironment environment)
+        {
+            return new AzureCredentials(new ServicePrincipalLoginInformation
+            {
+                ClientId = clientId,
+                X509Certificate = certificate
+            }, tenantId, environment);
+        }
+#endif
+
         /// <summary>
         /// Creates a credentials object from a file in the following format:
         ///
