@@ -40,11 +40,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param
         /// name="vpnClientRevokedCertificates">VpnClientRevokedCertificate for
         /// Virtual network gateway.</param>
-        public VpnClientConfiguration(AddressSpace vpnClientAddressPool = default(AddressSpace), IList<VpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnClientRootCertificate>), IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnClientRevokedCertificate>))
+        /// <param name="vpnClientProtocols">VpnClientProtocols for Virtual
+        /// network gateway.</param>
+        public VpnClientConfiguration(AddressSpace vpnClientAddressPool = default(AddressSpace), IList<VpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnClientRootCertificate>), IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnClientRevokedCertificate>), IList<string> vpnClientProtocols = default(IList<string>))
         {
             VpnClientAddressPool = vpnClientAddressPool;
             VpnClientRootCertificates = vpnClientRootCertificates;
             VpnClientRevokedCertificates = vpnClientRevokedCertificates;
+            VpnClientProtocols = vpnClientProtocols;
             CustomInit();
         }
 
@@ -72,6 +75,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "vpnClientRevokedCertificates")]
         public IList<VpnClientRevokedCertificate> VpnClientRevokedCertificates { get; set; }
+
+        /// <summary>
+        /// Gets or sets vpnClientProtocols for Virtual network gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "vpnClientProtocols")]
+        public IList<string> VpnClientProtocols { get; set; }
 
     }
 }

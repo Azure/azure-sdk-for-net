@@ -129,5 +129,22 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Target == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Target");
+            }
+            if (StorageLocation == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StorageLocation");
+            }
+        }
     }
 }

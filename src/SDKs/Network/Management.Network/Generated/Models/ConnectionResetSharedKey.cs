@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Network;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -50,5 +51,22 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "keyLength")]
         public int KeyLength { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (KeyLength > 128)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "KeyLength", 128);
+            }
+            if (KeyLength < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "KeyLength", 1);
+            }
+        }
     }
 }

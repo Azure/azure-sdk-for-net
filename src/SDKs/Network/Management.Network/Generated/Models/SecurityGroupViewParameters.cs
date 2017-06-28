@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Network;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -50,5 +51,18 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "targetResourceId")]
         public string TargetResourceId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TargetResourceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TargetResourceId");
+            }
+        }
     }
 }
