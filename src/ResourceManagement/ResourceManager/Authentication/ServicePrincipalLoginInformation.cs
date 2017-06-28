@@ -15,5 +15,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
         public byte[] Certificate { get; set; }
 
         public string CertificatePassword { get; set; }
+
+#if NET45
+        public X509Certificate2 X509Certificate { get; set; }
+#endif
     }
 }
