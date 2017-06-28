@@ -4,7 +4,9 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Core;
 
     /// <summary>
     /// An interface showing the common functionality between all Service Bus clients.
@@ -31,5 +33,22 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <returns>The asynchronous operation.</returns>
         Task CloseAsync();
+
+        /// <summary>
+        /// Gets a list of currently registered plugins for this client.
+        /// </summary>
+        IList<ServiceBusPlugin> RegisteredPlugins { get; }
+
+        /// <summary>
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this client.
+        /// </summary>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
+        void RegisterPlugin(ServiceBusPlugin serviceBusPlugin);
+
+        /// <summary>
+        /// Unregisters a <see cref="ServiceBusPlugin"/>.
+        /// </summary>
+        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
+        void UnregisterPlugin(string serviceBusPluginName);
     }
 }

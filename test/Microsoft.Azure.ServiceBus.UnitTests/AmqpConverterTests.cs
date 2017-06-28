@@ -94,8 +94,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 To = to,
                 ContentType = contentType,
                 ReplyTo = replyTo,
-                ReplyToSessionId = replyToSessionId,
-                Publisher = publisher,
+                ReplyToSessionId = replyToSessionId
             };
             sbMessage.UserProperties.Add("UserProperty", "SomeUserProperty");
 
@@ -113,7 +112,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal(contentType, convertedSbMessage.ContentType);
             Assert.Equal(replyTo, convertedSbMessage.ReplyTo);
             Assert.Equal(replyToSessionId, convertedSbMessage.ReplyToSessionId);
-            Assert.Equal(publisher, convertedSbMessage.Publisher);
         }
     }
 }

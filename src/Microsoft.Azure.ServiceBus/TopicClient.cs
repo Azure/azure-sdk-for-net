@@ -159,10 +159,15 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
+        /// Gets a list of currently registered plugins for this SubscriptionClient.
+        /// </summary>
+        public override IList<ServiceBusPlugin> RegisteredPlugins => this.InnerSender.RegisteredPlugins;
+
+        /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used for sending messages to Service Bus.
         /// </summary>
         /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register</param>
-        public void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
+        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
         {
             this.InnerSender.RegisterPlugin(serviceBusPlugin);
         }
@@ -171,7 +176,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Unregisters a <see cref="ServiceBusPlugin"/>.
         /// </summary>
         /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
-        public void UnregisterPlugin(string serviceBusPluginName)
+        public override void UnregisterPlugin(string serviceBusPluginName)
         {
             this.InnerSender.UnregisterPlugin(serviceBusPluginName);
         }

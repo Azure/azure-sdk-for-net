@@ -100,14 +100,12 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Gets a list of currently registered plugins for this sender.
         /// </summary>
         /// <seealso cref="RegisterPlugin"/>
-        public IList<ServiceBusPlugin> RegisteredPlugins { get; } = new List<ServiceBusPlugin>();
+        public override IList<ServiceBusPlugin> RegisteredPlugins { get; } = new List<ServiceBusPlugin>();
 
         /// <summary>
         /// Gets the entity path of the MessageSender.
         /// </summary>
         public virtual string Path { get; private set; }
-
-        internal TimeSpan OperationTimeout { get; }
 
         internal MessagingEntityType? EntityType { get; private set; }
 
@@ -212,7 +210,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Schedules a message to appear on Service Bus.
+        /// Schedules a message to appear on Service Bus at a later time.
         /// </summary>
         /// <param name="message">The <see cref="Message"/> that needs to be scheduled.</param>
         /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing</param>
@@ -486,10 +484,10 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Registers a <see cref="ServiceBusPlugin"/> to be used for sending messages to Service Bus.
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this sender.
         /// </summary>
         /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
-        public void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
+        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
         {
             if (serviceBusPlugin == null)
             {
@@ -507,7 +505,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Unregisters a <see cref="ServiceBusPlugin"/>.
         /// </summary>
         /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
-        public void UnregisterPlugin(string serviceBusPluginName)
+        public override void UnregisterPlugin(string serviceBusPluginName)
         {
             if (serviceBusPluginName == null)
             {

@@ -4,8 +4,10 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using Core;
 
     /// <summary>
     /// Contract for all client entities with Open-Close/Abort state m/c
@@ -41,17 +43,22 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
+        /// Duration after which individual operations will timeout.
+        /// </summary>
+        public TimeSpan OperationTimeout { get; internal set; }
+
+        /// <summary>
         /// Gets the client ID.
         /// </summary>
         public string ClientId { get; private set; }
 
         /// <summary>
-        /// Gets the <see cref="RetryPolicy.RetryPolicy"/> for the ClientEntity.
+        /// Gets the <see cref="ServiceBus.RetryPolicy"/> for the ClientEntity.
         /// </summary>
         public RetryPolicy RetryPolicy { get; private set; }
 
         /// <summary>
-        /// Closes the ClientEntity.
+        /// Closes the Client. Closes the connections opened by it.
         /// </summary>
         /// <returns>The asynchronous operation</returns>
         public async Task CloseAsync()
@@ -71,6 +78,23 @@ namespace Microsoft.Azure.ServiceBus
                 await this.OnClosingAsync().ConfigureAwait(false);
             }
         }
+
+        /// <summary>
+        /// Gets a list of currently registered plugins for this client.
+        /// </summary>
+        public abstract IList<ServiceBusPlugin> RegisteredPlugins { get; }
+
+        /// <summary>
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this client.
+        /// </summary>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
+        public abstract void RegisterPlugin(ServiceBusPlugin serviceBusPlugin);
+
+        /// <summary>
+        /// Unregisters a <see cref="ServiceBusPlugin"/>.
+        /// </summary>
+        /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
+        public abstract void UnregisterPlugin(string serviceBusPluginName);
 
         /// <summary></summary>
         /// <returns></returns>

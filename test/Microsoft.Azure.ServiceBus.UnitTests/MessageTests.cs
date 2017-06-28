@@ -37,8 +37,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 To = to,
                 ContentType = contentType,
                 ReplyTo = replyTo,
-                ReplyToSessionId = replyToSessionId,
-                Publisher = publisher,
+                ReplyToSessionId = replyToSessionId
             };
             brokeredMessage.UserProperties.Add("UserProperty", "SomeUserProperty");
 
@@ -57,7 +56,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal(contentType, clone.ContentType);
             Assert.Equal(replyTo, clone.ReplyTo);
             Assert.Equal(replyToSessionId, clone.ReplyToSessionId);
-            Assert.Equal(publisher, clone.Publisher);
         }
 
         public class WhenQueryingIsReceivedProperty

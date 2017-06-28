@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
@@ -13,19 +14,49 @@ namespace Microsoft.Azure.ServiceBus
     using Microsoft.Azure.ServiceBus.Primitives;
 
     /// <summary>
-    /// Used for all basic interactions with a Service Bus subscription.
+    /// SubscriptionClient can be used for all basic interactions with a Service Bus Subscription.
     /// </summary>
+    /// <example>
+    /// Create a new SubscriptionClient
+    /// <code>
+    /// ISubscriptionClient subscriptionClient = new SubscriptionClient(
+    ///     namespaceConnectionString,
+    ///     topicName,
+    ///     subscriptionName,
+    ///     ReceiveMode.PeekLock,
+    ///     RetryExponential);
+    /// </code>
+    /// 
+    /// Register a message handler which will be invoked every time a message is received.
+    /// <code>
+    /// subscriptionClient.RegisterMessageHandler(
+    ///        async (message, token) =&gt;
+    ///        {
+    ///            // Process the message
+    ///            Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
+    ///
+    ///            // Complete the message so that it is not received again.
+    ///            // This can be done only if the subscriptionClient is opened in ReceiveMode.PeekLock mode.
+    ///            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+    ///        });
+    /// </code>
+    /// </example>
+    /// <remarks>Use <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
     public class SubscriptionClient : ClientEntity, ISubscriptionClient
     {
         /// <summary>
         /// Gets the name of the default rule on the subscription.
         /// </summary>
+        /// <remarks>
+        /// Whenever a new subscription is created, a default rule is always added. 
+        /// The default rule is a <see cref="TrueFilter"/> which will enable all messages in the topic to reach subscription.
+        /// </remarks>
         public const string DefaultRule = "$Default";
         int prefetchCount;
         readonly object syncLock;
         readonly bool ownsConnection;
         IInnerSubscriptionClient innerSubscriptionClient;
-        SessionClient sessionClient;
+        AmqpSessionClient sessionClient;
         SessionPumpHost sessionPumpHost;
 
         /// <summary>
@@ -35,6 +66,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="subscriptionName">Name of the subscription.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>Creates a new connection to the subscription, which is opened during the first operation.</remarks>
         public SubscriptionClient(ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, subscriptionName, receiveMode, retryPolicy)
         {
@@ -43,11 +75,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Instantiates a new <see cref="SubscriptionClient"/> to perform operations on a subscription.
         /// </summary>
-        /// <param name="connectionString">Namespace connection string. <remarks>Should not contain topic information.</remarks></param>
+        /// <param name="connectionString">Namespace connection string. Must not contain topic or subscription information.</param>
         /// <param name="topicPath">Path to the topic.</param>
         /// <param name="subscriptionName">Name of the subscription.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>Creates a new connection to the subscription, which is opened during the first operation.</remarks>
         public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
             : this(new ServiceBusNamespaceConnection(connectionString), topicPath, subscriptionName, receiveMode, retryPolicy ?? RetryPolicy.Default)
         {
@@ -88,8 +121,9 @@ namespace Microsoft.Azure.ServiceBus
         public string TopicPath { get; }
 
         /// <summary>
-        /// Gets the path of the subscription client.
+        /// Gets the formatted path of the subscription client.
         /// </summary>
+        /// <seealso cref="EntityNameHelper.FormatSubscriptionPath(string, string)"/>
         public string Path { get; }
 
         /// <summary>
@@ -98,14 +132,27 @@ namespace Microsoft.Azure.ServiceBus
         public string SubscriptionName { get; }
 
         /// <summary>
-        /// Gets the <see cref="ReceiveMode.ReceiveMode"/> for the SubscriptionClient.
+        /// Gets the <see cref="ServiceBus.ReceiveMode"/> for the SubscriptionClient.
         /// </summary>
         public ReceiveMode ReceiveMode { get; }
 
         /// <summary>
-        /// Gets or sets the number of messages that the subscription client can simultaneously request.
-        /// </summary>
-        /// <value>The number of messages that the subscription client can simultaneously request.</value>
+        /// Prefetch speeds up the message flow by aiming to have a message readily available for local retrieval when and before the application asks for one using Receive.
+        /// Setting a non-zero value prefetches PrefetchCount number of messages.
+        /// Setting the value to zero turns prefetch off.</summary>
+        /// <remarks> 
+        /// <para>
+        /// When Prefetch is enabled, the client will quietly acquire more messages, up to the PrefetchCount limit, than what the application 
+        /// immediately asks for. The message pump will therefore acquire a message for immediate consumption 
+        /// that will be returned as soon as available, and the client will proceed to acquire further messages to fill the prefetch buffer in the background. 
+        /// </para>
+        /// <para>
+        /// While messages are available in the prefetch buffer, any subsequent ReceiveAsync calls will be immediately satisfied from the buffer, and the buffer is 
+        /// replenished in the background as space becomes available.If there are no messages available for delivery, the receive operation will drain the 
+        /// buffer and then wait or block as expected. 
+        /// </para>
+        /// <para>Updates to this value take effect on the next receive call to the service.</para>
+        /// </remarks>
         public int PrefetchCount
         {
             get => this.prefetchCount;
@@ -145,7 +192,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        internal SessionClient SessionClient
+        internal AmqpSessionClient SessionClient
         {
             get
             {
@@ -155,7 +202,7 @@ namespace Microsoft.Azure.ServiceBus
                     {
                         if (this.sessionClient == null)
                         {
-                            this.sessionClient = new SessionClient(
+                            this.sessionClient = new AmqpSessionClient(
                                 this.ClientId,
                                 this.Path,
                                 MessagingEntityType.Subscriber,
@@ -219,10 +266,13 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Completes a <see cref="Message"/> using a lock token.
+        /// Completes a <see cref="Message"/> using its lock token. This will delete the message from the subscription.
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
-        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.</remarks>
+        /// <remarks>
+        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>.
+        /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         public Task CompleteAsync(string lockToken)
         {
@@ -233,7 +283,9 @@ namespace Microsoft.Azure.ServiceBus
         /// Abandons a <see cref="Message"/> using a lock token. This will make the message available again for processing.
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
-        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.</remarks>
+        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
+        /// Abandoning a message will increase the delivery count on the message.</remarks>
         /// <returns>The asynchronous operation.</returns>
         public Task AbandonAsync(string lockToken)
         {
@@ -241,66 +293,98 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Moves a message to the deadletter queue.
+        /// Moves a message to the deadletter sub-queue.
         /// </summary>
         /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
-        /// <remarks>A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>. 
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="IMessageReceiver"/>, with the corresponding path. You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.</remarks>
+        /// <remarks>
+        /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
+        /// In order to receive a message from the deadletter sub-queue, you will need a new <see cref="IMessageReceiver"/> or <see cref="IQueueClient"/>, with the corresponding path. 
+        /// You can use <see cref="EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.</remarks>
         /// <returns>The asynchronous operation.</returns>
         public Task DeadLetterAsync(string lockToken)
         {
             return this.InnerSubscriptionClient.InnerReceiver.DeadLetterAsync(lockToken);
         }
 
-        /// <summary>Asynchronously processes a message.</summary>
-        /// <param name="handler">A <see cref="Func{T1, T2, TResult}"/> that processes messages.</param>
-        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is used to notify exceptions.</param>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
+        /// <summary>
+        /// Receive messages continously from the subscription. Registers a message handler and begins a new thread to receive messages.
+        /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the subscription client.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
+        /// <remarks>Enable prefetch to speeden up the receive rate. 
+        /// Use <see cref="RegisterMessageHandler(Func{Message,CancellationToken,Task}, MessageHandlerOptions)"/> to configure the settings of the pump.</remarks>
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler)
         {
-            this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler, exceptionReceivedHandler);
-        }
-
-        /// <summary>Asynchronously processes a message.</summary>
-        /// <param name="handler">A <see cref="Func{T1, T2, TResult}"/> that processes messages.</param>
-        /// <param name="registerHandlerOptions">Calls a message option.</param>
-        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions registerHandlerOptions)
-        {
-            this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler, registerHandlerOptions);
-        }
-
-        /// <summary>Register a session handler.</summary>
-        /// <param name="handler">A <see cref="Func{T1, T2, TResult}"/> that processes sessions.</param>
-        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is used to notify exceptions.</param>
-        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
-        {
-            var sessionHandlerOptions = new SessionHandlerOptions(exceptionReceivedHandler);
-            this.RegisterSessionHandler(handler, sessionHandlerOptions);
-        }
-
-        /// <summary>Register a session handler.</summary>
-        /// <param name="handler">A <see cref="Func{T1, T2, TResult}"/> that processes sessions.</param>
-        /// <param name="sessionHandlerOptions">Options associated with session pump processing.</param>
-        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
-        {
-            this.SessionPumpHost.OnSessionHandler(handler, sessionHandlerOptions);
+            this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler);
         }
 
         /// <summary>
-        /// Asynchronously adds a rule to the current subscription with the specified name and filter expression.
+        /// Receive messages continously from the subscription. Registers a message handler and begins a new thread to receive messages.
+        /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the subscription client.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
+        /// <param name="messageHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
+        /// <remarks>Enable prefetch to speeden up the receive rate.</remarks>
+        public void RegisterMessageHandler(Func<Message, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
+        {
+            this.InnerSubscriptionClient.InnerReceiver.RegisterMessageHandler(handler, messageHandlerOptions);
+        }
+
+        /// <summary>
+        /// Receive session messages continously from the subscription. Registers a message handler and begins a new thread to receive session-messages.
+        /// This handler(<see cref="Func{IMessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the subscription client.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{IMessageSession, Message, CancellationToken, Task}"/> that processes messages. 
+        /// <see cref="IMessageSession"/> contains the session information, and must be used to perform Complete/Abandon/Deadletter or other such operations on the <see cref="Message"/></param>
+        /// <remarks>  Enable prefetch to speeden up the receive rate. 
+        /// Use <see cref="RegisterSessionHandler(Func{IMessageSession,Message,CancellationToken,Task}, SessionHandlerOptions)"/> to configure the settings of the pump.</remarks>
+        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler)
+        {
+            var sessionHandlerOptions = new SessionHandlerOptions();
+            this.RegisterSessionHandler(handler, sessionHandlerOptions);
+        }
+
+        /// <summary>
+        /// Receive session messages continously from the subscription. Registers a message handler and begins a new thread to receive session-messages.
+        /// This handler(<see cref="Func{IMessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the subscription client.
+        /// </summary>
+        /// <param name="handler">A <see cref="Func{IMessageSession, Message, CancellationToken, Task}"/> that processes messages. 
+        /// <see cref="IMessageSession"/> contains the session information, and must be used to perform Complete/Abandon/Deadletter or other such operations on the <see cref="Message"/></param>
+        /// <param name="sessionHandlerOptions">Options used to configure the settings of the session pump.</param>
+        /// <remarks>  Enable prefetch to speeden up the receive rate. 
+        /// Use <see cref="RegisterSessionHandler(Func{IMessageSession,Message,CancellationToken,Task}, SessionHandlerOptions)"/> to configure the settings of the pump.</remarks>
+        public void RegisterSessionHandler(Func<IMessageSession, Message, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
+        {
+            this.SessionPumpHost.OnSessionHandlerAsync(handler, sessionHandlerOptions).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
         /// </summary>
         /// <param name="ruleName">The name of the rule to add.</param>
         /// <param name="filter">The filter expression against which messages will be matched.</param>
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
+        /// <remarks>
+        /// You can add rules to the subscription that will decide filter which messages from the topic should reach the subscription.
+        /// A default <see cref="TrueFilter"/> rule named <see cref="DefaultRule"/> is always added while creation of the Subscription.
+        /// You can add multiple rules with distinct names to the same subscription.
+        /// </remarks>
         public Task AddRuleAsync(string ruleName, Filter filter)
         {
             return this.AddRuleAsync(new RuleDescription(name: ruleName, filter: filter));
         }
 
         /// <summary>
-        /// Asynchronously adds a new rule to the subscription using the specified rule description.
+        /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
         /// </summary>
-        /// <param name="description">The rule description that provides metadata of the rule to add.</param>
+        /// <param name="description">The rule description that provides the rule to add.</param>
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
+        /// <remarks>
+        /// You can add rules to the subscription that will decide filter which messages from the topic should reach the subscription.
+        /// A default <see cref="TrueFilter"/> rule named <see cref="DefaultRule"/> is always added while creation of the Subscription.
+        /// You can add multiple rules with distinct names to the same subscription.
+        /// </remarks>
         public async Task AddRuleAsync(RuleDescription description)
         {
             if (description == null)
@@ -325,7 +409,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Asynchronously removes the rule described by <paramref name="ruleName" />.
+        /// Removes the rule on the subscription identified by <paramref name="ruleName" />.
         /// </summary>
         /// <param name="ruleName">The name of the rule.</param>
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
@@ -352,10 +436,15 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
+        /// Gets a list of currently registered plugins for this SubscriptionClient.
+        /// </summary>
+        public override IList<ServiceBusPlugin> RegisteredPlugins => this.InnerSubscriptionClient.InnerReceiver.RegisteredPlugins;
+
+        /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used for receiving messages from Service Bus.
         /// </summary>
         /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register</param>
-        public void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
+        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
         {
             this.InnerSubscriptionClient.InnerReceiver.RegisterPlugin(serviceBusPlugin);
         }
@@ -364,7 +453,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Unregisters a <see cref="ServiceBusPlugin"/>.
         /// </summary>
         /// <param name="serviceBusPluginName">The name <see cref="ServiceBusPlugin.Name"/> to be unregistered</param>
-        public void UnregisterPlugin(string serviceBusPluginName)
+        public override void UnregisterPlugin(string serviceBusPluginName)
         {
             this.InnerSubscriptionClient.InnerReceiver.UnregisterPlugin(serviceBusPluginName);
         }
