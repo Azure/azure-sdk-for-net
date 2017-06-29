@@ -1755,6 +1755,7 @@ namespace Microsoft.Azure.Management.Automation
             url = url + Uri.EscapeDataString(parameters.Name);
             List<string> queryParameters = new List<string>();
             queryParameters.Add("api-version=2015-10-31");
+            queryParameters.Add("convertTimesFromTimeZone=" + Uri.EscapeDataString(parameters.ConvertTimesFromTimeZone.ToString().ToLower()));
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1805,6 +1806,87 @@ namespace Microsoft.Azure.Management.Automation
                     if (parameters.Properties.Description != null)
                     {
                         propertiesValue["description"] = parameters.Properties.Description;
+                    }
+                    
+                    if (parameters.Properties.StartTime != null)
+                    {
+                        propertiesValue["startTime"] = parameters.Properties.StartTime.Value;
+                    }
+                    
+                    if (parameters.Properties.ExpiryTime != null)
+                    {
+                        propertiesValue["expiryTime"] = parameters.Properties.ExpiryTime.Value;
+                    }
+                    
+                    if (parameters.Properties.Interval != null)
+                    {
+                        propertiesValue["interval"] = parameters.Properties.Interval.Value;
+                    }
+                    
+                    if (parameters.Properties.Frequency != null)
+                    {
+                        propertiesValue["frequency"] = parameters.Properties.Frequency;
+                    }
+                    
+                    if (parameters.Properties.TimeZone != null)
+                    {
+                        propertiesValue["timeZone"] = parameters.Properties.TimeZone;
+                    }
+                    
+                    if (parameters.Properties.AdvancedSchedule != null)
+                    {
+                        JObject advancedScheduleValue = new JObject();
+                        propertiesValue["advancedSchedule"] = advancedScheduleValue;
+                        
+                        if (parameters.Properties.AdvancedSchedule.WeekDays != null)
+                        {
+                            if (parameters.Properties.AdvancedSchedule.WeekDays is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AdvancedSchedule.WeekDays).IsInitialized)
+                            {
+                                JArray weekDaysArray = new JArray();
+                                foreach (string weekDaysItem in parameters.Properties.AdvancedSchedule.WeekDays)
+                                {
+                                    weekDaysArray.Add(weekDaysItem);
+                                }
+                                advancedScheduleValue["weekDays"] = weekDaysArray;
+                            }
+                        }
+                        
+                        if (parameters.Properties.AdvancedSchedule.MonthDays != null)
+                        {
+                            if (parameters.Properties.AdvancedSchedule.MonthDays is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AdvancedSchedule.MonthDays).IsInitialized)
+                            {
+                                JArray monthDaysArray = new JArray();
+                                foreach (int monthDaysItem in parameters.Properties.AdvancedSchedule.MonthDays)
+                                {
+                                    monthDaysArray.Add(monthDaysItem);
+                                }
+                                advancedScheduleValue["monthDays"] = monthDaysArray;
+                            }
+                        }
+                        
+                        if (parameters.Properties.AdvancedSchedule.MonthlyOccurrences != null)
+                        {
+                            if (parameters.Properties.AdvancedSchedule.MonthlyOccurrences is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AdvancedSchedule.MonthlyOccurrences).IsInitialized)
+                            {
+                                JArray monthlyOccurrencesArray = new JArray();
+                                foreach (AdvancedScheduleMonthlyOccurrence monthlyOccurrencesItem in parameters.Properties.AdvancedSchedule.MonthlyOccurrences)
+                                {
+                                    JObject advancedScheduleMonthlyOccurrenceValue = new JObject();
+                                    monthlyOccurrencesArray.Add(advancedScheduleMonthlyOccurrenceValue);
+                                    
+                                    if (monthlyOccurrencesItem.Occurrence != null)
+                                    {
+                                        advancedScheduleMonthlyOccurrenceValue["occurrence"] = monthlyOccurrencesItem.Occurrence.Value;
+                                    }
+                                    
+                                    if (monthlyOccurrencesItem.Day != null)
+                                    {
+                                        advancedScheduleMonthlyOccurrenceValue["day"] = monthlyOccurrencesItem.Day;
+                                    }
+                                }
+                                advancedScheduleValue["monthlyOccurrences"] = monthlyOccurrencesArray;
+                            }
+                        }
                     }
                     
                     if (parameters.Properties.IsEnabled != null)

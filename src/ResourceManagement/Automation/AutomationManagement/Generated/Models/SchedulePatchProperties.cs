@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Automation.Models;
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
@@ -29,6 +30,17 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class SchedulePatchProperties
     {
+        private AdvancedSchedule _advancedSchedule;
+        
+        /// <summary>
+        /// Optional. Gets or sets the AdvancedSchedule.
+        /// </summary>
+        public AdvancedSchedule AdvancedSchedule
+        {
+            get { return this._advancedSchedule; }
+            set { this._advancedSchedule = value; }
+        }
+        
         private string _description;
         
         /// <summary>
@@ -38,6 +50,39 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._description; }
             set { this._description = value; }
+        }
+        
+        private System.DateTimeOffset? _expiryTime;
+        
+        /// <summary>
+        /// Optional. Gets or sets the end time of the schedule.
+        /// </summary>
+        public System.DateTimeOffset? ExpiryTime
+        {
+            get { return this._expiryTime; }
+            set { this._expiryTime = value; }
+        }
+        
+        private string _frequency;
+        
+        /// <summary>
+        /// Optional. Gets or sets the frequency of the schedule.
+        /// </summary>
+        public string Frequency
+        {
+            get { return this._frequency; }
+            set { this._frequency = value; }
+        }
+        
+        private byte? _interval;
+        
+        /// <summary>
+        /// Optional. Gets or sets the interval of the schedule.
+        /// </summary>
+        public byte? Interval
+        {
+            get { return this._interval; }
+            set { this._interval = value; }
         }
         
         private bool? _isEnabled;
@@ -50,6 +95,28 @@ namespace Microsoft.Azure.Management.Automation.Models
         {
             get { return this._isEnabled; }
             set { this._isEnabled = value; }
+        }
+        
+        private System.DateTimeOffset? _startTime;
+        
+        /// <summary>
+        /// Optional. Gets or sets the start time of the schedule.
+        /// </summary>
+        public System.DateTimeOffset? StartTime
+        {
+            get { return this._startTime; }
+            set { this._startTime = value; }
+        }
+        
+        private string _timeZone;
+        
+        /// <summary>
+        /// Optional. Gets or sets the time zone of the schedule.
+        /// </summary>
+        public string TimeZone
+        {
+            get { return this._timeZone; }
+            set { this._timeZone = value; }
         }
         
         /// <summary>

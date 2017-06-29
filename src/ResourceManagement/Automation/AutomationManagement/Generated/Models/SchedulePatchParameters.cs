@@ -30,6 +30,18 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class SchedulePatchParameters
     {
+        private bool _convertTimesFromTimeZone;
+        
+        /// <summary>
+        /// Optional. True if times provided are specified in the provided time
+        /// zone. False if times are in UTC.
+        /// </summary>
+        public bool ConvertTimesFromTimeZone
+        {
+            get { return this._convertTimesFromTimeZone; }
+            set { this._convertTimesFromTimeZone = value; }
+        }
+        
         private string _name;
         
         /// <summary>
