@@ -52,7 +52,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// of the Event Hub. Possible values include: 'Active', 'Disabled',
         /// 'Restoring', 'SendDisabled', 'ReceiveDisabled', 'Creating',
         /// 'Deleting', 'Renaming', 'Unknown'</param>
-        public Eventhub(string id = default(string), string name = default(string), string type = default(string), IList<string> partitionIds = default(IList<string>), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), long? messageRetentionInDays = default(long?), long? partitionCount = default(long?), EntityStatus? status = default(EntityStatus?))
+        /// <param name="captureDescription">Properties of capture
+        /// description</param>
+        public Eventhub(string id = default(string), string name = default(string), string type = default(string), IList<string> partitionIds = default(IList<string>), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), long? messageRetentionInDays = default(long?), long? partitionCount = default(long?), EntityStatus? status = default(EntityStatus?), CaptureDescription captureDescription = default(CaptureDescription))
             : base(id, name, type)
         {
             PartitionIds = partitionIds;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
             MessageRetentionInDays = messageRetentionInDays;
             PartitionCount = partitionCount;
             Status = status;
+            CaptureDescription = captureDescription;
             CustomInit();
         }
 
@@ -111,6 +114,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public EntityStatus? Status { get; set; }
 
         /// <summary>
+        /// Gets or sets properties of capture description
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.captureDescription")]
+        public CaptureDescription CaptureDescription { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -133,6 +142,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
             if (PartitionCount < 1)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "PartitionCount", 1);
+            }
+            if (CaptureDescription != null)
+            {
+                CaptureDescription.Validate();
             }
         }
     }

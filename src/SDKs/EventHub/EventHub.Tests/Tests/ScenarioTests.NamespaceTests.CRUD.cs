@@ -49,7 +49,9 @@ namespace EventHub.Tests.ScenarioTests
                         {
                             {"tag1", "value1"},
                             {"tag2", "value2"}
-                        }
+                        },
+                        IsAutoInflateEnabled = true,
+                        MaximumThroughputUnits = 10
                     });
 
                 Assert.NotNull(createNamespaceResponse);
@@ -83,7 +85,6 @@ namespace EventHub.Tests.ScenarioTests
                 // Update namespace tags and make the namespace critical
                 var updateNamespaceParameter = new EHNamespace()
                 {
-                    Location = location,
                     Tags = new Dictionary<string, string>()
                         {
                             {"tag3", "value3"},

@@ -58,7 +58,22 @@ namespace EventHub.Tests.ScenarioTests
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);
 
                 var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
-                new Eventhub() { MessageRetentionInDays = 4, PartitionCount = 4, Status = EntityStatus.Active });
+                new Eventhub() { MessageRetentionInDays = 4, PartitionCount = 4, Status = EntityStatus.Active,
+                    CaptureDescription = new CaptureDescription()
+                    {
+                        Enabled = true,
+                        Encoding = EncodingCaptureDescription.Avro,
+                        IntervalInSeconds = 120,
+                        SizeLimitInBytes = 10485763,
+                        Destination = new Destination()
+                        {
+                            Name = "EventHubArchive.AzureBlockBlob",
+                            BlobContainer = "container",
+                            ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
+                            StorageAccountResourceId = "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-SouthCentralUS/providers/Microsoft.ClassicStorage/storageAccounts/arjunteststorage"
+                        }
+                    }
+                });
 
                 Assert.NotNull(createEventHubResponse);
                 Assert.Equal(createEventHubResponse.Name, eventhubName);
@@ -74,12 +89,11 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.True(getListEventHubResponse.Count<Eventhub>() >= 1);
 
                 // Update the EventHub
-                Eventhub updateEventHubProperties = new Eventhub()
-                {
-                    MessageRetentionInDays = 5
-                };
+                getEventResponse.CaptureDescription.IntervalInSeconds = 130;
+                getEventResponse.CaptureDescription.SizeLimitInBytes = 10485900;
+                getEventResponse.MessageRetentionInDays = 5;
 
-                var getUpdateEventhubPropertiesResponse = EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, updateEventHubProperties);
+                var getUpdateEventhubPropertiesResponse = EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, getEventResponse);
                 Assert.NotNull(getUpdateEventhubPropertiesResponse);
 
                 getEventResponse.MessageRetentionInDays = 6;
