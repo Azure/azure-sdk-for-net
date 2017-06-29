@@ -10,4 +10,4 @@ Set-Location $location
 
 $sdkinfo = Read-SdkInfoList -project "*" -sdkInfo '.\sdkinfo.json' -commit $commit
 
-$sdkInfo | ConvertTo-Json | Out-File ".\sdkinfo.lock.json"
+$sdkInfo | ConvertTo-Json | Out-File ".\sdkinfo.lock.json" -Encoding "UTF8"
