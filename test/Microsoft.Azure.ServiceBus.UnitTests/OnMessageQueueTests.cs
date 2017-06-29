@@ -62,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        void OnMessageExceptionHandlerCalledTest()
+        async Task OnMessageExceptionHandlerCalledTest()
         {
             string queueName = "nonexistentqueuename";
             bool exceptionReceivedHandlerCalled = false;
@@ -89,10 +89,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     break;
                 }
 
-                Task.Delay(TimeSpan.FromSeconds(1));
+                await Task.Delay(TimeSpan.FromSeconds(1));
             }
 
             Assert.True(exceptionReceivedHandlerCalled);
+
+            await queueClient.CloseAsync();
         }
 
         async Task OnMessageTestAsync(string queueName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)

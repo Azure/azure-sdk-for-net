@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Primitives;
     using Xunit;
@@ -39,8 +40,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        void OnSessionHandlerShouldFailOnNonSessionFulQueue()
+        async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulSubscription()
         {
+            bool exceptionReceivedHandlerCalled = false;
             var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedTopicName);
             var subscriptionClient = new SubscriptionClient(
                 TestUtility.NamespaceConnectionString,
@@ -48,12 +50,39 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 TestConstants.SubscriptionName,
                 ReceiveMode.PeekLock);
 
-            Assert.Throws<InvalidOperationException>(
-               () => subscriptionClient.RegisterSessionHandler(
+            SessionHandlerOptions sessionHandlerOptions = new SessionHandlerOptions(
+            (eventArgs) =>
+            {
+                Assert.NotNull(eventArgs);
+                Assert.NotNull(eventArgs.Exception);
+                if (eventArgs.Exception is InvalidOperationException)
+                {
+                    exceptionReceivedHandlerCalled = true;
+                }
+                return Task.CompletedTask;
+            })
+            { MaxConcurrentSessions = 1 };
+
+            subscriptionClient.RegisterSessionHandler(
                (session, message, token) =>
                {
                    return Task.CompletedTask;
-               }, ExceptionReceivedHandler));
+               },
+               sessionHandlerOptions);
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 5)
+            {
+                if (exceptionReceivedHandlerCalled)
+                {
+                    break;
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
+            }
+
+            Assert.True(exceptionReceivedHandlerCalled);
+            await subscriptionClient.CloseAsync();
         }
 
         async Task OnSessionTestAsync(string topicName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)

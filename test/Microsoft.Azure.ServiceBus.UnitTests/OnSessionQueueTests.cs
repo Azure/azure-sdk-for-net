@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Threading.Tasks;
     using Core;
     using Microsoft.Azure.ServiceBus.Primitives;
@@ -98,17 +99,44 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        void OnSessionHandlerShouldFailOnNonSessionFulQueue()
+        async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulQueue()
         {
+            bool exceptionReceivedHandlerCalled = false;
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName);
 
-            Assert.Throws<InvalidOperationException>(
-               () => queueClient.RegisterSessionHandler(
+            SessionHandlerOptions sessionHandlerOptions = new SessionHandlerOptions(
+            (eventArgs) =>
+            {
+                Assert.NotNull(eventArgs);
+                Assert.NotNull(eventArgs.Exception);
+                if (eventArgs.Exception is InvalidOperationException)
+                {
+                    exceptionReceivedHandlerCalled = true;
+                }
+                return Task.CompletedTask;
+            })
+            { MaxConcurrentSessions = 1 };
+
+            queueClient.RegisterSessionHandler(
                (session, message, token) =>
                {
                    return Task.CompletedTask;
                },
-               ExceptionReceivedHandler));
+               sessionHandlerOptions);
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 5)
+            {
+                if (exceptionReceivedHandlerCalled)
+                {
+                    break;
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
+            }
+
+            Assert.True(exceptionReceivedHandlerCalled);
+            await queueClient.CloseAsync();
         }
 
         async Task OnSessionTestAsync(string queueName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
