@@ -695,7 +695,8 @@ namespace Microsoft.Azure.ServiceBus.Core
                         }
 
                         Message message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
-                        if(message.SystemProperties.LockedUntilUtc <= DateTime.UtcNow)
+                        if(this.ReceiveMode == ReceiveMode.PeekLock &&
+                           message.SystemProperties.LockedUntilUtc <= DateTime.UtcNow)
                         {
                             receiveLink.ReleaseMessage(amqpMessage);
                             continue;
