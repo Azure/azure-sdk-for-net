@@ -12,34 +12,37 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.EventHub;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The Resource definition
+    /// Single item in a List or Get AuthorizationRule operation
     /// </summary>
-    public partial class Resource : IResource
+    [Rest.Serialization.JsonTransformation]
+    public partial class AuthorizationRule : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
-        public Resource()
+        public AuthorizationRule()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="rights">The rights associated with the rule.</param>
+        public AuthorizationRule(string id = default(string), string name = default(string), string type = default(string), IList<string> rights = default(IList<string>))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
+            Rights = rights;
             CustomInit();
         }
 
@@ -49,22 +52,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Id
+        /// Gets or sets the rights associated with the rule.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets resource name
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets resource type
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "properties.rights")]
+        public IList<string> Rights { get; set; }
 
     }
 }

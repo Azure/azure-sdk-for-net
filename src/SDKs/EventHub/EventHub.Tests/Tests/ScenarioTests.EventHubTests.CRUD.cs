@@ -5,6 +5,7 @@
 namespace EventHub.Tests.ScenarioTests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Management.EventHub;
@@ -13,7 +14,7 @@ namespace EventHub.Tests.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
     using Xunit;
-    public partial class ScenarioTests 
+    public partial class ScenarioTests
     {
         [Fact]
         public void EventCreateGetUpdateDelete()
@@ -34,81 +35,84 @@ namespace EventHub.Tests.ScenarioTests
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new EHNamespace()
                     {
                         Location = location,
                         Sku = new Sku
                         {
-                            Name = "Standard",
-                            Tier = "Standard"
+                            Name = SkuName.Standard,
+                            Tier = SkuTier.Standard
+                        },
+                        Tags = new Dictionary<string, string>()
+                        {
+                            {"tag1", "value1"},
+                            {"tag2", "value2"}
                         }
                     });
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
-
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 // Create a EventHub
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);
 
                 var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
-                new EventHubCreateOrUpdateParameters()
-                {
-                    Location = location
+                new Eventhub() { MessageRetentionInDays = 4, PartitionCount = 4, Status = EntityStatus.Active,
+                    CaptureDescription = new CaptureDescription()
+                    {
+                        Enabled = true,
+                        Encoding = EncodingCaptureDescription.Avro,
+                        IntervalInSeconds = 120,
+                        SizeLimitInBytes = 10485763,
+                        Destination = new Destination()
+                        {
+                            Name = "EventHubArchive.AzureBlockBlob",
+                            BlobContainer = "container",
+                            ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
+                            StorageAccountResourceId = "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-SouthCentralUS/providers/Microsoft.ClassicStorage/storageAccounts/arjunteststorage"
+                        }
+                    }
                 });
 
                 Assert.NotNull(createEventHubResponse);
-                Assert.Equal(createEventHubResponse.Name, eventhubName);                
-                
+                Assert.Equal(createEventHubResponse.Name, eventhubName);
+
                 // Get the created EventHub
                 var getEventResponse = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
                 Assert.NotNull(getEventResponse);
                 Assert.Equal(getEventResponse.Status, EntityStatus.Active);
 
-
                 // Get all Event Hubs for a given NameSpace
-                var getListEventHubResponse = EventHubManagementClient.EventHubs.ListAll(resourceGroup, namespaceName);
+                var getListEventHubResponse = EventHubManagementClient.EventHubs.ListByNamespace(resourceGroup, namespaceName);
                 Assert.NotNull(getListEventHubResponse);
-                Assert.True(getListEventHubResponse.Count<EventHubResource>() >= 1 );
+                Assert.True(getListEventHubResponse.Count<Eventhub>() >= 1);
 
                 // Update the EventHub
-                EventHubCreateOrUpdateParameters updateEventHubProperties = new EventHubCreateOrUpdateParameters()
-                {
-                    Location = location,
-                    Name = eventhubName
-                };
+                getEventResponse.CaptureDescription.IntervalInSeconds = 130;
+                getEventResponse.CaptureDescription.SizeLimitInBytes = 10485900;
+                getEventResponse.MessageRetentionInDays = 5;
 
-                var getUpdateEventhubPropertiesResponse = EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, updateEventHubProperties);
+                var getUpdateEventhubPropertiesResponse = EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, getEventResponse);
                 Assert.NotNull(getUpdateEventhubPropertiesResponse);
-                
+
+                getEventResponse.MessageRetentionInDays = 6;
+                var getUpdateEventhubPropertiesResponse1 = EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, getEventResponse);
+
+
                 // Get the updated EventHub and verify the properties
                 getEventResponse = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
                 Assert.NotNull(getEventResponse);
                 Assert.Equal(getEventResponse.Status, EntityStatus.Active);
-                Assert.Equal(getEventResponse.MessageRetentionInDays, getEventResponse.MessageRetentionInDays);
+                Assert.Equal(getEventResponse.MessageRetentionInDays, 6);
 
                 // Delete the Evnet Hub
                 EventHubManagementClient.EventHubs.Delete(resourceGroup, namespaceName, eventhubName);
-                try
-                {
-                    var getEventHubResponse1 = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
-                }
-                catch (Exception ex)
-                {
-                    Assert.Equal(ex.Message, "The requested resource " + eventhubName + " does not exist.");
-                }
 
-                // Delete namespace and check for the NotFound exception 
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                // Delete namespace and check for the NotFound exception
                 EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
-                try
-                {
-                    var getNamespaceResponse_chkDelete = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
             }
         }
     }

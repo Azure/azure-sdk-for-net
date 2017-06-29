@@ -17,28 +17,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for EntityStatus.
+    /// Defines values for EncodingCaptureDescription.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum EntityStatus
+    public enum EncodingCaptureDescription
     {
-        [EnumMember(Value = "Active")]
-        Active,
-        [EnumMember(Value = "Disabled")]
-        Disabled,
-        [EnumMember(Value = "Restoring")]
-        Restoring,
-        [EnumMember(Value = "SendDisabled")]
-        SendDisabled,
-        [EnumMember(Value = "ReceiveDisabled")]
-        ReceiveDisabled,
-        [EnumMember(Value = "Creating")]
-        Creating,
-        [EnumMember(Value = "Deleting")]
-        Deleting,
-        [EnumMember(Value = "Renaming")]
-        Renaming,
-        [EnumMember(Value = "Unknown")]
-        Unknown
+        [EnumMember(Value = "Avro")]
+        Avro,
+        [EnumMember(Value = "AvroDeflate")]
+        AvroDeflate
     }
 }

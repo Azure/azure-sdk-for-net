@@ -15,29 +15,29 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Linq;
 
     /// <summary>
-    /// A Event Hub REST API operation
+    /// Error reponse indicates EventHub service is not able to process the
+    /// incoming request. The reason is provided in the error message.
     /// </summary>
-    public partial class Operation
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the Operation class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public Operation()
+        public ErrorResponse()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Operation class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="name">Operation name:
-        /// {provider}/{resource}/{operation}</param>
-        /// <param name="display">The object that represents the
-        /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="code">Error code.</param>
+        /// <param name="message">Error message indicating why the operation
+        /// failed.</param>
+        public ErrorResponse(string code = default(string), string message = default(string))
         {
-            Name = name;
-            Display = display;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -47,16 +47,16 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets operation name: {provider}/{resource}/{operation}
+        /// Gets or sets error code.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the object that represents the operation.
+        /// Gets or sets error message indicating why the operation failed.
         /// </summary>
-        [JsonProperty(PropertyName = "display")]
-        public OperationDisplay Display { get; set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
     }
 }
