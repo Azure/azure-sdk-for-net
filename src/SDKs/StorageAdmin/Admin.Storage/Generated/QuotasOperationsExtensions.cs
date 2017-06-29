@@ -23,15 +23,18 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// Location of storage accounts.
+            /// </param>
             /// <param name='quotaName'>
             /// The name of the quota.
             /// </param>
             /// <param name='template'>
             /// Template used to create or update storage quota
             /// </param>
-            public static StorageQuota CreateOrUpdate(this IQuotasOperations operations, string quotaName, StorageQuota template)
+            public static StorageQuota CreateOrUpdate(this IQuotasOperations operations, string location, string quotaName, QuotaCreateOrUpdateParameters template)
             {
-                return operations.CreateOrUpdateAsync(quotaName, template).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(location, quotaName, template).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -40,6 +43,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// Location of storage accounts.
+            /// </param>
             /// <param name='quotaName'>
             /// The name of the quota.
             /// </param>
@@ -49,9 +55,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageQuota> CreateOrUpdateAsync(this IQuotasOperations operations, string quotaName, StorageQuota template, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageQuota> CreateOrUpdateAsync(this IQuotasOperations operations, string location, string quotaName, QuotaCreateOrUpdateParameters template, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(quotaName, template, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(location, quotaName, template, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -63,12 +69,15 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// Location of storage accounts.
+            /// </param>
             /// <param name='quotaName'>
             /// The name of the quota.
             /// </param>
-            public static void Delete(this IQuotasOperations operations, string quotaName)
+            public static void Delete(this IQuotasOperations operations, string location, string quotaName)
             {
-                operations.DeleteAsync(quotaName).GetAwaiter().GetResult();
+                operations.DeleteAsync(location, quotaName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -77,15 +86,18 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// Location of storage accounts.
+            /// </param>
             /// <param name='quotaName'>
             /// The name of the quota.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IQuotasOperations operations, string quotaName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IQuotasOperations operations, string location, string quotaName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(quotaName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(location, quotaName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -94,12 +106,15 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// Location of storage accounts.
+            /// </param>
             /// <param name='quotaName'>
             /// The name of the quota.
             /// </param>
-            public static StorageQuota Get(this IQuotasOperations operations, string quotaName)
+            public static StorageQuota Get(this IQuotasOperations operations, string location, string quotaName)
             {
-                return operations.GetAsync(quotaName).GetAwaiter().GetResult();
+                return operations.GetAsync(location, quotaName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -108,15 +123,18 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// Location of storage accounts.
+            /// </param>
             /// <param name='quotaName'>
             /// The name of the quota.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageQuota> GetAsync(this IQuotasOperations operations, string quotaName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageQuota> GetAsync(this IQuotasOperations operations, string location, string quotaName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(quotaName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(location, quotaName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -128,9 +146,12 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static StorageQuota List(this IQuotasOperations operations)
+            /// <param name='location'>
+            /// Location of storage accounts.
+            /// </param>
+            public static StorageQuotaListResponse List(this IQuotasOperations operations, string location)
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -139,12 +160,15 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// Location of storage accounts.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageQuota> ListAsync(this IQuotasOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageQuotaListResponse> ListAsync(this IQuotasOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

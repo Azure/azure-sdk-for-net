@@ -49,6 +49,9 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <summary>
         /// Create or update an existing storage quota
         /// </summary>
+        /// <param name='location'>
+        /// Location of storage accounts.
+        /// </param>
         /// <param name='quotaName'>
         /// The name of the quota.
         /// </param>
@@ -76,15 +79,15 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<StorageQuota>> CreateOrUpdateWithHttpMessagesAsync(string quotaName, StorageQuota template, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageQuota>> CreateOrUpdateWithHttpMessagesAsync(string location, string quotaName, QuotaCreateOrUpdateParameters template, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.Location == null)
+            if (location == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
             if (quotaName == null)
             {
@@ -94,6 +97,10 @@ namespace Microsoft.AzureStack.Storage.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "template");
             }
+            if (template != null)
+            {
+                template.Validate();
+            }
             string apiVersion = "2015-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -102,17 +109,18 @@ namespace Microsoft.AzureStack.Storage.Admin
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("location", location);
                 tracingParameters.Add("quotaName", quotaName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("template", template);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{locationName}/quotas/{quotaName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(Client.Location));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{quotaName}", System.Uri.EscapeDataString(quotaName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -253,6 +261,9 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <summary>
         /// Delete an existing quota
         /// </summary>
+        /// <param name='location'>
+        /// Location of storage accounts.
+        /// </param>
         /// <param name='quotaName'>
         /// The name of the quota.
         /// </param>
@@ -274,15 +285,15 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string location, string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.Location == null)
+            if (location == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
             if (quotaName == null)
             {
@@ -297,15 +308,16 @@ namespace Microsoft.AzureStack.Storage.Admin
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("location", location);
                 tracingParameters.Add("quotaName", quotaName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{locationName}/quotas/{quotaName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(Client.Location));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{quotaName}", System.Uri.EscapeDataString(quotaName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -422,6 +434,9 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <summary>
         /// Retrieve an existing quota
         /// </summary>
+        /// <param name='location'>
+        /// Location of storage accounts.
+        /// </param>
         /// <param name='quotaName'>
         /// The name of the quota.
         /// </param>
@@ -446,15 +461,15 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<StorageQuota>> GetWithHttpMessagesAsync(string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageQuota>> GetWithHttpMessagesAsync(string location, string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.Location == null)
+            if (location == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
             if (quotaName == null)
             {
@@ -469,15 +484,16 @@ namespace Microsoft.AzureStack.Storage.Admin
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("location", location);
                 tracingParameters.Add("quotaName", quotaName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{locationName}/quotas/{quotaName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(Client.Location));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{quotaName}", System.Uri.EscapeDataString(quotaName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -612,6 +628,9 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <summary>
         /// Get a list of quotas for this location
         /// </summary>
+        /// <param name='location'>
+        /// Location of storage accounts.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -633,11 +652,15 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<StorageQuota>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageQuotaListResponse>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
             string apiVersion = "2015-12-01-preview";
             // Tracing
@@ -647,14 +670,16 @@ namespace Microsoft.AzureStack.Storage.Admin
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("location", location);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{locationName}/quotas").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -753,7 +778,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<StorageQuota>();
+            var _result = new AzureOperationResponse<StorageQuotaListResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -766,7 +791,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<StorageQuota>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<StorageQuotaListResponse>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -1,16 +1,19 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Microsoft.AzureStack.Storage.Admin;
+using TestCommon;
 
 namespace Storage.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class ClientTests : TestBase
     {
+        
         [TestMethod]
-        public void TestMethod1()
+        public void Test1()
         {
+            RunTest(() => {
+                var client = Common.CreateAndValidateStorageAdminClient(parameters);
+            });
         }
     }
 }

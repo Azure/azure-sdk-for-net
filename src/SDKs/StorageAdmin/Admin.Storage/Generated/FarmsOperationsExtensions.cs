@@ -31,12 +31,12 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='farmId'>
             /// Th name of the farm.
             /// </param>
-            /// <param name='settingAccessString'>
-            /// TODO
+            /// <param name='parameters'>
+            /// Parameters used to create a farm
             /// </param>
-            public static Farm Create(this IFarmsOperations operations, string resourceGroupName, string farmId, FarmCreateParameters settingAccessString)
+            public static FarmModel Create(this IFarmsOperations operations, string resourceGroupName, string farmId, FarmCreateParameters parameters)
             {
-                return operations.CreateAsync(resourceGroupName, farmId, settingAccessString).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, farmId, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -51,15 +51,15 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='farmId'>
             /// Th name of the farm.
             /// </param>
-            /// <param name='settingAccessString'>
-            /// TODO
+            /// <param name='parameters'>
+            /// Parameters used to create a farm
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Farm> CreateAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, FarmCreateParameters settingAccessString, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FarmModel> CreateAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, FarmCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, farmId, settingAccessString, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, farmId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -77,7 +77,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='farmId'>
             /// Th name of the farm.
             /// </param>
-            public static Farm Get(this IFarmsOperations operations, string resourceGroupName, string farmId)
+            public static FarmModel Get(this IFarmsOperations operations, string resourceGroupName, string farmId)
             {
                 return operations.GetAsync(resourceGroupName, farmId).GetAwaiter().GetResult();
             }
@@ -97,7 +97,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Farm> GetAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FarmModel> GetAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, farmId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -106,7 +106,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             }
 
             /// <summary>
-            /// Get an existing farm
+            /// Update an existing farm.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -120,13 +120,13 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='parameters'>
             /// New values for farm
             /// </param>
-            public static Farm Update(this IFarmsOperations operations, string resourceGroupName, string farmId, object parameters)
+            public static FarmModel Update(this IFarmsOperations operations, string resourceGroupName, string farmId, object parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, farmId, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get an existing farm
+            /// Update an existing farm.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -143,7 +143,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Farm> UpdateAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, object parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FarmModel> UpdateAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, object parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, farmId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -152,7 +152,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             }
 
             /// <summary>
-            /// Get the list of metric definitions for this farm
+            /// Get the list of metric definitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -166,59 +166,13 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='filter'>
             /// TODO
             /// </param>
-            public static IList<MetricDefinition> GetMetricDefinitions(this IFarmsOperations operations, string resourceGroupName, string farmId, string filter)
+            public static IList<MetricDefinition> ListMetricDefinitions(this IFarmsOperations operations, string resourceGroupName, string farmId, string filter)
             {
-                return operations.GetMetricDefinitionsAsync(resourceGroupName, farmId, filter).GetAwaiter().GetResult();
+                return operations.ListMetricDefinitionsAsync(resourceGroupName, farmId, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get the list of metric definitions for this farm
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='farmId'>
-            /// Th name of the farm.
-            /// </param>
-            /// <param name='filter'>
-            /// TODO
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IList<MetricDefinition>> GetMetricDefinitionsAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, string filter, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetMetricDefinitionsWithHttpMessagesAsync(resourceGroupName, farmId, filter, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get the list of metrics for this farm
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='farmId'>
-            /// Th name of the farm.
-            /// </param>
-            /// <param name='filter'>
-            /// TODO
-            /// </param>
-            public static Metrics GetMetrics(this IFarmsOperations operations, string resourceGroupName, string farmId, string filter)
-            {
-                return operations.GetMetricsAsync(resourceGroupName, farmId, filter).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the list of metrics for this farm
+            /// Get the list of metric definitions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -235,16 +189,16 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Metrics> GetMetricsAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, string filter, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<MetricDefinition>> ListMetricDefinitionsAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, string filter, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetMetricsWithHttpMessagesAsync(resourceGroupName, farmId, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListMetricDefinitionsWithHttpMessagesAsync(resourceGroupName, farmId, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get a list of all farms under this resource group
+            /// Get the list of metrics.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -252,13 +206,59 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            public static IList<Farm> List(this IFarmsOperations operations, string resourceGroupName)
+            /// <param name='farmId'>
+            /// Th name of the farm.
+            /// </param>
+            /// <param name='filter'>
+            /// TODO
+            /// </param>
+            public static Metrics ListMetrics(this IFarmsOperations operations, string resourceGroupName, string farmId, string filter)
+            {
+                return operations.ListMetricsAsync(resourceGroupName, farmId, filter).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the list of metrics.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='farmId'>
+            /// Th name of the farm.
+            /// </param>
+            /// <param name='filter'>
+            /// TODO
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Metrics> ListMetricsAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, string filter, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListMetricsWithHttpMessagesAsync(resourceGroupName, farmId, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get a list of all farms.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            public static FarmListResponse List(this IFarmsOperations operations, string resourceGroupName)
             {
                 return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get a list of all farms under this resource group
+            /// Get a list of all farms.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -269,7 +269,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Farm>> ListAsync(this IFarmsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FarmListResponse> ListAsync(this IFarmsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -289,9 +289,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='farmId'>
             /// Th name of the farm.
             /// </param>
-            public static string GC(this IFarmsOperations operations, string resourceGroupName, string farmId)
+            public static string GarbageCollect(this IFarmsOperations operations, string resourceGroupName, string farmId)
             {
-                return operations.GCAsync(resourceGroupName, farmId).GetAwaiter().GetResult();
+                return operations.GarbageCollectAsync(resourceGroupName, farmId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -309,9 +309,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> GCAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> GarbageCollectAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GCWithHttpMessagesAsync(resourceGroupName, farmId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GarbageCollectWithHttpMessagesAsync(resourceGroupName, farmId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -331,9 +331,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// </param>
             /// <param name='operationId'>
             /// </param>
-            public static object GCStatus(this IFarmsOperations operations, string resourceGroupName, string farmId, string operationId)
+            public static string GargbageCollectStatus(this IFarmsOperations operations, string resourceGroupName, string farmId, string operationId)
             {
-                return operations.GCStatusAsync(resourceGroupName, farmId, operationId).GetAwaiter().GetResult();
+                return operations.GargbageCollectStatusAsync(resourceGroupName, farmId, operationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -353,9 +353,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GCStatusAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> GargbageCollectStatusAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GCStatusWithHttpMessagesAsync(resourceGroupName, farmId, operationId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GargbageCollectStatusWithHttpMessagesAsync(resourceGroupName, farmId, operationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

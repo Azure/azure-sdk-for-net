@@ -96,14 +96,37 @@
         ]
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/blobservices/default/metrics?api-version={api-version}&$filter={filter}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/blobservices/default/metrics?api-version={api-version}&$filter={filter}": {
       "get": {
         "tags": [
           "Blobs"
         ],
         "description": "",
         "operationId": "Blobs_ListMetrics",
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/FarmIdParameter"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Client Api Version.",
+            "enum": [
+              "2015-12-01-preview"
+            ]
+          },
+          {
+            "$ref": "#/parameters/FilterParameter"
+          }
+        ],
         "responses": {
           "200": {
             "description": "TODO",
@@ -171,7 +194,27 @@
         ],
         "description": "",
         "operationId": "Tables_ListMetricDefinitions",
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/FarmIdParameter"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Client Api Version.",
+            "enum": [
+              "2015-12-01-preview"
+            ]
+          }
+        ],
         "responses": {
           "200": {
             "description": "TODO",
@@ -188,14 +231,34 @@
         ]
       }
     },
-    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/tableservices/default/metrics?api-version={api-version}&$filter={filter}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/tableservices/default/metrics?api-version={api-version}&$filter={filter}": {
       "get": {
         "tags": [
           "Tables"
         ],
         "description": "",
         "operationId": "Tables_ListMetrics",
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/FarmIdParameter"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Client Api Version.",
+            "enum": [
+              "2015-12-01-preview"
+            ]
+          }
+        ],
         "responses": {
           "200": {
             "description": "TODO",
@@ -263,7 +326,30 @@
         ],
         "description": "",
         "operationId": "Queues_ListMetricDefinitions",
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/FarmIdParameter"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Client Api Version.",
+            "enum": [
+              "2015-12-01-preview"
+            ]
+          },
+          {
+            "$ref": "#/parameters/FilterParameter"
+          }
+        ],
         "responses": {
           "200": {
             "description": "TODO",
@@ -287,7 +373,27 @@
         ],
         "description": "",
         "operationId": "Queues_ListMetrics",
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/FarmIdParameter"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Client Api Version.",
+            "enum": [
+              "2015-12-01-preview"
+            ]
+          }
+        ],
         "responses": {
           "200": {
             "description": "TODO",
@@ -323,6 +429,16 @@
           },
           {
             "$ref": "#/parameters/AccountIdParameter"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Client Api Version.",
+            "enum": [
+              "2015-12-01-preview"
+            ]
           }
         ],
         "responses": {
@@ -360,6 +476,16 @@
           },
           {
             "$ref": "#/parameters/AccountIdParameter"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Client Api Version.",
+            "enum": [
+              "2015-12-01-preview"
+            ]
           }
         ],
         "responses": {
@@ -437,7 +563,20 @@
             "$ref": "#/parameters/SubscriptionIdParameter"
           },
           {
+            "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
             "$ref": "#/parameters/FarmIdParameter"
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Client Api Version.",
+            "enum": [
+              "2015-12-01-preview"
+            ]
           },
           {
             "$ref": "#/parameters/FilterParameter"
@@ -700,7 +839,7 @@
         ]
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{locationName}/quotas/{quotaName}?api-version={api-version}": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}?api-version={api-version}": {
       "put": {
         "tags": [
           "Quotas"
@@ -710,6 +849,12 @@
         "parameters": [
           {
             "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
+          },
+          {
+            "$ref": "#/parameters/QuotaNameParameter"
           },
           {
             "name": "api-version",
@@ -722,17 +867,11 @@
             ]
           },
           {
-            "$ref": "#/parameters/LocationParameter"
-          },
-          {
-            "$ref": "#/parameters/QuotaNameParameter"
-          },
-          {
             "name": "template",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/StorageQuota"
+              "$ref": "#/definitions/QuotaCreateOrUpdateParameters"
             },
             "description": "Template used to create or update storage quota"
           }
@@ -834,7 +973,7 @@
         ]
       }
     },
-    "/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{locationName}/quotas?api-version={api-version}": {
+    "/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas?api-version={api-version}": {
       "get": {
         "tags": [
           "Quotas"
@@ -844,6 +983,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/LocationParameter"
           },
           {
             "name": "api-version",
@@ -860,7 +1002,7 @@
           "200": {
             "description": "TODO",
             "schema": {
-              "$ref": "#/definitions/StorageQuota"
+              "$ref": "#/definitions/StorageQuotaListResponse"
             }
           }
         },
@@ -900,20 +1042,20 @@
             ]
           },
           {
-            "name": "settingAccessString",
+            "name": "parameters",
+            "description": "Parameters used to create a farm",
             "in": "body",
             "required": true,
             "schema": {
               "$ref": "#/definitions/FarmCreateParameters"
-            },
-            "description": "TODO"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "TODO",
             "schema": {
-              "$ref": "#/definitions/Farm"
+              "$ref": "#/definitions/FarmModel"
             }
           }
         },
@@ -955,7 +1097,7 @@
           "200": {
             "description": "TODO",
             "schema": {
-              "$ref": "#/definitions/Farm"
+              "$ref": "#/definitions/FarmModel"
             }
           }
         },
@@ -970,7 +1112,7 @@
         "tags": [
           "Farms"
         ],
-        "description": "Get an existing farm",
+        "description": "Update an existing farm.",
         "operationId": "Farms_Update",
         "parameters": [
           {
@@ -997,15 +1139,15 @@
             "required": true,
             "description": "New values for farm",
             "schema": {
-              "$ref": "#/definitions/FarmBase"
+              "$ref": "#/definitions/FarmUpdateParameters"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "TODO",
+            "description": "Returns the new values of the farm.",
             "schema": {
-              "$ref": "#/definitions/Farm"
+              "$ref": "#/definitions/FarmModel"
             }
           }
         },
@@ -1022,8 +1164,8 @@
         "tags": [
           "Farms"
         ],
-        "description": "Get the list of metric definitions for this farm",
-        "operationId": "Farms_GetMetricDefinitions",
+        "description": "Get the list of metric definitions.",
+        "operationId": "Farms_ListMetricDefinitions",
         "parameters": [
           {
             "$ref": "#/parameters/SubscriptionIdParameter"
@@ -1050,7 +1192,7 @@
         ],
         "responses": {
           "200": {
-            "description": "TODO",
+            "description": "List of Metric Definitions",
             "schema": {
               "$ref": "#/definitions/MetricDefinitions"
             }
@@ -1069,8 +1211,8 @@
         "tags": [
           "Farms"
         ],
-        "description": "Get the list of metrics for this farm",
-        "operationId": "Farms_GetMetrics",
+        "description": "Get the list of metrics.",
+        "operationId": "Farms_ListMetrics",
         "parameters": [
           {
             "$ref": "#/parameters/SubscriptionIdParameter"
@@ -1097,7 +1239,7 @@
         ],
         "responses": {
           "200": {
-            "description": "TODO",
+            "description": "List of metrics.",
             "schema": {
               "$ref": "#/definitions/Metrics"
             }
@@ -1111,12 +1253,12 @@
         ]
       }
     },
-    "/subscriptions/{SubscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms?api-version={api-version}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms?api-version={api-version}": {
       "get": {
         "tags": [
           "Farms"
         ],
-        "description": "Get a list of all farms under this resource group",
+        "description": "Get a list of all farms.",
         "operationId": "Farms_List",
         "parameters": [
           {
@@ -1140,7 +1282,7 @@
           "200": {
             "description": "TODO",
             "schema": {
-              "$ref": "#/definitions/Farms"
+              "$ref": "#/definitions/FarmListResponse"
             }
           }
         },
@@ -1157,7 +1299,7 @@
         "tags": [
           "Farms"
         ],
-        "operationId": "Farms_GC",
+        "operationId": "Farms_GarbageCollect",
         "description": "TODO",
         "parameters": [
           {
@@ -1202,7 +1344,7 @@
         "tags": [
           "GC"
         ],
-        "operationId": "Farms_GCStatus",
+        "operationId": "Farms_GargbageCollectStatus",
         "description": "TODO",
         "parameters": [
           {
@@ -1234,7 +1376,9 @@
         "responses": {
           "200": {
             "description": "The status of the GC operation",
-            "schema": {}
+            "schema": {
+              "type": "string"
+            }
           }
         },
         "produces": [
@@ -1393,7 +1537,7 @@
         ]
       }
     },
-    "/subscriptions/{SubscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}/destinationshares?api-version={api-version}": {
+    "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}/destinationshares?api-version={api-version}": {
       "get": {
         "tags": [
           "Containers"
@@ -1838,13 +1982,26 @@
         }
       }
     },
+    "StorageQuotaModel": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/StorageQuota"
+        }
+      }
+    },
     "StorageQuota": {
+      "required": [
+        "NumberOfStorageAccounts",
+        "CapacityInGB"
+      ],
       "properties": {
         "NumberOfStorageAccounts": {
-          "type": "integer"
+          "type": "integer",
+          "default": "20"
         },
         "CapacityInGB": {
-          "type": "integer"
+          "type": "integer",
+          "default": "500"
         }
       }
     },
@@ -1876,12 +2033,6 @@
       ]
     },
     "ResourceBase": {
-      "required": [
-        "id",
-        "name",
-        "type",
-        "location"
-      ],
       "properties": {
         "id": {
           "type": "string"
@@ -2184,6 +2335,75 @@
       },
       "description": "List of shares"
     },
+    "QuotaCreateOrUpdateParameters": {
+      "properties": {
+        "properties": {
+          "$ref": "#/definitions/StorageQuota"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceBase"
+        }
+      ]
+    },
+    "StorageQuotaListResponse": {
+      "properties": {
+        "value": {
+          "readOnly": true,
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StorageQuotaModel"
+          },
+          "description": "List of quotas."
+        }
+      }
+    },
+    "FarmListResponse": {
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/FarmModels"
+        }
+      }
+    },
+    "FarmCreateParameters": {
+      "properties": {
+        "properties": {
+          "settingAccessString": {
+            "type": "string"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceBase"
+        }
+      ]
+    },
+    "FarmUpdateParameters": {
+      "properties": {
+        "Farm": {
+          "$ref": "#/definitions/FarmBase"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceBase"
+        }
+      ]
+    },
+    "FarmModel": {
+      "properties": {
+        "Properties": {
+          "$ref": "#/definitions/Farm"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResourceBase"
+        }
+      ]
+    },
     "FarmSettings": {
       "properties": {
         "settingsPollingIntervalInSecond": {
@@ -2333,18 +2553,11 @@
         }
       ]
     },
-    "FarmCreateParameters": {
-      "properties": {
-        "settingAccessString": {
-          "type": "string"
-        }
-      }
-    },
-    "Farms": {
+    "FarmModels": {
       "readOnly": true,
       "type": "array",
       "items": {
-        "$ref": "#/definitions/Farm"
+        "$ref": "#/definitions/FarmModel"
       },
       "description": "TODO"
     },
@@ -2475,6 +2688,14 @@
     }
   },
   "parameters": {
+    "FilterParameter": {
+      "name": "filter",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "TODO",
+      "x-ms-parameter-location": "method"
+    },
     "SubscriptionIdParameter": {
       "name": "subscriptionId",
       "in": "path",
@@ -2511,7 +2732,8 @@
       "in": "path",
       "required": true,
       "type": "string",
-      "description": "Location of storage accounts."
+      "description": "Location of storage accounts.",
+      "x-ms-parameter-location": "method"
     },
     "AccountIdParameter": {
       "name": "accountId",
@@ -2537,17 +2759,9 @@
       "description": "The tenant subscription id.",
       "x-ms-parameter-location": "method"
     },
-    "FilterParameter": {
-      "name": "filter",
-      "in": "path",
-      "required": true,
-      "type": "string",
-      "description": "TODO",
-      "x-ms-parameter-location": "method"
-    },
     "SummaryParameter": {
       "name": "summary",
-      "in": "path",
+      "in": "query",
       "required": true,
       "type": "boolean",
       "description": "TODO",

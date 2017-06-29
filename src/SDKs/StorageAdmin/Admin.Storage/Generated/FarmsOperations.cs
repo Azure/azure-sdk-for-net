@@ -55,8 +55,8 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <param name='farmId'>
         /// Th name of the farm.
         /// </param>
-        /// <param name='settingAccessString'>
-        /// TODO
+        /// <param name='parameters'>
+        /// Parameters used to create a farm
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -79,7 +79,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Farm>> CreateWithHttpMessagesAsync(string resourceGroupName, string farmId, FarmCreateParameters settingAccessString, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FarmModel>> CreateWithHttpMessagesAsync(string resourceGroupName, string farmId, FarmCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -93,9 +93,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "farmId");
             }
-            if (settingAccessString == null)
+            if (parameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "settingAccessString");
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             string apiVersion = "2015-12-01-preview";
             // Tracing
@@ -108,7 +108,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("farmId", farmId);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("settingAccessString", settingAccessString);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
@@ -161,9 +161,9 @@ namespace Microsoft.AzureStack.Storage.Admin
 
             // Serialize Request
             string _requestContent = null;
-            if(settingAccessString != null)
+            if(parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(settingAccessString, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -222,7 +222,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Farm>();
+            var _result = new AzureOperationResponse<FarmModel>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -235,7 +235,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Farm>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FarmModel>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -284,7 +284,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Farm>> GetWithHttpMessagesAsync(string resourceGroupName, string farmId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FarmModel>> GetWithHttpMessagesAsync(string resourceGroupName, string farmId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -416,7 +416,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Farm>();
+            var _result = new AzureOperationResponse<FarmModel>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -429,7 +429,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Farm>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FarmModel>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -449,7 +449,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         }
 
         /// <summary>
-        /// Get an existing farm
+        /// Update an existing farm.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -481,7 +481,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Farm>> UpdateWithHttpMessagesAsync(string resourceGroupName, string farmId, object parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FarmModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string farmId, object parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -617,7 +617,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Farm>();
+            var _result = new AzureOperationResponse<FarmModel>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -630,7 +630,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Farm>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FarmModel>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -650,7 +650,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         }
 
         /// <summary>
-        /// Get the list of metric definitions for this farm
+        /// Get the list of metric definitions.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -682,7 +682,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IList<MetricDefinition>>> GetMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string farmId, string filter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<MetricDefinition>>> ListMetricDefinitionsWithHttpMessagesAsync(string resourceGroupName, string farmId, string filter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -713,7 +713,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetMetricDefinitions", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListMetricDefinitions", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -721,8 +721,11 @@ namespace Microsoft.AzureStack.Storage.Admin
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{farmId}", System.Uri.EscapeDataString(farmId));
-            _url = _url.Replace("{filter}", System.Uri.EscapeDataString(filter));
             List<string> _queryParameters = new List<string>();
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("filter={0}", System.Uri.EscapeDataString(filter)));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
@@ -853,7 +856,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         }
 
         /// <summary>
-        /// Get the list of metrics for this farm
+        /// Get the list of metrics.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -885,7 +888,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Metrics>> GetMetricsWithHttpMessagesAsync(string resourceGroupName, string farmId, string filter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Metrics>> ListMetricsWithHttpMessagesAsync(string resourceGroupName, string farmId, string filter, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -916,7 +919,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetMetrics", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListMetrics", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -924,8 +927,11 @@ namespace Microsoft.AzureStack.Storage.Admin
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{farmId}", System.Uri.EscapeDataString(farmId));
-            _url = _url.Replace("{filter}", System.Uri.EscapeDataString(filter));
             List<string> _queryParameters = new List<string>();
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("filter={0}", System.Uri.EscapeDataString(filter)));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
@@ -1056,7 +1062,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         }
 
         /// <summary>
-        /// Get a list of all farms under this resource group
+        /// Get a list of all farms.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -1082,7 +1088,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IList<Farm>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FarmListResponse>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1107,7 +1113,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{SubscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
@@ -1208,7 +1214,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IList<Farm>>();
+            var _result = new AzureOperationResponse<FarmListResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1221,7 +1227,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<Farm>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FarmListResponse>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1270,7 +1276,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<string>> GCWithHttpMessagesAsync(string resourceGroupName, string farmId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<string>> GarbageCollectWithHttpMessagesAsync(string resourceGroupName, string farmId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1296,7 +1302,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 tracingParameters.Add("farmId", farmId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GC", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GarbageCollect", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -1466,7 +1472,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<object>> GCStatusWithHttpMessagesAsync(string resourceGroupName, string farmId, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<string>> GargbageCollectStatusWithHttpMessagesAsync(string resourceGroupName, string farmId, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1497,7 +1503,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("operationId", operationId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GCStatus", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GargbageCollectStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -1604,7 +1610,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<object>();
+            var _result = new AzureOperationResponse<string>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1617,7 +1623,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<object>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

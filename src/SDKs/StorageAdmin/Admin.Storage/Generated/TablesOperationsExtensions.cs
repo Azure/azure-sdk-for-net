@@ -62,20 +62,32 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IList<MetricDefinition> ListMetricDefinitions(this ITablesOperations operations)
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='farmId'>
+            /// Th name of the farm.
+            /// </param>
+            public static IList<MetricDefinition> ListMetricDefinitions(this ITablesOperations operations, string resourceGroupName, string farmId)
             {
-                return operations.ListMetricDefinitionsAsync().GetAwaiter().GetResult();
+                return operations.ListMetricDefinitionsAsync(resourceGroupName, farmId).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='farmId'>
+            /// Th name of the farm.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<MetricDefinition>> ListMetricDefinitionsAsync(this ITablesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<MetricDefinition>> ListMetricDefinitionsAsync(this ITablesOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListMetricDefinitionsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListMetricDefinitionsWithHttpMessagesAsync(resourceGroupName, farmId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -84,20 +96,32 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static Metrics ListMetrics(this ITablesOperations operations)
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='farmId'>
+            /// Th name of the farm.
+            /// </param>
+            public static Metrics ListMetrics(this ITablesOperations operations, string resourceGroupName, string farmId)
             {
-                return operations.ListMetricsAsync().GetAwaiter().GetResult();
+                return operations.ListMetricsAsync(resourceGroupName, farmId).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='farmId'>
+            /// Th name of the farm.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Metrics> ListMetricsAsync(this ITablesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Metrics> ListMetricsAsync(this ITablesOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListMetricsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListMetricsWithHttpMessagesAsync(resourceGroupName, farmId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -58,13 +58,24 @@ paths:
         - application/json
       consumes:
         - application/json
-  '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/blobservices/default/metrics?api-version={api-version}&$filter={filter}':
+  '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/blobservices/default/metrics?api-version={api-version}&$filter={filter}':
     get:
       tags:
         - Blobs
       description: ''
       operationId: Blobs_ListMetrics
-      parameters: []
+      parameters:
+        - $ref: '#/parameters/SubscriptionIdParameter'
+        - $ref: '#/parameters/ResourceGroupNameParameter'
+        - $ref: '#/parameters/FarmIdParameter'
+        - name: api-version
+          in: query
+          required: true
+          type: string
+          description: Client Api Version.
+          enum:
+            - 2015-12-01-preview
+        - $ref: '#/parameters/FilterParameter'
       responses:
         '200':
           description: TODO
@@ -106,7 +117,17 @@ paths:
         - Tables
       description: ''
       operationId: Tables_ListMetricDefinitions
-      parameters: []
+      parameters:
+        - $ref: '#/parameters/SubscriptionIdParameter'
+        - $ref: '#/parameters/ResourceGroupNameParameter'
+        - $ref: '#/parameters/FarmIdParameter'
+        - name: api-version
+          in: query
+          required: true
+          type: string
+          description: Client Api Version.
+          enum:
+            - 2015-12-01-preview
       responses:
         '200':
           description: TODO
@@ -116,13 +137,23 @@ paths:
         - application/json
       consumes:
         - application/json
-  '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/tableservices/default/metrics?api-version={api-version}&$filter={filter}':
+  '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/tableservices/default/metrics?api-version={api-version}&$filter={filter}':
     get:
       tags:
         - Tables
       description: ''
       operationId: Tables_ListMetrics
-      parameters: []
+      parameters:
+        - $ref: '#/parameters/SubscriptionIdParameter'
+        - $ref: '#/parameters/ResourceGroupNameParameter'
+        - $ref: '#/parameters/FarmIdParameter'
+        - name: api-version
+          in: query
+          required: true
+          type: string
+          description: Client Api Version.
+          enum:
+            - 2015-12-01-preview
       responses:
         '200':
           description: TODO
@@ -164,7 +195,18 @@ paths:
         - Queues
       description: ''
       operationId: Queues_ListMetricDefinitions
-      parameters: []
+      parameters:
+        - $ref: '#/parameters/SubscriptionIdParameter'
+        - $ref: '#/parameters/ResourceGroupNameParameter'
+        - $ref: '#/parameters/FarmIdParameter'
+        - name: api-version
+          in: query
+          required: true
+          type: string
+          description: Client Api Version.
+          enum:
+            - 2015-12-01-preview
+        - $ref: '#/parameters/FilterParameter'
       responses:
         '200':
           description: TODO
@@ -180,7 +222,17 @@ paths:
         - Queues
       description: ''
       operationId: Queues_ListMetrics
-      parameters: []
+      parameters:
+        - $ref: '#/parameters/SubscriptionIdParameter'
+        - $ref: '#/parameters/ResourceGroupNameParameter'
+        - $ref: '#/parameters/FarmIdParameter'
+        - name: api-version
+          in: query
+          required: true
+          type: string
+          description: Client Api Version.
+          enum:
+            - 2015-12-01-preview
       responses:
         '200':
           description: TODO
@@ -201,6 +253,13 @@ paths:
         - $ref: '#/parameters/ResourceGroupNameParameter'
         - $ref: '#/parameters/FarmIdParameter'
         - $ref: '#/parameters/AccountIdParameter'
+        - name: api-version
+          in: query
+          required: true
+          type: string
+          description: Client Api Version.
+          enum:
+            - 2015-12-01-preview
       responses:
         '200':
           description: OK -- Undelete either has been performed or account was not deleted.
@@ -221,6 +280,13 @@ paths:
         - $ref: '#/parameters/TenantIdParameter'
         - $ref: '#/parameters/FarmIdParameter'
         - $ref: '#/parameters/AccountIdParameter'
+        - name: api-version
+          in: query
+          required: true
+          type: string
+          description: Client Api Version.
+          enum:
+            - 2015-12-01-preview
       responses:
         '200':
           description: TODO
@@ -266,7 +332,15 @@ paths:
       description: TODO
       parameters:
         - $ref: '#/parameters/SubscriptionIdParameter'
+        - $ref: '#/parameters/ResourceGroupNameParameter'
         - $ref: '#/parameters/FarmIdParameter'
+        - name: api-version
+          in: query
+          required: true
+          type: string
+          description: Client Api Version.
+          enum:
+            - 2015-12-01-preview
         - $ref: '#/parameters/FilterParameter'
         - $ref: '#/parameters/SummaryParameter'
       responses:
@@ -414,7 +488,7 @@ paths:
         - application/json
       consumes:
         - application/json
-  '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{locationName}/quotas/{quotaName}?api-version={api-version}':
+  '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas/{quotaName}?api-version={api-version}':
     put:
       tags:
         - Quotas
@@ -422,6 +496,8 @@ paths:
       operationId: Quotas_CreateOrUpdate
       parameters:
         - $ref: '#/parameters/SubscriptionIdParameter'
+        - $ref: '#/parameters/LocationParameter'
+        - $ref: '#/parameters/QuotaNameParameter'
         - name: api-version
           in: query
           required: true
@@ -429,13 +505,11 @@ paths:
           description: Client Api Version.
           enum:
             - 2015-12-01-preview
-        - $ref: '#/parameters/LocationParameter'
-        - $ref: '#/parameters/QuotaNameParameter'
         - name: template
           in: body
           required: true
           schema:
-            $ref: '#/definitions/StorageQuota'
+            $ref: '#/definitions/QuotaCreateOrUpdateParameters'
           description: Template used to create or update storage quota
       responses:
         '200':
@@ -494,7 +568,7 @@ paths:
         - application/json
       consumes:
         - application/json
-  '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{locationName}/quotas?api-version={api-version}':
+  '/subscriptions/{subscriptionId}/providers/Microsoft.Storage.Admin/locations/{location}/quotas?api-version={api-version}':
     get:
       tags:
         - Quotas
@@ -502,6 +576,7 @@ paths:
       operationId: Quotas_List
       parameters:
         - $ref: '#/parameters/SubscriptionIdParameter'
+        - $ref: '#/parameters/LocationParameter'
         - name: api-version
           in: query
           required: true
@@ -513,7 +588,7 @@ paths:
         '200':
           description: TODO
           schema:
-            $ref: '#/definitions/StorageQuota'
+            $ref: '#/definitions/StorageQuotaListResponse'
       produces:
         - application/json
       consumes:
@@ -535,17 +610,17 @@ paths:
           description: Client Api Version.
           enum:
             - 2015-12-01-preview
-        - name: settingAccessString
+        - name: parameters
+          description: Parameters used to create a farm
           in: body
           required: true
           schema:
             $ref: '#/definitions/FarmCreateParameters'
-          description: TODO
       responses:
         '200':
           description: TODO
           schema:
-            $ref: '#/definitions/Farm'
+            $ref: '#/definitions/FarmModel'
       produces:
         - application/json
       consumes:
@@ -570,7 +645,7 @@ paths:
         '200':
           description: TODO
           schema:
-            $ref: '#/definitions/Farm'
+            $ref: '#/definitions/FarmModel'
       produces:
         - application/json
       consumes:
@@ -578,7 +653,7 @@ paths:
     patch:
       tags:
         - Farms
-      description: Get an existing farm
+      description: Update an existing farm.
       operationId: Farms_Update
       parameters:
         - $ref: '#/parameters/SubscriptionIdParameter'
@@ -595,12 +670,12 @@ paths:
           required: true
           description: New values for farm
           schema:
-            $ref: '#/definitions/FarmBase'
+            $ref: '#/definitions/FarmUpdateParameters'
       responses:
         '200':
-          description: TODO
+          description: Returns the new values of the farm.
           schema:
-            $ref: '#/definitions/Farm'
+            $ref: '#/definitions/FarmModel'
       produces:
         - application/json
       consumes:
@@ -609,8 +684,8 @@ paths:
     get:
       tags:
         - Farms
-      description: Get the list of metric definitions for this farm
-      operationId: Farms_GetMetricDefinitions
+      description: Get the list of metric definitions.
+      operationId: Farms_ListMetricDefinitions
       parameters:
         - $ref: '#/parameters/SubscriptionIdParameter'
         - $ref: '#/parameters/ResourceGroupNameParameter'
@@ -625,7 +700,7 @@ paths:
             - 2015-12-01-preview
       responses:
         '200':
-          description: TODO
+          description: List of Metric Definitions
           schema:
             $ref: '#/definitions/MetricDefinitions'
       produces:
@@ -636,8 +711,8 @@ paths:
     get:
       tags:
         - Farms
-      description: Get the list of metrics for this farm
-      operationId: Farms_GetMetrics
+      description: Get the list of metrics.
+      operationId: Farms_ListMetrics
       parameters:
         - $ref: '#/parameters/SubscriptionIdParameter'
         - $ref: '#/parameters/ResourceGroupNameParameter'
@@ -652,18 +727,18 @@ paths:
             - 2015-12-01-preview
       responses:
         '200':
-          description: TODO
+          description: List of metrics.
           schema:
             $ref: '#/definitions/Metrics'
       produces:
         - application/json
       consumes:
         - application/json
-  '/subscriptions/{SubscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms?api-version={api-version}':
+  '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms?api-version={api-version}':
     get:
       tags:
         - Farms
-      description: Get a list of all farms under this resource group
+      description: Get a list of all farms.
       operationId: Farms_List
       parameters:
         - $ref: '#/parameters/SubscriptionIdParameter'
@@ -679,7 +754,7 @@ paths:
         '200':
           description: TODO
           schema:
-            $ref: '#/definitions/Farms'
+            $ref: '#/definitions/FarmListResponse'
       produces:
         - application/json
       consumes:
@@ -688,7 +763,7 @@ paths:
     post:
       tags:
         - Farms
-      operationId: Farms_GC
+      operationId: Farms_GarbageCollect
       description: TODO
       parameters:
         - $ref: '#/parameters/SubscriptionIdParameter'
@@ -715,7 +790,7 @@ paths:
     get:
       tags:
         - GC
-      operationId: Farms_GCStatus
+      operationId: Farms_GargbageCollectStatus
       description: TODO
       parameters:
         - $ref: '#/parameters/SubscriptionIdParameter'
@@ -735,7 +810,8 @@ paths:
       responses:
         '200':
           description: The status of the GC operation
-          schema: {}
+          schema:
+            type: string
       produces:
         - application/json
       consumes:
@@ -829,7 +905,7 @@ paths:
         - application/json
       consumes:
         - application/json
-  '/subscriptions/{SubscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}/destinationshares?api-version={api-version}':
+  '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/shares/{shareName}/destinationshares?api-version={api-version}':
     get:
       tags:
         - Containers
@@ -1111,12 +1187,21 @@ definitions:
         items:
           $ref: '#/definitions/Metric'
         description: List of Metrics.
+  StorageQuotaModel:
+    properties:
+      properties:
+        $ref: '#/definitions/StorageQuota'
   StorageQuota:
+    required:
+      - NumberOfStorageAccounts
+      - CapacityInGB
     properties:
       NumberOfStorageAccounts:
         type: integer
+        default: '20'
       CapacityInGB:
         type: integer
+        default: '500'
   HealthStatus:
     readOnly: true
     description: Current health status of Share
@@ -1136,11 +1221,6 @@ definitions:
     allOf:
       - $ref: '#/definitions/ResourceBase'
   ResourceBase:
-    required:
-      - id
-      - name
-      - type
-      - location
     properties:
       id:
         type: string
@@ -1372,6 +1452,43 @@ definitions:
     items:
       $ref: '#/definitions/Share'
     description: List of shares
+  QuotaCreateOrUpdateParameters:
+    properties:
+      properties:
+        $ref: '#/definitions/StorageQuota'
+    allOf:
+      - $ref: '#/definitions/ResourceBase'
+  StorageQuotaListResponse:
+    properties:
+      value:
+        readOnly: true
+        type: array
+        items:
+          $ref: '#/definitions/StorageQuotaModel'
+        description: List of quotas.
+  FarmListResponse:
+    properties:
+      value:
+        $ref: '#/definitions/FarmModels'
+  FarmCreateParameters:
+    properties:
+      properties:
+        settingAccessString:
+          type: string
+    allOf:
+      - $ref: '#/definitions/ResourceBase'
+  FarmUpdateParameters:
+    properties:
+      Farm:
+        $ref: '#/definitions/FarmBase'
+    allOf:
+      - $ref: '#/definitions/ResourceBase'
+  FarmModel:
+    properties:
+      Properties:
+        $ref: '#/definitions/Farm'
+    allOf:
+      - $ref: '#/definitions/ResourceBase'
   FarmSettings:
     properties:
       settingsPollingIntervalInSecond:
@@ -1468,15 +1585,11 @@ definitions:
         $ref: '#/definitions/HealthStatus'
     allOf:
       - $ref: '#/definitions/FarmBase'
-  FarmCreateParameters:
-    properties:
-      settingAccessString:
-        type: string
-  Farms:
+  FarmModels:
     readOnly: true
     type: array
     items:
-      $ref: '#/definitions/Farm'
+      $ref: '#/definitions/FarmModel'
     description: TODO
   Container:
     properties:
@@ -1565,6 +1678,13 @@ definitions:
     items:
       $ref: '#/definitions/Acquisition'
 parameters:
+  FilterParameter:
+    name: filter
+    in: query
+    required: true
+    type: string
+    description: TODO
+    x-ms-parameter-location: method
   SubscriptionIdParameter:
     name: subscriptionId
     in: path
@@ -1601,6 +1721,7 @@ parameters:
     required: true
     type: string
     description: Location of storage accounts.
+    x-ms-parameter-location: method
   AccountIdParameter:
     name: accountId
     in: path
@@ -1622,16 +1743,9 @@ parameters:
     type: string
     description: The tenant subscription id.
     x-ms-parameter-location: method
-  FilterParameter:
-    name: filter
-    in: path
-    required: true
-    type: string
-    description: TODO
-    x-ms-parameter-location: method
   SummaryParameter:
     name: summary
-    in: path
+    in: query
     required: true
     type: boolean
     description: TODO

@@ -8,9 +8,11 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using Microsoft.AzureStack.Storage;
     using Microsoft.AzureStack.Storage.Admin;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class FarmCreateParameters
+    public partial class FarmCreateParameters : ResourceBase
     {
         /// <summary>
         /// Initializes a new instance of the FarmCreateParameters class.
@@ -23,9 +25,10 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// Initializes a new instance of the FarmCreateParameters class.
         /// </summary>
-        public FarmCreateParameters(string settingAccessString = default(string))
+        public FarmCreateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
+            : base(id, name, type, location, tags)
         {
-            SettingAccessString = settingAccessString;
+            Properties = properties;
             CustomInit();
         }
 
@@ -36,8 +39,8 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "settingAccessString")]
-        public string SettingAccessString { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public object Properties { get; set; }
 
     }
 }

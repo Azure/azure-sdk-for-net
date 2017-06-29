@@ -22,6 +22,9 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <summary>
         /// Create or update an existing storage quota
         /// </summary>
+        /// <param name='location'>
+        /// Location of storage accounts.
+        /// </param>
         /// <param name='quotaName'>
         /// The name of the quota.
         /// </param>
@@ -43,10 +46,13 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageQuota>> CreateOrUpdateWithHttpMessagesAsync(string quotaName, StorageQuota template, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageQuota>> CreateOrUpdateWithHttpMessagesAsync(string location, string quotaName, QuotaCreateOrUpdateParameters template, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an existing quota
         /// </summary>
+        /// <param name='location'>
+        /// Location of storage accounts.
+        /// </param>
         /// <param name='quotaName'>
         /// The name of the quota.
         /// </param>
@@ -62,10 +68,13 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string location, string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve an existing quota
         /// </summary>
+        /// <param name='location'>
+        /// Location of storage accounts.
+        /// </param>
         /// <param name='quotaName'>
         /// The name of the quota.
         /// </param>
@@ -84,10 +93,13 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageQuota>> GetWithHttpMessagesAsync(string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageQuota>> GetWithHttpMessagesAsync(string location, string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of quotas for this location
         /// </summary>
+        /// <param name='location'>
+        /// Location of storage accounts.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -103,6 +115,6 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageQuota>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageQuotaListResponse>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

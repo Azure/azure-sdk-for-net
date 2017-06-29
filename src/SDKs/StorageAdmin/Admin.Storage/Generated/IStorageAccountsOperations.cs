@@ -100,6 +100,9 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <summary>
         /// TODO
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
         /// <param name='farmId'>
         /// Th name of the farm.
         /// </param>
@@ -124,7 +127,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IList<StorageAccountModel>>> ListWithHttpMessagesAsync(string farmId, string filter, bool summary, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<StorageAccountModel>>> ListWithHttpMessagesAsync(string resourceGroupName, string farmId, string filter, bool summary, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a specific storage account
         /// </summary>

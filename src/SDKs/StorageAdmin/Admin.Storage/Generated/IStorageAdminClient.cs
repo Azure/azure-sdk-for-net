@@ -43,11 +43,6 @@ namespace Microsoft.AzureStack.Storage.Admin
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Location of storage accounts.
-        /// </summary>
-        string Location { get; set; }
-
-        /// <summary>
         /// Operation identifier.
         /// </summary>
         string OperationId { get; set; }

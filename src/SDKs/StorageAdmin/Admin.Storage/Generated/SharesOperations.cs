@@ -321,8 +321,11 @@ namespace Microsoft.AzureStack.Storage.Admin
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{farmId}", System.Uri.EscapeDataString(farmId));
             _url = _url.Replace("{shareName}", System.Uri.EscapeDataString(shareName));
-            _url = _url.Replace("{filter}", System.Uri.EscapeDataString(filter));
             List<string> _queryParameters = new List<string>();
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("filter={0}", System.Uri.EscapeDataString(filter)));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
@@ -533,8 +536,11 @@ namespace Microsoft.AzureStack.Storage.Admin
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{farmId}", System.Uri.EscapeDataString(farmId));
             _url = _url.Replace("{shareName}", System.Uri.EscapeDataString(shareName));
-            _url = _url.Replace("{filter}", System.Uri.EscapeDataString(filter));
             List<string> _queryParameters = new List<string>();
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("filter={0}", System.Uri.EscapeDataString(filter)));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));

@@ -7,7 +7,6 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using Microsoft.AzureStack;
     using Microsoft.AzureStack.Storage;
     using Microsoft.AzureStack.Storage.Admin;
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -26,7 +25,7 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// Initializes a new instance of the ResourceBase class.
         /// </summary>
-        public ResourceBase(string id, string name, string type, string location, IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ResourceBase(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
@@ -66,30 +65,5 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
-            }
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
-            }
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-        }
     }
 }

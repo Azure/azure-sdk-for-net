@@ -94,6 +94,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountId");
             }
+            string apiVersion = "2015-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -104,6 +105,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("farmId", farmId);
                 tracingParameters.Add("accountId", accountId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Undelete", tracingParameters);
             }
@@ -115,6 +117,10 @@ namespace Microsoft.AzureStack.Storage.Admin
             _url = _url.Replace("{farmId}", System.Uri.EscapeDataString(farmId));
             _url = _url.Replace("{accountId}", System.Uri.EscapeDataString(accountId));
             List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -273,6 +279,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountId");
             }
+            string apiVersion = "2015-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -283,6 +290,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 tracingParameters.Add("tenantId", tenantId);
                 tracingParameters.Add("farmId", farmId);
                 tracingParameters.Add("accountId", accountId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "SynchronizeAll", tracingParameters);
             }
@@ -294,6 +302,10 @@ namespace Microsoft.AzureStack.Storage.Admin
             _url = _url.Replace("{farmId}", System.Uri.EscapeDataString(farmId));
             _url = _url.Replace("{accountId}", System.Uri.EscapeDataString(accountId));
             List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -616,6 +628,9 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <summary>
         /// TODO
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
         /// <param name='farmId'>
         /// Th name of the farm.
         /// </param>
@@ -646,11 +661,15 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IList<StorageAccountModel>>> ListWithHttpMessagesAsync(string farmId, string filter, bool summary, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<StorageAccountModel>>> ListWithHttpMessagesAsync(string resourceGroupName, string farmId, string filter, bool summary, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (farmId == null)
             {
@@ -660,6 +679,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "filter");
             }
+            string apiVersion = "2015-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -667,7 +687,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("summary", summary);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -677,10 +699,18 @@ namespace Microsoft.AzureStack.Storage.Admin
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Storage.Admin/farms/{farmId}/storageaccounts").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{farmId}", System.Uri.EscapeDataString(farmId));
-            _url = _url.Replace("{filter}", System.Uri.EscapeDataString(filter));
-            _url = _url.Replace("{summary}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(summary, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("filter={0}", System.Uri.EscapeDataString(filter)));
+            }
+            _queryParameters.Add(string.Format("summary={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(summary, Client.SerializationSettings).Trim('"'))));
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);

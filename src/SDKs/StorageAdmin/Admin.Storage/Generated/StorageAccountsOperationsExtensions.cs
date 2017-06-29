@@ -154,6 +154,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
             /// <param name='farmId'>
             /// Th name of the farm.
             /// </param>
@@ -163,9 +166,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='summary'>
             /// TODO
             /// </param>
-            public static IList<StorageAccountModel> List(this IStorageAccountsOperations operations, string farmId, string filter, bool summary)
+            public static IList<StorageAccountModel> List(this IStorageAccountsOperations operations, string resourceGroupName, string farmId, string filter, bool summary)
             {
-                return operations.ListAsync(farmId, filter, summary).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, farmId, filter, summary).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -173,6 +176,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
             /// </param>
             /// <param name='farmId'>
             /// Th name of the farm.
@@ -186,9 +192,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<StorageAccountModel>> ListAsync(this IStorageAccountsOperations operations, string farmId, string filter, bool summary, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<StorageAccountModel>> ListAsync(this IStorageAccountsOperations operations, string resourceGroupName, string farmId, string filter, bool summary, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(farmId, filter, summary, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, farmId, filter, summary, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

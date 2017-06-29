@@ -7,8 +7,8 @@
     <ProjectGuid>{4960ACDE-30D6-4476-8B8D-40E51ABEE505}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Storage.Management</RootNamespace>
-    <AssemblyName>Storage.Management</AssemblyName>
+    <RootNamespace>Admin.Storage</RootNamespace>
+    <AssemblyName>Admin.Storage</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -29,16 +29,21 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Jeff.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.5\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.6\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Rest.ClientRuntime.Azure.3.3.5\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -78,7 +83,10 @@
     <Compile Include="Generated\Models\Farm.cs" />
     <Compile Include="Generated\Models\FarmBase.cs" />
     <Compile Include="Generated\Models\FarmCreateParameters.cs" />
+    <Compile Include="Generated\Models\FarmListResponse.cs" />
+    <Compile Include="Generated\Models\FarmModel.cs" />
     <Compile Include="Generated\Models\FarmSettings.cs" />
+    <Compile Include="Generated\Models\FarmUpdateParameters.cs" />
     <Compile Include="Generated\Models\HealthStatus.cs" />
     <Compile Include="Generated\Models\LocationStatus.cs" />
     <Compile Include="Generated\Models\Metric.cs" />
@@ -90,6 +98,7 @@
     <Compile Include="Generated\Models\MetricValue.cs" />
     <Compile Include="Generated\Models\MigrationResult.cs" />
     <Compile Include="Generated\Models\QueueServiceSettings.cs" />
+    <Compile Include="Generated\Models\QuotaCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Models\ResourceBase.cs" />
     <Compile Include="Generated\Models\ServiceSettings.cs" />
     <Compile Include="Generated\Models\Share.cs" />
@@ -101,6 +110,8 @@
     <Compile Include="Generated\Models\StorageAccountSyncResult.cs" />
     <Compile Include="Generated\Models\StorageAccountType.cs" />
     <Compile Include="Generated\Models\StorageQuota.cs" />
+    <Compile Include="Generated\Models\StorageQuotaListResponse.cs" />
+    <Compile Include="Generated\Models\StorageQuotaModel.cs" />
     <Compile Include="Generated\Models\TableServiceSettings.cs" />
     <Compile Include="Generated\Models\WacAccountPermissions.cs" />
     <Compile Include="Generated\Models\WacAccountStates.cs" />
@@ -119,7 +130,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="generate.bat" />
+    <None Include="Jeff.pfx" />
     <None Include="packages.config" />
+    <None Include="storage.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>START /b /D $(ProjectDir) $(ProjectDir)generate.cmd</PreBuildEvent>
+  </PropertyGroup>
 </Project>

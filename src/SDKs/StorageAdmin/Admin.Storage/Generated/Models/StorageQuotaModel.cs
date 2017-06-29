@@ -8,25 +8,22 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using Microsoft.AzureStack.Storage;
     using Microsoft.AzureStack.Storage.Admin;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ShareModel : ResourceBase
+    public partial class StorageQuotaModel
     {
         /// <summary>
-        /// Initializes a new instance of the ShareModel class.
+        /// Initializes a new instance of the StorageQuotaModel class.
         /// </summary>
-        public ShareModel()
+        public StorageQuotaModel()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ShareModel class.
+        /// Initializes a new instance of the StorageQuotaModel class.
         /// </summary>
-        public ShareModel(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Share properties = default(Share))
-            : base(id, name, type, location, tags)
+        public StorageQuotaModel(StorageQuota properties = default(StorageQuota))
         {
             Properties = properties;
             CustomInit();
@@ -40,7 +37,20 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public Share Properties { get; set; }
+        public StorageQuota Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Properties != null)
+            {
+                Properties.Validate();
+            }
+        }
     }
 }

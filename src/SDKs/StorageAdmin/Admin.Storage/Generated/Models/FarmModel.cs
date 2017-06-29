@@ -12,20 +12,20 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ShareModel : ResourceBase
+    public partial class FarmModel : ResourceBase
     {
         /// <summary>
-        /// Initializes a new instance of the ShareModel class.
+        /// Initializes a new instance of the FarmModel class.
         /// </summary>
-        public ShareModel()
+        public FarmModel()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ShareModel class.
+        /// Initializes a new instance of the FarmModel class.
         /// </summary>
-        public ShareModel(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Share properties = default(Share))
+        public FarmModel(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Farm properties = default(Farm))
             : base(id, name, type, location, tags)
         {
             Properties = properties;
@@ -39,8 +39,8 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public Share Properties { get; set; }
+        [JsonProperty(PropertyName = "Properties")]
+        public Farm Properties { get; set; }
 
     }
 }

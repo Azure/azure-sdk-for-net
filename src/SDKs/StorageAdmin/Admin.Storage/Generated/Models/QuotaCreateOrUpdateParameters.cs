@@ -8,25 +8,29 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using Microsoft.AzureStack.Storage;
     using Microsoft.AzureStack.Storage.Admin;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class StorageQuota
+    public partial class QuotaCreateOrUpdateParameters : ResourceBase
     {
         /// <summary>
-        /// Initializes a new instance of the StorageQuota class.
+        /// Initializes a new instance of the QuotaCreateOrUpdateParameters
+        /// class.
         /// </summary>
-        public StorageQuota()
+        public QuotaCreateOrUpdateParameters()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageQuota class.
+        /// Initializes a new instance of the QuotaCreateOrUpdateParameters
+        /// class.
         /// </summary>
-        public StorageQuota(int numberOfStorageAccounts, int capacityInGB)
+        public QuotaCreateOrUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), StorageQuota properties = default(StorageQuota))
+            : base(id, name, type, location, tags)
         {
-            NumberOfStorageAccounts = numberOfStorageAccounts;
-            CapacityInGB = capacityInGB;
+            Properties = properties;
             CustomInit();
         }
 
@@ -37,13 +41,8 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "NumberOfStorageAccounts")]
-        public int NumberOfStorageAccounts { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "CapacityInGB")]
-        public int CapacityInGB { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public StorageQuota Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -53,7 +52,10 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (Properties != null)
+            {
+                Properties.Validate();
+            }
         }
     }
 }

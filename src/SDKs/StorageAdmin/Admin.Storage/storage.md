@@ -17,6 +17,7 @@ output-artifact:
     - swagger-document.json
     - swagger-document.yaml
 
+
 input-file:
     - "https://github.com/BrianLPeterson/azure-rest-api-specs/blob/feature/azsswagger/arm-storage-admin/2015-12-01-preview/swagger/common.json"
     - "https://github.com/BrianLPeterson/azure-rest-api-specs/blob/feature/azsswagger/arm-storage-admin/2015-12-01-preview/swagger/blobServices.json"
@@ -28,7 +29,6 @@ input-file:
     - "https://github.com/BrianLPeterson/azure-rest-api-specs/blob/feature/azsswagger/arm-storage-admin/2015-12-01-preview/swagger/farm.json"
     - "https://github.com/BrianLPeterson/azure-rest-api-specs/blob/feature/azsswagger/arm-storage-admin/2015-12-01-preview/swagger/container.json"
     - "https://github.com/BrianLPeterson/azure-rest-api-specs/blob/feature/azsswagger/arm-storage-admin/2015-12-01-preview/swagger/acquisition.json"
-    
 
 header-text: MICROSOFT_MIT
 

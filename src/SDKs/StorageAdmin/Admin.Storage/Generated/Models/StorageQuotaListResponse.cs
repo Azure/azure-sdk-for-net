@@ -12,23 +12,23 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ShareModel : ResourceBase
+    public partial class StorageQuotaListResponse
     {
         /// <summary>
-        /// Initializes a new instance of the ShareModel class.
+        /// Initializes a new instance of the StorageQuotaListResponse class.
         /// </summary>
-        public ShareModel()
+        public StorageQuotaListResponse()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ShareModel class.
+        /// Initializes a new instance of the StorageQuotaListResponse class.
         /// </summary>
-        public ShareModel(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Share properties = default(Share))
-            : base(id, name, type, location, tags)
+        /// <param name="value">List of quotas.</param>
+        public StorageQuotaListResponse(IList<StorageQuotaModel> value = default(IList<StorageQuotaModel>))
         {
-            Properties = properties;
+            Value = value;
             CustomInit();
         }
 
@@ -38,9 +38,10 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets list of quotas.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public Share Properties { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<StorageQuotaModel> Value { get; private set; }
 
     }
 }
