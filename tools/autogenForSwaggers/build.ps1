@@ -1,6 +1,6 @@
 param(
     [string] $project = '*',
-    [string] $specs = "..\..\..\azure-rest-api-specs",
+    [string] $specs = "https://github.com/Azure/azure-rest-api-specs",
     [string] $sdkInfo = 'sdkinfo.lock.json')
 
 Import-Module "./lib.psm1"

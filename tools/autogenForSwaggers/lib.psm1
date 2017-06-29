@@ -10,7 +10,7 @@ function New-Dir {
     param([string]$path)
 
     New-Item -Path $path -ItemType Directory | Out-Null
-} 
+}
 
 function Clear-Dir {
     param([string]$path)
@@ -68,7 +68,7 @@ function Update-SdkInfo {
     Set-Default -object $dotNet -member namespace -value "Microsoft.Azure.$prefix$($dotNet.name)"
 
     # dotNet.commit
-    Set-Default -object $dotNet -member commit -value $commit   
+    Set-Default -object $dotNet -member commit -value $commit
 }
 
 function Read-SdkInfoList {
@@ -89,7 +89,7 @@ function Read-SdkInfoList {
 
 function Get-DotNetPath {
     param([psobject]$dotNet, [string]$folder)
-    
+
     $current = Get-Location
     return Join-Path $current "..\..\src\SDKs\$($dotNet.folder)\$folder"
 }
@@ -97,24 +97,28 @@ function Get-DotNetPath {
 function Get-SourcePath {
     param([string] $specs, [psobject]$info, [string]$source)
 
-    $specsFolder = Join-Path $specs $info.name
-    return Join-Path $specsFolder $source
+    if (Is-Url -specs $specs) {
+
+        "$specs/$($info.name)/$source"
+    } else {
+        Join-Path (Join-Path $specs $info.name) $source
+    }
 }
 
 function Get-LangInfo {
     param([psobject] $lang)
 
     if (-Not $lang) {
-        [PSCustomObject] @{ 
+        [PSCustomObject] @{
             jsonRpc = $false
             script = $false
         }
     } else {
         [PSCustomObject] @{
-            jsonRpc = $true            
+            jsonRpc = $true
             script = $lang -ne "json-rpc"
         }
-    }    
+    }
 }
 
 function Generate-Sdk {
@@ -125,18 +129,6 @@ function Generate-Sdk {
     $info
 
     "Generating SDK..."
-
-    "Clear $output"
-    $output = Get-DotNetPath -dotNet $dotNet -folder $dotNet.output
-    Clear-Dir -path $output
-
-    $commit = if ($dotNet.commit) { $dotNet.commit } else { "master" }
-
-    "Commit: $commits"
-    $location = Get-Location
-    Set-Location $specs
-    git checkout $commit
-    Set-Location $location
 
     "AutoRest: $($dotNet.autorest)"
     if ($dotNet.autorest) {
@@ -170,14 +162,32 @@ function Generate-Sdk {
 
     $langInfo = Get-LangInfo -lang $lang
 
+    $commit = if ($dotNet.commit) { $dotNet.commit } else { "master" }
+
+    $isUrl = Is-Url -specs $specs
+    "Commit: $commits"
+    if (-Not $isUrl) {
+        $location = Get-Location
+        Set-Location $specs
+        git checkout $commit
+        Set-Location $location
+    } else {
+        $specs = $specs.Replace('https://github.com/', 'https://raw.githubusercontent.com/')
+        $specs = "$specs/$commit"
+    }
+
+    "Clear $output"
+    $output = Get-DotNetPath -dotNet $dotNet -folder $dotNet.output
+    Clear-Dir -path $output
+
     if ($dotNet.autorest -or $info.isLegacy) {
         if ($langInfo.jsonRpc) {
             Write-Error "JSON RPC is not supported for $($info.name)"
             exit -1
         }
         # Run AutoRest for all sources.
-        $info.sources | % {
-            $modeler = If ($info.isComposite) { "CompositeSwagger" } Else { "Swagger" }
+        $info.sources | ForEach-Object {
+            $modeler = if ($info.isComposite) { "CompositeSwagger" } else { "Swagger" }
             $input = Get-SourcePath -specs $specs -info $info -source $_
             $r = @(
                 "-Modeler",
@@ -205,7 +215,7 @@ function Generate-Sdk {
                 Write-Error "generation errors"
                 exit $LASTEXITCODE
             }
-        }                     
+        }
     } else {
         $autoRestExe = "autorest"
         $r = @(
@@ -220,24 +230,36 @@ function Generate-Sdk {
         }
         $title = $dotNet.client
         if ($info.isComposite) {
-            $info.sources | % {
+            $info.sources | ForEach-Object {
+                $compositeDir = Split-Path -Path $_ -Parent
                 $compositeInput = Get-SourcePath -specs $specs -info $info -source $_
-                $compositeDir = Split-Path -Path $compositeInput -Parent
-                $composite = Get-Content $compositeInput | Out-String | ConvertFrom-Json
-                $composite.documents | % {
-                    $input = Join-Path $compositeDir $_
+                $compositeStr = if (Is-Url -specs $specs) {
+                    $web = New-Object Net.WebClient
+                    $web.DownloadString($compositeInput)
+                } else {
+                    Get-Content $compositeInput | Out-String
+                }
+                $composite = $compositeStr | ConvertFrom-Json
+                Write-Host "==="
+                Write-Host $composite
+                Write-Host "==="
+                Write-Host "_: $_"
+                Write-Host "compositeDir: $compositeDir"
+                Write-Host "==="
+                $composite.documents | ForEach-Object {
+                    $input = Get-SourcePath -specs $specs -info $info -source "$compositeDir/$_"
                     $r += "--input-file=$input"
                 }
                 if(-Not $title) {
                     $title = $composite.info.title
                 }
-            }            
+            }
         } else {
             $info.sources | % {
                 $input = Get-SourcePath -specs $specs -info $info -source $_
                 $r += "--input-file=$input"
-            }            
-        }        
+            }
+        }
         if ($title) {
             $r += "--override-info.title=$title"
         }
@@ -246,8 +268,8 @@ function Generate-Sdk {
         if (-Not $?) {
             Write-Error "generation errors"
             exit $LASTEXITCODE
-        }        
-    }    
+        }
+    }
 }
 
 function Build-Project {
@@ -278,7 +300,14 @@ function Get-DotNetTestList {
     return $infoList | ForEach-Object { Get-DotNetTest $_.dotNet } | Get-Unique
 }
 
+function Is-Url {
+    param([string] $specs)
+
+    return $specs.StartsWith("http")
+}
+
 Export-ModuleMember -Function Read-SdkInfoList
 Export-ModuleMember -Function Generate-Sdk
 Export-ModuleMember -Function Build-Project
 Export-ModuleMember -Function Get-DotNetTestList
+Export-ModuleMember -Function Is-Url
