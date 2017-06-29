@@ -695,7 +695,15 @@ namespace Microsoft.Azure.ServiceBus.Core
                         }
 
                         Message message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
-                        brokeredMessages.Add(message);
+                        if(message.SystemProperties.LockedUntilUtc <= DateTime.UtcNow)
+                        {
+                            receiveLink.ReleaseMessage(amqpMessage);
+                            continue;
+                        }
+                        else
+                        {
+                            brokeredMessages.Add(message);
+                        }                        
                     }
 
                     return brokeredMessages;

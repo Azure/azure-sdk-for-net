@@ -10,11 +10,10 @@ namespace Microsoft.Azure.ServiceBus
         public static TimeSpan CalculateRenewAfterDuration(DateTime lockedUntilUtc)
         {
             TimeSpan remaining = lockedUntilUtc - DateTime.UtcNow;
-            if (remaining < TimeSpan.Zero)
+
+            if(remaining < TimeSpan.FromMilliseconds(400))
             {
-                // It is possible that time is not synchronized, clock moved backward or session has already expired.
-                // Let's assume the session is still valid for half of minimum lock duration.
-                remaining = TimeSpan.FromTicks(Constants.MinimumLockDuration.Ticks / 2);
+                return TimeSpan.Zero;
             }
 
             TimeSpan buffer = TimeSpan.FromTicks(Math.Min(remaining.Ticks / 2, Constants.MaximumRenewBufferDuration.Ticks));
