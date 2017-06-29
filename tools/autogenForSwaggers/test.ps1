@@ -1,10 +1,8 @@
-param(
-    [string] $project = '*',
-    [string] $sdkInfo = 'sdkinfo.lock.json')
+param([string] $project = '*')
 
 Import-Module "./lib.psm1"
 
-$infoList = Read-SdkInfoList -project $project -sdkInfo $sdkInfo
+$infoList = Read-SdkInfoList -project $project -sdkInfo 'sdkinfo.lock.json'
 
 $testProjectList = Get-DotNetTestList $infoList
 
@@ -15,5 +13,5 @@ $testProjectList | ForEach-Object {
     {
         Write-Error "test errors"
         exit $LASTEXITCODE
-    }    
+    }
 }

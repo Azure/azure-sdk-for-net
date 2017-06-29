@@ -306,8 +306,21 @@ function Is-Url {
     return $specs.StartsWith("http")
 }
 
+function GenerateAndBuild {
+    param([string] $project, [string] $specs)
+
+    $infoList = Read-SdkInfoList -project $project -sdkInfo "sdkinfo.lock.json"
+
+    $infoList | ForEach-Object { Generate-Sdk -specs $specs -info $_ }
+
+    $testProjectList = Get-DotNetTestList $infoList
+
+    $testProjectList | ForEach-Object { Build-Project -project $_ }
+}
+
 Export-ModuleMember -Function Read-SdkInfoList
 Export-ModuleMember -Function Generate-Sdk
 Export-ModuleMember -Function Build-Project
 Export-ModuleMember -Function Get-DotNetTestList
 Export-ModuleMember -Function Is-Url
+Export-ModuleMember -Function GenerateAndBuild

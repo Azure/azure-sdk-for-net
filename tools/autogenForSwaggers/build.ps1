@@ -1,14 +1,7 @@
 param(
     [string] $project = '*',
-    [string] $specs = "https://github.com/Azure/azure-rest-api-specs",
-    [string] $sdkInfo = 'sdkinfo.lock.json')
+    [string] $specs = "https://github.com/Azure/azure-rest-api-specs")
 
 Import-Module "./lib.psm1"
 
-$infoList = Read-SdkInfoList -project $project -sdkInfo $sdkInfo
-
-$infoList | ForEach-Object { Generate-Sdk -specs $specs -info $_ }
-
-$testProjectList = Get-DotNetTestList $infoList
-
-$testProjectList | ForEach-Object { Build-Project -project $_ }
+GenerateAndBuild -project $project -specs $specs
