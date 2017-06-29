@@ -11,4 +11,4 @@ $infoList | ForEach-Object { Generate-Sdk -specs $specs -info $_ }
 
 $testProjectList = Get-DotNetTestList $infoList | Get-Unique
 
-$testProjectList | % { Build-Project -project $_ }
+$testProjectList | ForEach-Object { Build-Project -project $_ }

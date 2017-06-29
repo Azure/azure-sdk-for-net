@@ -263,6 +263,19 @@ function Build-Project {
     }
 }
 
+function Get-DotNetTest {
+    param([psobject]$dotNet)
+
+    return Get-DotNetPath -dotNet $dotNet -folder $dotNet.test
+}
+
+function Get-DotNetTestList {
+    param([psobject] $infoList)
+
+    return $infoList | ForEach-Object { Get-DotNetTest $_.dotNet } | Get-Unique
+}
+
 Export-ModuleMember -Function Read-SdkInfoList
 Export-ModuleMember -Function Generate-Sdk
 Export-ModuleMember -Function Build-Project
+Export-ModuleMember -Function Get-DotNetTestList

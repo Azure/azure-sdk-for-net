@@ -328,7 +328,7 @@
         "name": "arm-search",
         "sources": [ "2015-08-19/swagger/search.json" ],
         "dotNet": {
-            "name": "Search",            
+            "name": "Search",
             "folder": "Search/Management",
             "test": "Search.Management.Tests/Search.Management.Tests.csproj"
         }
