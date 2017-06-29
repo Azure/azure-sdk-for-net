@@ -98,7 +98,6 @@ function Get-SourcePath {
     param([string] $specs, [psobject]$info, [string]$source)
 
     if (Is-Url -specs $specs) {
-
         "$specs/$($info.name)/$source"
     } else {
         Join-Path (Join-Path $specs $info.name) $source
@@ -240,12 +239,6 @@ function Generate-Sdk {
                     Get-Content $compositeInput | Out-String
                 }
                 $composite = $compositeStr | ConvertFrom-Json
-                Write-Host "==="
-                Write-Host $composite
-                Write-Host "==="
-                Write-Host "_: $_"
-                Write-Host "compositeDir: $compositeDir"
-                Write-Host "==="
                 $composite.documents | ForEach-Object {
                     $input = Get-SourcePath -specs $specs -info $info -source "$compositeDir/$_"
                     $r += "--input-file=$input"
