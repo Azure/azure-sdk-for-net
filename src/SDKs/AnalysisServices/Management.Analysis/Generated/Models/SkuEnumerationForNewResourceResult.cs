@@ -17,26 +17,28 @@ namespace Microsoft.Azure.Management.Analysis.Models
     using System.Linq;
 
     /// <summary>
-    /// An array of administrator user identities
+    /// An object that represents enumerating SKUs for new resources
     /// </summary>
-    public partial class ServerAdministrators
+    public partial class SkuEnumerationForNewResourceResult
     {
         /// <summary>
-        /// Initializes a new instance of the ServerAdministrators class.
+        /// Initializes a new instance of the
+        /// SkuEnumerationForNewResourceResult class.
         /// </summary>
-        public ServerAdministrators()
+        public SkuEnumerationForNewResourceResult()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServerAdministrators class.
+        /// Initializes a new instance of the
+        /// SkuEnumerationForNewResourceResult class.
         /// </summary>
-        /// <param name="members">An array of administrator user
-        /// identities.</param>
-        public ServerAdministrators(IList<string> members = default(IList<string>))
+        /// <param name="value">The collection of available SKUs for new
+        /// resources</param>
+        public SkuEnumerationForNewResourceResult(IList<ResourceSku> value = default(IList<ResourceSku>))
         {
-            Members = members;
+            Value = value;
             CustomInit();
         }
 
@@ -46,10 +48,10 @@ namespace Microsoft.Azure.Management.Analysis.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an array of administrator user identities.
+        /// Gets or sets the collection of available SKUs for new resources
         /// </summary>
-        [JsonProperty(PropertyName = "members")]
-        public IList<string> Members { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<ResourceSku> Value { get; set; }
 
     }
 }
