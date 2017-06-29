@@ -16,14 +16,17 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         readonly ICbsTokenProvider cbsTokenProvider;
         readonly AmqpLinkSettings amqpLinkSettings;
 
-        protected AmqpLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings amqpLinkSettings)
+        protected AmqpLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings amqpLinkSettings, string clientId)
         {
             this.entityPath = entityPath;
             this.serviceBusConnection = serviceBusConnection;
             this.requiredClaims = requiredClaims;
             this.cbsTokenProvider = cbsTokenProvider;
             this.amqpLinkSettings = amqpLinkSettings;
+            this.ClientId = clientId;
         }
+
+        protected string ClientId { get; }
 
         public async Task<AmqpObject> CreateAndOpenAmqpLinkAsync()
         {
