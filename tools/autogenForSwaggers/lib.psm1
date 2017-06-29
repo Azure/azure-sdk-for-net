@@ -253,10 +253,13 @@ function Generate-Sdk {
 function Build-Project {
     param([string] $project)
 
+    $p = Join-Path (Get-Location) "common.targets"
+
     "Restoring test project NuGet packages..."
     dotnet restore $project
-            
-    & dotnet build $project
+
+    "& dotnet build $project /p:CustomAfterMicrosoftCommonTargets=$p"
+    & dotnet build $project /p:CustomAfterMicrosoftCommonTargets=$p
     if (-Not $?) {
         Write-Error "build errors"
         exit $LASTEXITCODE

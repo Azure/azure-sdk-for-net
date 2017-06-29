@@ -9,6 +9,6 @@ $infoList = Read-SdkInfoList -project $project -sdkInfo $sdkInfo
 
 $infoList | ForEach-Object { Generate-Sdk -specs $specs -info $_ }
 
-$testProjectList = Get-DotNetTestList $infoList | Get-Unique
+$testProjectList = Get-DotNetTestList $infoList
 
 $testProjectList | ForEach-Object { Build-Project -project $_ }
