@@ -4,7 +4,7 @@
 using Xunit;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
-namespace Azure.Tests
+namespace Fluent.Tests
 {
     public class ExapandableEnumTests
     {

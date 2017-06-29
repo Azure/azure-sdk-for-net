@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
@@ -11,7 +12,7 @@ using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Azure.Tests
+namespace Fluent.Tests
 {
     public class AzureTests
     {

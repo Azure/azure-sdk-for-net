@@ -6,26 +6,29 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.ContainerRegistry.Fluent;
+using Azure.Tests;
 
-namespace Azure.Tests.ContainerRegistry
+namespace Fluent.Tests.ContainerRegistry
 {
-    public class ContainerRegistriesTest
+    public class ContainerRegistriesTests
     {
-        [Fact(Skip = "Runs fine locally but fails for unknown reason on check in.")]
-        public void Test()
+        [Fact]
+        public void ContainerRegistryCRUDTest()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var regName = TestUtilities.GenerateName("reg");
                 var saName = TestUtilities.GenerateName("regsa");
+                var rgName = TestUtilities.GenerateName("crRg");
                 var registryManager = TestHelper.CreateRegistryManager();
+                var resourceManager = TestHelper.CreateResourceManager();
                 IRegistry registry = null;
 
                 try
                 {
                     registry = registryManager.ContainerRegistries.Define(regName)
                             .WithRegion(Region.USWest)
-                            .WithNewResourceGroup()
+                            .WithNewResourceGroup(rgName)
                             .WithNewStorageAccount(saName)
                             .WithRegistryNameAsAdminUser()
                             .Create();
@@ -46,7 +49,7 @@ namespace Azure.Tests.ContainerRegistry
                 {
                     try
                     {
-                        registryManager.ContainerRegistries.DeleteById(registry.Id);
+                        resourceManager.ResourceGroups.BeginDeleteByName(rgName);
                     }
                     catch { }
                 }

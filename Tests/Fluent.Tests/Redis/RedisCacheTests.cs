@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Redis.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
@@ -10,7 +11,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Azure.Tests.Redis
+namespace Fluent.Tests.Redis
 {
     public class RedisCacheTests
     {

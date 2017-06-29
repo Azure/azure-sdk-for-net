@@ -7,15 +7,16 @@ using Fluent.Tests.Common;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
+using Azure.Tests;
 
-namespace Azure.Tests.Compute
+namespace Fluent.Tests.Compute
 {
-    public class ContainerServicesTest
+    public class ContainerServicesTests
     {
         private static readonly string SshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
 
-        [Fact(Skip = "Runs fine locally but fails for unknown reason on check in.")]
-        public void Test()
+        [Fact]
+        public void ContainerServiceCRUDTest()
         {
             
             using (var context = FluentMockContext.Start(GetType().FullName))
@@ -23,14 +24,16 @@ namespace Azure.Tests.Compute
                 var csName = TestUtilities.GenerateName("cr");
                 var saName = TestUtilities.GenerateName("crsa");
                 var dnsPrefix = TestUtilities.GenerateName("dns");
+                var rgName = TestUtilities.GenerateName("crRg");
                 IContainerService containerService = null;
                 var computeManager = TestHelper.CreateComputeManager();
+                var resourceManager = TestHelper.CreateResourceManager();
 
                 try
                 {
                     containerService = computeManager.ContainerServices.Define(csName)
                             .WithRegion(Region.USWest)
-                            .WithNewResourceGroup()
+                            .WithNewResourceGroup(rgName)
                             .WithDcosOrchestration()
                             .WithDiagnostics()
                             .WithLinux()
@@ -74,7 +77,7 @@ namespace Azure.Tests.Compute
                 {
                     try
                     {
-                        computeManager.ContainerServices.DeleteById(containerService.Id);
+                        resourceManager.ResourceGroups.BeginDeleteByName(rgName);
                     }
                     catch { }
                 }

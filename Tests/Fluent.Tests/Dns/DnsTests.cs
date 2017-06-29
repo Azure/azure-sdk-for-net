@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.Txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Dns.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
@@ -12,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Azure.Tests.Dns
+namespace Fluent.Tests.Dns
 {
     public class DnsTests
     {
