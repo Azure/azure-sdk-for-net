@@ -172,7 +172,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// replenished in the background as space becomes available.If there are no messages available for delivery, the receive operation will drain the 
         /// buffer and then wait or block as expected. 
         /// </para>
-        /// <para>Prefetch also works equivalently with the <see cref="RegisterMessageHandler(Func{Message,CancellationToken,Task})"/> APIs.</para>
+        /// <para>Prefetch also works equivalently with the <see cref="RegisterMessageHandler(Func{Message,CancellationToken,Task}, Func{ExceptionReceivedEventArgs, Task})"/> APIs.</para>
         /// <para>Updates to this value take effect on the next receive call to the service.</para>
         /// </remarks>
         public int PrefetchCount
