@@ -203,41 +203,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
-        [Theory]
-        [MemberData(nameof(TestPermutations))]
-        [DisplayTestMethodName]
-        async Task AcceptSessionShouldReturnNoLaterThanServerWaitTimeTestCase(string queueName, int messageCount = 1)
-        {
-            var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-
-            try
-            {
-                Stopwatch timer = Stopwatch.StartNew();
-
-                IMessageSession sessionReceiver = null;
-                try
-                {
-                    sessionReceiver = await sessionClient.AcceptMessageSessionAsync(TimeSpan.FromSeconds(2));
-                }
-                catch (ServiceBusTimeoutException)
-                {
-                }
-
-                timer.Stop();
-
-                // If sessionId is not null, then the queue needs to be cleaned up before running the timeout test.
-                Assert.Null(sessionReceiver?.SessionId);
-
-                // Ensuring total time taken is less than 60 seconds, which is the default timeout for AcceptMessageSessionAsync.
-                // Keeping the value of 40 to avoid flakiness in test infrastructure which may lead to extended time taken.
-                // Todo: Change this value to a lower number once test infra is performant.
-                Assert.True(timer.Elapsed.TotalSeconds < 40);
-            }
-            finally
-            {
-                await sessionClient.CloseAsync().ConfigureAwait(false);
-            }
-        }
 
         async Task AcceptAndCompleteSessionsAsync(SessionClient sessionClient, string sessionId, string messageId)
         {
