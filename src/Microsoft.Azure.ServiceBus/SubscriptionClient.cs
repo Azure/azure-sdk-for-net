@@ -379,7 +379,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="description">The rule description that provides the rule to add.</param>
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         /// <remarks>
-        /// You can add rules to the subscription that will decide filter which messages from the topic should reach the subscription.
+        /// You can add rules to the subscription that decides which messages from the topic should reach the subscription.
         /// A default <see cref="TrueFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// </remarks>

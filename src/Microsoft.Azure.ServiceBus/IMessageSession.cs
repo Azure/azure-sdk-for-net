@@ -13,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Service Bus Sessions, also called "Groups" in the AMQP 1.0 protocol, are unbounded sequences of related messages. ServiceBus guarantees ordering of messages in a session.
+    /// Service Bus Sessions, also called 'Groups' in the AMQP 1.0 protocol, are unbounded sequences of related messages. ServiceBus guarantees ordering of messages in a session.
     /// </para>
     /// <para>
     /// Any sender can create a session when submitting messages into a Topic or Queue by setting the <see cref="Message.SessionId"/> property on Message to some 

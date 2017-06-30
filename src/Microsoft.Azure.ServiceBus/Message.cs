@@ -142,7 +142,7 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>
         /// Gets or sets the message’s time to live value. This is the duration after which the message expires, starting from when the message is sent to the Service Bus. 
-        /// Messages older than their TimeToLive value will expire and no longer be retained in the message store. Expired messages can not be received. 
+        /// Messages older than their TimeToLive value will expire and no longer be retained in the message store. Expired messages cannot be received. 
         /// TimeToLive is the maximum lifetime that a message can be received, but its value cannot exceed the entity specified value on the destination queue or subscription. 
         /// If a lower TimeToLive value is specified, it will be applied to the individual message. However, a larger value specified on the message will be overridden by the 
         /// entity’s DefaultMessageTimeToLive value.
