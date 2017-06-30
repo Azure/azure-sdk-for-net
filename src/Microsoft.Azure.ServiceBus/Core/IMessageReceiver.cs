@@ -94,14 +94,14 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Receives a particular message identified by <paramref name="sequenceNumber"/>.
         /// </summary>
         /// <param name="sequenceNumber">The sequence number of the message that will be received.</param>
-        /// <returns>Message with the sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found.</returns>
+        /// <returns>Message identified by sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found.</returns>
         Task<Message> ReceiveBySequenceNumberAsync(long sequenceNumber);
 
         /// <summary>
         /// Receives a <see cref="IList{Message}"/> messages identified by <paramref name="sequenceNumbers"/>.
         /// </summary>
         /// <param name="sequenceNumbers">An <see cref="IEnumerable{T}"/> containing the sequence numbers to receive.</param>
-        /// <returns>Messages whoese sequence numbers were requested. Returns null if no messages are found.</returns>
+        /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.</returns>
         Task<IList<Message>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers);
 
         /// <summary>

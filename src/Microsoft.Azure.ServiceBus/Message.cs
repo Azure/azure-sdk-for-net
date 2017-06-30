@@ -31,7 +31,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
-        /// <param name="body">The payload of the message in byte[]</param>
+        /// <param name="body">The payload of the message in bytes</param>
         public Message(byte[] body)
         {
             this.Body = body;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets a partition key value when a transaction is to be used to send messages via a transfer queue.</summary>
+        /// <summary>Gets or sets a partition key for sending a transactional message via a transfer queue.</summary>
         /// <value>The partition key value when a transaction is to be used to send messages via a transfer queue.</value>
         /// <remarks>Max size of ViaPartitionKey is 128 chars.</remarks>
         public string ViaPartitionKey
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>Gets the date and time in UTC at which the message is set to expire.</summary>
         /// <value>The message expiration time in UTC.</value>
         /// <exception cref="System.InvalidOperationException">If the message has not been received. For example if a new message was created but not yet sent and received.</exception>
-        /// <remarks>Unless specifically set for a message, this value is controlled by the default message TTL value set on the entity.</remarks>
+        /// <remarks>Unless specifically set for a message, this value is controlled by the 'DefaultMessageTimeToLive' property set while creating the entity.</remarks>
         public DateTime ExpiresAtUtc
         {
             get
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>
         /// Gets or sets the message’s time to live value. This is the duration after which the message expires, starting from when the message is sent to the Service Bus. 
-        /// Messages older than their TimeToLive value will expire and no longer be retained in the message store. Subscribers will be unable to receive expired messages. 
+        /// Messages older than their TimeToLive value will expire and no longer be retained in the message store. Expired messages can not be received. 
         /// TimeToLive is the maximum lifetime that a message can be received, but its value cannot exceed the entity specified value on the destination queue or subscription. 
         /// If a lower TimeToLive value is specified, it will be applied to the individual message. However, a larger value specified on the message will be overridden by the 
         /// entity’s DefaultMessageTimeToLive value.
@@ -277,14 +277,14 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public sealed class SystemPropertiesCollection
         {
-            private int deliveryCount;
-            private DateTime lockedUntilUtc;
-            private long sequenceNumber = -1;
-            private short partitionId;
-            private long enqueuedSequenceNumber;
-            private DateTime enqueuedTimeUtc;
-            private Guid lockTokenGuid;
-            private string deadLetterSource;
+            int deliveryCount;
+            DateTime lockedUntilUtc;
+            long sequenceNumber = -1;
+            short partitionId;
+            long enqueuedSequenceNumber;
+            DateTime enqueuedTimeUtc;
+            Guid lockTokenGuid;
+            string deadLetterSource;
 
             /// <summary>
             /// Specifies whether or not there is a lock token set on the current message.

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
         /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>Creates a new connection to the topic, which is opened during the first operation.</remarks>
+        /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
         public TopicClient(ServiceBusConnectionStringBuilder connectionStringBuilder, RetryPolicy retryPolicy = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, retryPolicy)
         {
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="connectionString">Namespace connection string. Must not contain topic information.</param>
         /// <param name="entityPath">Path to the topic</param>
         /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>Creates a new connection to the topic, which is opened during the first operation.</remarks>
+        /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
         public TopicClient(string connectionString, string entityPath, RetryPolicy retryPolicy = null)
             : this(new ServiceBusNamespaceConnection(connectionString), entityPath, retryPolicy ?? RetryPolicy.Default)
         {

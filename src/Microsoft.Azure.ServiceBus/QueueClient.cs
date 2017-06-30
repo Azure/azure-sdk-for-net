@@ -69,7 +69,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and queue information.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>Creates a new connection to the queue, which is opened during the first operation.</remarks>
+        /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
         public QueueClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, receiveMode, retryPolicy)
         {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="entityPath">Name of the queue</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>Creates a new connection to the queue, which is opened during the first operation.</remarks>
+        /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
         public QueueClient(string connectionString, string entityPath, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
             : this(new ServiceBusNamespaceConnection(connectionString), entityPath, receiveMode, retryPolicy ?? RetryPolicy.Default)
         {

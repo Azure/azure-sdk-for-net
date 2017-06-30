@@ -64,7 +64,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="subscriptionName">Name of the subscription.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>Creates a new connection to the subscription, which is opened during the first operation.</remarks>
+        /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
         public SubscriptionClient(ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, subscriptionName, receiveMode, retryPolicy)
         {
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="subscriptionName">Name of the subscription.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <remarks>Creates a new connection to the subscription, which is opened during the first operation.</remarks>
+        /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
         public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
             : this(new ServiceBusNamespaceConnection(connectionString), topicPath, subscriptionName, receiveMode, retryPolicy ?? RetryPolicy.Default)
         {
@@ -364,7 +364,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="filter">The filter expression against which messages will be matched.</param>
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         /// <remarks>
-        /// You can add rules to the subscription that will decide filter which messages from the topic should reach the subscription.
+        /// You can add rules to the subscription that decides which messages from the topic should reach the subscription.
         /// A default <see cref="TrueFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// </remarks>

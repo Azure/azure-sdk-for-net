@@ -4,12 +4,13 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Threading;
     using System.Threading.Tasks;
     using Primitives;
 
     /// <summary>Provides options associated with message pump processing using
-    /// <see cref="QueueClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},MessageHandlerOptions)" /> and
-    /// <see cref="SubscriptionClient.RegisterMessageHandler(System.Func{Microsoft.Azure.ServiceBus.Message,System.Threading.CancellationToken,System.Threading.Tasks.Task},MessageHandlerOptions)" />.</summary>
+    /// <see cref="QueueClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" /> and
+    /// <see cref="SubscriptionClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" />.</summary>
     public sealed class MessageHandlerOptions
     {
         int maxConcurrentCalls;
@@ -22,7 +23,8 @@ namespace Microsoft.Azure.ServiceBus
         ///     <see cref="ReceiveTimeOut"/> = 1 minute
         ///     <see cref="MaxAutoRenewDuration"/> = 5 minutes
         /// </summary>
-        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is used to notify exceptions.</param>
+        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
+        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
         public MessageHandlerOptions(Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
             this.MaxConcurrentCalls = 1;
