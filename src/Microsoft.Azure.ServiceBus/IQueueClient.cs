@@ -39,6 +39,12 @@ namespace Microsoft.Azure.ServiceBus
     ///            // Complete the message so that it is not received again.
     ///            // This can be done only if the queueClient is opened in ReceiveMode.PeekLock mode.
     ///            await queueClient.CompleteAsync(message.SystemProperties.LockToken);
+    ///        },
+    ///        async (exceptionEvent) =&gt;
+    ///        {
+    ///            // Process the exception
+    ///            Console.WriteLine("Exception = " + exceptionEvent.Exception);
+    ///            return Task.CompletedTask;
     ///        });
     /// </code>
     /// </example>
