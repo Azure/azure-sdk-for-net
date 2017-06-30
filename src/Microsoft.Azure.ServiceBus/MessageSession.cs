@@ -15,9 +15,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public MessageSession(string sessionId, DateTime lockedUntilUtc, MessageReceiver innerMessageReceiver, RetryPolicy retryPolicy)
             : base(innerMessageReceiver.ReceiveMode, innerMessageReceiver.OperationTimeout, retryPolicy)
         {
-            this.SessionId = sessionId;
-            this.LockedUntilUtc = lockedUntilUtc;
             this.InnerMessageReceiver = innerMessageReceiver ?? throw Fx.Exception.ArgumentNull(nameof(innerMessageReceiver));
+            this.SessionId = sessionId;
+            this.LockedUntilUtc = lockedUntilUtc;            
             this.ReceiveMode = innerMessageReceiver.ReceiveMode;
         }
 
