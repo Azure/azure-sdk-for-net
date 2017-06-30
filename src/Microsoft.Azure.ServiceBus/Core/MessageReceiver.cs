@@ -687,11 +687,6 @@ namespace Microsoft.Azure.ServiceBus.Core
                     {
                         foreach (var amqpMessage in amqpMessages)
                         {
-                            if (brokeredMessages == null)
-                            {
-                                brokeredMessages = new List<Message>();
-                            }
-
                             if (this.ReceiveMode == ReceiveMode.ReceiveAndDelete)
                             {
                                 receiveLink.DisposeDelivery(amqpMessage, true, AmqpConstants.AcceptedOutcome);
@@ -707,11 +702,16 @@ namespace Microsoft.Azure.ServiceBus.Core
                             }
                             else
                             {
+                                if (brokeredMessages == null)
+                                {
+                                    brokeredMessages = new List<Message>();
+                                }
+
                                 brokeredMessages.Add(message);
                             }
                         }
                         
-                        if(brokeredMessages != null && brokeredMessages.Count > 0)
+                        if(brokeredMessages != null)
                         {
                             break;
                         }
