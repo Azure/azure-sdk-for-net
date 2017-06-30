@@ -200,9 +200,9 @@ function Generate-Sdk {
         }
     } else {
         $autoRestExe = "autorest"
-        $lang = if ($jsonRpc) { "jsonrpcclient" } else { "csharp.azure-arm" }
+        $lang = if ($jsonRpc) { "jsonrpcclient" } else { "csharp" }
         $r = @(
-            "--$lang",
+            "--$lang.azure-arm",
             "--namespace=$($dotNet.namespace)",
             "--output-folder=$output",
             "--license-header=MICROSOFT_MIT",
