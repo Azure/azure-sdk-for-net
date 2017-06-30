@@ -3,8 +3,6 @@
 
 namespace Microsoft.Azure.ServiceBus.Filters
 {
-    using System;
-
     /// <summary>
     /// Represents a description of a rule.
     /// </summary>
@@ -111,7 +109,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
             set
             {
-                if (String.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(this.Name));
                 }
@@ -122,7 +120,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
         internal void ValidateDescriptionName()
         {
-            if (String.IsNullOrWhiteSpace(this.name))
+            if (string.IsNullOrWhiteSpace(this.name))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(this.name));
             }

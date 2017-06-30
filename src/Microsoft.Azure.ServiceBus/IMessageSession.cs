@@ -16,8 +16,8 @@ namespace Microsoft.Azure.ServiceBus
     /// Service Bus Sessions, also called "Groups" in the AMQP 1.0 protocol, are unbounded sequences of related messages. ServiceBus guarantees ordering of messages in a session.
     /// </para>
     /// <para>
-    /// Any sender can "create" a session when submitting messages into a Topic or Queue by setting the <see cref="Message.SessionId"/> property on Message to some 
-    /// application-defined identifier that is unique to the session. At the AMQP 1.0 protocol level, this value maps to the group-id property.
+    /// Any sender can create a session when submitting messages into a Topic or Queue by setting the <see cref="Message.SessionId"/> property on Message to some 
+    /// application defined unique identifier. At the AMQP 1.0 protocol level, this value maps to the group-id property.
     /// </para>
     /// <para>
     /// Sessions come into existence when there is at least one message with the session's SessionId in the Queue or Topic subscription. 
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <remarks>
         /// <para>
-        /// When you accept/receive a session, the session is locked for this client instance by the service for a duration as specified during the Queue/Subscription creation.
+        /// When you accept a session, the session is locked for this client instance by the service for a duration as specified during the Queue/Subscription creation.
         /// If processing of the session requires longer than this duration, the session-lock needs to be renewed. For each renewal, the session-lock is renewed by 
         /// the entity's LockDuration. 
         /// </para>

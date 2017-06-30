@@ -122,12 +122,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 amqpMessage.MessageAnnotations.Map.Add(ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTimeUtc);
             }
-
-            if (sbMessage.SystemProperties.DeadLetterSource != null)
-            {
-                amqpMessage.MessageAnnotations.Map.Add(DeadLetterSourceName, sbMessage.SystemProperties.DeadLetterSource);
-            }
-
+            
             if (sbMessage.PartitionKey != null)
             {
                 amqpMessage.MessageAnnotations.Map.Add(PartitionKeyName, sbMessage.PartitionKey);
@@ -216,7 +211,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                             byteArray = new byte[arraySegmentValue.Count];
                             Array.ConstrainedCopy(arraySegmentValue.Array, arraySegmentValue.Offset, byteArray, 0, arraySegmentValue.Count);
                         }
-                        dataSegments.AddRange(arraySegmentValue);
+                        dataSegments.AddRange(byteArray);
                     }
                 }
                 sbMessage = new SBMessage(dataSegments.ToArray());
