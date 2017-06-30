@@ -157,7 +157,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets a session object of any <see cref="IMessageSession.SessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
-        /// <param name="serverWaitTime">Amount of time for which the call should wait for to fetch the next session.</param>
+        /// <param name="serverWaitTime">Amount of time for which the call should wait to fetch the next session.</param>
         /// <returns>A session object.</returns>
         public Task<IMessageSession> AcceptMessageSessionAsync(TimeSpan serverWaitTime)
         {
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Gets a particular session object identified by <paramref name="sessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
         /// <param name="sessionId">The sessionId present in all its messages.</param>
-        /// <param name="serverWaitTime">Amount of time for which the call should wait for to fetch the next session.</param>
+        /// <param name="serverWaitTime">Amount of time for which the call should wait to fetch the next session.</param>
         /// <returns>A session object.</returns>
         public async Task<IMessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime)
         {
