@@ -12,7 +12,7 @@ namespace Microsoft.Azure.ServiceBus
     sealed class SessionReceivePump
     {
         readonly string clientId;
-        readonly IMessageSessionEntity client;
+        readonly ISessionClient client;
         readonly Func<IMessageSession, Message, CancellationToken, Task> userOnSessionCallback;
         readonly SessionHandlerOptions sessionHandlerOptions;
         readonly string endpoint;
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus
         readonly SemaphoreSlim maxPendingAcceptSessionsSemaphoreSlim;
 
         public SessionReceivePump(string clientId, 
-            IMessageSessionEntity client, 
+            ISessionClient client, 
             ReceiveMode receiveMode, 
             SessionHandlerOptions sessionHandlerOptions, 
             Func<IMessageSession, Message, CancellationToken, Task> callback, 

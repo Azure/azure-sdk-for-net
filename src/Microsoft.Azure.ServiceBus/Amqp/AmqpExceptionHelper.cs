@@ -96,7 +96,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             if (string.Equals(condition, AmqpClientConstants.TimeoutError.Value))
             {
-                return new TimeoutException(message);
+                return new ServiceBusTimeoutException(message);
             }
 
             if (string.Equals(condition, AmqpErrorCode.NotFound.Value))
