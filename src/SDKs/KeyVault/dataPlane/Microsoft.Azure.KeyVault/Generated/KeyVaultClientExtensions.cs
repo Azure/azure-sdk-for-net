@@ -1852,6 +1852,9 @@ namespace Microsoft.Azure.KeyVault
             /// <summary>
             /// Creates or updates a new storage account.
             /// </summary>
+            /// <remarks>
+            /// The full key identifier, attributes, and tags are provided in the response.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

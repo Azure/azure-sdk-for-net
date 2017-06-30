@@ -10,11 +10,11 @@ namespace Microsoft.Azure.KeyVault.Models
 {
     using Azure;
     using KeyVault;
+    using Microsoft.Azure.KeyVault.WebKey;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// A KeyBundle consisting of a WebKey plus its attributes.
