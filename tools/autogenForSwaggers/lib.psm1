@@ -88,10 +88,9 @@ function Read-SdkInfoList {
 }
 
 function Get-DotNetPath {
-    param([psobject]$dotNet, [string]$folder)
+    param([string] $sdkDir, [psobject]$dotNet, [string]$folder)
 
-    $current = Get-Location
-    return Join-Path $current "..\..\src\SDKs\$($dotNet.folder)\$folder"
+    Join-Path $sdkDir "src\SDKs\$($dotNet.folder)\$folder"
 }
 
 function Get-SourcePath {
@@ -121,7 +120,7 @@ function Get-LangInfo {
 }
 
 function Generate-Sdk {
-    param([string] $specs, [psobject] $info, [string] $lang)
+    param([string] $specs, [psobject] $info, [string] $sdkDir, [string] $lang)
 
     $dotNet = $info.dotNet
 
@@ -135,14 +134,15 @@ function Generate-Sdk {
         $index = $dotNet.autorest.IndexOf('.')
         $package = $dotNet.autorest.SubString(0, $index)
         $version = $dotNet.autorest.SubString($index + 1)
-        $autoRestExe = "..\..\packages\$($dotNet.autorest)\tools\AutoRest.exe"
+        $packages = Join-Path $sdkDir "packages"
+        $autoRestExe = Join-Path $packages "$($dotNet.autorest)\tools\AutoRest.exe"
         $r = @(
             "install",
             $package,
             "-Version",
             $version,
             "-o",
-            "..\..\packages\"
+            $packages
         )
         if ($version.Contains("-"))
         {
@@ -150,7 +150,8 @@ function Generate-Sdk {
             $r += "https://www.myget.org/F/autorest/api/v2"
         }
         $r
-        & ..\..\tools\nuget.exe $r
+        $tools = Join-Path $sdkDir "tools\nuget.exe"
+        & $tools $r
         if (-Not $?) {
             Write-Error "autorest restore errors"
             exit $LASTEXITCODE
@@ -176,7 +177,7 @@ function Generate-Sdk {
     }
 
     "Clear $output"
-    $output = Get-DotNetPath -dotNet $dotNet -folder $dotNet.output
+    $output = Get-DotNetPath -sdkDir $sdkDir -dotNet $dotNet -folder $dotNet.output
     Clear-Dir -path $output
 
     if ($dotNet.autorest -or $info.isLegacy) {
@@ -282,15 +283,15 @@ function Build-Project {
 }
 
 function Get-DotNetTest {
-    param([psobject]$dotNet)
+    param([string] $sdkDir, [psobject] $dotNet)
 
-    return Get-DotNetPath -dotNet $dotNet -folder $dotNet.test
+    Get-DotNetPath -sdkDir $sdkDir -dotNet $dotNet -folder $dotNet.test
 }
 
 function Get-DotNetTestList {
-    param([psobject] $infoList)
+    param([string] $sdkDir, [psobject] $infoList)
 
-    return $infoList | ForEach-Object { Get-DotNetTest $_.dotNet } | Get-Unique
+    return $infoList | ForEach-Object { Get-DotNetTest -sdkDir $sdkDir -dotNet $_.dotNet } | Get-Unique
 }
 
 function Is-Url {
@@ -299,16 +300,30 @@ function Is-Url {
     return $specs.StartsWith("http")
 }
 
+function Get-SdkInfoPath {
+    param([string] $sdkDir, [string] $fileName = "sdkinfo.json")
+
+    Join-Path (Join-Path $sdkDir "tools\autogenForSwaggers") $fileName
+}
+
+function Get-SdkInfoLockPath {
+    param([string] $sdkDir)
+
+    Get-SdkInfoPath -sdkDir $sdkDir -fileName "sdkinfo.lock.json"
+}
+
 function GenerateAndBuild {
-    param([string] $project, [string] $specs)
+    param([string] $project, [string] $specs, [string] $sdkDir)
 
-    $infoList = Read-SdkInfoList -project $project -sdkInfo "sdkinfo.lock.json"
+    $sdkInfoLock = Get-SdkInfoLockPath -sdkDir $sdkDir
 
-    $infoList | ForEach-Object { Generate-Sdk -specs $specs -info $_ }
+    $infoList = Read-SdkInfoList -project $project -sdkInfo $sdkInfoLock
 
-    $testProjectList = Get-DotNetTestList $infoList
+    $infoList | ForEach-Object { Generate-Sdk -sdkDir $sdkDir -specs $specs -info $_ }
 
-    $testProjectList | ForEach-Object { Build-Project -project $_ }
+    $testProjectList = Get-DotNetTestList -sdkDir $sdkDir -infoList $infoList
+
+    $testProjectList | ForEach-Object { Build-Project -sdkDir $sdkDir -project $_ }
 }
 
 Export-ModuleMember -Function Read-SdkInfoList
@@ -317,3 +332,5 @@ Export-ModuleMember -Function Build-Project
 Export-ModuleMember -Function Get-DotNetTestList
 Export-ModuleMember -Function Is-Url
 Export-ModuleMember -Function GenerateAndBuild
+Export-ModuleMember -Function Get-SdkInfoPath
+Export-ModuleMember -Function Get-SdkInfoLockPath

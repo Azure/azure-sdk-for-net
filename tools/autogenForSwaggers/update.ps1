@@ -1,4 +1,4 @@
-param([string] $specs = "https://github.com/Azure/azure-rest-api-specs")
+param([string] $specs = "https://github.com/Azure/azure-rest-api-specs", [string] $sdkDir = "..\..\")
 
 Import-Module "./lib.psm1"
 
@@ -13,6 +13,6 @@ $commit = if (Is-Url -specs $specs) {
     Set-Location $location
 }
 
-$sdkinfo = Read-SdkInfoList -project "*" -sdkInfo '.\sdkinfo.json' -commit $commit
+$sdkinfo = Read-SdkInfoList -project "*" -sdkInfo (Get-SdkInfoPath $sdkDir) -commit $commit
 
-$sdkInfo | ConvertTo-Json | Out-File ".\sdkinfo.lock.json" -Encoding "UTF8"
+$sdkInfo | ConvertTo-Json | Out-File (Get-SdkInfoLockPath $sdkDir) -Encoding "UTF8"

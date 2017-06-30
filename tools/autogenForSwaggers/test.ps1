@@ -1,10 +1,12 @@
-param([string] $project = '*')
+param([string] $project = '*', [string] $sdkDir = "..\..")
 
 Import-Module "./lib.psm1"
 
-$infoList = Read-SdkInfoList -project $project -sdkInfo 'sdkinfo.lock.json'
+$sdkInfoLock = Get-SdkInfoLockPath -sdkDir $sdkDir
 
-$testProjectList = Get-DotNetTestList $infoList
+$infoList = Read-SdkInfoList -project $project -sdkInfo $sdkInfoLock
+
+$testProjectList = Get-DotNetTestList -sdkDir $sdkDir -infoList $infoList
 
 $testProjectList | ForEach-Object {
     "Testing $_"
