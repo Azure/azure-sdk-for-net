@@ -13,11 +13,11 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 
 namespace Fluent.Tests.Network
 {
-    public class NSGTests
+    public class NSG
     {
 
         [Fact]
-        public void CreateUpdateTest()
+        public void CreateUpdate()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {

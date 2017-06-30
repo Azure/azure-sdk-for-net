@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Tests
+namespace Samples.Tests
 {
     public class ServiceBus : Samples.Tests.TestBase
     {
@@ -21,58 +21,48 @@ namespace Tests
 
         [Fact]
         [Trait("Samples", "ServiceBus")]
-        public void ServiceBusQueueBasicTest()
+        public void QueueBasicTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ServiceBusQueueBasic.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ServiceBusQueueBasic.Program.RunSample);
         }
 
         [Fact]
         [Trait("Samples", "ServiceBus")]
-        public void ServiceBusPublishSubscribeBasicTest()
+        public void PublishSubscribeBasicTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ServiceBusPublishSubscribeBasic.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ServiceBusPublishSubscribeBasic.Program.RunSample);
         }
 
         [Fact]
         [Trait("Samples", "ServiceBus")]
-        public void ServiceBusQueueAdvanceFeaturesTest()
+        public void QueueAdvanceFeaturesTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ServiceBusQueueAdvanceFeatures.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ServiceBusQueueAdvanceFeatures.Program.RunSample);
         }
 
 
         [Fact]
         [Trait("Samples", "ServiceBus")]
-        public void ServiceBusWithClaimBasedAuthorizationTest()
+        public void WithClaimBasedAuthorizationTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ServiceBusWithClaimBasedAuthorization.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ServiceBusWithClaimBasedAuthorization.Program.RunSample);
         }
 
         [Fact]
         [Trait("Samples", "ServiceBus")]
-        public void ServiceBusPublishSubscribeAdvanceFeaturesTest()
+        public void PublishSubscribeAdvanceFeaturesTest()
         {
-            using (var context = FluentMockContext.Start(this.GetType().FullName))
-            {
-                var rollUpClient = TestHelper.CreateRollupClient();
-                ServiceBusPublishSubscribeAdvanceFeatures.Program.RunSample(rollUpClient);
-            }
+            RunSampleAsTest(
+                this.GetType().FullName,
+                ServiceBusPublishSubscribeAdvanceFeatures.Program.RunSample);
         }
     }
 }

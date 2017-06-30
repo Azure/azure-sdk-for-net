@@ -77,12 +77,6 @@ namespace Microsoft.Azure.Management.AppService.Fluent
             var agreements = await Manager.Inner.TopLevelDomains.ListAgreementsAsync(topLevel, new TopLevelDomainAgreementOptionInner());
             var agreementKeys = agreements.Select(x => x.AgreementKey).ToList();
             // Step 2: Create domain
-            using (var httpClient = new HttpClient())
-            {
-                var response = await httpClient.GetAsync("http://azure.com");
-                var request = response.RequestMessage;
-            }
-
             Inner.Consent = new DomainPurchaseConsent()
             {
                 AgreedAt = new DateTime(),

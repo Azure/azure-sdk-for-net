@@ -24,7 +24,7 @@ using System.Net;
 
 namespace Fluent.Tests.Compute
 {
-    public class VirtualMachineScaleSetTests
+    public class VirtualMachineScaleSet
     {
         private readonly Region Location = Region.USEast;
 

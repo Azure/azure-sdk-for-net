@@ -13,7 +13,7 @@ using Azure.Tests;
 
 namespace Fluent.Tests.Compute
 {
-    public class VirtualMachineExtensionTests
+    public class VirtualMachineExtension
     {
         [Fact]
         public void CanResetPasswordUsingVMAccessExtension()

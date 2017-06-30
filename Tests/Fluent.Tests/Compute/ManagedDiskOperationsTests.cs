@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Fluent.Tests.Compute
 {
-    public class ManagedDiskOperationsTests
+    public class ManagedDiskOperations
     {
         private readonly string Location = Region.USWestCentral.Name;
 

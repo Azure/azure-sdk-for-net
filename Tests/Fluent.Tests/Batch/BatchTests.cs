@@ -12,9 +12,9 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Azure.Tests;
 
-namespace Fluent.Tests.Batch
+namespace Fluent.Tests
 {
-    public class BatchTests
+    public partial class Batch
     {
         private string rgName = "rgstg158";
         private string batchAccountName = "batchaccount733";

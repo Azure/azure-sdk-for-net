@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Compute.Fluent.Models;
@@ -13,9 +14,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Azure.Tests.Compute
+namespace Fluent.Tests.Compute
 {
-    public class VirtualMachineEncryptionOperationsTests
+    public class VirtualMachineEncryptionOperations
     {
         [Fact(Skip = "Manual only: Requires ServicePrincipal, KeyVault creation and association, requires SSH to vm and perform mounting")]
         public void CanEncryptVirtualMachine()

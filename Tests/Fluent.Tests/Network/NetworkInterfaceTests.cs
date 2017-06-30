@@ -15,10 +15,10 @@ using Azure.Tests;
 
 namespace Fluent.Tests.Network
 {
-    public class NetworkInterfaceTests
+    public class NetworkInterface
     {
         [Fact]
-        public void CreateUpdateTest()
+        public void CreateUpdate()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {

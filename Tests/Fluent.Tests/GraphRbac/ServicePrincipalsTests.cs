@@ -19,8 +19,9 @@ using System.IO;
 namespace Fluent.Tests.Graph.RBAC
 {
 
-    public class ServicePrincipalsTests {
-        
+    public class ServicePrincipals
+    {
+
         [Fact]
         public void CanCRUDServicePrincipal()
         {

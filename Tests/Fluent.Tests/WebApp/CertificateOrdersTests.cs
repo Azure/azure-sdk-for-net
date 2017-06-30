@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
-namespace Azure.Tests.WebApp
+namespace Fluent.Tests.WebApp
 {
-    public class CertificateOrdersTests
+    public class CertificateOrders
     {
         private static string GroupName = "javacsmrg9b9912262";
         private static string CertificateName = "graphdmcert7720";

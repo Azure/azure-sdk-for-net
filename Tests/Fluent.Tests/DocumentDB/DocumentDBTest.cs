@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.DocumentDB.Fluent;
 using Microsoft.Azure.Management.DocumentDB.Fluent.Models;
@@ -8,25 +9,27 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
-namespace Azure.Tests.DocumentDB
+namespace Fluent.Tests
 {
-    public class DocumentDBTest
+    public class DocumentDB
     {
-        [Fact(Skip = "Runs fine locally but fails for unknown reason on check in.")]
-        public void Test()
+        [Fact]
+        public void DocumentDBCRUD()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var dbName = TestUtilities.GenerateName("db");
                 var saName = TestUtilities.GenerateName("dbsa");
+                var rgName = TestUtilities.GenerateName("ddbRg");
                 var manager = TestHelper.CreateDocumentDB();
+                var resourceManager = TestHelper.CreateResourceManager();
                 IDocumentDBAccount databaseAccount = null;
 
                 try
                 {
                     databaseAccount = manager.DocumentDBAccounts.Define(dbName)
                             .WithRegion(Region.USWest)
-                            .WithNewResourceGroup()
+                            .WithNewResourceGroup(rgName)
                             .WithKind(DatabaseAccountKind.GlobalDocumentDB)
                             .WithSessionConsistency()
                             .WithWriteReplication(Region.USWest)
@@ -60,7 +63,7 @@ namespace Azure.Tests.DocumentDB
                 {
                     try
                     {
-                        manager.DocumentDBAccounts.DeleteById(databaseAccount.Id);
+                        resourceManager.ResourceGroups.BeginDeleteByName(rgName);
                     }
                     catch { }
                 }

@@ -16,7 +16,7 @@ using Xunit;
 namespace Fluent.Tests.Compute
 {
 
-    public class VirtualMachineScaleSetManagedDiskOperationsTests
+    public class VirtualMachineScaleSetManagedDiskOperations
     {
         private readonly Region Location = Region.USEast;
 
@@ -46,7 +46,7 @@ namespace Fluent.Tests.Compute
                             .WithSubnet("subnet1", "10.0.0.0/28")
                             .Create();
 
-                    var publicLoadBalancer = VirtualMachineScaleSetTests.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
+                    var publicLoadBalancer = VirtualMachineScaleSet.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
                     var vmScaleSet = computeManager.VirtualMachineScaleSets
                             .Define(vmssName)
                             .WithRegion(Location)
@@ -168,7 +168,7 @@ namespace Fluent.Tests.Compute
                             .WithSubnet("subnet1", "10.0.0.0/28")
                             .Create();
 
-                    var publicLoadBalancer = VirtualMachineScaleSetTests.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
+                    var publicLoadBalancer = VirtualMachineScaleSet.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
                     var vmScaleSet = computeManager.VirtualMachineScaleSets
                             .Define(vmssName)
                             .WithRegion(Location)

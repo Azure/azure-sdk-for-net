@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Fluent.Tests.Compute
 {
-    public class VirtualMachineManagedDiskOperationsTests
+    public class VirtualMachineManagedDiskOperations
     {
         private readonly Region Location = Region.USEast;
         private readonly KnownLinuxVirtualMachineImage LinuxImage = KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts;

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Fluent.Tests.ResourceManager
 {
-    public class SubscriptionsTests
+    public class Subscriptions
     {
         [Fact]
         public void CanListSubscriptions()
