@@ -36,7 +36,50 @@ namespace StorSimple8000Series.Tests
                 Assert.Null(e);
             }
         }
-        
+      
+        [Fact]
+        public void TestSyncRemoteManagementCertificateAPI()
+        {
+            var device = Helpers.CheckAndGetConfiguredDevice(this, TestConstants.DefaultDeviceName);
+            var deviceName = device.Name;
+
+            try
+            {
+                //update remote management settings
+                RemoteManagementSettingsPatch remoteManagementSettings = 
+                    new RemoteManagementSettingsPatch(RemoteManagementModeConfiguration.HttpsAndHttpEnabled);
+
+                SecuritySettingsPatch securitySettingsPatch = new SecuritySettingsPatch()
+                {
+                    RemoteManagementSettings = remoteManagementSettings
+                };
+
+                this.Client.DeviceSettings.UpdateSecuritySettings(
+                    deviceName.GetDoubleEncoded(),
+                    securitySettingsPatch,
+                    this.ResourceGroupName,
+                    this.ManagerName);
+
+                //sync remote management certificate between appliance and service
+                this.Client.DeviceSettings.SyncRemotemanagementCertificate(
+                    deviceName.GetDoubleEncoded(),
+                    this.ResourceGroupName,
+                    this.ManagerName);
+
+                //validation
+                var securitySettings = this.Client.DeviceSettings.GetSecuritySettings(
+                    deviceName.GetDoubleEncoded(),
+                    this.ResourceGroupName,
+                    this.ManagerName);
+                var remoteManagementCertificate = securitySettings.RemoteManagementSettings.RemoteManagementCertificate;
+                Assert.True(!string.IsNullOrEmpty(remoteManagementCertificate), "Remote management certificate is not synced correctly.");
+            }
+            catch (Exception e)
+            {
+                Assert.Null(e);
+            }
+        }
+
         /// <summary>
         /// Create TimeSettings on the Device.
         /// </summary>
