@@ -711,7 +711,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                             }
                         }
                         
-                        if(brokeredMessages.Count > 0)
+                        if(brokeredMessages != null && brokeredMessages.Count > 0)
                         {
                             break;
                         }
