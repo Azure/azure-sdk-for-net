@@ -3,11 +3,22 @@
 
 namespace Microsoft.Azure.ServiceBus.Filters
 {
+    using System;
+
     /// <summary>
     /// Represents a description of a rule.
     /// </summary>
     public sealed class RuleDescription
     {
+        /// <summary>
+        /// Gets the name of the default rule on the subscription.
+        /// </summary>
+        /// <remarks>
+        /// Whenever a new subscription is created, a default rule is always added. 
+        /// The default rule is a <see cref="TrueFilter"/> which will enable all messages in the topic to reach subscription.
+        /// </remarks>
+        public const string DefaultRuleName = "$Default";
+
         Filter filter;
         string name;
 
@@ -100,7 +111,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (String.IsNullOrWhiteSpace(value))
                 {
                     throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(this.Name));
                 }
@@ -111,7 +122,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
         internal void ValidateDescriptionName()
         {
-            if (string.IsNullOrWhiteSpace(this.name))
+            if (String.IsNullOrWhiteSpace(this.name))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(this.name));
             }

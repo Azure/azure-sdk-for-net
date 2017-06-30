@@ -8,8 +8,11 @@ namespace Microsoft.Azure.ServiceBus.Core
     using System.Threading.Tasks;
 
     /// <summary>
-    /// An interface used to describe Service Bus send functionality.
+    /// Interface that defines common send functionality between different clients.
     /// </summary>
+    /// <seealso cref="IMessageSender"/>
+    /// <seealso cref="IQueueClient"/>
+    /// <seealso cref="ITopicClient"/>
     public interface ISenderClient : IClientEntity
     {
         /// <summary>
@@ -31,7 +34,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </summary>
         /// <param name="message">The <see cref="Message"/></param>
         /// <param name="scheduleEnqueueTimeUtc">The UTC time that the message should be available for processing</param>
-        /// <returns>An asynchronous operation</returns>
+        /// <returns>The sequence number of the message that was scheduled.</returns>
         Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc);
 
         /// <summary>

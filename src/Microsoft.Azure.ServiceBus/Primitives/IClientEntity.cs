@@ -14,12 +14,13 @@ namespace Microsoft.Azure.ServiceBus
     public interface IClientEntity
     {
         /// <summary>
-        /// Get the client ID.
+        /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
+        /// <remarks>Every new client has a unique ID (in that process).</remarks>
         string ClientId { get; }
 
         /// <summary>
-        /// Determines whether or not the ClientEntity is closed or being closed.
+        /// Returns true if the client is closed or closing.
         /// </summary>
         bool IsClosedOrClosing { get; }
 
@@ -29,9 +30,9 @@ namespace Microsoft.Azure.ServiceBus
         TimeSpan OperationTimeout { get; }
 
         /// <summary>
-        /// Closes the ClientEntity.
+        /// Closes the Client. Closes the connections opened by it.
         /// </summary>
-        /// <returns>The asynchronous operation.</returns>
+        /// <returns>The asynchronous operation</returns>
         Task CloseAsync();
 
         /// <summary>

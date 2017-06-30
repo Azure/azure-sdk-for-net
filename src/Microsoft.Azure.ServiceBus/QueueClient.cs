@@ -45,7 +45,8 @@ namespace Microsoft.Azure.ServiceBus
     ///        });
     /// </code>
     /// </example>
-    /// <remarks>Use <see cref="MessageSender"/> or <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
+    /// <remarks>Use <see cref="MessageSender"/> or <see cref="MessageReceiver"/> for advanced set of functionality.
+    /// It uses AMQP protocol for communicating with servicebus.</remarks>
     public class QueueClient : ClientEntity, IQueueClient
     {
         readonly bool ownsConnection;

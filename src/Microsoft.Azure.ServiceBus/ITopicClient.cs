@@ -6,21 +6,21 @@ namespace Microsoft.Azure.ServiceBus
     using Core;
 
     /// <summary>
-    /// Interface used to access a Topic to perform run-time operations.
+    /// TopicClient can be used for all basic interactions with a Service Bus topic.
     /// </summary>
     /// <example>
+    /// Create a new TopicClient
     /// <code>
-    /// // Create the TopicClient
-    /// ITopicClient myTopicClient = new TopicClient(
-    ///     serviceBusConnectionString,
-    ///     topicName);
-    ///
-    /// // Send messages to topic
-    /// List &lt;byte[]&gt; Issues = GetIssues();
-    /// foreach (var issue in Issues)
-    /// {
-    ///    await myTopicClient.SendAsync(new Message(issue));
-    /// }
+    /// ITopicClient topicClient = new TopicClient(
+    ///     namespaceConnectionString,
+    ///     topicName,
+    ///     RetryExponential);
+    /// </code>
+    /// 
+    /// Send a message to the topic:
+    /// <code>
+    /// byte[] data = GetData();
+    /// await topicClient.SendAsync(data);
     /// </code>
     /// </example>
     public interface ITopicClient : ISenderClient

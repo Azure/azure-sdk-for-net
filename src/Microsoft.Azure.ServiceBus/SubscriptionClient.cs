@@ -41,17 +41,9 @@ namespace Microsoft.Azure.ServiceBus
     ///        });
     /// </code>
     /// </example>
-    /// <remarks>Use <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
+    /// <remarks>It uses AMQP protocol for communicating with servicebus. Use <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
     public class SubscriptionClient : ClientEntity, ISubscriptionClient
     {
-        /// <summary>
-        /// Gets the name of the default rule on the subscription.
-        /// </summary>
-        /// <remarks>
-        /// Whenever a new subscription is created, a default rule is always added. 
-        /// The default rule is a <see cref="TrueFilter"/> which will enable all messages in the topic to reach subscription.
-        /// </remarks>
-        public const string DefaultRule = "$Default";
         int prefetchCount;
         readonly object syncLock;
         readonly bool ownsConnection;
@@ -367,7 +359,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         /// <remarks>
         /// You can add rules to the subscription that will decide filter which messages from the topic should reach the subscription.
-        /// A default <see cref="TrueFilter"/> rule named <see cref="DefaultRule"/> is always added while creation of the Subscription.
+        /// A default <see cref="TrueFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// </remarks>
         public Task AddRuleAsync(string ruleName, Filter filter)
@@ -382,7 +374,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         /// <remarks>
         /// You can add rules to the subscription that will decide filter which messages from the topic should reach the subscription.
-        /// A default <see cref="TrueFilter"/> rule named <see cref="DefaultRule"/> is always added while creation of the Subscription.
+        /// A default <see cref="TrueFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
         /// </remarks>
         public async Task AddRuleAsync(RuleDescription description)

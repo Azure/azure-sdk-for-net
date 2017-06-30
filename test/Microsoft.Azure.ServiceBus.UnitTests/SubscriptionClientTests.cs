@@ -36,7 +36,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 try
                 {
-                    await subscriptionClient.RemoveRuleAsync(SubscriptionClient.DefaultRule);
+                    await subscriptionClient.RemoveRuleAsync(RuleDescription.DefaultRuleName);
                 }
                 catch
                 {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             finally
             {
                 await subscriptionClient.RemoveRuleAsync("RedCorrelation");
-                await subscriptionClient.AddRuleAsync(SubscriptionClient.DefaultRule, new TrueFilter());
+                await subscriptionClient.AddRuleAsync(RuleDescription.DefaultRuleName, new TrueFilter());
                 await subscriptionClient.CloseAsync();
                 await topicClient.CloseAsync();
             }
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 try
                 {
-                    await subscriptionClient.RemoveRuleAsync(SubscriptionClient.DefaultRule);
+                    await subscriptionClient.RemoveRuleAsync(RuleDescription.DefaultRuleName);
                 }
                 catch
                 {
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             finally
             {
                 await subscriptionClient.RemoveRuleAsync("RedSql");
-                await subscriptionClient.AddRuleAsync(SubscriptionClient.DefaultRule, new TrueFilter());
+                await subscriptionClient.AddRuleAsync(RuleDescription.DefaultRuleName, new TrueFilter());
                 await subscriptionClient.CloseAsync();
                 await topicClient.CloseAsync();
             }
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 try
                 {
-                    await subscriptionClient.RemoveRuleAsync(SubscriptionClient.DefaultRule);
+                    await subscriptionClient.RemoveRuleAsync(RuleDescription.DefaultRuleName);
                 }
                 catch
                 {
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             finally
             {
                 await subscriptionClient.RemoveRuleAsync("RedSqlAction");
-                await subscriptionClient.AddRuleAsync(SubscriptionClient.DefaultRule, new TrueFilter());
+                await subscriptionClient.AddRuleAsync(RuleDescription.DefaultRuleName, new TrueFilter());
                 await subscriptionClient.CloseAsync();
                 await topicClient.CloseAsync();
             }

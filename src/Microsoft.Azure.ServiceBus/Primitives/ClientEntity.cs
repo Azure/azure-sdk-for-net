@@ -34,12 +34,12 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the state of closing.
+        /// Returns true if the client is closed or closing.
         /// </summary>
         public bool IsClosedOrClosing
         {
             get;
-            set;
+            internal set;
         }
 
         /// <summary>
@@ -48,12 +48,13 @@ namespace Microsoft.Azure.ServiceBus
         public TimeSpan OperationTimeout { get; internal set; }
 
         /// <summary>
-        /// Gets the client ID.
+        /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
+        /// <remarks>Every new client has a unique ID (in that process).</remarks>
         public string ClientId { get; private set; }
 
         /// <summary>
-        /// Gets the <see cref="ServiceBus.RetryPolicy"/> for the ClientEntity.
+        /// Gets the <see cref="ServiceBus.RetryPolicy"/> defined on the client.
         /// </summary>
         public RetryPolicy RetryPolicy { get; private set; }
 

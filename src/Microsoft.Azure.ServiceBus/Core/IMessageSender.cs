@@ -4,9 +4,25 @@
 namespace Microsoft.Azure.ServiceBus.Core
 {
     /// <summary>
-    /// The interface used to describe common functionality for sending messages to Queues and Topics.
+    /// The MessageSender can be used to send messages to Queues or Topics.
     /// </summary>
+    /// <example>
+    /// Create a new MessageSender to send to a Queue
+    /// <code>
+    /// IMessageSender messageSender = new MessageSender(
+    ///     namespaceConnectionString,
+    ///     queueName)
+    /// </code>
+    /// 
+    /// Send message
+    /// <code>
+    /// byte[] data = GetData();
+    /// await messageSender.SendAsync(data);
+    /// </code>
+    /// </example>
     /// <seealso cref="MessageSender"/>
+    /// <seealso cref="QueueClient"/>
+    /// <seealso cref="TopicClient"/>
     public interface IMessageSender : ISenderClient
     {
     }

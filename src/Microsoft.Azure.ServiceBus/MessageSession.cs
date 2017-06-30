@@ -1,32 +1,59 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus
+namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Amqp;
-    using Azure.Amqp;
-    using Core;
+    using Microsoft.Azure.Amqp;
+    using Microsoft.Azure.ServiceBus.Core;
 
     internal class MessageSession : MessageReceiver, IMessageSession
     {
-        public MessageSession(
-            string entityPath,
-            MessagingEntityType? entityType,
-            ReceiveMode receiveMode,
-            ServiceBusConnection serviceBusConnection,
-            ICbsTokenProvider cbsTokenProvider,
-            RetryPolicy retryPolicy,
-            int prefetchCount = 0,
-            string sessionId = null,
-            bool isSessionReceiver = false)
-            : base(entityPath, entityType, receiveMode, serviceBusConnection, cbsTokenProvider, retryPolicy, prefetchCount, sessionId, isSessionReceiver)
+        public MessageSession(string sessionId, DateTime lockedUntilUtc, MessageReceiver innerMessageReceiver, RetryPolicy retryPolicy)
+            : base(innerMessageReceiver.ReceiveMode, innerMessageReceiver.OperationTimeout, retryPolicy)
         {
+            this.SessionId = sessionId;
+            this.LockedUntilUtc = lockedUntilUtc;
+            this.InnerMessageReceiver = innerMessageReceiver ?? throw Fx.Exception.ArgumentNull(nameof(innerMessageReceiver));
+            this.ReceiveMode = innerMessageReceiver.ReceiveMode;
         }
-        
+
+        /// <summary>
+        /// Gets the DateTime that the current receiver is locked until. This is only applicable when Sessions are used.
+        /// </summary>
+        public new DateTime LockedUntilUtc
+        {
+            get => this.InnerMessageReceiver.LockedUntilUtc;
+            set => this.InnerMessageReceiver.LockedUntilUtc = value;
+        }
+
+        /// <summary>
+        /// Gets the SessionId of the current receiver. This is only applicable when Sessions are used.
+        /// </summary>
+        public new string SessionId
+        {
+            get => this.InnerMessageReceiver.SessionId;
+            set => this.InnerMessageReceiver.SessionId = value;
+        }
+
+        public override string Path
+        {
+            get { return this.InnerMessageReceiver.Path; }
+        }
+
+        protected MessageReceiver InnerMessageReceiver { get; set; }
+
+        protected override async Task OnClosingAsync()
+        {
+            if (this.InnerMessageReceiver != null)
+            {
+                await this.InnerMessageReceiver.CloseAsync().ConfigureAwait(false);
+            }
+        }
+
         public Task<Stream> GetStateAsync()
         {
             return this.OnGetStateAsync();
@@ -39,20 +66,49 @@ namespace Microsoft.Azure.ServiceBus
 
         public Task RenewSessionLockAsync()
         {
-            return this.OnRenewLockAsync();
+            return this.OnRenewSessionLockAsync();
         }
 
-        protected override void OnMessageHandler(MessageHandlerOptions registerHandlerOptions, Func<Message, CancellationToken, Task> callback)
+        protected override Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
         {
-            throw new InvalidOperationException($"{nameof(RegisterMessageHandler)} is not supported for Sessions.");
+            return this.InnerMessageReceiver.ReceiveAsync(maxMessageCount, serverWaitTime);
+        }
+
+        protected override Task<IList<Message>> OnReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
+        {
+            return this.InnerMessageReceiver.ReceiveBySequenceNumberAsync(sequenceNumbers);
+        }
+
+        protected override Task OnCompleteAsync(IEnumerable<string> lockTokens)
+        {
+            return this.InnerMessageReceiver.CompleteAsync(lockTokens);
+        }
+
+        protected override Task OnAbandonAsync(string lockToken)
+        {
+            return this.InnerMessageReceiver.AbandonAsync(lockToken);
+        }
+
+        protected override Task OnDeferAsync(string lockToken)
+        {
+            return this.InnerMessageReceiver.DeferAsync(lockToken);
+        }
+
+        protected override Task OnDeadLetterAsync(string lockToken)
+        {
+            return this.InnerMessageReceiver.DeadLetterAsync(lockToken);
         }
 
         protected override Task<DateTime> OnRenewLockAsync(string lockToken)
         {
-            throw new InvalidOperationException($"{nameof(RenewLockAsync)} is not supported for Session. Use {this.RenewSessionLockAsync()} to renew sessions instead");
+            // TODO:  Should throw invalid operation exception?
+            return this.InnerMessageReceiver.RenewLockAsync(lockToken);
         }
 
-        // TODO: What are other operations which are not allowed in Session - Peek/ReceiveBySequenceNumber?
+        protected override Task<IList<Message>> OnPeekAsync(long fromSequenceNumber, int messageCount = 1)
+        {
+            return this.InnerMessageReceiver.PeekAsync(messageCount);
+        }
 
         protected async Task<Stream> OnGetStateAsync()
         {
@@ -61,7 +117,7 @@ namespace Microsoft.Azure.ServiceBus
                 AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, this.OperationTimeout, null);
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionId;
 
-                AmqpResponseMessage amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                AmqpResponseMessage amqpResponseMessage = await this.InnerMessageReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 Stream sessionState = null;
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
@@ -107,7 +163,7 @@ namespace Microsoft.Azure.ServiceBus
                     amqpRequestMessage.Map[ManagementConstants.Properties.SessionState] = null;
                 }
 
-                AmqpResponseMessage amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                AmqpResponseMessage amqpResponseMessage = await this.InnerMessageReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
                 if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
                 {
                     throw amqpResponseMessage.ToMessagingContractException();
@@ -119,14 +175,14 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        protected async Task OnRenewLockAsync()
+        protected async Task OnRenewSessionLockAsync()
         {
             try
             {
                 AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, this.OperationTimeout, null);
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionId;
 
-                AmqpResponseMessage amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                AmqpResponseMessage amqpResponseMessage = await this.InnerMessageReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {

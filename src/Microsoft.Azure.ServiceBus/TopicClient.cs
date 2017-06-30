@@ -11,8 +11,24 @@ namespace Microsoft.Azure.ServiceBus
     using Microsoft.Azure.ServiceBus.Primitives;
 
     /// <summary>
-    /// Used for all basic interactions with a Service Bus topic.
+    /// TopicClient can be used for all basic interactions with a Service Bus topic.
     /// </summary>
+    /// <example>
+    /// Create a new TopicClient
+    /// <code>
+    /// ITopicClient topicClient = new TopicClient(
+    ///     namespaceConnectionString,
+    ///     topicName,
+    ///     RetryExponential);
+    /// </code>
+    /// 
+    /// Send a message to the topic:
+    /// <code>
+    /// byte[] data = GetData();
+    /// await topicClient.SendAsync(data);
+    /// </code>
+    /// </example>
+    /// <remarks>It uses AMQP protocol for communicating with servicebus.</remarks>
     public class TopicClient : ClientEntity, ITopicClient
     {
         readonly bool ownsConnection;
@@ -24,6 +40,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="connectionStringBuilder"><see cref="ServiceBusConnectionStringBuilder"/> having namespace and topic information.</param>
         /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>Creates a new connection to the topic, which is opened during the first operation.</remarks>
         public TopicClient(ServiceBusConnectionStringBuilder connectionStringBuilder, RetryPolicy retryPolicy = null)
             : this(connectionStringBuilder?.GetNamespaceConnectionString(), connectionStringBuilder?.EntityPath, retryPolicy)
         {
@@ -32,9 +49,10 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Instantiates a new <see cref="TopicClient"/> to perform operations on a topic.
         /// </summary>
-        /// <param name="connectionString">Namespace connection string. <remarks>Should not contain topic information.</remarks></param>
+        /// <param name="connectionString">Namespace connection string. Must not contain topic information.</param>
         /// <param name="entityPath">Path to the topic</param>
         /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>Creates a new connection to the topic, which is opened during the first operation.</remarks>
         public TopicClient(string connectionString, string entityPath, RetryPolicy retryPolicy = null)
             : this(new ServiceBusNamespaceConnection(connectionString), entityPath, retryPolicy ?? RetryPolicy.Default)
         {
@@ -138,35 +156,35 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
-        /// Sends a scheduled message
+        /// Schedules a message to appear on Service Bus at a later time.
         /// </summary>
-        /// <param name="message">Message to be scheduled</param>
-        /// <param name="scheduleEnqueueTimeUtc">Time of enqueue</param>
-        /// <returns>Sequence number that is needed for cancelling.</returns>
+        /// <param name="message">The <see cref="Message"/> that needs to be scheduled.</param>
+        /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing.</param>
+        /// <returns>The sequence number of the message that was scheduled.</returns>
         public Task<long> ScheduleMessageAsync(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
         {
             return this.InnerSender.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
         }
 
         /// <summary>
-        /// Cancels a scheduled message
+        /// Cancels a message that was scheduled.
         /// </summary>
-        /// <param name="sequenceNumber">Returned on scheduling a message.</param>
-        /// <returns></returns>
+        /// <param name="sequenceNumber">The <see cref="Message.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <returns>An asynchronous operation</returns>
         public Task CancelScheduledMessageAsync(long sequenceNumber)
         {
             return this.InnerSender.CancelScheduledMessageAsync(sequenceNumber);
         }
 
         /// <summary>
-        /// Gets a list of currently registered plugins for this SubscriptionClient.
+        /// Gets a list of currently registered plugins for this TopicClient.
         /// </summary>
         public override IList<ServiceBusPlugin> RegisteredPlugins => this.InnerSender.RegisteredPlugins;
 
         /// <summary>
-        /// Registers a <see cref="ServiceBusPlugin"/> to be used for sending messages to Service Bus.
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this topic client.
         /// </summary>
-        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register</param>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
         public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
         {
             this.InnerSender.RegisterPlugin(serviceBusPlugin);
