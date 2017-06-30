@@ -247,12 +247,14 @@ function Generate-Sdk {
 }
 
 function Build-Project {
-    param([string] $project)
+    param([string] $project, [string] $sdkDir)
 
-    $p = Join-Path (Get-Location) "common.targets"
+    $p = Join-Path (Join-Path (Get-Location) $sdkDir) "tools/autogenForSwaggers/jsonrpc.targets"
+    $p = [System.IO.Path]::GetFullPath($p)
 
     "Restoring test project NuGet packages..."
     dotnet restore $project
+    dotnet restore $project -s "https://ci.appveyor.com/nuget/rest-client-runtime-test-net-p-lft6230b45rt" /p:CustomAfterMicrosoftCommonTargets=$p
 
     "& dotnet build $project /p:CustomAfterMicrosoftCommonTargets=$p"
     & dotnet build $project /p:CustomAfterMicrosoftCommonTargets=$p
