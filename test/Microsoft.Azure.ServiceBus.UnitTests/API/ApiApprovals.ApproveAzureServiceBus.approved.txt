@@ -50,6 +50,8 @@ namespace Microsoft.Azure.ServiceBus
     public interface IQueueClient : Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity
     {
         string QueueName { get; }
+        void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler);
+        void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.SessionHandlerOptions sessionHandlerOptions);
     }
     public interface ISubscriptionClient : Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity
     {
@@ -57,6 +59,8 @@ namespace Microsoft.Azure.ServiceBus
         string TopicPath { get; }
         System.Threading.Tasks.Task AddRuleAsync(string ruleName, Microsoft.Azure.ServiceBus.Filters.Filter filter);
         System.Threading.Tasks.Task AddRuleAsync(Microsoft.Azure.ServiceBus.Filters.RuleDescription description);
+        void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler);
+        void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.SessionHandlerOptions sessionHandlerOptions);
         System.Threading.Tasks.Task RemoveRuleAsync(string ruleName);
     }
     public interface ITopicClient : Microsoft.Azure.ServiceBus.Core.ISenderClient, Microsoft.Azure.ServiceBus.IClientEntity
