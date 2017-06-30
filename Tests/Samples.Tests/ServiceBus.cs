@@ -21,7 +21,7 @@ namespace Samples.Tests
 
         [Fact]
         [Trait("Samples", "ServiceBus")]
-        public void ServiceBusQueueBasicTest()
+        public void QueueBasicTest()
         {
             RunSampleAsTest(
                 this.GetType().FullName,
@@ -30,7 +30,7 @@ namespace Samples.Tests
 
         [Fact]
         [Trait("Samples", "ServiceBus")]
-        public void ServiceBusPublishSubscribeBasicTest()
+        public void PublishSubscribeBasicTest()
         {
             RunSampleAsTest(
                 this.GetType().FullName,
@@ -39,7 +39,7 @@ namespace Samples.Tests
 
         [Fact]
         [Trait("Samples", "ServiceBus")]
-        public void ServiceBusQueueAdvanceFeaturesTest()
+        public void QueueAdvanceFeaturesTest()
         {
             RunSampleAsTest(
                 this.GetType().FullName,
@@ -49,7 +49,7 @@ namespace Samples.Tests
 
         [Fact]
         [Trait("Samples", "ServiceBus")]
-        public void ServiceBusWithClaimBasedAuthorizationTest()
+        public void WithClaimBasedAuthorizationTest()
         {
             RunSampleAsTest(
                 this.GetType().FullName,
@@ -58,7 +58,7 @@ namespace Samples.Tests
 
         [Fact]
         [Trait("Samples", "ServiceBus")]
-        public void ServiceBusPublishSubscribeAdvanceFeaturesTest()
+        public void PublishSubscribeAdvanceFeaturesTest()
         {
             RunSampleAsTest(
                 this.GetType().FullName,

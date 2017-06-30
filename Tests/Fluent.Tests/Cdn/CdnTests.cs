@@ -10,9 +10,9 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using Xunit;
 
-namespace Fluent.Tests.Cdn
+namespace Fluent.Tests
 {
-    public class CdnTests
+    public partial class Cdn
     {
         private const string cdnEndpointName = "endpoint-f3757d2a3e10";
         private const string endpointOriginHostname = "mylinuxapp.azurewebsites.net";

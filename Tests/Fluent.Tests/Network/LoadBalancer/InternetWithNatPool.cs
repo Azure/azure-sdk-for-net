@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Fluent.Tests.Network.LoadBalancer
+namespace Fluent.Tests.Network.LoadBalancerHelpers
 {
     /// <summary>
     /// Internet-facing LB test with NAT pool test. 

@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Fluent.Tests.WebApp
 {
-    public class WebAppsTests
+    public class WebApps
     {
         [Fact]
         public void CanCRUDWebApp()

@@ -11,11 +11,11 @@ using Xunit;
 
 namespace Fluent.Tests.Network
 {
-    public class NetworkTests
+    public class Network
     {
 
         [Fact]
-        public void CreateUpdateTest()
+        public void CreateUpdate()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {

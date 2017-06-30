@@ -14,7 +14,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
 namespace Fluent.Tests.ResourceManager
 {
-    public class TestProviderInterceptor
+    public class ProviderInterceptor
     {
         [Fact]
         public void CanAutomaticallyRegisterProvider()

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Fluent.Tests.WebApp
 {
-    public class AppServicePlansTests
+    public class AppServicePlans
     {
         [Fact]
         public void CanCRUDAppServicePlan()

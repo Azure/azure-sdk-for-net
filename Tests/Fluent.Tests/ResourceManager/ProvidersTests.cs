@@ -14,7 +14,7 @@ using System;
 
 namespace Fluent.Tests.ResourceManager
 {
-    public class ProvidersTests
+    public class Providers
     {
         [Fact]
         public void CanRegisterAndUnRegisterProvider()

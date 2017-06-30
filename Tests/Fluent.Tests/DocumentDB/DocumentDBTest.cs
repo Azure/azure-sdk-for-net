@@ -9,12 +9,12 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
-namespace Fluent.Tests.DocumentDB
+namespace Fluent.Tests
 {
-    public class DocumentDBTests
+    public class DocumentDB
     {
         [Fact]
-        public void DocumentDBCRUDTest()
+        public void DocumentDBCRUD()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {

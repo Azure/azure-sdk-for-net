@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Fluent.Tests.WebApp
 {
-    public class DeploymentSlotsTests
+    public class DeploymentSlots
     {
         [Fact]
         public void CanCRUDSwapSlots()

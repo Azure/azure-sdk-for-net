@@ -13,9 +13,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Fluent.Tests.ServiceBus
+namespace Fluent.Tests
 {
-    public class ServiceBusTests
+    public class ServiceBus
     {
         [Fact]
         public void CanCRUDOnSimpleNamespace()

@@ -13,7 +13,7 @@ using Azure.Tests;
 
 namespace Fluent.Tests.Compute
 {
-    public class VirtualMachineExtensionImageTests
+    public class VirtualMachineExtensionImage
     {
         [Fact]
         public void CanListExtensionImages()

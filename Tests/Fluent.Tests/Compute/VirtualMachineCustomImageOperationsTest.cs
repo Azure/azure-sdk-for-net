@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Fluent.Tests.Compute
 {
-    public class VirtualMachineCustomImageOperationsTest
+    public class VirtualMachineCustomImageOperations
     {
         private readonly Region Location = Region.USEast;
 

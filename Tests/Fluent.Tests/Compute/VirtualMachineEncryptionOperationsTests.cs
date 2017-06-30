@@ -16,7 +16,7 @@ using Xunit;
 
 namespace Fluent.Tests.Compute
 {
-    public class VirtualMachineEncryptionOperationsTests
+    public class VirtualMachineEncryptionOperations
     {
         [Fact(Skip = "Manual only: Requires ServicePrincipal, KeyVault creation and association, requires SSH to vm and perform mounting")]
         public void CanEncryptVirtualMachine()

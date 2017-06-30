@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Fluent.Tests.WebApp
 {
-    public class DomainsTests
+    public class Domains
     {
         private static readonly string GroupName = "javacsmrg9b9912262";
         private static readonly string DomainName = "graph-dm7720.com";

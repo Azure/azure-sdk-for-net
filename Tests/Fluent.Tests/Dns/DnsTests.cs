@@ -13,9 +13,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Fluent.Tests.Dns
+namespace Fluent.Tests
 {
-    public class DnsTests
+    public class Dns
     {
         [Fact]
         public void CanCreateUpdateDnsZone()

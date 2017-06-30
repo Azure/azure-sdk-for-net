@@ -8,12 +8,12 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Azure.Management.ContainerRegistry.Fluent;
 using Azure.Tests;
 
-namespace Fluent.Tests.ContainerRegistry
+namespace Fluent.Tests
 {
-    public class ContainerRegistriesTests
+    public class ContainerRegistry
     {
         [Fact]
-        public void ContainerRegistryCRUDTest()
+        public void ContainerRegistryCRUD()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {

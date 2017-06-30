@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Fluent.Tests.WebApp
 {
-    public class LinuxWebAppsTests
+    public class LinuxWebApps
     {
         [Fact(Skip = "Pending ICM 39157077 & https://github.com/Azure-App-Service/kudu/issues/30")]
         public void CanCRUDLinuxWebApp()

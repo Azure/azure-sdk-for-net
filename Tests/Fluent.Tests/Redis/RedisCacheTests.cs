@@ -11,9 +11,9 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Fluent.Tests.Redis
+namespace Fluent.Tests
 {
-    public class RedisCacheTests
+    public class Redis
     {
 
         [Fact]

@@ -11,9 +11,9 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Fluent.Tests.TrafficManager
+namespace Fluent.Tests
 {
-    public class TrafficManagerTests
+    public class TrafficManager
     {
         [Fact]
         public void CanCreateUpdateTrafficManagerProfile()

@@ -14,12 +14,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Xunit;
 
-namespace Fluent.Tests.Network.LoadBalancer
+namespace Fluent.Tests.Network
 {
-    public class LoadBalancerBugFixes
+    public class BugFixes
     {
         [Fact]
-        public void WithExistingPublicIpAddressTest()
+        public void WithExistingPublicIpAddress()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -112,7 +112,7 @@ namespace Fluent.Tests.Network.LoadBalancer
         }
 
         [Fact]
-        public void WithExistingNetworkSecurityGroupTest()
+        public void WithExistingNetworkSecurityGroup()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {

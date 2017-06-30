@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Fluent.Tests.WebApp
 {
-    public class SourceControlTests
+    public class SourceControl
     {
         [Fact]
         public async Task CanDeploySourceControl()

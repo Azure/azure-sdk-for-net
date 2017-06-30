@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Fluent.Tests.ResourceManager
 {
-    public class DeploymentTests
+    public class Deployment
     {
         private string rgName = "rgchash12";
         private string deploymentName1 = "deployment1";

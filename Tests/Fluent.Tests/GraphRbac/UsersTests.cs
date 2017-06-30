@@ -18,8 +18,9 @@ using Microsoft.Azure.Management.Graph.RBAC.Fluent;
 namespace Fluent.Tests.Graph.RBAC
 {
 
-    public class UsersTests {
-        
+    public class Users
+    {
+
         [Fact]
         public void CanGetUserByEmail()
         {

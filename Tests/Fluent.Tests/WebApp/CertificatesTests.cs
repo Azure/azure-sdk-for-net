@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Fluent.Tests.WebApp
 {
-    public class CertificatesTests
+    public class Certificates
     {
         private static readonly string GroupName = "javacsmrg319";
         private static readonly string CertificateName = "javagoodcert319";

@@ -15,9 +15,9 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Xunit;
 
-namespace Fluent.Tests.Sql
+namespace Fluent.Tests
 {
-    public class SqlTests : IDisposable
+    public class Sql : IDisposable
     {
         private static string GroupName = null;
         private static string SqlServerName = null;
