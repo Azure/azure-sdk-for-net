@@ -216,12 +216,12 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Gets the DateTime that the current receiver is locked until. This is only applicable when Sessions are used.
         /// </summary>
-        internal DateTime LockedUntilUtc { get; set; }
+        public DateTime LockedUntilUtc { get; set; }
 
         /// <summary>
         /// Gets the SessionId of the current receiver. This is only applicable when Sessions are used.
         /// </summary>
-        internal string SessionId { get; set; }
+        public string SessionId { get; set; }
 
         internal MessagingEntityType? EntityType { get; private set; }
 
