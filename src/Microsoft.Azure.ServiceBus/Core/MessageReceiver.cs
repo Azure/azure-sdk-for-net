@@ -671,7 +671,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 IEnumerable<AmqpMessage> amqpMessages = null;
                 IList<Message> brokeredMessages = null;
 
-                while (timeoutHelper.RemainingTime() >= TimeSpan.Zero)
+                while (timeoutHelper.RemainingTime() > TimeSpan.Zero)
                 {
                     bool hasMessages = await Task.Factory.FromAsync(
                     (c, s) => receiveLink.BeginReceiveRemoteMessages(maxMessageCount, DefaultBatchFlushInterval, timeoutHelper.RemainingTime(), c, s),
