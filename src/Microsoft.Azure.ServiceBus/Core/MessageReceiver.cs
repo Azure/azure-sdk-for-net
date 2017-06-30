@@ -1104,7 +1104,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        void OnMessageHandler(
+        /// <summary> </summary>
+        protected virtual void OnMessageHandler(
             MessageHandlerOptions registerHandlerOptions,
             Func<Message, CancellationToken, Task> callback)
         {

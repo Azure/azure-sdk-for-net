@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
     using Amqp;
     using Azure.Amqp;
@@ -40,6 +41,18 @@ namespace Microsoft.Azure.ServiceBus
         {
             return this.OnRenewLockAsync();
         }
+
+        protected override void OnMessageHandler(MessageHandlerOptions registerHandlerOptions, Func<Message, CancellationToken, Task> callback)
+        {
+            throw new InvalidOperationException($"{nameof(RegisterMessageHandler)} is not supported for Sessions.");
+        }
+
+        protected override Task<DateTime> OnRenewLockAsync(string lockToken)
+        {
+            throw new InvalidOperationException($"{nameof(RenewLockAsync)} is not supported for Session. Use {this.RenewSessionLockAsync()} to renew sessions instead");
+        }
+
+        // TODO: What are other operations which are not allowed in Session - Peek/ReceiveBySequenceNumber?
 
         protected async Task<Stream> OnGetStateAsync()
         {

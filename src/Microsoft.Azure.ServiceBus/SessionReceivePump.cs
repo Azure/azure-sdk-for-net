@@ -6,8 +6,8 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.ServiceBus.Core;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Core;
+    using Primitives;
 
     sealed class SessionReceivePump
     {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.ServiceBus
             // Schedule Tasks for doing PendingAcceptSession calls
             for (int i = 0; i < this.sessionHandlerOptions.MaxConcurrentAcceptSessionCalls; i++)
             {
-                TaskExtensionHelper.Schedule(() => this.SessionPumpTaskAsync());
+                TaskExtensionHelper.Schedule(this.SessionPumpTaskAsync);
             }
         }
 
@@ -111,7 +111,6 @@ namespace Microsoft.Azure.ServiceBus
 
         async Task SessionPumpTaskAsync()
         {
-            IMessageSession session;
             while (!this.pumpCancellationToken.IsCancellationRequested)
             {
                 bool concurrentSessionSemaphoreAquired = false;
@@ -121,14 +120,17 @@ namespace Microsoft.Azure.ServiceBus
                     concurrentSessionSemaphoreAquired = true;
 
                     await this.maxPendingAcceptSessionsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
-                    session = await this.client.AcceptMessageSessionAsync().ConfigureAwait(false);
+                    IMessageSession session = await this.client.AcceptMessageSessionAsync().ConfigureAwait(false);
                     if (session == null)
                     {
                         await Task.Delay(Constants.NoMessageBackoffTimeSpan, this.pumpCancellationToken).ConfigureAwait(false);
                         continue;
                     }
 
-                    TaskExtensionHelper.Schedule(() => this.MessagePumpTaskAsync(session));
+                    // `session` needs to be copied to another local variable before passing to Schedule
+                    // because of the way variables are captured. (Refer 'Captured variables')
+                    IMessageSession messageSession = session;
+                    TaskExtensionHelper.Schedule(() => this.MessagePumpTaskAsync(messageSession));
                 }
                 catch (Exception exception)
                 {
