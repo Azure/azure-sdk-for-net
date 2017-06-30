@@ -326,6 +326,26 @@ function GenerateAndBuild {
     $testProjectList | ForEach-Object { Build-Project -sdkDir $sdkDir -project $_ }
 }
 
+function TestSdk {
+    param([string] $project, [string] $sdkDir)
+
+    $sdkInfoLock = Get-SdkInfoLockPath -sdkDir $sdkDir
+
+    $infoList = Read-SdkInfoList -project $project -sdkInfo $sdkInfoLock
+
+    $testProjectList = Get-DotNetTestList -sdkDir $sdkDir -infoList $infoList
+
+    $testProjectList | ForEach-Object {
+        "Testing $_"
+        dotnet test -l trx $_
+        if (-Not $?)
+        {
+            Write-Error "test errors"
+            exit $LASTEXITCODE
+        }
+    }
+}
+
 Export-ModuleMember -Function Read-SdkInfoList
 Export-ModuleMember -Function Generate-Sdk
 Export-ModuleMember -Function Build-Project
@@ -334,3 +354,4 @@ Export-ModuleMember -Function Is-Url
 Export-ModuleMember -Function GenerateAndBuild
 Export-ModuleMember -Function Get-SdkInfoPath
 Export-ModuleMember -Function Get-SdkInfoLockPath
+Export-ModuleMember -Function TestSdk
