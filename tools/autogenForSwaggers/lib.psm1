@@ -330,6 +330,24 @@ function TestSdk {
     }
 }
 
+function UpdateSdkInfo {
+    param([string] $specs, [string] $sdkDir)
+
+    $commit = if (Is-Url -specs $specs) {
+        $line = git ls-remote $specs master
+        $line.Split("`t")[0]
+    } else {
+        $location = Get-Location
+        Set-Location $specs
+        git rev-parse HEAD
+        Set-Location $location
+    }
+
+    $sdkinfo = Read-SdkInfoList -project "*" -sdkInfo (Get-SdkInfoPath $sdkDir) -commit $commit
+
+    $sdkInfo | ConvertTo-Json | Out-File (Get-SdkInfoLockPath $sdkDir) -Encoding "UTF8"
+}
+
 Export-ModuleMember -Function Read-SdkInfoList
 Export-ModuleMember -Function Generate-Sdk
 Export-ModuleMember -Function Build-Project
@@ -339,3 +357,4 @@ Export-ModuleMember -Function GenerateAndBuild
 Export-ModuleMember -Function Get-SdkInfoPath
 Export-ModuleMember -Function Get-SdkInfoLockPath
 Export-ModuleMember -Function TestSdk
+Export-ModuleMember -Function UpdateSdkInfo
