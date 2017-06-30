@@ -669,48 +669,56 @@ namespace Microsoft.Azure.ServiceBus.Core
                 receiveLink = await this.ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
                 IEnumerable<AmqpMessage> amqpMessages = null;
-                bool hasMessages = await Task.Factory.FromAsync(
+                IList<Message> brokeredMessages = null;
+
+                while (timeoutHelper.RemainingTime() >= TimeSpan.Zero)
+                {
+                    bool hasMessages = await Task.Factory.FromAsync(
                     (c, s) => receiveLink.BeginReceiveRemoteMessages(maxMessageCount, DefaultBatchFlushInterval, timeoutHelper.RemainingTime(), c, s),
                     a => receiveLink.EndReceiveMessages(a, out amqpMessages),
                     this).ConfigureAwait(false);
 
-                if (receiveLink.TerminalException != null)
-                {
-                    throw receiveLink.TerminalException;
-                }
-
-                if (hasMessages && amqpMessages != null)
-                {
-                    IList<Message> brokeredMessages = null;
-                    foreach (var amqpMessage in amqpMessages)
+                    if (receiveLink.TerminalException != null)
                     {
-                        if (brokeredMessages == null)
-                        {
-                            brokeredMessages = new List<Message>();
-                        }
-
-                        if (this.ReceiveMode == ReceiveMode.ReceiveAndDelete)
-                        {
-                            receiveLink.DisposeDelivery(amqpMessage, true, AmqpConstants.AcceptedOutcome);
-                        }
-
-                        Message message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
-                        if(this.ReceiveMode == ReceiveMode.PeekLock &&
-                           message.SystemProperties.LockedUntilUtc <= DateTime.UtcNow)
-                        {
-                            receiveLink.ReleaseMessage(amqpMessage);
-                            continue;
-                        }
-                        else
-                        {
-                            brokeredMessages.Add(message);
-                        }                        
+                        throw receiveLink.TerminalException;
                     }
 
-                    return brokeredMessages;
+                    if (hasMessages && amqpMessages != null)
+                    {
+                        foreach (var amqpMessage in amqpMessages)
+                        {
+                            if (brokeredMessages == null)
+                            {
+                                brokeredMessages = new List<Message>();
+                            }
+
+                            if (this.ReceiveMode == ReceiveMode.ReceiveAndDelete)
+                            {
+                                receiveLink.DisposeDelivery(amqpMessage, true, AmqpConstants.AcceptedOutcome);
+                            }
+
+                            Message message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+
+                            if (this.ReceiveMode == ReceiveMode.PeekLock &&
+                               message.SystemProperties.LockedUntilUtc <= DateTime.UtcNow)
+                            {
+                                receiveLink.ReleaseMessage(amqpMessage);
+                                continue;
+                            }
+                            else
+                            {
+                                brokeredMessages.Add(message);
+                            }
+                        }
+                        
+                        if(brokeredMessages.Count > 0)
+                        {
+                            break;
+                        }
+                    }
                 }
 
-                return null;
+                return brokeredMessages;
             }
             catch (Exception exception)
             {
