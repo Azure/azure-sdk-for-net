@@ -103,24 +103,8 @@ function Get-SourcePath {
     }
 }
 
-function Get-LangInfo {
-    param([psobject] $lang)
-
-    if (-Not $lang) {
-        [PSCustomObject] @{
-            jsonRpc = $false
-            script = $false
-        }
-    } else {
-        [PSCustomObject] @{
-            jsonRpc = $true
-            script = $lang -ne "json-rpc"
-        }
-    }
-}
-
 function Generate-Sdk {
-    param([string] $specs, [psobject] $info, [string] $sdkDir, [string] $lang)
+    param([string] $specs, [psobject] $info, [string] $sdkDir, [bool] $jsonRpc)
 
     $dotNet = $info.dotNet
 
@@ -160,8 +144,6 @@ function Generate-Sdk {
         $autoRestExe = "autorest"
     }
 
-    $langInfo = Get-LangInfo -lang $lang
-
     $commit = if ($dotNet.commit) { $dotNet.commit } else { "master" }
 
     $isUrl = Is-Url -specs $specs
@@ -181,7 +163,7 @@ function Generate-Sdk {
     Clear-Dir -path $output
 
     if ($dotNet.autorest -or $info.isLegacy) {
-        if ($langInfo.jsonRpc) {
+        if ($jsonRpc) {
             Write-Error "JSON RPC is not supported for $($info.name)"
             exit -1
         }
@@ -218,16 +200,14 @@ function Generate-Sdk {
         }
     } else {
         $autoRestExe = "autorest"
+        $lang = if ($jsonRpc) { "jsonrpcclient" } else { "csharp.azure-arm" }
         $r = @(
-            "--csharp.azure-arm",
+            "--$lang",
             "--namespace=$($dotNet.namespace)",
             "--output-folder=$output",
             "--license-header=MICROSOFT_MIT",
             "--payload-flattening-threshold=$($dotNet.ft)"
         )
-        if ($langInfo.jsonRpc) {
-            $r += "--json-rpc"
-        }
         $title = $dotNet.client
         if ($info.isComposite) {
             $info.sources | ForEach-Object {
@@ -313,13 +293,15 @@ function Get-SdkInfoLockPath {
 }
 
 function GenerateAndBuild {
-    param([string] $project, [string] $specs, [string] $sdkDir)
+    param([string] $project, [string] $specs, [string] $sdkDir, [bool] $jsonRpc)
 
     $sdkInfoLock = Get-SdkInfoLockPath -sdkDir $sdkDir
 
     $infoList = Read-SdkInfoList -project $project -sdkInfo $sdkInfoLock
 
-    $infoList | ForEach-Object { Generate-Sdk -sdkDir $sdkDir -specs $specs -info $_ }
+    $infoList | ForEach-Object {
+        Generate-Sdk -sdkDir $sdkDir -specs $specs -info $_ -jsonRpc $jsonRpc
+    }
 
     $testProjectList = Get-DotNetTestList -sdkDir $sdkDir -infoList $infoList
 
