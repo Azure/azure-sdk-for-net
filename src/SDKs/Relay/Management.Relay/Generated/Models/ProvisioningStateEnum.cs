@@ -17,14 +17,22 @@ namespace Microsoft.Azure.Management.Relay.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for KeyType.
+    /// Defines values for ProvisioningStateEnum.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum KeyType
+    public enum ProvisioningStateEnum
     {
-        [EnumMember(Value = "PrimaryKey")]
-        PrimaryKey,
-        [EnumMember(Value = "SecondaryKey")]
-        SecondaryKey
+        [EnumMember(Value = "Created")]
+        Created,
+        [EnumMember(Value = "Succeeded")]
+        Succeeded,
+        [EnumMember(Value = "Deleted")]
+        Deleted,
+        [EnumMember(Value = "Failed")]
+        Failed,
+        [EnumMember(Value = "Updating")]
+        Updating,
+        [EnumMember(Value = "Unknown")]
+        Unknown
     }
 }

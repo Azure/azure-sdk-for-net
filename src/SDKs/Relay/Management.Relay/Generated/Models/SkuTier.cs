@@ -17,14 +17,12 @@ namespace Microsoft.Azure.Management.Relay.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for KeyType.
+    /// Defines values for SkuTier.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum KeyType
+    public enum SkuTier
     {
-        [EnumMember(Value = "PrimaryKey")]
-        PrimaryKey,
-        [EnumMember(Value = "SecondaryKey")]
-        SecondaryKey
+        [EnumMember(Value = "Standard")]
+        Standard
     }
 }

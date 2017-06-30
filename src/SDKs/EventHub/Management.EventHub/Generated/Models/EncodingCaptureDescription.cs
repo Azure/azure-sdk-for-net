@@ -6,25 +6,25 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Relay.Models
+namespace Microsoft.Azure.Management.EventHub.Models
 {
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
-    using Microsoft.Azure.Management.Relay;
+    using Microsoft.Azure.Management.EventHub;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using System.Runtime;
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for KeyType.
+    /// Defines values for EncodingCaptureDescription.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum KeyType
+    public enum EncodingCaptureDescription
     {
-        [EnumMember(Value = "PrimaryKey")]
-        PrimaryKey,
-        [EnumMember(Value = "SecondaryKey")]
-        SecondaryKey
+        [EnumMember(Value = "Avro")]
+        Avro,
+        [EnumMember(Value = "AvroDeflate")]
+        AvroDeflate
     }
 }
