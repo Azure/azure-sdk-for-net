@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Amqp;
     using Azure.Amqp;
@@ -135,6 +136,11 @@ namespace Microsoft.Azure.ServiceBus
 
         ICbsTokenProvider CbsTokenProvider { get; }
 
+        /// <summary>
+        /// Gets a list of currently registered plugins.
+        /// </summary>
+        public override IList<ServiceBusPlugin> RegisteredPlugins => throw new NotImplementedException();
+
         /// <summary></summary>
         /// <returns>The asynchronous operation.</returns>
         protected override async Task OnClosingAsync()
@@ -226,6 +232,24 @@ namespace Microsoft.Azure.ServiceBus
                 session.SessionId);
 
             return session;
+        }
+
+        /// <summary>
+        /// Registers a <see cref="ServiceBusPlugin"/> to be used with this receiver.
+        /// </summary>
+        /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
+        public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Unregisters a <see cref="ServiceBusPlugin"/>.
+        /// </summary>
+        /// <param name="serviceBusPluginName">The <see cref="ServiceBusPlugin.Name"/> of the plugin to be unregistered.</param>
+        public override void UnregisterPlugin(string serviceBusPluginName)
+        {
+            throw new NotImplementedException();
         }
     }
 }
