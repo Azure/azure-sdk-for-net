@@ -41,7 +41,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
 
             if(message.Body == null || message.Body.Length == 0)
             {
-                throw new ArgumentException(nameof(message.Body));
+                throw new InvalidOperationException(Resources.MessageBodyIsNullOrEmpty);
             }
 
             using (MemoryStream stream = new MemoryStream(256))

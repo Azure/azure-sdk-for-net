@@ -337,5 +337,14 @@ namespace Microsoft.Azure.ServiceBus {
                 return ResourceManager.GetString("TokenMissingExpiresOn", resourceCulture);
             }
         }
+
+        /// <summary>
+        /// Looks up a localized string similar to The message body is null or empty..
+        /// </summary>
+        public static string MessageBodyIsNullOrEmpty {
+            get {
+                return ResourceManager.GetString("MessageBodyIsNullOrEmpty", resourceCulture);
+            }
+        }
     }
 }
