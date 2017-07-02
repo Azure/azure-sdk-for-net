@@ -3,22 +3,30 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
+    using Microsoft.Azure.ServiceBus.Core;
     using Microsoft.Azure.ServiceBus.Extensions;
     using System.Collections.Generic;
     using System.IO;
     using System.Runtime.Serialization;
+    using System.Threading.Tasks;
     using Xunit;
 
     public class MessageInterOpTests
     {
-        public static IEnumerable<object> TestPermutations => new object[]
+        public static IEnumerable<object> TestSerializerPermutations => new object[]
         {
             new object[] { new DataContractBinarySerializer(typeof(Book)) },
             new object[] { new DataContractSerializer(typeof(Book)) },
         };
 
+        public static IEnumerable<object> TestEnd2EndEntityPermutations => new object[]
+        {
+            new object[] { TestConstants.NonPartitionedQueueName },
+            new object[] { TestConstants.PartitionedQueueName}
+        };
+
         [Theory]
-        [MemberData(nameof(TestPermutations))]
+        [MemberData(nameof(TestSerializerPermutations))]
         [DisplayTestMethodName]
         void RunSerializerTests(XmlObjectSerializer serializer)
         {
@@ -27,6 +35,30 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             Book returnedBookObject = message.GetBody<Book>(serializer);
             VerifyReturnedObject(book, returnedBookObject);
+        }
+
+        [Theory]
+        [MemberData(nameof(TestEnd2EndEntityPermutations))]
+        [DisplayTestMethodName]
+        async Task RunEnd2EndSerializerTests(string queueName)
+        {
+            MessageSender messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+            MessageReceiver messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+            try
+            {
+                DataContractBinarySerializer serializer = new DataContractBinarySerializer(typeof(Book));
+                Book book = new Book("contoso", 1, 5);
+                await messageSender.SendAsync(GetBrokeredMessage(serializer, book));
+
+                Message message = await messageReceiver.ReceiveAsync();
+                Book returnedBookObject = message.GetBody<Book>(serializer);
+                VerifyReturnedObject(book, returnedBookObject);
+            }
+            finally
+            {
+                await messageReceiver.CloseAsync();
+                await messageSender.CloseAsync();
+            }
         }
 
         Message GetBrokeredMessage(XmlObjectSerializer serializer, Book bookObject)

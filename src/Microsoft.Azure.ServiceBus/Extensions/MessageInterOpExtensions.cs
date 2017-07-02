@@ -7,7 +7,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
     using System.IO;
     using System.Runtime.Serialization;
 
-        /// <summary>
+    /// <summary>
     /// A Message Extension Class that provides extension methods to deserialize 
     /// the body of a message that was serialized and sent to Service Bus Queue/Topic
     /// using the full .Net Client library which uses a DataContractSerializer.
