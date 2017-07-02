@@ -225,9 +225,6 @@ namespace Microsoft.Azure.ServiceBus
             return string.Format(CultureInfo.CurrentCulture, $"{{MessageId:{this.MessageId}}}");
         }
 
-        /// <summary>Returns a deserialized bodyobject </summary>
-        public object BodyObject;
-
         /// <summary>Clones a message, so that it is possible to send a clone of a message as a new message.</summary>
         /// <returns>The <see cref="Message" /> that contains the cloned message.</returns>
         public Message Clone()
