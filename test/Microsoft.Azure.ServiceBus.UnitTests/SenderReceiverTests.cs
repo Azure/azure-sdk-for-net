@@ -10,8 +10,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using Microsoft.Azure.ServiceBus.Primitives;
     using Microsoft.Azure.ServiceBus.Core;
     using Xunit;
-    using System.Runtime.Serialization;
-    using System.Xml;
 
     public class SenderReceiverTests : SenderReceiverClientTestBase
     {
@@ -41,55 +39,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await receiver.CloseAsync().ConfigureAwait(false);
             }
         }
-
-        [Fact]
-        [MemberData(nameof(TestPermutations))]
-        [DisplayTestMethodName]
-        async Task MessageReceiverDeserializationTest()
-        {
-            //Book test = new Book("vinsu", 1, 10);
-            string queueName = "serializationtestq";
-
-            MessageReceiver messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName);
-            
-            Message message = await messageReceiver.ReceiveAsync();
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Book));
-            message.BodyObject = (Book) serializer.ReadObject(XmlDictionaryReader.CreateBinaryReader(message.Body, XmlDictionaryReaderQuotas.Max));
-
-            Book test = (Book)message.BodyObject;
-
-            //msg.GetBody<T>(Func<byte[], T> fac)
-            //   { }
-            
-            //test = message.GetBody<Book>();
-            //Book test = message.Body;
-
-            Assert.True(10 == test.count);
-            Assert.True(string.Equals(test.name, test.name));
-            Assert.True(1 == test.id);
-        }
-
-        [DataContract(Name = "Library", Namespace = "BookNamespace")]
-        class Book
-        {
-            [DataMember(Name = "Name")]
-            public string name;
-
-            [DataMember(Name = "Count")]
-            public int count;
-
-            [DataMember(Name = "Id")]
-            public int id;
-
-            public Book(string name, int id, int count)
-            {
-                this.count = count;
-                this.id = id;
-                this.name = name;
-            }
-        }
-
-
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
