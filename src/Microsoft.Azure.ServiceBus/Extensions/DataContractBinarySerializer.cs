@@ -4,7 +4,6 @@
 namespace Microsoft.Azure.ServiceBus.Extensions
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Runtime.Serialization;
     using System.Xml;
@@ -15,7 +14,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
     /// ReadObject(Stream) and WriteObject(Stream, object) pick Binary Xml Reader/Writer 
     /// instead of text.
     /// </summary>
-    public sealed class DataContractBinarySerializer : XmlObjectSerializer
+    sealed class DataContractBinarySerializer : XmlObjectSerializer
     {
         readonly DataContractSerializer dataContractSerializer;
 

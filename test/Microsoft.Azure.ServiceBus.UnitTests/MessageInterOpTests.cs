@@ -10,13 +10,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
     using Xunit;
+    using System;
 
-    public class MessageInterOpTests
+    public class MessageInteropTests
     {
         public static IEnumerable<object> TestSerializerPermutations => new object[]
         {
             new object[] { new DataContractBinarySerializer(typeof(Book)) },
-            new object[] { new DataContractSerializer(typeof(Book)) },
+            new object[] { new DataContractSerializer(typeof(Book)) }
         };
 
         public static IEnumerable<object> TestEnd2EndEntityPermutations => new object[]
@@ -30,11 +31,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         void RunSerializerTests(XmlObjectSerializer serializer)
         {
-            Book book = new Book("contoso", 1, 5);
-            Message message = GetBrokeredMessage(serializer, book);
+            var book = new Book("contoso", 1, 5);
+            var message = GetBrokeredMessage(serializer, book);
 
-            Book returnedBookObject = message.GetBody<Book>(serializer);
-            VerifyReturnedObject(book, returnedBookObject);
+            var returned = message.GetBody<Book>(serializer);
+            Assert.Equal(book, returned);
         }
 
         [Theory]
@@ -46,13 +47,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             MessageReceiver messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
             try
             {
-                DataContractBinarySerializer serializer = new DataContractBinarySerializer(typeof(Book));
-                Book book = new Book("contoso", 1, 5);
+                var serializer = new DataContractBinarySerializer(typeof(Book));
+                var book = new Book("contoso", 1, 5);
                 await messageSender.SendAsync(GetBrokeredMessage(serializer, book));
 
-                Message message = await messageReceiver.ReceiveAsync();
-                Book returnedBookObject = message.GetBody<Book>(serializer);
-                VerifyReturnedObject(book, returnedBookObject);
+                var message = await messageReceiver.ReceiveAsync();
+                var returned = message.GetBody<Book>(serializer);
+                Assert.Equal(book, returned);
             }
             finally
             {
@@ -61,12 +62,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
-        Message GetBrokeredMessage(XmlObjectSerializer serializer, Book bookObject)
+        Message GetBrokeredMessage(XmlObjectSerializer serializer, Book book)
         {
             byte[] payload = null;
             using (MemoryStream stream = new MemoryStream(10))
             {
-                serializer.WriteObject(stream, bookObject);
+                serializer.WriteObject(stream, book);
                 stream.Flush();
                 stream.Position = 0;
                 payload = stream.ToArray();
@@ -75,31 +76,42 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             return new Message(payload);
         }
 
-        void VerifyReturnedObject(Book originalObject, Book returnedObject)
+        public class Book
         {
-            Assert.True(string.Equals(returnedObject.Name, originalObject.Name));
-            Assert.True(originalObject.Id == returnedObject.Id);
-            Assert.True(originalObject.Count == returnedObject.Count);
-        }
-
-        [DataContract(Name = "Library", Namespace = "Books")]
-        class Book
-        {
-            [DataMember(Name = "Name")]
-            public string Name;
-
-            [DataMember(Name = "Count")]
-            public int Count;
-
-            [DataMember(Name = "Id")]
-            public int Id;
+            public Book() { }
 
             public Book(string name, int id, int count)
             {
+                this.Name = name;
                 this.Count = count;
                 this.Id = id;
-                this.Name = name;
             }
+
+            public override bool Equals(Object obj)
+            {
+                if(obj == null || GetType() != obj.GetType())
+                {
+                    return false;
+                }
+
+                Book book = (Book)obj;
+
+                return 
+                    this.Name.Equals(book.Name, StringComparison.OrdinalIgnoreCase) &&
+                    this.Count == book.Count &&
+                    this.Id == book.Id;
+            }
+
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
+
+            public string Name { get; set; }
+
+            public int Count { get; set; }
+
+            public int Id { get; set; }         
         }
     }
 }

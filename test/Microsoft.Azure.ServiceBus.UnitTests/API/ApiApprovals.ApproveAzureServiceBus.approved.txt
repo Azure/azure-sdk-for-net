@@ -426,19 +426,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 namespace Microsoft.Azure.ServiceBus.Extensions
 {
     
-    public sealed class DataContractBinarySerializer : System.Runtime.Serialization.XmlObjectSerializer
-    {
-        public DataContractBinarySerializer(System.Type type) { }
-        public override bool IsStartObject(System.Xml.XmlDictionaryReader reader) { }
-        public override object ReadObject(System.IO.Stream stream) { }
-        public override object ReadObject(System.Xml.XmlDictionaryReader reader, bool verifyObjectName) { }
-        public override void WriteEndObject(System.Xml.XmlDictionaryWriter writer) { }
-        public override void WriteObject(System.IO.Stream stream, object graph) { }
-        public override void WriteObject(System.Xml.XmlDictionaryWriter writer, object graph) { }
-        public override void WriteObjectContent(System.Xml.XmlDictionaryWriter writer, object graph) { }
-        public override void WriteStartObject(System.Xml.XmlDictionaryWriter writer, object graph) { }
-    }
-    public class static MessageInterOpExtensions
+    public class static MessageInteropExtensions
     {
         public static T GetBody<T>(this Microsoft.Azure.ServiceBus.Message message) { }
         public static T GetBody<T>(this Microsoft.Azure.ServiceBus.Message message, System.Runtime.Serialization.XmlObjectSerializer serializer) { }

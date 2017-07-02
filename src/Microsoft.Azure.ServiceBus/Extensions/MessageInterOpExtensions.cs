@@ -9,10 +9,17 @@ namespace Microsoft.Azure.ServiceBus.Extensions
 
     /// <summary>
     /// A Message Extension Class that provides extension methods to deserialize 
-    /// the body of a message that was serialized and sent to Service Bus Queue/Topic
-    /// using the full .Net Client library which uses a DataContractSerializer.
+    /// the body of a message that was serialized and sent to ServiceBus Queue/Topic
+    /// using the WindowsAzure.Messaging client library. The WindowsAzure.Messaging
+    /// client libary serializes objects using the 
+    /// <see cref="DataContractBinarySerializer"/> or <see cref="DataContractSerializer"/>
+    /// when sending message. This class provides extension methods to deserialize
+    /// and retrieve the body of such messages.
     /// </summary>
-    public static class MessageInterOpExtensions
+    /// <remarks>If a message is only being sent and received using this 
+    /// Microsoft.Azure.ServiceBus client library, then the below extension methods are not
+    /// relevant.</remarks>
+    public static class MessageInteropExtensions
     {
         /// <summary>
         /// Deserializes the body of a message that was serialized using DataContractBinarySerializer
