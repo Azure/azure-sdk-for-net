@@ -80,20 +80,26 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     return Task.CompletedTask;
                 });
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            while (stopwatch.Elapsed.TotalSeconds <= 5)
+            try
             {
-                if(exceptionReceivedHandlerCalled)
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                while (stopwatch.Elapsed.TotalSeconds <= 5)
                 {
-                    break;
+                    if (exceptionReceivedHandlerCalled)
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(TimeSpan.FromSeconds(1));
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(1));
+                TestUtility.Log($"{DateTime.Now}: ExceptionReceivedHandlerCalled: {exceptionReceivedHandlerCalled}");
+                Assert.True(exceptionReceivedHandlerCalled);
             }
-
-            Assert.True(exceptionReceivedHandlerCalled);
-
-            await queueClient.CloseAsync();
+            finally
+            {
+                await queueClient.CloseAsync();
+            }            
         }
 
         async Task OnMessageTestAsync(string queueName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)

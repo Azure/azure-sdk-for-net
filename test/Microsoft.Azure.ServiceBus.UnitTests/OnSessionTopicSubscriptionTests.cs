@@ -70,19 +70,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                },
                sessionHandlerOptions);
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            while (stopwatch.Elapsed.TotalSeconds <= 5)
+            try
             {
-                if (exceptionReceivedHandlerCalled)
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                while (stopwatch.Elapsed.TotalSeconds <= 5)
                 {
-                    break;
+                    if (exceptionReceivedHandlerCalled)
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(TimeSpan.FromSeconds(1));
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(1));
+                TestUtility.Log($"{DateTime.Now}: ExceptionReceivedHandlerCalled: {exceptionReceivedHandlerCalled}");
+                Assert.True(exceptionReceivedHandlerCalled);
             }
-
-            Assert.True(exceptionReceivedHandlerCalled);
-            await subscriptionClient.CloseAsync();
+            finally
+            {
+                await subscriptionClient.CloseAsync();
+                await topicClient.CloseAsync();
+            }
         }
 
         async Task OnSessionTestAsync(string topicName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)

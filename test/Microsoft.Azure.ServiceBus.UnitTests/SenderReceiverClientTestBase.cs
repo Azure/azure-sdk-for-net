@@ -289,7 +289,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             await TestUtility.SendMessagesAsync(messageSender, 1);
 
             Stopwatch stopwatch = Stopwatch.StartNew();
-            while (stopwatch.Elapsed.TotalSeconds <= 5)
+            while (stopwatch.Elapsed.TotalSeconds <= 20)
             {
                 if (count == 1)
                 {
@@ -298,10 +298,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 else
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    await Task.Delay(TimeSpan.FromSeconds(5));
                 }
             }
 
+            TestUtility.Log($"{DateTime.Now}: MessagesReceived: {count}");
             Assert.True(count == 1);
         }
 
