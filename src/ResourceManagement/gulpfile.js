@@ -6,114 +6,114 @@ var fs = require('fs');
 
 var mappings = {
     'compute': {
-        'dir': 'Compute/Microsoft.Azure.Management.Compute.Fluent',
+        'dir': 'Compute',
         'source': 'arm-compute/compositeComputeClient.json',
         'package': 'Microsoft.Azure.Management.Compute.Fluent',
         'composite': true,
         'args': '-FT 1'
     },
     'storage': {
-        'dir': 'Storage/Microsoft.Azure.Management.Storage.Fluent',
+        'dir': 'Storage',
         'source': 'arm-storage/2016-01-01/swagger/storage.json',
         'package': 'Microsoft.Azure.Management.Storage.Fluent',
         'args': '-FT 2'
     },
     'resources': {
-        'dir': 'ResourceManager/Microsoft.Azure.Management.ResourceManager.Fluent',
+        'dir': 'ResourceManager',
         'source': 'arm-resources/resources/2016-02-01/swagger/resources.json',
         'package': 'Microsoft.Azure.Management.ResourceManager.Fluent'
     },
     'subscriptions': {
-        'dir': 'ResourceManager/Microsoft.Azure.Management.ResourceManager.Fluent',
+        'dir': 'ResourceManager',
         'source': 'arm-resources/subscriptions/2015-11-01/swagger/subscriptions.json',
         'package': 'Microsoft.Azure.Management.ResourceManager.Fluent'
     },
     'features': {
-        'dir': 'ResourceManager/Microsoft.Azure.Management.ResourceManager.Fluent',
+        'dir': 'ResourceManager',
         'source': 'arm-resources/features/2015-12-01/swagger/features.json',
         'package': 'Microsoft.Azure.Management.ResourceManager.Fluent'
     },
     'network': {
-        'dir': 'Network/Microsoft.Azure.Management.Network.Fluent',
+        'dir': 'Network',
         'source': 'arm-network/compositeNetworkClient.json',
         'package': 'Microsoft.Azure.Management.Network.Fluent',
         'args': '-FT 1',
         'composite': true,
     },
     'batch': {
-        'dir': 'Batch/Microsoft.Azure.Management.Batch.Fluent',
+        'dir': 'Batch',
         'source': 'arm-batch/2017-05-01/swagger/BatchManagement.json',
         'package': 'Microsoft.Azure.Management.Batch.Fluent',
         'args': '-FT 1'
     },
     'redis': {
-        'dir': 'RedisCache/Microsoft.Azure.Management.Redis.Fluent',
+        'dir': 'RedisCache',
         'source': 'arm-redis/2016-04-01/swagger/redis.json',
         'package': 'Microsoft.Azure.Management.Redis.Fluent',
         'args': '-FT 1'
     },
     'graphrbac': {
-        'dir': 'Graph.RBAC/Microsoft.Azure.Management.Graph.RBAC.Fluent',
+        'dir': 'Graph.RBAC',
         'source': 'arm-graphrbac/1.6/swagger/graphrbac.json',
         'package': 'Microsoft.Azure.Management.Graph.RBAC.Fluent',
     },
     'authorization': {
-        'dir': 'Graph.RBAC/Microsoft.Azure.Management.Graph.RBAC.Fluent',
+        'dir': 'Graph.RBAC',
         'source': 'arm-authorization/2015-07-01/swagger/authorization.json',
         'package': 'Microsoft.Azure.Management.Graph.RBAC.Fluent',
         'args': '-FT 1'
     },
     'keyvault': {
-        'dir': 'KeyVault/Microsoft.Azure.Management.KeyVault.Fluent',
+        'dir': 'KeyVault',
         'source': 'arm-keyvault/2015-06-01/swagger/keyvault.json',
         'package': 'Microsoft.Azure.Management.KeyVault.Fluent',
     },
     'sql': {
-        'dir': 'Sql/Microsoft.Azure.Management.Sql.Fluent',
+        'dir': 'Sql',
         'source': 'arm-sql/compositeSql.json',
         'package': 'Microsoft.Azure.Management.Sql.Fluent',
         'composite': true,
         'args': '-FT 1'
     },
     'cdn': {
-        'dir': 'Cdn/Microsoft.Azure.Management.Cdn.Fluent',
+        'dir': 'Cdn',
         'source': 'arm-cdn/2016-10-02/swagger/cdn.json',
         'package': 'Microsoft.Azure.Management.Cdn.Fluent',
         'args': '-FT 2'
     },
     'dns': {
-        'dir': 'Dns/Microsoft.Azure.Management.Dns.Fluent',
+        'dir': 'Dns',
         'source': 'arm-dns/2016-04-01/swagger/dns.json',
         'package': 'Microsoft.Azure.Management.Dns.Fluent',
         'args': '-FT 2'
     },
     'trafficmanager': {
-        'dir': 'TrafficManager/Microsoft.Azure.Management.TrafficManager.Fluent',
+        'dir': 'TrafficManager',
         'source': 'arm-trafficmanager/2015-11-01/swagger/trafficmanager.json',
         'package': 'Microsoft.Azure.Management.TrafficManager.Fluent',
         'args': '-FT 2'
     },
     'appservice': {
-        'dir': 'AppService/Microsoft.Azure.Management.AppService.Fluent',
+        'dir': 'AppService',
         'source': 'arm-web/compositeWebAppClient.json',
         'package': 'Microsoft.Azure.Management.AppService.Fluent',
         'composite': true,
         'args': '-FT 1'
     },
     'servicebus': {
-        'dir': 'ServiceBus/Microsoft.Azure.Management.ServiceBus.Fluent',
+        'dir': 'ServiceBus',
         'source': 'arm-servicebus\2015-08-01\swagger\servicebus.json',
         'package': 'Microsoft.Azure.Management.Fluent.ServiceBus',
         'args': '-FT 1'
     },
     'containerregistry': {
-        'dir': 'ContainerRegistry/Microsoft.Azure.Management.ContainerRegistry.Fluent',
+        'dir': 'ContainerRegistry',
         'source': 'arm-containerregistry/2017-03-01/swagger/containerregistry.json',
         'package': 'Microsoft.Azure.Management.ContainerRegistry.Fluent',
         'args': '-FT 1',
     },
     'documentdb': {
-        'dir': 'DocumentDB/Microsoft.Azure.Management.DocumentDB.Fluent',
+        'dir': 'DocumentDB',
         'source': 'arm-documentdb/2015-04-08/swagger/documentdb.json',
         'package': 'Microsoft.Azure.Management.DocumentDB.Fluent',
         'args': '-FT 1',
