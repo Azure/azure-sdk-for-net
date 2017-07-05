@@ -60,5 +60,15 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

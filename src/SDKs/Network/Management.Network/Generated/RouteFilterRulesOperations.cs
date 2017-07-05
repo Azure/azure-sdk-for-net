@@ -764,6 +764,10 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "routeFilterRuleParameters");
             }
+            if (routeFilterRuleParameters != null)
+            {
+                routeFilterRuleParameters.Validate();
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");

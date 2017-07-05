@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// pool resource of URL path map.</param>
         /// <param name="defaultBackendHttpSettings">Default backend http
         /// settings resource of URL path map.</param>
+        /// <param name="defaultRedirectConfiguration">Default redirect
+        /// configuration resource of URL path map.</param>
         /// <param name="pathRules">Path rule of URL path map resource.</param>
         /// <param name="provisioningState">Provisioning state of the backend
         /// http settings resource. Possible values are: 'Updating',
@@ -52,15 +54,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGatewayUrlPathMap(string id = default(string), SubResource defaultBackendAddressPool = default(SubResource), SubResource defaultBackendHttpSettings = default(SubResource), IList<ApplicationGatewayPathRule> pathRules = default(IList<ApplicationGatewayPathRule>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Type of the resource.</param>
+        public ApplicationGatewayUrlPathMap(string id = default(string), SubResource defaultBackendAddressPool = default(SubResource), SubResource defaultBackendHttpSettings = default(SubResource), SubResource defaultRedirectConfiguration = default(SubResource), IList<ApplicationGatewayPathRule> pathRules = default(IList<ApplicationGatewayPathRule>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             DefaultBackendAddressPool = defaultBackendAddressPool;
             DefaultBackendHttpSettings = defaultBackendHttpSettings;
+            DefaultRedirectConfiguration = defaultRedirectConfiguration;
             PathRules = pathRules;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -81,6 +86,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultBackendHttpSettings")]
         public SubResource DefaultBackendHttpSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets default redirect configuration resource of URL path
+        /// map.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultRedirectConfiguration")]
+        public SubResource DefaultRedirectConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets path rule of URL path map resource.
@@ -109,6 +121,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }

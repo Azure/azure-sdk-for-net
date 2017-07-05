@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Network;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -127,5 +128,42 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "targetNicResourceId")]
         public string TargetNicResourceId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TargetResourceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TargetResourceId");
+            }
+            if (Direction == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Direction");
+            }
+            if (Protocol == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Protocol");
+            }
+            if (LocalPort == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "LocalPort");
+            }
+            if (RemotePort == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RemotePort");
+            }
+            if (LocalIPAddress == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "LocalIPAddress");
+            }
+            if (RemoteIPAddress == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RemoteIPAddress");
+            }
+        }
     }
 }

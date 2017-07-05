@@ -72,5 +72,26 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "properties.storagePath")]
         public string StoragePath { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TargetResourceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TargetResourceId");
+            }
+            if (StorageId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StorageId");
+            }
+            if (StoragePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StoragePath");
+            }
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// backend server.</param>
         /// <param name="health">Health of backend server. Possible values
         /// include: 'Unknown', 'Up', 'Down', 'Partial', 'Draining'</param>
-        public ApplicationGatewayBackendHealthServer(string address = default(string), SubResource ipConfiguration = default(SubResource), string health = default(string))
+        public ApplicationGatewayBackendHealthServer(string address = default(string), NetworkInterfaceIPConfiguration ipConfiguration = default(NetworkInterfaceIPConfiguration), string health = default(string))
         {
             Address = address;
             IpConfiguration = ipConfiguration;
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets reference of IP configuration of backend server.
         /// </summary>
         [JsonProperty(PropertyName = "ipConfiguration")]
-        public SubResource IpConfiguration { get; set; }
+        public NetworkInterfaceIPConfiguration IpConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets health of backend server. Possible values include:

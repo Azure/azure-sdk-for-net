@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Network;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -64,5 +65,22 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "drainTimeoutInSec")]
         public int DrainTimeoutInSec { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DrainTimeoutInSec > 3600)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "DrainTimeoutInSec", 3600);
+            }
+            if (DrainTimeoutInSec < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "DrainTimeoutInSec", 1);
+            }
+        }
     }
 }
