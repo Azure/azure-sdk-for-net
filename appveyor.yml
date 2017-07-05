@@ -1,5 +1,10 @@
 version: 1.0.{build}
 image: Visual Studio 2017
+environment:
+  nodejs_version: "7"
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - ps: npm install -g autorest
 build_script:
 - ps: Set-Location .\tools\autogenForSwaggers\
 - ps: .\build.ps1
