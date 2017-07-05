@@ -147,15 +147,16 @@ function Generate-Sdk {
     $commit = if ($dotNet.commit) { $dotNet.commit } else { "master" }
 
     $isUrl = Is-Url -specs $specs
-    "Commit: $commits"
-    if (-Not $isUrl) {
-        $location = Get-Location
-        Set-Location $specs
-        git checkout $commit
-        Set-Location $location
-    } else {
+    "Commit: $commit"
+    if ($isUrl) {
         $specs = $specs.Replace('https://github.com/', 'https://raw.githubusercontent.com/')
         $specs = "$specs/$commit"
+    } else {
+        # # no commit switch if it's a local repository
+        # $location = Get-Location
+        # Set-Location $specs
+        # git checkout $commit
+        # Set-Location $location
     }
 
     "Clear $output"
