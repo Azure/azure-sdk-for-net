@@ -1,4 +1,5 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 build_script:
-- ps: .\tools\autogenForSwaggers\build.ps1
+- ps: Set-Location .\tools\autogenForSwaggers\
+- ps: .\build.ps1
