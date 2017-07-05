@@ -8,3 +8,7 @@ install:
 build_script:
 - ps: Set-Location .\tools\autogenForSwaggers\
 - ps: .\build.ps1
+test_script:
+- ps: Set-Location .\tools\autogenForSwaggers\
+- ps: .\test.ps1
+
