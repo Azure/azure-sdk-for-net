@@ -67,7 +67,7 @@ namespace Relay.Tests.ScenarioTests
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
                 Assert.Equal(createNamespaceResponse.Tags.Count, 2);
-                Assert.Equal(createNamespaceResponse.Type, "Microsoft.Relay/namespaces");
+                Assert.Equal(createNamespaceResponse.Type, "Microsoft.Relay/Namespaces");
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 
