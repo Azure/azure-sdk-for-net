@@ -103,7 +103,7 @@ function Get-SourcePath {
     }
 }
 
-function AutoRest {
+function CallAutoRest {
     param([psobject] $info, [bool] $jsonRpc, [string] $title, [string[]] $inputList)
 
     $dotNet = $info.dotNet
@@ -229,7 +229,7 @@ function Generate-Sdk {
     } elseif ($info.isLegacy) {
         # Run AutoRest for all sources.
         $info.sources | ForEach-Object {
-            AutoRest -info $info -inputList @( $_ ) -jsonRpc $jsonRpc -title $title
+            CallAutoRest -info $info -inputList @( $_ ) -jsonRpc $jsonRpc -title $title
         }
     } else {
         $inputList = @()
@@ -256,7 +256,8 @@ function Generate-Sdk {
                 $inputList += $_
             }
         }
-        AutoRest -info $info -inputList $inputList -jsonRpc $jsonRpc -title $title
+        $inputList
+        CallAutoRest -info $info -inputList $inputList -jsonRpc $jsonRpc -title $title
     }
 }
 
