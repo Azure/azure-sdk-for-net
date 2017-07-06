@@ -132,6 +132,7 @@ environment:
 install:
 - ps: Install-Product node $env:nodejs_version
 - ps: npm install -g autorest
+- ps: (autorest --reset --feed=sergey-shandar) 2> $null
 - ps: Set-Location .\tools\autogenForSwaggers\
 build_script:
 - ps: .\build.ps1 -project $env:TEST_PROJECT -jsonRpc $env:TEST_JSONRPC
