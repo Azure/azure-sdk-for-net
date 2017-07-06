@@ -31,7 +31,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='farmId'>
             /// Th name of the farm.
             /// </param>
-            public static IList<Share> List(this ISharesOperations operations, string resourceGroupName, string farmId)
+            public static IList<ShareModel> List(this ISharesOperations operations, string resourceGroupName, string farmId)
             {
                 return operations.ListAsync(resourceGroupName, farmId).GetAwaiter().GetResult();
             }
@@ -51,7 +51,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Share>> ListAsync(this ISharesOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ShareModel>> ListAsync(this ISharesOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, farmId, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -55,8 +55,8 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <param name='quotaName'>
         /// The name of the quota.
         /// </param>
-        /// <param name='template'>
-        /// Template used to create or update storage quota
+        /// <param name='parameters'>
+        /// parameters used to create or update storage quota
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -79,7 +79,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<StorageQuota>> CreateOrUpdateWithHttpMessagesAsync(string location, string quotaName, QuotaCreateOrUpdateParameters template, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageQuotaModel>> CreateOrUpdateWithHttpMessagesAsync(string location, string quotaName, QuotaParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -93,13 +93,13 @@ namespace Microsoft.AzureStack.Storage.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "quotaName");
             }
-            if (template == null)
+            if (parameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "template");
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (template != null)
+            if (parameters != null)
             {
-                template.Validate();
+                parameters.Validate();
             }
             string apiVersion = "2015-12-01-preview";
             // Tracing
@@ -112,7 +112,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("quotaName", quotaName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("template", template);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -165,9 +165,9 @@ namespace Microsoft.AzureStack.Storage.Admin
 
             // Serialize Request
             string _requestContent = null;
-            if(template != null)
+            if(parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(template, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -226,7 +226,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<StorageQuota>();
+            var _result = new AzureOperationResponse<StorageQuotaModel>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -239,7 +239,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<StorageQuota>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<StorageQuotaModel>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -461,7 +461,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<StorageQuota>> GetWithHttpMessagesAsync(string location, string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageQuotaModel>> GetWithHttpMessagesAsync(string location, string quotaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -593,7 +593,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<StorageQuota>();
+            var _result = new AzureOperationResponse<StorageQuotaModel>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -606,7 +606,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<StorageQuota>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<StorageQuotaModel>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

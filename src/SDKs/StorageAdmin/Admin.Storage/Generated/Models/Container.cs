@@ -23,6 +23,16 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// Initializes a new instance of the Container class.
         /// </summary>
+        /// <param name="sharename">Name of the share container is
+        /// located.</param>
+        /// <param name="accountname">Name of account container belongs
+        /// too.</param>
+        /// <param name="containername">Name of the container.</param>
+        /// <param name="containerid">TODO</param>
+        /// <param name="accountid">GUID of account.</param>
+        /// <param name="usedBytesInPrimaryVolume">Number of bytes used by the
+        /// primary volume.</param>
+        /// <param name="containerState">TODO</param>
         public Container(string sharename = default(string), string accountname = default(string), string containername = default(string), int? containerid = default(int?), string accountid = default(string), int? usedBytesInPrimaryVolume = default(int?), string containerState = default(string))
         {
             Sharename = sharename;
@@ -41,36 +51,43 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets name of the share container is located.
         /// </summary>
         [JsonProperty(PropertyName = "sharename")]
         public string Sharename { get; set; }
 
         /// <summary>
+        /// Gets or sets name of account container belongs too.
         /// </summary>
         [JsonProperty(PropertyName = "accountname")]
         public string Accountname { get; set; }
 
         /// <summary>
+        /// Gets or sets name of the container.
         /// </summary>
         [JsonProperty(PropertyName = "containername")]
         public string Containername { get; set; }
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
         [JsonProperty(PropertyName = "containerid")]
         public int? Containerid { get; set; }
 
         /// <summary>
+        /// Gets or sets GUID of account.
         /// </summary>
         [JsonProperty(PropertyName = "accountid")]
         public string Accountid { get; set; }
 
         /// <summary>
+        /// Gets or sets number of bytes used by the primary volume.
         /// </summary>
         [JsonProperty(PropertyName = "usedBytesInPrimaryVolume")]
         public int? UsedBytesInPrimaryVolume { get; set; }
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
         [JsonProperty(PropertyName = "containerState")]
         public string ContainerState { get; set; }

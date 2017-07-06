@@ -23,8 +23,15 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// Initializes a new instance of the Acquisition class.
         /// </summary>
-        /// <param name="status">Possible values include: 'InProgress',
+        /// <param name="filePath">TODO</param>
+        /// <param name="maximumblobsize">TODO</param>
+        /// <param name="status">TODO. Possible values include: 'InProgress',
         /// 'Success', 'Failed'</param>
+        /// <param name="susbcriptionid">TODO</param>
+        /// <param name="storageaccount">TODO</param>
+        /// <param name="container">TODO</param>
+        /// <param name="blob">TODO</param>
+        /// <param name="acquisitionid">TODO</param>
         public Acquisition(string filePath = default(string), int? maximumblobsize = default(int?), AcquisitionStatus? status = default(AcquisitionStatus?), string susbcriptionid = default(string), string storageaccount = default(string), string container = default(string), string blob = default(string), string acquisitionid = default(string))
         {
             FilePath = filePath;
@@ -44,43 +51,50 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
         [JsonProperty(PropertyName = "filePath")]
         public string FilePath { get; set; }
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
         [JsonProperty(PropertyName = "maximumblobsize")]
         public int? Maximumblobsize { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'InProgress', 'Success',
-        /// 'Failed'
+        /// Gets or sets TODO. Possible values include: 'InProgress',
+        /// 'Success', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public AcquisitionStatus? Status { get; set; }
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
         [JsonProperty(PropertyName = "susbcriptionid")]
         public string Susbcriptionid { get; set; }
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
         [JsonProperty(PropertyName = "storageaccount")]
         public string Storageaccount { get; set; }
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
         [JsonProperty(PropertyName = "container")]
         public string Container { get; set; }
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
         [JsonProperty(PropertyName = "blob")]
         public string Blob { get; set; }
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
         [JsonProperty(PropertyName = "acquisitionid")]
         public string Acquisitionid { get; set; }

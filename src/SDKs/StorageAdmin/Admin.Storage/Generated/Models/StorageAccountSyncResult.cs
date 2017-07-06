@@ -42,28 +42,28 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets TODO
+        /// Gets TODO
         /// </summary>
         [JsonProperty(PropertyName = "CorrelationId")]
-        public string CorrelationId { get; set; }
+        public string CorrelationId { get; private set; }
 
         /// <summary>
-        /// Gets or sets TODO
+        /// Gets TODO
         /// </summary>
         [JsonProperty(PropertyName = "FrontdoorLocation")]
-        public string FrontdoorLocation { get; set; }
+        public string FrontdoorLocation { get; private set; }
 
         /// <summary>
-        /// Gets or sets TODO
+        /// Gets TODO
         /// </summary>
         [JsonProperty(PropertyName = "TimeStamp")]
-        public string TimeStamp { get; set; }
+        public string TimeStamp { get; private set; }
 
         /// <summary>
-        /// Gets or sets TODO
+        /// Gets TODO
         /// </summary>
         [JsonProperty(PropertyName = "Message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
     }
 }

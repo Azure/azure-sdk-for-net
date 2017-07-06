@@ -15,7 +15,7 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     /// <summary>
     /// Properties of the storage account.
     /// </summary>
-    public partial class StorageAccountModel
+    public partial class StorageAccountModel : ResourceBase
     {
         /// <summary>
         /// Initializes a new instance of the StorageAccountModel class.
@@ -28,69 +28,10 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccountModel class.
         /// </summary>
-        /// <param name="tenantViewId">TODO</param>
-        /// <param name="accountType">Current operation being performed on
-        /// Storage Account. Possible values include: 'Standard_LRS',
-        /// 'Standard_GRS', 'Standard_ZRS', 'Standard_RAGRS',
-        /// 'Premium_LRS'</param>
-        /// <param name="provisioningState">Current state of storage account.
-        /// Possible values include: 'PreCreate', 'Created',
-        /// 'Suspended'</param>
-        /// <param name="primaryEndpoints">Gets the URLs that are used to
-        /// perform a retrieval of a public blob, queue, or table object. Note
-        /// that Standard_ZRS and Premium_LRS accounts only return the blob
-        /// endpoint.</param>
-        /// <param name="creationTime">Gets the creation date and time of the
-        /// storage account in UTC.</param>
-        /// <param name="alternateName">Used during undelete operation</param>
-        /// <param name="primaryLocation">Gets the location of the primary data
-        /// center for the storage account.</param>
-        /// <param name="statusOfPrimary">Gets the status indicating whether
-        /// the primary location of the storage account is available or
-        /// unavailable. Possible values include: 'available',
-        /// 'unavailable'</param>
-        /// <param name="tenantSubscriptionId">TODO</param>
-        /// <param name="tenantStorageAccountName">TODO</param>
-        /// <param name="tenantResourceGroupName">TODO</param>
-        /// <param name="currentOperation">Current operation being performed on
-        /// Storage Account. Possible values include: 'None', 'Create',
-        /// 'Update', 'Suspend', 'Delete', 'Undelete'</param>
-        /// <param name="customDomain">Gets the custom domain the user assigned
-        /// to this storage account.</param>
-        /// <param name="acquisitionOperationCount">TODO</param>
-        /// <param name="accountStatus">Possible values include: 'Active',
-        /// 'Deleted', 'OutOfRetentionPeriod', 'Recycled'</param>
-        /// <param name="permissions">Current operation being performed on
-        /// Storage Account. Possible values include: 'Empty', 'None', 'Read',
-        /// 'Delete', 'Write', 'Full'</param>
-        /// <param name="accountId">TODO</param>
-        /// <param name="wacInternalState">Current operation being performed on
-        /// Storage Account. Possible values include: 'None', 'Active',
-        /// 'Deleted', 'AboveQuota', 'Suspended', 'All'</param>
-        public StorageAccountModel(string tenantViewId = default(string), StorageAccountType? accountType = default(StorageAccountType?), StorageAccountState? provisioningState = default(StorageAccountState?), IDictionary<string, string> primaryEndpoints = default(IDictionary<string, string>), System.DateTime? creationTime = default(System.DateTime?), string alternateName = default(string), string primaryLocation = default(string), LocationStatus? statusOfPrimary = default(LocationStatus?), string tenantSubscriptionId = default(string), string tenantStorageAccountName = default(string), string tenantResourceGroupName = default(string), StorageAccountOperation? currentOperation = default(StorageAccountOperation?), string customDomain = default(string), int? acquisitionOperationCount = default(int?), System.DateTime? deletedTime = default(System.DateTime?), StorageAccountStatus? accountStatus = default(StorageAccountStatus?), System.DateTime? recoveredTime = default(System.DateTime?), System.DateTime? recycledTime = default(System.DateTime?), WacAccountPermissions? permissions = default(WacAccountPermissions?), string accountId = default(string), WacAccountStates? wacInternalState = default(WacAccountStates?), string resourceAdminApiVersion = default(string))
+        public StorageAccountModel(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
+            : base(id, name, type, location, tags)
         {
-            TenantViewId = tenantViewId;
-            AccountType = accountType;
-            ProvisioningState = provisioningState;
-            PrimaryEndpoints = primaryEndpoints;
-            CreationTime = creationTime;
-            AlternateName = alternateName;
-            PrimaryLocation = primaryLocation;
-            StatusOfPrimary = statusOfPrimary;
-            TenantSubscriptionId = tenantSubscriptionId;
-            TenantStorageAccountName = tenantStorageAccountName;
-            TenantResourceGroupName = tenantResourceGroupName;
-            CurrentOperation = currentOperation;
-            CustomDomain = customDomain;
-            AcquisitionOperationCount = acquisitionOperationCount;
-            DeletedTime = deletedTime;
-            AccountStatus = accountStatus;
-            RecoveredTime = recoveredTime;
-            RecycledTime = recycledTime;
-            Permissions = permissions;
-            AccountId = accountId;
-            WacInternalState = wacInternalState;
-            ResourceAdminApiVersion = resourceAdminApiVersion;
+            Properties = properties;
             CustomInit();
         }
 
@@ -100,146 +41,9 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets TODO
         /// </summary>
-        [JsonProperty(PropertyName = "tenantViewId")]
-        public string TenantViewId { get; private set; }
-
-        /// <summary>
-        /// Gets current operation being performed on Storage Account. Possible
-        /// values include: 'Standard_LRS', 'Standard_GRS', 'Standard_ZRS',
-        /// 'Standard_RAGRS', 'Premium_LRS'
-        /// </summary>
-        [JsonProperty(PropertyName = "accountType")]
-        public StorageAccountType? AccountType { get; private set; }
-
-        /// <summary>
-        /// Gets current state of storage account. Possible values include:
-        /// 'PreCreate', 'Created', 'Suspended'
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public StorageAccountState? ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets the URLs that are used to perform a retrieval of a public
-        /// blob, queue, or table object. Note that Standard_ZRS and
-        /// Premium_LRS accounts only return the blob endpoint.
-        /// </summary>
-        [JsonProperty(PropertyName = "primaryEndpoints")]
-        public IDictionary<string, string> PrimaryEndpoints { get; private set; }
-
-        /// <summary>
-        /// Gets the creation date and time of the storage account in UTC.
-        /// </summary>
-        [JsonProperty(PropertyName = "creationTime")]
-        public System.DateTime? CreationTime { get; private set; }
-
-        /// <summary>
-        /// Gets or sets used during undelete operation
-        /// </summary>
-        [JsonProperty(PropertyName = "alternateName")]
-        public string AlternateName { get; set; }
-
-        /// <summary>
-        /// Gets the location of the primary data center for the storage
-        /// account.
-        /// </summary>
-        [JsonProperty(PropertyName = "primaryLocation")]
-        public string PrimaryLocation { get; private set; }
-
-        /// <summary>
-        /// Gets the status indicating whether the primary location of the
-        /// storage account is available or unavailable. Possible values
-        /// include: 'available', 'unavailable'
-        /// </summary>
-        [JsonProperty(PropertyName = "statusOfPrimary")]
-        public LocationStatus? StatusOfPrimary { get; private set; }
-
-        /// <summary>
-        /// Gets TODO
-        /// </summary>
-        [JsonProperty(PropertyName = "tenantSubscriptionId")]
-        public string TenantSubscriptionId { get; private set; }
-
-        /// <summary>
-        /// Gets or sets TODO
-        /// </summary>
-        [JsonProperty(PropertyName = "tenantStorageAccountName")]
-        public string TenantStorageAccountName { get; set; }
-
-        /// <summary>
-        /// Gets or sets TODO
-        /// </summary>
-        [JsonProperty(PropertyName = "tenantResourceGroupName")]
-        public string TenantResourceGroupName { get; set; }
-
-        /// <summary>
-        /// Gets current operation being performed on Storage Account. Possible
-        /// values include: 'None', 'Create', 'Update', 'Suspend', 'Delete',
-        /// 'Undelete'
-        /// </summary>
-        [JsonProperty(PropertyName = "currentOperation")]
-        public StorageAccountOperation? CurrentOperation { get; private set; }
-
-        /// <summary>
-        /// Gets the custom domain the user assigned to this storage account.
-        /// </summary>
-        [JsonProperty(PropertyName = "customDomain")]
-        public string CustomDomain { get; private set; }
-
-        /// <summary>
-        /// Gets or sets TODO
-        /// </summary>
-        [JsonProperty(PropertyName = "acquisitionOperationCount")]
-        public int? AcquisitionOperationCount { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "deletedTime")]
-        public System.DateTime? DeletedTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'Active', 'Deleted',
-        /// 'OutOfRetentionPeriod', 'Recycled'
-        /// </summary>
-        [JsonProperty(PropertyName = "accountStatus")]
-        public StorageAccountStatus? AccountStatus { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "recoveredTime")]
-        public System.DateTime? RecoveredTime { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "recycledTime")]
-        public System.DateTime? RecycledTime { get; set; }
-
-        /// <summary>
-        /// Gets current operation being performed on Storage Account. Possible
-        /// values include: 'Empty', 'None', 'Read', 'Delete', 'Write', 'Full'
-        /// </summary>
-        [JsonProperty(PropertyName = "permissions")]
-        public WacAccountPermissions? Permissions { get; private set; }
-
-        /// <summary>
-        /// Gets TODO
-        /// </summary>
-        [JsonProperty(PropertyName = "accountId")]
-        public string AccountId { get; private set; }
-
-        /// <summary>
-        /// Gets current operation being performed on Storage Account. Possible
-        /// values include: 'None', 'Active', 'Deleted', 'AboveQuota',
-        /// 'Suspended', 'All'
-        /// </summary>
-        [JsonProperty(PropertyName = "wacInternalState")]
-        public WacAccountStates? WacInternalState { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "resourceAdminApiVersion")]
-        public string ResourceAdminApiVersion { get; private set; }
+        [JsonProperty(PropertyName = "properties")]
+        public object Properties { get; set; }
 
     }
 }

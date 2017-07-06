@@ -52,6 +52,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         public string OperationId { get; set; }
 
         /// <summary>
+        /// TODO
         /// </summary>
         public string AcquisitionId { get; set; }
 
@@ -327,7 +328,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             Farms = new FarmsOperations(this);
             Containers = new ContainersOperations(this);
             Acquisitions = new AcquisitionsOperations(this);
-            BaseUri = new System.Uri("https://management.azure.com");
+            BaseUri = new System.Uri("https://https://adminmanagement.local.azurestack.external");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -344,6 +345,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -357,6 +359,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }

@@ -48,6 +48,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         string OperationId { get; set; }
 
         /// <summary>
+        /// TODO
         /// </summary>
         string AcquisitionId { get; set; }
 

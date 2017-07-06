@@ -12,22 +12,24 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class FarmListResponse
+    public partial class AcquisitionModel : ResourceBase
     {
         /// <summary>
-        /// Initializes a new instance of the FarmListResponse class.
+        /// Initializes a new instance of the AcquisitionModel class.
         /// </summary>
-        public FarmListResponse()
+        public AcquisitionModel()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FarmListResponse class.
+        /// Initializes a new instance of the AcquisitionModel class.
         /// </summary>
-        public FarmListResponse(IList<FarmModel> value = default(IList<FarmModel>))
+        /// <param name="properties">TODO</param>
+        public AcquisitionModel(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Acquisition properties = default(Acquisition))
+            : base(id, name, type, location, tags)
         {
-            Value = value;
+            Properties = properties;
             CustomInit();
         }
 
@@ -37,9 +39,10 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<FarmModel> Value { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public Acquisition Properties { get; set; }
 
     }
 }

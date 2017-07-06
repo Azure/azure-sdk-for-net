@@ -15,20 +15,22 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     /// <summary>
     /// TODO
     /// </summary>
-    public partial class FarmCreateParameters : ResourceBase
+    public partial class QueueServiceResponseResource : ResourceBase
     {
         /// <summary>
-        /// Initializes a new instance of the FarmCreateParameters class.
+        /// Initializes a new instance of the QueueServiceResponseResource
+        /// class.
         /// </summary>
-        public FarmCreateParameters()
+        public QueueServiceResponseResource()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FarmCreateParameters class.
+        /// Initializes a new instance of the QueueServiceResponseResource
+        /// class.
         /// </summary>
-        public FarmCreateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
+        public QueueServiceResponseResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), QueueServiceResponse properties = default(QueueServiceResponse))
             : base(id, name, type, location, tags)
         {
             Properties = properties;
@@ -43,7 +45,7 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        public QueueServiceResponse Properties { get; set; }
 
     }
 }

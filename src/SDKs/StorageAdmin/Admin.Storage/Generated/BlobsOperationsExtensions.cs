@@ -31,7 +31,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='farmId'>
             /// Th name of the farm.
             /// </param>
-            public static ServiceSettings Get(this IBlobsOperations operations, string resourceGroupName, string farmId)
+            public static BlobServiceResponseResource Get(this IBlobsOperations operations, string resourceGroupName, string farmId)
             {
                 return operations.GetAsync(resourceGroupName, farmId).GetAwaiter().GetResult();
             }
@@ -51,7 +51,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServiceSettings> GetAsync(this IBlobsOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BlobServiceResponseResource> GetAsync(this IBlobsOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, farmId, null, cancellationToken).ConfigureAwait(false))
                 {

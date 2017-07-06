@@ -8,9 +8,11 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using Microsoft.AzureStack.Storage;
     using Microsoft.AzureStack.Storage.Admin;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class StorageQuotaModel
+    public partial class StorageQuotaModel : ResourceBase
     {
         /// <summary>
         /// Initializes a new instance of the StorageQuotaModel class.
@@ -23,7 +25,8 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// Initializes a new instance of the StorageQuotaModel class.
         /// </summary>
-        public StorageQuotaModel(StorageQuota properties = default(StorageQuota))
+        public StorageQuotaModel(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), StorageQuota properties = default(StorageQuota))
+            : base(id, name, type, location, tags)
         {
             Properties = properties;
             CustomInit();

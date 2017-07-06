@@ -12,22 +12,20 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class QuotaCreateOrUpdateParameters : ResourceBase
+    public partial class QuotaParameters : ResourceBase
     {
         /// <summary>
-        /// Initializes a new instance of the QuotaCreateOrUpdateParameters
-        /// class.
+        /// Initializes a new instance of the QuotaParameters class.
         /// </summary>
-        public QuotaCreateOrUpdateParameters()
+        public QuotaParameters()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the QuotaCreateOrUpdateParameters
-        /// class.
+        /// Initializes a new instance of the QuotaParameters class.
         /// </summary>
-        public QuotaCreateOrUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), StorageQuota properties = default(StorageQuota))
+        public QuotaParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), StorageQuota properties = default(StorageQuota))
             : base(id, name, type, location, tags)
         {
             Properties = properties;

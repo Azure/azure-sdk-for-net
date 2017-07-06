@@ -18,7 +18,6 @@ namespace Storage.Tests
             Assert.AreEqual<string>(parameters.Location, farm.Location);
             Assert.IsNotNull(farm.Name);
             Assert.IsNotNull(farm.Properties);
-            Assert.IsNotNull(farm.Properties.Settings);
             // Assert.IsNotNull(farm.Properties.HealthStatus);
             Assert.IsNotNull(farm.Properties.SettingsStore);
             
@@ -35,7 +34,7 @@ namespace Storage.Tests
                     Assert.IsNotNull(quota);
                 }
 
-                client.Quotas.CreateOrUpdate(parameters.Location, "herro", new QuotaCreateOrUpdateParameters() {
+                client.Quotas.CreateOrUpdate(parameters.Location, "herro", new QuotaParameters() {
                     Type = "Microsoft.Storage.Admin/locations/quotas",
                     Properties = new StorageQuota(50, 1000)
                 });

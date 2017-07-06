@@ -95,7 +95,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             }
 
             /// <summary>
-            /// TODO
+            /// Get a list of acquistions
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -115,7 +115,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             }
 
             /// <summary>
-            /// TODO
+            /// Get a list of acquistions
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

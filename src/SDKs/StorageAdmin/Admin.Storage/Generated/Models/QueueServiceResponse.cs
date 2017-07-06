@@ -8,28 +8,29 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using Microsoft.AzureStack.Storage;
     using Microsoft.AzureStack.Storage.Admin;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// TODO
     /// </summary>
-    public partial class FarmCreateParameters : ResourceBase
+    public partial class QueueServiceResponse : ServiceResponse
     {
         /// <summary>
-        /// Initializes a new instance of the FarmCreateParameters class.
+        /// Initializes a new instance of the QueueServiceResponse class.
         /// </summary>
-        public FarmCreateParameters()
+        public QueueServiceResponse()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FarmCreateParameters class.
+        /// Initializes a new instance of the QueueServiceResponse class.
         /// </summary>
-        public FarmCreateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
-            : base(id, name, type, location, tags)
+        /// <param name="version">TODO</param>
+        /// <param name="healthStatus">Possible values include: 'Unknown',
+        /// 'Healthy', 'Warning', 'Critical'</param>
+        public QueueServiceResponse(string version = default(string), HealthStatus? healthStatus = default(HealthStatus?), QueueServiceSettings properties = default(QueueServiceSettings))
+            : base(version, healthStatus)
         {
             Properties = properties;
             CustomInit();
@@ -43,7 +44,7 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        public QueueServiceSettings Properties { get; set; }
 
     }
 }

@@ -28,9 +28,12 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            public static void CancelShare(this IContainersOperations operations, string resourceGroupName)
+            /// <param name='farmId'>
+            /// Th name of the farm.
+            /// </param>
+            public static void CancelMigration(this IContainersOperations operations, string resourceGroupName, string farmId)
             {
-                operations.CancelShareAsync(resourceGroupName).GetAwaiter().GetResult();
+                operations.CancelMigrationAsync(resourceGroupName, farmId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -42,12 +45,15 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
+            /// <param name='farmId'>
+            /// Th name of the farm.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelShareAsync(this IContainersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CancelMigrationAsync(this IContainersOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CancelShareWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.CancelMigrationWithHttpMessagesAsync(resourceGroupName, farmId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -99,9 +105,67 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='shareName'>
             /// TODO
             /// </param>
-            public static IList<ShareModel> ListDestinations(this IContainersOperations operations, string resourceGroupName, string farmId, string shareName)
+            /// <param name='migrationIntent'>
+            /// </param>
+            /// <param name='maxCount'>
+            /// </param>
+            /// <param name='startIndex'>
+            /// </param>
+            public static IList<Container> List(this IContainersOperations operations, string resourceGroupName, string farmId, string shareName, string migrationIntent, int maxCount, int startIndex)
             {
-                return operations.ListDestinationsAsync(resourceGroupName, farmId, shareName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, farmId, shareName, migrationIntent, maxCount, startIndex).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all containers under the given parameters
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='farmId'>
+            /// Th name of the farm.
+            /// </param>
+            /// <param name='shareName'>
+            /// TODO
+            /// </param>
+            /// <param name='migrationIntent'>
+            /// </param>
+            /// <param name='maxCount'>
+            /// </param>
+            /// <param name='startIndex'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<Container>> ListAsync(this IContainersOperations operations, string resourceGroupName, string farmId, string shareName, string migrationIntent, int maxCount, int startIndex, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, farmId, shareName, migrationIntent, maxCount, startIndex, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all containers under the given parameters
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='farmId'>
+            /// Th name of the farm.
+            /// </param>
+            /// <param name='shareName'>
+            /// TODO
+            /// </param>
+            public static IList<ShareModel> ListDestinationShares(this IContainersOperations operations, string resourceGroupName, string farmId, string shareName)
+            {
+                return operations.ListDestinationSharesAsync(resourceGroupName, farmId, shareName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -122,9 +186,9 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ShareModel>> ListDestinationsAsync(this IContainersOperations operations, string resourceGroupName, string farmId, string shareName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ShareModel>> ListDestinationSharesAsync(this IContainersOperations operations, string resourceGroupName, string farmId, string shareName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListDestinationsWithHttpMessagesAsync(resourceGroupName, farmId, shareName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListDestinationSharesWithHttpMessagesAsync(resourceGroupName, farmId, shareName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -142,9 +206,15 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='farmId'>
             /// Th name of the farm.
             /// </param>
-            public static string Migrate(this IContainersOperations operations, string resourceGroupName, string farmId)
+            /// <param name='shareName'>
+            /// TODO
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters needed to perform migration
+            /// </param>
+            public static string Migrate(this IContainersOperations operations, string resourceGroupName, string farmId, string shareName, MigrationParameters parameters)
             {
-                return operations.MigrateAsync(resourceGroupName, farmId).GetAwaiter().GetResult();
+                return operations.MigrateAsync(resourceGroupName, farmId, shareName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -159,12 +229,18 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='farmId'>
             /// Th name of the farm.
             /// </param>
+            /// <param name='shareName'>
+            /// TODO
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters needed to perform migration
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> MigrateAsync(this IContainersOperations operations, string resourceGroupName, string farmId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> MigrateAsync(this IContainersOperations operations, string resourceGroupName, string farmId, string shareName, MigrationParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.MigrateWithHttpMessagesAsync(resourceGroupName, farmId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.MigrateWithHttpMessagesAsync(resourceGroupName, farmId, shareName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

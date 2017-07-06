@@ -33,7 +33,11 @@
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Jeff.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -58,86 +62,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generated\AcquisitionsOperations.cs" />
-    <Compile Include="Generated\AcquisitionsOperationsExtensions.cs" />
-    <Compile Include="Generated\BlobsOperations.cs" />
-    <Compile Include="Generated\BlobsOperationsExtensions.cs" />
-    <Compile Include="Generated\ContainersOperations.cs" />
-    <Compile Include="Generated\ContainersOperationsExtensions.cs" />
-    <Compile Include="Generated\FarmsOperations.cs" />
-    <Compile Include="Generated\FarmsOperationsExtensions.cs" />
-    <Compile Include="Generated\IAcquisitionsOperations.cs" />
-    <Compile Include="Generated\IBlobsOperations.cs" />
-    <Compile Include="Generated\IContainersOperations.cs" />
-    <Compile Include="Generated\IFarmsOperations.cs" />
-    <Compile Include="Generated\IQueuesOperations.cs" />
-    <Compile Include="Generated\IQuotasOperations.cs" />
-    <Compile Include="Generated\ISharesOperations.cs" />
-    <Compile Include="Generated\IStorageAccountsOperations.cs" />
-    <Compile Include="Generated\IStorageAdminClient.cs" />
-    <Compile Include="Generated\ITablesOperations.cs" />
-    <Compile Include="Generated\Models\Acquisition.cs" />
-    <Compile Include="Generated\Models\AcquisitionStatus.cs" />
-    <Compile Include="Generated\Models\AggregateType.cs" />
-    <Compile Include="Generated\Models\Container.cs" />
-    <Compile Include="Generated\Models\Farm.cs" />
-    <Compile Include="Generated\Models\FarmBase.cs" />
-    <Compile Include="Generated\Models\FarmCreateParameters.cs" />
-    <Compile Include="Generated\Models\FarmListResponse.cs" />
-    <Compile Include="Generated\Models\FarmModel.cs" />
-    <Compile Include="Generated\Models\FarmSettings.cs" />
-    <Compile Include="Generated\Models\FarmUpdateParameters.cs" />
-    <Compile Include="Generated\Models\HealthStatus.cs" />
-    <Compile Include="Generated\Models\LocationStatus.cs" />
-    <Compile Include="Generated\Models\Metric.cs" />
-    <Compile Include="Generated\Models\MetricAvailability.cs" />
-    <Compile Include="Generated\Models\MetricDefinition.cs" />
-    <Compile Include="Generated\Models\Metrics.cs" />
-    <Compile Include="Generated\Models\MetricsResult.cs" />
-    <Compile Include="Generated\Models\MetricUnit.cs" />
-    <Compile Include="Generated\Models\MetricValue.cs" />
-    <Compile Include="Generated\Models\MigrationResult.cs" />
-    <Compile Include="Generated\Models\QueueServiceSettings.cs" />
-    <Compile Include="Generated\Models\QuotaCreateOrUpdateParameters.cs" />
-    <Compile Include="Generated\Models\ResourceBase.cs" />
-    <Compile Include="Generated\Models\ServiceSettings.cs" />
-    <Compile Include="Generated\Models\Share.cs" />
-    <Compile Include="Generated\Models\ShareModel.cs" />
-    <Compile Include="Generated\Models\StorageAccountModel.cs" />
-    <Compile Include="Generated\Models\StorageAccountOperation.cs" />
-    <Compile Include="Generated\Models\StorageAccountState.cs" />
-    <Compile Include="Generated\Models\StorageAccountStatus.cs" />
-    <Compile Include="Generated\Models\StorageAccountSyncResult.cs" />
-    <Compile Include="Generated\Models\StorageAccountType.cs" />
-    <Compile Include="Generated\Models\StorageQuota.cs" />
-    <Compile Include="Generated\Models\StorageQuotaListResponse.cs" />
-    <Compile Include="Generated\Models\StorageQuotaModel.cs" />
-    <Compile Include="Generated\Models\TableServiceSettings.cs" />
-    <Compile Include="Generated\Models\WacAccountPermissions.cs" />
-    <Compile Include="Generated\Models\WacAccountStates.cs" />
-    <Compile Include="Generated\Models\WritableSettings.cs" />
-    <Compile Include="Generated\QueuesOperations.cs" />
-    <Compile Include="Generated\QueuesOperationsExtensions.cs" />
-    <Compile Include="Generated\QuotasOperations.cs" />
-    <Compile Include="Generated\QuotasOperationsExtensions.cs" />
-    <Compile Include="Generated\SharesOperations.cs" />
-    <Compile Include="Generated\SharesOperationsExtensions.cs" />
-    <Compile Include="Generated\StorageAccountsOperations.cs" />
-    <Compile Include="Generated\StorageAccountsOperationsExtensions.cs" />
-    <Compile Include="Generated\StorageAdminClient.cs" />
-    <Compile Include="Generated\TablesOperations.cs" />
-    <Compile Include="Generated\TablesOperationsExtensions.cs" />
+    <Compile Include="Generated\**\*" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="generate.bat" />
-    <None Include="Jeff.pfx" />
     <None Include="packages.config" />
     <None Include="storage.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>START /b /D $(ProjectDir) $(ProjectDir)generate.cmd</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

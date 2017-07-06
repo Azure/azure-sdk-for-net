@@ -29,12 +29,12 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='quotaName'>
             /// The name of the quota.
             /// </param>
-            /// <param name='template'>
-            /// Template used to create or update storage quota
+            /// <param name='parameters'>
+            /// parameters used to create or update storage quota
             /// </param>
-            public static StorageQuota CreateOrUpdate(this IQuotasOperations operations, string location, string quotaName, QuotaCreateOrUpdateParameters template)
+            public static StorageQuotaModel CreateOrUpdate(this IQuotasOperations operations, string location, string quotaName, QuotaParameters parameters)
             {
-                return operations.CreateOrUpdateAsync(location, quotaName, template).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(location, quotaName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -49,15 +49,15 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='quotaName'>
             /// The name of the quota.
             /// </param>
-            /// <param name='template'>
-            /// Template used to create or update storage quota
+            /// <param name='parameters'>
+            /// parameters used to create or update storage quota
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageQuota> CreateOrUpdateAsync(this IQuotasOperations operations, string location, string quotaName, QuotaCreateOrUpdateParameters template, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageQuotaModel> CreateOrUpdateAsync(this IQuotasOperations operations, string location, string quotaName, QuotaParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(location, quotaName, template, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(location, quotaName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -112,7 +112,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='quotaName'>
             /// The name of the quota.
             /// </param>
-            public static StorageQuota Get(this IQuotasOperations operations, string location, string quotaName)
+            public static StorageQuotaModel Get(this IQuotasOperations operations, string location, string quotaName)
             {
                 return operations.GetAsync(location, quotaName).GetAwaiter().GetResult();
             }
@@ -132,7 +132,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageQuota> GetAsync(this IQuotasOperations operations, string location, string quotaName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageQuotaModel> GetAsync(this IQuotasOperations operations, string location, string quotaName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(location, quotaName, null, cancellationToken).ConfigureAwait(false))
                 {

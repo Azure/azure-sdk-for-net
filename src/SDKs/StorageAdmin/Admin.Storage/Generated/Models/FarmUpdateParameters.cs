@@ -25,10 +25,10 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// Initializes a new instance of the FarmUpdateParameters class.
         /// </summary>
-        public FarmUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), FarmBase farm = default(FarmBase))
+        public FarmUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), FarmBase properties = default(FarmBase))
             : base(id, name, type, location, tags)
         {
-            Farm = farm;
+            Properties = properties;
             CustomInit();
         }
 
@@ -39,8 +39,8 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Farm")]
-        public FarmBase Farm { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public FarmBase Properties { get; set; }
 
     }
 }

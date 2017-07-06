@@ -67,7 +67,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// </exception>
         Task<AzureOperationResponse<object>> GetWithHttpMessagesAsync(string resourceGroupName, string farmId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// TODO
+        /// Get a list of acquistions
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.

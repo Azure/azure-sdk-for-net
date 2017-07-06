@@ -15,20 +15,23 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     /// <summary>
     /// TODO
     /// </summary>
-    public partial class FarmCreateParameters : ResourceBase
+    public partial class BlobServiceResponseResource : ResourceBase
     {
         /// <summary>
-        /// Initializes a new instance of the FarmCreateParameters class.
+        /// Initializes a new instance of the BlobServiceResponseResource
+        /// class.
         /// </summary>
-        public FarmCreateParameters()
+        public BlobServiceResponseResource()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FarmCreateParameters class.
+        /// Initializes a new instance of the BlobServiceResponseResource
+        /// class.
         /// </summary>
-        public FarmCreateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
+        /// <param name="properties">TODO</param>
+        public BlobServiceResponseResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), BlobServiceResponse properties = default(BlobServiceResponse))
             : base(id, name, type, location, tags)
         {
             Properties = properties;
@@ -41,9 +44,10 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets TODO
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        public BlobServiceResponse Properties { get; set; }
 
     }
 }

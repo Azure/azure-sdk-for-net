@@ -8,31 +8,32 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
     using Microsoft.AzureStack.Storage;
     using Microsoft.AzureStack.Storage.Admin;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// TODO
     /// </summary>
-    public partial class FarmModel : ResourceBase
+    public partial class BlobServiceResponse : ServiceResponse
     {
         /// <summary>
-        /// Initializes a new instance of the FarmModel class.
+        /// Initializes a new instance of the BlobServiceResponse class.
         /// </summary>
-        public FarmModel()
+        public BlobServiceResponse()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FarmModel class.
+        /// Initializes a new instance of the BlobServiceResponse class.
         /// </summary>
-        /// <param name="properties">TODO</param>
-        public FarmModel(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Farm properties = default(Farm))
-            : base(id, name, type, location, tags)
+        /// <param name="version">TODO</param>
+        /// <param name="healthStatus">Possible values include: 'Unknown',
+        /// 'Healthy', 'Warning', 'Critical'</param>
+        /// <param name="settings">TODO</param>
+        public BlobServiceResponse(string version = default(string), HealthStatus? healthStatus = default(HealthStatus?), BlobServiceSettings settings = default(BlobServiceSettings))
+            : base(version, healthStatus)
         {
-            Properties = properties;
+            Settings = settings;
             CustomInit();
         }
 
@@ -44,8 +45,8 @@ namespace Microsoft.AzureStack.Storage.Admin.Models
         /// <summary>
         /// Gets or sets TODO
         /// </summary>
-        [JsonProperty(PropertyName = "Properties")]
-        public Farm Properties { get; set; }
+        [JsonProperty(PropertyName = "settings")]
+        public BlobServiceSettings Settings { get; set; }
 
     }
 }
