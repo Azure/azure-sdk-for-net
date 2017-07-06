@@ -2,8 +2,10 @@ param(
     [string] $project = '*',
     [string] $specs = "https://github.com/Azure/azure-rest-api-specs",
     [string] $sdkDir = "..\..",
-    [bool] $jsonRpc)
+    [string] $jsonRpc)
 
 Import-Module "./lib.psm1"
 
-GenerateAndBuild -project $project -specs $specs -sdkDir $sdkDir -jsonRpc $jsonRpc
+$jsonRpcBool = if ($jsonRpc) { $true } else { $false }
+
+GenerateAndBuild -project $project -specs $specs -sdkDir $sdkDir -jsonRpc $jsonRpcBool

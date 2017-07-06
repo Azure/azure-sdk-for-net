@@ -176,6 +176,6 @@ install:
 - ps: npm install -g autorest
 - ps: Set-Location .\tools\autogenForSwaggers\
 build_script:
-- ps: .\build.ps1 -project $env:TEST_PROJECT -jsonrpc $env:TEST_JSONRPC
+- ps: .\build.ps1 -project $env:TEST_PROJECT -jsonRpc $env:TEST_JSONRPC
 test_script:
 - ps: .\test.ps1 -project $env:TEST_PROJECT
