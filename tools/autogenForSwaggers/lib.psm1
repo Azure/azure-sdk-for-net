@@ -123,7 +123,8 @@ function AutoRest {
     }
 
     $inputList | ForEach-Object {
-        $r += "--input-file=$_"
+        $input = Get-SourcePath -specs $specs -info $info -source $_
+        $r += "--input-file=$input"
     }
 
     $r
@@ -188,7 +189,8 @@ function Generate-Sdk {
     $output = Get-DotNetPath -sdkDir $sdkDir -dotNet $dotNet -folder $dotNet.output
     Clear-Dir -path $output
 
-    if ($dotNet.autorest -or $info.isLegacy) {
+    $title = $dotNet.client
+    if ($dotNet.autorest) {
         if ($jsonRpc) {
             Write-Error "JSON RPC is not supported for $($info.name)"
             exit -1
@@ -213,9 +215,9 @@ function Generate-Sdk {
                 "-Input",
                 $input
             )
-            if ($dotNet.client) {
+            if ($title) {
                 $r += "-name"
-                $r += $dotNet.client
+                $r += $title
             }
             $r
             & $autoRestExe $r
@@ -224,17 +226,12 @@ function Generate-Sdk {
                 exit $LASTEXITCODE
             }
         }
+    } elseif ($info.isLegacy) {
+        # Run AutoRest for all sources.
+        $info.sources | ForEach-Object {
+            AutoRest -info $info -inputList @( $_ ) -jsonRpc $jsonRpc -title $title
+        }
     } else {
-        $autoRestExe = "autorest"
-        $lang = if ($jsonRpc) { "jsonrpcclient" } else { "csharp" }
-        $r = @(
-            "--$lang.azure-arm",
-            "--namespace=$($dotNet.namespace)",
-            "--output-folder=$output",
-            "--license-header=MICROSOFT_MIT",
-            "--payload-flattening-threshold=$($dotNet.ft)"
-        )
-        $title = $dotNet.client
         $inputList = @()
         if ($info.isComposite) {
             $info.sources | ForEach-Object {
@@ -248,17 +245,15 @@ function Generate-Sdk {
                 }
                 $composite = $compositeStr | ConvertFrom-Json
                 $composite.documents | ForEach-Object {
-                    $input = Get-SourcePath -specs $specs -info $info -source "$compositeDir/$_"
-                    $inputList += $input
+                    $inputList += "$compositeDir/$_"
                 }
                 if(-Not $title) {
                     $title = $composite.info.title
                 }
             }
         } else {
-            $info.sources | % {
-                $input = Get-SourcePath -specs $specs -info $info -source $_
-                $inputList += $input
+            $info.sources | ForEach-Object {
+                $inputList += $_
             }
         }
         AutoRest -info $info -inputList $inputList -jsonRpc $jsonRpc -title $title
