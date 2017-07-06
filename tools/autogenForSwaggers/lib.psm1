@@ -256,7 +256,6 @@ function Generate-Sdk {
                 $inputList += $_
             }
         }
-        $inputList
         CallAutoRest -info $info -inputList $inputList -jsonRpc $jsonRpc -title $title
     }
 }
