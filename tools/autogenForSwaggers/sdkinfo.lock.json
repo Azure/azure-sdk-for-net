@@ -7,11 +7,11 @@
         "dotNet":  {
                        "name":  "Analysis",
                        "folder":  "AnalysisServices",
-                       "commit":  "4936e4e315ff32f6e53c62d17c065c2f38601169",
                        "test":  "AnalysisServices.Tests/AnalysisServices.Tests.csproj",
                        "ft":  0,
                        "output":  "Management.Analysis\\Generated",
-                       "namespace":  "Microsoft.Azure.Management.Analysis"
+                       "namespace":  "Microsoft.Azure.Management.Analysis",
+                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
                    },
         "isArm":  true,
         "isComposite":  null

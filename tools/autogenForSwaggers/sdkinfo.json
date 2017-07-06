@@ -5,7 +5,6 @@
         "dotNet": {
             "name": "Analysis",
             "folder": "AnalysisServices",
-            "commit": "4936e4e315ff32f6e53c62d17c065c2f38601169",
             "test": "AnalysisServices.Tests/AnalysisServices.Tests.csproj"
         }
     },
@@ -31,9 +30,9 @@
             "folder": "Batch/Management",
             "test": "Management.Batch.Tests/Management.Batch.Tests.csproj",
             "ft": 1,
-            "commit": "19f63015ea5a8a0fc64b9d7e2cdfeac447d93eaf",            
-            "autorest": "AutoRest.1.0.0-Nightly20170129" 
-        }        
+            "commit": "19f63015ea5a8a0fc64b9d7e2cdfeac447d93eaf",
+            "autorest": "AutoRest.1.0.0-Nightly20170129"
+        }
     },
     {
         "name": "arm-billing",
@@ -52,14 +51,14 @@
         "sources": [ "2017-04-18/swagger/cognitiveservices.json" ],
         "dotNet": {
             "name": "CognitiveServices"
-        }        
+        }
     },
     {
-        "name": "arm-compute",        
+        "name": "arm-compute",
         "sources": [ "compositeComputeClient.json" ],
         "dotNet":{
             "ft": 1,
-            "autorest": "AutoRest.1.0.0-Nightly20170126"   
+            "autorest": "AutoRest.1.0.0-Nightly20170126"
         }
     },
     {
@@ -91,7 +90,7 @@
             "catalog/2016-11-01/swagger/catalog.json"
         ],
         "isLegacy": true,
-        "dotNet": { 
+        "dotNet": {
             "name": "DataLake.Analytics",
             "test": "DataLakeAnalytics.Tests/DataLakeAnalytics.Tests.csproj"
         }
@@ -136,7 +135,7 @@
             "name": "Graph.RBAC",
             "namespace": "Microsoft.Azure.Graph.RBAC",
             "output": "Graph.RBAC/Generated"
-        }                
+        }
     },
     {
         "name": "insights",
@@ -158,7 +157,7 @@
         "sources": [ "2017-01-19/swagger/iothub.json" ],
         "dotNet": {
             "name": "IotHub"
-        }        
+        }
     },
     {
         "name": "keyvault",
@@ -167,7 +166,7 @@
     {
         "name": "arm-keyvault",
         "sources": [ "2016-10-01/swagger/keyvault.json" ],
-        "dotNet": 
+        "dotNet":
         {
             "name": "KeyVault",
             "folder": "KeyVault/Management",
@@ -180,7 +179,7 @@
     },
     {
         "name": "arm-machinelearning/2017-01-01",
-        "sources": [ 
+        "sources": [
             "swagger/webservices.json"
         ],
         "dotNet": {
@@ -197,7 +196,7 @@
             "namespace": "Microsoft.Azure.Management.MachineLearning.CommitmentPlans",
             "output": "Management.MachineLearning/Generated/CommitmentPlans"
         }
-    },    
+    },
     {
         "name": "arm-mediaservices",
         "sources": [ "2015-10-01/swagger/media.json" ],
@@ -213,7 +212,7 @@
             "namespace": "Microsoft.Azure.Management.Monitor",
             "output": "Management.Monitor/Generated/Monitor"
         }
-    },    
+    },
     {
         "name": "arm-monitor",
         "sources": [ "compositeMonitorManagementClient.json" ],
@@ -224,7 +223,7 @@
     },
     {
         "name": "arm-network",
-        "sources": [ 
+        "sources": [
             "compositeNetworkClient.json" ],
         "dotNet":{
             "commit": "c6aa42181aede778b31b3630ef2e8ea2d32c7ae3"
@@ -282,7 +281,7 @@
             "folder": "RedisCache",
             "test": "RedisCache.Tests/RedisCache.Tests.csproj",
             "autorest": "AutoRest.0.17.3"
-        }       
+        }
     },
     {
         "name": "arm-relay",
@@ -353,7 +352,7 @@
         "dotNet": {
             "name": "ServiceFabric",
             "test": "ServiceFabric.Test/ServiceFabric.Test.csproj"
-        }        
+        }
     },
     {
         "name": "arm-sql",
