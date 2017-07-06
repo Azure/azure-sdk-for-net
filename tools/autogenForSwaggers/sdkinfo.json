@@ -123,7 +123,7 @@
     },
     {
         "name": "arm-eventhub",
-        "sources": [ "2015-08-01/swagger/EventHub.json" ],
+        "sources": [ "2017-04-01/swagger/EventHub.json" ],
         "dotNet": {
             "name": "EventHub"
         }

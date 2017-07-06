@@ -11,7 +11,7 @@
                        "ft":  0,
                        "output":  "Management.Analysis\\Generated",
                        "namespace":  "Microsoft.Azure.Management.Analysis",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -30,7 +30,7 @@
                        "output":  "Management.Authorization\\Generated",
                        "test":  "Authorization.Tests\\Authorization.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Authorization",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    }
     },
     {
@@ -47,7 +47,7 @@
                        "output":  "Management.Automation\\Generated",
                        "test":  "Automation.Tests\\Automation.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Automation",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    }
     },
     {
@@ -62,7 +62,7 @@
                        "folder":  "Batch",
                        "test":  "Batch.Tests\\Batch.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Batch",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  false,
         "isComposite":  null
@@ -99,7 +99,7 @@
                        "output":  "Management.Billing\\Generated",
                        "test":  "Billing.Tests\\Billing.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Billing",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    }
     },
     {
@@ -115,7 +115,7 @@
                        "output":  "Management.Cdn\\Generated",
                        "test":  "Cdn.Tests\\Cdn.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Cdn",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -132,7 +132,7 @@
                        "output":  "Management.CognitiveServices\\Generated",
                        "test":  "CognitiveServices.Tests\\CognitiveServices.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.CognitiveServices",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -150,7 +150,7 @@
                        "output":  "Management.Compute\\Generated",
                        "test":  "Compute.Tests\\Compute.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Compute",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  "compositeComputeClient.json"
@@ -169,7 +169,7 @@
                        "output":  "Management.Consumption\\Generated",
                        "test":  "Consumption.Tests\\Consumption.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Consumption",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    }
     },
     {
@@ -202,7 +202,7 @@
                        "output":  "Management.CustomerInsights\\Generated",
                        "test":  "CustomerInsights.Tests\\CustomerInsights.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.CustomerInsights",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -222,7 +222,7 @@
                        "folder":  "DataLake.Analytics",
                        "output":  "Management.DataLake.Analytics\\Generated",
                        "namespace":  "Microsoft.Azure.Management.DataLake.Analytics",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -241,7 +241,7 @@
                        "folder":  "DataLake.Store",
                        "output":  "Management.DataLake.Store\\Generated",
                        "namespace":  "Microsoft.Azure.Management.DataLake.Store",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -258,7 +258,7 @@
                        "output":  "Management.DevTestLabs\\Generated",
                        "test":  "DevTestLabs.Tests\\DevTestLabs.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.DevTestLabs",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -275,7 +275,7 @@
                        "output":  "Management.Dns\\Generated",
                        "test":  "Dns.Tests\\Dns.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Dns",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -283,7 +283,7 @@
     {
         "name":  "arm-eventhub",
         "sources":  [
-                        "2015-08-01/swagger/EventHub.json"
+                        "2017-04-01/swagger/EventHub.json"
                     ],
         "dotNet":  {
                        "name":  "EventHub",
@@ -292,7 +292,7 @@
                        "output":  "Management.EventHub\\Generated",
                        "test":  "EventHub.Tests\\EventHub.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.EventHub",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -309,7 +309,7 @@
                        "ft":  0,
                        "folder":  "Graph.RBAC",
                        "test":  "Graph.RBAC.Tests\\Graph.RBAC.Tests.csproj",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  "compositeGraphRbacManagementClient.json"
@@ -326,7 +326,7 @@
                        "folder":  "Insights",
                        "test":  "Insights.Tests\\Insights.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Insights",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  false,
         "isComposite":  "compositeInsightsClient.json"
@@ -343,7 +343,7 @@
                        "folder":  "Insights",
                        "test":  "Insights.Tests\\Insights.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Insights",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  "compositeInsightsManagementClient.json"
@@ -360,7 +360,7 @@
                        "output":  "Management.IotHub\\Generated",
                        "test":  "IotHub.Tests\\IotHub.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.IotHub",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -379,7 +379,7 @@
                        "output":  "dataPlane\\Microsoft.Azure.Keyvault\\Generated",
                        "test":  "Keyvault.Tests\\Keyvault.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Keyvault",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    }
     },
     {
@@ -394,7 +394,7 @@
                        "ft":  0,
                        "output":  "Management.KeyVault\\Generated",
                        "namespace":  "Microsoft.Azure.Management.KeyVault",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -413,7 +413,7 @@
                        "output":  "Management.Logic\\Generated",
                        "test":  "Logic.Tests\\Logic.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Logic",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    }
     },
     {
@@ -428,7 +428,7 @@
                        "ft":  0,
                        "folder":  "MachineLearning",
                        "test":  "MachineLearning.Tests\\MachineLearning.Tests.csproj",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -445,7 +445,7 @@
                        "ft":  0,
                        "folder":  "MachineLearning",
                        "test":  "MachineLearning.Tests\\MachineLearning.Tests.csproj",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -479,7 +479,7 @@
                        "name":  "Monitor",
                        "folder":  "Monitor",
                        "test":  "Monitor.Tests\\Monitor.Tests.csproj",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  false,
         "isComposite":  "compositeMonitorClient.json"
@@ -496,7 +496,7 @@
                        "name":  "Monitor",
                        "folder":  "Monitor",
                        "test":  "Monitor.Tests\\Monitor.Tests.csproj",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  "compositeMonitorManagementClient.json"
@@ -530,7 +530,7 @@
                        "output":  "Management.NotificationHubs\\Generated",
                        "test":  "NotificationHubs.Tests\\NotificationHubs.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.NotificationHubs",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -549,7 +549,7 @@
                        "folder":  "OperationalInsights",
                        "output":  "Management.OperationalInsights\\Generated",
                        "namespace":  "Microsoft.Azure.Management.OperationalInsights",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  "compositeOperationalInsights.json"
@@ -566,7 +566,7 @@
                        "output":  "Management.PowerBIEmbedded\\Generated",
                        "test":  "PowerBIEmbedded.Tests\\PowerBIEmbedded.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.PowerBIEmbedded",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -583,7 +583,7 @@
                        "output":  "Management.RecoveryServices\\Generated",
                        "test":  "RecoveryServices.Tests\\RecoveryServices.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.RecoveryServices",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  "compositeRecoveryServicesClient.json"
@@ -602,7 +602,7 @@
                        "output":  "Management.RecoveryServices.Backup\\Generated",
                        "test":  "RecoveryServices.Backup.Tests\\RecoveryServices.Backup.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.RecoveryServices.Backup",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -620,7 +620,7 @@
                        "ft":  0,
                        "output":  "Management.Redis\\Generated",
                        "namespace":  "Microsoft.Azure.Management.Redis",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -639,7 +639,7 @@
                        "output":  "Management.Relay\\Generated",
                        "test":  "Relay.Tests\\Relay.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Relay",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    }
     },
     {
@@ -660,7 +660,7 @@
                        "ft":  0,
                        "output":  "Management.ResourceManager\\Generated",
                        "namespace":  "Microsoft.Azure.Management.ResourceManager",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -677,7 +677,7 @@
                        "folder":  "Scheduler",
                        "output":  "Management.Scheduler\\Generated",
                        "namespace":  "Microsoft.Azure.Management.Scheduler",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -695,7 +695,7 @@
                        "ft":  0,
                        "test":  "Search.Tests\\Search.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Search",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  false,
         "isComposite":  null
@@ -712,7 +712,7 @@
                        "ft":  0,
                        "output":  "Management.Search\\Generated",
                        "namespace":  "Microsoft.Azure.Management.Search",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -729,7 +729,7 @@
                        "output":  "Management.ServerManagement\\Generated",
                        "test":  "ServerManagement.Tests\\ServerManagement.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.ServerManagement",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -746,7 +746,7 @@
                        "output":  "Management.ServiceBus\\Generated",
                        "test":  "ServiceBus.Tests\\ServiceBus.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.ServiceBus",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -763,7 +763,7 @@
                        "folder":  "ServiceFabric",
                        "output":  "Management.ServiceFabric\\Generated",
                        "namespace":  "Microsoft.Azure.Management.ServiceFabric",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
@@ -780,7 +780,7 @@
                        "output":  "Management.Sql\\Generated",
                        "test":  "Sql.Tests\\Sql.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Sql",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  "compositeSql.json"
@@ -797,7 +797,7 @@
                        "output":  "Management.Storage\\Generated",
                        "test":  "Storage.Tests\\Storage.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Storage",
-                       "commit":  "9ab46e8a5bd391980f893081ef5805dd22db01e5"
+                       "commit":  "ccbfd5093099b56cd312a7dfeed8f1dcd219ce0b"
                    },
         "isArm":  true,
         "isComposite":  null
