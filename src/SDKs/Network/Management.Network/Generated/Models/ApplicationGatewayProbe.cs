@@ -50,6 +50,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// server is marked down after consecutive probe failure count reaches
         /// UnhealthyThreshold. Acceptable values are from 1 second to
         /// 20.</param>
+        /// <param name="pickHostNameFromBackendHttpSettings">Whether the host
+        /// header should be picked from the backend http settings. Default
+        /// value is false.</param>
+        /// <param name="minServers">Minimum number of servers that are always
+        /// marked healthy. Default value is 0.</param>
+        /// <param name="match">Criterion for classifying a healthy probe
+        /// response.</param>
         /// <param name="provisioningState">Provisioning state of the backend
         /// http settings resource. Possible values are: 'Updating',
         /// 'Deleting', and 'Failed'.</param>
@@ -58,7 +65,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGatewayProbe(string id = default(string), string protocol = default(string), string host = default(string), string path = default(string), int? interval = default(int?), int? timeout = default(int?), int? unhealthyThreshold = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Type of the resource.</param>
+        public ApplicationGatewayProbe(string id = default(string), string protocol = default(string), string host = default(string), string path = default(string), int? interval = default(int?), int? timeout = default(int?), int? unhealthyThreshold = default(int?), bool? pickHostNameFromBackendHttpSettings = default(bool?), int? minServers = default(int?), ApplicationGatewayProbeHealthResponseMatch match = default(ApplicationGatewayProbeHealthResponseMatch), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Protocol = protocol;
@@ -67,9 +75,13 @@ namespace Microsoft.Azure.Management.Network.Models
             Interval = interval;
             Timeout = timeout;
             UnhealthyThreshold = unhealthyThreshold;
+            PickHostNameFromBackendHttpSettings = pickHostNameFromBackendHttpSettings;
+            MinServers = minServers;
+            Match = match;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -123,6 +135,26 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? UnhealthyThreshold { get; set; }
 
         /// <summary>
+        /// Gets or sets whether the host header should be picked from the
+        /// backend http settings. Default value is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.pickHostNameFromBackendHttpSettings")]
+        public bool? PickHostNameFromBackendHttpSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets minimum number of servers that are always marked
+        /// healthy. Default value is 0.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minServers")]
+        public int? MinServers { get; set; }
+
+        /// <summary>
+        /// Gets or sets criterion for classifying a healthy probe response.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.match")]
+        public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
+
+        /// <summary>
         /// Gets or sets provisioning state of the backend http settings
         /// resource. Possible values are: 'Updating', 'Deleting', and
         /// 'Failed'.
@@ -143,6 +175,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }

@@ -125,5 +125,17 @@ namespace StorSimple8000Series.Tests
 
             return volumes;
         }
+
+        public static IEnumerable<BackupPolicy> CheckAndGetBackupPolicies(StorSimpleTestBase testBase, string deviceName, int requiredCount)
+        {
+            var backupPolicies = testBase.Client.BackupPolicies.ListByDevice(
+                deviceName.GetDoubleEncoded(),
+                testBase.ResourceGroupName,
+                testBase.ManagerName);
+
+            Assert.True(backupPolicies.Count() >= requiredCount, string.Format("Could not find minimum backup policies: Required={0}, ActuallyFound={1}", requiredCount, backupPolicies.Count()));
+
+            return backupPolicies;
+        }
     }
 }

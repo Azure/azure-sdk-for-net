@@ -14,6 +14,7 @@ namespace Microsoft.Azure.KeyVault
     using Rest.Serialization;
     using Models;
     using Newtonsoft.Json;
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -15700,6 +15701,10 @@ namespace Microsoft.Azure.KeyVault
         /// <summary>
         /// List storage accounts managed by specified key vault
         /// </summary>
+        /// <remarks>
+        /// The GetCertificateVersions operation returns the versions of a certificate
+        /// in the specified key vault
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>

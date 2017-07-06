@@ -17,7 +17,6 @@ using Microsoft.Azure.KeyVault.WebKey;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.Serialization;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace Microsoft.Azure.KeyVault.Tests
@@ -306,8 +305,8 @@ namespace Microsoft.Azure.KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-
                 var client = GetKeyVaultClient();
+                bool recoveryLevelIsConsistent = true;
 
                 var attributes = new KeyAttributes();
                 var tags = new Dictionary<string, string>() { { "purpose", "unit test" }, { "test name ", "CreateGetDeleteKeyTest" } };
@@ -323,6 +322,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyAttributesAreEqual(attributes, retrievedKey.Attributes);
                     VerifyWebKeysAreEqual(createdKey.Key, retrievedKey.Key);
                     VerifyTagsAreEqual(tags, retrievedKey.Tags);
+
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(retrievedKey.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
@@ -330,6 +331,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     VerifyKeyAttributesAreEqual(deletedKey.Attributes, createdKey.Attributes);
                     VerifyWebKeysAreEqual(deletedKey.Key, createdKey.Key);
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(deletedKey.Attributes, _softDeleteEnabled);
 
                     //verify the key is deleted
                     try
@@ -349,6 +351,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                         client.PurgeDeletedKeyAsync(_vaultAddress, "CreateSoftKeyTest").GetAwaiter().GetResult();
                     }
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -362,6 +366,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 var client = GetKeyVaultClient();
 
+                bool recoveryLevelIsConsistent = true;
                 var attributes = new KeyAttributes();
                 var createdKey = client.CreateKeyAsync(_vaultAddress, "CreateHsmKeyTest", JsonWebKeyType.RsaHsm, 2048,
                     JsonWebKeyOperation.AllOperations, attributes).GetAwaiter().GetResult();
@@ -371,13 +376,14 @@ namespace Microsoft.Azure.KeyVault.Tests
                     //Trace.WriteLine("Verify generated key is as expected");
                     VerifyKeyAttributesAreEqual(attributes, createdKey.Attributes);
                     Assert.Equal(JsonWebKeyType.RsaHsm, createdKey.Key.Kty);
-                    Assert.NotNull(createdKey.Attributes.PurgeDisabled);
+                    Assert.False(String.IsNullOrWhiteSpace(createdKey.Attributes.RecoveryLevel));
 
                     //Trace.WriteLine("Get the key");
                     var retrievedKey = client.GetKeyAsync(createdKey.Key.Kid).GetAwaiter().GetResult();
                     VerifyKeyAttributesAreEqual(attributes, retrievedKey.Attributes);
                     VerifyWebKeysAreEqual(createdKey.Key, retrievedKey.Key);
 
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(createdKey.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
@@ -386,7 +392,9 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     VerifyKeyAttributesAreEqual(deletedKey.Attributes, createdKey.Attributes);
                     VerifyWebKeysAreEqual(deletedKey.Key, createdKey.Key);
-                    Assert.NotNull(deletedKey.Attributes.PurgeDisabled);
+                    Assert.False(String.IsNullOrWhiteSpace(deletedKey.Attributes.RecoveryLevel));
+
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(deletedKey.Attributes, _softDeleteEnabled);
 
                     if (_softDeleteEnabled)
                     {
@@ -395,6 +403,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                         client.PurgeDeletedKeyAsync(_vaultAddress, "CreateHsmKeyTest").Wait();
                     }
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -417,7 +427,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 var importedKey =
                     client.ImportKeyAsync(_vaultAddress, "ImportSoftKeyTest", keyBundle).GetAwaiter().GetResult();
-                Assert.NotNull(importedKey.Attributes.PurgeDisabled);
+                Assert.False(String.IsNullOrWhiteSpace(importedKey.Attributes.RecoveryLevel));
 
                 try
                 {
@@ -429,7 +439,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     VerifyKeyAttributesAreEqual(importedKey.Attributes, retrievedKey.Attributes);
                     VerifyWebKeysAreEqual(importedKey.Key, retrievedKey.Key);
-                    Assert.NotNull(retrievedKey.Attributes.PurgeDisabled);
+                    Assert.False(String.IsNullOrWhiteSpace(retrievedKey.Attributes.RecoveryLevel));
                 }
                 finally
                 {
@@ -477,7 +487,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, operations);
                     updatedKey.Key.KeyOps = JsonWebKeyOperation.AllOperations;
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
-                    Assert.NotNull(updatedKey.Attributes.PurgeDisabled);
+                    Assert.False(String.IsNullOrWhiteSpace(updatedKey.Attributes.RecoveryLevel));
 
                     // Create a new version of the key
                     var newkeyVersion = client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
@@ -495,7 +505,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, operations);
                     updatedKey.Key.KeyOps = JsonWebKeyOperation.AllOperations;
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
-                    Assert.NotNull(updatedKey.Attributes.PurgeDisabled);
+                    Assert.False(String.IsNullOrWhiteSpace(updatedKey.Attributes.RecoveryLevel));
                 }
                 finally
                 {
@@ -547,7 +557,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyAttributesAreEqual(updatedKey.Attributes, createdKey.Attributes);
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, createdKey.Key.KeyOps);
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
-                    Assert.NotNull(updatedKey.Attributes.PurgeDisabled);
+                    Assert.False(String.IsNullOrWhiteSpace(updatedKey.Attributes.RecoveryLevel));
                 }
                 finally
                 {
@@ -579,12 +589,15 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Expires = new DateTime(2030, 1, 1).ToUniversalTime(),
                     NotBefore = new DateTime(2010, 1, 1).ToUniversalTime()
                 };
+                bool recoveryLevelIsConsistent = true;
 
                 var createdKey = client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
                     JsonWebKeyOperation.AllOperations, attribute).GetAwaiter().GetResult();
 
                 try
                 {
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(createdKey.Attributes, _softDeleteEnabled);
+
                     // Backup the key
                     var backupResponse = client.BackupKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
 
@@ -604,7 +617,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyAttributesAreEqual(restoredDeletedKey.Attributes, createdKey.Attributes);
                     Assert.Equal(restoredDeletedKey.Key.Kty, createdKey.Key.Kty);
                     Assert.Equal(createdKey.Key.Kid, restoredDeletedKey.Key.Kid);
-                    Assert.NotNull(restoredDeletedKey.Attributes.PurgeDisabled);
+                    Assert.False(String.IsNullOrWhiteSpace(restoredDeletedKey.Attributes.RecoveryLevel));
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(restoredDeletedKey.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
@@ -619,6 +633,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                         client.PurgeDeletedKeyAsync(_vaultAddress, keyName).Wait();
                     }
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -631,7 +647,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 var client = GetKeyVaultClient();
 
                 var name = "SecretBackupRestoreTest";
-
+                bool recoveryLevelIsConsistent = true;
                 var attributes = new SecretAttributes()
                 {
                     Enabled = true,
@@ -642,6 +658,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 var created = client.SetSecretAsync(_vaultAddress, name, "if found please return to secretbackuprestoretest", tags: null, contentType: "text", secretAttributes: attributes)
                     .GetAwaiter()
                     .GetResult();
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(created.Attributes, _softDeleteEnabled);
 
                 try
                 {
@@ -662,6 +679,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                         this.fixture.retryExecutor.ExecuteAction(() => client.RestoreSecretAsync(_vaultAddress, backupResponse.Value).GetAwaiter().GetResult());
 
                     VerifySecretAttributesAreEqual(restoredDeletedSecret.Attributes, created.Attributes);
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(restoredDeletedSecret.Attributes, _softDeleteEnabled);
                     Assert.Equal(created.Id, restoredDeletedSecret.Id);
                 }
                 finally
@@ -677,6 +695,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                         client.PurgeDeletedSecretAsync(_vaultAddress, name).Wait();
                     }
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -690,6 +710,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 int numKeys = 3;
                 int maxResults = 1;
+                bool recoveryLevelIsConsistent = true;
 
                 var addedObjects = new HashSet<string>();
 
@@ -701,6 +722,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     var addedKey =
                         client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa).GetAwaiter().GetResult();
                     addedObjects.Add(GetKidWithoutVersion(addedKey.Key.Kid));
+
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(addedKey.Attributes, _softDeleteEnabled);
                 }
 
                 //List the keys
@@ -713,6 +736,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                         Assert.True(m.Identifier.Name.StartsWith("listkeytest"));
                         addedObjects.Remove(m.Kid);
                     }
+
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
                 }
 
                 var nextLink = listResponse.NextPageLink;
@@ -727,11 +752,14 @@ namespace Microsoft.Azure.KeyVault.Tests
                             Assert.True(m.Identifier.Name.StartsWith("listkeytest"));
                             addedObjects.Remove(m.Kid);
                         }
+
+                        recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
                     }
                     nextLink = listNextResponse.NextPageLink;
                 }
 
                 Assert.True(addedObjects.Count == 0);
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -745,6 +773,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 int numKeys = 3;
                 int maxResults = 1;
+                bool recoveryLevelIsConsistent = true;
 
                 var addedObjects = new HashSet<string>();
 
@@ -756,6 +785,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     var addedKey =
                         client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa).GetAwaiter().GetResult();
                     addedObjects.Add(addedKey.Key.Kid);
+
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(addedKey.Attributes, _softDeleteEnabled);
                 }
 
                 //List the keys
@@ -765,6 +796,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                 {
                     if (addedObjects.Contains(m.Kid))
                         addedObjects.Remove(m.Kid);
+
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
                 }
 
                 var nextLink = listResponse.NextPageLink;
@@ -776,11 +809,14 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         if (addedObjects.Contains(m.Kid))
                             addedObjects.Remove(m.Kid);
+
+                        recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
                     }
                     nextLink = listNextResponse.NextPageLink;
                 }
 
                 Assert.True(addedObjects.Count == 0);
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
         #endregion
@@ -797,12 +833,16 @@ namespace Microsoft.Azure.KeyVault.Tests
                 // settings may not be loaded until the client is fully initialized
                 if (!_softDeleteEnabled) return;
 
+                bool recoveryLevelIsConsistent = true;
                 var keyName = "GetDeletedKeyTest";
                 var attributes = new KeyAttributes();
                 var tags = new Dictionary<string, string>() { { "purpose", "unit test" }, { "test name ", "GetDeletedKeyTest" } };
                 var createdKey = client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
                     JsonWebKeyOperation.AllOperations, attributes, tags).GetAwaiter().GetResult();
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(createdKey.Attributes, _softDeleteEnabled);
+
                 var deletedKey = client.DeleteKeyAsync(_vaultAddress, createdKey.KeyIdentifier.Name).GetAwaiter().GetResult();
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(deletedKey.Attributes, _softDeleteEnabled);
 
                 try
                 {
@@ -812,6 +852,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     var getDeletedKey = client.GetDeletedKeyAsync(_vaultAddress, createdKey.KeyIdentifier.Name).GetAwaiter().GetResult();
                     VerifyIdsAreEqual(createdKey.Key.Kid, getDeletedKey.Key.Kid);
                     VerifyIdsAreEqual(deletedKey.RecoveryId, getDeletedKey.RecoveryId);
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(getDeletedKey.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
@@ -820,6 +861,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     // Purge the key
                     client.PurgeDeletedKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -833,17 +876,22 @@ namespace Microsoft.Azure.KeyVault.Tests
                 // settings may not be loaded until the client is fully initialized
                 if (!_softDeleteEnabled) return;
 
+                bool recoveryLevelIsConsistent = true;
                 var keyName = "CreateDeleteRecoverPurgeTest";
                 var attributes = new KeyAttributes();
                 var tags = new Dictionary<string, string>() { { "purpose", "unit test" }, { "test name ", "CreateDeleteRecoverPurgeTest" } };
                 var createdKey = client.CreateKeyAsync(_vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
                     JsonWebKeyOperation.AllOperations, attributes, tags).GetAwaiter().GetResult();
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(createdKey.Attributes, _softDeleteEnabled);
+
                 var originalKey = client.GetKeyAsync(_vaultAddress, createdKey.KeyIdentifier.Name).GetAwaiter().GetResult();
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(originalKey.Attributes, _softDeleteEnabled);
 
                 try
                 {
                     // Delete the key
                     var deletedKey = client.DeleteKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(deletedKey.Attributes, _softDeleteEnabled);
 
                     //verify the key is deleted
                     try
@@ -864,7 +912,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyOperationsAreEqual(recoveredKey.Key.KeyOps, originalKey.Key.KeyOps);
                     Assert.Equal(keyName, recoveredKey.KeyIdentifier.Name);
                     Assert.Equal(originalKey.Key.Kid, recoveredKey.Key.Kid);
-                    Assert.NotNull(recoveredKey.Attributes.PurgeDisabled);
+                    Assert.False(String.IsNullOrWhiteSpace(recoveredKey.Attributes.RecoveryLevel));
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(recoveredKey.Attributes, _softDeleteEnabled);
 
                     this.fixture.WaitOnKey(client, _vaultAddress, keyName);
 
@@ -873,7 +922,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifyKeyOperationsAreEqual(recoveredGetKey.Key.KeyOps, originalKey.Key.KeyOps);
                     Assert.Equal(keyName, recoveredGetKey.KeyIdentifier.Name);
                     Assert.Equal(originalKey.Key.Kid, recoveredGetKey.Key.Kid);
-                    Assert.NotNull(recoveredGetKey.Attributes.PurgeDisabled);
+                    Assert.False(String.IsNullOrWhiteSpace(recoveredGetKey.Attributes.RecoveryLevel));
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(recoveredGetKey.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
@@ -881,6 +931,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     // Delete the key
                     var deletedKey = client.DeleteKeyAsync(_vaultAddress, keyName).GetAwaiter().GetResult();
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(deletedKey.Attributes, _softDeleteEnabled);
 
                     //verify the key is deleted
                     try
@@ -909,6 +960,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                             throw ex;
                     }
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -925,6 +978,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 string keyNamePrefix = "listdeletedkeytest";
                 int numKeys = 3;
                 int maxResults = 1;
+                bool recoveryLevelIsConsistent = true;
 
                 var addedObjects = new HashSet<string>();
                 var removedObjects = new HashSet<string>();
@@ -956,6 +1010,9 @@ namespace Microsoft.Azure.KeyVault.Tests
                         Assert.NotNull(m.DeletedDate);
                         Assert.Equal(m.RecoveryIdentifier.Name, m.Identifier.Name);
                         Assert.True(m.RecoveryIdentifier.Name.StartsWith(keyNamePrefix));
+
+                        recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
+
                         addedObjects.Remove(m.Kid);
                         removedObjects.Add(m.RecoveryId);
                     }
@@ -977,6 +1034,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                             Assert.Equal(m.RecoveryIdentifier.Name, m.Identifier.Name);
                             Assert.True(m.RecoveryIdentifier.Name.StartsWith(keyNamePrefix));
 
+                            recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
+
                             addedObjects.Remove(m.Kid);
                             removedObjects.Add(m.RecoveryId);
                         }
@@ -984,12 +1043,13 @@ namespace Microsoft.Azure.KeyVault.Tests
                     nextLink = listNextResponse.NextPageLink;
                 }
 
-                Assert.True(addedObjects.Count == 0);
-
                 foreach (string recoveryId in removedObjects)
                 {
                     client.PurgeDeletedKeyAsync(recoveryId).Wait();
                 }
+
+                Assert.True(addedObjects.Count == 0);
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
         #endregion
@@ -1006,18 +1066,22 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 string secretName = "crpsecret";
                 string originalSecretValue = "mysecretvalue";
+                bool recoveryLevelAttributeIsConsistent = true;
 
                 var originalSecret =
                     client.SetSecretAsync(_vaultAddress, secretName, originalSecretValue).GetAwaiter().GetResult();
 
                 VerifySecretValuesAreEqual(originalSecret.Value, originalSecretValue);
                 Assert.Equal(secretName, originalSecret.SecretIdentifier.Name);
+                recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(originalSecret.Attributes, _softDeleteEnabled);
+
                 try
                 {
                     // Get the original secret
                     var originalReadSecret = client.GetSecretAsync(originalSecret.Id).GetAwaiter().GetResult();
                     VerifySecretValuesAreEqual(originalReadSecret.Value, originalSecret.Value);
                     VerifyIdsAreEqual(originalSecret.Id, originalReadSecret.Id);
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(originalReadSecret.Attributes, _softDeleteEnabled);
 
                     // Update the secret
                     var updatedSecretValue = "mysecretvalue2";
@@ -1025,21 +1089,25 @@ namespace Microsoft.Azure.KeyVault.Tests
                         client.SetSecretAsync(_vaultAddress, secretName, updatedSecretValue).GetAwaiter().GetResult();
                     VerifySecretValuesAreNotEqual(originalSecret.Value, updatedSecret.Value);
                     VerifyIdsAreNotEqual(originalSecret.Id, updatedSecret.Id);
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(updatedSecret.Attributes, _softDeleteEnabled);
 
                     // Read the secret using full identifier
                     var updatedReadSecret = client.GetSecretAsync(updatedSecret.Id).GetAwaiter().GetResult();
                     VerifySecretValuesAreEqual(updatedReadSecret.Value, updatedSecret.Value);
                     VerifyIdsAreEqual(updatedReadSecret.Id, updatedSecret.Id);
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(updatedReadSecret.Attributes, _softDeleteEnabled);
 
                     // Read the secret with the version independent identifier
                     updatedReadSecret = client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
                     VerifySecretValuesAreEqual(updatedReadSecret.Value, updatedSecret.Value);
                     VerifyIdsAreEqual(updatedReadSecret.Id, updatedSecret.Id);
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(updatedReadSecret.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
                     // Delete the secret
                     var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(deletedSecret.Attributes, _softDeleteEnabled);
 
                     if (_softDeleteEnabled)
                     {
@@ -1058,6 +1126,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
                             throw ex;
                     }
+
+                    Assert.True(recoveryLevelAttributeIsConsistent, "The recoveryLevel attribute did not return consistently the expected value");
                 }
             }
         }
@@ -1073,6 +1143,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 var secretName = "mysecretname";
                 var secretValue = "mysecretvalue";
                 var secretOlder = client.SetSecretAsync(_vaultAddress, secretName, secretValue).GetAwaiter().GetResult();
+                bool recoveryLevelAttributeIsConsistent = true;
 
                 try
                 {
@@ -1081,6 +1152,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     var getSecret = client.GetSecretAsync(_vaultAddress, secretIdentifier.Name).GetAwaiter().GetResult();
                     VerifySecretValuesAreEqual(getSecret.Value, secretOlder.Value);
                     VerifyIdsAreEqual(secretOlder.Id, getSecret.Id);
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(getSecret.Attributes, _softDeleteEnabled);
 
                     var secretNewer =
                         client.SetSecretAsync(_vaultAddress, secretName, secretValue).GetAwaiter().GetResult();
@@ -1092,6 +1164,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                             .GetResult();
                     VerifySecretValuesAreEqual(getSecretOlder.Value, secretOlder.Value);
                     VerifyIdsAreEqual(secretOlder.Id, getSecretOlder.Id);
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(getSecretOlder.Attributes, _softDeleteEnabled);
 
                     // Get the latest secret using its identifier with version
                     var secretIdentifierNewer = new SecretIdentifier(secretNewer.Id);
@@ -1101,11 +1174,13 @@ namespace Microsoft.Azure.KeyVault.Tests
                             .GetResult();
                     VerifySecretValuesAreEqual(getSecretNewer.Value, secretNewer.Value);
                     VerifyIdsAreEqual(secretNewer.Id, getSecretNewer.Id);
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(getSecretNewer.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
                     // Delete the secret
-                    client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(deletedSecret.Attributes, _softDeleteEnabled);
 
                     if (_softDeleteEnabled)
                     {
@@ -1239,37 +1314,85 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 string secretName = "secretwithextendedattribs";
                 string originalSecretValue = "mysecretvalue";
+                bool recoveryLevelIsConsistent = true;
 
-                var originalSecret = client.SetSecretAsync(
-                    vaultBaseUrl: _vaultAddress,
-                    secretName: secretName,
-                    value: originalSecretValue,
-                    tags: new Dictionary<string, string>() { { "purpose", "unit test" } },
-                    contentType: "plaintext",
-                    secretAttributes: NewSecretAttributes(
-                        enabled: false,
-                        active: false,
-                        expired: false)
-                    ).GetAwaiter().GetResult();
-
-                Assert.Equal("plaintext", originalSecret.ContentType);
-                Assert.Equal("unit test", originalSecret.Tags["purpose"]);
-                Assert.True(originalSecret.Attributes.Enabled != null && originalSecret.Attributes.Enabled == false);
-
-                // Cannot get disabled secret
                 try
                 {
-                    client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
-                    Assert.True(false, "Get on disabled secret must throw an exception.");
+                    var originalSecret = client.SetSecretAsync(
+                        vaultBaseUrl: _vaultAddress,
+                        secretName: secretName,
+                        value: originalSecretValue,
+                        tags: new Dictionary<string, string>() { { "purpose", "unit test" } },
+                        contentType: "plaintext",
+                        secretAttributes: NewSecretAttributes(
+                            enabled: false,
+                            active: false,
+                            expired: false)
+                        ).GetAwaiter().GetResult();
+
+                    Assert.Equal("plaintext", originalSecret.ContentType);
+                    Assert.Equal("unit test", originalSecret.Tags["purpose"]);
+                    Assert.True(originalSecret.Attributes.Enabled != null && originalSecret.Attributes.Enabled == false);
+
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(originalSecret.Attributes, _softDeleteEnabled);
+
+                    // Cannot get disabled secret
+                    try
+                    {
+                        client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                        Assert.True(false, "Get on disabled secret must throw an exception.");
+                    }
+                    catch (KeyVaultErrorException ex)
+                    {
+                        // Validate that exception contains an error code, an error message, and an inner error code
+                        Assert.True(!String.IsNullOrEmpty(ex.Body.Error.Code));
+                        Assert.True(!String.IsNullOrEmpty(ex.Body.Error.Message));
+                        Assert.NotNull(ex.Body.Error.InnerError);
+                        Assert.True(!String.IsNullOrEmpty(ex.Body.Error.InnerError.Code));
+                    }
+
+                    // Cleanup is a bit more difficult in soft-delete-enabled vaults; since deletion
+                    // is asynchronous, and the secret is disabled, we can't know when the secret is
+                    // safe to purge. Therefore we'll re-enable the secret before proceeding with the
+                    // common cleanup code.
+                    if (_softDeleteEnabled)
+                    {
+                        originalSecret.Attributes.Enabled = true;
+                        originalSecret.Attributes.NotBefore = DateTime.UtcNow.AddDays(-1);
+
+                        // rev the secret to enable it
+                        var updatedSecret = client.SetSecretAsync(_vaultAddress, secretName, originalSecretValue, (IDictionary<string,string>)originalSecret.Tags, originalSecret.ContentType, originalSecret.Attributes)
+                            .GetAwaiter()
+                            .GetResult();
+
+                        // verify we can retrieve the secret
+                        try
+                        {
+                            var retrievedEnabledSecret = client.GetSecretAsync(_vaultAddress, secretName)
+                                .GetAwaiter()
+                                .GetResult();
+                        }
+                        catch (KeyVaultErrorException ex)
+                        {
+                            Assert.False(false, "failed to re-enable disabled secret in soft-delete-enabled vault; cleanup will fail");
+                        }
+                    }
                 }
-                catch (KeyVaultErrorException ex)
+                finally
                 {
-                    // Validate that exception contains an error code, an error message, and an inner error code
-                    Assert.True(!String.IsNullOrEmpty(ex.Body.Error.Code));
-                    Assert.True(!String.IsNullOrEmpty(ex.Body.Error.Message));
-                    Assert.NotNull(ex.Body.Error.InnerError);
-                    Assert.True(!String.IsNullOrEmpty(ex.Body.Error.InnerError.Code));
+                    // Delete the secret
+                    var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(deletedSecret.Attributes, _softDeleteEnabled);
+
+                    if (_softDeleteEnabled)
+                    {
+                        this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
+
+                        client.PurgeDeletedSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    }
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -1289,8 +1412,13 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 var secretName = "GetDeletedSecretTest";
                 var secretValue = "mysecretvalue";
+                bool recoveryLevelIsConsistent = true;
+
                 var secretOlder = client.SetSecretAsync(_vaultAddress, secretName, secretValue).GetAwaiter().GetResult();
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(secretOlder.Attributes, _softDeleteEnabled);
+
                 var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(deletedSecret.Attributes, _softDeleteEnabled);
 
                 this.fixture.WaitOnDeletedSecret(client, _vaultAddress, secretName);
 
@@ -1300,6 +1428,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     var getDeletedSecret = client.GetDeletedSecretAsync(_vaultAddress, secretOlder.SecretIdentifier.Name).GetAwaiter().GetResult();
                     VerifyIdsAreEqual(secretOlder.Id, getDeletedSecret.Id);
                     VerifyIdsAreEqual(deletedSecret.RecoveryId, getDeletedSecret.RecoveryId);
+
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(getDeletedSecret.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
@@ -1308,6 +1438,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     // Purge the secret
                     client.PurgeDeletedSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -1323,16 +1455,20 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 string secretName = "SecretCreateDeleteRecoverPurgeTest";
                 string originalSecretValue = "mysecretvalue";
+                bool recoveryLevelAttributeIsConsistent = true;
 
                 var originalSecret =
                     client.SetSecretAsync(_vaultAddress, secretName, originalSecretValue).GetAwaiter().GetResult();
 
                 VerifySecretValuesAreEqual(originalSecret.Value, originalSecretValue);
                 Assert.Equal(secretName, originalSecret.SecretIdentifier.Name);
+                recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(originalSecret.Attributes, _softDeleteEnabled);
+
                 try
                 {
                     // Delete the secret
                     var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(deletedSecret.Attributes, _softDeleteEnabled);
 
                     //verify the secret is deleted
                     try
@@ -1351,6 +1487,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     var recoveredSecret = client.RecoverDeletedSecretAsync(deletedSecret.RecoveryId).GetAwaiter().GetResult();
                     VerifySecretValuesAreEqual(recoveredSecret.Value, null);
                     Assert.Equal(secretName, recoveredSecret.SecretIdentifier.Name);
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(recoveredSecret.Attributes, _softDeleteEnabled);
 
                     this.fixture.WaitOnSecret(client, _vaultAddress, secretName);
 
@@ -1359,12 +1496,14 @@ namespace Microsoft.Azure.KeyVault.Tests
                     VerifySecretValuesAreEqual(recoveredReadSecret.Value, originalSecretValue);
                     VerifyIdsAreEqual(recoveredReadSecret.Id, recoveredSecret.Id);
                     VerifyTagsAreEqual(originalSecret.Tags, recoveredReadSecret.Tags);
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(recoveredReadSecret.Attributes, _softDeleteEnabled);
 
                     // Read the recovered secret with the version independent identifier
                     recoveredReadSecret = client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
                     VerifySecretValuesAreEqual(recoveredReadSecret.Value, originalSecretValue);
                     VerifyIdsAreEqual(recoveredReadSecret.Id, recoveredSecret.Id);
                     VerifyTagsAreEqual(originalSecret.Tags, recoveredReadSecret.Tags);
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(recoveredReadSecret.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
@@ -1372,6 +1511,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     // Delete the secret
                     var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(deletedSecret.Attributes, _softDeleteEnabled);
 
                     //verify the secret is deleted
                     try
@@ -1400,6 +1540,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                             throw ex;
                     }
                 }
+
+                Assert.True(recoveryLevelAttributeIsConsistent, "The 'recoveryLevel' attribute did not consistently return the expected value");
             }
         }
 
@@ -1415,6 +1557,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 int numSecrets = 3;
                 int maxResults = 1;
+                bool recoveryLevelAttributeIsConsistent = true;
 
                 var addedObjects = new HashSet<string>();
                 var removedObjects = new HashSet<string>();
@@ -1446,6 +1589,9 @@ namespace Microsoft.Azure.KeyVault.Tests
                         Assert.NotNull(m.ScheduledPurgeDate);
                         Assert.NotNull(m.DeletedDate);
                         Assert.True(m.RecoveryIdentifier.Name.StartsWith("listdeletedsecrettest"));
+
+                        recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
+
                         addedObjects.Remove(m.Id);
                         removedObjects.Add(m.RecoveryId);
                     }
@@ -1465,6 +1611,9 @@ namespace Microsoft.Azure.KeyVault.Tests
                             Assert.NotNull(m.ScheduledPurgeDate);
                             Assert.NotNull(m.DeletedDate);
                             Assert.True(m.RecoveryIdentifier.Name.StartsWith("listdeletedsecrettest"));
+
+                            recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
+
                             addedObjects.Remove(m.Id);
                             removedObjects.Add(m.RecoveryId);
                         }
@@ -1478,6 +1627,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                 {
                     client.PurgeDeletedSecretAsync(recoveryId).Wait();
                 }
+
+                Assert.True(recoveryLevelAttributeIsConsistent, "The 'recoveryLevel' attribute did not consistently return the expected value");
             }
         }
 
@@ -1496,6 +1647,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     "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";
                 const string certificatePassword = "123";
                 const string certificateMimeType = "application/x-pkcs12";
+                bool recoveryLevelIsConsistent = true;
 
                 var myCertificate = new X509Certificate2(Convert.FromBase64String(certificateContent), certificatePassword, X509KeyStorageFlags.Exportable);
 
@@ -1522,6 +1674,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle.Policy);
                 Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(createdCertificateBundle.Attributes, _softDeleteEnabled);
+
                 Assert.NotNull(createdCertificateBundle.Cer);
                 var publicCer = new X509Certificate2(createdCertificateBundle.Cer);
                 Assert.NotNull(publicCer);
@@ -1540,6 +1694,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Assert.NotNull(createdCertificateBundle.Policy);
                     Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(certificateBundleLatest.Attributes, _softDeleteEnabled);
+
                     Assert.NotNull(certificateBundleLatest.Cer);
                     publicCer = new X509Certificate2(certificateBundleLatest.Cer);
                     Assert.NotNull(publicCer);
@@ -1554,6 +1710,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Assert.NotNull(certificateBundleVersion.KeyIdentifier);
                     Assert.NotNull(certificateBundleVersion.X509Thumbprint);
                     Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
+
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(certificateBundleVersion.Attributes, _softDeleteEnabled);
 
                     Assert.NotNull(certificateBundleVersion.Cer);
                     publicCer = new X509Certificate2(certificateBundleVersion.Cer);
@@ -1584,8 +1742,18 @@ namespace Microsoft.Azure.KeyVault.Tests
                     var certificateBundleDeleted =
                         client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
 
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(certificateBundleDeleted.Attributes, _softDeleteEnabled);
+
                     Assert.NotNull(certificateBundleDeleted);
+
+                    if ( _softDeleteEnabled )
+                    {
+                        this.fixture.WaitOnDeletedCertificate(client, _vaultAddress, certificateName);
+                        client.PurgeDeletedCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+                    }
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -2856,6 +3024,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     "MIIJOwIBAzCCCPcGCSqGSIb3DQEHAaCCCOgEggjkMIII4DCCBgkGCSqGSIb3DQEHAaCCBfoEggX2MIIF8jCCBe4GCyqGSIb3DQEMCgECoIIE/jCCBPowHAYKKoZIhvcNAQwBAzAOBAj15YH9pOE58AICB9AEggTYLrI+SAru2dBZRQRlJY7XQ3LeLkah2FcRR3dATDshZ2h0IA2oBrkQIdsLyAAWZ32qYR1qkWxLHn9AqXgu27AEbOk35+pITZaiy63YYBkkpR+pDdngZt19Z0PWrGwHEq5z6BHS2GLyyN8SSOCbdzCz7blj3+7IZYoMj4WOPgOm/tQ6U44SFWek46QwN2zeA4i97v7ftNNns27ms52jqfhOvTA9c/wyfZKAY4aKJfYYUmycKjnnRl012ldS2lOkASFt+lu4QCa72IY6ePtRudPCvmzRv2pkLYS6z3cI7omT8nHP3DymNOqLbFqr5O2M1ZYaLC63Q3xt3eVvbcPh3N08D1hHkhz/KDTvkRAQpvrW8ISKmgDdmzN55Pe55xHfSWGB7gPw8sZea57IxFzWHTK2yvTslooWoosmGxanYY2IG/no3EbPOWDKjPZ4ilYJe5JJ2immlxPz+2e2EOCKpDI+7fzQcRz3PTd3BK+budZ8aXX8aW/lOgKS8WmxZoKnOJBNWeTNWQFugmktXfdPHAdxMhjUXqeGQd8wTvZ4EzQNNafovwkI7IV/ZYoa++RGofVR3ZbRSiBNF6TDj/qXFt0wN/CQnsGAmQAGNiN+D4mY7i25dtTu/Jc7OxLdhAUFpHyJpyrYWLfvOiS5WYBeEDHkiPUa/8eZSPA3MXWZR1RiuDvuNqMjct1SSwdXADTtF68l/US1ksU657+XSC+6ly1A/upz+X71+C4Ho6W0751j5ZMT6xKjGh5pee7MVuduxIzXjWIy3YSd0fIT3U0A5NLEvJ9rfkx6JiHjRLx6V1tqsrtT6BsGtmCQR1UCJPLqsKVDvAINx3cPA/CGqr5OX2BGZlAihGmN6n7gv8w4O0k0LPTAe5YefgXN3m9pE867N31GtHVZaJ/UVgDNYS2jused4rw76ZWN41akx2QN0JSeMJqHXqVz6AKfz8ICS/dFnEGyBNpXiMRxrY/QPKi/wONwqsbDxRW7vZRVKs78pBkE0ksaShlZk5GkeayDWC/7Hi/NqUFtIloK9XB3paLxo1DGu5qqaF34jZdktzkXp0uZqpp+FfKZaiovMjt8F7yHCPk+LYpRsU2Cyc9DVoDA6rIgf+uEP4jppgehsxyT0lJHax2t869R2jYdsXwYUXjgwHIV0voj7bJYPGFlFjXOp6ZW86scsHM5xfsGQoK2Fp838VT34SHE1ZXU/puM7rviREHYW72pfpgGZUILQMohuTPnd8tFtAkbrmjLDo+k9xx7HUvgoFTiNNWuq/cRjr70FKNguMMTIrid+HwfmbRoaxENWdLcOTNeascER2a+37UQolKD5ksrPJG6RdNA7O2pzp3micDYRs/+s28cCIxO//J/d4nsgHp6RTuCu4+Jm9k0YTw2Xg75b2cWKrxGnDUgyIlvNPaZTB5QbMid4x44/lE0LLi9kcPQhRgrK07OnnrMgZvVGjt1CLGhKUv7KFc3xV1r1rwKkosxnoG99oCoTQtregcX5rIMjHgkc1IdflGJkZzaWMkYVFOJ4Weynz008i4ddkske5vabZs37Lb8iggUYNBYZyGzalruBgnQyK4fz38Fae4nWYjyildVfgyo/fCePR2ovOfphx9OQJi+M9BoFmPrAg+8ARDZ+R+5yzYuEc9ZoVX7nkp7LTGB3DANBgkrBgEEAYI3EQIxADATBgkqhkiG9w0BCRUxBgQEAQAAADBXBgkqhkiG9w0BCRQxSh5IAGEAOAAwAGQAZgBmADgANgAtAGUAOQA2AGUALQA0ADIAMgA0AC0AYQBhADEAMQAtAGIAZAAxADkANABkADUAYQA2AGIANwA3MF0GCSsGAQQBgjcRATFQHk4ATQBpAGMAcgBvAHMAbwBmAHQAIABTAHQAcgBvAG4AZwAgAEMAcgB5AHAAdABvAGcAcgBhAHAAaABpAGMAIABQAHIAbwB2AGkAZABlAHIwggLPBgkqhkiG9w0BBwagggLAMIICvAIBADCCArUGCSqGSIb3DQEHATAcBgoqhkiG9w0BDAEGMA4ECNX+VL2MxzzWAgIH0ICCAojmRBO+CPfVNUO0s+BVuwhOzikAGNBmQHNChmJ/pyzPbMUbx7tO63eIVSc67iERda2WCEmVwPigaVQkPaumsfp8+L6iV/BMf5RKlyRXcwh0vUdu2Qa7qadD+gFQ2kngf4Dk6vYo2/2HxayuIf6jpwe8vql4ca3ZtWXfuRix2fwgltM0bMz1g59d7x/glTfNqxNlsty0A/rWrPJjNbOPRU2XykLuc3AtlTtYsQ32Zsmu67A7UNBw6tVtkEXlFDqhavEhUEO3dvYqMY+QLxzpZhA0q44ZZ9/ex0X6QAFNK5wuWxCbupHWsgxRwKftrxyszMHsAvNoNcTlqcctee+ecNwTJQa1/MDbnhO6/qHA7cfG1qYDq8Th635vGNMW1w3sVS7l0uEvdayAsBHWTcOC2tlMa5bfHrhY8OEIqj5bN5H9RdFy8G/W239tjDu1OYjBDydiBqzBn8HG1DSj1Pjc0kd/82d4ZU0308KFTC3yGcRad0GnEH0Oi3iEJ9HbriUbfVMbXNHOF+MktWiDVqzndGMKmuJSdfTBKvGFvejAWVO5E4mgLvoaMmbchc3BO7sLeraHnJN5hvMBaLcQI38N86mUfTR8AP6AJ9c2k514KaDLclm4z6J8dMz60nUeo5D3YD09G6BavFHxSvJ8MF0Lu5zOFzEePDRFm9mH8W0N/sFlIaYfD/GWU/w44mQucjaBk95YtqOGRIj58tGDWr8iUdHwaYKGqU24zGeRae9DhFXPzZshV1ZGsBQFRaoYkyLAwdJWIXTi+c37YaC8FRSEnnNmS79Dou1Kc3BvK4EYKAD2KxjtUebrV174gD0Q+9YuJ0GXOTspBvCFd5VT2Rw5zDNrA/J3F5fMCk4wOzAfMAcGBSsOAwIaBBSxgh2xyF+88V4vAffBmZXv8Txt4AQU4O/NX4MjxSodbE7ApNAMIvrtREwCAgfQ";
                 const string certificatePassword = "123";
                 const string certificateMimeType = "application/x-pkcs12";
+                bool recoveryLevelIsConsistent = true;
 
                 var myCertificate = new X509Certificate2(Convert.FromBase64String(certificateContent), certificatePassword, X509KeyStorageFlags.Exportable);
 
@@ -2882,6 +3051,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     certificateContent,
                     certificatePassword,
                     policy).GetAwaiter().GetResult();
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(createdCertificateBundle.Attributes, _softDeleteEnabled);
 
                 // add another version 
                 var attributes = new CertificateAttributes
@@ -2892,6 +3062,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     createdCertificateBundle.CertificateIdentifier.BaseIdentifier,
                     certificatePolicy: policy,
                     certificateAttributes: attributes).GetAwaiter().GetResult();
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(updatedCertificateBundle.Attributes, _softDeleteEnabled);
 
                 Assert.NotNull(createdCertificateBundle);
                 Assert.NotNull(createdCertificateBundle.SecretIdentifier);
@@ -2906,17 +3077,20 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 // soft-delete the cert
                 var deletedCert = client.DeleteCertificateAsync(_vaultAddress, certificateName).ConfigureAwait(false).GetAwaiter().GetResult();
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(deletedCert.Attributes, _softDeleteEnabled);
                 this.fixture.WaitOnDeletedCertificate(client, _vaultAddress, certificateName);
 
                 try
                 {
                     // Get the deleted certificate using its recovery identifier
                     var getDeletedCertificate = client.GetDeletedCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+
                     VerifyIdsAreEqual(createdCertificateBundle.Id, getDeletedCertificate.Id);
                     VerifyIdsAreEqual(createdCertificateBundle.KeyIdentifier.Identifier, getDeletedCertificate.KeyIdentifier.Identifier);
                     VerifyIdsAreEqual(createdCertificateBundle.SecretIdentifier.Identifier, getDeletedCertificate.SecretIdentifier.Identifier);
 
                     VerifyIdsAreEqual(deletedCert.RecoveryId, getDeletedCertificate.RecoveryId);
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(getDeletedCertificate.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
@@ -2925,6 +3099,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     // Purge the cert
                     client.PurgeDeletedCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "The 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -2944,6 +3120,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     "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";
                 const string certificatePassword = "123";
                 const string certificateMimeType = "application/x-pkcs12";
+                bool recoveryLevelIsConsistent = true;
 
                 var myCertificate = new X509Certificate2(Convert.FromBase64String(certificateContent), certificatePassword, X509KeyStorageFlags.Exportable);
 
@@ -2978,11 +3155,13 @@ namespace Microsoft.Azure.KeyVault.Tests
                 var publicCer = new X509Certificate2(createdCertificateBundle.Cer);
                 Assert.NotNull(publicCer);
                 Assert.False(publicCer.HasPrivateKey);
+                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(createdCertificateBundle.Attributes, _softDeleteEnabled);
 
                 try
                 {
                     // Delete the certificate
                     var deletedCert = client.DeleteCertificateAsync(_vaultAddress, name).GetAwaiter().GetResult();
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(deletedCert.Attributes, _softDeleteEnabled);
 
                     //verify the certificate is deleted
                     try
@@ -3000,16 +3179,19 @@ namespace Microsoft.Azure.KeyVault.Tests
                     // Recover the certificate
                     var recoveredCert = client.RecoverDeletedCertificateAsync(deletedCert.RecoveryId).GetAwaiter().GetResult();
                     Assert.Equal(name, recoveredCert.SecretIdentifier.Name);
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(recoveredCert.Attributes, _softDeleteEnabled);
 
                     this.fixture.WaitOnCertificate(client, _vaultAddress, name);
 
                     // Read the recovered certificate using full identifier
                     var recoveredReadCert = client.GetCertificateAsync(recoveredCert.Id).GetAwaiter().GetResult();
                     VerifyIdsAreEqual(recoveredReadCert.Id, recoveredCert.Id);
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(recoveredReadCert.Attributes, _softDeleteEnabled);
 
                     // Read the recovered cert with the version independent identifier
                     recoveredReadCert = client.GetCertificateAsync(_vaultAddress, name).GetAwaiter().GetResult();
                     VerifyIdsAreEqual(recoveredReadCert.Id, recoveredCert.Id);
+                    recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(recoveredReadCert.Attributes, _softDeleteEnabled);
                 }
                 finally
                 {
@@ -3045,6 +3227,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                             throw ex;
                     }
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "The 'recoveryLevel' attribute did not consistently return the expected value");
             }
         }
 
@@ -3069,65 +3253,49 @@ namespace Microsoft.Azure.KeyVault.Tests
                     "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";
                 const string certificatePassword = "123";
                 const string certificateMimeType = "application/x-pkcs12";
+                bool recoveryLevelIsConsistent = true;
 
-                //Create and delete the certs
-                for (int i = 0; i < numCerts; i++)
+                try
                 {
-                    string name = namePrefix + i.ToString();
-
-                    var myCertificate = new X509Certificate2(Convert.FromBase64String(certificateContent), certificatePassword, X509KeyStorageFlags.Exportable);
-
-                    // Import cert
-                    var addedCert = client.ImportCertificateAsync(
-                        _vaultAddress,
-                        name,
-                        certificateContent,
-                        certificatePassword,
-                        new CertificatePolicy
-                        {
-                            KeyProperties = new KeyProperties
-                            {
-                                Exportable = true,
-                                KeySize = 2048,
-                                KeyType = "RSA",
-                                ReuseKey = false
-                            },
-                            SecretProperties = new SecretProperties
-                            {
-                                ContentType = certificateMimeType
-                            }
-                        }).GetAwaiter().GetResult();
-
-                    addedObjects.Add(addedCert.Id.Substring(0, addedCert.Id.LastIndexOf("/")));
-
-                    client.DeleteCertificateAsync(_vaultAddress, name).GetAwaiter().GetResult();
-
-                    this.fixture.WaitOnDeletedCertificate(client, _vaultAddress, name);
-                }
-
-                //List the deleted certificates
-                var listResponse = client.GetDeletedCertificatesAsync(_vaultAddress, maxResults).GetAwaiter().GetResult();
-                Assert.NotNull(listResponse);
-                foreach (DeletedCertificateItem m in listResponse)
-                {
-                    if (addedObjects.Contains(m.Id))
+                    //Create and delete the certs
+                    for (int i = 0; i < numCerts; i++)
                     {
-                        Assert.True(m.Identifier.Name.StartsWith(namePrefix));
-                        Assert.NotNull(m.RecoveryId);
-                        Assert.NotNull(m.ScheduledPurgeDate);
-                        Assert.NotNull(m.DeletedDate);
-                        Assert.True(m.RecoveryIdentifier.Name.StartsWith(namePrefix));
-                        addedObjects.Remove(m.Id);
-                        removedObjects.Add(m.RecoveryId);
-                    }
-                }
+                        string name = namePrefix + i.ToString();
 
-                var nextLink = listResponse.NextPageLink;
-                while (!string.IsNullOrEmpty(nextLink))
-                {
-                    var listNextResponse = client.GetDeletedCertificatesNextAsync(nextLink).GetAwaiter().GetResult();
-                    Assert.NotNull(listNextResponse);
-                    foreach (DeletedCertificateItem m in listNextResponse)
+                        var myCertificate = new X509Certificate2(Convert.FromBase64String(certificateContent), certificatePassword, X509KeyStorageFlags.Exportable);
+
+                        // Import cert
+                        var addedCert = client.ImportCertificateAsync(
+                            _vaultAddress,
+                            name,
+                            certificateContent,
+                            certificatePassword,
+                            new CertificatePolicy
+                            {
+                                KeyProperties = new KeyProperties
+                                {
+                                    Exportable = true,
+                                    KeySize = 2048,
+                                    KeyType = "RSA",
+                                    ReuseKey = false
+                                },
+                                SecretProperties = new SecretProperties
+                                {
+                                    ContentType = certificateMimeType
+                                }
+                            }).GetAwaiter().GetResult();
+
+                        addedObjects.Add(addedCert.Id.Substring(0, addedCert.Id.LastIndexOf("/")));
+
+                        client.DeleteCertificateAsync(_vaultAddress, name).GetAwaiter().GetResult();
+
+                        this.fixture.WaitOnDeletedCertificate(client, _vaultAddress, name);
+                    }
+
+                    //List the deleted certificates
+                    var listResponse = client.GetDeletedCertificatesAsync(_vaultAddress, maxResults).GetAwaiter().GetResult();
+                    Assert.NotNull(listResponse);
+                    foreach (DeletedCertificateItem m in listResponse)
                     {
                         if (addedObjects.Contains(m.Id))
                         {
@@ -3136,19 +3304,47 @@ namespace Microsoft.Azure.KeyVault.Tests
                             Assert.NotNull(m.ScheduledPurgeDate);
                             Assert.NotNull(m.DeletedDate);
                             Assert.True(m.RecoveryIdentifier.Name.StartsWith(namePrefix));
+                            recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
+
                             addedObjects.Remove(m.Id);
                             removedObjects.Add(m.RecoveryId);
                         }
                     }
-                    nextLink = listNextResponse.NextPageLink;
+
+                    var nextLink = listResponse.NextPageLink;
+                    while (!string.IsNullOrEmpty(nextLink))
+                    {
+                        var listNextResponse = client.GetDeletedCertificatesNextAsync(nextLink).GetAwaiter().GetResult();
+                        Assert.NotNull(listNextResponse);
+                        foreach (DeletedCertificateItem m in listNextResponse)
+                        {
+                            if (addedObjects.Contains(m.Id))
+                            {
+                                Assert.True(m.Identifier.Name.StartsWith(namePrefix));
+                                Assert.NotNull(m.RecoveryId);
+                                Assert.NotNull(m.ScheduledPurgeDate);
+                                Assert.NotNull(m.DeletedDate);
+                                Assert.True(m.RecoveryIdentifier.Name.StartsWith(namePrefix));
+                                recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
+
+                                addedObjects.Remove(m.Id);
+                                removedObjects.Add(m.RecoveryId);
+                            }
+                        }
+                        nextLink = listNextResponse.NextPageLink;
+                    }
+
+                    Assert.True(addedObjects.Count == 0);
                 }
-
-                Assert.True(addedObjects.Count == 0);
-
-                foreach (string recoveryId in removedObjects)
+                finally
                 {
-                    client.PurgeDeletedCertificateAsync(recoveryId).Wait();
+                    foreach (string recoveryId in removedObjects)
+                    {
+                        client.PurgeDeletedCertificateAsync(recoveryId).Wait();
+                    }
                 }
+
+                Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
 
@@ -3951,6 +4147,27 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 return new HttpClient(handlers[handlers.Length - 1]);
             }
+        }
+
+        private static bool VerifyDeletionRecoveryLevel( SecretAttributes attributes, bool isSoftDeleteEnabledVault )
+        {
+            return !String.IsNullOrWhiteSpace(attributes.RecoveryLevel)
+                && attributes.RecoveryLevel.ToLowerInvariant().Contains(DeletionRecoveryLevel.Purgeable.ToLowerInvariant())
+                && !(isSoftDeleteEnabledVault ^ attributes.RecoveryLevel.ToLowerInvariant().Contains(DeletionRecoveryLevel.Recoverable.ToLowerInvariant()));
+        }
+
+        private static bool VerifyDeletionRecoveryLevel(KeyAttributes attributes, bool isSoftDeleteEnabledVault)
+        {
+            return !String.IsNullOrWhiteSpace(attributes.RecoveryLevel)
+                && attributes.RecoveryLevel.ToLowerInvariant().Contains(DeletionRecoveryLevel.Purgeable.ToLowerInvariant())
+                && !(isSoftDeleteEnabledVault ^ attributes.RecoveryLevel.ToLowerInvariant().Contains(DeletionRecoveryLevel.Recoverable.ToLowerInvariant()));
+        }
+
+        private static bool VerifyDeletionRecoveryLevel(CertificateAttributes attributes, bool isSoftDeleteEnabledVault)
+        {
+            return !String.IsNullOrWhiteSpace(attributes.RecoveryLevel)
+                && attributes.RecoveryLevel.ToLowerInvariant().Contains(DeletionRecoveryLevel.Purgeable.ToLowerInvariant())
+                && !(isSoftDeleteEnabledVault ^ attributes.RecoveryLevel.ToLowerInvariant().Contains(DeletionRecoveryLevel.Recoverable.ToLowerInvariant()));
         }
         #endregion
     }
