@@ -103,6 +103,37 @@ function Get-SourcePath {
     }
 }
 
+function AutoRest {
+    param([psobject] $info, [bool] $jsonRpc, [string] $title, [string[]] $inputList)
+
+    $dotNet = $info.dotNet
+
+    $autoRestExe = "autorest"
+    $lang = if ($jsonRpc) { "jsonrpcclient" } else { "csharp" }
+    $r = @(
+        "--$lang.azure-arm",
+        "--namespace=$($dotNet.namespace)",
+        "--output-folder=$output",
+        "--license-header=MICROSOFT_MIT",
+        "--payload-flattening-threshold=$($dotNet.ft)"
+    )
+
+    if ($title) {
+        $r += "--override-info.title=$title"
+    }
+
+    $inputList | ForEach-Object {
+        $r += "--input-file=$_"
+    }
+
+    $r
+    & $autoRestExe $r
+    if (-Not $?) {
+        Write-Error "generation errors"
+        exit $LASTEXITCODE
+    }
+}
+
 function Generate-Sdk {
     param([string] $specs, [psobject] $info, [string] $sdkDir, [bool] $jsonRpc)
 
@@ -151,12 +182,6 @@ function Generate-Sdk {
     if ($isUrl) {
         $specs = $specs.Replace('https://github.com/', 'https://raw.githubusercontent.com/')
         $specs = "$specs/$commit"
-    } else {
-        # # no commit switch if it's a local repository
-        # $location = Get-Location
-        # Set-Location $specs
-        # git checkout $commit
-        # Set-Location $location
     }
 
     "Clear $output"
@@ -210,6 +235,7 @@ function Generate-Sdk {
             "--payload-flattening-threshold=$($dotNet.ft)"
         )
         $title = $dotNet.client
+        $inputList = @()
         if ($info.isComposite) {
             $info.sources | ForEach-Object {
                 $compositeDir = Split-Path -Path $_ -Parent
@@ -223,7 +249,7 @@ function Generate-Sdk {
                 $composite = $compositeStr | ConvertFrom-Json
                 $composite.documents | ForEach-Object {
                     $input = Get-SourcePath -specs $specs -info $info -source "$compositeDir/$_"
-                    $r += "--input-file=$input"
+                    $inputList += $input
                 }
                 if(-Not $title) {
                     $title = $composite.info.title
@@ -232,18 +258,10 @@ function Generate-Sdk {
         } else {
             $info.sources | % {
                 $input = Get-SourcePath -specs $specs -info $info -source $_
-                $r += "--input-file=$input"
+                $inputList += $input
             }
         }
-        if ($title) {
-            $r += "--override-info.title=$title"
-        }
-        $r
-        & $autoRestExe $r
-        if (-Not $?) {
-            Write-Error "generation errors"
-            exit $LASTEXITCODE
-        }
+        AutoRest -info $info -inputList $inputList -jsonRpc $jsonRpc -title $title
     }
 }
 
