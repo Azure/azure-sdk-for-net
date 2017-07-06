@@ -223,11 +223,7 @@
     },
     {
         "name": "arm-network",
-        "sources": [
-            "compositeNetworkClient.json" ],
-        "dotNet":{
-            "commit": "c6aa42181aede778b31b3630ef2e8ea2d32c7ae3"
-        }
+        "sources": [ "compositeNetworkClient.json" ]
     },
     {
         "name": "arm-notificationhubs",
