@@ -506,6 +506,8 @@
         "sources":  [
                         "compositeNetworkClient.json"
                     ],
+        "isArm":  true,
+        "isComposite":  "compositeNetworkClient.json",
         "dotNet":  {
                        "ft":  0,
                        "name":  "Network",
@@ -514,9 +516,7 @@
                        "test":  "Network.Tests\\Network.Tests.csproj",
                        "namespace":  "Microsoft.Azure.Management.Network",
                        "commit":  "dc561017f36fd5176929aa8c864f74004e88ed36"
-                   },
-        "isArm":  true,
-        "isComposite":  "compositeNetworkClient.json"
+                   }
     },
     {
         "name":  "arm-notificationhubs",
@@ -737,7 +737,7 @@
     {
         "name":  "arm-servicebus",
         "sources":  [
-                        "2015-08-01/swagger/servicebus.json"
+                        "2017-04-01/swagger/servicebus.json"
                     ],
         "dotNet":  {
                        "name":  "ServiceBus",

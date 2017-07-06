@@ -337,7 +337,7 @@
     },
     {
         "name": "arm-servicebus",
-        "sources": [ "2015-08-01/swagger/servicebus.json" ],
+        "sources": [ "2017-04-01/swagger/servicebus.json" ],
         "dotNet": {
             "name": "ServiceBus"
         }
