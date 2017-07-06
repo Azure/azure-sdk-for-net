@@ -25,6 +25,10 @@ namespace Networks.Tests
         public const string MS_PeerASN = "1000";
         public const string MS_PublicPrefix = "12.2.3.4/30";
 
+        public const string MS_PrimaryPrefix_V6 = "fc00::/126";
+        public const string MS_SecondaryPrefix_V6 = "fc01::/126";
+        public const string MS_PublicPrefix_V6 = "fc02::1/128";
+
         public const string Circuit_Provider = "bvtazureixp01";
         public const string Circuit_Location = "boydton 1 dc";
         public const string Circuit_BW = "200";
@@ -121,6 +125,45 @@ namespace Networks.Tests
                 Assert.Equal(circuit.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
 
                 circuit = TestHelper.UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(resourceGroupName,
+                    circuitName, networkManagementClient);
+
+                Assert.Equal(circuit.Name, circuitName);
+                Assert.Equal(circuit.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
+                Assert.NotNull(circuit.Peerings);
+
+                resourcesClient.ResourceGroups.Delete(resourceGroupName);
+            }
+        }
+
+        [Fact]
+        public void ExpressRouteMicrosoftPeeringApiWithIpv6Test()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+                var location = "westus";
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(
+                    resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                string circuitName = "circuit";
+
+                var circuit = TestHelper.CreateDefaultExpressRouteCircuit(resourceGroupName,
+                    circuitName, location, networkManagementClient);
+
+                Assert.Equal(circuit.Name, circuitName);
+                Assert.Equal(circuit.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
+
+                circuit = TestHelper.UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(resourceGroupName,
                     circuitName, networkManagementClient);
 
                 Assert.Equal(circuit.Name, circuitName);
