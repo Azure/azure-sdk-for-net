@@ -5,6 +5,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using ResourceManager.Fluent.Core;
     using Models;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation for VirtualMachineExtensionImageVersion.
@@ -57,6 +59,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 this.Type().Publisher.Name,
                 this.Type().Name,
                 this.Name());
+            return new VirtualMachineExtensionImageImpl(this, inner);
+        }
+
+        ///GENMHASH:CAE7C5956C89A3353EA5E0FC6E8AD675:39D1FBA4A37519D7E29877939A31F436
+        public async Task<IVirtualMachineExtensionImage> GetImageAsync(CancellationToken cancellationToken)
+        {
+            VirtualMachineExtensionImageInner inner = await this.client.GetAsync(this.RegionName(),
+                this.Type().Publisher.Name,
+                this.Type().Name,
+                this.Name(), cancellationToken);
             return new VirtualMachineExtensionImageImpl(this, inner);
         }
     }

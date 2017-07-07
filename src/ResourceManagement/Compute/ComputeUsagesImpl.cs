@@ -6,6 +6,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Models;
     using Rest.Azure;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// The implementation of ComputeUsages.
@@ -34,6 +36,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             return WrapList(client.Usage.List(regionName)
                 .AsContinuousCollection(link => client.Usage.ListNext(link)));
+        }
+
+        ///GENMHASH:271CC39CE723B6FD3D7CCA7471D4B201:039795D842B96323D94D260F3FF83299
+        public async Task<IPagedCollection<Microsoft.Azure.Management.Compute.Fluent.IComputeUsage>> ListByRegionAsync(Region region, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await ListByRegionAsync(region.Name, cancellationToken);
+        }
+
+        ///GENMHASH:2ED29FF482F2137640A1CA66925828A8:DBED7C5E8F3D15AA49FB5B3D4C6C961C
+        public async Task<IPagedCollection<Microsoft.Azure.Management.Compute.Fluent.IComputeUsage>> ListByRegionAsync(string regionName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IComputeUsage, Usage>.LoadPage(
+                 async (cancellation) => await client.Usage.ListAsync(regionName, cancellation),
+                 client.Usage.ListNextAsync,
+                 WrapModel,
+                 false,
+                 cancellationToken);
         }
 
         ///GENMHASH:438AA0AEE9E5AB3F7FB0CB3404AB0062:347158454CE9D4F224065BB056903D09

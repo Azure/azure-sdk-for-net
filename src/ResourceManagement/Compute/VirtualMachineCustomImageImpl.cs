@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:9E984BEB4133DD0B3AA842B63D7D77AC:1C3F555F09D9102CFCAD04ADC6BBFE42
-        public ImageOSDisk OsDiskImage()
+        public ImageOSDisk OSDiskImage()
         {
             if (Inner.StorageProfile == null) {
                 return null;

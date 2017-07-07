@@ -15,13 +15,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetSkuTypes SkuType { get; }
 
         /// <summary>
-        /// Gets available scaling information.
-        /// </summary>
-        Models.VirtualMachineScaleSetSkuCapacity Capacity { get; }
-
-        /// <summary>
         /// Gets the type of resource the SKU applies to.
         /// </summary>
         string ResourceType { get; }
+
+        /// <summary>
+        /// Gets available scaling information.
+        /// </summary>
+        Models.VirtualMachineScaleSetSkuCapacity Capacity { get; }
     }
 }

@@ -33,6 +33,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
+        ///GENMHASH:1BCE81BDD651175D2AF64E39F4F2C420:F211289A9C0637B5973069548F05CECE
+        public void RevokeAccess(string resourceGroupName, string diskName)
+        {
+            this.Inner.RevokeAccess(resourceGroupName, diskName);
+        }
+
+        ///GENMHASH:C2E2A5650639245BC0993A33DCAA5D61:EB62A2650D38743CBB5B7D4B8A7D8255
+        public string GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration)
+        {
+            return this.GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration).Result;
+        }
+
         ///GENMHASH:1BCE81BDD651175D2AF64E39F4F2C420:BFFE56CE1D59C3CA9284FED6EC0BD4DE
         public async Task RevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
         {

@@ -13,19 +13,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Defi
     public interface IWithTags<ParentT> 
     {
         /// <summary>
-        /// Specifies tags for the virtual machine extension.
-        /// </summary>
-        /// <param name="tags">The tags to associate.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithTags(IDictionary<string,string> tags);
-
-        /// <summary>
         /// Adds a tag to the virtual machine extension.
         /// </summary>
         /// <param name="key">The key for the tag.</param>
         /// <param name="value">The value for the tag.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithTag(string key, string value);
+
+        /// <summary>
+        /// Specifies tags for the virtual machine extension.
+        /// </summary>
+        /// <param name="tags">The tags to associate.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithTags(IDictionary<string,string> tags);
     }
 
     /// <summary>
@@ -151,20 +151,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Defi
     public interface IWithSettings<ParentT> 
     {
         /// <summary>
-        /// Specifies private settings.
-        /// </summary>
-        /// <param name="settings">The private settings.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithProtectedSettings(IDictionary<string,object> settings);
-
-        /// <summary>
-        /// Specifies public settings.
-        /// </summary>
-        /// <param name="settings">The public settings.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithPublicSettings(IDictionary<string,object> settings);
-
-        /// <summary>
         /// Specifies a private settings entry.
         /// </summary>
         /// <param name="key">The key of a private settings entry.</param>
@@ -179,5 +165,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Defi
         /// <param name="value">The value of the public settings entry.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithPublicSetting(string key, object value);
+
+        /// <summary>
+        /// Specifies public settings.
+        /// </summary>
+        /// <param name="settings">The public settings.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithPublicSettings(IDictionary<string,object> settings);
+
+        /// <summary>
+        /// Specifies private settings.
+        /// </summary>
+        /// <param name="settings">The private settings.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Definition.IWithAttach<ParentT> WithProtectedSettings(IDictionary<string,object> settings);
     }
 }

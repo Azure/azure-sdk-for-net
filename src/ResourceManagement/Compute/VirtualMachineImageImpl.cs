@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:9E984BEB4133DD0B3AA842B63D7D77AC:6D8F2FF773E3B310A12FB550BBF5501D
-        public OSDiskImage OsDiskImage()
+        public OSDiskImage OSDiskImage()
         {
             return Inner.OsDiskImage;
         }

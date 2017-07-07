@@ -16,9 +16,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<AvailabilitySet.Update.IUpdate>
     {
-        /// <return>The virtual machine sizes supported in the availability set.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> ListVirtualMachineSizes();
-
         /// <summary>
         /// Gets the fault domain count of this availability set.
         /// </summary>
@@ -29,10 +26,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         System.Collections.Generic.ISet<string> VirtualMachineIds { get; }
 
-        /// <summary>
-        /// Gets the update domain count of this availability set.
-        /// </summary>
-        int UpdateDomainCount { get; }
+        /// <return>The virtual machine sizes supported in the availability set.</return>
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> ListVirtualMachineSizes();
 
         /// <summary>
         /// Gets the statuses of the existing virtual machines in the availability set.
@@ -43,5 +38,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the availability set SKU.
         /// </summary>
         Models.AvailabilitySetSkuTypes Sku { get; }
+
+        /// <summary>
+        /// Gets the update domain count of this availability set.
+        /// </summary>
+        int UpdateDomainCount { get; }
     }
 }

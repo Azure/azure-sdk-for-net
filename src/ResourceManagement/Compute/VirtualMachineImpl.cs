@@ -184,10 +184,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:BF8CE5C594210A476EF389DC52B15805:2795B67DFA718D9C0FFC69E152857591
         public void ConvertToManaged()
         {
-            Manager.Inner.VirtualMachines.ConvertToManagedDisks(this.ResourceGroupName, this.Name);
-            this.Refresh();
+            this.ConvertToManagedAsync().Wait();
         }
 
+        ///GENMHASH:BE99BB2DEA25942BB991922E902344B7:BB9B58DA6D2DB651B79BA46AE181759B
         public async Task ConvertToManagedAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await Manager.Inner.VirtualMachines.ConvertToManagedDisksAsync(this.ResourceGroupName, this.Name, cancellationToken);
@@ -204,14 +204,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:1F383B6B989059B78D6ECB949E789CD4:D3D812C91301FB29508197FA8534CDDC
         public string Capture(string containerName, string vhdPrefix, bool overwriteVhd)
         {
-            VirtualMachineCaptureParametersInner parameters = new VirtualMachineCaptureParametersInner();
-            parameters.DestinationContainerName = containerName;
-            parameters.OverwriteVhds = overwriteVhd;
-            parameters.VhdPrefix = vhdPrefix;
-            VirtualMachineCaptureResultInner captureResult = Manager.Inner.VirtualMachines.Capture(this.ResourceGroupName, this.Name, parameters);
-            return JsonConvert.SerializeObject(captureResult.Output);
+            return this.CaptureAsync(containerName, vhdPrefix, overwriteVhd).Result;
         }
 
+        ///GENMHASH:C345130B595C0FF585A57651EFDC3A0F:E97CAC99D13041F7FEAACC7E4508DC7B
         public async Task<string> CaptureAsync(string containerName, string vhdPrefix, bool overwriteVhd, CancellationToken cancellationToken = default(CancellationToken))
         {
             VirtualMachineCaptureParametersInner parameters = new VirtualMachineCaptureParametersInner();
@@ -275,13 +271,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:54B52B6B32A26AD456CFB5E00BE4A7E1:A19C73689F2772054260CA742BE6FC13
-        public async Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> GetExtensionsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> ListExtensionsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             return await this.virtualMachineExtensions.ListAsync(cancellationToken);
         }
 
         ///GENMHASH:979FFAEA86882618784D4077FB80332F:B79EEB6C251B19AEB675FFF7A365C818
-        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> GetExtensions()
+        public IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> ListExtensions()
         {
             return this.virtualMachineExtensions.AsMap();
         }
@@ -463,7 +459,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:57A0D9F7821CCF113A2473B139EA6535:A5202C2E2CECEF8345A7B13AA2F45579
-        public VirtualMachineImpl WithSpecializedOsUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType)
+        public VirtualMachineImpl WithSpecializedOSUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType)
         {
             VirtualHardDisk osVhd = new VirtualHardDisk();
             osVhd.Uri = osDiskUrl;
@@ -475,7 +471,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:1F74902637AB57C68DF7BEB69565D69F:E405AA329DD9CF5E18080043D36F5E0A
-        public VirtualMachineImpl WithSpecializedOsDisk(IDisk disk, OperatingSystemTypes osType)
+        public VirtualMachineImpl WithSpecializedOSDisk(IDisk disk, OperatingSystemTypes osType)
         {
             ManagedDiskParametersInner diskParametersInner = new ManagedDiskParametersInner();
             diskParametersInner.Id = disk.Id;
@@ -610,7 +606,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:6AD476CF269D3B37CBD6D308C3557D31:16840EEFCED2B5791EEB29EDAE4CB087
-        public VirtualMachineImpl WithOsDiskVhdLocation(string containerName, string vhdName)
+        public VirtualMachineImpl WithOSDiskVhdLocation(string containerName, string vhdName)
         {
             // Sets the native (un-managed) disk backing virtual machine OS disk
             //
@@ -659,7 +655,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:90924DCFADE551C6E90B738982E6C2F7:279439FCFF8597A1B86C671E92AB9C4F
-        public VirtualMachineImpl WithOsDiskStorageAccountType(StorageAccountTypes accountType)
+        public VirtualMachineImpl WithOSDiskStorageAccountType(StorageAccountTypes accountType)
         {
             if (Inner.StorageProfile.OsDisk.ManagedDisk == null)
             {
@@ -1176,13 +1172,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:AACA43FF0E9DA39D6993719C23FB0486
-        public OperatingSystemTypes OsType()
+        public OperatingSystemTypes OSType()
         {
             return Inner.StorageProfile.OsDisk.OsType.Value;
         }
 
         ///GENMHASH:E6371CFFB9CB09E08DD4757D639CBF27:976273E359EA5250C90646DEEB682652
-        public string OsUnmanagedDiskVhdUri()
+        public string OSUnmanagedDiskVhdUri()
         {
             if (IsManagedDiskEnabled())
             {
@@ -1192,13 +1188,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:123FF0223083F789E78E45771A759A9C:1604791894B0C3EF16EEDF56536B8B70
-        public CachingTypes OsDiskCachingType()
+        public CachingTypes OSDiskCachingType()
         {
             return Inner.StorageProfile.OsDisk.Caching.Value;
         }
 
         ///GENMHASH:034DA366E39060AAD75E1DA786657383:65EDBB2144C128EB0C43030D512C5EED
-        public int OsDiskSize()
+        public int OSDiskSize()
         {
             if (Inner.StorageProfile.OsDisk.DiskSizeGB == null)
             {
@@ -1210,7 +1206,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:E5CADE85564466522E512C04EB3F57B6:086F150AD4D805B10FE2EDCCE4784829
-        public StorageAccountTypes? OsDiskStorageAccountType()
+        public StorageAccountTypes? OSDiskStorageAccountType()
         {
             if (!IsManagedDiskEnabled() || this.StorageProfile().OsDisk.ManagedDisk == null)
             {
@@ -1220,7 +1216,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:C6D786A0345B2C4ADB349E573A0BF6C7:E98CE6464DD63DE655EAFA519D693285
-        public string OsDiskId()
+        public string OSDiskId()
         {
             if (!IsManagedDiskEnabled())
             {
@@ -1360,7 +1356,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:5390AD803419DE6CEAFF825AD0A94458:7197E049071CE2157D45362744EAD102
-        public OSProfile OsProfile()
+        public OSProfile OSProfile()
         {
             return Inner.OsProfile;
         }
@@ -1487,7 +1483,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                         {
                             string osDiskVhdContainerName = "vhds";
                             string osDiskVhdName = this.vmName + "-os-disk-" + Guid.NewGuid().ToString() + ".Vhd";
-                            WithOsDiskVhdLocation(osDiskVhdContainerName, osDiskVhdName);
+                            WithOSDiskVhdLocation(osDiskVhdContainerName, osDiskVhdName);
                         }
                         osDisk.ManagedDisk = null;
                     }

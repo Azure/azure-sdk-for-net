@@ -40,48 +40,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.Reimage(string groupName, string name)
         {
-            this.ReimageAsync(groupName, name).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Starts the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
-        /// <param name="name">The name of the virtual machine scale set.</param>
-        /// <throws>CloudException thrown for an invalid response from the service.</throws>
-        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
-        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.Start(string groupName, string name)
-        {
-            this.StartAsync(groupName, name).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Powers off (stops) the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
-        /// <param name="name">The name of the virtual machine scale set.</param>
-        /// <throws>CloudException thrown for an invalid response from the service.</throws>
-        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
-        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.PowerOff(string groupName, string name)
-        {
  
-            this.PowerOffAsync(groupName, name).GetAwaiter().GetResult(); ;
-        }
-
-        /// <summary>
-        /// Restarts the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
-        /// <param name="name">The name of the virtual machine scale set.</param>
-        /// <throws>CloudException thrown for an invalid response from the service.</throws>
-        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
-        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.Restart(string groupName, string name)
-        {
- 
-            this.RestartAsync(groupName, name).GetAwaiter().GetResult(); ;
+            this.Reimage(groupName, name);
         }
 
         /// <summary>
@@ -95,7 +55,49 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.Deallocate(string groupName, string name)
         {
  
-            this.DeallocateAsync(groupName, name).GetAwaiter().GetResult(); ;
+            this.Deallocate(groupName, name);
+        }
+
+        /// <summary>
+        /// Restarts the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
+        /// <param name="name">The name of the virtual machine scale set.</param>
+        /// <throws>CloudException thrown for an invalid response from the service.</throws>
+        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
+        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.Restart(string groupName, string name)
+        {
+ 
+            this.Restart(groupName, name);
+        }
+
+        /// <summary>
+        /// Powers off (stops) the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
+        /// <param name="name">The name of the virtual machine scale set.</param>
+        /// <throws>CloudException thrown for an invalid response from the service.</throws>
+        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
+        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.PowerOff(string groupName, string name)
+        {
+ 
+            this.PowerOff(groupName, name);
+        }
+
+        /// <summary>
+        /// Starts the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
+        /// <param name="name">The name of the virtual machine scale set.</param>
+        /// <throws>CloudException thrown for an invalid response from the service.</throws>
+        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
+        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSets.Start(string groupName, string name)
+        {
+ 
+            this.Start(groupName, name);
         }
     }
 }

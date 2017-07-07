@@ -43,16 +43,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         void Restart(string groupName, string name);
 
         /// <summary>
-        /// Starts the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
-        /// <param name="name">The name of the virtual machine scale set.</param>
-        /// <throws>CloudException thrown for an invalid response from the service.</throws>
-        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
-        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
-        void Start(string groupName, string name);
-
-        /// <summary>
         /// Powers off (stops) the virtual machines in the scale set.
         /// </summary>
         /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
@@ -71,5 +61,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <throws>IOException exception thrown from serialization/deserialization.</throws>
         /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
         void Deallocate(string groupName, string name);
+
+        /// <summary>
+        /// Starts the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="groupName">The name of the resource group the virtual machine scale set is in.</param>
+        /// <param name="name">The name of the virtual machine scale set.</param>
+        /// <throws>CloudException thrown for an invalid response from the service.</throws>
+        /// <throws>IOException exception thrown from serialization/deserialization.</throws>
+        /// <throws>InterruptedException exception thrown when the operation is interrupted.</throws>
+        void Start(string groupName, string name);
     }
 }

@@ -78,10 +78,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             await Inner.DeallocateAsync(groupName, name, cancellationToken: cancellationToken);
         }
 
+        ///GENMHASH:2048E8AC80AC022225C462CE7FD14A6F:AB513A3D7E5B1192B76F853CB23CBB12
+        public void Deallocate(string groupName, string name)
+        {
+            this.DeallocateAsync(groupName, name).GetAwaiter().GetResult();
+        }
+
         ///GENMHASH:9F1310A4445A183902C9AF672DA34354:F32BEF843CE33ABB858763CFD92B9A36
         public async Task PowerOffAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             await Inner.PowerOffAsync(groupName, name, cancellationToken: cancellationToken);
+        }
+
+        ///GENMHASH:9F1310A4445A183902C9AF672DA34354:F32BEF843CE33ABB858763CFD92B9A36
+        public void PowerOff(string groupName, string name)
+        {
+            this.PowerOffAsync(groupName, name).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:CD0E967F30C27C522C0DE3E4523C6CDD:8C9B139D9CD48BE89CACA8348E2E8469
@@ -90,16 +102,34 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             await Inner.RestartAsync(groupName, name, cancellationToken: cancellationToken);
         }
 
+        ///GENMHASH:CD0E967F30C27C522C0DE3E4523C6CDD:8C9B139D9CD48BE89CACA8348E2E8469
+        public void Restart(string groupName, string name)
+        {
+            this.RestartAsync(groupName, name).GetAwaiter().GetResult();
+        }
+
         ///GENMHASH:F5C1D0B90DEED77EE54F7CEB164C727E:4E2B451086A707DC66F26388A688071E
         public async Task StartAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             await Inner.StartAsync(groupName, name, cancellationToken: cancellationToken);
         }
 
+        ///GENMHASH:F5C1D0B90DEED77EE54F7CEB164C727E:4E2B451086A707DC66F26388A688071E
+        public void Start(string groupName, string name)
+        {
+            this.StartAsync(groupName, name).GetAwaiter().GetResult();
+        }
+
         ///GENMHASH:4DBD1302C1BE61E6004FB18DA868020B:A8445E32081DE89D5D3DAD2DAAFEFB2F
         public async Task ReimageAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             await Inner.ReimageAsync(groupName, name, cancellationToken);
+        }
+
+        ///GENMHASH:4DBD1302C1BE61E6004FB18DA868020B:A8445E32081DE89D5D3DAD2DAAFEFB2F
+        public void Reimage(string groupName, string name)
+        {
+            this.ReimageAsync(groupName, name).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
