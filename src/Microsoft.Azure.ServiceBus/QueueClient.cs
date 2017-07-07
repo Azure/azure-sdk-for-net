@@ -99,7 +99,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         QueueClient(ServiceBusNamespaceConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode, RetryPolicy retryPolicy)
-            : base($"{nameof(QueueClient)}{ClientEntity.GetNextId()}({entityPath})", retryPolicy)
+            : base(ClientEntity.GenerateClientId(nameof(QueueClient), entityPath), retryPolicy)
         {
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();

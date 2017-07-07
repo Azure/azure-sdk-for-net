@@ -85,7 +85,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
             RetryPolicy retryPolicy)
-            : base(nameof(MessageSender) + StringUtility.GetRandomString(), retryPolicy ?? RetryPolicy.Default)
+            : base(ClientEntity.GenerateClientId(nameof(MessageSender), entityPath), retryPolicy ?? RetryPolicy.Default)
         {
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.OperationTimeout = serviceBusConnection.OperationTimeout;

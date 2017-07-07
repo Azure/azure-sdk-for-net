@@ -69,7 +69,7 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         TopicClient(ServiceBusNamespaceConnection serviceBusConnection, string entityPath, RetryPolicy retryPolicy)
-            : base($"{nameof(TopicClient)}{GetNextId()}({entityPath})", retryPolicy)
+            : base(ClientEntity.GenerateClientId(nameof(TopicClient), entityPath), retryPolicy)
         {
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();

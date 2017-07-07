@@ -115,7 +115,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             int prefetchCount = DefaultPrefetchCount,
             string sessionId = null,
             bool isSessionReceiver = false)
-            : base(nameof(MessageReceiver) + StringUtility.GetRandomString(), retryPolicy ?? RetryPolicy.Default)
+            : base(ClientEntity.GenerateClientId(nameof(MessageReceiver), entityPath), retryPolicy ?? RetryPolicy.Default)
         {
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.ReceiveMode = receiveMode;
@@ -129,21 +129,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(this.CreateRequestResponseLinkAsync, this.CloseRequestResponseSession);
             this.requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             this.PrefetchCount = prefetchCount;
-            this.messageReceivePumpSyncLock = new object();
-        }
-
-        /// <summary>
-        /// This constructor should only be used by inherited members, such as the <see cref="IMessageSession"/>.
-        /// </summary>
-        /// <param name="receiveMode">The <see cref="ServiceBus.ReceiveMode"/> used to specify how messages are received.</param>
-        /// <param name="operationTimeout">The default operation timeout to be used.</param>
-        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> to be used.</param>
-        protected MessageReceiver(ReceiveMode receiveMode, TimeSpan operationTimeout, RetryPolicy retryPolicy)
-            : base(nameof(MessageReceiver) + StringUtility.GetRandomString(), retryPolicy ?? RetryPolicy.Default)
-        {
-            this.ReceiveMode = receiveMode;
-            this.OperationTimeout = operationTimeout;
-            this.lastPeekedSequenceNumber = Constants.DefaultLastPeekedSequenceNumber;
             this.messageReceivePumpSyncLock = new object();
         }
 

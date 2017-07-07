@@ -79,7 +79,7 @@ namespace Microsoft.Azure.ServiceBus
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             RetryPolicy retryPolicy = null,
             int prefetchCount = DefaultPrefetchCount)
-            : this($"{nameof(SessionClient)}{ClientEntity.GetNextId()}({entityPath})",
+            : this(ClientEntity.GenerateClientId(nameof(SessionClient), entityPath),
                   entityPath,
                   null,
                   receiveMode,

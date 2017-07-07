@@ -23,13 +23,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="retryPolicy"></param>
         protected ClientEntity(string clientId, RetryPolicy retryPolicy)
         {
-            if (retryPolicy == null)
-            {
-                throw new ArgumentNullException(nameof(retryPolicy));
-            }
-
             this.ClientId = clientId;
-            this.RetryPolicy = retryPolicy;
+            this.RetryPolicy = retryPolicy ?? throw new ArgumentNullException(nameof(retryPolicy));
             this.syncLock = new object();
         }
 
@@ -106,6 +101,16 @@ namespace Microsoft.Azure.ServiceBus
         protected static long GetNextId()
         {
             return Interlocked.Increment(ref nextId);
+        }
+
+        /// <summary>
+        /// Generates a new client id that can be used to identify a specific client in logs and error messages.
+        /// </summary>
+        /// <param name="clientTypeName">The type of the client.</param>
+        /// <param name="postfix">Information that can be appended by the client.</param>
+        protected static string GenerateClientId(string clientTypeName, string postfix = "")
+        {
+            return $"{clientTypeName}{GetNextId()}{postfix}";
         }
     }
 }

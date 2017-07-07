@@ -15,6 +15,7 @@ namespace Microsoft.Azure.ServiceBus
         public abstract System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public Microsoft.Azure.ServiceBus.RetryPolicy RetryPolicy { get; }
         public System.Threading.Tasks.Task CloseAsync() { }
+        protected static string GenerateClientId(string clientTypeName, string postfix = "") { }
         protected static long GetNextId() { }
         protected abstract System.Threading.Tasks.Task OnClosingAsync();
         public abstract void RegisterPlugin(Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin serviceBusPlugin);
@@ -361,7 +362,6 @@ namespace Microsoft.Azure.ServiceBus.Core
     {
         public MessageReceiver(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public MessageReceiver(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
-        protected MessageReceiver(Microsoft.Azure.ServiceBus.ReceiveMode receiveMode, System.TimeSpan operationTimeout, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy) { }
         public long LastPeekedSequenceNumber { get; }
         public System.DateTime LockedUntilUtc { get; set; }
         public string Path { get; }
