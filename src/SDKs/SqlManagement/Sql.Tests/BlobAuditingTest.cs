@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
@@ -80,7 +78,7 @@ namespace Sql.Tests
                         StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
                         StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
                         AuditActionsAndGroups = auditActionsAndGroups,
-                        StorageAccountSubscriptionId = "00000000-1234-0000-5678-000000000000",
+                        StorageAccountSubscriptionId = new Guid("00000000-1234-0000-5678-000000000000"),
                         IsStorageSecondaryKeyInUse = false
                     };
                     sqlClient.Databases.CreateOrUpdateBlobAuditingPolicy(resourceGroup.Name, server.Name, dbName, updatedDatabasePolicy);
@@ -176,7 +174,7 @@ namespace Sql.Tests
                 StorageAccountAccessKey = string.Empty,
                 StorageEndpoint = string.Empty,
                 AuditActionsAndGroups = new List<string>(),
-                StorageAccountSubscriptionId = "00000000-0000-0000-0000-000000000000",
+                StorageAccountSubscriptionId = new Guid("00000000-0000-0000-0000-000000000000"),
                 IsStorageSecondaryKeyInUse = false,
             };
 

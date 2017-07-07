@@ -1,11 +1,23 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
+### Changes in 3.0.1
+- Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.
+
+### Changes in 3.0.0
+- All previous preview changes (below) are now stable and part of the official release
+- Add support for Compute Policy management
+    - Compute policies allow an admin to define maximum parallelism and priority for jobs for given users and groups
+    - The policy support can be accessed through the `ComputePolicy` operations property.
+- Add support for Job Relationships
+    - This allows for better definitions and searchability of jobs that are part of pipelines or specific runs.
+    - There is a new property bag on JobInformation called `Related`
+    - There are four new APIs allowing for retrieval of jobs in a pipeline or recurrence.
 
 ### Changes in 2.2.0-preview
 - Introduces the new package item type for catalog items.
 - Switched the FileType enum to a string since this field is read only and will have new types added and changed with some regularity.
 - Allows for listing the following catalog items from their parent's parent item (the database)
     - Table
-    - view
+    - View
     - Table valued function
     - Table statistics
 

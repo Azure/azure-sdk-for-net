@@ -5,7 +5,6 @@ using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Collections.Generic;
 using System.Net;
 using Xunit;
 

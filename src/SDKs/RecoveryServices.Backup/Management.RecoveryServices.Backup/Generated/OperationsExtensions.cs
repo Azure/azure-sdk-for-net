@@ -28,13 +28,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group where the recovery services vault is
-            /// present.
-            /// </param>
-            public static IPage<ClientDiscoveryValueForSingleApi> List(this IOperations operations, string resourceGroupName)
+            public static IPage<ClientDiscoveryValueForSingleApi> List(this IOperations operations)
             {
-                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -43,16 +39,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group where the recovery services vault is
-            /// present.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ClientDiscoveryValueForSingleApi>> ListAsync(this IOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ClientDiscoveryValueForSingleApi>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
