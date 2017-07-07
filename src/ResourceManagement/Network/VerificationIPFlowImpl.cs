@@ -1,5 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Threading;
@@ -14,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uVmVyaWZpY2F0aW9uSVBGbG93SW1wbA==
     internal partial class VerificationIPFlowImpl  :
-        ExecutableImpl<Microsoft.Azure.Management.Network.Fluent.IVerificationIPFlow>,
+        Executable<IVerificationIPFlow>,
         IVerificationIPFlow,
         IDefinition
     {
@@ -30,9 +33,9 @@ namespace Microsoft.Azure.Management.Network.Fluent
         }
 
         ///GENMHASH:AD2631B1DB33BADA121356C1B30A8CEF:22CA551C34302C2ECB41398C91A06993
-        public Access Access()
+        public Models.Access Access()
         {
-            return result.Access();
+            return Models.Access.Parse(result.Access);
         }
 
         ///GENMHASH:BB86B1F07AADE33841AA4762FF3CC20E:B387E3DD8624B2499C0BDB4DDC202E72
@@ -121,10 +124,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:F0DF1562B8B293A495AB4D86FA5FF5A2:8668EBCD576CE12CC0DF56FC49AA4BDF
         public IVerificationIPFlow WithTargetNetworkInterfaceId(string targetNetworkInterfaceId)
         {
-            //$ parameters.WithTargetNicResourceId(targetNetworkInterfaceId);
-            //$ return this;
-
-            return null;
+            parameters.TargetNicResourceId = targetNetworkInterfaceId;
+            return this;
         }
 
         ///GENMHASH:FA2535431E8DE1A68BC05577993DEAFF:D55D5BD9867C55095428F74D81048912
@@ -157,6 +158,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             //$ });
 
             return null;
+        }
+
+        public override Task<IVerificationIPFlow> ExecuteAsync(CancellationToken cancellationToken = new CancellationToken(), bool multiThreaded = true)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

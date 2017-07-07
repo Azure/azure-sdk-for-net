@@ -15,10 +15,10 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
 ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50Lm5ldHdvcmsuaW1wbGVtZW50YXRpb24uVG9wb2xvZ3lJbXBs
     internal partial class TopologyImpl  :
-        IndexableRefreshable<Microsoft.Azure.Management.Network.Fluent.ITopology>,
+        IndexableRefreshableWrapper<Microsoft.Azure.Management.Network.Fluent.ITopology, TopologyInner>,
         ITopology
     {
-        private Dictionary<string,Models.TopologyResource> resources;
+        private Dictionary<string,TopologyResource> resources;
         private NetworkWatcherImpl parent;
         private string groupName;
         ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:8AB87020DE6C711CD971F3D80C33DD83
@@ -82,17 +82,17 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         ///GENMHASH:432D1607DC634180D9215162AB0A4606:4E97D9B69941FDA55FB8CA87259B7D25
         internal  TopologyImpl(NetworkWatcherImpl parent, TopologyInner innerObject, string groupName)
+            : base(innerObject.Id, innerObject)
         {
-            //$ super(innerObject);
-            //$ this.parent = parent;
-            //$ this.groupName = groupName;
+            this.parent = parent;
+            this.groupName = groupName;
             //$ initializeResourcesFromInner();
             //$ }
 
         }
 
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:407DF2FB896AD0A714F7B557BFA97C87
-        protected async Task<Models.TopologyInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        protected override async Task<Models.TopologyInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             //$ return this.parent().Manager().Inner.NetworkWatchers()
             //$ .GetTopologyAsync(parent().ResourceGroupName(), parent().Name(), groupName);
