@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Fluent.Tests.Storage
 {
-    public class StorageUsagesTests
+    public class Usages
     {
         [Fact]
         public void CanListUsages()

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Azure.Tests.Common;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Fluent;
@@ -13,12 +14,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Xunit;
 
-namespace Azure.Tests.Network.LoadBalancer
+namespace Fluent.Tests.Network
 {
-    public class LoadBalancerBugFixes
+    public class BugFixes
     {
         [Fact]
-        public void WithExistingPublicIpAddressTest()
+        public void WithExistingPublicIpAddress()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -111,7 +112,7 @@ namespace Azure.Tests.Network.LoadBalancer
         }
 
         [Fact]
-        public void WithExistingNetworkSecurityGroupTest()
+        public void WithExistingNetworkSecurityGroup()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {

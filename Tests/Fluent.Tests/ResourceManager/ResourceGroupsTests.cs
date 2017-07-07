@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Fluent.Tests.ResourceManager
 {
-    public class ResourceGroupsTests
+    public class ResourceGroups
     {
         [Fact]
         public void CanCRUDResourceGroup()

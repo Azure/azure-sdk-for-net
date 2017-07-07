@@ -11,7 +11,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Xunit;
 
-namespace Azure.Tests.Network.ApplicationGateway
+namespace Fluent.Tests.Network.ApplicationGateway
 {
     /// <summary>
     /// Internal complex app gateway test.

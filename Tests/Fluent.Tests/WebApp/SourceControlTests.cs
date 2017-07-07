@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.Dns.Fluent.Models;
@@ -11,9 +12,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Azure.Tests.WebApp
+namespace Fluent.Tests.WebApp
 {
-    public class SourceControlTests
+    public class SourceControl
     {
         [Fact]
         public async Task CanDeploySourceControl()

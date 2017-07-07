@@ -18,9 +18,9 @@ using System.IO;
 
 namespace Fluent.Tests.Graph.RBAC
 {
+    public class Applications
+    {
 
-    public class ApplicationsTests {
-        
         [Fact]
         public void CanCRUDApplication()
         {

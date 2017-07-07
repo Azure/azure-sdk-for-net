@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Cdn.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
@@ -9,9 +10,9 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using Xunit;
 
-namespace Azure.Tests.Cdn
+namespace Fluent.Tests
 {
-    public class CdnTests
+    public partial class Cdn
     {
         private const string cdnEndpointName = "endpoint-f3757d2a3e10";
         private const string endpointOriginHostname = "mylinuxapp.azurewebsites.net";

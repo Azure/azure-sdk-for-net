@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Fluent.Tests.ResourceManager
 {
-    public class TenantsTests
+    public class Tenants
     {
 
         [Fact]

@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Fluent.Tests.ResourceManager
 {
-    public class GenericResourcesTests
+    public class GenericResources
     {
         [Fact]
         public async Task CanCreateUpdateMoveResource()

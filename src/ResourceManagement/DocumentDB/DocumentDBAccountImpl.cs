@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
             IDocumentDBAccount databaseAccount = null;
             while (!done)
             {
-                await Task.Delay(5000);
+                await SdkContext.DelayProvider.DelayAsync(5000, cancellationToken);
                 databaseAccount = await this.Manager.DocumentDBAccounts.GetByResourceGroupAsync(
                     ResourceGroupName, Name);
 

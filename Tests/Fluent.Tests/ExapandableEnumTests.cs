@@ -4,9 +4,9 @@
 using Xunit;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
-namespace Azure.Tests
+namespace Fluent.Tests
 {
-    public class ExapandableEnumTests
+    public class ExapandableEnum
     {
         public class ExpandableStringEnumFoo : ExpandableStringEnum<ExpandableStringEnumFoo>
         {
@@ -21,7 +21,7 @@ namespace Azure.Tests
         }
 
         [Fact]
-        public void TestExpandableEnums()
+        public void ExpandableEnums()
         {
             ExpandableStringEnumFoo foo = ExpandableStringEnumFoo.Foo1;
             Assert.True(ExpandableStringEnumFoo.Foo1 == foo);

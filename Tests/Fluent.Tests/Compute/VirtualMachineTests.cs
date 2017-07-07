@@ -19,7 +19,7 @@ using Xunit;
 
 namespace Fluent.Tests.Compute
 {
-    public class VirtualMachineTests
+    public class VirtualMachine
     {
         private const string Location = "southcentralus";
         private const string VMName = "chashvm";

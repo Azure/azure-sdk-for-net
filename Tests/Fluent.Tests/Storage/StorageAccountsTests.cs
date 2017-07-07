@@ -12,7 +12,7 @@ using Azure.Tests;
 
 namespace Fluent.Tests.Storage
 {
-    public class StorageAccountsTests
+    public class StorageAccounts
     {
         [Fact]
         public void CanCRUDStorageAccount()

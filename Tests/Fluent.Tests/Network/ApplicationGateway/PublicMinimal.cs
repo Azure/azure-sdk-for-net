@@ -9,7 +9,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using Xunit;
 
-namespace Azure.Tests.Network.ApplicationGateway
+namespace Fluent.Tests.Network.ApplicationGateway
 {
     /// <summary>
     /// Internet-facing minimalistic app gateway test.

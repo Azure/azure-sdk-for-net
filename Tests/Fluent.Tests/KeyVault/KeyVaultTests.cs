@@ -14,10 +14,11 @@ using Azure.Tests;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 
-namespace Fluent.Tests.KeyVault
+namespace Fluent.Tests
 {
 
-    public class ManageKeyVault {
+    public class KeyVault
+    {
 
         /**
          * Main entry point.
@@ -31,7 +32,7 @@ namespace Fluent.Tests.KeyVault
                 string vaultName1 = TestUtilities.GenerateName("vault1");
                 string vaultName2 = TestUtilities.GenerateName("vault2");
                 string rgName = TestUtilities.GenerateName("rgNEMV");
-                
+
                 IKeyVaultManager manager = TestHelper.CreateKeyVaultManager();
 
                 var spnCredentialsClientId = HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey];

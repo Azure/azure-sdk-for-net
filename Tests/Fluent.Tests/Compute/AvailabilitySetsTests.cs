@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Fluent.Tests.Compute
 {
-    public class AvailabilitySetsTests
+    public partial class AvailabilitySets
     {
 
         [Fact]

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
@@ -11,17 +12,17 @@ using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Azure.Tests
+namespace Fluent.Tests.Network
 {
-    public class AzureTests
+    public class AppGateway
     {
-        public AzureTests(ITestOutputHelper output)
+        public AppGateway(ITestOutputHelper output)
         {
             TestHelper.TestLogger = output;
         }
 
         [Fact]
-        public void TestAppGatewaysInParallel()
+        public void InParallel()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -93,92 +94,100 @@ namespace Azure.Tests
         }
 
         [Fact]
-        public void TestAppGatewaysPrivateMinimal()
+        public void PrivateMinimal()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new Network.ApplicationGateway.PrivateMinimal().RunTest(azure.ApplicationGateways, azure.ResourceGroups);
+                new ApplicationGateway.PrivateMinimal().RunTest(azure.ApplicationGateways, azure.ResourceGroups);
             }
         }
 
         [Fact]
-        public void TestAppGatewaysPublicMinimal()
+        public void PublicMinimal()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new Network.ApplicationGateway.PublicMinimal().RunTest(azure.ApplicationGateways, azure.ResourceGroups);
+                new ApplicationGateway.PublicMinimal().RunTest(azure.ApplicationGateways, azure.ResourceGroups);
             }
         }
 
         [Fact]
-        public void TestAppGatewaysPrivateComplex()
+        public void PrivateComplex()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
-                new Network.ApplicationGateway.PrivateComplex().RunTest(azure.ApplicationGateways, azure.ResourceGroups);
+                new ApplicationGateway.PrivateComplex().RunTest(azure.ApplicationGateways, azure.ResourceGroups);
             }
         }
 
         [Fact]
-        public void TestAppGatewaysPublicComplex()
+        public void PublicComplex()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new Network.ApplicationGateway.PublicComplex().RunTest(azure.ApplicationGateways, azure.ResourceGroups);
+                new ApplicationGateway.PublicComplex().RunTest(azure.ApplicationGateways, azure.ResourceGroups);
             }
+        }
+    }
+
+    public partial class LoadBalancer
+    {
+        public LoadBalancer(ITestOutputHelper output)
+        {
+            TestHelper.TestLogger = output;
         }
 
         [Fact]
-        public void TestLoadBalancersNatRules()
+        public void NatRules()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new Network.LoadBalancer.InternetWithNatRule(azure.VirtualMachines)
+                new LoadBalancerHelpers.InternetWithNatRule(azure.VirtualMachines)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
             }
         }
 
         [Fact]
-        public void TestLoadBalancersNatPools()
+        public void NatPools()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new Network.LoadBalancer.InternetWithNatPool(azure.VirtualMachines)
+                new LoadBalancerHelpers.InternetWithNatPool(azure.VirtualMachines)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
             }
         }
 
         [Fact]
-        public void TestLoadBalancersInternetMinimum()
+        public void InternetMinimum()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new Network.LoadBalancer.InternetMinimal(azure.VirtualMachines)
+                new LoadBalancerHelpers.InternetMinimal(azure.VirtualMachines)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
             }
         }
 
         [Fact]
-        public void TestLoadBalancersInternalMinimum()
+        public void InternalMinimum()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 var azure = TestHelper.CreateRollupClient();
 
-                new Network.LoadBalancer.InternalMinimal(azure.VirtualMachines)
+                new LoadBalancerHelpers.InternalMinimal(azure.VirtualMachines)
                 .RunTest(azure.LoadBalancers, azure.ResourceGroups);
             }
         }
