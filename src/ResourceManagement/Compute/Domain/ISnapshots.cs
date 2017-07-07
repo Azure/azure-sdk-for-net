@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="snapshotName">The snapshot name.</param>
         /// <param name="accessLevel">Access level.</param>
         /// <param name="accessDuration">Access duration.</param>
-        /// <returna>Representation of the deferred computation of this call returning a read-only SAS URI to the disk.</returna>
+        /// <returna>Representation of the deferred computation of this call returning a read-only SAS URI to the snapshot.</returna>
         Task<string> GrantAccessAsync(string resourceGroupName, string snapshotName, AccessLevel accessLevel, int accessDuration, CancellationToken cancellationToken = default(CancellationToken));
 
     }
