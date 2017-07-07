@@ -99,7 +99,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FarmModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string farmId, object parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FarmModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string farmId, FarmUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the list of metric definitions.
         /// </summary>

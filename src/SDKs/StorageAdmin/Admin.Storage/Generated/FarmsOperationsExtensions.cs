@@ -120,7 +120,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='parameters'>
             /// New values for farm
             /// </param>
-            public static FarmModel Update(this IFarmsOperations operations, string resourceGroupName, string farmId, object parameters)
+            public static FarmModel Update(this IFarmsOperations operations, string resourceGroupName, string farmId, FarmUpdateParameters parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, farmId, parameters).GetAwaiter().GetResult();
             }
@@ -143,7 +143,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FarmModel> UpdateAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, object parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FarmModel> UpdateAsync(this IFarmsOperations operations, string resourceGroupName, string farmId, FarmUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, farmId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

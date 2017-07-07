@@ -503,7 +503,7 @@ namespace Microsoft.AzureStack.Storage.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FarmModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string farmId, object parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FarmModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string farmId, FarmUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -543,6 +543,7 @@ namespace Microsoft.AzureStack.Storage.Admin
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("farmId", farmId);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
@@ -595,6 +596,12 @@ namespace Microsoft.AzureStack.Storage.Admin
 
             // Serialize Request
             string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {

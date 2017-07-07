@@ -328,7 +328,7 @@ namespace Microsoft.AzureStack.Storage.Admin
             Farms = new FarmsOperations(this);
             Containers = new ContainersOperations(this);
             Acquisitions = new AcquisitionsOperations(this);
-            BaseUri = new System.Uri("https://https://adminmanagement.local.azurestack.external");
+            BaseUri = new System.Uri("https://adminmanagement.local.azurestack.external");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
