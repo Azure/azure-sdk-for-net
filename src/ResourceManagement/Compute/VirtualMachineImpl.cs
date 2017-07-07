@@ -38,24 +38,44 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         private readonly IStorageManager storageManager;
         private readonly INetworkManager networkManager;
         private readonly string vmName;
+        // used to generate unique name for any dependency resources
         private readonly IResourceNamer namer;
+        // unique key of a creatable storage account to be used for virtual machine child resources that
+        // requires storage [OS disk, data disk etc..] requires storage [OS disk, data disk, boot diagnostics etc..]
         private string creatableStorageAccountKey;
+        // unique key of a creatable availability set that this virtual machine to put
         private string creatableAvailabilitySetKey;
+        // unique key of a creatable network interface that needs to be used as virtual machine's primary network interface
         private string creatablePrimaryNetworkInterfaceKey;
+        // unique key of a creatable network interfaces that needs to be used as virtual machine's secondary network interface
         private IList<string> creatableSecondaryNetworkInterfaceKeys;
+        // reference to an existing storage account to be used for virtual machine child resources that
+        // requires storage [OS disk, data disk, boot diagnostics etc..]
         private IStorageAccount existingStorageAccountToAssociate;
+        // reference to an existing availability set that this virtual machine to put
         private IAvailabilitySet existingAvailabilitySetToAssociate;
+        // reference to an existing network interface that needs to be used as virtual machine's primary network interface
         private INetworkInterface existingPrimaryNetworkInterfaceToAssociate;
+        // reference to a list of existing network interfaces that needs to be used as virtual machine's secondary network interface
         private IList<INetworkInterface> existingSecondaryNetworkInterfacesToAssociate;
         private VirtualMachineInstanceView virtualMachineInstanceView;
         private bool isMarketplaceLinuxImage;
+        // Intermediate state of network interface definition to which private IP can be associated
         private Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIP nicDefinitionWithPrivateIP;
+        // Intermediate state of network interface definition to which subnet can be associated
         private Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetworkSubnet nicDefinitionWithSubnet;
+        // Intermediate state of network interface definition to which public IP can be associated
         private Network.Fluent.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
+        // The entry point to manage extensions associated with the virtual machine
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
+        // Flag indicates native disk is selected for OS and Data disks
         private bool isUnmanagedDiskSelected;
+        // The native data disks associated with the virtual machine
         private IList<IVirtualMachineUnmanagedDataDisk> unmanagedDataDisks;
+        // To track the managed data disks
         private ManagedDataDiskCollection managedDataDisks;
+        // unique key of a creatable storage account to be used for boot diagnostics
+        private string creatableDiagnosticsStorageAccountKey;
 
         ///GENMHASH:0A331C2401291DF824493E64F2798884:D3B04C536032C2BDC056A8F85225875E
         internal VirtualMachineImpl(
@@ -1117,6 +1137,51 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
+        ///GENMHASH:4C7CAAD83BFD2178732EBCF6E061B2FA:E84D8725C76163C38C60209300BBC171
+        public VirtualMachineImpl WithBootDiagnostics()
+        {
+            // Diagnostics storage uri will be set later by this.HandleBootDiagnosticsStorageSettings(..)
+            //
+            this.EnableDisableBootDiagnostics(true);
+            return this;
+        }
+
+
+        ///GENMHASH:863CDD9F8489B70A038C82A8B4339C1E:9ABCD9EF7B6D335327D3363AC01E0FFF
+        public VirtualMachineImpl WithBootDiagnostics(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
+        {
+            // Diagnostics storage uri will be set later by this.HandleBootDiagnosticsStorageSettings(..)
+            //
+            EnableDisableBootDiagnostics(true);
+            this.creatableDiagnosticsStorageAccountKey = creatable.Key;
+            this.AddCreatableDependency(creatable as IResourceCreator<IHasId>);
+            return this;
+        }
+
+        ///GENMHASH:5719F860C08C586F249065EB7A86DED3:D78B3EDD6BE5C30863D9F9E21A28EE11
+        public VirtualMachineImpl WithBootDiagnostics(string storageAccountBlobEndpointUri)
+        {
+            this.EnableDisableBootDiagnostics(true);
+            this.Inner
+                .DiagnosticsProfile
+                .BootDiagnostics
+                .StorageUri = storageAccountBlobEndpointUri;
+            return this;
+        }
+
+        ///GENMHASH:F731B4942EC78BDFB7DA69F73C48F080:7E7787C820A03B7F2B97B51FDACA8053
+        public VirtualMachineImpl WithBootDiagnostics(IStorageAccount storageAccount)
+        {
+            return this.WithBootDiagnostics(storageAccount.EndPoints.Primary.Blob);
+        }
+
+        ///GENMHASH:5892700B93394BCA74ABA1B081C6F158:455622D3AC079705ADC12CAFAD0028C2
+        public VirtualMachineImpl WithoutBootDiagnostics()
+        {
+            this.EnableDisableBootDiagnostics(false);
+            return this;
+        }
+
         ///GENMHASH:C81171F34FA85CED80852E725FF8B7A4:56767F3A519F0DF8AB9F685ABA15F2E4
         public bool IsManagedDiskEnabled()
         {
@@ -1389,6 +1454,29 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return Fluent.PowerState.FromInstanceView(this.InstanceView());
         }
 
+        ///GENMHASH:D8D324B42ED7B0976032110E0D5D3320:32345B0AB329E6E420804CD852C47627
+        public bool IsBootDiagnosticsEnabled()
+        {
+            if (this.Inner.DiagnosticsProfile != null
+                && this.Inner.DiagnosticsProfile.BootDiagnostics != null
+                && this.Inner.DiagnosticsProfile.BootDiagnostics.Enabled != null
+                && this.Inner.DiagnosticsProfile.BootDiagnostics.Enabled.HasValue) {
+                    return this.Inner.DiagnosticsProfile.BootDiagnostics.Enabled.Value;
+            }
+            return false;
+        }
+
+        ///GENMHASH:F842C1987E811B219C87CFA14349A00B:556CABFA1947D39EDB3AAE3870809862
+        public string BootDiagnosticsStorageUri()
+        {
+            // Even though diagnostics can disabled azure still keep the storage uri
+            if (this.Inner.DiagnosticsProfile != null
+                && this.Inner.DiagnosticsProfile.BootDiagnostics != null) {
+                    return this.Inner.DiagnosticsProfile.BootDiagnostics.StorageUri;
+            }
+            return null;
+        }
+
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:272F8DA403745EB8C8C6DCCD8A4778E2
         public async override Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1406,7 +1494,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 UnmanagedDataDiskImpl.SetDataDisksDefaults(this.unmanagedDataDisks, this.vmName);
             }
-            await HandleStorageSettingsAsync(cancellationToken);
+            var diskStorageAccount = await HandleStorageSettingsAsync(cancellationToken);
+            await HandleBootDiagnosticsStorageSettingsAsync(diskStorageAccount, cancellationToken);
             HandleNetworkSettings();
             HandleAvailabilitySettings();
             var response = await Manager.Inner.VirtualMachines.CreateOrUpdateAsync(ResourceGroupName, vmName, Inner, cancellationToken);
@@ -1591,8 +1680,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        ///GENMHASH:E9830BD8841F5F66740928BA7AA21EB0:5C7D9BC8E92D9076657ED7BB4C691583
-        private async Task HandleStorageSettingsAsync(CancellationToken cancellationToken = default(CancellationToken))
+        ///GENMHASH:E9830BD8841F5F66740928BA7AA21EB0:52457D4653AB87BFDAB452BDB2A8B34C
+        private async Task<IStorageAccount> HandleStorageSettingsAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             IStorageAccount storageAccount = null;
             if (this.creatableStorageAccountKey != null)
@@ -1641,6 +1730,52 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     }
                 }
             }
+            return storageAccount;
+        }
+
+
+        ///GENMHASH:679C8E77D63CDAC3C75B428C73FDBA6F:810F9B4884B03FC354476CC848056897
+        private async Task<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> HandleBootDiagnosticsStorageSettingsAsync(IStorageAccount diskStorageAccount, 
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (this.Inner.DiagnosticsProfile == null 
+                || this.Inner.DiagnosticsProfile.BootDiagnostics == null)
+            {
+                return diskStorageAccount;
+            }
+            if (this.Inner.DiagnosticsProfile.BootDiagnostics.StorageUri != null)
+            {
+                return diskStorageAccount;
+            }
+            if (this.Inner.DiagnosticsProfile.BootDiagnostics.Enabled.HasValue 
+                && this.Inner.DiagnosticsProfile.BootDiagnostics.Enabled == true)
+            {
+                if (this.creatableDiagnosticsStorageAccountKey != null)
+                {
+                    var diagnosticsStgAccount = (IStorageAccount)this.CreatedResource(this.creatableDiagnosticsStorageAccountKey);
+                    this.Inner.DiagnosticsProfile.BootDiagnostics.StorageUri = diagnosticsStgAccount.EndPoints.Primary.Blob;
+                    return diskStorageAccount == null? diagnosticsStgAccount : diskStorageAccount;
+                }
+                if (diskStorageAccount != null)
+                {
+                    this.Inner.DiagnosticsProfile.BootDiagnostics.StorageUri = diskStorageAccount.EndPoints.Primary.Blob;
+                    return diskStorageAccount;
+                }
+                else
+                {
+                    var diagnosticsStgAccount = await this.storageManager.StorageAccounts
+                        .Define(this.namer.RandomName("stg", 24).Replace("-", ""))
+                        .WithRegion(this.RegionName)
+                        .WithExistingResourceGroup(this.ResourceGroupName)
+                        .CreateAsync(cancellationToken);
+                    this.Inner
+                        .DiagnosticsProfile
+                        .BootDiagnostics
+                        .StorageUri = diagnosticsStgAccount.EndPoints.Primary.Blob;
+                    return diagnosticsStgAccount;
+                }
+            }
+            return diskStorageAccount;
         }
 
         ///GENMHASH:D07A07F736607425258AAE80368A516D:168FE2B09726F397B3F197216CE80D80
@@ -1684,6 +1819,28 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 nicReference.Primary = false;
                 nicReference.Id = secondaryNetworkInterface.Id;
                 Inner.NetworkProfile.NetworkInterfaces.Add(nicReference);
+            }
+        }
+
+        ///GENMHASH:C5029F7D6B24C60F12C8C8EE00CA338D:4025A91B58E8284506099B34457E6276
+        private void EnableDisableBootDiagnostics(bool enable)
+        {
+            if (this.Inner.DiagnosticsProfile == null)
+            {
+                this.Inner.DiagnosticsProfile =  new DiagnosticsProfile();
+            }
+            if (this.Inner.DiagnosticsProfile.BootDiagnostics == null)
+            {
+                this.Inner.DiagnosticsProfile.BootDiagnostics = new BootDiagnostics();
+            }
+            if (enable)
+            {
+                this.Inner.DiagnosticsProfile.BootDiagnostics.Enabled = true;
+            }
+            else
+            {
+                this.Inner.DiagnosticsProfile.BootDiagnostics.Enabled = false;
+                this.Inner.DiagnosticsProfile.BootDiagnostics.StorageUri = null;
             }
         }
 
