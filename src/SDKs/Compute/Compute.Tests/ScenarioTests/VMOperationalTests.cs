@@ -91,7 +91,24 @@ namespace Compute.Tests
                     m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Redeploy(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Restart(rg1Name, vm1.Name);
-                    m_CrpClient.VirtualMachines.RunCommand(rg1Name, vm1.Name, new RunCommandInput() { CommandId="ipconfig" });
+
+                    var runCommandImput = new RunCommandInput() {
+                        CommandId = "RunPowerShellScript",
+                        Script = new List<string>() {
+                            "param(",
+                            "    [string]$arg1,",
+                            "    [string]$arg2",
+                            ")",
+                            "echo This is a sample script with parameters $arg1 $arg2"
+                        },
+                        Parameters = new List<RunCommandInputParameter>()
+                        {
+                            new RunCommandInputParameter("arg1","value1"),
+                            new RunCommandInputParameter("arg2","value2"),
+                        }
+                    };
+                    m_CrpClient.VirtualMachines.RunCommand(rg1Name, vm1.Name, runCommandImput);
+
                     m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Deallocate(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Generalize(rg1Name, vm1.Name);
