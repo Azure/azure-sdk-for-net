@@ -6,6 +6,7 @@ using Microsoft.Rest.TransientFaultHandling;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
@@ -24,6 +25,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         {
             RootHttpHandler = httpClientHandler;
             this.handlers = handlers;
+        }
+
+        public AzureEnvironment Environment
+        {
+            get; private set;
         }
 
         public string BaseUri
@@ -164,6 +170,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
             public IBuildable WithEnvironment(AzureEnvironment environment)
             {
+                this.environment = environment;
                 return WithBaseUri(environment.ResourceManagerEndpoint);
             }
 
@@ -221,8 +228,50 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                 {
                     BaseUri = baseUri,
                     Credentials = credentials,
-                    RetryPolicy = retryPolicy
+                    RetryPolicy = retryPolicy,
+                    Environment = this.Environment
                 };
+            }
+
+            private AzureEnvironment environment;
+            private AzureEnvironment Environment
+            {
+                get
+                {
+                    if (environment != null)
+                    {
+                        if (this.environment.ResourceManagerEndpoint != null)
+                        {
+                            var matchedEnvironment = AzureEnvironment
+                                .KnownEnvironments
+                                .FirstOrDefault(env => env.ResourceManagerEndpoint.StartsWith(this.environment.ResourceManagerEndpoint, StringComparison.OrdinalIgnoreCase));
+                            if (matchedEnvironment != null)
+                            {
+                                if (environment.AuthenticationEndpoint == null)
+                                {
+                                    environment.AuthenticationEndpoint = matchedEnvironment.AuthenticationEndpoint;
+                                }
+                                if (environment.GraphEndpoint == null)
+                                {
+                                    environment.GraphEndpoint = matchedEnvironment.GraphEndpoint;
+                                }
+                                if (environment.ManagementEnpoint == null)
+                                {
+                                    environment.ManagementEnpoint = matchedEnvironment.ManagementEnpoint;
+                                }
+                                if (environment.StorageEndpointSuffix == null)
+                                {
+                                    environment.StorageEndpointSuffix = matchedEnvironment.StorageEndpointSuffix;
+                                }
+                            }
+                        }
+                    }
+                    else if (baseUri != null)
+                    {
+                        environment = AzureEnvironment.KnownEnvironments.FirstOrDefault(env => env.ResourceManagerEndpoint.StartsWith(this.baseUri, StringComparison.OrdinalIgnoreCase));
+                    }
+                    return environment;
+                }
             }
         }
     }
