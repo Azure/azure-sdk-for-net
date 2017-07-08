@@ -363,12 +363,10 @@ namespace Microsoft.Azure.ServiceBus.Core
         public MessageReceiver(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public MessageReceiver(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public long LastPeekedSequenceNumber { get; }
-        public System.DateTime LockedUntilUtc { get; set; }
         public string Path { get; }
         public int PrefetchCount { get; set; }
         public Microsoft.Azure.ServiceBus.ReceiveMode ReceiveMode { get; set; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
-        public string SessionId { get; set; }
         public System.Threading.Tasks.Task AbandonAsync(string lockToken) { }
         public System.Threading.Tasks.Task CompleteAsync(string lockToken) { }
         public System.Threading.Tasks.Task CompleteAsync(System.Collections.Generic.IEnumerable<string> lockTokens) { }

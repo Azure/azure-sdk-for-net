@@ -20,13 +20,31 @@ namespace Microsoft.Azure.ServiceBus
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
             RetryPolicy retryPolicy,
-            int prefetchCount = 0,
+            int prefetchCount = Constants.DefaultClientPrefetchCount,
             string sessionId = null,
             bool isSessionReceiver = false)
             : base(entityPath, entityType, receiveMode, serviceBusConnection, cbsTokenProvider, retryPolicy, prefetchCount, sessionId, isSessionReceiver)
         {
         }
-        
+
+        /// <summary>
+        /// Gets the time that the session identified by <see cref="SessionId"/> is locked until for this client.
+        /// </summary>
+        public DateTime LockedUntilUtc
+        {
+            get => this.LockedUntilUtcInternal;
+            internal set => this.LockedUntilUtcInternal = value;
+        }
+
+        /// <summary>
+        /// Gets the SessionId.
+        /// </summary>
+        public string SessionId
+        {
+            get => this.SessionIdInternal;
+            internal set => this.SessionIdInternal = value;
+        }
+
         public Task<Stream> GetStateAsync()
         {
             return this.OnGetStateAsync();
@@ -57,7 +75,7 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, this.OperationTimeout, null);
-                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionId;
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
 
                 AmqpResponseMessage amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
@@ -92,7 +110,7 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.SetSessionStateOperation, this.OperationTimeout, null);
-                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionId;
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
 
                 if (sessionState != null)
                 {
@@ -122,13 +140,13 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, this.OperationTimeout, null);
-                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionId;
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
 
                 AmqpResponseMessage amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
-                    this.LockedUntilUtc = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
+                    this.LockedUntilUtcInternal = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
                 }
                 else
                 {

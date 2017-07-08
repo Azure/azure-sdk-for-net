@@ -23,6 +23,8 @@ namespace Microsoft.Azure.ServiceBus
 
         public const int MaximumSqlRuleActionStatementLength = 1024;
 
+        public const int DefaultClientPrefetchCount = 0;
+
         public static readonly int MaximumMessageHeaderPropertySize = ushort.MaxValue;
 
         public static readonly long DefaultLastPeekedSequenceNumber = 0;
@@ -36,9 +38,7 @@ namespace Microsoft.Azure.ServiceBus
         public static readonly TimeSpan MaximumRenewBufferDuration = TimeSpan.FromSeconds(10);
 
         public static readonly TimeSpan DefaultRetryDeltaBackoff = TimeSpan.FromSeconds(3);
-
-        public static readonly int DefaultClientPumpPrefetchCount = 5;
-
+        
         public static readonly TimeSpan NoMessageBackoffTimeSpan = TimeSpan.FromSeconds(5);
     }
 }
