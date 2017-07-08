@@ -2114,6 +2114,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return !this.IsInCreateMode;
         }
 
+        ///GENMHASH:31F1AF1FE9C5F41A363BCD2478A5DEE0:7DFBFA37EDE490851B9F2FD6F2A6E971
+        internal AzureEnvironment Environment()
+        {
+            return this.Manager.RestClient.Environment;
+        }
+
         ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVJbXBsLk1hbmFnZWREYXRhRGlza0NvbGxlY3Rpb24=
         partial class ManagedDataDiskCollection
         {
