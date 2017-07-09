@@ -310,7 +310,10 @@ namespace Fluent.Tests.Compute
                 Assert.Equal(1, publicSettings.Count);
                 Assert.True(publicSettings.ContainsKey("fileUris"));
                 string fileUrisString = (publicSettings["fileUris"]).ToString();
-                Assert.True(fileUrisString.Contains(uri));
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                {
+                    Assert.True(fileUrisString.Contains(uri));
+                }
 
                 /*** UPDATE THE EXTENSION WITH NEW PUBLIC AND PROTECTED SETTINGS **/
 
@@ -355,7 +358,10 @@ namespace Fluent.Tests.Compute
                 Assert.True(publicSettings2.ContainsKey("fileUris"));
 
                 string fileUris2String = (publicSettings2["fileUris"]).ToString();
-                Assert.True(fileUris2String.Contains(uri2));
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                {
+                    Assert.True(fileUris2String.Contains(uri2));
+                }
             }
         }
 
