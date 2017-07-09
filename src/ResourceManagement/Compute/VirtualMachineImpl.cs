@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:1F383B6B989059B78D6ECB949E789CD4:D3D812C91301FB29508197FA8534CDDC
         public string Capture(string containerName, string vhdPrefix, bool overwriteVhd)
         {
-            return this.CaptureAsync(containerName, vhdPrefix, overwriteVhd).Result;
+            return this.CaptureAsync(containerName, vhdPrefix, overwriteVhd).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:C345130B595C0FF585A57651EFDC3A0F:E97CAC99D13041F7FEAACC7E4508DC7B
