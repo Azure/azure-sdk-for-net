@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C14080365CC6F93E30BB51B78DED7084:769384CE5F12D8DA31D146E04DAD108F
         public void RevokeAccess()
         {
-            this.RevokeAccessAsync().GetAwaiter().GetResult();
+            this.RevokeAccessAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:920045A2761D4D5D5F5E2E52D43917D0:28B657BB52464897349F96AD3FEE7B7C
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:DAC486F08AF23F259E630032FC20FAF1:3FE53F300A729DFBC3C1F55BBB117CA1
         public string GrantAccess(int accessDurationInSeconds)
         {
-            return this.GrantAccessAsync(accessDurationInSeconds).GetAwaiter().GetResult();
+            return this.GrantAccessAsync(accessDurationInSeconds).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:AACFFB1D9582E4E00031423DDDD4036A
