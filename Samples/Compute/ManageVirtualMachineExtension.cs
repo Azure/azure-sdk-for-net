@@ -48,7 +48,7 @@ namespace ManageVirtualMachineExtension
         readonly static string mySqlScriptWindowsInstallCommand = "powershell.exe -ExecutionPolicy Unrestricted -File installMySQL.ps1";
         readonly static List<string> mySQLWindowsInstallScriptFileUris = new List<string>()
         {
-            "https://raw.githubusercontent.com/Azure-Samples/compute-dotnet-manage-virtual-machine-using-vm-extensions/master/Assets/installMySQL.ps1"
+            "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/Fluent/Samples/Asset/installMySQL.ps1"
         };
 
         readonly static string linuxVmAccessExtensionName = "VMAccessForLinux";
