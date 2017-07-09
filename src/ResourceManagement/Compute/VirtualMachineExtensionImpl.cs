@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using ResourceManager.Fluent.Core.ChildResourceActions;
     using Newtonsoft.Json;
     using System.Collections.ObjectModel;
+    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// Implementation of VirtualMachineExtension.
@@ -140,15 +141,28 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F4E714A8C40DF6CD0AE34FBA3BC4C770:79A077AE3BFC0D04AB2B4B8492338A57
         public VirtualMachineExtensionImpl WithPublicSetting(string key, object value)
         {
-            this.publicSettings.Add(key, value);
+            if (this.publicSettings.ContainsKey(key))
+            {
+                this.publicSettings[key] = value;
+            }
+            else
+            {
+                this.publicSettings.Add(key, value);
+            }
             return this;
         }
 
         ///GENMHASH:4E0AB82616606C4EEBD304EE7CA95448:C69FF63CB6446E393F7AC97CBA0B0631
         public VirtualMachineExtensionImpl WithProtectedSetting (string key, object value)
         {
-
-            this.protectedSettings.Add(key, value);
+            if (this.protectedSettings.ContainsKey(key))
+            {
+                this.protectedSettings[key] = value;
+            }
+            else
+            {
+                this.protectedSettings.Add(key, value);
+            }
             return this;
         }
 
@@ -257,20 +271,35 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 {
                     Inner.AutoUpgradeMinorVersion = resource.AutoUpgradeMinorVersion;
                 }
-                IDictionary<string, object> publicSettings = resource.Settings as IDictionary<string, object>;
-                if (publicSettings != null && publicSettings.Count > 0)
+                IDictionary<string, object> existingPublicSettings = null;
+                if (resource.Settings != null)
                 {
-                    IDictionary<string, object> innerPublicSettings = Inner.Settings as IDictionary<string, object>;
-                    if (innerPublicSettings == null)
+                    if (resource.Settings is JObject)
+                    {
+                        // NOTE: Unlike Java, In C# the settings can be JObject which needs to be
+                        // specially handled. In Java it is an Object that represents Dictionary.
+                        //
+                        var jObject = (JObject)(resource.Settings);
+                        existingPublicSettings = jObject.ToObject<Dictionary<string, object>>();
+                    }
+                    else
+                    {
+                        existingPublicSettings = resource.Settings as IDictionary<string, object>;
+                    }
+                }
+                if (existingPublicSettings != null && existingPublicSettings.Count > 0)
+                {
+                    IDictionary<string, object> newPublicSettings = Inner.Settings as IDictionary<string, object>;
+                    if (newPublicSettings == null)
                     {
                         Inner.Settings = new Dictionary<string, object>();
-                        innerPublicSettings = Inner.Settings as IDictionary<string, object>;
+                        newPublicSettings = Inner.Settings as IDictionary<string, object>;
                     }
-                    foreach (var setting in publicSettings)
+                    foreach (var setting in existingPublicSettings)
                     {
-                        if (!innerPublicSettings.ContainsKey(setting.Key))
+                        if (!newPublicSettings.ContainsKey(setting.Key))
                         {
-                            innerPublicSettings.Add(setting.Key, setting.Value);
+                            newPublicSettings.Add(setting.Key, setting.Value);
                         }
                     }
                 }
@@ -316,23 +345,43 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             if (Inner.Settings == null)
             {
                 this.publicSettings = new Dictionary<string, object>();
-                Inner.Settings = this.publicSettings;
+            }
+            else if (Inner.Settings is JObject)
+            {
+                // NOTE: Unlike Java, In C# the settings can be JObject which needs to be
+                // specially handled. In Java it is an Object that can be based to Dictionary.
+                //
+                var jObject = (JObject)(Inner.Settings);
+                this.publicSettings = jObject.ToObject<Dictionary<string, object>>();
             }
             else
             {
                 this.publicSettings = Inner.Settings as IDictionary<string, object>;
             }
-
+            // Ensure inner settings references the same object
+            //
+            Inner.Settings = this.publicSettings;
             if (Inner.ProtectedSettings == null)
             {
                 this.protectedSettings = new Dictionary<string, object>();
-                Inner.ProtectedSettings = this.protectedSettings;
+            }
+            else if (Inner.ProtectedSettings is JObject)
+            {
+                // NOTE: Unlike Java, In C# the protectedSettings can be JObject which needs to be
+                // specially handled. In Java it is an Object that can be based to Dictionary.
+                //
+                var jObject = (JObject)(Inner.ProtectedSettings);
+                this.protectedSettings = jObject.ToObject<Dictionary<string, object>>();
             }
             else
             {
                 this.protectedSettings = Inner.ProtectedSettings as IDictionary<string, object>;
             }
+            // Ensure inner protected settings references the same object
+            //
+            Inner.ProtectedSettings = this.protectedSettings;
         }
+
         VirtualMachine.Update.IUpdate ISettable<VirtualMachine.Update.IUpdate>.Parent()
         {
             return this.Parent;

@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             this.namer = SdkContext.CreateResourceNamer(this.vmName);
             this.creatableSecondaryNetworkInterfaceKeys = new List<string>();
             this.existingSecondaryNetworkInterfacesToAssociate = new List<INetworkInterface>();
-            this.virtualMachineExtensions = new VirtualMachineExtensionsImpl(this);
+            InitializeExtensions();
             this.managedDataDisks = new ManagedDataDiskCollection(this);
             InitializeDataDisks();
         }
@@ -1499,10 +1499,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             HandleNetworkSettings();
             HandleAvailabilitySettings();
             var response = await Manager.Inner.VirtualMachines.CreateOrUpdateAsync(ResourceGroupName, vmName, Inner, cancellationToken);
+            var extensionsCommited = await this.virtualMachineExtensions.CommitAndGetAllAsync(cancellationToken);
+            if (extensionsCommited.Any())
+            {
+                // Another get to fetch vm inner with extensions list reflecting the commited changes to extensions
+                //
+                response = await Manager.Inner.VirtualMachines.GetAsync(ResourceGroupName, vmName, null, cancellationToken);
+            }
             this.SetInner(response);
             ClearCachedRelatedResources();
             InitializeDataDisks();
-            await this.virtualMachineExtensions.CommitAndGetAllAsync(cancellationToken);
+            InitializeExtensions();
             return this;
         }
 
@@ -2082,6 +2089,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     this.unmanagedDataDisks.Add(new UnmanagedDataDiskImpl(dataDiskInner, this));
                 }
             }
+        }
+
+        private void InitializeExtensions()
+        {
+            this.virtualMachineExtensions = new VirtualMachineExtensionsImpl(this);
         }
 
         ///GENMHASH:7F6A7E961EA5A11F2B8013E54123A7D0:C1CDD6BC19A1D800E2865E3DC44941E1
