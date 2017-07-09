@@ -21,6 +21,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace Fluent.Tests.Compute
 {
@@ -31,6 +32,8 @@ namespace Fluent.Tests.Compute
         [Fact]
         public void CanUpdateVirtualMachineScaleSetWithExtensionProtectedSettings()
         {
+            // Test for https://github.com/Azure/azure-sdk-for-net/issues/2716
+            //
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 string rgName = TestUtilities.GenerateName("javacsmrg");
@@ -55,26 +58,7 @@ namespace Fluent.Tests.Compute
                 Assert.NotNull(keys);
                 Assert.True(keys.Count() > 0);
                 var storageAccountKey = keys.First();
-                string uri = null;
-                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-                {
-                    uri = "http://nonexisting.blob.core.windows.net/scripts/install_apache.sh";
-                }
-                else
-                {
-                    var storageConnectionString = $"DefaultEndpointsProtocol=http;AccountName={storageAccount.Name};AccountKey={storageAccountKey.Value}";
-                    CloudStorageAccount account = CloudStorageAccount.Parse(storageConnectionString);
-                    CloudBlobClient cloudBlobClient = account.CreateCloudBlobClient();
-                    CloudBlobContainer container = cloudBlobClient.GetContainerReference("scripts");
-                    bool createdNew = container.CreateIfNotExistsAsync().Result;
-                    CloudBlockBlob blob = container.GetBlockBlobReference("install_apache.sh");
-                    using (HttpClient client = new HttpClient())
-                    {
-                        blob.UploadFromStreamAsync(client.GetStreamAsync("https://raw.githubusercontent.com/Azure/azure-sdk-for-net/Fluent/src/ResourceManagement/Azure.Fluent/Fluent.Tests/Assets/install_apache.sh").Result).Wait();
-                    }
-                    uri = blob.Uri.ToString();
-                }
-
+                string uri = prepareCustomScriptStorageUri(storageAccount.Name, storageAccountKey.Value, "scripts");
                 List<string> fileUris = new List<string>();
                 fileUris.Add(uri);
 
@@ -157,13 +141,159 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
+        public void CanUpdateVirtualMachineScaleSetExtensionPublicProtectedSettings()
+        {
+            // Test for https://github.com/Azure/azure-sdk-for-net/issues/3398
+            //
+            using (var context = FluentMockContext.Start(GetType().FullName))
+            {
+                string rgName = TestUtilities.GenerateName("javacsmrg");
+                var vmssName = TestUtilities.GenerateName("vmss");
+                var uname = "jvuser";
+                var password = "123OData!@#123";
+
+                var azure = TestHelper.CreateRollupClient();
+
+                var resourceGroup = azure.ResourceGroups
+                    .Define(rgName)
+                    .WithRegion(Location)
+                    .Create();
+
+                var storageAccount = azure.StorageAccounts
+                    .Define(TestUtilities.GenerateName("stg"))
+                    .WithRegion(Location)
+                    .WithExistingResourceGroup(resourceGroup)
+                    .Create();
+
+                var keys = storageAccount.GetKeys();
+                Assert.NotNull(keys);
+                Assert.True(keys.Count() > 0);
+                var storageAccountKey = keys.First();
+                string uri = prepareCustomScriptStorageUri(storageAccount.Name, storageAccountKey.Value, "scripts");
+                List<string> fileUris = new List<string>();
+                fileUris.Add(uri);
+
+                var network = azure.Networks
+                        .Define(TestUtilities.GenerateName("vmssvnet"))
+                        .WithRegion(Location)
+                        .WithExistingResourceGroup(resourceGroup)
+                        .WithAddressSpace("10.0.0.0/28")
+                        .WithSubnet("subnet1", "10.0.0.0/28")
+                        .Create();
+
+                var virtualMachineScaleSet = azure.VirtualMachineScaleSets.Define(vmssName)
+                        .WithRegion(Location)
+                        .WithExistingResourceGroup(resourceGroup)
+                        .WithSku(VirtualMachineScaleSetSkuTypes.StandardA0)
+                        .WithExistingPrimaryNetworkSubnet(network, "subnet1")
+                        .WithoutPrimaryInternetFacingLoadBalancer()
+                        .WithoutPrimaryInternalLoadBalancer()
+                        .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts)
+                        .WithRootUsername(uname)
+                        .WithRootPassword(password)
+                        .WithUnmanagedDisks()
+                        .WithNewStorageAccount(TestUtilities.GenerateName("stg"))
+                        .WithExistingStorageAccount(storageAccount)
+                        .DefineNewExtension("CustomScriptForLinux")
+                            .WithPublisher("Microsoft.OSTCExtensions")
+                            .WithType("CustomScriptForLinux")
+                            .WithVersion("1.4")
+                            .WithMinorVersionAutoUpgrade()
+                            .WithPublicSetting("fileUris", fileUris)
+                            .WithProtectedSetting("commandToExecute", "bash install_apache.sh")
+                            .WithProtectedSetting("storageAccountName", storageAccount.Name)
+                            .WithProtectedSetting("storageAccountKey", storageAccountKey.Value)
+                            .Attach()
+                        .Create();
+                // Validate extensions after create
+                //
+                var extensions = virtualMachineScaleSet.Extensions;
+                Assert.NotNull(extensions);
+                Assert.Equal(1, extensions.Count);
+                Assert.True(extensions.ContainsKey("CustomScriptForLinux"));
+                var customScriptExtension = extensions["CustomScriptForLinux"];
+                Assert.NotNull(customScriptExtension);
+                Assert.Equal(customScriptExtension.PublisherName, "Microsoft.OSTCExtensions");
+                Assert.Equal(customScriptExtension.TypeName, "CustomScriptForLinux");
+                Assert.NotNull(customScriptExtension.PublicSettings);
+                Assert.Equal(1, customScriptExtension.PublicSettings.Count);
+                Assert.NotNull(customScriptExtension.PublicSettingsAsJsonString);
+                Assert.Equal(customScriptExtension.AutoUpgradeMinorVersionEnabled, true);
+
+                // Special check for C# implementation, seems runtime changed the actual type of public settings from 
+                // dictionary to Newtonsoft.Json.Linq.JObject. In future such changes needs to be catched before attemptting
+                // inner conversion hence the below special validation (not applicable for Java)
+                //
+                Assert.NotNull(customScriptExtension.Inner);
+                Assert.NotNull(customScriptExtension.Inner.Settings);
+                bool isJObject = customScriptExtension.Inner.Settings is JObject;
+                bool isDictionary = customScriptExtension.Inner.Settings is IDictionary<string, object>;
+                Assert.True(isJObject || isDictionary);
+
+                // Ensure the public settings are accessible, the protected settings won't be returned from the service.
+                //
+                var publicSettings = customScriptExtension.PublicSettings;
+                Assert.NotNull(publicSettings);
+                Assert.Equal(1, publicSettings.Count);
+                Assert.True(publicSettings.ContainsKey("fileUris"));
+                string fileUrisString = (publicSettings["fileUris"]).ToString();
+                Assert.True(fileUrisString.Contains(uri));
+
+                /*** UPDATE THE EXTENSION WITH NEW PUBLIC AND PROTECTED SETTINGS **/
+
+                // Regenerate the storage account key
+                //
+                storageAccount.RegenerateKey(storageAccountKey.KeyName);
+                keys = storageAccount.GetKeys();
+                Assert.NotNull(keys);
+                Assert.True(keys.Count() > 0);
+                var updatedStorageAccountKey = keys.FirstOrDefault(key => key.KeyName.Equals(storageAccountKey.KeyName, StringComparison.OrdinalIgnoreCase));
+                Assert.NotNull(updatedStorageAccountKey);
+                Assert.NotEqual(updatedStorageAccountKey.Value, storageAccountKey.Value);
+
+                // Upload the script to a different container ("scripts2") in the same storage account
+                //
+                var uri2 = prepareCustomScriptStorageUri(storageAccount.Name, updatedStorageAccountKey.Value, "scripts2");
+                List<string> fileUris2 = new List<string>();
+                fileUris2.Add(uri2);
+                string commandToExecute2 = "bash install_apache.sh";
+
+                virtualMachineScaleSet.Update()
+                    .UpdateExtension("CustomScriptForLinux")
+                        .WithPublicSetting("fileUris", fileUris2)
+                        .WithProtectedSetting("commandToExecute", commandToExecute2)
+                        .WithProtectedSetting("storageAccountName", storageAccount.Name)
+                        .WithProtectedSetting("storageAccountKey", updatedStorageAccountKey.Value)
+                        .Parent()
+                    .Apply();
+
+                extensions = virtualMachineScaleSet.Extensions;
+                Assert.NotNull(extensions);
+                Assert.Equal(1, extensions.Count);
+                Assert.True(extensions.ContainsKey("CustomScriptForLinux"));
+                var customScriptExtension2 = extensions["CustomScriptForLinux"];
+                Assert.NotNull(customScriptExtension2);
+                Assert.Equal(customScriptExtension2.PublisherName, "Microsoft.OSTCExtensions");
+                Assert.Equal(customScriptExtension2.TypeName, "CustomScriptForLinux");
+                Assert.Equal(customScriptExtension2.AutoUpgradeMinorVersionEnabled, true);
+
+                var publicSettings2 = customScriptExtension2.PublicSettings;
+                Assert.NotNull(publicSettings2);
+                Assert.Equal(1, publicSettings2.Count);
+                Assert.True(publicSettings2.ContainsKey("fileUris"));
+                string fileUris2String = (publicSettings2["fileUris"]).ToString();
+                Assert.True(fileUris2String.Contains(uri2));
+            }
+        }
+
+        [Fact]
         public void CanCreateVirtualMachineScaleSetWithCustomScriptExtension()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
                 string rgName = TestUtilities.GenerateName("javacsmrg");
                 string vmssName = TestUtilities.GenerateName("vmss");
-                string apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/Fluent/src/ResourceManagement/Azure.Fluent/Fluent.Tests/Assets/install_apache.sh";
+                string apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/Fluent/Tests/Fluent.Tests/Assets/install_apache.sh";
                 string installCommand = "bash install_apache.sh";
                 List<string> fileUris = new List<string>();
                 fileUris.Add(apacheInstallScript);
@@ -713,6 +843,25 @@ namespace Fluent.Tests.Compute
             var natPool = loadBalancer.InboundNatPools.FirstOrDefault();
             Assert.NotNull(natPool);
             return loadBalancer;
+        }
+
+        private string prepareCustomScriptStorageUri(string storageAccountName, string storageAccountKey, string containerName)
+        {
+            if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                return "http://nonexisting.blob.core.windows.net/scripts2/install_apache.sh";
+            }
+            var storageConnectionString = $"DefaultEndpointsProtocol=http;AccountName={storageAccountName};AccountKey={storageAccountKey}";
+            CloudStorageAccount account = CloudStorageAccount.Parse(storageConnectionString);
+            CloudBlobClient cloudBlobClient = account.CreateCloudBlobClient();
+            CloudBlobContainer container = cloudBlobClient.GetContainerReference(containerName);
+            bool createdNew = container.CreateIfNotExistsAsync().Result;
+            CloudBlockBlob blob = container.GetBlockBlobReference("install_apache.sh");
+            using (HttpClient client = new HttpClient())
+            {
+                blob.UploadFromStreamAsync(client.GetStreamAsync("https://raw.githubusercontent.com/Azure/azure-sdk-for-net/Fluent/Tests/Fluent.Tests/Assets/install_apache.sh").Result).Wait();
+            }
+            return blob.Uri.ToString();
         }
     }
 }

@@ -208,11 +208,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             else if (Inner.Settings is JObject)
             {
                 var jObject = (JObject)(Inner.Settings);
-                return jObject.ToObject<Dictionary<string, object>>();
+                Inner.Settings = jObject.ToObject<Dictionary<string, object>>();
+                return (Dictionary<string, object>)Inner.Settings;
             }
             else
             {
-                return Inner.Settings as Dictionary<string, object>;
+                return (Dictionary < string, object >)Inner.Settings;
             }
         }
 
@@ -226,7 +227,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             else if (Inner.ProtectedSettings is JObject)
             {
                 var jObject = (JObject)(Inner.ProtectedSettings);
-                return jObject.ToObject<Dictionary<string, object>>();
+                Inner.ProtectedSettings = jObject.ToObject<Dictionary<string, object>>();
+                return (Dictionary<string, object>)Inner.ProtectedSettings;
             }
             else
             {
