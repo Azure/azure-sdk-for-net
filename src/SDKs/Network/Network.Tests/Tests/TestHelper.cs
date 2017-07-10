@@ -127,6 +127,7 @@ namespace Networks.Tests
             {
                 var rule = new RouteFilterRule()
                 {
+                    Name = "test",
                     Access = ExpressRouteTests.Filter_Access,
                     Communities = new List<string> { ExpressRouteTests.Filter_Commmunity },
                     Location = location
