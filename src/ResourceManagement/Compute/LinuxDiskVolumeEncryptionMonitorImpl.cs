@@ -115,13 +115,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:14DA61D401D0341BDBDB99994BA6DA1F
-        public OperatingSystemTypes OsType()
+        public OperatingSystemTypes OSType()
         {
             return OperatingSystemTypes.Linux;
         }
 
         ///GENMHASH:D1037603B1F11C451DD830F07021E503:1E738399F355D89FDD840DEFB7CAE473
-        public EncryptionStatus OsDiskStatus()
+        public EncryptionStatus OSDiskStatus()
         {
             if (!HasEncryptionExtension()) {
                 return EncryptionStatus.NotEncrypted;

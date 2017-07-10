@@ -14,9 +14,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId
     {
         /// <summary>
+        /// Gets the size of this data disk in GB.
+        /// </summary>
+        int Size { get; }
+
+        /// <summary>
         /// Gets the logical unit number assigned to this data disk.
         /// </summary>
         int Lun { get; }
+
+        /// <summary>
+        /// Gets the disk caching type.
+        /// </summary>
+        Models.CachingTypes? CachingType { get; }
 
         /// <summary>
         /// Gets the storage account type of the disk.
@@ -27,15 +37,5 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the creation method used while creating this disk.
         /// </summary>
         Models.DiskCreateOptionTypes CreationMethod { get; }
-
-        /// <summary>
-        /// Gets the disk caching type.
-        /// </summary>
-        Models.CachingTypes? CachingType { get; }
-
-        /// <summary>
-        /// Gets the size of this data disk in GB.
-        /// </summary>
-        int Size { get; }
     }
 }

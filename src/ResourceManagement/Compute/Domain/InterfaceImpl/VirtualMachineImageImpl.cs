@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsDiskImage() as Models.OSDiskImage;
+                return this.OSDiskImage() as Models.OSDiskImage;
             }
         }
 
@@ -110,11 +110,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the image reference representing the publisher, offer, SKU and version of the virtual machine image.
         /// </summary>
-        ImageReference Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.ImageReference
+        Models.ImageReference Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage.ImageReference
         {
             get
             {
-                return this.ImageReference();
+                return this.ImageReference() as Models.ImageReference;
             }
         }
     }

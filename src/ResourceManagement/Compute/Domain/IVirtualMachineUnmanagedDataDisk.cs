@@ -22,9 +22,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         string SourceImageUri { get; }
 
         /// <summary>
+        /// Gets the size of this data disk in GB.
+        /// </summary>
+        int Size { get; }
+
+        /// <summary>
         /// Gets the logical unit number assigned to this data disk.
         /// </summary>
         int Lun { get; }
+
+        /// <summary>
+        /// Gets the disk caching type.
+        /// possible values are: 'None', 'ReadOnly', 'ReadWrite'.
+        /// </summary>
+        /// <summary>
+        /// Gets the caching type.
+        /// </summary>
+        Models.CachingTypes CachingType { get; }
 
         /// <summary>
         /// Gets URI to the virtual hard disk backing this data disk.
@@ -35,15 +49,5 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the creation method used while creating this disk.
         /// </summary>
         Models.DiskCreateOptionTypes CreationMethod { get; }
-
-        /// <summary>
-        /// Gets the caching type.
-        /// </summary>
-        Models.CachingTypes CachingType { get; }
-
-        /// <summary>
-        /// Gets the size of this data disk in GB.
-        /// </summary>
-        int Size { get; }
     }
 }

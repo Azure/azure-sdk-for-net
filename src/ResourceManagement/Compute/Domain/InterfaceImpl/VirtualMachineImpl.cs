@@ -4,6 +4,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.DefinitionManaged;
@@ -24,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Microsoft.Azure.Management.Storage.Fluent;
     using Microsoft.Rest;
 
-    internal partial class VirtualMachineImpl 
+    internal partial class VirtualMachineImpl
     {
         /// <summary>
         /// Specifies an SSH root user name for the Linux virtual machine.
@@ -63,16 +64,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         VirtualMachine.Definition.IWithFromImageCreateOptionsUnmanaged VirtualMachine.Definition.IWithFromImageCreateOptionsManagedOrUnmanaged.WithUnmanagedDisks()
         {
             return this.WithUnmanagedDisks() as VirtualMachine.Definition.IWithFromImageCreateOptionsUnmanaged;
-        }
-
-        /// <summary>
-        /// Specifies the custom data for the virtual machine.
-        /// </summary>
-        /// <param name="base64EncodedCustomData">The base64 encoded custom data.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachine.Definition.IWithFromImageCreateOptionsManaged VirtualMachine.Definition.IWithFromImageCreateOptionsManagedOrUnmanaged.WithCustomData(string base64EncodedCustomData)
-        {
-            return this.WithCustomData(base64EncodedCustomData) as VirtualMachine.Definition.IWithFromImageCreateOptionsManaged;
         }
 
         /// <summary>
@@ -430,7 +421,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The next stage of the definition.</return>
         VirtualMachine.Definition.IWithUnmanagedCreate VirtualMachine.Definition.IWithUnmanagedCreate.WithOSDiskVhdLocation(string containerName, string vhdName)
         {
-            return this.WithOsDiskVhdLocation(containerName, vhdName) as VirtualMachine.Definition.IWithUnmanagedCreate;
+            return this.WithOSDiskVhdLocation(containerName, vhdName) as VirtualMachine.Definition.IWithUnmanagedCreate;
         }
 
         /// <summary>
@@ -535,7 +526,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The next stage of the definition.</return>
         VirtualMachine.Definition.IWithUnmanagedCreate VirtualMachine.Definition.IWithOS.WithSpecializedOSUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType)
         {
-            return this.WithSpecializedOsUnmanagedDisk(osDiskUrl, osType) as VirtualMachine.Definition.IWithUnmanagedCreate;
+            return this.WithSpecializedOSUnmanagedDisk(osDiskUrl, osType) as VirtualMachine.Definition.IWithUnmanagedCreate;
         }
 
         /// <summary>
@@ -596,7 +587,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The next stage of the definition.</return>
         VirtualMachine.Definition.IWithManagedCreate VirtualMachine.Definition.IWithOS.WithSpecializedOSDisk(IDisk disk, OperatingSystemTypes osType)
         {
-            return this.WithSpecializedOsDisk(disk, osType) as VirtualMachine.Definition.IWithManagedCreate;
+            return this.WithSpecializedOSDisk(disk, osType) as VirtualMachine.Definition.IWithManagedCreate;
         }
 
         /// <summary>
@@ -776,7 +767,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The next stage of the definition.</return>
         VirtualMachine.Definition.IWithManagedCreate VirtualMachine.Definition.IWithManagedCreate.WithOSDiskStorageAccountType(StorageAccountTypes accountType)
         {
-            return this.WithOsDiskStorageAccountType(accountType) as VirtualMachine.Definition.IWithManagedCreate;
+            return this.WithOSDiskStorageAccountType(accountType) as VirtualMachine.Definition.IWithManagedCreate;
         }
 
         /// <summary>
@@ -839,6 +830,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Specifies an SSH public key.
+        /// </summary>
+        /// <param name="publicKey">An SSH public key in the PEM format.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachine.Definition.IWithLinuxCreateManaged VirtualMachine.Definition.IWithLinuxRootPasswordOrPublicKeyManaged.WithSsh(string publicKey)
+        {
+            return this.WithSsh(publicKey) as VirtualMachine.Definition.IWithLinuxCreateManaged;
+        }
+
+        /// <summary>
+        /// Specifies the SSH root password for the Linux virtual machine.
+        /// </summary>
+        /// <param name="rootPassword">A password, following the complexity criteria for Azure Linux VM passwords.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachine.Definition.IWithLinuxCreateManaged VirtualMachine.Definition.IWithLinuxRootPasswordOrPublicKeyManaged.WithRootPassword(string rootPassword)
+        {
+            return this.WithRootPassword(rootPassword) as VirtualMachine.Definition.IWithLinuxCreateManaged;
+        }
+
+        /// <summary>
         /// Specifies the time-zone.
         /// </summary>
         /// <param name="timeZone">A time zone.</param>
@@ -875,26 +886,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         VirtualMachine.Definition.IWithWindowsCreateManaged VirtualMachine.Definition.IWithWindowsCreateManaged.WithoutAutoUpdate()
         {
             return this.WithoutAutoUpdate() as VirtualMachine.Definition.IWithWindowsCreateManaged;
-        }
-
-        /// <summary>
-        /// Specifies an SSH public key.
-        /// </summary>
-        /// <param name="publicKey">An SSH public key in the PEM format.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachine.Definition.IWithLinuxCreateManaged VirtualMachine.Definition.IWithLinuxRootPasswordOrPublicKeyManaged.WithSsh(string publicKey)
-        {
-            return this.WithSsh(publicKey) as VirtualMachine.Definition.IWithLinuxCreateManaged;
-        }
-
-        /// <summary>
-        /// Specifies the SSH root password for the Linux virtual machine.
-        /// </summary>
-        /// <param name="rootPassword">A password, following the complexity criteria for Azure Linux VM passwords.</param>
-        /// <return>The next stage of the definition.</return>
-        VirtualMachine.Definition.IWithLinuxCreateManaged VirtualMachine.Definition.IWithLinuxRootPasswordOrPublicKeyManaged.WithRootPassword(string rootPassword)
-        {
-            return this.WithRootPassword(rootPassword) as VirtualMachine.Definition.IWithLinuxCreateManaged;
         }
 
         /// <summary>
@@ -1199,6 +1190,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Specifies the custom data for the virtual machine.
+        /// </summary>
+        /// <param name="base64EncodedCustomData">The base64 encoded custom data.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachine.Definition.IWithFromImageCreateOptionsManaged VirtualMachine.Definition.IWithFromImageCreateOptionsManaged.WithCustomData(string base64EncodedCustomData)
+        {
+            return this.WithCustomData(base64EncodedCustomData) as VirtualMachine.Definition.IWithFromImageCreateOptionsManaged;
+        }
+
+        /// <summary>
         /// Starts the definition of an extension to be attached to the virtual machine.
         /// </summary>
         /// <param name="name">The reference name for the extension.</param>
@@ -1245,7 +1246,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsDiskId();
+                return this.OSDiskId();
             }
         }
 
@@ -1261,12 +1262,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets the storage blob endpoint uri if boot diagnostics is enabled for the virtual machine.
+        /// </summary>
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.BootDiagnosticsStorageUri
+        {
+            get
+            {
+                return this.BootDiagnosticsStorageUri();
+            }
+        }
+
+        /// <summary>
         /// Powers off (stops) the virtual machine asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.PowerOffAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.PowerOffAsync(CancellationToken cancellationToken)
         {
- 
+
             await this.PowerOffAsync(cancellationToken);
         }
 
@@ -1307,24 +1319,47 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Captures the virtual machine by copying virtual hard disks of the VM asynchronously.
+        /// </summary>
+        /// <param name="containerName">Destination container name to store the captured VHD.</param>
+        /// <param name="vhdPrefix">The prefix for the VHD holding captured image.</param>
+        /// <param name="overwriteVhd">Whether to overwrites destination VHD if it exists.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task<string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.CaptureAsync(string containerName, string vhdPrefix, bool overwriteVhd, CancellationToken cancellationToken)
+        {
+            return await this.CaptureAsync(containerName, vhdPrefix, overwriteVhd, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the unmanaged data disks associated with this virtual machine, indexed by LUN number.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.UnmanagedDataDisks
+        System.Collections.Generic.IReadOnlyDictionary<int, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.UnmanagedDataDisks
         {
             get
             {
-                return this.UnmanagedDataDisks() as System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk>;
+                return this.UnmanagedDataDisks() as System.Collections.Generic.IReadOnlyDictionary<int, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineUnmanagedDataDisk>;
+            }
+        }
+
+        /// <summary>
+        /// Gets true if boot diagnostics is enabled for the virtual machine.
+        /// </summary>
+        bool Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.IsBootDiagnosticsEnabled
+        {
+            get
+            {
+                return this.IsBootDiagnosticsEnabled();
             }
         }
 
         /// <summary>
         /// Gets the managed data disks associated with this virtual machine, indexed by LUN.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.DataDisks
+        System.Collections.Generic.IReadOnlyDictionary<int, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.DataDisks
         {
             get
             {
-                return this.DataDisks() as System.Collections.Generic.IReadOnlyDictionary<int,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk>;
+                return this.DataDisks() as System.Collections.Generic.IReadOnlyDictionary<int, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk>;
             }
         }
 
@@ -1345,8 +1380,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Restart()
         {
- 
+
             this.Restart();
+        }
+
+        /// <summary>
+        /// Converts (migrates) the virtual machine with un-managed disks to use managed disk asynchronously.
+        /// </summary>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.ConvertToManagedAsync(CancellationToken cancellationToken)
+        {
+
+            await this.ConvertToManagedAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1356,7 +1401,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsDiskCachingType();
+                return this.OSDiskCachingType();
             }
         }
 
@@ -1365,7 +1410,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Redeploy()
         {
- 
+
             this.Redeploy();
         }
 
@@ -1374,7 +1419,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.PowerOff()
         {
- 
+
             this.PowerOff();
         }
 
@@ -1396,7 +1441,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsDiskStorageAccountType();
+                return this.OSDiskStorageAccountType();
             }
         }
 
@@ -1443,7 +1488,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsDiskSize();
+                return this.OSDiskSize();
             }
         }
 
@@ -1454,7 +1499,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsType();
+                return this.OSType();
             }
         }
 
@@ -1465,23 +1510,23 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsUnmanagedDiskVhdUri();
+                return this.OSUnmanagedDiskVhdUri();
             }
         }
 
         /// <return>Extensions attached to the virtual machine.</return>
-        System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.ListExtensions()
+        System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.ListExtensions()
         {
-            return this.GetExtensions() as System.Collections.Generic.IReadOnlyDictionary<string,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>;
+            return this.ListExtensions() as System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>;
         }
 
         /// <summary>
         /// Starts the virtual machine asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.StartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.StartAsync(CancellationToken cancellationToken)
         {
- 
+
             await this.StartAsync(cancellationToken);
         }
 
@@ -1490,6 +1535,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.ConvertToManaged()
         {
+
             this.ConvertToManaged();
         }
 
@@ -1497,9 +1543,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Shuts down the virtual machine and releases the compute resources asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.DeallocateAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.DeallocateAsync(CancellationToken cancellationToken)
         {
- 
+
             await this.DeallocateAsync(cancellationToken);
         }
 
@@ -1508,7 +1554,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Deallocate()
         {
- 
+
             this.Deallocate();
         }
 
@@ -1527,9 +1573,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Restarts the virtual machine asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.RestartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.RestartAsync(CancellationToken cancellationToken)
         {
- 
+
             await this.RestartAsync(cancellationToken);
         }
 
@@ -1551,7 +1597,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsProfile() as Models.OSProfile;
+                return this.OSProfile() as Models.OSProfile;
             }
         }
 
@@ -1560,7 +1606,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Generalize()
         {
- 
+
             this.Generalize();
         }
 
@@ -1569,7 +1615,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.Start()
         {
- 
+
             this.Start();
         }
 
@@ -1636,7 +1682,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Refreshes the virtual machine instance view to sync with Azure.
         /// </summary>
         /// <return>An observable that emits the instance view of the virtual machine.</return>
-        async Task<Models.VirtualMachineInstanceView> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.RefreshInstanceViewAsync(CancellationToken cancellationToken)
+        async Task<Models.VirtualMachineInstanceView> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.RefreshInstanceViewAsync(CancellationToken cancellationToken)
         {
             return await this.RefreshInstanceViewAsync(cancellationToken) as Models.VirtualMachineInstanceView;
         }
@@ -1651,19 +1697,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this.GetPrimaryPublicIPAddress() as Microsoft.Azure.Management.Network.Fluent.IPublicIPAddress;
         }
 
-        /// <return>Extensions attached to the virtual machine.</return>
-        async Task<IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.ListExtensionsAsync(CancellationToken cancellationToken)
+        /// <return>A representation of the deferred computation of this call, returning extensions attached to the virtual machine.</return>
+        async Task<IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.ListExtensionsAsync(CancellationToken cancellationToken)
         {
-            return await this.GetExtensionsAsync(cancellationToken);
+            return await this.ListExtensionsAsync(cancellationToken) as IReadOnlyList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension>;
         }
 
         /// <summary>
         /// Generalizes the virtual machine asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.GeneralizeAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.GeneralizeAsync(CancellationToken cancellationToken)
         {
- 
+
             await this.GeneralizeAsync(cancellationToken);
         }
 
@@ -1671,9 +1717,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Redeploys the virtual machine asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineBeta.RedeployAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine.RedeployAsync(CancellationToken cancellationToken)
         {
- 
+
             await this.RedeployAsync(cancellationToken);
         }
 
@@ -1761,9 +1807,92 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             return this.WithRootUsername(rootUserName) as VirtualMachine.Definition.IWithLinuxRootPasswordOrPublicKeyManaged;
         }
-    }
 
-    public partial class ManagedDataDiskCollection 
-    {
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithBootDiagnostics.WithBootDiagnostics()
+        {
+            return this.WithBootDiagnostics() as VirtualMachine.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="creatable">The storage account to be created and used for store the boot diagnostics.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithBootDiagnostics.WithBootDiagnostics(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
+        {
+            return this.WithBootDiagnostics(creatable) as VirtualMachine.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="storageAccountBlobEndpointUri">A storage account blob endpoint to store the boot diagnostics.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithBootDiagnostics.WithBootDiagnostics(string storageAccountBlobEndpointUri)
+        {
+            return this.WithBootDiagnostics(storageAccountBlobEndpointUri) as VirtualMachine.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="storageAccount">An existing storage account to be uses to store the boot diagnostics.</param>
+        /// <return>The next stage of the definition.</return>
+        VirtualMachine.Definition.IWithCreate VirtualMachine.Definition.IWithBootDiagnostics.WithBootDiagnostics(IStorageAccount storageAccount)
+        {
+            return this.WithBootDiagnostics(storageAccount) as VirtualMachine.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be disabled in the virtual machine.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        VirtualMachine.Update.IUpdate VirtualMachine.Update.IWithBootDiagnostics.WithoutBootDiagnostics()
+        {
+            return this.WithoutBootDiagnostics() as VirtualMachine.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        VirtualMachine.Update.IUpdate VirtualMachine.Update.IWithBootDiagnostics.WithBootDiagnostics()
+        {
+            return this.WithBootDiagnostics() as VirtualMachine.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="creatable">The storage account to be created and used for store the boot diagnostics.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachine.Update.IUpdate VirtualMachine.Update.IWithBootDiagnostics.WithBootDiagnostics(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
+        {
+            return this.WithBootDiagnostics(creatable) as VirtualMachine.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="storageAccountBlobEndpointUri">A storage account blob endpoint to store the boot diagnostics.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachine.Update.IUpdate VirtualMachine.Update.IWithBootDiagnostics.WithBootDiagnostics(string storageAccountBlobEndpointUri)
+        {
+            return this.WithBootDiagnostics(storageAccountBlobEndpointUri) as VirtualMachine.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="storageAccount">An existing storage account to be uses to store the boot diagnostics.</param>
+        /// <return>The next stage of the update.</return>
+        VirtualMachine.Update.IUpdate VirtualMachine.Update.IWithBootDiagnostics.WithBootDiagnostics(IStorageAccount storageAccount)
+        {
+            return this.WithBootDiagnostics(storageAccount) as VirtualMachine.Update.IUpdate;
+        }
     }
 }

@@ -52,18 +52,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmana
     public interface IWithDiskSource<ParentT> 
     {
         /// <summary>
-        /// Specifies that unmanaged disk needs to be created with a new VHD of given size.
-        /// </summary>
-        /// <param name="sizeInGB">The initial disk size in GB.</param>
-        /// <return>The next stage of unmanaged data disk definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithNewVhdDiskSettings<ParentT> WithNewVhd(int sizeInGB);
-
-        /// <summary>
         /// Specifies the image LUN identifier of the source disk image.
         /// </summary>
         /// <param name="imageLun">The LUN.</param>
         /// <return>The next stage of unmanaged data disk definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithFromImageDiskSettings<ParentT> FromImage(int imageLun);
+
+        /// <summary>
+        /// Specifies that unmanaged disk needs to be created with a new VHD of given size.
+        /// </summary>
+        /// <param name="sizeInGB">The initial disk size in GB.</param>
+        /// <return>The next stage of unmanaged data disk definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetUnmanagedDataDisk.Definition.IWithNewVhdDiskSettings<ParentT> WithNewVhd(int sizeInGB);
     }
 
     /// <summary>

@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:C6D786A0345B2C4ADB349E573A0BF6C7:424FABAED1A1FB32529BDB97BA59F68B
-        public string OsDiskId()
+        public string OSDiskId()
         {
             if (this.StorageProfile().OsDisk.ManagedDisk != null) {
                 return this.StorageProfile().OsDisk.ManagedDisk.Id;
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:123FF0223083F789E78E45771A759A9C:4C15A2B31C3EDC9F84F5ED384B0E13D8
-        public CachingTypes OsDiskCachingType()
+        public CachingTypes OSDiskCachingType()
         {
             return Inner.StorageProfile.OsDisk.Caching.Value;
         }
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:5390AD803419DE6CEAFF825AD0A94458:840BEA574ED55AAD9998A3A420D98257
-        public OSProfile OsProfile()
+        public OSProfile OSProfile()
         {
             return Inner.OsProfile;
         }
@@ -369,7 +369,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:84A1C38F299C7713046CF6F1527D8F63:1B67F25B1C5584321081FAB1AF143179
-        public int OsDiskSizeInGB()
+        public int OSDiskSizeInGB()
         {
             if (Inner.StorageProfile.OsDisk.DiskSizeGB != null) {
                 return Inner.StorageProfile.OsDisk.DiskSizeGB ?? 0;
@@ -425,13 +425,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:39841E710EB7DD7AE8E99B918CA0EEEA:2F3BC2C8125DFCF2467F6219DA16876C
-        public string OsDiskName()
+        public string OSDiskName()
         {
             return Inner.StorageProfile.OsDisk.Name;
         }
 
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:FB684D7D2C82711ED8A5D7DE503D692B
-        public OperatingSystemTypes OsType()
+        public OperatingSystemTypes OSType()
         {
             return Inner.StorageProfile.OsDisk.OsType.Value;
         }
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:E6371CFFB9CB09E08DD4757D639CBF27:8AE50992E9627A3D3844895445A18A8D
-        public string OsUnmanagedDiskVhdUri()
+        public string OSUnmanagedDiskVhdUri()
         {
             if (Inner.StorageProfile.OsDisk.Vhd != null) {
                 return Inner.StorageProfile.OsDisk.Vhd.Uri;

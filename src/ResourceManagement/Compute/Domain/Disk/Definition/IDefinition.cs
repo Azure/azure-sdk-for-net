@@ -76,6 +76,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Disk.Definition
     public interface IWithWindowsDiskSource 
     {
         /// <summary>
+        /// Specifies a source specialized or generalized Windows OS VHD.
+        /// </summary>
+        /// <param name="vhdUrl">The source VHD URL.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.Disk.Definition.IWithCreateAndSize WithWindowsFromVhd(string vhdUrl);
+
+        /// <summary>
         /// Specifies a source Windows OS managed snapshot.
         /// </summary>
         /// <param name="sourceSnapshotId">Snapshot resource ID.</param>
@@ -102,13 +109,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Disk.Definition
         /// <param name="sourceDisk">Source managed disk.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Disk.Definition.IWithCreateAndSize WithWindowsFromDisk(IDisk sourceDisk);
-
-        /// <summary>
-        /// Specifies a source specialized or generalized Windows OS VHD.
-        /// </summary>
-        /// <param name="vhdUrl">The source VHD URL.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.Disk.Definition.IWithCreateAndSize WithWindowsFromVhd(string vhdUrl);
     }
 
     /// <summary>

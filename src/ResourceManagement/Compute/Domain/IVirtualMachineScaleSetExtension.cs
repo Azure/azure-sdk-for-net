@@ -14,19 +14,30 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>
     {
         /// <summary>
-        /// Gets the type name of the virtual machine scale set extension image this extension is created from.
-        /// </summary>
-        string TypeName { get; }
-
-        /// <summary>
         /// Gets the publisher name of the virtual machine scale set extension image this extension is created from.
         /// </summary>
         string PublisherName { get; }
 
         /// <summary>
+        /// Gets the public settings of the virtual machine scale set extension as key value pairs.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,object> PublicSettings { get; }
+
+        /// <summary>
+        /// Gets the type name of the virtual machine scale set extension image this extension is created from.
+        /// </summary>
+        string TypeName { get; }
+
+        /// <summary>
         /// Gets the public settings of the virtual machine extension as a JSON string.
         /// </summary>
         string PublicSettingsAsJsonString { get; }
+
+        /// <summary>
+        /// Gets true if this extension is configured to upgrade automatically when a new minor version of
+        /// the extension image that this extension based on is published.
+        /// </summary>
+        bool AutoUpgradeMinorVersionEnabled { get; }
 
         /// <summary>
         /// Gets the provisioning state of this virtual machine scale set extension.
@@ -37,16 +48,5 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the version name of the virtual machine scale set extension image this extension is created from.
         /// </summary>
         string VersionName { get; }
-
-        /// <summary>
-        /// Gets true if this extension is configured to upgrade automatically when a new minor version of
-        /// the extension image that this extension based on is published.
-        /// </summary>
-        bool AutoUpgradeMinorVersionEnabled { get; }
-
-        /// <summary>
-        /// Gets the public settings of the virtual machine scale set extension as key value pairs.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,object> PublicSettings { get; }
     }
 }

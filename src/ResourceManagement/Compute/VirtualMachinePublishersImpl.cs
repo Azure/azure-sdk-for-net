@@ -5,6 +5,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using ResourceManager.Fluent.Core;
     using Models;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     /// <summary>
     /// The implementation for VirtualMachinePublishers.
@@ -30,6 +32,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public IEnumerable<IVirtualMachinePublisher> ListByRegion(string regionName)
         {
             return WrapList(innerCollection.ListPublishers(regionName));
+        }
+
+        ///GENMHASH:2ED29FF482F2137640A1CA66925828A8:FDF416505062C8F51CBE651942F05701
+        public async Task<IPagedCollection<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher>> ListByRegionAsync(string regionName, CancellationToken cancellationToken)
+        {
+            return await PagedCollection<IVirtualMachinePublisher, VirtualMachineImageResourceInner>.LoadPage(
+                async (cancellation) => await innerCollection.ListPublishersAsync(regionName, cancellation),
+                WrapModel, cancellationToken);
+        }
+
+        ///GENMHASH:271CC39CE723B6FD3D7CCA7471D4B201:039795D842B96323D94D260F3FF83299
+        public async Task<IPagedCollection<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher>> ListByRegionAsync(Region region, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await ListByRegionAsync(region.Name, cancellationToken);
         }
 
         ///GENMHASH:BA2FEDDF9D78BF55786D81F6C85E907C:CD5A589A9B297BE134944F6A531D30E8

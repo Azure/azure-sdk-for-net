@@ -4,23 +4,22 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.Compute.Fluent.Disk.Definition;
     using Microsoft.Azure.Management.Compute.Fluent.Disk.Update;
-    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Rest;
 
     internal partial class DiskImpl 
     {
         /// <summary>
-        /// Gets the resource ID of the virtual machine this disk is attached to, or null
-        /// if the disk is in a detached state.
+        /// Gets true if the disk is attached to a virtual machine, otherwise false.
         /// </summary>
-        string Microsoft.Azure.Management.Compute.Fluent.IDisk.VirtualMachineId
+        bool Microsoft.Azure.Management.Compute.Fluent.IDisk.IsAttachedToVirtualMachine
         {
             get
             {
-                return this.VirtualMachineId();
+                return this.IsAttachedToVirtualMachine();
             }
         }
 
@@ -36,35 +35,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets true if the disk is attached to a virtual machine, otherwise false.
+        /// Gets disk size in GB.
         /// </summary>
-        bool Microsoft.Azure.Management.Compute.Fluent.IDisk.IsAttachedToVirtualMachine
+        int Microsoft.Azure.Management.Compute.Fluent.IDisk.SizeInGB
         {
             get
             {
-                return this.IsAttachedToVirtualMachine();
+                return this.SizeInGB();
             }
-        }
-
-        /// <summary>
-        /// Gets the details of the source from which the disk is created.
-        /// </summary>
-        CreationSource Microsoft.Azure.Management.Compute.Fluent.IDisk.Source
-        {
-            get
-            {
-                return this.Source() as CreationSource;
-            }
-        }
-
-        /// <summary>
-        /// Grants access to the disk.
-        /// </summary>
-        /// <param name="accessDurationInSeconds">The access duration in seconds.</param>
-        /// <return>The read-only SAS URI to the disk.</return>
-        string Microsoft.Azure.Management.Compute.Fluent.IDisk.GrantAccess(int accessDurationInSeconds)
-        {
-            return this.GrantAccess(accessDurationInSeconds);
         }
 
         /// <summary>
@@ -79,6 +57,29 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Gets the resource ID of the virtual machine this disk is attached to, or null
+        /// if the disk is in a detached state.
+        /// </summary>
+        string Microsoft.Azure.Management.Compute.Fluent.IDisk.VirtualMachineId
+        {
+            get
+            {
+                return this.VirtualMachineId();
+            }
+        }
+
+        /// <summary>
+        /// Gets the details of the source from which the disk is created.
+        /// </summary>
+        Models.CreationSource Microsoft.Azure.Management.Compute.Fluent.IDisk.Source
+        {
+            get
+            {
+                return this.Source() as Models.CreationSource;
+            }
+        }
+
+        /// <summary>
         /// Revokes access granted to the disk.
         /// </summary>
         void Microsoft.Azure.Management.Compute.Fluent.IDisk.RevokeAccess()
@@ -88,24 +89,43 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Grants access to the disk.
+        /// </summary>
+        /// <param name="accessDurationInSeconds">The access duration in seconds.</param>
+        /// <return>The read-only SAS URI to the disk.</return>
+        string Microsoft.Azure.Management.Compute.Fluent.IDisk.GrantAccess(int accessDurationInSeconds)
+        {
+            return this.GrantAccess(accessDurationInSeconds);
+        }
+
+        /// <summary>
+        /// Revokes access granted to the disk asynchronously.
+        /// </summary>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Compute.Fluent.IDisk.RevokeAccessAsync(CancellationToken cancellationToken)
+        {
+ 
+            await this.RevokeAccessAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Grants access to the disk asynchronously.
+        /// </summary>
+        /// <param name="accessDurationInSeconds">The access duration in seconds.</param>
+        /// <return>A representation of the deferred computation of this call returning a read-only SAS URI to the disk.</return>
+        async Task<string> Microsoft.Azure.Management.Compute.Fluent.IDisk.GrantAccessAsync(int accessDurationInSeconds, CancellationToken cancellationToken)
+        {
+            return await this.GrantAccessAsync(accessDurationInSeconds, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the type of the operating system on the disk.
         /// </summary>
         Models.OperatingSystemTypes? Microsoft.Azure.Management.Compute.Fluent.IDisk.OSType
         {
             get
             {
-                return this.OsType();
-            }
-        }
-
-        /// <summary>
-        /// Gets disk size in GB.
-        /// </summary>
-        int Microsoft.Azure.Management.Compute.Fluent.IDisk.SizeInGB
-        {
-            get
-            {
-                return this.SizeInGB();
+                return this.OSType();
             }
         }
 
@@ -117,6 +137,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Disk.Update.IUpdate Disk.Update.IWithOSSettings.WithOSType(OperatingSystemTypes osType)
         {
             return this.WithOSType(osType) as Disk.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies the source data managed snapshot.
+        /// </summary>
+        /// <param name="snapshotId">Snapshot resource ID.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithDataDiskFromSnapshot.FromSnapshot(string snapshotId)
+        {
+            return this.FromSnapshot(snapshotId) as Disk.Definition.IWithCreateAndSize;
+        }
+
+        /// <summary>
+        /// Specifies the source data managed snapshot.
+        /// </summary>
+        /// <param name="snapshot">Snapshot resource.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithDataDiskFromSnapshot.FromSnapshot(ISnapshot snapshot)
+        {
+            return this.FromSnapshot(snapshot) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
@@ -170,26 +210,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the source data managed snapshot.
-        /// </summary>
-        /// <param name="snapshotId">Snapshot resource ID.</param>
-        /// <return>The next stage of the definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithDataDiskFromSnapshot.FromSnapshot(string snapshotId)
-        {
-            return this.FromSnapshot(snapshotId) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the source data managed snapshot.
-        /// </summary>
-        /// <param name="snapshot">Snapshot resource.</param>
-        /// <return>The next stage of the definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithDataDiskFromSnapshot.FromSnapshot(ISnapshot snapshot)
-        {
-            return this.FromSnapshot(snapshot) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
         /// Specifies the source data VHD.
         /// </summary>
         /// <param name="vhdUrl">The source VHD URL.</param>
@@ -197,16 +217,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Disk.Definition.IWithCreateAndSize Disk.Definition.IWithDataDiskFromVhd.FromVhd(string vhdUrl)
         {
             return this.FromVhd(vhdUrl) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the disk size.
-        /// </summary>
-        /// <param name="sizeInGB">The disk size in GB.</param>
-        /// <return>The next stage of the definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithCreateAndSize.WithSizeInGB(int sizeInGB)
-        {
-            return this.WithSizeInGB(sizeInGB) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
@@ -219,33 +229,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Specifies the source Linux OS managed disk.
+        /// Specifies the disk size.
         /// </summary>
-        /// <param name="sourceDiskId">Source managed disk resource ID.</param>
+        /// <param name="sizeInGB">The disk size in GB.</param>
         /// <return>The next stage of the definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromDisk(string sourceDiskId)
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithCreateAndSize.WithSizeInGB(int sizeInGB)
         {
-            return this.WithLinuxFromDisk(sourceDiskId) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the source Linux OS managed disk.
-        /// </summary>
-        /// <param name="sourceDisk">Source managed disk.</param>
-        /// <return>The next stage of the definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromDisk(IDisk sourceDisk)
-        {
-            return this.WithLinuxFromDisk(sourceDisk) as Disk.Definition.IWithCreateAndSize;
-        }
-
-        /// <summary>
-        /// Specifies the source specialized or generalized Linux OS VHD.
-        /// </summary>
-        /// <param name="vhdUrl">The source VHD URL.</param>
-        /// <return>The next stage of the definition.</return>
-        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromVhd(string vhdUrl)
-        {
-            return this.WithLinuxFromVhd(vhdUrl) as Disk.Definition.IWithCreateAndSize;
+            return this.WithSizeInGB(sizeInGB) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>
@@ -266,6 +256,36 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromSnapshot(ISnapshot sourceSnapshot)
         {
             return this.WithLinuxFromSnapshot(sourceSnapshot) as Disk.Definition.IWithCreateAndSize;
+        }
+
+        /// <summary>
+        /// Specifies the source specialized or generalized Linux OS VHD.
+        /// </summary>
+        /// <param name="vhdUrl">The source VHD URL.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromVhd(string vhdUrl)
+        {
+            return this.WithLinuxFromVhd(vhdUrl) as Disk.Definition.IWithCreateAndSize;
+        }
+
+        /// <summary>
+        /// Specifies the source Linux OS managed disk.
+        /// </summary>
+        /// <param name="sourceDiskId">Source managed disk resource ID.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromDisk(string sourceDiskId)
+        {
+            return this.WithLinuxFromDisk(sourceDiskId) as Disk.Definition.IWithCreateAndSize;
+        }
+
+        /// <summary>
+        /// Specifies the source Linux OS managed disk.
+        /// </summary>
+        /// <param name="sourceDisk">Source managed disk.</param>
+        /// <return>The next stage of the definition.</return>
+        Disk.Definition.IWithCreateAndSize Disk.Definition.IWithLinuxDiskSource.WithLinuxFromDisk(IDisk sourceDisk)
+        {
+            return this.WithLinuxFromDisk(sourceDisk) as Disk.Definition.IWithCreateAndSize;
         }
 
         /// <summary>

@@ -30,13 +30,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the logical unit number assigned to this data disk.
+        /// Gets the disk caching type.
         /// </summary>
-        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Lun
+        Models.CachingTypes? Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CachingType
         {
             get
             {
-                return this.Lun();
+                return this.CachingType();
             }
         }
 
@@ -52,28 +52,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the creation method used while creating this disk.
-        /// </summary>
-        Models.DiskCreateOptionTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CreationMethod
-        {
-            get
-            {
-                return this.CreationMethod();
-            }
-        }
-
-        /// <summary>
-        /// Gets the disk caching type.
-        /// </summary>
-        Models.CachingTypes? Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CachingType
-        {
-            get
-            {
-                return this.CachingType();
-            }
-        }
-
-        /// <summary>
         /// Gets the size of this data disk in GB.
         /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Size
@@ -81,6 +59,28 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.Size();
+            }
+        }
+
+        /// <summary>
+        /// Gets the logical unit number assigned to this data disk.
+        /// </summary>
+        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Lun
+        {
+            get
+            {
+                return this.Lun();
+            }
+        }
+
+        /// <summary>
+        /// Gets the creation method used while creating this disk.
+        /// </summary>
+        Models.DiskCreateOptionTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CreationMethod
+        {
+            get
+            {
+                return this.CreationMethod();
             }
         }
     }

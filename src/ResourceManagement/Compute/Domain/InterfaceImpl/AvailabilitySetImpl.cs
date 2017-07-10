@@ -24,12 +24,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
         }
 
-        /// <return>The virtual machine sizes supported in the availability set.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.ListVirtualMachineSizes()
-        {
-            return this.ListVirtualMachineSizes() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>;
-        }
-
         /// <summary>
         /// Gets the statuses of the existing virtual machines in the availability set.
         /// </summary>
@@ -72,6 +66,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 return this.UpdateDomainCount();
             }
+        }
+
+        /// <return>The virtual machine sizes supported in the availability set.</return>
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.ListVirtualMachineSizes()
+        {
+            return this.ListVirtualMachineSizes() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>;
         }
 
         /// <summary>

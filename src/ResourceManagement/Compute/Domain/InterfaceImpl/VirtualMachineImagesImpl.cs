@@ -32,6 +32,26 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Lists all the resources of the specified type in the specified region.
+        /// </summary>
+        /// <param name="region">The selected Azure region.</param>
+        /// <return>A representation of the deferred computation of this call, returning the requested resources.</return>
+        async Task<IPagedCollection<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage>> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage>.ListByRegionAsync(Region region, CancellationToken cancellationToken)
+        {
+            return await this.ListByRegionAsync(region, cancellationToken) as IPagedCollection<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage>;
+        }
+
+        /// <summary>
+        /// List all the resources of the specified type in the specified region.
+        /// </summary>
+        /// <param name="regionName">The name of an Azure region.</param>
+        /// <return>A representation of the deferred computation of this call, returning the requested resources.</return>
+        async Task<IPagedCollection<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage>> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListingByRegion<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage>.ListByRegionAsync(string regionName, CancellationToken cancellationToken)
+        {
+            return await this.ListByRegionAsync(regionName, cancellationToken) as IPagedCollection<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage>;
+        }
+
+        /// <summary>
         /// Gets a virtual machine image.
         /// </summary>
         /// <param name="region">The region.</param>
@@ -41,6 +61,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="version">Version name.</param>
         /// <return>The virtual machine image.</return>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImages.GetImage(Region region, string publisherName, string offerName, string skuName, string version)
+        {
+            return this.GetImage(region, publisherName, offerName, skuName, version) as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage;
+        }
+
+        /// <summary>
+        /// Gets a virtual machine image.
+        /// </summary>
+        /// <param name="region">The region.</param>
+        /// <param name="publisherName">Publisher name.</param>
+        /// <param name="offerName">Offer name.</param>
+        /// <param name="skuName">SKU name.</param>
+        /// <param name="version">Version name.</param>
+        /// <return>The virtual machine image.</return>
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImagesBeta.GetImage(string region, string publisherName, string offerName, string skuName, string version)
         {
             return this.GetImage(region, publisherName, offerName, skuName, version) as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImage;
         }

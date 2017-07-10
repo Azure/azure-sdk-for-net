@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsDiskImage() as Models.ImageOSDisk;
+                return this.OSDiskImage() as Models.ImageOSDisk;
             }
         }
 
@@ -189,11 +189,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets Begins the definition of a new data disk image to add to the image.
+        /// Begins the definition of a new data disk image to add to the image.
         /// </summary>
-        /// <summary>
-        /// Gets the first stage of the new data disk image definition.
-        /// </summary>
+        /// <return>The first stage of the new data disk image definition.</return>
         VirtualMachineCustomImage.CustomImageDataDisk.Definition.IBlank<VirtualMachineCustomImage.Definition.IWithCreateAndDataDiskImageOSDiskSettings> VirtualMachineCustomImage.Definition.IWithDataDiskImage.DefineDataDiskImage()
         {
             return this.DefineDataDiskImage() as VirtualMachineCustomImage.CustomImageDataDisk.Definition.IBlank<VirtualMachineCustomImage.Definition.IWithCreateAndDataDiskImageOSDiskSettings>;

@@ -13,9 +13,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.VirtualMachineExtensionInner>
     {
         /// <summary>
-        /// Gets the tags for this virtual machine extension.
+        /// Gets the publisher name of the virtual machine extension image this extension is created from.
         /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,string> Tags { get; }
+        string PublisherName { get; }
+
+        /// <summary>
+        /// Gets the public settings of the virtual machine extension as key value pairs.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,object> PublicSettings { get; }
 
         /// <summary>
         /// Gets the type name of the virtual machine extension image this extension is created from.
@@ -23,14 +28,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         string TypeName { get; }
 
         /// <summary>
-        /// Gets the publisher name of the virtual machine extension image this extension is created from.
-        /// </summary>
-        string PublisherName { get; }
-
-        /// <summary>
         /// Gets the public settings of the virtual machine extension as a JSON string.
         /// </summary>
         string PublicSettingsAsJsonString { get; }
+
+        /// <summary>
+        /// Gets true if this extension is configured to upgrade automatically when a new minor version of the
+        /// extension image that this extension based on is published.
+        /// </summary>
+        bool AutoUpgradeMinorVersionEnabled { get; }
 
         /// <summary>
         /// Gets the provisioning state of the virtual machine extension.
@@ -43,14 +49,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         string VersionName { get; }
 
         /// <summary>
-        /// Gets true if this extension is configured to upgrade automatically when a new minor version of the
-        /// extension image that this extension based on is published.
+        /// Gets the tags for this virtual machine extension.
         /// </summary>
-        bool AutoUpgradeMinorVersionEnabled { get; }
-
-        /// <summary>
-        /// Gets the public settings of the virtual machine extension as key value pairs.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,object> PublicSettings { get; }
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Tags { get; }
     }
 }

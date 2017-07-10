@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:845FBD8ADE79EEE8EFF759CB350BCAEC:D44E5029C8A19439E10477CD39524531
-        public int OsDiskSizeInMB()
+        public int OSDiskSizeInMB()
         {
             return innerModel.OsDiskSizeInMB.Value;
         }
