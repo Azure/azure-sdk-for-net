@@ -257,6 +257,11 @@ namespace Microsoft.Azure.ServiceBus
 
             this.sessionPumpHost?.Close();
 
+            if (this.sessionClient != null)
+            {
+                await this.sessionClient.CloseAsync().ConfigureAwait(false);
+            }
+
             if (this.ownsConnection)
             {
                 await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);

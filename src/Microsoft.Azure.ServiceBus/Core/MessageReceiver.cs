@@ -338,7 +338,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>Message with the sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found.</returns>
         public async Task<Message> ReceiveBySequenceNumberAsync(long sequenceNumber)
         {
-            IList<Message> messages = await this.ReceiveBySequenceNumberAsync(new long[] { sequenceNumber });
+            IList<Message> messages = await this.ReceiveBySequenceNumberAsync(new long[] { sequenceNumber }).ConfigureAwait(false);
             if (messages != null && messages.Count > 0)
             {
                 return messages[0];

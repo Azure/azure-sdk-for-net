@@ -366,7 +366,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 request.Map[ManagementConstants.Properties.Messages] = new List<AmqpMap> { entry };
 
                 IEnumerable<long> sequenceNumbers = null;
-                var response = await this.ExecuteRequestResponseAsync(request);
+                var response = await this.ExecuteRequestResponseAsync(request).ConfigureAwait(false);
                 if (response.StatusCode == AmqpResponseStatusCode.OK)
                 {
                     sequenceNumbers = response.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);

@@ -76,7 +76,7 @@ namespace Microsoft.Azure.ServiceBus
 
                 try
                 {
-                    await operation();
+                    await operation().ConfigureAwait(false);
 
                     // Its a successful operation. Preemptively reset ServerBusy status.
                     this.ResetServerBusy();

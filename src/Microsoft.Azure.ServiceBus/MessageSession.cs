@@ -67,7 +67,7 @@ namespace Microsoft.Azure.ServiceBus
 
         protected override Task<DateTime> OnRenewLockAsync(string lockToken)
         {
-            throw new InvalidOperationException($"{nameof(RenewLockAsync)} is not supported for Session. Use {this.RenewSessionLockAsync()} to renew sessions instead");
+            throw new InvalidOperationException($"{nameof(RenewLockAsync)} is not supported for Session. Use {nameof(RenewSessionLockAsync)} to renew sessions instead");
         }
 
         protected async Task<Stream> OnGetStateAsync()
