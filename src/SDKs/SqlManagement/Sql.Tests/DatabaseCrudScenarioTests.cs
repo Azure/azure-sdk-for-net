@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System.Collections.Generic;
@@ -15,10 +16,11 @@ namespace Sql.Tests
         [Fact]
         public void TestCreateDropDatabase()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateDropDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
                         { "tagKey1", "TagValue1" }
@@ -26,7 +28,7 @@ namespace Sql.Tests
 
                 // Create database only required parameters
                 //
-                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string dbName = SqlManagementTestUtilities.GenerateName();
                 var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
                 {
                     Location = server.Location,
@@ -35,7 +37,7 @@ namespace Sql.Tests
 
                 // Create a database with all parameters specified
                 // 
-                dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                dbName = SqlManagementTestUtilities.GenerateName();
                 var db2Input = new Database()
                 {
                     Location = server.Location,
@@ -54,7 +56,7 @@ namespace Sql.Tests
 
                 // Service Objective ID
                 //
-                dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                dbName = SqlManagementTestUtilities.GenerateName();
                 var db3Input = new Database()
                 {
                     Location = server.Location,
@@ -67,7 +69,7 @@ namespace Sql.Tests
 
                 // Service Objective Name
                 //
-                dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                dbName = SqlManagementTestUtilities.GenerateName();
                 var db4Input = new Database()
                 {
                     Location = server.Location,
@@ -80,7 +82,7 @@ namespace Sql.Tests
 
                 // Edition
                 //
-                dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                dbName = SqlManagementTestUtilities.GenerateName();
                 var db5Input = new Database()
                 {
                     Location = server.Location,
@@ -96,22 +98,24 @@ namespace Sql.Tests
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db3.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db4.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db5.Name);
-            });
+            }
         }
 
         [Fact]
         public void TestUpdateDatabase()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestUpdateDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
                         { "tagKey1", "TagValue1" }
                     };
 
-                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string dbName = SqlManagementTestUtilities.GenerateName();
 
                 // Create initial database
                 //
@@ -181,16 +185,20 @@ namespace Sql.Tests
                 };
                 var db6 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updateMaxSize);
                 SqlManagementTestUtilities.ValidateDatabase(updateMaxSize, db6, dbName);
-            });
+            }
         }
 
         [Fact]
         public void TestGetAndListDatabase()
         {
             string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListDatabase", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create some small databases to run the get/List tests on.
                 Database[] databases = SqlManagementTestUtilities.CreateDatabasesAsync(
                     sqlClient, resourceGroup.Name, server, testPrefix, 4).Result;
@@ -228,16 +236,18 @@ namespace Sql.Tests
                 {
                     SqlManagementTestUtilities.ValidateDatabase(inputs[db.Name], db, db.Name);
                 }
-            });
+            }
         }
         
         [Fact]
         public void TestRemoveDatabaseFromPool()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestRemoveDatabaseFromPool", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
                         { "tagKey1", "TagValue1" }
@@ -276,19 +286,21 @@ namespace Sql.Tests
                 var dbResult = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 
                 Assert.Equal(null, dbResult.ElasticPoolName);
-            });
+            }
         }
 
         [Fact]
         public void TestDatabaseTransparentDataEncryptionConfiguration()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestDatabaseTransparentDataEncryptionConfiguration", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create database only required parameters
                 //
-                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string dbName = SqlManagementTestUtilities.GenerateName();
                 var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
                 {
                     Location = server.Location,
@@ -304,7 +316,7 @@ namespace Sql.Tests
                 config.Status = TransparentDataEncryptionStatus.Disabled;
                 config = sqlClient.Databases.CreateOrUpdateTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName, config);
                 Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
-            });
+            }
         }
     }
 }

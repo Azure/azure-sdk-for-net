@@ -26,18 +26,20 @@ namespace Sql.Tests
         {
             // Warning: This test takes around 20 minutes to run in record mode.
 
-            string testPrefix = "sqlrestoretest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestDatabasePointInTimeRestore", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 Database db1 = CreateDatabaseAndWaitUntilBackupCreated(
                     sqlClient,
                     resourceGroup,
                     server,
-                    dbName: SqlManagementTestUtilities.GenerateName(testPrefix));
+                    dbName: SqlManagementTestUtilities.GenerateName());
 
                 // Create a new database that is the first database restored to an earlier point in time
-                string db2Name = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string db2Name = SqlManagementTestUtilities.GenerateName();
                 Database db2Input = new Database
                 {
                     Location = server.Location,
@@ -48,7 +50,7 @@ namespace Sql.Tests
                 Database db2 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, db2Name, db2Input);
                 Assert.NotNull(db2);
                 SqlManagementTestUtilities.ValidateDatabase(db2Input, db2, db2Name);
-            });
+            }
         }
 
         [Fact]
@@ -56,15 +58,17 @@ namespace Sql.Tests
         {
             // Warning: This test takes around 20 minutes to run in record mode.
 
-            string testPrefix = "sqlrestoretest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestDatabaseRestore", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 Database db1 = CreateDatabaseAndWaitUntilBackupCreated(
                     sqlClient,
                     resourceGroup,
                     server,
-                    dbName: SqlManagementTestUtilities.GenerateName(testPrefix));
+                    dbName: SqlManagementTestUtilities.GenerateName());
 
                 // Delete the original database
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db1.Name);
@@ -102,7 +106,7 @@ namespace Sql.Tests
                 Assert.StartsWith(db1.Name, droppedDatabase.Name);
 
                 // Restore the deleted database using restorable dropped database id
-                var db3Name = SqlManagementTestUtilities.GenerateName(testPrefix);
+                var db3Name = SqlManagementTestUtilities.GenerateName();
                 var db3Input = new Database
                 {
                     Location = server.Location,
@@ -114,7 +118,7 @@ namespace Sql.Tests
 
                 // Concurrently (to make test faster) also restore the deleted database using its original id
                 // and deletion date
-                var db4Name = SqlManagementTestUtilities.GenerateName(testPrefix);
+                var db4Name = SqlManagementTestUtilities.GenerateName();
                 var db4Input = new Database
                 {
                     Location = server.Location,
@@ -128,7 +132,7 @@ namespace Sql.Tests
                 // Wait for completion
                 sqlClient.GetPutOrPatchOperationResultAsync(db3Response.Result, new Dictionary<string, List<string>>(), CancellationToken.None).Wait();
                 sqlClient.GetPutOrPatchOperationResultAsync(db4Response.Result, new Dictionary<string, List<string>>(), CancellationToken.None).Wait();
-            });
+            }
         }
 
         private static Database CreateDatabaseAndWaitUntilBackupCreated(
@@ -248,7 +252,7 @@ namespace Sql.Tests
             }
         }
 
-        [Fact(Skip = "Manual test. Remove this Skip property and edit ")]
+        [Fact(Skip = "Manual test due to long setup time required (potentially several hours).")]
         public void TestDatabaseGeoRecovery()
         {
             // There can be a delay of several hours before the fist geo recoverable database backup

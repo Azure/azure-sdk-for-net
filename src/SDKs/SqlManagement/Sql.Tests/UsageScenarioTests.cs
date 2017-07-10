@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
@@ -16,10 +17,12 @@ namespace Sql.Tests
         [Fact]
         public void TestGetUsageData()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetUsageData", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Get server Usages
                 IEnumerable<ServerUsage> serverUsages = sqlClient.Servers.ListUsages(resourceGroup.Name, server.Name);
                 Assert.True(serverUsages.Count(s => s.ResourceName == server.Name) > 1);
@@ -33,7 +36,7 @@ namespace Sql.Tests
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
                 IEnumerable<DatabaseUsage> databaseUsages = sqlClient.Databases.ListUsages(resourceGroup.Name, server.Name, dbName);
                 Assert.True(databaseUsages.Where(db => db.ResourceName == dbName).Count() == 1);
-            });
+            }
         }
     }
 }
