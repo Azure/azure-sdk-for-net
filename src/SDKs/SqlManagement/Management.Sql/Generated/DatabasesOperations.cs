@@ -4999,6 +4999,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 parameters.Validate();
             }
+            string securityAlertPolicyName = "default";
             string apiVersion = "2014-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -5010,6 +5011,7 @@ namespace Microsoft.Azure.Management.Sql
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("securityAlertPolicyName", securityAlertPolicyName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -5022,6 +5024,7 @@ namespace Microsoft.Azure.Management.Sql
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{securityAlertPolicyName}", System.Uri.EscapeDataString(securityAlertPolicyName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {

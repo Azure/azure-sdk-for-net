@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ICapabilitiesOperations Capabilities { get; private set; }
 
         /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        public virtual IServersOperations Servers { get; private set; }
+
+        /// <summary>
         /// Gets the IFirewallRulesOperations.
         /// </summary>
         public virtual IFirewallRulesOperations FirewallRules { get; private set; }
@@ -105,11 +110,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        public virtual IServersOperations Servers { get; private set; }
 
         /// <summary>
         /// Gets the IRecommendedElasticPoolsOperations.
@@ -346,10 +346,10 @@ namespace Microsoft.Azure.Management.Sql
             RecoverableDatabases = new RecoverableDatabasesOperations(this);
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
             Capabilities = new CapabilitiesOperations(this);
+            Servers = new ServersOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
             Operations = new Operations(this);
-            Servers = new ServersOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
