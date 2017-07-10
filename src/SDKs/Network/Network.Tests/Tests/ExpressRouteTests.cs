@@ -76,19 +76,20 @@ namespace Networks.Tests
 
                 // Create route filter 
                 string filterName = "filter";
-                string ruleName = "rule";
+             
 
                 var filter = TestHelper.CreateDefaultRouteFilter(resourceGroupName,
                     filterName, location, networkManagementClient);
 
                 Assert.Equal(filter.Name, filterName);
 
-                // Update filter with rules
-                var rule = TestHelper.CreateDefaultRouteFilterRule(resourceGroupName,
-                    filterName, ruleName, location, networkManagementClient);
+                // Update route filter with rule by put on parent resources
+                filter = TestHelper.CreateDefaultRouteFilter(resourceGroupName,
+                    filterName, location, networkManagementClient, true);
 
-                // Delete resource group
-                resourcesClient.ResourceGroups.Delete(resourceGroupName);
+                Assert.Equal(filter.Name, filterName);
+
+
             }
         }
 
