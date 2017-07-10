@@ -1514,58 +1514,6 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a list of a database's transparent data encryption configurations.
-            /// There is only ever one element, named 'current', so
-            /// GetTransparentDataEncryptionConfiguration should be used instead.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database for which the transparent data encryption applies.
-            /// </param>
-            public static IEnumerable<TransparentDataEncryption> ListTransparentDataEncryptionConfigurations(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                return operations.ListTransparentDataEncryptionConfigurationsAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of a database's transparent data encryption configurations.
-            /// There is only ever one element, named 'current', so
-            /// GetTransparentDataEncryptionConfiguration should be used instead.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database for which the transparent data encryption applies.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IEnumerable<TransparentDataEncryption>> ListTransparentDataEncryptionConfigurationsAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListTransparentDataEncryptionConfigurationsWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Returns a database's transparent data encryption operation result.
             /// </summary>
             /// <param name='operations'>
