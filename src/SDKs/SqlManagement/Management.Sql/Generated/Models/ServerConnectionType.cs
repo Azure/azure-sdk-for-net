@@ -29,4 +29,37 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Redirect")]
         Redirect
     }
+    internal static class ServerConnectionTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this ServerConnectionType? value)  =>
+            value == null ? null : ((ServerConnectionType)value).ToSerializedValue();
+
+        internal static string ToSerializedValue(this ServerConnectionType value)
+        {
+            switch( value )
+            {
+                case ServerConnectionType.Default:
+                    return "Default";
+                case ServerConnectionType.Proxy:
+                    return "Proxy";
+                case ServerConnectionType.Redirect:
+                    return "Redirect";
+            }
+            return null;
+        }
+
+        internal static ServerConnectionType? ParseServerConnectionType(this string value)
+        {
+            switch( value )
+            {
+                case "Default":
+                    return ServerConnectionType.Default;
+                case "Proxy":
+                    return ServerConnectionType.Proxy;
+                case "Redirect":
+                    return ServerConnectionType.Redirect;
+            }
+            return null;
+        }
+    }
 }

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class DatabasesOperationsExtensions
     {
             /// <summary>
-            /// Returns a list of database restore points.
+            /// Gets a list of database restore points.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database from which to retrieve available restore points.
+            /// The name of the database to get available restore points.
             /// </param>
             public static IEnumerable<RestorePoint> ListRestorePoints(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a list of database restore points.
+            /// Gets a list of database restore points.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database from which to retrieve available restore points.
+            /// The name of the database to get available restore points.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1041,9 +1041,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a new database or updates an existing database. Location is a
-            /// required property in the request body, and it must be the same as the
-            /// location of the SQL server.
+            /// Creates a new database or updates an existing database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1067,9 +1065,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a new database or updates an existing database. Location is a
-            /// required property in the request body, and it must be the same as the
-            /// location of the SQL server.
+            /// Creates a new database or updates an existing database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1093,6 +1089,60 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<Database> CreateOrUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates an existing database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating a database.
+            /// </param>
+            public static Database Update(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseUpdate parameters)
+            {
+                return operations.UpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating a database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Database> UpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1458,6 +1508,58 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<TransparentDataEncryption> GetTransparentDataEncryptionConfigurationAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetTransparentDataEncryptionConfigurationWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of a database's transparent data encryption configurations.
+            /// There is only ever one element, named 'current', so
+            /// GetTransparentDataEncryptionConfiguration should be used instead.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database for which the transparent data encryption applies.
+            /// </param>
+            public static IEnumerable<TransparentDataEncryption> ListTransparentDataEncryptionConfigurations(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return operations.ListTransparentDataEncryptionConfigurationsAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of a database's transparent data encryption configurations.
+            /// There is only ever one element, named 'current', so
+            /// GetTransparentDataEncryptionConfiguration should be used instead.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database for which the transparent data encryption applies.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<TransparentDataEncryption>> ListTransparentDataEncryptionConfigurationsAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTransparentDataEncryptionConfigurationsWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2226,9 +2328,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a new database or updates an existing database. Location is a
-            /// required property in the request body, and it must be the same as the
-            /// location of the SQL server.
+            /// Creates a new database or updates an existing database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2252,9 +2352,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates a new database or updates an existing database. Location is a
-            /// required property in the request body, and it must be the same as the
-            /// location of the SQL server.
+            /// Creates a new database or updates an existing database.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2278,6 +2376,60 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<Database> BeginCreateOrUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates an existing database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating a database.
+            /// </param>
+            public static Database BeginUpdate(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseUpdate parameters)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating a database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Database> BeginUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

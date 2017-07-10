@@ -35,13 +35,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the DatabaseBlobAuditingPolicy class.
         /// </summary>
+        /// <param name="state">Specifies the state of the policy. If state is
+        /// Enabled, storageEndpoint and storageAccountAccessKey are required.
+        /// Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="kind">Resource kind.</param>
-        /// <param name="state">Specifies the state of the policy. If state is
-        /// Enabled, storageEndpoint and storageAccountAccessKey are required.
-        /// Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
         /// (e.g. https://MyAccount.blob.core.windows.net). If state is
         /// Enabled, storageEndpoint is required.</param>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="isStorageSecondaryKeyInUse">Specifies whether
         /// storageAccountAccessKey value is the storage’s secondary
         /// key.</param>
-        public DatabaseBlobAuditingPolicy(string id = default(string), string name = default(string), string type = default(string), string kind = default(string), BlobAuditingPolicyState? state = default(BlobAuditingPolicyState?), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?))
+        public DatabaseBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?))
             : base(id, name, type)
         {
             Kind = kind;
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public BlobAuditingPolicyState? State { get; set; }
+        public BlobAuditingPolicyState State { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the blob storage endpoint (e.g.
@@ -131,5 +131,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         [JsonProperty(PropertyName = "properties.isStorageSecondaryKeyInUse")]
         public bool? IsStorageSecondaryKeyInUse { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }
