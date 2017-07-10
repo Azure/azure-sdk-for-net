@@ -2,13 +2,41 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Compute.Fluent
 {
+    using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.Compute.Fluent.Disk.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Rest;
 
-    internal partial class DisksImpl 
+    internal partial class DisksImpl
     {
+        /// <summary>
+        /// Revoke access granted to the snapshot asynchronously.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group name.</param>
+        /// <param name="diskName">The disk name.</param>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Compute.Fluent.IDisks.RevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken)
+        {
+
+            await this.RevokeAccessAsync(resourceGroupName, diskName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Grants access to the disk asynchronously.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group name.</param>
+        /// <param name="diskName">The disk name.</param>
+        /// <param name="accessLevel">Access level.</param>
+        /// <param name="accessDuration">Access duration.</param>
+        /// <returna>Representation of the deferred computation of this call returning a read-only SAS URI to the disk.</returna>
+        async Task<string> Microsoft.Azure.Management.Compute.Fluent.IDisks.GrantAccessAsync(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration, CancellationToken cancellationToken)
+        {
+            return await this.GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration, cancellationToken);
+        }
+
         /// <summary>
         /// Revoke access granted to a disk.
         /// </summary>
@@ -16,8 +44,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <param name="diskName">The disk name.</param>
         void Microsoft.Azure.Management.Compute.Fluent.IDisks.RevokeAccess(string resourceGroupName, string diskName)
         {
- 
-            this.RevokeAccessAsync(resourceGroupName, diskName).GetAwaiter().GetResult();
+
+            this.RevokeAccess(resourceGroupName, diskName);
         }
 
         /// <summary>
@@ -30,7 +58,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The read-only SAS URI to the disk.</return>
         string Microsoft.Azure.Management.Compute.Fluent.IDisks.GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration)
         {
-            return this.GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration).GetAwaiter().GetResult();
+            return this.GrantAccess(resourceGroupName, diskName, accessLevel, accessDuration);
         }
 
         /// <summary>

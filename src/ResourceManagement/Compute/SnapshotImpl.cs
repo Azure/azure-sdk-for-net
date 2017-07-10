@@ -89,19 +89,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:DAC486F08AF23F259E630032FC20FAF1:3FE53F300A729DFBC3C1F55BBB117CA1
-        public string GrantAccess(int accessDurationInSeconds)
+        public async Task<string> GrantAccessAsync(int accessDurationInSeconds, CancellationToken cancellationToken = default(CancellationToken))
         {
             GrantAccessDataInner grantAccessDataInner = new GrantAccessDataInner();
             grantAccessDataInner.Access = AccessLevel.Read;
             grantAccessDataInner.DurationInSeconds = accessDurationInSeconds;
 
-            AccessUriInner accessUriInner = Manager.Inner.Snapshots.GrantAccess(
-                ResourceGroupName, Name, grantAccessDataInner);
+            AccessUriInner accessUriInner = await Manager.Inner.Snapshots.GrantAccessAsync(
+                ResourceGroupName, Name, grantAccessDataInner, cancellationToken);
             if (accessUriInner == null)
             {
                 return null;
             }
             return accessUriInner.AccessSAS;
+        }
+
+        ///GENMHASH:DAC486F08AF23F259E630032FC20FAF1:3FE53F300A729DFBC3C1F55BBB117CA1
+        public string GrantAccess(int accessDurationInSeconds)
+        {
+            return this.GrantAccessAsync(accessDurationInSeconds).GetAwaiter().GetResult();
         }
 
         ///GENMHASH:0305227D84160F6D01FAC3F90C4D3B17:B17E3BD9F6452F930B5081BFB28B816E
@@ -222,10 +228,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:C14080365CC6F93E30BB51B78DED7084:769384CE5F12D8DA31D146E04DAD108F
+        public async Task RevokeAccessAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Manager.Inner.Snapshots.RevokeAccessAsync(ResourceGroupName, Name, cancellationToken);
+        }
+
+        ///GENMHASH:C14080365CC6F93E30BB51B78DED7084:769384CE5F12D8DA31D146E04DAD108F
         public void RevokeAccess()
         {
-            Manager.Inner.Snapshots.RevokeAccess(ResourceGroupName, Name);
-
+            RevokeAccessAsync().GetAwaiter().GetResult();
         }
 
         ///GENMHASH:920045A2761D4D5D5F5E2E52D43917D0:28B657BB52464897349F96AD3FEE7B7C
@@ -239,7 +250,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:F71645491B82E137E4D1786750E7ADF0
-        public OperatingSystemTypes? OsType()
+        public OperatingSystemTypes? OSType()
         {
             return Inner.OsType;
         }

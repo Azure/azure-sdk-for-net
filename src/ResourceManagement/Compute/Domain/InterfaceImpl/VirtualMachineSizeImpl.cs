@@ -19,17 +19,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the memory size supported by the VM size.
-        /// </summary>
-        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.MemoryInMB
-        {
-            get
-            {
-                return this.MemoryInMB();
-            }
-        }
-
-        /// <summary>
         /// Gets the maximum number of data disks allowed by a VM size.
         /// </summary>
         int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.MaxDataDiskCount
@@ -37,6 +26,28 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.MaxDataDiskCount();
+            }
+        }
+
+        /// <summary>
+        /// Gets the number of cores supported by the VM size.
+        /// </summary>
+        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.NumberOfCores
+        {
+            get
+            {
+                return this.NumberOfCores();
+            }
+        }
+
+        /// <summary>
+        /// Gets the OS disk size allowed by the VM size.
+        /// </summary>
+        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.OSDiskSizeInMB
+        {
+            get
+            {
+                return this.OSDiskSizeInMB();
             }
         }
 
@@ -52,24 +63,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the OS disk size allowed by the VM size.
+        /// Gets the memory size supported by the VM size.
         /// </summary>
-        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.OSDiskSizeInMB
+        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.MemoryInMB
         {
             get
             {
-                return this.OsDiskSizeInMB();
-            }
-        }
-
-        /// <summary>
-        /// Gets the number of cores supported by the VM size.
-        /// </summary>
-        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize.NumberOfCores
-        {
-            get
-            {
-                return this.NumberOfCores();
+                return this.MemoryInMB();
             }
         }
     }

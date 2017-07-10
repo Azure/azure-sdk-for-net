@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:F14EFB618E3BDB008C8709A98CBD7185
-        public OperatingSystemTypes OsType()
+        public OperatingSystemTypes OSType()
         {
             // OperatingSystemTypes is an AutoRest generated type from the swagger
             return EnumHelper.FromEnumMemberSerializationValue<OperatingSystemTypes>(Inner.OperatingSystem);

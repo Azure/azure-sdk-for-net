@@ -13,20 +13,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.Cu
     public interface IWithImageSource<ParentT> 
     {
         /// <summary>
-        /// Specifies the source snapshot for the data disk image.
-        /// </summary>
-        /// <param name="sourceSnapshotId">Source snapshot resource ID.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromSnapshot(string sourceSnapshotId);
-
-        /// <summary>
-        /// Specifies the source VHD for the data disk image.
-        /// </summary>
-        /// <param name="sourceVhdUrl">Source virtual hard disk URL.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromVhd(string sourceVhdUrl);
-
-        /// <summary>
         /// Specifies the source managed disk for the data disk image.
         /// </summary>
         /// <param name="sourceManagedDiskId">Source managed disk resource ID.</param>
@@ -39,6 +25,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.Cu
         /// <param name="sourceManagedDisk">Source managed disk.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromManagedDisk(IDisk sourceManagedDisk);
+
+        /// <summary>
+        /// Specifies the source VHD for the data disk image.
+        /// </summary>
+        /// <param name="sourceVhdUrl">Source virtual hard disk URL.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromVhd(string sourceVhdUrl);
+
+        /// <summary>
+        /// Specifies the source snapshot for the data disk image.
+        /// </summary>
+        /// <param name="sourceSnapshotId">Source snapshot resource ID.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> FromSnapshot(string sourceSnapshotId);
     }
 
     /// <summary>
@@ -63,18 +63,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.Cu
     public interface IWithDiskSettings<ParentT> 
     {
         /// <summary>
-        /// Specifies the caching type for data disk.
-        /// </summary>
-        /// <param name="cachingType">The disk caching type.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> WithDiskCaching(CachingTypes cachingType);
-
-        /// <summary>
         /// Specifies the size in GB for data disk.
         /// </summary>
         /// <param name="diskSizeGB">The disk size in GB.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> WithDiskSizeInGB(int diskSizeGB);
+
+        /// <summary>
+        /// Specifies the caching type for data disk.
+        /// </summary>
+        /// <param name="cachingType">The disk caching type.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineCustomImage.CustomImageDataDisk.Definition.IWithAttach<ParentT> WithDiskCaching(CachingTypes cachingType);
     }
 
     /// <summary>

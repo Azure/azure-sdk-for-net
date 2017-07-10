@@ -19,14 +19,20 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<Snapshot.Update.IUpdate>
     {
         /// <summary>
+        /// Revoke access granted to the snapshot asynchronously.
+        /// </summary>
+        /// <return>A representation of the deferred computation of this call.</return>
+        Task RevokeAccessAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Revoke access granted to the snapshot.
         /// </summary>
         void RevokeAccess();
 
         /// <summary>
-        /// Gets the details of the source from which snapshot is created.
+        /// Gets disk size in GB.
         /// </summary>
-        CreationSource Source { get; }
+        int SizeInGB { get; }
 
         /// <summary>
         /// Grants access to the snapshot.
@@ -36,23 +42,30 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         string GrantAccess(int accessDurationInSeconds);
 
         /// <summary>
-        /// Gets disk size in GB.
-        /// </summary>
-        int SizeInGB { get; }
-
-        /// <summary>
         /// Gets the type of operating system in the snapshot.
         /// </summary>
         Models.OperatingSystemTypes? OSType { get; }
 
         /// <summary>
-        /// Gets the snapshot creation method.
+        /// Grants access to the snapshot asynchronously.
         /// </summary>
-        Models.DiskCreateOption CreationMethod { get; }
+        /// <param name="accessDurationInSeconds">The access duration in seconds.</param>
+        /// <return>A representation of the deferred computation of this call returning a read-only SAS URI to the disk.</return>
+        Task<string> GrantAccessAsync(int accessDurationInSeconds, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the details of the source from which snapshot is created.
+        /// </summary>
+        Models.CreationSource Source { get; }
 
         /// <summary>
         /// Gets the snapshot SKU type.
         /// </summary>
         Models.DiskSkuTypes Sku { get; }
+
+        /// <summary>
+        /// Gets the snapshot creation method.
+        /// </summary>
+        Models.DiskCreateOption CreationMethod { get; }
     }
 }

@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOSDiskSettings.WithOSDiskCaching(CachingTypes cachingType)
         {
-            return this.WithOsDiskCaching(cachingType) as VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithOSDiskCaching(cachingType) as VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The next stage of the definition.</return>
         VirtualMachineScaleSet.Definition.IWithCreate VirtualMachineScaleSet.Definition.IWithOSDiskSettings.WithOSDiskName(string name)
         {
-            return this.WithOsDiskName(name) as VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithOSDiskName(name) as VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -702,7 +702,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Re-images (updates the version of the installed operating system) the virtual machines in the scale set asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.ReimageAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.ReimageAsync(CancellationToken cancellationToken)
         {
  
             await this.ReimageAsync(cancellationToken);
@@ -736,7 +736,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsDiskName();
+                return this.OSDiskName();
             }
         }
 
@@ -785,7 +785,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsDiskCachingType();
+                return this.OSDiskCachingType();
             }
         }
 
@@ -840,7 +840,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         {
             get
             {
-                return this.OsType();
+                return this.OSType();
             }
         }
 
@@ -971,7 +971,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Starts the virtual machines in the scale set asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.StartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.StartAsync(CancellationToken cancellationToken)
         {
  
             await this.StartAsync(cancellationToken);
@@ -1003,7 +1003,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Powers off (stops) the virtual machines in the scale set asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.PowerOffAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.PowerOffAsync(CancellationToken cancellationToken)
         {
  
             await this.PowerOffAsync(cancellationToken);
@@ -1013,7 +1013,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Shuts down the virtual machines in the scale set and releases its compute resources asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.DeallocateAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.DeallocateAsync(CancellationToken cancellationToken)
         {
  
             await this.DeallocateAsync(cancellationToken);
@@ -1033,7 +1033,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Restarts the virtual machines in the scale set asynchronously.
         /// </summary>
         /// <return>A representation of the deferred computation of this call.</return>
-        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetBeta.RestartAsync(CancellationToken cancellationToken)
+        async Task Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.RestartAsync(CancellationToken cancellationToken)
         {
  
             await this.RestartAsync(cancellationToken);
@@ -1053,7 +1053,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the number of virtual machine instances in the scale set.
         /// </summary>
-        long Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Capacity
+        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet.Capacity
         {
             get
             {
@@ -1126,7 +1126,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>The stage representing creatable VM definition.</return>
         VirtualMachineScaleSet.Definition.IWithManagedCreate VirtualMachineScaleSet.Definition.IWithManagedDiskOptionals.WithOSDiskStorageAccountType(StorageAccountTypes accountType)
         {
-            return this.WithOsDiskStorageAccountType(accountType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
+            return this.WithOSDiskStorageAccountType(accountType) as VirtualMachineScaleSet.Definition.IWithManagedCreate;
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
     using Microsoft.Azure.Management.Compute.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Storage.Fluent;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.Update;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition;
     using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update;
@@ -21,7 +22,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithUnmanagedDataDisk,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithManagedDataDisk,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithSecondaryNetworkInterface,
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithExtension
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithExtension,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IWithBootDiagnostics
     {
         /// <summary>
         /// Specifies the encryption settings for the OS Disk.
@@ -29,6 +31,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         /// <param name="settings">The encryption settings.</param>
         /// <return>The stage representing creatable VM update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithOSDiskEncryptionSettings(DiskEncryptionSettings settings);
+
+        /// <summary>
+        /// Specifies a storage account type.
+        /// </summary>
+        /// <param name="storageAccountType">A storage account type.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithDataDiskDefaultStorageAccountType(StorageAccountTypes storageAccountType);
 
         /// <summary>
         /// Specifies the size of the OS disk in GB.
@@ -46,6 +55,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithDataDiskDefaultCachingType(CachingTypes cachingType);
 
         /// <summary>
+        /// Specifies the caching type for the OS disk.
+        /// </summary>
+        /// <param name="cachingType">A caching type.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithOSDiskCaching(CachingTypes cachingType);
+
+        /// <summary>
         /// Specifies a new size for the virtual machine.
         /// </summary>
         /// <param name="sizeName">The name of a size for the virtual machine as text.</param>
@@ -58,20 +74,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         /// <param name="size">A size from the list of available sizes for the virtual machine.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithSize(VirtualMachineSizeTypes size);
-
-        /// <summary>
-        /// Specifies a storage account type.
-        /// </summary>
-        /// <param name="storageAccountType">A storage account type.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithDataDiskDefaultStorageAccountType(StorageAccountTypes storageAccountType);
-
-        /// <summary>
-        /// Specifies the caching type for the OS disk.
-        /// </summary>
-        /// <param name="cachingType">A caching type.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithOSDiskCaching(CachingTypes cachingType);
     }
 
     /// <summary>
@@ -79,6 +81,32 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
     /// </summary>
     public interface IWithManagedDataDisk 
     {
+        /// <summary>
+        /// Associates an existing source managed disk with the VM.
+        /// </summary>
+        /// <param name="disk">A managed disk.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithExistingDataDisk(IDisk disk);
+
+        /// <summary>
+        /// Specifies an existing source managed disk and settings.
+        /// </summary>
+        /// <param name="disk">The managed disk.</param>
+        /// <param name="lun">The disk LUN.</param>
+        /// <param name="cachingType">A caching type.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithExistingDataDisk(IDisk disk, int lun, CachingTypes cachingType);
+
+        /// <summary>
+        /// Specifies an existing source managed disk and settings.
+        /// </summary>
+        /// <param name="disk">A managed disk.</param>
+        /// <param name="newSizeInGB">The disk resize size in GB.</param>
+        /// <param name="lun">The disk LUN.</param>
+        /// <param name="cachingType">A caching type.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithExistingDataDisk(IDisk disk, int newSizeInGB, int lun, CachingTypes cachingType);
+
         /// <summary>
         /// Specifies that a managed disk needs to be created explicitly with the given definition and
         /// attached to the virtual machine as a data disk.
@@ -124,32 +152,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType, StorageAccountTypes storageAccountType);
 
         /// <summary>
-        /// Associates an existing source managed disk with the VM.
-        /// </summary>
-        /// <param name="disk">A managed disk.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithExistingDataDisk(IDisk disk);
-
-        /// <summary>
-        /// Specifies an existing source managed disk and settings.
-        /// </summary>
-        /// <param name="disk">The managed disk.</param>
-        /// <param name="lun">The disk LUN.</param>
-        /// <param name="cachingType">A caching type.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithExistingDataDisk(IDisk disk, int lun, CachingTypes cachingType);
-
-        /// <summary>
-        /// Specifies an existing source managed disk and settings.
-        /// </summary>
-        /// <param name="disk">A managed disk.</param>
-        /// <param name="newSizeInGB">The disk resize size in GB.</param>
-        /// <param name="lun">The disk LUN.</param>
-        /// <param name="cachingType">A caching type.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithExistingDataDisk(IDisk disk, int newSizeInGB, int lun, CachingTypes cachingType);
-
-        /// <summary>
         /// Detaches a managed data disk with the given LUN from the virtual machine.
         /// </summary>
         /// <param name="lun">The disk LUN.</param>
@@ -158,30 +160,65 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
     }
 
     /// <summary>
+    /// The stage of the virtual machine definition allowing to enable boot diagnostics.
+    /// </summary>
+    public interface IWithBootDiagnostics  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be disabled in the virtual machine.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithoutBootDiagnostics();
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithBootDiagnostics();
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="creatable">The storage account to be created and used for store the boot diagnostics.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithBootDiagnostics(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable);
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="storageAccount">An existing storage account to be uses to store the boot diagnostics.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithBootDiagnostics(IStorageAccount storageAccount);
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="storageAccountBlobEndpointUri">A storage account blob endpoint to store the boot diagnostics.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithBootDiagnostics(string storageAccountBlobEndpointUri);
+    }
+
+    /// <summary>
     /// The stage of a virtual machine definition allowing to specify unmanaged data disk configuration.
     /// </summary>
     public interface IWithUnmanagedDataDisk 
     {
+        /// <summary>
+        /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.
+        /// </summary>
+        /// <param name="storageAccountName">The storage account name.</param>
+        /// <param name="containerName">The name of the container holding the VHD file.</param>
+        /// <param name="vhdName">The name for the VHD file.</param>
+        /// <return>The stage representing creatable VM definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithExistingUnmanagedDataDisk(string storageAccountName, string containerName, string vhdName);
+
         /// <summary>
         /// Begins the description of an update of an existing unmanaged data disk of this virtual machine.
         /// </summary>
         /// <param name="name">The name of an existing disk.</param>
         /// <return>The first stage of the data disk update.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.Update.IUpdate UpdateUnmanagedDataDisk(string name);
-
-        /// <summary>
-        /// Specifies that a new blank unmanaged data disk needs to be attached to virtual machine.
-        /// </summary>
-        /// <param name="sizeInGB">The disk size in GB.</param>
-        /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithNewUnmanagedDataDisk(int sizeInGB);
-
-        /// <summary>
-        /// Begins the definition of a blank unmanaged data disk to be attached to the virtual machine along with its configuration.
-        /// </summary>
-        /// <param name="name">The name for the data disk.</param>
-        /// <return>The first stage of the data disk definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate> DefineUnmanagedDataDisk(string name);
 
         /// <summary>
         /// Detaches an unmanaged data disk from the virtual machine.
@@ -198,13 +235,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithoutUnmanagedDataDisk(int lun);
 
         /// <summary>
-        /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.
+        /// Specifies that a new blank unmanaged data disk needs to be attached to virtual machine.
         /// </summary>
-        /// <param name="storageAccountName">The storage account name.</param>
-        /// <param name="containerName">The name of the container holding the VHD file.</param>
-        /// <param name="vhdName">The name for the VHD file.</param>
+        /// <param name="sizeInGB">The disk size in GB.</param>
         /// <return>The stage representing creatable VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithExistingUnmanagedDataDisk(string storageAccountName, string containerName, string vhdName);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithNewUnmanagedDataDisk(int sizeInGB);
+
+        /// <summary>
+        /// Begins the definition of a blank unmanaged data disk to be attached to the virtual machine along with its configuration.
+        /// </summary>
+        /// <param name="name">The name for the data disk.</param>
+        /// <return>The first stage of the data disk definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate> DefineUnmanagedDataDisk(string name);
     }
 
     /// <summary>
@@ -213,11 +255,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
     public interface IWithExtension 
     {
         /// <summary>
-        /// Detaches an extension from the virtual machine.
+        /// Begins the description of an update of an existing extension of this virtual machine.
         /// </summary>
-        /// <param name="name">The reference name of the extension to be removed/uninstalled.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithoutExtension(string name);
+        /// <param name="name">The reference name of an existing extension.</param>
+        /// <return>The first stage of an extension update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate UpdateExtension(string name);
 
         /// <summary>
         /// Begins the definition of an extension to be attached to the virtual machine.
@@ -227,11 +269,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate> DefineNewExtension(string name);
 
         /// <summary>
-        /// Begins the description of an update of an existing extension of this virtual machine.
+        /// Detaches an extension from the virtual machine.
         /// </summary>
-        /// <param name="name">The reference name of an existing extension.</param>
-        /// <return>The first stage of an extension update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.Update.IUpdate UpdateExtension(string name);
+        /// <param name="name">The reference name of the extension to be removed/uninstalled.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate WithoutExtension(string name);
     }
 
     /// <summary>

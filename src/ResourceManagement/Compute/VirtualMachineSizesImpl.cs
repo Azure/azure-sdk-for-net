@@ -6,6 +6,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using Models;
     using ResourceManager.Fluent.Core;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation for VirtualMachineSizes.
@@ -39,6 +41,21 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public IEnumerable<IVirtualMachineSize> ListByRegion(string regionName)
         {
             return WrapList(innerCollection.List(regionName));
+        }
+
+        ///GENMHASH:271CC39CE723B6FD3D7CCA7471D4B201:039795D842B96323D94D260F3FF83299
+        public async Task<IPagedCollection<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>> ListByRegionAsync(Region region, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await ListByRegionAsync(region.Name, cancellationToken);
+        }
+
+        ///GENMHASH:2ED29FF482F2137640A1CA66925828A8:23E6C183E53FB66FB963B8D1F7962C4F
+        public async Task<IPagedCollection<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize>> ListByRegionAsync(string regionName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await PagedCollection<IVirtualMachineSize, VirtualMachineSize>.LoadPage(
+                 async (cancellation) => await innerCollection.ListAsync(regionName, cancellation),
+                 WrapModel,
+                 cancellationToken);
         }
     }
 }

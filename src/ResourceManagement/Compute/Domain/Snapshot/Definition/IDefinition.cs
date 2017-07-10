@@ -215,6 +215,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
     public interface IWithWindowsSnapshotSource 
     {
         /// <summary>
+        /// Specifies the source specialized or generalized Windows OS VHD.
+        /// </summary>
+        /// <param name="vhdUrl">The source VHD URL.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithWindowsFromVhd(string vhdUrl);
+
+        /// <summary>
         /// Specifies the source Windows OS managed snapshot.
         /// </summary>
         /// <param name="sourceSnapshotId">A snapshot resource ID.</param>
@@ -241,13 +248,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition
         /// <param name="sourceDisk">A source managed disk.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithWindowsFromDisk(IDisk sourceDisk);
-
-        /// <summary>
-        /// Specifies the source specialized or generalized Windows OS VHD.
-        /// </summary>
-        /// <param name="vhdUrl">The source VHD URL.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.Snapshot.Definition.IWithCreate WithWindowsFromVhd(string vhdUrl);
     }
 
     /// <summary>

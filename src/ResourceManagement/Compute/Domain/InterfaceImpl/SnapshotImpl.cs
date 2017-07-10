@@ -88,11 +88,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <summary>
         /// Gets the details of the source from which snapshot is created.
         /// </summary>
-        CreationSource Microsoft.Azure.Management.Compute.Fluent.ISnapshot.Source
+        Models.CreationSource Microsoft.Azure.Management.Compute.Fluent.ISnapshot.Source
         {
             get
             {
-                return this.Source();
+                return this.Source() as Models.CreationSource;
             }
         }
 
@@ -116,13 +116,33 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
+        /// Revoke access granted to the snapshot asynchronously.
+        /// </summary>
+        /// <return>A representation of the deferred computation of this call.</return>
+        async Task Microsoft.Azure.Management.Compute.Fluent.ISnapshot.RevokeAccessAsync(CancellationToken cancellationToken)
+        {
+ 
+            await this.RevokeAccessAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Grants access to the snapshot asynchronously.
+        /// </summary>
+        /// <param name="accessDurationInSeconds">The access duration in seconds.</param>
+        /// <return>A representation of the deferred computation of this call returning a read-only SAS URI to the disk.</return>
+        async Task<string> Microsoft.Azure.Management.Compute.Fluent.ISnapshot.GrantAccessAsync(int accessDurationInSeconds, CancellationToken cancellationToken)
+        {
+            return await this.GrantAccessAsync(accessDurationInSeconds, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the type of operating system in the snapshot.
         /// </summary>
         Models.OperatingSystemTypes? Microsoft.Azure.Management.Compute.Fluent.ISnapshot.OSType
         {
             get
             {
-                return this.OsType();
+                return this.OSType();
             }
         }
 

@@ -11,19 +11,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName
     {
         /// <summary>
-        /// Gets the memory size supported by the VM size.
-        /// </summary>
-        int MemoryInMB { get; }
-
-        /// <summary>
         /// Gets the OS disk size allowed by the VM size.
         /// </summary>
         int OSDiskSizeInMB { get; }
 
         /// <summary>
-        /// Gets the number of cores supported by the VM size.
+        /// Gets the resource disk size allowed by the VM size.
         /// </summary>
-        int NumberOfCores { get; }
+        int ResourceDiskSizeInMB { get; }
 
         /// <summary>
         /// Gets the maximum number of data disks allowed by a VM size.
@@ -31,8 +26,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         int MaxDataDiskCount { get; }
 
         /// <summary>
-        /// Gets the resource disk size allowed by the VM size.
+        /// Gets the memory size supported by the VM size.
         /// </summary>
-        int ResourceDiskSizeInMB { get; }
+        int MemoryInMB { get; }
+
+        /// <summary>
+        /// Gets the number of cores supported by the VM size.
+        /// </summary>
+        int NumberOfCores { get; }
     }
 }
