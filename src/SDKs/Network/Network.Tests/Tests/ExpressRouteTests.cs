@@ -11,12 +11,17 @@ namespace Networks.Tests
     using System.Net;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
+    //using Microsoft.Azure.Management.Resources;
+    //using Microsoft.Azure.Management.Resources.Models;
+
     using Microsoft.Azure.Test;
     using Networks.Tests.Helpers;
     using ResourceGroups.Tests;
     using Xunit;
+   //using Microsoft.Azure.Management.ResourceManager;
+    using System.Threading.Tasks;
 
     public class ExpressRouteTests
     {
@@ -66,7 +71,7 @@ namespace Networks.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/routefilters");
 
@@ -104,7 +109,7 @@ namespace Networks.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
                 var location = "westus" ;
 
@@ -143,13 +148,12 @@ namespace Networks.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
                 var location = "westus";
 
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
-                resourcesClient.ResourceGroups.CreateOrUpdate(
-                    resourceGroupName,
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
                     new ResourceGroup
                     {
                         Location = location
