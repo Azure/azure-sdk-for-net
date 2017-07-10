@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus.Extensions
+namespace Microsoft.Azure.ServiceBus.InteropExtensions
 {
     using System;
     using System.IO;
@@ -12,23 +12,64 @@ namespace Microsoft.Azure.ServiceBus.Extensions
     /// the body of a message that was serialized and sent to ServiceBus Queue/Topic
     /// using the WindowsAzure.Messaging client library. The WindowsAzure.Messaging
     /// client libary serializes objects using the 
-    /// <see cref="DataContractBinarySerializer"/> or <see cref="DataContractSerializer"/>
+    /// <see cref="DataContractBinarySerializer"/> (default serializer) or <see cref="DataContractSerializer"/>
     /// when sending message. This class provides extension methods to deserialize
     /// and retrieve the body of such messages.
     /// </summary>
-    /// <remarks>If a message is only being sent and received using this 
-    /// Microsoft.Azure.ServiceBus client library, then the below extension methods are not
-    /// relevant.</remarks>
+    /// <remarks>
+    /// 1. If a message is only being sent and received using this Microsoft.Azure.ServiceBus
+    /// client library, then the below extension methods are not relevant and should not be used.
+    /// 
+    /// 2. If this client library will be used to receive messages that were sent using both 
+    /// WindowsAzure.Messaging client library and this (Microsoft.Azure.ServiceBus) library,
+    /// then the Users need to add a User property <see cref="Message.UserProperties"/>
+    /// while sending the message. On receiving the message, this property can be examined to
+    /// determine if the message was from WindowsAzure.Messaging client library and if so
+    /// use the message.GetBody() extension method to get the actual body associated with the message.
+    /// 
+    /// ----------------------------------------------
+    /// Scenarios to use the GetBody Extension method:
+    /// ----------------------------------------------
+    /// If message was constructed using the WindowsAzure.Messaging client library as follows:
+    ///     var message1 = new BrokeredMessage("contoso"); // Sending a plain string
+    ///     var message2 = new BrokeredMessage(sampleObject); // Sending an actual customer object
+    ///     var message3 = new BrokeredMessage(Encoding.UTF8.GetBytes("contoso")); // Sending a UTF8 encoded byte array object
+    ///     
+    ///     await messageSender.SendAsync(message1);
+    ///     await messageSender.SendAsync(message2);
+    ///     await messageSender.SendAsync(message3);
+    ///     
+    /// Then retreive the original objects using this client library as follows:
+    /// (Serializer passed for GetBody() call can be null if message was sent using WindowsAzure.Messaging client
+    /// library and TransportType was AMQP.)
+    /// 
+    ///     var message1 = await messageReceiver.ReceiveAsync();
+    ///     var serializer1 = new DataContractBinarySerializer(typeof(string));
+    ///     var returnedData1 = message1.GetBody&lt;string&gt;(serializer1);
+    ///     
+    ///     var message2 = await messageReceiver.ReceiveAsync();
+    ///     var serializer2 = new DataContractBinarySerializer(typeof(SampleObject));
+    ///     var returnedData2 = message1.GetBody&lt;SampleObject&gt;(serializer2);
+    ///     
+    ///     var message3 = await messageReceiver.ReceiveAsync();
+    ///     var serializer3 = new DataContractBinarySerializer(typeof(byte[]));
+    ///     var returnedData3Bytes = message1.GetBody&lt;byte[]&gt;(serializer3);
+    ///     Console.WriteLine($"Message3 String: {Encoding.UTF8.GetString(returnedData3Bytes)}");
+    ///     
+    /// -------------------------------------------------
+    /// Scenarios to NOT use the GetBody Extension method:
+    /// -------------------------------------------------
+    ///  If message was sent using the WindowsAzure.Messaging client library as follows:
+    ///     var message4 = new BrokeredMessage(new MemoryStream(Encoding.UTF8.GetBytes("contoso")));
+    ///     await messageSender.SendAsync(message4);
+    ///     
+    ///  Then retreive the original objects using this client library as follows:
+    ///     var message4 = await messageReceiver.ReceiveAsync();
+    ///     string returned = Encoding.UTF8.GetString(message4.Body); // Since message was sent as Stream, no deserialization required here.
+    /// 
+    /// </remarks>
     public static class MessageInteropExtensions
     {
-        /// <summary>
-        /// Deserializes the body of a message that was serialized using DataContractBinarySerializer
-        /// </summary>
-        public static T GetBody<T>(this Message message)
-        {
-            return GetBody<T>(message, new DataContractBinarySerializer(typeof(T)));
-        }
-
         /// <summary>
         /// Deserializes the body of a message that was serialized using XmlObjectSerializer
         /// </summary>
@@ -37,6 +78,11 @@ namespace Microsoft.Azure.ServiceBus.Extensions
             if(message == null)
             {
                 throw new ArgumentNullException(nameof(message));
+            }
+
+            if(message.SystemProperties.BodyObject != null)
+            {
+                return (T)message.SystemProperties.BodyObject;
             }
 
             if(message.Body == null || message.Body.Length == 0)

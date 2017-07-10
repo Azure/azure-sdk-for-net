@@ -160,33 +160,20 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             SBMessage sbMessage;
-
-            // ToDo: Further testing is needed to ensure interop scenarios with other clients.
+            
             if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0
                 && amqpMessage.ValueBody.Value != null)
             {
-                if (amqpMessage.ValueBody.Value is byte[] byteArrayValue)
+                sbMessage = new SBMessage();
+
+                object dotNetObject = null;
+                if (!TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out dotNetObject))
                 {
-                    sbMessage = new SBMessage(byteArrayValue);
-                }
-                else if (amqpMessage.ValueBody.Value is ArraySegment<byte> arraySegmentValue)
-                {
-                    byte[] byteArray;
-                    if (arraySegmentValue.Count == arraySegmentValue.Array.Length)
-                    {
-                        byteArray = arraySegmentValue.Array;
-                    }
-                    else
-                    {
-                        byteArray = new byte[arraySegmentValue.Count];
-                        Array.ConstrainedCopy(arraySegmentValue.Array, arraySegmentValue.Offset, byteArray, 0, arraySegmentValue.Count);
-                    }
-                    
-                    sbMessage = new SBMessage(byteArray);
+                    sbMessage.SystemProperties.BodyObject = amqpMessage.ValueBody.Value;
                 }
                 else
                 {
-                    sbMessage = new SBMessage();
+                    sbMessage.SystemProperties.BodyObject = dotNetObject;
                 }
             }
             else if ((amqpMessage.BodyType & SectionFlag.Data) != 0

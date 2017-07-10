@@ -426,7 +426,13 @@ namespace Microsoft.Azure.ServiceBus
                 }
             }
 
-            private void ThrowIfNotReceived()
+            internal object BodyObject
+            {
+                get;
+                set;
+            }
+
+            void ThrowIfNotReceived()
             {
                 if (!this.IsReceived)
                 {
