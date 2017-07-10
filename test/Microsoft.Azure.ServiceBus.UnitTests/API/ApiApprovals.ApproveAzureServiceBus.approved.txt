@@ -421,15 +421,6 @@ namespace Microsoft.Azure.ServiceBus.Core
         public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Message> BeforeMessageSend(Microsoft.Azure.ServiceBus.Message message) { }
     }
 }
-namespace Microsoft.Azure.ServiceBus.Extensions
-{
-    
-    public class static MessageInteropExtensions
-    {
-        public static T GetBody<T>(this Microsoft.Azure.ServiceBus.Message message) { }
-        public static T GetBody<T>(this Microsoft.Azure.ServiceBus.Message message, System.Runtime.Serialization.XmlObjectSerializer serializer) { }
-    }
-}
 namespace Microsoft.Azure.ServiceBus.Filters
 {
     
@@ -484,6 +475,14 @@ namespace Microsoft.Azure.ServiceBus.Filters
     {
         public TrueFilter() { }
         public override string ToString() { }
+    }
+}
+namespace Microsoft.Azure.ServiceBus.InteropExtensions
+{
+    
+    public class static MessageInteropExtensions
+    {
+        public static T GetBody<T>(this Microsoft.Azure.ServiceBus.Message message, System.Runtime.Serialization.XmlObjectSerializer serializer) { }
     }
 }
 namespace Microsoft.Azure.ServiceBus.Primitives
