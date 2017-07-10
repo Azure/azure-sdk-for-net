@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Xunit;
@@ -12,12 +13,13 @@ namespace Sql.Tests
         [Fact]
         public void TestCheckServerNameAvailable()
         {
-            string testPrefix = "sqlcrudtest-";
             string suiteName = this.GetType().FullName;
 
-            SqlManagementTestUtilities.RunTest(suiteName, "TestCheckServerNameAvailable", (resClient, sqlClient) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                string serverName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                string serverName = SqlManagementTestUtilities.GenerateName();
 
                 CheckNameAvailabilityResponse response = sqlClient.Servers.CheckNameAvailability(new CheckNameAvailabilityRequest
                 {
@@ -28,18 +30,17 @@ namespace Sql.Tests
                 Assert.Equal(serverName, response.Name);
                 Assert.Equal(null, response.Message);
                 Assert.Equal(null, response.Reason);
-            });
+            }
         }
 
         [Fact]
         public void TestCheckServerNameInvalid()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-
-            SqlManagementTestUtilities.RunTest(suiteName, "TestCheckServerNameInvalid", (resClient, sqlClient) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                string serverName = SqlManagementTestUtilities.GenerateName(testPrefix).ToUpperInvariant(); // upper case is invalid
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                string serverName = SqlManagementTestUtilities.GenerateName().ToUpperInvariant(); // upper case is invalid
 
                 CheckNameAvailabilityResponse response = sqlClient.Servers.CheckNameAvailability(new CheckNameAvailabilityRequest
                 {
@@ -50,17 +51,18 @@ namespace Sql.Tests
                 Assert.Equal(serverName, response.Name);
                 Assert.NotNull(response.Message);
                 Assert.Equal(CheckNameAvailabilityReason.Invalid, response.Reason);
-            });
+            }
         }
 
         [Fact]
         public void TestCheckServerNameAlreadyExists()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCheckServerNameAlreadyExists", testPrefix, (resClient, sqlClient, rg, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Check name of a server that we know exists (because we just created it)
                 CheckNameAvailabilityResponse response = sqlClient.Servers.CheckNameAvailability(new CheckNameAvailabilityRequest
                 {
@@ -71,7 +73,7 @@ namespace Sql.Tests
                 Assert.Equal(server.Name, response.Name);
                 Assert.NotNull(response.Message);
                 Assert.Equal(CheckNameAvailabilityReason.AlreadyExists, response.Reason);
-            });
+            }
         }
     }
 }

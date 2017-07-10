@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System.Collections.Generic;
@@ -15,11 +16,12 @@ namespace Sql.Tests
         [Fact]
         public void TestCreateUpdateGetDropServer()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCreateUpdateGetDropServer", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                string serverNameV12 = SqlManagementTestUtilities.GenerateName(testPrefix);
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                string serverNameV12 = SqlManagementTestUtilities.GenerateName();
                 string login = "dummylogin";
                 string password = "Un53cuRE!";
                 string version12 = "12.0";
@@ -40,7 +42,7 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateServer(server1, serverNameV12, login, version12, tags, SqlManagementTestUtilities.DefaultLocationId);
 
                 // Create second server
-                string server2 = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string server2 = SqlManagementTestUtilities.GenerateName();
                 var v2Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, server2, new Server()
                 {
                     AdministratorLogin = login,
@@ -66,7 +68,7 @@ namespace Sql.Tests
 
                 var listServers2 = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(1, listServers2.Count());
-            });
+            }
         }
     }
 }

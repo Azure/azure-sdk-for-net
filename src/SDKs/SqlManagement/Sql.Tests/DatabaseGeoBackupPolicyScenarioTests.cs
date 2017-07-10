@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System.Collections.Generic;
@@ -15,12 +16,14 @@ namespace Sql.Tests
         [Fact]
         public void TestUpdateGetListGeoBackupPolicy()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestUpdateGetListGeoBackupPolicy", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create data warehouse
-                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string dbName = SqlManagementTestUtilities.GenerateName();
                 var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
                 {
                     Location = server.Location,
@@ -63,7 +66,7 @@ namespace Sql.Tests
                 Assert.Equal("Default", policy.Name);
                 Assert.Equal(GeoBackupPolicyState.Disabled, policy.State);
                 Assert.Equal("Premium", policy.StorageType);
-            });
+            }
         }
     }
 }

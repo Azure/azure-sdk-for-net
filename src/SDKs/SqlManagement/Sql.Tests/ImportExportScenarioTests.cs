@@ -24,36 +24,30 @@ namespace Sql.Tests
         [Fact]
         public void TestImportExistingDatabase()
         {
-            string testPrefix = "sqlcrudtest-";
-            TestImportExport(true, testPrefix, "TestImportExistingDatabase");
+            TestImportExport(true, "TestImportExistingDatabase");
         }
 
         [Fact]
         public void TestImportNewDatabase()
         {
-            string testPrefix = "sqlcrudtest-";
-            TestImportExport(false, testPrefix, "TestImportNewDatabase");
+            TestImportExport(false, "TestImportNewDatabase");
         }
 
-        public void TestImportExport(bool preexistingDatabase, string testPrefix, string testName)
+        public void TestImportExport(bool preexistingDatabase, string testName)
         {
-            string suiteName = this.GetType().FullName;
-            using (SqlManagementTestContext context = new SqlManagementTestContext(this, testName = testName))
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this, testName))
             {
-                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
-
                 ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
                 // Begin creating storage account and container
                 Task<StorageContainerInfo> storageContainerTask = CreateStorageContainer(context, resourceGroup);
 
-                // Create server and database
-                Server server = context.CreateServer(resourceGroup);
-
                 string login = SqlManagementTestUtilities.DefaultLogin;
                 string password = SqlManagementTestUtilities.DefaultPassword;
-                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                string dbName2 = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                string dbName2 = SqlManagementTestUtilities.GenerateName();
                 string storageAccountName = SqlManagementTestUtilities.GenerateName("sqlcrudstorage");
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -61,7 +55,7 @@ namespace Sql.Tests
                     };
 
                 // set server firewall rule
-                sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(testPrefix), new FirewallRule()
+                sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(), new FirewallRule()
                 {
                     StartIpAddress = "0.0.0.0",
                     EndIpAddress = "255.255.255.255"
