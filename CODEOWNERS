@@ -1,0 +1,3 @@
+# This automatically requests reviews from the code owners when a pull request changes any owned files.
+# Details at https://help.github.com/articles/about-codeowners/
+*       @Azure/azure-service-bus-write
