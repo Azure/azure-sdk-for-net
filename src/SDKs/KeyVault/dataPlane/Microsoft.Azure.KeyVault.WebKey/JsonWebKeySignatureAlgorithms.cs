@@ -3,6 +3,8 @@
 // license information.
 // 
 
+using System.Linq;
+
 namespace Microsoft.Azure.KeyVault.WebKey
 {
     /// <summary>
@@ -23,14 +25,29 @@ namespace Microsoft.Azure.KeyVault.WebKey
         // RSASSA-PSS using SHA-512 and MGF1 with SHA-512
         public const string PS512   = "PS512";
 
+        // ECDSA using P-256 and SHA-256 
+        public const string ES256   = "ES256";
+        // ECDSA using P-384 and SHA-384 
+        public const string ES384   = "ES384";
+        // ECDSA using P-521 and SHA-512 
+        public const string ES512   = "ES512";
+
         /// <summary>
         /// All algorithms names. Use clone to avoid FxCop violation
         /// </summary>
         public static string[] AllAlgorithms
         {
-            get { return (string[])_allAlgorithms.Clone(); }
+            get { return AllRsaAlgorithms.Concat(AllEcAlgorithms).ToArray(); }
         }
 
-        private static readonly string[] _allAlgorithms = { RS256, RS384, RS512, RSNULL, PS256, PS384, PS512 };
+        public static string[] AllRsaAlgorithms
+        {
+            get { return new[] { RS256, RS384, RS512, RSNULL, PS256, PS384, PS512 }; }
+        }
+
+        public static string[] AllEcAlgorithms
+        {
+            get { return new[] { ES256, ES384, ES512 }; }
+        }
     }
  }

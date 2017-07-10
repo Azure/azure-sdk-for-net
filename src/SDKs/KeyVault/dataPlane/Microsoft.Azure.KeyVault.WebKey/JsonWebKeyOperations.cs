@@ -3,6 +3,11 @@
 // license information.
 // 
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+
 namespace Microsoft.Azure.KeyVault.WebKey
 {
 
@@ -17,6 +22,27 @@ namespace Microsoft.Azure.KeyVault.WebKey
         public const string Verify  = "verify";
         public const string Wrap    = "wrapKey";
         public const string Unwrap  = "unwrapKey";
+
+        private static Dictionary<CngKeyUsages, string[]> cngOperations;
+
+        static JsonWebKeyOperation()
+        {
+            cngOperations = new Dictionary<CngKeyUsages, string[]>()
+            {
+                { CngKeyUsages.None, new string[0] },
+                { CngKeyUsages.Signing, new[] { Sign, Verify } },
+                { CngKeyUsages.Decryption, new[] { Encrypt, Decrypt, Wrap, Unwrap } },
+                { CngKeyUsages.AllUsages, AllOperations }
+            };
+        }
+
+        public static string[] GetKeyOperations(CngKeyUsages cngKeyUsages)
+        {
+            if (!cngOperations.ContainsKey(cngKeyUsages))
+                throw new CryptographicException(string.Format("Unknown key usage {0}", cngKeyUsages));
+
+            return cngOperations[cngKeyUsages];
+        }
 
         /// <summary>
         /// All operations names. Use clone to avoid FxCop violation

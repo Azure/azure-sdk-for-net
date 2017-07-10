@@ -24,25 +24,31 @@ namespace Microsoft.Azure.KeyVault.WebKey
         internal const string Property_KeyOps = "key_ops";
 
         // RSA Key Property Names
-        internal const string Property_D  = "d";
-        internal const string Property_DP = "dp";
-        internal const string Property_DQ = "dq";
-        internal const string Property_E  = "e";
-        internal const string Property_QI = "qi";
-        internal const string Property_N  = "n";
-        internal const string Property_P  = "p";
-        internal const string Property_Q  = "q";
+        internal const string Property_D      = "d";
+        internal const string Property_DP     = "dp";
+        internal const string Property_DQ     = "dq";
+        internal const string Property_E      = "e";
+        internal const string Property_QI     = "qi";
+        internal const string Property_N      = "n";
+        internal const string Property_P      = "p";
+        internal const string Property_Q      = "q";
+
+        // ECC Key Property Names
+        // Property_D the same as RSA Key
+        internal const string Property_Crv    = "crv";
+        internal const string Property_X      = "x";
+        internal const string Property_Y      = "y";
 
         // Symmetric Key Property Names
-        internal const string Property_K  = "k";
+        internal const string Property_K      = "k";
 
         // HSM Token Property Names
-        internal const string Property_T  = "key_hsm";
+        internal const string Property_T      = "key_hsm";
 
         /// <summary>
         /// Key Identifier
         /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Kid, Required = Required.Default )]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Kid, Required = Required.Default)]
         public string Kid { get; set; }
 
         /// <summary>
@@ -50,29 +56,35 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// Curve, RSA, HSM, Octet, usually RSA. Possible values include:
         /// 'EC', 'RSA', 'RSA-HSM', 'oct'
         /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Kty, Required = Required.Always )]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Kty, Required = Required.Always)]
         public string Kty { get; set; }
 
         /// <summary>
         /// Supported Key Operations
         /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_KeyOps, Required = Required.Default )]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_KeyOps, Required = Required.Default)]
         public IList<string> KeyOps { get; set; }
+
+        /// <summary>
+        /// The curve for Elliptic Curve Cryptography (ECC) algorithms
+        /// </summary>
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Crv, Required = Required.Default)]
+        public string ECCurve { get; set; }
 
         #region RSA Public Key Parameters
 
         /// <summary>
         /// RSA modulus, in Base64.
         /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_N, Required = Required.Default )]
-        [JsonConverter( typeof( Base64UrlJsonConverter ) )]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_N, Required = Required.Default)]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
         public byte[] N { get; set; }
 
         /// <summary>
         /// RSA public exponent, in Base64.
         /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_E, Required = Required.Default )]
-        [JsonConverter( typeof( Base64UrlJsonConverter ) )]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_E, Required = Required.Default)]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
         public byte[] E { get; set; }
 
         #endregion
@@ -80,49 +92,70 @@ namespace Microsoft.Azure.KeyVault.WebKey
         #region RSA Private Key Parameters
 
         /// <summary>
-        /// RSA private exponent
-        /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_D, Required = Required.Default )]
-        [JsonConverter( typeof( Base64UrlJsonConverter ) )]
-        public byte[] D { get; set; }
-
-        /// <summary>
         /// RSA Private Key Parameter
         /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_DP, Required = Required.Default )]
-        [JsonConverter( typeof( Base64UrlJsonConverter ) )]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_DP, Required = Required.Default)]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
         public byte[] DP { get; set; }
 
         /// <summary>
         /// RSA Private Key Parameter
         /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_DQ, Required = Required.Default )]
-        [JsonConverter( typeof( Base64UrlJsonConverter ) )]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_DQ, Required = Required.Default)]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
         public byte[] DQ { get; set; }
 
         /// <summary>
         /// RSA Private Key Parameter
         /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_QI, Required = Required.Default )]
-        [JsonConverter( typeof( Base64UrlJsonConverter ) )]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_QI, Required = Required.Default)]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
         public byte[] QI { get; set; }
 
         /// <summary>
         /// RSA secret prime
         /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_P, Required = Required.Default )]
-        [JsonConverter( typeof( Base64UrlJsonConverter ) )]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_P, Required = Required.Default)]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
         public byte[] P { get; set; }
 
         /// <summary>
         /// RSA secret prime, with p &lt; q
         /// </summary>
-        [JsonProperty( DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Q, Required = Required.Default )]
-        [JsonConverter( typeof( Base64UrlJsonConverter ) )]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Q, Required = Required.Default)]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
         public byte[] Q { get; set; }
 
         #endregion
 
+        #region EC Public Key Parameters
+
+        /// <summary>
+        /// X coordinate for the Elliptic Curve point.
+        /// </summary>
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_X, Required = Required.Default)]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
+        public byte[] X { get; set; }
+
+        /// <summary>
+        /// Y coordinate for the Elliptic Curve point.
+        /// </summary>
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_Y, Required = Required.Default)]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
+        public byte[] Y { get; set; }
+
+        #endregion
+
+        #region EC and RSA Private Key Parameters
+
+        /// <summary>
+        /// RSA private exponent or ECC private key.
+        /// </summary>
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_D, Required = Required.Default)]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
+        public byte[] D { get; set; }
+
+        #endregion 
 
         #region Symmetric Key Parameters
 
@@ -130,7 +163,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// Symmetric key
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_K, Required = Required.Default)]
-        [JsonConverter(typeof( Base64UrlJsonConverter ))]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
         public byte[] K { get; set; }
 
         #endregion
@@ -139,7 +172,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// HSM Token, used with "Bring Your Own Key"
         /// </summary>
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = Property_T, Required = Required.Default)]
-        [JsonConverter(typeof( Base64UrlJsonConverter ))]
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
         public byte[] T { get; set; }
 
         /// <summary>
@@ -155,7 +188,6 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// Converts an AES object to a WebKey of type Octet
         /// </summary>
         /// <param name="aesProvider"></param>
-        /// <returns></returns>
         public JsonWebKey(Aes aesProvider)
         {
             if (aesProvider == null)
@@ -166,12 +198,38 @@ namespace Microsoft.Azure.KeyVault.WebKey
         }
 
         /// <summary>
+        /// Converts an ECDSA object to a WebKey of type EC
+        /// </summary>
+        /// <param name="ecdsaProvider"></param>
+        public JsonWebKey(ECDsaCng ecdsaProvider, bool includePrivateParameters = false)
+            : this(ecdsaProvider.ExportParameters(includePrivateParameters))
+        {
+            KeyOps = JsonWebKeyOperation.GetKeyOperations(ecdsaProvider.Key.KeyUsage);
+        }
+
+        /// <summary>
+        /// Converts a ECParameters object to a WebKey of type EC.
+        /// </summary>
+        /// <param name="ecParameters">The EC object to convert</param>
+        /// <returns>A WebKey representing the EC object</returns>
+        public JsonWebKey(ECParameters ecParameters)
+        {
+            Kty = JsonWebKeyType.EllipticCurve;
+
+            ECCurve = ecParameters.Curve;
+            D = ecParameters.D;
+            X = ecParameters.X;
+            Y = ecParameters.Y;
+        }
+
+        /// <summary>
         /// Converts a RSA object to a WebKey of type RSA.
         /// </summary>
         /// <param name="rsaProvider">The RSA object to convert</param>
         /// <param name="includePrivateParameters">True to include the RSA private key parameters</param>
         /// <returns>A WebKey representing the RSA object</returns>
-        public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = false) : this(rsaProvider.ExportParameters(includePrivateParameters))
+        public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = false)
+            : this(rsaProvider.ExportParameters(includePrivateParameters))
         {
         }
 
@@ -195,9 +253,9 @@ namespace Microsoft.Azure.KeyVault.WebKey
             Q = rsaParameters.Q;
         }
 
-        public override bool Equals( object obj )
+        public override bool Equals(object obj)
         {
-            if ( obj == null )
+            if (obj == null)
                 return false;
 
             if (obj == this)
@@ -205,10 +263,10 @@ namespace Microsoft.Azure.KeyVault.WebKey
 
             JsonWebKey other = obj as JsonWebKey;
 
-            if ( other == null )
+            if (other == null)
                 return false;
 
-            return this.Equals( other );
+            return this.Equals(other);
         }
 
         /// <summary>
@@ -216,9 +274,9 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// </summary>
         /// <param name="other"> the <see cref="JsonWebKey"/> object to compare with </param>
         /// <returns> whether the <see cref="JsonWebKey"/> objects are equals </returns>
-        public bool Equals( JsonWebKey other )
+        public bool Equals(JsonWebKey other)
         {
-            if ( other == null )
+            if (other == null)
                 return false;
 
             if (!string.Equals(Kid, other.Kid))
@@ -230,6 +288,9 @@ namespace Microsoft.Azure.KeyVault.WebKey
             if (!AreEqual(KeyOps, other.KeyOps))
                 return false;
 
+            if (!string.Equals(ECCurve, other.ECCurve))
+                return false;
+
             if (!AreEqual(K, other.K))
                 return false;
 
@@ -238,6 +299,12 @@ namespace Microsoft.Azure.KeyVault.WebKey
                 return false;
 
             if (!AreEqual(E, other.E))
+                return false;
+
+            if (!AreEqual(X, other.X))
+                return false;
+
+            if (!AreEqual(Y, other.Y))
                 return false;
 
             // Private parameters
@@ -280,16 +347,20 @@ namespace Microsoft.Azure.KeyVault.WebKey
                 hashCode += Kid.GetHashCode();
             }
 
-            switch ( Kty )
+            switch (Kty)
             {
+                case JsonWebKeyType.EllipticCurve:
+                case JsonWebKeyType.EllipticCurveHsm:
+                    return hashCode += GetHashCode(X);
+
                 case JsonWebKeyType.Octet:
-                    return hashCode += GetHashCode( K );
+                    return hashCode += GetHashCode(K);
 
                 case JsonWebKeyType.Rsa:
-                    return hashCode += GetHashCode( N );
+                    return hashCode += GetHashCode(N);
 
                 case JsonWebKeyType.RsaHsm:
-                    return hashCode += GetHashCode( T );
+                    return hashCode += GetHashCode(T);
 
                 default:
                     return hashCode;
@@ -297,17 +368,17 @@ namespace Microsoft.Azure.KeyVault.WebKey
         }
 
 
-        private int GetHashCode( byte[] obj )
+        private int GetHashCode(byte[] obj)
         {
-            if ( obj == null || obj.Length == 0 )
+            if (obj == null || obj.Length == 0)
                 return 0;
 
             var hashCode = 0;
 
             // Rotate by 3 bits and XOR the new value.
-            for ( var i = 0; i < obj.Length; i++ )
-                hashCode = ( hashCode << 3 ) | ( hashCode >> ( 29 ) ) ^ obj[i];
-            
+            for (var i = 0; i < obj.Length; i++)
+                hashCode = (hashCode << 3) | (hashCode >> (29)) ^ obj[i];
+
             return hashCode;
         }
 
@@ -317,15 +388,19 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// <returns> True if the object has private key; false otherwise.</returns>
         public virtual bool HasPrivateKey()
         {
-            switch ( Kty )
+            switch (Kty)
             {
+                case JsonWebKeyType.EllipticCurve:
+                case JsonWebKeyType.EllipticCurveHsm:
+                    return D != null;
+
                 case JsonWebKeyType.Octet:
                     return K != null;
 
                 case JsonWebKeyType.Rsa:
                 case JsonWebKeyType.RsaHsm:
                     var privateParameters = new bool[] { D != null, DP != null, DQ != null, QI != null, P != null, Q != null };
-                    return privateParameters.All( ( value ) => value );
+                    return privateParameters.All((value) => value);
 
                 default:
                     return false;
@@ -340,7 +415,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
         public virtual bool IsValid()
         {
             // MUST have kty
-            if ( string.IsNullOrEmpty( Kty ) )
+            if (string.IsNullOrEmpty(Kty))
                 return false;
 
             // Validate Key Operations
@@ -351,10 +426,11 @@ namespace Microsoft.Azure.KeyVault.WebKey
             }
 
             // Per-kty validation
-            switch ( Kty )
+            switch (Kty)
             {
                 case JsonWebKeyType.EllipticCurve:
-                    break;
+                case JsonWebKeyType.EllipticCurveHsm:
+                    return IsValidEc();
 
                 case JsonWebKeyType.Octet:
                     return IsValidOctet();
@@ -367,6 +443,24 @@ namespace Microsoft.Azure.KeyVault.WebKey
             }
 
             return false;
+        }
+
+        private bool IsValidEc()
+        {
+            // MUST have public key parameters
+            if (X == null || Y == null || ECCurve == null || X.Length != Y.Length)
+                return false;
+
+            switch(ECCurve)
+            {
+                case JsonWebKeyECCurve.P256:
+                    return X.Length == 32;
+                case JsonWebKeyECCurve.P384:
+                    return X.Length == 48;
+                case JsonWebKeyECCurve.P521:
+                    return X.Length == 66;
+            }
+            return true;
         }
 
         private bool IsValidOctet()
@@ -506,6 +600,23 @@ namespace Microsoft.Azure.KeyVault.WebKey
             return result;
         }
 
+        /// <summary>
+        /// Converts a WebKey of type EC or EC-HSM to a ECDsa object
+        /// </summary>
+        /// <param name="includePrivateParameters">Determines whether private key material, if available, is included</param>
+        /// <returns>An initialized ECDsa instance</returns>
+        public ECDsa ToECDsa(bool includePrivateParameters = false)
+        {
+            if (!string.Equals(JsonWebKeyType.EllipticCurve, Kty) 
+                && !string.Equals(JsonWebKeyType.EllipticCurveHsm, Kty))
+                throw new ArgumentException("JsonWebKey is not an Elliptic Curve key");
+
+            var ecParameters = new ECParameters { Curve = ECCurve, D = this.D, X = this.X, Y = this.Y };
+            var ecKeyblob = ecParameters.GetKeyBlob(includePrivateParameters);
+
+            return new ECDsaCng(CngKey.Import(ecKeyblob.KeyBlob, ecKeyblob.KeyBlobFormat));
+        }
+
         private static void VerifyNonZero(string name, byte[] value)
         {
             if (value != null && value.Length > 0)
@@ -609,8 +720,15 @@ namespace Microsoft.Azure.KeyVault.WebKey
             ZeroArray(T);
             T = null;
 
+            // Elliptic curve
+            ZeroArray(X);
+            ZeroArray(Y);
+            X = Y = null;
+
             switch (Kty)
             {
+                case JsonWebKeyType.EllipticCurve:
+                case JsonWebKeyType.EllipticCurveHsm:
                 case JsonWebKeyType.Octet:
                 case JsonWebKeyType.Rsa:
                 case JsonWebKeyType.RsaHsm:

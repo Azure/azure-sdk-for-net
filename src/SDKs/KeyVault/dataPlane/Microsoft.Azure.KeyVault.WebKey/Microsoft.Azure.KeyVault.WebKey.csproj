@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault.WebKey</PackageId>
     <Description>Microsoft Azure Key Vault WebKey Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault WebKey</AssemblyTitle>
+    <VersionPrefix>2.0.8-alpha1</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault.WebKey</AssemblyName>
-    <VersionPrefix>2.0.7</VersionPrefix>
     <PackageTags>Microsoft Azure key vault WebKey</PackageTags>    
   </PropertyGroup>
   <PropertyGroup>
@@ -17,13 +17,13 @@
   </ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="1.0.2" />
     <PackageReference Include="System.Collections" Version="4.0.11" />
     <PackageReference Include="System.Runtime" Version="4.1.0" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.2.0" />
+    <PackageReference Include="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Include="System.Collections.Concurrent" Version="4.0.12" />
     <PackageReference Include="System.Linq" Version="4.1.0" />
-	<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 
 </Project>
