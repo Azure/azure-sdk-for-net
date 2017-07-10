@@ -210,6 +210,8 @@ namespace Microsoft.Azure.Management.Automation
                     }
                 }
                 
+                propertiesValue["incrementNodeConfigurationBuild"] = parameters.Properties.IncrementNodeConfigurationBuild;
+                
                 if (parameters.Name != null)
                 {
                     dscCompilationJobCreateParametersValue["name"] = parameters.Name;

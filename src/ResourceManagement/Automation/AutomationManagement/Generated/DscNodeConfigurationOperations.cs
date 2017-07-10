@@ -236,6 +236,8 @@ namespace Microsoft.Azure.Management.Automation
                     configurationValue["name"] = parameters.Configuration.Name;
                 }
                 
+                dscNodeConfigurationCreateOrUpdateParametersValue["incrementNodeConfigurationBuild"] = parameters.IncrementNodeConfigurationBuild;
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
