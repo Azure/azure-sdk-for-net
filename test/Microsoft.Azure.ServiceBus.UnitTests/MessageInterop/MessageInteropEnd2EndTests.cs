@@ -37,15 +37,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
                 sbConnectionString += ';' + nameof(TransportType) + '=' + TransportType.Amqp.ToString();
             }
 
+            // Create a full framework MessageSender
             MessagingFactory messagingFactory = MessagingFactory.CreateFromConnectionString(sbConnectionString);
             MessageSender fullFrameWorkClientSender = messagingFactory.CreateMessageSender(queueName);
 
-            // Create a full framework MessageReceiver
+            // Create a .NetCore MessageReceiver
             Core.MessageReceiver dotNetStandardMessageReceiver = new Core.MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ServiceBus.ReceiveMode.ReceiveAndDelete);
 
             try
             {
-                // Send using a full framework MessageSender
                 // Plain string
                 string message1Body = "contosoString";
                 var message1 = new BrokeredMessage(message1Body);
