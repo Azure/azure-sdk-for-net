@@ -73,31 +73,30 @@ namespace Fluent.Tests.Network
 
                 // pre-create VMs to show topology on
                 ICreatedResources<IVirtualMachine> virtualMachines = EnsureNetwork(manager, computeManager);
-
-                ITopology topology = nw.GetTopology(virtualMachines.ElementAt(0).ResourceGroupName);
-                Assert.Equal(11, topology.Resources.Count);
-//                Assert.True(topology.Resources.ContainsKey(virtualMachines.ElementAt(0).PrimaryNetworkInterface()
-//                    .networkSecurityGroupId()));
-//                Assert.Equal(4,
-//                    topology.Resources.Get(virtualMachines[0].primaryNetworkInterfaceId()).associations().size());
+                var vm0 = virtualMachines.ElementAt(0);
+                ITopology topology = nw.GetTopology(vm0.ResourceGroupName);
+                Assert.Equal(10, topology.Resources.Count);
+//                Assert.True(topology.Resources.ContainsKey(vm0.GetPrimaryNetworkInterface().NetworkSecurityGroupId));
+                Assert.Equal(4,
+                    topology.Resources[vm0.PrimaryNetworkInterfaceId].Associations.Count);
 
                 ISecurityGroupView sgViewResult = nw.GetSecurityGroupView(virtualMachines.ElementAt(0).Id);
                 Assert.Equal(1, sgViewResult.NetworkInterfaces.Count);
                 Assert.Equal(virtualMachines.ElementAt(0).PrimaryNetworkInterfaceId,
                     sgViewResult.NetworkInterfaces.Keys.First());
 
-//                IFlowLogSettings flowLogSettings =
-//                    nw.GetFlowLogSettings(virtualMachines.ElementAt(0).getPrimaryNetworkInterface().networkSecurityGroupId());
-//                IStorageAccount storageAccount = EnsureStorageAccount();
-//                flowLogSettings.Update()
-//                    .WithLogging()
-//                    .WithStorageAccount(storageAccount.Id)
-//                    .WithRetentionPolicyDays(5)
-//                    .WithRetentionPolicyEnabled()
-//                    .Apply();
-//                Assert.Equal(true, flowLogSettings.Enabled);
-//                Assert.Equal(5, flowLogSettings.RetentionDays);
-//                Assert.Equal(storageAccount.Id, flowLogSettings.StorageId);
+                IFlowLogSettings flowLogSettings =
+                    nw.GetFlowLogSettings(vm0.GetPrimaryNetworkInterface().NetworkSecurityGroupId);
+                IStorageAccount storageAccount = EnsureStorageAccount();
+                flowLogSettings.Update()
+                    .WithLogging()
+                    .WithStorageAccount(storageAccount.Id)
+                    .WithRetentionPolicyDays(5)
+                    .WithRetentionPolicyEnabled()
+                    .Apply();
+                Assert.Equal(true, flowLogSettings.Enabled);
+                Assert.Equal(5, flowLogSettings.RetentionDays);
+                Assert.Equal(storageAccount.Id, flowLogSettings.StorageId);
 
                 //        Troubleshooting troubleshooting = nw.troubleshoot(<virtual_network_gateway_id> or <virtual_network_gateway_connaction_id>,
                 //                storageAccount.id(), "");
@@ -124,30 +123,30 @@ namespace Fluent.Tests.Network
                 // test packet capture
                 IEnumerable<IPacketCapture> packetCaptures = nw.PacketCaptures.List();
                 Assert.Equal(0, packetCaptures.Count());
-//                IPacketCapture packetCapture = nw.PacketCaptures
-//                    .Define("NewPacketCapture")
-//                    .WithTarget(virtualMachines.ElementAt(0).Id)
-//                    .WithStorageAccountId(storageAccount.Id)
-//                    .WithTimeLimitInSeconds(1500)
-//                    .DefinePacketCaptureFilter()
-//                    .WithProtocol(PcProtocol.TCP)
-//                    .WithLocalIPAddresses(Arrays.asList("127.0.0.1", "127.0.0.5"))
-//                    .attach()
-//                    .create();
-//                packetCaptures = nw.packetCaptures().list();
-//                Assert.Equal(1, packetCaptures.Count());
-//                Assert.assertEquals("NewPacketCapture", packetCapture.name());
-//                Assert.assertEquals(1500, packetCapture.timeLimitInSeconds());
-//                Assert.assertEquals(PcProtocol.TCP, packetCapture.filters().get(0).protocol());
-//                Assert.assertEquals("127.0.0.1;127.0.0.5", packetCapture.filters().get(0).localIPAddress());
-//                //        Assert.assertEquals("Running", packetCapture.getStatus().packetCaptureStatus().toString());
-//                packetCapture.Stop();
-//                Assert.assertEquals("Stopped", packetCapture.GetStatus().PacketCaptureStatus.Value);
-//                nw.PacketCaptures.DeleteByName(packetCapture.Name);
+                IPacketCapture packetCapture = nw.PacketCaptures
+                    .Define("NewPacketCapture")
+                    .WithTarget(virtualMachines.ElementAt(0).Id)
+                    .WithStorageAccountId(storageAccount.Id)
+                    .WithTimeLimitInSeconds(1500)
+                    .DefinePacketCaptureFilter
+                        .WithProtocol(PcProtocol.TCP)
+                        .WithLocalIPAddresses(new List<string>(){"127.0.0.1", "127.0.0.5"})
+                        .Attach()
+                    .Create();
+                packetCaptures = nw.PacketCaptures.List();
+                Assert.Equal(1, packetCaptures.Count());
+                Assert.Equal("NewPacketCapture", packetCapture.Name);
+                Assert.Equal(1500, packetCapture.TimeLimitInSeconds);
+                Assert.Equal(PcProtocol.TCP.Value, packetCapture.Filters[0].Protocol);
+                Assert.Equal("127.0.0.1;127.0.0.5", packetCapture.Filters[0].LocalIPAddress);
+                //        Assert.assertEquals("Running", packetCapture.getStatus().packetCaptureStatus().toString());
+                packetCapture.Stop();
+                Assert.Equal("Stopped", packetCapture.GetStatus().PacketCaptureStatus.Value);
+                nw.PacketCaptures.DeleteByName(packetCapture.Name);
 
                 computeManager.VirtualMachines.DeleteById(virtualMachines.ElementAt(1).Id);
                 topology.Refresh();
-                Assert.Equal(10, topology.Resources.Count);
+                Assert.Equal(9, topology.Resources.Count);
 
                 manager.ResourceManager.ResourceGroups.DeleteByName(nw.ResourceGroupName);
                 manager.ResourceManager.ResourceGroups.DeleteByName(GROUP_NAME);

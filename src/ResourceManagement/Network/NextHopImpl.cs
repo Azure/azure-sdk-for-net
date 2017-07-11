@@ -106,8 +106,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        ///GENMHASH:637F0A3522F2C635C23E54FAAD79CBEA:0145CCB84EEDC3B4052C158738780D22
-        public async Task<Microsoft.Azure.Management.Network.Fluent.INextHop> ExecuteAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<INextHop> ExecuteAsync(CancellationToken cancellationToken = new CancellationToken(), bool multiThreaded = true)
         {
             //$ return this.parent().Manager().Inner.NetworkWatchers()
             //$ .GetNextHopAsync(parent.ResourceGroupName(), parent.Name(), parameters)
@@ -120,11 +119,6 @@ namespace Microsoft.Azure.Management.Network.Fluent
             //$ });
 
             return null;
-        }
-
-        public override Task<INextHop> ExecuteAsync(CancellationToken cancellationToken = new CancellationToken(), bool multiThreaded = true)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

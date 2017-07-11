@@ -27,9 +27,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:8AB87020DE6C711CD971F3D80C33DD83
         public NetworkWatcherImpl Parent()
         {
-            //$ return parent;
-
-            return null;
+            return parent;
         }
 
         ///GENMHASH:AD2631B1DB33BADA121356C1B30A8CEF:22CA551C34302C2ECB41398C91A06993
@@ -81,44 +79,34 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:D5128E88467A6B172A89A50F0F0F88D9:FDFF64DEFBB7046083446D549F1CC328
         public VerificationIPFlowImpl WithLocalPort(string localPort)
         {
-            //$ parameters.WithLocalPort(localPort);
-            //$ return this;
-
+            parameters.LocalPort = localPort;
             return this;
         }
 
         ///GENMHASH:474E02257E2AE7663EEAFE7D2306F217:AE52C01285A7507D3FF8B55101140BF3
         public VerificationIPFlowImpl WithRemotePort(string remotePort)
         {
-            //$ parameters.WithRemotePort(remotePort);
-            //$ return this;
-
+            parameters.RemotePort = remotePort;
             return this;
         }
 
         ///GENMHASH:CD439A9A0EEB2CF0133E315FD689D362:5889115CA9827174846B143D1E5C28CE
         public VerificationIPFlowImpl WithDirection(Direction direction)
         {
-            //$ parameters.WithDirection(direction);
-            //$ return this;
-
+            parameters.Direction = direction.Value;
             return this;
         }
 
         ///GENMHASH:9EF9E4B3FA586E17D14DE931AC742510:42AD059E7262C5A8AAA92E41CFD44B75
         public IWithProtocol Outbound()
         {
-            //$ return withDirection(Direction.OUTBOUND);
-
-            return null;
+            return WithDirection(Direction.Outbound);
         }
 
         ///GENMHASH:B4858D1B3832472F65F15B5A90B1AA9A:E902986261253137210F32831D73A99F
         public string RuleName()
         {
-            //$ return this.result.RuleName();
-
-            return null;
+            return this.result.RuleName;
         }
 
         ///GENMHASH:F0DF1562B8B293A495AB4D86FA5FF5A2:8668EBCD576CE12CC0DF56FC49AA4BDF
@@ -131,24 +119,21 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:FA2535431E8DE1A68BC05577993DEAFF:D55D5BD9867C55095428F74D81048912
         public IWithLocalIP WithTCP()
         {
-            //$ return withProtocol(Protocol.TCP);
-
-            return null;
+            return WithProtocol(Protocol.TCP);
         }
 
         ///GENMHASH:D36AEA2E8788C46661B7C3DA03646E23:4082802774A0A2A4DD57F3F46876C1CE
         public IWithLocalIP WithUDP()
         {
-            //$ return withProtocol(Protocol.UDP);
-
-            return null;
+            return WithProtocol(Protocol.UDP);
         }
 
-        ///GENMHASH:637F0A3522F2C635C23E54FAAD79CBEA:8C7F92FA1C5E38E7CE575889629C53B5
-        public async Task<Microsoft.Azure.Management.Network.Fluent.IVerificationIPFlow> ExecuteWorkAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<IVerificationIPFlow> ExecuteAsync(CancellationToken cancellationToken = new CancellationToken(), bool multiThreaded = true)
         {
-            //$ return this.parent().Manager().Inner.NetworkWatchers()
-            //$ .VerifyIPFlowAsync(parent.ResourceGroupName(), parent.Name(), parameters)
+//            var response = await parent.Manager.Inner.NetworkWatchers
+//                .VerifyIPFlowAsync(parent.ResourceGroupName, parent.Name, parameters);
+//            result = response;
+//            return this;
             //$ .Map(new Func1<VerificationIPFlowResultInner, VerificationIPFlow>() {
             //$ @Override
             //$ public VerificationIPFlow call(VerificationIPFlowResultInner verificationIPFlowResultInner) {
@@ -156,13 +141,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             //$ return VerificationIPFlowImpl.This;
             //$ }
             //$ });
-
             return null;
-        }
-
-        public override Task<IVerificationIPFlow> ExecuteAsync(CancellationToken cancellationToken = new CancellationToken(), bool multiThreaded = true)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
