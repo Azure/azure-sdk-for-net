@@ -20,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(1, namespaceName, queuename, receiveMode);
+                this.WriteEvent(1, namespaceName ?? string.Empty, queuename, receiveMode);
             }
         }
 
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(3, namespaceName, topicName);
+                this.WriteEvent(3, namespaceName ?? string.Empty, topicName);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(5, namespaceName, topicName, subscriptionName, receiveMode);
+                this.WriteEvent(5, namespaceName, topicName ?? string.Empty, subscriptionName, receiveMode);
             }
         }
 
@@ -347,39 +347,8 @@ namespace Microsoft.Azure.ServiceBus
             this.WriteEvent(30, clientId, exception);
         }
 
-        [Event(31, Level = EventLevel.Informational, Message = "{0}: AcceptMessageSessionAsync start. SessionId = {1}")]
-        public void AcceptMessageSessionStart(string clientId, string sessionId)
-        {
-            if (this.IsEnabled())
-            {
-                this.WriteEvent(31, clientId, sessionId);
-            }
-        }
-
-        [Event(32, Level = EventLevel.Informational, Message = "{0}: AcceptMessageSessionAsync done.")]
-        public void AcceptMessageSessionStop(string clientId)
-        {
-            if (this.IsEnabled())
-            {
-                this.WriteEvent(32, clientId);
-            }
-        }
-
-        [NonEvent]
-        public void AcceptMessageSessionException(string clientId, Exception exception)
-        {
-            if (this.IsEnabled())
-            {
-                this.AcceptMessageSessionException(clientId, exception.ToString());
-            }
-        }
-
-        [Event(33, Level = EventLevel.Error, Message = "{0}: AcceptMessageSessionAsync Exception: {1}.")]
-        void AcceptMessageSessionException(string clientId, string exception)
-        {
-            this.WriteEvent(33, clientId, exception);
-        }
-
+        // Unused - 31;32;33
+        
         [NonEvent]
         public void AmqpSendLinkCreateStart(string clientId, MessagingEntityType? entityType, string entityPath)
         {
@@ -512,12 +481,12 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        [Event(46, Level = EventLevel.Informational, Message = "MessageSender (Namespace '{0}'; Entity '{1}' created).")]
-        public void MessageSenderCreateStop(string namespaceName, string entityName)
+        [Event(46, Level = EventLevel.Informational, Message = "MessageSender (Namespace '{0}'; Entity '{1}'; ClientId '{2}' created).")]
+        public void MessageSenderCreateStop(string namespaceName, string entityName, string clientId)
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(46, namespaceName, entityName);
+                this.WriteEvent(46, namespaceName, entityName, clientId);
             }
         }
 
@@ -530,12 +499,12 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        [Event(48, Level = EventLevel.Informational, Message = "MessageReceiver (Namespace '{0}'; Entity '{1}' created).")]
-        public void MessageReceiverCreateStop(string namespaceName, string entityName)
+        [Event(48, Level = EventLevel.Informational, Message = "MessageReceiver (Namespace '{0}'; Entity '{1}'; ClientId '{2}' created).")]
+        public void MessageReceiverCreateStop(string namespaceName, string entityName, string clientId)
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(48, namespaceName, entityName);
+                this.WriteEvent(48, namespaceName, entityName, clientId);
             }
         }
 
@@ -544,12 +513,12 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.ScheduleMessageException(clientId, scheduleEnqueueTimeUtc.ToString());
+                this.ScheduleMessageStart(clientId, scheduleEnqueueTimeUtc.ToString());
             }
         }
 
         [Event(49, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync start. ScheduleTimeUtc = {1}")]
-        public void ScheduleMessageStart(string clientId, string scheduleEnqueueTimeUtc)
+        void ScheduleMessageStart(string clientId, string scheduleEnqueueTimeUtc)
         {
             if (this.IsEnabled())
             {
@@ -1179,6 +1148,15 @@ namespace Microsoft.Azure.ServiceBus
         void ExceptionReceivedHandlerThrewException(string exception)
         {
             WriteEvent(99, exception);
+        }
+
+        [Event(101, Level = EventLevel.Informational, Message = "Updating client id. OldClientId: {0}, NewClientId: {1}")]
+        public void UpdateClientId(string oldClientId, string newClientId)
+        {
+            if (this.IsEnabled())
+            {
+                WriteEvent(101, oldClientId, newClientId); 
+            }
         }
     }
 }

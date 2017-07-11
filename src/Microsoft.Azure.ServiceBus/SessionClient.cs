@@ -231,6 +231,7 @@ namespace Microsoft.Azure.ServiceBus
                 this.EntityPath,
                 session.SessionIdInternal);
 
+            session.UpdateClientId(ClientEntity.GenerateClientId(nameof(MessageSession), $"{this.EntityPath}_{session.SessionId}"));
             return session;
         }
 

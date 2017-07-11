@@ -112,5 +112,15 @@ namespace Microsoft.Azure.ServiceBus
         {
             return $"{clientTypeName}{GetNextId()}{postfix}";
         }
+        
+        /// <summary>
+        /// Updates the client id.
+        /// </summary>
+        /// <param name="newClientId"></param>
+        internal void UpdateClientId(string newClientId)
+        {
+            MessagingEventSource.Log.UpdateClientId(this.ClientId, newClientId);
+            this.ClientId = newClientId;
+        }
     }
 }

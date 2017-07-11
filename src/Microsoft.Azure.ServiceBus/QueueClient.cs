@@ -101,6 +101,8 @@ namespace Microsoft.Azure.ServiceBus
         QueueClient(ServiceBusNamespaceConnection serviceBusConnection, string entityPath, ReceiveMode receiveMode, RetryPolicy retryPolicy)
             : base(ClientEntity.GenerateClientId(nameof(QueueClient), entityPath), retryPolicy)
         {
+            MessagingEventSource.Log.QueueClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath, receiveMode.ToString());
+
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();
             this.QueueName = entityPath;
@@ -109,6 +111,8 @@ namespace Microsoft.Azure.ServiceBus
                 serviceBusConnection.SasKeyName,
                 serviceBusConnection.SasKey);
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, serviceBusConnection.OperationTimeout);
+
+            MessagingEventSource.Log.QueueClientCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
         }
 
         /// <summary>

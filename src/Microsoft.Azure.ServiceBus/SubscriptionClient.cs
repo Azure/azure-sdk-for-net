@@ -101,6 +101,8 @@ namespace Microsoft.Azure.ServiceBus
         SubscriptionClient(ServiceBusNamespaceConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode, RetryPolicy retryPolicy)
             : base(ClientEntity.GenerateClientId(nameof(SubscriptionClient), $"{topicPath}/{subscriptionName}"), retryPolicy)
         {
+            MessagingEventSource.Log.SubscriptionClientCreateStart(serviceBusConnection?.Endpoint.Authority, topicPath, subscriptionName, receiveMode.ToString());
+
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();
             this.TopicPath = topicPath;
@@ -111,6 +113,8 @@ namespace Microsoft.Azure.ServiceBus
                 serviceBusConnection.SasKeyName,
                 serviceBusConnection.SasKey);
             this.CbsTokenProvider = new TokenProviderAdapter(this.TokenProvider, serviceBusConnection.OperationTimeout);
+
+            MessagingEventSource.Log.SubscriptionClientCreateStop(serviceBusConnection.Endpoint.Authority, topicPath, subscriptionName, this.ClientId);
         }
 
         /// <summary>

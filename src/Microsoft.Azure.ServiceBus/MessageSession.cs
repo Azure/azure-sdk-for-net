@@ -39,11 +39,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets the SessionId.
         /// </summary>
-        public string SessionId
-        {
-            get => this.SessionIdInternal;
-            internal set => this.SessionIdInternal = value;
-        }
+        public string SessionId => this.SessionIdInternal;
 
         public Task<Stream> GetStateAsync()
         {

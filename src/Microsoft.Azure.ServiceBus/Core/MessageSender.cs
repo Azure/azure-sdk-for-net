@@ -87,6 +87,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             RetryPolicy retryPolicy)
             : base(ClientEntity.GenerateClientId(nameof(MessageSender), entityPath), retryPolicy ?? RetryPolicy.Default)
         {
+            MessagingEventSource.Log.MessageSenderCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);
+
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.OperationTimeout = serviceBusConnection.OperationTimeout;
             this.Path = entityPath;
@@ -94,6 +96,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.CbsTokenProvider = cbsTokenProvider;
             this.SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(this.CreateLinkAsync, this.CloseSession);
             this.RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(this.CreateRequestResponseLinkAsync, this.CloseRequestResponseSession);
+
+            MessagingEventSource.Log.MessageSenderCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
         }
 
         /// <summary>

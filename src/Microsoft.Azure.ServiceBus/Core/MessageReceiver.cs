@@ -116,6 +116,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             bool isSessionReceiver = false)
             : base(ClientEntity.GenerateClientId(nameof(MessageReceiver), entityPath), retryPolicy ?? RetryPolicy.Default)
         {
+            MessagingEventSource.Log.MessageReceiverCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath, receiveMode.ToString());
+
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.ReceiveMode = receiveMode;
             this.OperationTimeout = serviceBusConnection.OperationTimeout;
@@ -129,6 +131,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             this.PrefetchCount = prefetchCount;
             this.messageReceivePumpSyncLock = new object();
+
+            MessagingEventSource.Log.MessageReceiverCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
         }
 
         /// <summary>
