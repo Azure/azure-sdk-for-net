@@ -128,20 +128,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WithProtocol(Protocol.UDP);
         }
 
-        public override Task<IVerificationIPFlow> ExecuteAsync(CancellationToken cancellationToken = new CancellationToken(), bool multiThreaded = true)
+        public override async Task<IVerificationIPFlow> ExecuteAsync(CancellationToken cancellationToken = new CancellationToken(), bool multiThreaded = true)
         {
-//            var response = await parent.Manager.Inner.NetworkWatchers
-//                .VerifyIPFlowAsync(parent.ResourceGroupName, parent.Name, parameters);
-//            result = response;
-//            return this;
-            //$ .Map(new Func1<VerificationIPFlowResultInner, VerificationIPFlow>() {
-            //$ @Override
-            //$ public VerificationIPFlow call(VerificationIPFlowResultInner verificationIPFlowResultInner) {
-            //$ VerificationIPFlowImpl.This.result = verificationIPFlowResultInner;
-            //$ return VerificationIPFlowImpl.This;
-            //$ }
-            //$ });
-            return null;
+            result = await parent.Manager.Inner.NetworkWatchers
+                .VerifyIPFlowAsync(parent.ResourceGroupName, parent.Name, parameters, cancellationToken);
+            return this;
         }
     }
 }

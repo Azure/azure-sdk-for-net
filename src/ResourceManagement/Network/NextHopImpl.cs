@@ -106,19 +106,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return this;
         }
 
-        public override Task<INextHop> ExecuteAsync(CancellationToken cancellationToken = new CancellationToken(), bool multiThreaded = true)
+        public override async Task<INextHop> ExecuteAsync(CancellationToken cancellationToken = new CancellationToken(), bool multiThreaded = true)
         {
-            //$ return this.parent().Manager().Inner.NetworkWatchers()
-            //$ .GetNextHopAsync(parent.ResourceGroupName(), parent.Name(), parameters)
-            //$ .Map(new Func1<NextHopResultInner, NextHop>() {
-            //$ @Override
-            //$ public NextHop call(NextHopResultInner nextHopResultInner) {
-            //$ NextHopImpl.This.result = nextHopResultInner;
-            //$ return NextHopImpl.This;
-            //$ }
-            //$ });
-
-            return null;
+            this.result = await parent.Manager.Inner.NetworkWatchers
+                .GetNextHopAsync(parent.ResourceGroupName, parent.Name, parameters);
+            return this;
         }
     }
 }
