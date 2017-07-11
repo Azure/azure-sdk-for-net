@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// domainNameLabel and the regionalized DNS zone.
         /// </summary>
         [JsonProperty(PropertyName = "fqdn")]
-        public string Fqdn { get; set; }
+        public string Fqdn { get; private set; }
 
         /// <summary>
         /// Gets or Sets the Reverse FQDN. A user-visible, fully qualified

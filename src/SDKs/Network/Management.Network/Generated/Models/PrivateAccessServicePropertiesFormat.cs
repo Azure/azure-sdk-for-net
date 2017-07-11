@@ -58,16 +58,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Service { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of locations.
+        /// Gets a list of locations.
         /// </summary>
         [JsonProperty(PropertyName = "locations")]
-        public IList<string> Locations { get; set; }
+        public IList<string> Locations { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the resource.
+        /// Gets the provisioning state of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
     }
 }

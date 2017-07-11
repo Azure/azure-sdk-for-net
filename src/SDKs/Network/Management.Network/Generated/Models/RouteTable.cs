@@ -77,18 +77,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<Subnet> Subnets { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the resource. Possible values are:
+        /// 'Updating', 'Deleting', and 'Failed'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }
