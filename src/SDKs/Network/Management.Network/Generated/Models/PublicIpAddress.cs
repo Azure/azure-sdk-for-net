@@ -48,6 +48,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'IPv4', 'IPv6'</param>
         /// <param name="dnsSettings">The FQDN of the DNS record associated
         /// with the public IP address.</param>
+        /// <param name="ipAddress">The IP address associated with the public
+        /// IP address resource</param>
         /// <param name="idleTimeoutInMinutes">The idle timeout of the public
         /// IP address.</param>
         /// <param name="resourceGuid">The resource GUID property of the public
@@ -105,9 +107,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public PublicIPAddressDnsSettings DnsSettings { get; set; }
 
         /// <summary>
+        /// Gets the IP address associated with the public IP address resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipAddress")]
-        public string IpAddress { get; set; }
+        public string IpAddress { get; private set; }
 
         /// <summary>
         /// Gets or sets the idle timeout of the public IP address.
@@ -116,24 +119,24 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? IdleTimeoutInMinutes { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the public IP resource.
+        /// Gets the resource GUID property of the public IP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the PublicIP resource.
-        /// Possible values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the PublicIP resource. Possible
+        /// values are: 'Updating', 'Deleting', and 'Failed'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

@@ -86,10 +86,10 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the reference of a virtual machine.
+        /// Gets the reference of a virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachine")]
-        public SubResource VirtualMachine { get; set; }
+        public SubResource VirtualMachine { get; private set; }
 
         /// <summary>
         /// Gets or sets the reference of the NetworkSecurityGroup resource.
@@ -110,17 +110,17 @@ namespace Microsoft.Azure.Management.Network.Models
         public NetworkInterfaceDnsSettings DnsSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the MAC address of the network interface.
+        /// Gets the MAC address of the network interface.
         /// </summary>
         [JsonProperty(PropertyName = "properties.macAddress")]
-        public string MacAddress { get; set; }
+        public string MacAddress { get; private set; }
 
         /// <summary>
         /// Gets whether this is a primary network interface on a virtual
         /// machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
-        public bool? Primary { get; set; }
+        public bool? Primary { get; private set; }
 
         /// <summary>
         /// Gets or sets if the network interface is accelerated networking
@@ -137,25 +137,24 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableIPForwarding { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the network interface
-        /// resource.
+        /// Gets the resource GUID property of the network interface resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the public IP resource.
-        /// Possible values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the public IP resource. Possible
+        /// values are: 'Updating', 'Deleting', and 'Failed'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

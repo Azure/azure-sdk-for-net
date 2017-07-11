@@ -120,18 +120,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource RemoteVirtualNetwork { get; set; }
 
         /// <summary>
-        /// Gets or sets the status of the virtual network peering. Possible
-        /// values are 'Initiated', 'Connected', and 'Disconnected'. Possible
-        /// values include: 'Initiated', 'Connected', 'Disconnected'
+        /// Gets the status of the virtual network peering. Possible values are
+        /// 'Initiated', 'Connected', and 'Disconnected'. Possible values
+        /// include: 'Initiated', 'Connected', 'Disconnected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.peeringState")]
-        public string PeeringState { get; set; }
+        public string PeeringState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the resource.
+        /// Gets the provisioning state of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within a
@@ -141,11 +141,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }
