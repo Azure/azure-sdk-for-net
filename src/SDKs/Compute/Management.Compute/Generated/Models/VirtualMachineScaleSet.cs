@@ -41,25 +41,33 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="plan">The purchase plan when deploying a virtual
         /// machine scale set from VM Marketplace images.</param>
         /// <param name="upgradePolicy">The upgrade policy.</param>
+        /// <param name="recoveryPolicy">The recovery policy.</param>
         /// <param name="virtualMachineProfile">The virtual machine
         /// profile.</param>
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="overprovision">Specifies whether the Virtual Machine
         /// Scale Set should be overprovisioned.</param>
+        /// <param name="uniqueId">Specifies the ID which uniquely identifies a
+        /// Virtual Machine Scale Set.</param>
         /// <param name="singlePlacementGroup">When true this limits the scale
         /// set to a single placement group, of max size 100 virtual
         /// machines.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? singlePlacementGroup = default(bool?))
+        /// <param name="identity">The identity of the virtual machine scale
+        /// set, if configured.</param>
+        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), RecoveryPolicy recoveryPolicy = default(RecoveryPolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
             Plan = plan;
             UpgradePolicy = upgradePolicy;
+            RecoveryPolicy = recoveryPolicy;
             VirtualMachineProfile = virtualMachineProfile;
             ProvisioningState = provisioningState;
             Overprovision = overprovision;
+            UniqueId = uniqueId;
             SinglePlacementGroup = singlePlacementGroup;
+            Identity = identity;
         }
 
         /// <summary>
@@ -82,6 +90,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public UpgradePolicy UpgradePolicy { get; set; }
 
         /// <summary>
+        /// Gets or sets the recovery policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.recoveryPolicy")]
+        public RecoveryPolicy RecoveryPolicy { get; set; }
+
+        /// <summary>
         /// Gets or sets the virtual machine profile.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachineProfile")]
@@ -101,11 +115,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? Overprovision { get; set; }
 
         /// <summary>
+        /// Gets specifies the ID which uniquely identifies a Virtual Machine
+        /// Scale Set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueId")]
+        public string UniqueId { get; protected set; }
+
+        /// <summary>
         /// Gets or sets when true this limits the scale set to a single
         /// placement group, of max size 100 virtual machines.
         /// </summary>
         [JsonProperty(PropertyName = "properties.singlePlacementGroup")]
         public bool? SinglePlacementGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the virtual machine scale set, if
+        /// configured.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public VirtualMachineScaleSetIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

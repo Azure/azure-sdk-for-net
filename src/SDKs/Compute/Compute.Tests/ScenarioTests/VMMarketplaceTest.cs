@@ -3,7 +3,7 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Net;
@@ -127,6 +127,10 @@ namespace Compute.Tests
                     catch (Exception ex)
                     {
                         if (ex.Message.Contains("License type cannot be specified when creating a virtual machine from platform image. Please use an image from on-premises instead."))
+                        {
+                            return;
+                        }
+                        else if (ex.Message.Equals("Long running operation failed with status 'Failed'."))
                         {
                             return;
                         }

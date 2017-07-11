@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
          /// <summary>
          /// Gets the link to the next page.
          /// </summary>
-         [JsonProperty("")]
+         [JsonProperty("NextLink")]
          public string NextPageLink { get; private set; }
 
-         [JsonProperty("value")]
+         [JsonProperty("Value")]
          private IList<T> Items{ get; set; }
 
          /// <summary>

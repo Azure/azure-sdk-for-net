@@ -58,7 +58,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// and can be read using platform BIOS commands.</param>
         /// <param name="resources">The virtual machine child extension
         /// resources.</param>
-        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>))
+        /// <param name="identity">The identity of the virtual machine, if
+        /// configured.</param>
+        public VirtualMachine(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), VirtualMachineIdentity identity = default(VirtualMachineIdentity))
             : base(location, id, name, type, tags)
         {
             Plan = plan;
@@ -73,6 +75,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             LicenseType = licenseType;
             VmId = vmId;
             Resources = resources;
+            Identity = identity;
         }
 
         /// <summary>
@@ -152,6 +155,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "resources")]
         public IList<VirtualMachineExtension> Resources { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the virtual machine, if configured.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public VirtualMachineIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for CachingTypes.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum CachingTypes
     {
         [EnumMember(Value = "None")]

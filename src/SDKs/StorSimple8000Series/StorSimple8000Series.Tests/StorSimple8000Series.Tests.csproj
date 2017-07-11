@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>StorSimple8000series.Tests</PackageId>
+    <Description>StorSimple8000series.Tests class library</Description>
+    <AssemblyName>StorSimple8000series.Tests</AssemblyName>
+    <VersionPrefix>1.0.0</VersionPrefix>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Management.StorSimple8000Series\Microsoft.Azure.Management.StorSimple8000Series.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <!--Do not remove until VS Test Tools fixes #472-->
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+</Project>

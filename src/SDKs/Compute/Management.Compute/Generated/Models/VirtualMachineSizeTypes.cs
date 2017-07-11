@@ -34,6 +34,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string StandardA9 = "Standard_A9";
         public const string StandardA10 = "Standard_A10";
         public const string StandardA11 = "Standard_A11";
+        public const string StandardA1V2 = "Standard_A1_v2";
+        public const string StandardA2V2 = "Standard_A2_v2";
+        public const string StandardA4V2 = "Standard_A4_v2";
+        public const string StandardA8V2 = "Standard_A8_v2";
+        public const string StandardA2mV2 = "Standard_A2m_v2";
+        public const string StandardA4mV2 = "Standard_A4m_v2";
+        public const string StandardA8mV2 = "Standard_A8m_v2";
         public const string StandardD1 = "Standard_D1";
         public const string StandardD2 = "Standard_D2";
         public const string StandardD3 = "Standard_D3";
@@ -70,6 +77,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string StandardDS13V2 = "Standard_DS13_v2";
         public const string StandardDS14V2 = "Standard_DS14_v2";
         public const string StandardDS15V2 = "Standard_DS15_v2";
+        public const string StandardF1 = "Standard_F1";
+        public const string StandardF2 = "Standard_F2";
+        public const string StandardF4 = "Standard_F4";
+        public const string StandardF8 = "Standard_F8";
+        public const string StandardF16 = "Standard_F16";
+        public const string StandardF1s = "Standard_F1s";
+        public const string StandardF2s = "Standard_F2s";
+        public const string StandardF4s = "Standard_F4s";
+        public const string StandardF8s = "Standard_F8s";
+        public const string StandardF16s = "Standard_F16s";
         public const string StandardG1 = "Standard_G1";
         public const string StandardG2 = "Standard_G2";
         public const string StandardG3 = "Standard_G3";
@@ -80,6 +97,23 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string StandardGS3 = "Standard_GS3";
         public const string StandardGS4 = "Standard_GS4";
         public const string StandardGS5 = "Standard_GS5";
+        public const string StandardH8 = "Standard_H8";
+        public const string StandardH16 = "Standard_H16";
+        public const string StandardH8m = "Standard_H8m";
+        public const string StandardH16m = "Standard_H16m";
+        public const string StandardH16r = "Standard_H16r";
+        public const string StandardH16mr = "Standard_H16mr";
+        public const string StandardL4s = "Standard_L4s";
+        public const string StandardL8s = "Standard_L8s";
+        public const string StandardL16s = "Standard_L16s";
+        public const string StandardL32s = "Standard_L32s";
+        public const string StandardNC6 = "Standard_NC6";
+        public const string StandardNC12 = "Standard_NC12";
+        public const string StandardNC24 = "Standard_NC24";
+        public const string StandardNC24r = "Standard_NC24r";
+        public const string StandardNV6 = "Standard_NV6";
+        public const string StandardNV12 = "Standard_NV12";
+        public const string StandardNV24 = "Standard_NV24";
     }
 }
 

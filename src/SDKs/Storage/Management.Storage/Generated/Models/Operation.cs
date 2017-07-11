@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="display">Display metadata associated with the
         /// operation.</param>
         /// <param name="origin">The origin of operations.</param>
+        /// <param name="serviceSpecification">One property of operation,
+        /// include metric specifications.</param>
         public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string), ServiceSpecification serviceSpecification = default(ServiceSpecification))
         {
             Name = name;
@@ -62,6 +64,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string Origin { get; set; }
 
         /// <summary>
+        /// Gets or sets one property of operation, include metric
+        /// specifications.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceSpecification")]
         public ServiceSpecification ServiceSpecification { get; set; }

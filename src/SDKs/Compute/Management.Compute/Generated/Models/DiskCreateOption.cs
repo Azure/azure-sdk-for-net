@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for DiskCreateOption.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum DiskCreateOption
     {
         [EnumMember(Value = "Empty")]
@@ -31,9 +31,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         [EnumMember(Value = "Import")]
         Import,
         [EnumMember(Value = "Copy")]
-        Copy,
-        [EnumMember(Value = "Restore")]
-        Restore
+        Copy
     }
 }
 
