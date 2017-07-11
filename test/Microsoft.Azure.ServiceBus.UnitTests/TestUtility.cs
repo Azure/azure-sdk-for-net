@@ -10,7 +10,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Text;
     using System.Threading.Tasks;
     using Core;
-    using Microsoft.ServiceBus.Messaging;
 
     static class TestUtility
     {
@@ -37,20 +36,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 EntityPath = entityName
             };
             return connectionStringBuilder.ToString();
-        }
-
-        internal static string GetSbConnectionString(TransportType transportType)
-        {
-            // Override and Create a new ConnectionString with SbmpConnection Endpoint scheme
-            string[] temp = TestUtility.NamespaceConnectionString.Split(':');
-            string sbConnectionString = "Endpoint=sb:" + temp[1];
-
-            if (transportType == TransportType.Amqp)
-            {
-                sbConnectionString += ';' + nameof(TransportType) + '=' + TransportType.Amqp.ToString();
-            }
-
-            return sbConnectionString;
         }
 
         internal static void Log(string message)

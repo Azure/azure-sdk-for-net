@@ -16,8 +16,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
     {
         public static IEnumerable<object> TestEnd2EndEntityPermutations => new object[]
         {
-            new object[] { TransportType.NetMessaging, TestUtility.GetSbConnectionString(TransportType.NetMessaging) },
-            new object[] { TransportType.Amqp, TestUtility.GetSbConnectionString(TransportType.Amqp) }
+            new object[] { TransportType.NetMessaging, MessageInteropEnd2EndTests.GetSbConnectionString(TransportType.NetMessaging) },
+            new object[] { TransportType.Amqp, MessageInteropEnd2EndTests.GetSbConnectionString(TransportType.Amqp) }
         };
 
         [Theory]
@@ -89,6 +89,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
                 await dotNetStandardMessageReceiver.CloseAsync();
                 await fullFrameWorkClientSender.CloseAsync();
             }
+        }
+
+        internal static string GetSbConnectionString(TransportType transportType)
+        {
+            // Override and Create a new ConnectionString with SbmpConnection Endpoint scheme
+            string[] temp = TestUtility.NamespaceConnectionString.Split(':');
+            string sbConnectionString = "Endpoint=sb:" + temp[1];
+
+            if (transportType == TransportType.Amqp)
+            {
+                sbConnectionString += ';' + nameof(TransportType) + '=' + TransportType.Amqp.ToString();
+            }
+
+            return sbConnectionString;
         }
     }
 }
