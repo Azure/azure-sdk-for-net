@@ -121,4 +121,16 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
             this.dataContractSerializer.WriteStartObject(writer, graph);
         }
     }
+
+    /// <summary>
+    /// Returns a static <see cref="DataContractBinarySerializer"/> instance of type T
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public static class DataContractBinarySerializer<T>
+    {
+        /// <summary>
+        /// Initializes a DataContractBinarySerializer instance of type T
+        /// </summary>
+        public static XmlObjectSerializer Instance = new DataContractBinarySerializer(typeof(T));
+    }
 }

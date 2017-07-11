@@ -210,7 +210,4 @@
   <data name="PluginAlreadyRegistered" xml:space="preserve">
     <value>The {0} plugin has already been registered.</value>
   </data>
-  <data name="MessageBodyIsNullOrEmpty" xml:space="preserve">
-    <value>The message body is null or empty.</value>
-  </data>
 </root>

@@ -480,9 +480,14 @@ namespace Microsoft.Azure.ServiceBus.Filters
 namespace Microsoft.Azure.ServiceBus.InteropExtensions
 {
     
+    public class static DataContractBinarySerializer<T>
+    
+    {
+        public static System.Runtime.Serialization.XmlObjectSerializer Instance;
+    }
     public class static MessageInteropExtensions
     {
-        public static T GetBody<T>(this Microsoft.Azure.ServiceBus.Message message, System.Runtime.Serialization.XmlObjectSerializer serializer) { }
+        public static T GetBody<T>(this Microsoft.Azure.ServiceBus.Message message, System.Runtime.Serialization.XmlObjectSerializer serializer = null) { }
     }
 }
 namespace Microsoft.Azure.ServiceBus.Primitives

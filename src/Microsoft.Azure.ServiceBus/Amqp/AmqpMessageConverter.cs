@@ -167,13 +167,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 sbMessage = new SBMessage();
 
                 object dotNetObject = null;
-                if (!TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out dotNetObject))
+                if (TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out dotNetObject))
                 {
-                    sbMessage.SystemProperties.BodyObject = amqpMessage.ValueBody.Value;
+                    sbMessage.SystemProperties.BodyObject = dotNetObject;                    
                 }
                 else
                 {
-                    sbMessage.SystemProperties.BodyObject = dotNetObject;
+                    sbMessage.SystemProperties.BodyObject = amqpMessage.ValueBody.Value;
                 }
             }
             else if ((amqpMessage.BodyType & SectionFlag.Data) != 0

@@ -31,6 +31,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
     /// Scenarios to use the GetBody Extension method:
     /// ----------------------------------------------
     /// If message was constructed using the WindowsAzure.Messaging client library as follows:
+    /// <code>
     ///     var message1 = new BrokeredMessage("contoso"); // Sending a plain string
     ///     var message2 = new BrokeredMessage(sampleObject); // Sending an actual customer object
     ///     var message3 = new BrokeredMessage(Encoding.UTF8.GetBytes("contoso")); // Sending a UTF8 encoded byte array object
@@ -38,24 +39,23 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
     ///     await messageSender.SendAsync(message1);
     ///     await messageSender.SendAsync(message2);
     ///     await messageSender.SendAsync(message3);
-    ///     
-    /// Then retreive the original objects using this client library as follows:
-    /// (Serializer passed for GetBody() call can be null if message was sent using WindowsAzure.Messaging client
-    /// library and TransportType was AMQP.)
+    /// </code>
     /// 
+    /// Then retreive the original objects using this client library as follows:
+    /// (By default <see cref="DataContractBinarySerializer"/> will be used to deserialize and retrieve the body.
+    ///  If a serializer other than that was used, pass in the serializer explicitly.)
+    /// <code>
     ///     var message1 = await messageReceiver.ReceiveAsync();
-    ///     var serializer1 = new DataContractBinarySerializer(typeof(string));
-    ///     var returnedData1 = message1.GetBody&lt;string&gt;(serializer1);
+    ///     var returnedData1 = message1.GetBody&lt;string&gt;();
     ///     
     ///     var message2 = await messageReceiver.ReceiveAsync();
-    ///     var serializer2 = new DataContractBinarySerializer(typeof(SampleObject));
-    ///     var returnedData2 = message1.GetBody&lt;SampleObject&gt;(serializer2);
+    ///     var returnedData2 = message1.GetBody&lt;SampleObject&gt;();
     ///     
     ///     var message3 = await messageReceiver.ReceiveAsync();
-    ///     var serializer3 = new DataContractBinarySerializer(typeof(byte[]));
-    ///     var returnedData3Bytes = message1.GetBody&lt;byte[]&gt;(serializer3);
+    ///     var returnedData3Bytes = message1.GetBody&lt;byte[]&gt;();
     ///     Console.WriteLine($"Message3 String: {Encoding.UTF8.GetString(returnedData3Bytes)}");
-    ///     
+    /// </code>
+    /// 
     /// -------------------------------------------------
     /// Scenarios to NOT use the GetBody Extension method:
     /// -------------------------------------------------
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <summary>
         /// Deserializes the body of a message that was serialized using XmlObjectSerializer
         /// </summary>
-        public static T GetBody<T>(this Message message, XmlObjectSerializer serializer)
+        public static T GetBody<T>(this Message message, XmlObjectSerializer serializer = null)
         {
             if(message == null)
             {
@@ -87,10 +87,15 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
 
             if(message.Body == null || message.Body.Length == 0)
             {
-                throw new InvalidOperationException(Resources.MessageBodyIsNullOrEmpty);
+                return default(T);
             }
 
-            using (MemoryStream stream = new MemoryStream(256))
+            if(serializer == null)
+            {
+                serializer = DataContractBinarySerializer<T>.Instance;
+            }
+
+            using (MemoryStream stream = new MemoryStream(message.Body.Length))
             {
                 stream.Write(message.Body, 0, message.Body.Length);
                 stream.Flush();
