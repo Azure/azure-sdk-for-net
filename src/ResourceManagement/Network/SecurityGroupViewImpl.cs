@@ -34,9 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:8AB87020DE6C711CD971F3D80C33DD83
         public INetworkWatcher Parent()
         {
-            //$ return parent;
-
-            return null;
+            return parent;
         }
 
         ///GENMHASH:D8C26169BA1ED47B274A3F5C3A6AEB4D:BC9BE47CF9ABFA874A532AB6B9ABB4CB
@@ -50,9 +48,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:F91DF44F14D53833479DE592AB2B2890:4D7A48FC8E563CCD5ADFF99417BEF439
         public string VMId()
         {
-            //$ return vmId;
-
-            return null;
+            return vmId;
         }
 
         ///GENMHASH:5A2D79502EDA81E37A36694062AEDC65:574C8EAB1E1A7D0C399D331F9DB49796

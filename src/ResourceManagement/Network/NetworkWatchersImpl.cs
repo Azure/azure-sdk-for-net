@@ -34,9 +34,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691
         public NetworkWatcherImpl Define(string name)
         {
-            //$ return wrapModel(name);
-
-            return null;
+            return WrapModel(name);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:9501D4AC00C1A480FAA373B4EE254723
