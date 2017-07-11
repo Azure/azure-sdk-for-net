@@ -100,7 +100,7 @@ namespace Fluent.Tests.Network
 
                 //        Troubleshooting troubleshooting = nw.troubleshoot(<virtual_network_gateway_id> or <virtual_network_gateway_connaction_id>,
                 //                storageAccount.id(), "");
-                INextHop nextHop = nw.NextHop.WithTargetResourceId(virtualMachines.ElementAt(0).Id)
+                INextHop nextHop = nw.NextHop.WithTargetResourceId(vm0.Id)
                     .WithSourceIPAddress("10.0.0.4")
                     .WithDestinationIPAddress("8.8.8.8")
                     .Execute();
@@ -109,7 +109,7 @@ namespace Fluent.Tests.Network
                 Assert.Null(nextHop.NextHopIpAddress);
 
                 IVerificationIPFlow verificationIPFlow = nw.VerifyIPFlow
-                    .WithTargetResourceId(virtualMachines.ElementAt(0).Id)
+                    .WithTargetResourceId(vm0.Id)
                     .WithDirection(Direction.Outbound)
                     .WithProtocol(Protocol.TCP)
                     .WithLocalIPAddress("10.0.0.4")
@@ -125,7 +125,7 @@ namespace Fluent.Tests.Network
                 Assert.Equal(0, packetCaptures.Count());
                 IPacketCapture packetCapture = nw.PacketCaptures
                     .Define("NewPacketCapture")
-                    .WithTarget(virtualMachines.ElementAt(0).Id)
+                    .WithTarget(vm0.Id)
                     .WithStorageAccountId(storageAccount.Id)
                     .WithTimeLimitInSeconds(1500)
                     .DefinePacketCaptureFilter

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         IDefinition
     {
         private NetworkWatcherImpl parent;
-        private NextHopParametersInner parameters;
+        private NextHopParametersInner parameters = new NextHopParametersInner();
         private NextHopResultInner result;
         ///GENMHASH:CBA62609044BF002539F794F631D1AEF:319608FF6209541FDFD5A9FAD1FF1198
         public NextHopImpl WithSourceIPAddress(string sourceIPAddress)

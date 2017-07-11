@@ -3,12 +3,12 @@
 
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using System.Threading;
-    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Models;
     using NetworkWatcher.Definition;
     using NetworkWatcher.Update;
-    using Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Implementation for Network Watcher and its create and update interfaces.

@@ -29,9 +29,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         {
             this.parent = parent;
             this.vmId = vmId;
-            //$ initializeFromInner();
-            //$ }
-
+            InitializeFromInner();
         }
 
         ///GENMHASH:FD5D5A8D6904B467321E345BE1FA424E:8AB87020DE6C711CD971F3D80C33DD83
