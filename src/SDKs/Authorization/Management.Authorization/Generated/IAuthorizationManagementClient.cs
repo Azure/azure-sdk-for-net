@@ -8,17 +8,21 @@
 
 namespace Microsoft.Azure.Management.Authorization
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Newtonsoft.Json;
+	using System;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using Newtonsoft.Json;
 
     /// <summary>
+    /// Role based access control provides you a way to apply granular level
+    /// policy administration down to individual resources or resource groups.
+    /// These operations enable you to manage role definitions and role
+    /// assignments. A role definition describes the set of actions that can be
+    /// performed on resources. A role assignment grants access to Azure Active
+    /// Directory users.
     /// </summary>
     public partial interface IAuthorizationManagementClient : IDisposable
     {
@@ -38,19 +42,17 @@ namespace Microsoft.Azure.Management.Authorization
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// Gets Azure subscription credentials.
+        /// Credentials needed for the client to connect to Azure.
         /// </summary>
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -67,19 +69,34 @@ namespace Microsoft.Azure.Management.Authorization
 
         /// <summary>
         /// When set to true a unique x-ms-client-request-id value is
-        /// generated and included in each request. Default is true.
+		/// generated and included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
 
+        /// <summary>
+        /// Gets the IClassicAdministratorsOperations.
+        /// </summary>
         IClassicAdministratorsOperations ClassicAdministrators { get; }
 
+        /// <summary>
+        /// Gets the IPermissionsOperations.
+        /// </summary>
         IPermissionsOperations Permissions { get; }
 
+        /// <summary>
+        /// Gets the IProviderOperationsMetadataOperations.
+        /// </summary>
         IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; }
 
+        /// <summary>
+        /// Gets the IRoleAssignmentsOperations.
+        /// </summary>
         IRoleAssignmentsOperations RoleAssignments { get; }
 
+        /// <summary>
+        /// Gets the IRoleDefinitionsOperations.
+        /// </summary>
         IRoleDefinitionsOperations RoleDefinitions { get; }
 
     }

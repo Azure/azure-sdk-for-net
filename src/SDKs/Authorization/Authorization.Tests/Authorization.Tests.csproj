@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\ProviderOperationsMetadataListGetTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="SessionRecords\Authorization.Tests.BasicTests\ClassicAdministratorListTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -6,16 +6,18 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
+
 namespace Microsoft.Azure.Management.Authorization
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
 
     /// <summary>
@@ -24,13 +26,13 @@ namespace Microsoft.Azure.Management.Authorization
     public partial interface IRoleDefinitionsOperations
     {
         /// <summary>
-        /// Deletes the role definition.
+        /// Deletes a role definition.
         /// </summary>
         /// <param name='scope'>
-        /// Scope
+        /// The scope of the role definition.
         /// </param>
         /// <param name='roleDefinitionId'>
-        /// Role definition id.
+        /// The ID of the role definition to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -38,15 +40,24 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<RoleDefinition>> DeleteWithHttpMessagesAsync(string scope, string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get role definition by name (GUID).
         /// </summary>
         /// <param name='scope'>
-        /// Scope
+        /// The scope of the role definition.
         /// </param>
         /// <param name='roleDefinitionId'>
-        /// Role definition Id
+        /// The ID of the role definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,18 +65,27 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<RoleDefinition>> GetWithHttpMessagesAsync(string scope, string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a role definition.
         /// </summary>
         /// <param name='scope'>
-        /// Scope
+        /// The scope of the role definition.
         /// </param>
         /// <param name='roleDefinitionId'>
-        /// Role definition id.
+        /// The ID of the role definition.
         /// </param>
         /// <param name='roleDefinition'>
-        /// Role definition.
+        /// The values for the role definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -73,12 +93,21 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<RoleDefinition>> CreateOrUpdateWithHttpMessagesAsync(string scope, string roleDefinitionId, RoleDefinition roleDefinition, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get role definition by name (GUID).
+        /// Gets a role definition by ID.
         /// </summary>
         /// <param name='roleDefinitionId'>
-        /// Fully qualified role definition Id
+        /// The fully qualified role definition ID to get.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -86,13 +115,21 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<RoleDefinition>> GetByIdWithHttpMessagesAsync(string roleDefinitionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all role definitions that are applicable at scope and above.
-        /// Use atScopeAndBelow filter to search below the given scope as well
         /// </summary>
         /// <param name='scope'>
-        /// Scope
+        /// The scope of the role definition.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -103,10 +140,18 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<IPage<RoleDefinition>>> ListWithHttpMessagesAsync(string scope, ODataQuery<RoleDefinitionFilter> odataQuery = default(ODataQuery<RoleDefinitionFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all role definitions that are applicable at scope and above.
-        /// Use atScopeAndBelow filter to search below the given scope as well
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -117,6 +162,15 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<IPage<RoleDefinition>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
