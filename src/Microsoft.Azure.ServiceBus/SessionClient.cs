@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Amqp;
     using Azure.Amqp;
@@ -86,7 +87,8 @@ namespace Microsoft.Azure.ServiceBus
                   prefetchCount,
                   new ServiceBusNamespaceConnection(connectionString),
                   null,
-                  retryPolicy)
+                  retryPolicy,
+                  null)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -110,15 +112,26 @@ namespace Microsoft.Azure.ServiceBus
             int prefetchCount,
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
-            RetryPolicy retryPolicy)
+            RetryPolicy retryPolicy,
+            IList<ServiceBusPlugin> registeredPlugins)
             : base(clientId, retryPolicy ?? RetryPolicy.Default)
         {
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
+            this.OperationTimeout = this.ServiceBusConnection.OperationTimeout;
             this.EntityPath = entityPath;
             this.EntityType = entityType;
             this.ReceiveMode = receiveMode;
             this.PrefetchCount = prefetchCount;
             this.CbsTokenProvider = cbsTokenProvider;
+
+            // Register plugins on the message session.
+            if (registeredPlugins != null)
+            {
+                foreach (var serviceBusPlugin in registeredPlugins)
+                {
+                    this.RegisterPlugin(serviceBusPlugin);
+                } 
+            }
         }
 
         ReceiveMode ReceiveMode { get; }
@@ -139,7 +152,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets a list of currently registered plugins.
         /// </summary>
-        public override IList<ServiceBusPlugin> RegisteredPlugins => throw new NotImplementedException();
+        public override IList<ServiceBusPlugin> RegisteredPlugins { get; } = new List<ServiceBusPlugin>();
 
         /// <summary></summary>
         /// <returns>The asynchronous operation.</returns>
@@ -154,6 +167,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets a session object of any <see cref="IMessageSession.SessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
+        /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
+        /// Individual sessions can further register additional plugins.</remarks>
         /// <returns>A session object.</returns>
         public Task<IMessageSession> AcceptMessageSessionAsync()
         {
@@ -164,6 +179,8 @@ namespace Microsoft.Azure.ServiceBus
         /// Gets a session object of any <see cref="IMessageSession.SessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
         /// <param name="serverWaitTime">Amount of time for which the call should wait to fetch the next session.</param>
+        /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
+        /// Individual sessions can further register additional plugins.</remarks>
         /// <returns>A session object.</returns>
         public Task<IMessageSession> AcceptMessageSessionAsync(TimeSpan serverWaitTime)
         {
@@ -174,6 +191,8 @@ namespace Microsoft.Azure.ServiceBus
         /// Gets a particular session object identified by <paramref name="sessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
         /// <param name="sessionId">The sessionId present in all its messages.</param>
+        /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
+        /// Individual sessions can further register additional plugins.</remarks>
         /// <returns>A session object.</returns>
         public Task<IMessageSession> AcceptMessageSessionAsync(string sessionId)
         {
@@ -185,6 +204,8 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="sessionId">The sessionId present in all its messages.</param>
         /// <param name="serverWaitTime">Amount of time for which the call should wait to fetch the next session.</param>
+        /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
+        /// Individual sessions can further register additional plugins.</remarks>
         /// <returns>A session object.</returns>
         public async Task<IMessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime)
         {
@@ -232,6 +253,12 @@ namespace Microsoft.Azure.ServiceBus
                 session.SessionIdInternal);
 
             session.UpdateClientId(ClientEntity.GenerateClientId(nameof(MessageSession), $"{this.EntityPath}_{session.SessionId}"));
+            // Register plugins on the message session.
+            foreach (var serviceBusPlugin in this.RegisteredPlugins)
+            {
+                session.RegisterPlugin(serviceBusPlugin);
+            }
+            
             return session;
         }
 
@@ -241,7 +268,15 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
         public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
         {
-            throw new NotImplementedException();
+            if (serviceBusPlugin == null)
+            {
+                throw new ArgumentNullException(nameof(serviceBusPlugin), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPlugin)));
+            }
+            else if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPlugin.Name))
+            {
+                throw new ArgumentException(nameof(serviceBusPlugin), Resources.PluginAlreadyRegistered.FormatForUser(nameof(serviceBusPlugin)));
+            }
+            this.RegisteredPlugins.Add(serviceBusPlugin);
         }
 
         /// <summary>
@@ -250,7 +285,19 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="serviceBusPluginName">The <see cref="ServiceBusPlugin.Name"/> of the plugin to be unregistered.</param>
         public override void UnregisterPlugin(string serviceBusPluginName)
         {
-            throw new NotImplementedException();
+            if (this.RegisteredPlugins == null)
+            {
+                return;
+            }
+            if (serviceBusPluginName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceBusPluginName), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPluginName)));
+            }
+            if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPluginName))
+            {
+                var plugin = this.RegisteredPlugins.First(p => p.Name == serviceBusPluginName);
+                this.RegisteredPlugins.Remove(plugin);
+            }
         }
     }
 }

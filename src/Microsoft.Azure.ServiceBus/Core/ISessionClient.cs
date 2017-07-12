@@ -35,7 +35,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// </remarks> 
     /// <seealso cref="IMessageSession"/>
     /// <seealso cref="SessionClient"/>
-    public interface ISessionClient
+    public interface ISessionClient : IClientEntity
     {
         /// <summary>
         /// Gets the path of the entity. This is either the name of the queue, or the full path of the subscription.
@@ -45,6 +45,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Gets a session object of any <see cref="IMessageSession.SessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
+        /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
+        /// Individual sessions can further register additional plugins.</remarks>
         /// <returns>A session object.</returns>
         Task<IMessageSession> AcceptMessageSessionAsync();
 
@@ -52,6 +54,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Gets a session object of any <see cref="IMessageSession.SessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
         /// <param name="serverWaitTime">Amount of time for which the call should wait for to fetch the next session.</param>
+        /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
+        /// Individual sessions can further register additional plugins.</remarks>
         /// <returns>A session object.</returns>
         Task<IMessageSession> AcceptMessageSessionAsync(TimeSpan serverWaitTime);
 
@@ -59,6 +63,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Gets a particular session object identified by <paramref name="sessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
         /// <param name="sessionId">The sessionId present in all its messages.</param>
+        /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
+        /// Individual sessions can further register additional plugins.</remarks>
         /// <returns>A session object.</returns>
         Task<IMessageSession> AcceptMessageSessionAsync(string sessionId);
 
@@ -67,6 +73,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </summary>
         /// <param name="sessionId">The sessionId present in all its messages.</param>
         /// <param name="serverWaitTime">Amount of time for which the call should wait for to fetch the next session.</param>
+        /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
+        /// Individual sessions can further register additional plugins.</remarks>
         /// <returns>A session object.</returns>
         Task<IMessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime);
     }
