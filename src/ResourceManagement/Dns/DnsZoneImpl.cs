@@ -284,7 +284,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                     ifMatch: null,
                     ifNoneMatch: this.dnsZoneETag,
                     cancellationToken: cancellationToken);
-            } else
+            }
+            else
             {
                 innerResource = await Manager.Inner.Zones.CreateOrUpdateAsync(ResourceGroupName,
                     Name,
