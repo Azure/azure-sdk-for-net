@@ -67,7 +67,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                 {
                     if (deleteTask.IsFaulted)
                     {
-                        exceptions.Add(deleteTask.Exception);
+                        if (deleteTask.Exception.InnerException != null)
+                        {
+                            exceptions.Add(deleteTask.Exception.InnerException);
+                        } 
+                        else
+                        {
+                            exceptions.Add(deleteTask.Exception);
+                        }
                     }
                     else
                     {
@@ -89,7 +96,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                     {
                         FluentModelTImpl val;
                         this.collection.TryRemove(res.Name(), out val);
-                        exceptions.Add(createTask.Exception);
+                        if (createTask.Exception.InnerException != null)
+                        {
+                            exceptions.Add(createTask.Exception.InnerException);
+                        }
+                        else
+                        {
+                            exceptions.Add(createTask.Exception);
+                        }
                     }
                     else
                     {
@@ -107,7 +121,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                 {
                     if (updateTask.IsFaulted)
                     {
-                        exceptions.Add(updateTask.Exception);
+                        if (updateTask.Exception.InnerException != null)
+                        {
+                            exceptions.Add(updateTask.Exception.InnerException);
+                        }
+                        else
+                        {
+                            exceptions.Add(updateTask.Exception);
+                        }
                     }
                     else
                     {
@@ -129,7 +150,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
                     if (exceptions.Count > 0)
                     {
-                        completionSource.SetException(exceptions);
+                        completionSource.SetException(new AggregateException(exceptions));
                     }
                     else
                     {
