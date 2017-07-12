@@ -100,8 +100,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IPacketCapture>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             var innerPacketCaptures = await Inner.ListAsync(parent.ResourceGroupName, parent.Name, cancellationToken);
-            var result =
-                await Task.WhenAll(innerPacketCaptures.Select(async (innerPacketCapture) => WrapModel(innerPacketCapture)));
+            var result = innerPacketCaptures.Select((innerPacketCapture) => WrapModel(innerPacketCapture));
             return PagedCollection<IPacketCapture, PacketCaptureResultInner>.CreateFromEnumerable(result);
         }
 

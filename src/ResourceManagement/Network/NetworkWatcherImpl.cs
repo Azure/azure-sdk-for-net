@@ -33,6 +33,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         internal NetworkWatcherImpl(string name, NetworkWatcherInner innerModel, INetworkManager networkManager)
             : base(name, innerModel, networkManager)
         {
+            packetCaptures = new PacketCapturesImpl(networkManager.Inner.PacketCaptures, this);
         }
 
         ///GENMHASH:D44E087EDB7D7768653BF41409E6F465:6D92C6C15D79FD13F06FBA7B0F889152
