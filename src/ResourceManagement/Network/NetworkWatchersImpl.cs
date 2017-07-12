@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -64,7 +66,8 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public IEnumerable<INetworkWatcher> List()
         {
-            throw new System.NotImplementedException();
+            return Manager.ResourceManager.ResourceGroups.List()
+                .SelectMany(rg => ListByResourceGroup(rg.Name));
         }
 
         public Task<IPagedCollection<INetworkWatcher>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = new CancellationToken())
@@ -74,7 +77,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public IEnumerable<INetworkWatcher> ListByResourceGroup(string resourceGroupName)
         {
-            throw new System.NotImplementedException();
+            return WrapList(Inner.List(resourceGroupName));
         }
 
         public Task<IPagedCollection<INetworkWatcher>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true,

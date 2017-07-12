@@ -1,5 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System;
+using System.Linq;
+
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Threading;
@@ -46,6 +50,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
             this.innerCollection = innerCollection;
         }
 
+        public IPacketCapturesOperations Inner
+        {
+            get
+            {
+                return innerCollection;
+            }
+        }
+
         public override void DeleteById(string id)
         {
             throw new System.NotImplementedException();
@@ -75,29 +87,22 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:A848F2676FADFFFDD0FBF4834FC5D602
         public IEnumerable<Microsoft.Azure.Management.Network.Fluent.IPacketCapture> List()
         {
-            //$ return (new PagedListConverter<PacketCaptureResultInner, PacketCapture>() {
-            //$ @Override
-            //$ public PacketCapture typeConvert(PacketCaptureResultInner inner) {
-            //$ return wrapModel(inner);
-            //$ }
-            //$ }).Convert(ReadableWrappersImpl.ConvertToPagedList(Inner.List(parent.ResourceGroupName(), parent.Name())));
-
-            return null;
+            Func<PacketCaptureResultInner, IPacketCapture> converter = inner =>
+            {
+                return ((PacketCaptureImpl)WrapModel(inner));
+            };
+            return Inner.List(parent.ResourceGroupName, parent.Name)
+                .Select(inner => converter(inner));
         }
 
         /// <return>An observable emits packet captures in this collection.</return>
         ///GENMHASH:7F5BEBF638B801886F5E13E6CCFF6A4E:D4D129DBA16DC8F826460DF133372FD4
         public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IPacketCapture>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
-            //$ Observable<List<PacketCaptureResultInner>> list = Inner.ListAsync(parent.ResourceGroupName(), parent.Name());
-            //$ return ReadableWrappersImpl.ConvertListToInnerAsync(list).Map(new Func1<PacketCaptureResultInner, PacketCapture>() {
-            //$ @Override
-            //$ public PacketCapture call(PacketCaptureResultInner inner) {
-            //$ return wrapModel(inner);
-            //$ }
-            //$ });
-
-            return null;
+            var innerPacketCaptures = await Inner.ListAsync(parent.ResourceGroupName, parent.Name, cancellationToken);
+            var result =
+                await Task.WhenAll(innerPacketCaptures.Select(async (innerPacketCapture) => WrapModel(innerPacketCapture)));
+            return PagedCollection<IPacketCapture, PacketCaptureResultInner>.CreateFromEnumerable(result);
         }
 
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:B286BEB4529EB2A020B2C37E224A5577
@@ -120,7 +125,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         IPacketCapturesOperations IHasInner<IPacketCapturesOperations>.Inner
         {
-            get { throw new System.NotImplementedException(); }
+            get { return innerCollection; }
         }
     }
 }
