@@ -18,36 +18,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         {
             get
             {
-                return this.Parent() as Microsoft.Azure.Management.Dns.Fluent.IDnsZone;
+                return this.Parent as Microsoft.Azure.Management.Dns.Fluent.IDnsZone;
             }
         }
 
         /// <summary>
-        /// Lists all the resources of the specified type in the currently selected subscription.
-        /// </summary>
-        /// <return>List of resources.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IARecordSet> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IARecordSet>.List()
-        {
-            return this.List() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IARecordSet>;
-        }
-
-        /// <summary>
-        /// Lists all the resources of the specified type in the currently selected subscription.
-        /// </summary>
-        /// <return>List of resources.</return>
-        async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IARecordSet>> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Dns.Fluent.IARecordSet>.ListAsync(bool loadAllPages, CancellationToken cancellationToken)
-        {
-            return await this.ListAsync(loadAllPages, cancellationToken) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IARecordSet>;
-        }
-
-        /// <summary>
-        /// Gets the information about a resource from Azure based on the resource name within the current resource group.
+        /// Gets the information about a resource from Azure based on the resource name within the current resource group asynchronously.
         /// </summary>
         /// <param name="name">The name of the resource. (Note, this is not the resource ID.).</param>
-        /// <return>An immutable representation of the resource.</return>
-        Microsoft.Azure.Management.Dns.Fluent.IARecordSet Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.IARecordSet>.GetByName(string name)
+        /// <param name="cancellationToken">the task cancellation token</param>
+        /// <return>the task</return>
+        Task<Microsoft.Azure.Management.Dns.Fluent.IARecordSet> Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsGettingByName<Microsoft.Azure.Management.Dns.Fluent.IARecordSet>.GetByNameAsync(string name, CancellationToken cancellationToken)
         {
-            return this.GetByName(name) as Microsoft.Azure.Management.Dns.Fluent.IARecordSet;
+            return this.GetByNameAsync(name, cancellationToken) as Task<Microsoft.Azure.Management.Dns.Fluent.IARecordSet>;
         }
     }
 }

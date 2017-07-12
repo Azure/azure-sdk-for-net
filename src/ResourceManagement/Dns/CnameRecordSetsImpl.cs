@@ -11,62 +11,57 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// <summary>
     /// Implementation of CNameRecordSets.
     /// </summary>
-    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5DbmFtZVJlY29yZFNldHNJbXBs
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5DTmFtZVJlY29yZFNldHNJbXBs
     internal partial class CNameRecordSetsImpl  :
-        ReadableWrappers<ICNameRecordSet,CNameRecordSetImpl,RecordSetInner>,
+        DnsRecordSetsBaseImpl<ICNameRecordSet,CNameRecordSetImpl>,
         ICNameRecordSets
     {
-        private DnsZoneImpl dnsZone;
-        private const RecordType CNameRecordType = RecordType.CNAME;
-
-        private DnsZoneImpl Parent()
+        ///GENMHASH:7FD3C6284190B406493F8F2FF172B5CE:F8E87D142BE7B967C3D37E08C8777506
+        internal CNameRecordSetsImpl(DnsZoneImpl dnsZone) : base(dnsZone, RecordType.CNAME)
         {
-            return dnsZone;
         }
 
-        public async Task<ICNameRecordSet> GetByNameAsync(string name, CancellationToken cancellationToken)
+        ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:834B985CB612474BBF3D57983D242F20
+        public async override Task<ICNameRecordSet> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             RecordSetInner inner = await dnsZone.Manager.Inner.RecordSets.GetAsync(
                 dnsZone.ResourceGroupName,
                 dnsZone.Name,
                 name,
-                CNameRecordType,
+                recordType,
                 cancellationToken);
             return new CNameRecordSetImpl(dnsZone, inner);
         }
 
-        ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:21826374215313D0BBCD792A32A35145
-        public ICNameRecordSet GetByName(string name)
+        ///GENMHASH:64B3FB1F01DFC1156B75305640537ED6:3D0D7890A72816D6D70C56930E93BFEF
+        protected async override Task<IPagedCollection<ICNameRecordSet>> ListInternAsync(string recordSetNameSuffix, int? pageSize, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return GetByNameAsync(name, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            return await PagedCollection<ICNameRecordSet, RecordSetInner>.LoadPage(
+                async (cancellation) => await dnsZone.Manager.Inner.RecordSets.ListByTypeAsync(dnsZone.ResourceGroupName,
+                                                                                                dnsZone.Name,
+                                                                                                recordType,
+                                                                                                top: pageSize,
+                                                                                                recordsetnamesuffix: recordSetNameSuffix,
+                                                                                                cancellationToken: cancellationToken),
+                dnsZone.Manager.Inner.RecordSets.ListByTypeNextAsync,
+                WrapModel, loadAllPages, cancellationToken);
         }
 
-        ///GENMHASH:AEF19E721FABB2C4D04AB9D2DEC278FE:93DD647D9AB0DB30D017785882D88829
-        internal CNameRecordSetsImpl(DnsZoneImpl dnsZone)
+        ///GENMHASH:B94D04B9D91F75559A6D8E405D4A72FD:D009704C171C4D453FCEC632203851C7
+        protected override IEnumerable<ICNameRecordSet> ListIntern(string recordSetNameSuffix, int? pageSize)
         {
-            this.dnsZone = dnsZone;
+            return WrapList(dnsZone.Manager.Inner.RecordSets.ListByType(dnsZone.ResourceGroupName,
+                                                                dnsZone.Name,
+                                                                recordType,
+                                                                top: pageSize,
+                                                                recordsetnamesuffix: recordSetNameSuffix)
+                                                                .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
         }
 
-        ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:835EB6D00E8349C692B56704F6AE6278
-        public IEnumerable<ICNameRecordSet> List()
-        {
-            return WrapList(dnsZone.Manager.Inner.RecordSets
-                .ListByType(dnsZone.ResourceGroupName,dnsZone.Name, CNameRecordType)
-                .AsContinuousCollection(link => dnsZone.Manager.Inner.RecordSets.ListByTypeNext(link)));
-        }
-
-        ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:3FD60711AC73E456F2C157D4892D9EF5
+        ///GENMHASH:A65D7F670CB73E56248FA5B252060BCD:DF02675D7363FC8D2194BA7296AC08B3
         protected override ICNameRecordSet WrapModel(RecordSetInner inner)
         {
             return new CNameRecordSetImpl(dnsZone, inner);
-        }
-
-        public async Task<IPagedCollection<ICNameRecordSet>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return await PagedCollection<ICNameRecordSet, RecordSetInner>.LoadPage(
-                async (cancellation) => await dnsZone.Manager.Inner.RecordSets.ListByTypeAsync(dnsZone.ResourceGroupName, dnsZone.Name, CNameRecordType, cancellationToken: cancellation),
-                dnsZone.Manager.Inner.RecordSets.ListByTypeNextAsync,
-                WrapModel, loadAllPages, cancellationToken);
         }
     }
 }

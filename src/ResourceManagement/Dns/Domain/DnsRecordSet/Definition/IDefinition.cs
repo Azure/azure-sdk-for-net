@@ -26,6 +26,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IAaaaRecordSetBlank<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAaaaRecordIPv6Address<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAaaaRecordIPv6AddressOrAttachable<ParentT>,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.ICNameRecordSetBlank<ParentT>,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithCNameRecordAlias<ParentT>,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithCNameRecordSetAttachable<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IMXRecordSetBlank<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithMXRecordMailExchange<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithMXRecordMailExchangeOrAttachable<ParentT>,
@@ -78,6 +81,15 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     }
 
     /// <summary>
+    /// The stage of the CNAME record set definition allowing attach the record set to the parent.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    public interface IWithCNameRecordSetAttachable<ParentT>  :
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT>
+    {
+    }
+
+    /// <summary>
     /// The stage of the NS record set definition allowing to add additional NS records or
     /// attach the record set to the parent.
     /// </summary>
@@ -86,6 +98,20 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithNSRecordNameServer<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT>
     {
+    }
+
+    /// <summary>
+    /// The stage of a CNAME record definition allowing to add alias.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    public interface IWithCNameRecordAlias<ParentT> 
+    {
+        /// <summary>
+        /// Creates a CNAME record with the provided alias.
+        /// </summary>
+        /// <param name="alias">The alias.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithCNameRecordSetAttachable<ParentT> WithAlias(string alias);
     }
 
     /// <summary>
@@ -101,6 +127,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
         /// <param name="value">The value for the metadata.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT> WithMetadata(string key, string value);
+    }
+
+    /// <summary>
+    /// The stage of the record set definition allowing to enable ETag validation.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    public interface IWithETagCheck<ParentT> 
+    {
+        /// <summary>
+        /// Specifies that If-None-Match header needs to set to  to prevent updating an existing record set.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT> WithETagCheck();
     }
 
     /// <summary>
@@ -178,8 +217,18 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <typeparam name="ParentT">The return type of  DnsRecordSet.DefinitionStages.WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithTtl<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithMetadata<ParentT>,
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithTtl<ParentT>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithETagCheck<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The first stage of a CNAME record set definition.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    public interface ICNameRecordSetBlank<ParentT>  :
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithCNameRecordAlias<ParentT>
     {
     }
 
