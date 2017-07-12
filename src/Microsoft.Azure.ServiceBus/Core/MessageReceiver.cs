@@ -1019,6 +1019,8 @@ namespace Microsoft.Azure.ServiceBus.Core
                 if (exception is OperationCanceledException &&
                     receiveLink != null && receiveLink.State != AmqpObjectState.Opened)
                 {
+                    // The link state is lost, We need to return a non-retriable error.
+                    MessagingEventSource.Log.LinkStateLost(this.ClientId, receiveLink.Name, receiveLink.State, this.isSessionReceiver, exception);
                     if (this.isSessionReceiver)
                     {
                         throw new SessionLockLostException(Resources.SessionLockExpiredOnMessageSession);
