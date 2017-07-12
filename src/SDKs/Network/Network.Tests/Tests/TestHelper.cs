@@ -52,26 +52,59 @@ namespace Networks.Tests
         public static ExpressRouteCircuit UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(string resourceGroupName, string circuitName,
             NetworkManagementClient nrpClient)
         {
-            
+                var peering = new ExpressRouteCircuitPeering()
+                {
+                    Name = ExpressRouteCircuitPeeringType.MicrosoftPeering.ToString(),
+                    PeeringType = ExpressRouteCircuitPeeringType.MicrosoftPeering,
+                    PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
+                    VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
+                    PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix,
+                    SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix,
+                    MicrosoftPeeringConfig = new ExpressRouteCircuitPeeringConfig()
+                    {
+                        AdvertisedPublicPrefixes = new List<string>
+                    {
+                        ExpressRouteTests.MS_PublicPrefix
+                    },
+                        LegacyMode = Convert.ToInt32(true)
+                    },
+                };
+
+            var peerResponse = nrpClient.ExpressRouteCircuitPeerings.CreateOrUpdate(resourceGroupName, circuitName, 
+                ExpressRouteTests.Peering_Microsoft, peering);
+            Assert.Equal("Succeeded", peerResponse.ProvisioningState);
+            var getCircuitResponse = nrpClient.ExpressRouteCircuits.Get(resourceGroupName, circuitName);
+
+            return getCircuitResponse;
+        }
+
+        public static ExpressRouteCircuit UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(string resourceGroupName, string circuitName,
+            NetworkManagementClient nrpClient)
+        {
+            var ipv6Peering = new Ipv6ExpressRouteCircuitPeeringConfig()
+            {
+                PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix_V6,
+                SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix_V6,
+                MicrosoftPeeringConfig = new ExpressRouteCircuitPeeringConfig()
+                {
+                    AdvertisedPublicPrefixes = new List<string>
+                    {
+                        ExpressRouteTests.MS_PublicPrefix_V6
+                    },
+                    LegacyMode = Convert.ToInt32(true)
+                },
+            };
+
             var peering = new ExpressRouteCircuitPeering()
             {
                 Name = ExpressRouteCircuitPeeringType.MicrosoftPeering.ToString(),
                 PeeringType = ExpressRouteCircuitPeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
-                PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix,
-                SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix,
                 VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
-                MicrosoftPeeringConfig = new ExpressRouteCircuitPeeringConfig()
-                {
-                    AdvertisedPublicPrefixes = new List<string>
-                    {
-                        ExpressRouteTests.MS_PublicPrefix
-                    },
-                    LegacyMode = Convert.ToInt32(true)
-                },                
+                Ipv6PeeringConfig = ipv6Peering
             };
 
-            var peerResponse = nrpClient.ExpressRouteCircuitPeerings.CreateOrUpdate(resourceGroupName, circuitName, 
+            var peerResponse = nrpClient.ExpressRouteCircuitPeerings.CreateOrUpdate(resourceGroupName, circuitName,
                 ExpressRouteTests.Peering_Microsoft, peering);
             Assert.Equal("Succeeded", peerResponse.ProvisioningState);
             var getCircuitResponse = nrpClient.ExpressRouteCircuits.Get(resourceGroupName, circuitName);
