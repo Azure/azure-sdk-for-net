@@ -30,8 +30,9 @@ namespace Authorization.Tests
         private const int RoleAssignmentPageSize = 20;
         private const string RESOURCE_TEST_LOCATION = "westus";
         private const string WEBSITE_RP_VERSION = "2014-04-01";
+		private const string API_VERSION = "2015-07-01";
 
-        public BasicTests(TestExecutionContext context, ITestOutputHelper output)
+		public BasicTests(TestExecutionContext context, ITestOutputHelper output)
         {
             testContext = context;
             _output = output;
@@ -647,7 +648,7 @@ namespace Authorization.Tests
 
                 RoleDefinition createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
-                string currentSubscriptionId = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                string scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
 
 				// Create a custom role definition
 				try
@@ -666,12 +667,12 @@ namespace Authorization.Tests
                                         Actions = new List<string>{ "Microsoft.Authorization/*/Read" }
                                     }
                                 },
-                                AssignableScopes = new List<string>() { currentSubscriptionId },
+                                AssignableScopes = new List<string>() { scope },
                             },
                     };
 
                     var roleDefinition = client.RoleDefinitions.CreateOrUpdate(
-                        currentSubscriptionId, 
+						scope, 
                         roleDefinitionId.ToString(), 
                         createOrUpdateParams);
 
@@ -679,7 +680,7 @@ namespace Authorization.Tests
                     createOrUpdateParams.Properties.RoleName = "UpdatedRoleName_" + roleDefinitionId.ToString();
                     createOrUpdateParams.Properties.Permissions.Single().Actions.Add("Microsoft.Support/*/read");
 
-                    var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
+                    var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(scope,
                         roleDefinitionId.ToString(),
                         createOrUpdateParams);
                    
@@ -694,14 +695,14 @@ namespace Authorization.Tests
                     Assert.Equal("Microsoft.Support/*/read", updatedRoleDefinition.Properties.Permissions.Single().Actions.Last());
                     // Same assignable scopes
                     Assert.NotEmpty(updatedRoleDefinition.Properties.AssignableScopes);
-                    Assert.Equal(currentSubscriptionId.ToLower(), updatedRoleDefinition.Properties.AssignableScopes.Single().ToLower());
+                    Assert.Equal(scope.ToLower(), updatedRoleDefinition.Properties.AssignableScopes.Single().ToLower());
                 
                     // Negative test: Update the role with an empty RoleName 
                     createOrUpdateParams.Properties.RoleName = null;
 
                     try
                     {
-                        client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
+                        client.RoleDefinitions.CreateOrUpdate(scope,
                         roleDefinitionId.ToString(),
                         createOrUpdateParams);
                     }
@@ -713,7 +714,7 @@ namespace Authorization.Tests
                 finally
                 {
                     var deleteResult = client.RoleDefinitions.Delete(
-                        currentSubscriptionId, 
+						scope, 
                         roleDefinitionId.ToString());
                     Assert.NotNull(deleteResult);
                 }
@@ -751,8 +752,8 @@ namespace Authorization.Tests
                 catch
                 { }
 
-                // Create a custom role definition
-                try
+				// Create a custom role definition
+				try
                 {
                     createOrUpdateParams = new RoleDefinition()
                         {
@@ -929,7 +930,41 @@ namespace Authorization.Tests
             }
         }
 
-        private static T GetValueFromTestContext<T>(Func<T> constructor, Func<string, T> parser, string mockName)
+		[Fact]
+		public void ProviderOperationsMetadataListGetTests()
+		{
+			using (MockContext context = MockContext.Start(this.GetType().FullName))
+			{
+				var client = testContext.GetAuthorizationManagementClient(context);
+
+				Assert.NotNull(client);
+				Assert.NotNull(client.HttpClient);
+				var allProviderOperationsMetadatas = client.ProviderOperationsMetadata.List(API_VERSION);
+
+				Assert.NotNull(allProviderOperationsMetadatas);
+
+				foreach (var operationsMetadata in allProviderOperationsMetadatas)
+				{
+					Assert.NotNull(operationsMetadata);
+					Assert.NotNull(operationsMetadata.Id);
+					Assert.NotNull(operationsMetadata.Name);
+					Assert.NotNull(operationsMetadata.Operations);
+					Assert.NotNull(operationsMetadata.ResourceTypes);
+					Assert.NotNull(operationsMetadata.Type);
+				}
+
+				var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("Microsoft.Web", "2015-07-01");
+				Assert.NotNull(providerOperationsMetadata);
+				Assert.NotNull(providerOperationsMetadata.DisplayName);
+				Assert.NotNull(providerOperationsMetadata.Id);
+				Assert.NotNull(providerOperationsMetadata.Name);
+				Assert.NotNull(providerOperationsMetadata.Operations);
+				Assert.NotNull(providerOperationsMetadata.ResourceTypes);
+				Assert.NotNull(providerOperationsMetadata.Type);
+			}
+		}
+
+		private static T GetValueFromTestContext<T>(Func<T> constructor, Func<string, T> parser, string mockName)
         {
             T retValue = default(T);
 

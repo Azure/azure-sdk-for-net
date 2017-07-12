@@ -59,6 +59,9 @@
     <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionsListWithFilterTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="SessionRecords\Authorization.Tests.BasicTests\ProviderOperationsMetadataListGetTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionUpdateTests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

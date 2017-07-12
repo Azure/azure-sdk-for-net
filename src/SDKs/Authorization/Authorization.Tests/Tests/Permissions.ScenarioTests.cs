@@ -49,9 +49,9 @@ namespace Authorization.Tests
         [Fact]
         public void GetResourceGroupPermissions()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                string groupName = TestUtilities.GenerateName("csmrg");
+			using (MockContext context = MockContext.Start(this.GetType().FullName))
+			{
+				string groupName = TestUtilities.GenerateName("csmrg");
                 var resourceClient = GetResourceManagementClient(context);
                 var authzClient = GetAuthorizationManagementClient(context);
 
