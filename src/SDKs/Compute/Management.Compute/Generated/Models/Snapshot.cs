@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
+        /// <param name="managedBy">A relative URI containing the ID of the VM
+        /// that has the disk attached.</param>
         /// <param name="timeCreated">The time when the disk was
         /// created.</param>
         /// <param name="osType">The Operating System type. Possible values
@@ -54,9 +56,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// snapshot</param>
         /// <param name="provisioningState">The disk provisioning
         /// state.</param>
-        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings), string provisioningState = default(string))
+        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), DiskSku sku = default(DiskSku), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
+            ManagedBy = managedBy;
             Sku = sku;
             TimeCreated = timeCreated;
             OsType = osType;
@@ -65,6 +68,13 @@ namespace Microsoft.Azure.Management.Compute.Models
             EncryptionSettings = encryptionSettings;
             ProvisioningState = provisioningState;
         }
+
+        /// <summary>
+        /// Gets a relative URI containing the ID of the VM that has the disk
+        /// attached.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedBy")]
+        public string ManagedBy { get; protected set; }
 
         /// <summary>
         /// </summary>

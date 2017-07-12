@@ -4,14 +4,15 @@
 ::
 
 @echo off
-set autoRestVersion=1.0.0-Nightly20170129
-if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0cd4da929a9900eb3ac160b1d6c4cb11feca57de/arm-eventhub/2015-08-01/swagger/EventHub.json"
-) else (
-    set specFile="%1"
-)
+setlocal
+
+set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-eventhub/2017-04-01/swagger/EventHub.json"
+
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.EventHub %autoRestVersion% %generateFolder% 
+
+call autorest --latest -CodeGenerator Azure.CSharp -Input %specFile% -Namespace Microsoft.Azure.Management.EventHub  -outputDirectory %generateFolder% -Header MICROSOFT_MIT -ClientSideValidationntSideValidation
+
+endlocal

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Authorization" Version="2.5.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Graph.RBAC" Version="3.4.0-preview" />
     <!--<ProjectReference Include="..\Microsoft.Azure.Management.Authorization\Microsoft.Azure.Management.Authorization.csproj" />-->
   </ItemGroup>
 

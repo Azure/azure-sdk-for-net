@@ -37,10 +37,11 @@ namespace Sql.Tests
 
         private readonly List<ResourceGroup> _resourceGroups = new List<ResourceGroup>();
 
+        public RecordedDelegatingHandler Handler { get { return _handler; } }
+
         public TServiceClient GetClient<TServiceClient>() where TServiceClient :class, IDisposable
         {
-            IDisposable clientObject;
-            if (_serviceClientCache.TryGetValue(typeof(TServiceClient), out clientObject))
+            if (_serviceClientCache.TryGetValue(typeof(TServiceClient), out IDisposable clientObject))
             {
                 return (TServiceClient)clientObject;
             }
@@ -71,7 +72,23 @@ namespace Sql.Tests
         public Server CreateServer(ResourceGroup resourceGroup, string location = SqlManagementTestUtilities.DefaultLocationId)
         {
             SqlManagementClient sqlClient = GetClient<SqlManagementClient>();
-            return SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, location);
+
+            string version12 = "12.0";
+            string serverName = SqlManagementTestUtilities.GenerateName();
+            Dictionary<string, string> tags = new Dictionary<string, string>();
+
+            var v12Server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
+            {
+                AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
+                AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
+                Version = version12,
+                Tags = tags,
+                Location = location,
+            });
+
+            SqlManagementTestUtilities.ValidateServer(v12Server, serverName, SqlManagementTestUtilities.DefaultLogin, version12, tags, location);
+
+            return v12Server;
         }
 
         protected virtual void Dispose(bool disposing)

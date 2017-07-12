@@ -42,7 +42,31 @@ namespace StorSimple8000Series.Tests
             {
                 Assert.Null(e);
             }
-        }           
+        }
+
+        [Fact]
+        public void TestSendTestAlertEmailAPI()
+        {
+            var device = Helpers.CheckAndGetConfiguredDevice(this, TestConstants.DefaultDeviceName);
+            var deviceName = device.Name;
+
+            try
+            {
+                var emailList = new List<string>() { "testemailid@contoso.com" };
+
+                var sendTestAlertEmailRequest = new SendTestAlertEmailRequest(emailList);
+
+                this.Client.Alerts.SendTestEmail(
+                    deviceName.GetDoubleEncoded(),
+                    sendTestAlertEmailRequest,
+                    this.ResourceGroupName,
+                    this.ManagerName);
+            }
+            catch (Exception e)
+            {
+                Assert.Null(e);
+            }
+        }
 
         private IPage<Alert> GetAlertsBySeverity(AlertSeverity severity)
         {

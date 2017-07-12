@@ -16,8 +16,10 @@ namespace Sql.Tests
             Dictionary<string, string> tags = new Dictionary<string, string>();
             string suiteName = this.GetType().FullName;
 
-            SqlManagementTestUtilities.RunTest("Sql.Tests.CapabilitiesScenarioTests", "TestGetCapabilities", (resourceClient, sqlClient) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 LocationCapabilities capabilities = sqlClient.Capabilities.ListByLocation(SqlManagementTestUtilities.DefaultLocation);
 
                 Assert.NotNull(capabilities);
@@ -40,7 +42,7 @@ namespace Sql.Tests
                         }
                     }
                 }
-            });
+            }
         }
     }
 }
