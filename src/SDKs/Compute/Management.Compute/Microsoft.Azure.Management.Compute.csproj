@@ -11,9 +11,6 @@
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.Network" Version="10.0.0-preview" />
-  </ItemGroup>
   <!--
 
   <ItemGroup>

@@ -31,7 +31,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the RunCommandInput class.
         /// </summary>
         /// <param name="commandId">The run command id.</param>
-        /// <param name="script">The script to be executed.</param>
+        /// <param name="script">Optional. The script to be executed.  When
+        /// this value is given, the given script will override the default
+        /// script of the command.</param>
         /// <param name="parameters">The run command parameters.</param>
         public RunCommandInput(string commandId, IList<string> script = default(IList<string>), IList<RunCommandInputParameter> parameters = default(IList<RunCommandInputParameter>))
         {
@@ -47,7 +49,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string CommandId { get; set; }
 
         /// <summary>
-        /// Gets or sets the script to be executed.
+        /// Gets or sets optional. The script to be executed.  When this value
+        /// is given, the given script will override the default script of the
+        /// command.
         /// </summary>
         [JsonProperty(PropertyName = "script")]
         public IList<string> Script { get; set; }

@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets a virtual machine extension image.
         /// </summary>
         /// <param name='location'>
+        /// The name of a supported Azure region.
         /// </param>
         /// <param name='publisherName'>
         /// </param>
@@ -55,6 +56,7 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets a list of virtual machine extension image types.
         /// </summary>
         /// <param name='location'>
+        /// The name of a supported Azure region.
         /// </param>
         /// <param name='publisherName'>
         /// </param>
@@ -78,6 +80,7 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets a list of virtual machine extension image versions.
         /// </summary>
         /// <param name='location'>
+        /// The name of a supported Azure region.
         /// </param>
         /// <param name='publisherName'>
         /// </param>
