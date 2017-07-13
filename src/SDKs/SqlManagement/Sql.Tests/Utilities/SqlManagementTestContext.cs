@@ -60,7 +60,7 @@ namespace Sql.Tests
                 rgName,
                 new ResourceGroup
                 {
-                    Location = SqlManagementTestUtilities.DefaultLocation,
+                    Location = location,
                     Tags = new Dictionary<string, string>() { { rgName, DateTime.UtcNow.ToString("u") } }
                 });
 

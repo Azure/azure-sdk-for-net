@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.Network;
+using Microsoft.Azure.Management.Network.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
@@ -16,24 +19,90 @@ namespace Sql.Tests
         [Fact]
         public void TestGetAndListVirtualNetworkRule()
         {
-            // TODO Update SQL VirtualNetworkRules test to be fully automated
-            // TODO https://github.com/Azure/azure-sdk-for-net/issues/3388
-
             string testPrefix = "virtualnetworkrulescrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListVirtualNetworkRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                // Create Firewall Rules
-                //
+                // Basic setup
+                var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
+                ResourceGroup resourceGroup = context.CreateResourceGroup(location);
+                NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
+
+                // Create vnet 
+                string vnetName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string subnet1Name = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string subnet2Name = SqlManagementTestUtilities.GenerateName(testPrefix);
+
+                List<PrivateAccessServicePropertiesFormat> SqlPrivateAccess = new List<PrivateAccessServicePropertiesFormat>();
+                SqlPrivateAccess.Add(new PrivateAccessServicePropertiesFormat("Microsoft.Sql"));
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            "10.0.0.0/16",
+                        }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                        {
+                            "10.1.1.1",
+                            "10.1.2.4"
+                        }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnet1Name,
+                            AddressPrefix = "10.0.1.0/24",
+                            PrivateAccessServices = SqlPrivateAccess,
+                        },
+                        new Subnet()
+                        {
+                            Name = subnet2Name,
+                            AddressPrefix = "10.0.2.0/24",
+                            PrivateAccessServices = SqlPrivateAccess,
+                        }
+                    }
+                };
+
+                // Put Vnet
+                var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroup.Name, vnetName, vnet);
+                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
+
+                // Get Vnet
+                var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroup.Name, vnetName);
+
+                Server server = context.CreateServer(resourceGroup, location);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // create virtual network rules
                 Dictionary<string, VirtualNetworkRule> rules = new Dictionary<string, VirtualNetworkRule>();
 
-                string vnetfirewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                VirtualNetworkRule rule = new VirtualNetworkRule()
+                //rule 1
+                string vnetfirewallRuleName1 = SqlManagementTestUtilities.GenerateName(testPrefix);
+
+                VirtualNetworkRule rule1 = new VirtualNetworkRule()
                 {
-                    VirtualNetworkSubnetId = string.Format("/subscriptions/d513e2e9-97db-40f6-8d1a-ab3b340cc81a/resourceGroups/TestVnetSdk/providers/Microsoft.Network/virtualNetworks/vnetSdkTest/subnets/subnet1")
+                    VirtualNetworkSubnetId = getVnetResponse.Subnets[0].Id.ToString()
                 };
-                sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, rule);
-                rules.Add(vnetfirewallRuleName, rule);
+                sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName1, rule1);
+                rules.Add(vnetfirewallRuleName1, rule1);
+
+                //rule 2
+                string vnetfirewallRuleName2 = SqlManagementTestUtilities.GenerateName(testPrefix);
+                VirtualNetworkRule rule2 = new VirtualNetworkRule()
+                {
+                    VirtualNetworkSubnetId = getVnetResponse.Subnets[1].Id.ToString()
+                };
+                sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName2, rule2);
+                rules.Add(vnetfirewallRuleName2, rule2);
 
                 foreach (var rul in rules)
                 {
@@ -53,63 +122,170 @@ namespace Sql.Tests
                 {
                     SqlManagementTestUtilities.ValidateVirtualNetworkRule(rul.Value, listResponse.Single(r => r.Name == rul.Key), rul.Key);
                 }
-            }, SqlManagementTestUtilities.DefaultEuapPrimaryLocation);
+
+            }
         }
 
         [Fact]
         public void TestCreateAndDropVirtualNetworkRule()
         {
-            // TODO Update SQL VirtualNetworkRules test to be fully automated
-            // TODO https://github.com/Azure/azure-sdk-for-net/issues/3388
 
             string testPrefix = "virtualnetworkrulecrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateAndDropVirtualNetworkRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                // Create and validate Firewall Rule
-                //
+                // Basic setup
+                var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
+                ResourceGroup resourceGroup = context.CreateResourceGroup(location);
+                NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
+
+                // Create vnet 
+                string vnetName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string subnetName = SqlManagementTestUtilities.GenerateName(testPrefix);
+
+                List<PrivateAccessServicePropertiesFormat> SqlPrivateAccess = new List<PrivateAccessServicePropertiesFormat>();
+                SqlPrivateAccess.Add(new PrivateAccessServicePropertiesFormat("Microsoft.Sql"));
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            "10.0.0.0/16",
+                        }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                        {
+                            "10.1.1.1",
+                            "10.1.2.4"
+                        }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnetName,
+                            AddressPrefix = "10.0.1.0/24",
+                            PrivateAccessServices = SqlPrivateAccess,
+                        }
+                    }
+                };
+
+                // Put Vnet
+                var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroup.Name, vnetName, vnet);
+                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
+
+                // Get Vnet
+                var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroup.Name, vnetName);
+
+                Server server = context.CreateServer(resourceGroup, location);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // create virtual network rules
                 string vnetfirewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
 
-                VirtualNetworkRule toCreate = new VirtualNetworkRule()
+                VirtualNetworkRule rule = new VirtualNetworkRule()
                 {
-                    VirtualNetworkSubnetId = string.Format("/subscriptions/d513e2e9-97db-40f6-8d1a-ab3b340cc81a/resourceGroups/TestVnetSdk/providers/Microsoft.Network/virtualNetworks/vnetSdkTest/subnets/subnet1")
+                    VirtualNetworkSubnetId = getVnetResponse.Subnets[0].Id.ToString()
                 };
-                var vfr1 = sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, toCreate);
-                SqlManagementTestUtilities.ValidateVirtualNetworkRule(toCreate, vfr1, vnetfirewallRuleName);
+                VirtualNetworkRule vfr = sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, rule);
+                SqlManagementTestUtilities.ValidateVirtualNetworkRule(rule, vfr, vnetfirewallRuleName);
 
-                sqlClient.VirtualNetworkRules.Delete(resourceGroup.Name, server.Name, vfr1.Name);
-            }, SqlManagementTestUtilities.DefaultEuapPrimaryLocation);
+                // delete virtual network rules
+                sqlClient.VirtualNetworkRules.Delete(resourceGroup.Name, server.Name, vfr.Name);
+            }
         }
 
         [Fact]
         public void TestCreateAndUpdateVirtualNetworkRule()
         {
-            // TODO Update SQL VirtualNetworkRules test to be fully automated
-            // TODO https://github.com/Azure/azure-sdk-for-net/issues/3388
 
             string testPrefix = "virtualnetworkrulecrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateAndUpdateVirtualNetworkRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                // Create Firewall Rule and Validate
-                //
+                // Basic setup
+                var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
+                ResourceGroup resourceGroup = context.CreateResourceGroup(location);
+                NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
+
+                // Create vnet 
+                string vnetName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string subnet1Name = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string subnet2Name = SqlManagementTestUtilities.GenerateName(testPrefix);
+
+                List<PrivateAccessServicePropertiesFormat> SqlPrivateAccess = new List<PrivateAccessServicePropertiesFormat>();
+                SqlPrivateAccess.Add(new PrivateAccessServicePropertiesFormat("Microsoft.Sql"));
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            "10.0.0.0/16",
+                        }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                        {
+                            "10.1.1.1",
+                            "10.1.2.4"
+                        }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnet1Name,
+                            AddressPrefix = "10.0.1.0/24",
+                            PrivateAccessServices = SqlPrivateAccess,
+                        },
+                        new Subnet()
+                        {
+                            Name = subnet2Name,
+                            AddressPrefix = "10.0.2.0/24",
+                            PrivateAccessServices = SqlPrivateAccess,
+                        }
+                    }
+                };
+
+                // Put Vnet
+                var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroup.Name, vnetName, vnet);
+                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
+
+                // Get Vnet
+                var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroup.Name, vnetName);
+
+                Server server = context.CreateServer(resourceGroup, location);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // create virtual network rules
                 string vnetfirewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
 
-                VirtualNetworkRule toCreate = new VirtualNetworkRule()
+                VirtualNetworkRule rule = new VirtualNetworkRule()
                 {
-                    VirtualNetworkSubnetId = string.Format("/subscriptions/d513e2e9-97db-40f6-8d1a-ab3b340cc81a/resourceGroups/TestVnetSdk/providers/Microsoft.Network/virtualNetworks/vnetSdkTest/subnets/subnet1")
+                    VirtualNetworkSubnetId = getVnetResponse.Subnets[0].Id.ToString()
                 };
-                var vfr1 = sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, toCreate);
-                SqlManagementTestUtilities.ValidateVirtualNetworkRule(toCreate, vfr1, vnetfirewallRuleName);
+                VirtualNetworkRule vfr = sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, rule);
+                SqlManagementTestUtilities.ValidateVirtualNetworkRule(rule, vfr, vnetfirewallRuleName);
 
                 // Update Firewall Rule and Validate
-                toCreate = new VirtualNetworkRule()
+                rule = new VirtualNetworkRule()
                 {
-                    VirtualNetworkSubnetId = string.Format("/subscriptions/d513e2e9-97db-40f6-8d1a-ab3b340cc81a/resourceGroups/TestVnetSdk/providers/Microsoft.Network/virtualNetworks/vnetSdkTest/subnets/subnet1")
+                    VirtualNetworkSubnetId = getVnetResponse.Subnets[1].Id.ToString()
                 };
-                vfr1 = sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, toCreate);
-                SqlManagementTestUtilities.ValidateVirtualNetworkRule(toCreate, vfr1, vnetfirewallRuleName);
-            }, SqlManagementTestUtilities.DefaultEuapPrimaryLocation);
+                vfr = sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, rule);
+                SqlManagementTestUtilities.ValidateVirtualNetworkRule(rule, vfr, vnetfirewallRuleName);
+            }
         }
     }
 }
