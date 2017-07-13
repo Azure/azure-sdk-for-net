@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Provides capabilities to query Microsoft Azure Management Authorization.</Description>
     <AssemblyTitle>Authorization Library for Microsoft Azure Management Authorization</AssemblyTitle>
-    <VersionPrefix>2.6.0</VersionPrefix>
+    <VersionPrefix>2.5.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.Authorization</AssemblyName>
     <PackageId>Microsoft.Azure.Management.Authorization</PackageId>
     <PackageTags>Microsoft Azure Management;Authorization;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
