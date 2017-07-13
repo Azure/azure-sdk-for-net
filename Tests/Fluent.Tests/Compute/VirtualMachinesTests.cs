@@ -17,9 +17,9 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Fluent.Tests.Compute
+namespace Fluent.Tests.Compute.VirtualMachine
 {
-    public class VirtualMachines
+    public class VirtualMachine
     {
         private const string Location = "southcentralus";
         private const string VMName = "chashvm";

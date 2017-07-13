@@ -45,7 +45,7 @@ namespace Fluent.Tests.Compute.VirtualMachine
                             .WithSubnet("subnet1", "10.0.0.0/28")
                             .Create();
 
-                    var publicLoadBalancer = VirtualMachine.ScaleSet.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
+                    var publicLoadBalancer = ScaleSet.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
                     var vmScaleSet = computeManager.VirtualMachineScaleSets
                             .Define(vmssName)
                             .WithRegion(Location)
@@ -167,7 +167,7 @@ namespace Fluent.Tests.Compute.VirtualMachine
                             .WithSubnet("subnet1", "10.0.0.0/28")
                             .Create();
 
-                    var publicLoadBalancer = VirtualMachine.ScaleSet.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
+                    var publicLoadBalancer = ScaleSet.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
                     var vmScaleSet = computeManager.VirtualMachineScaleSets
                             .Define(vmssName)
                             .WithRegion(Location)
