@@ -23,14 +23,14 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
-namespace Fluent.Tests.Compute
+namespace Fluent.Tests.Compute.VirtualMachine
 {
-    public class VirtualMachineScaleSet
+    public class ScaleSet
     {
         private readonly Region Location = Region.USEast;
 
         [Fact]
-        public void CanUpdateVirtualMachineScaleSetWithExtensionProtectedSettings()
+        public void CanUpdateWithExtensionProtectedSettings()
         {
             // Test for https://github.com/Azure/azure-sdk-for-net/issues/2716
             //
@@ -141,7 +141,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanUpdateVirtualMachineScaleSetExtensionPublicProtectedSettings()
+        public void CanUpdateExtensionPublicProtectedSettings()
         {
             // Test for https://github.com/Azure/azure-sdk-for-net/issues/3398
             //
@@ -293,7 +293,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanCreateVirtualMachineScaleSetWithCustomScriptExtension()
+        public void CanCreateWithCustomScriptExtension()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -364,7 +364,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanCreateUpdateVirtualMachineScaleSet()
+        public void CanCreateUpdate()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {

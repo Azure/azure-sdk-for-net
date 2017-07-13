@@ -4897,7 +4897,7 @@
     }
   ],
   "Names": {
-    "CanCreateUpdateVirtualMachineScaleSet": [
+    "CanCreateUpdate": [
       "vmss1681",
       "javacsmrg2882",
       "extlb1-9169",

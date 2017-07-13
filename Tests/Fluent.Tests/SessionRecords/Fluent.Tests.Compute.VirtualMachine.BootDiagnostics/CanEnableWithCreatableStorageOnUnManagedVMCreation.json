@@ -1068,7 +1068,7 @@
     }
   ],
   "Names": {
-    "CanEnableBootDiagnosticsWithCreatableStorageOnUnManagedVMCreation": [
+    "CanEnableWithCreatableStorageOnUnManagedVMCreation": [
       "vmbdtest8423",
       "stgbnc968",
       "nicjavavm333419321",

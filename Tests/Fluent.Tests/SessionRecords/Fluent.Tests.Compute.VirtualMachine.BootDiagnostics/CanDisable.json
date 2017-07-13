@@ -1135,7 +1135,7 @@
     }
   ],
   "Names": {
-    "CanDisableBootDiagnostics": [
+    "CanDisable": [
       "vmbdtest842",
       "nicjavavm89e443524",
       "vnet9ac87219cae8",

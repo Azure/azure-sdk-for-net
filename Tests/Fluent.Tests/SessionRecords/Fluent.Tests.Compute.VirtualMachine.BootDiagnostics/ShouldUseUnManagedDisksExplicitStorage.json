@@ -1131,7 +1131,7 @@
     }
   ],
   "Names": {
-    "BootDiagnosticsShouldUseUnManagedDisksExplicitStorage": [
+    "ShouldUseUnManagedDisksExplicitStorage": [
       "vmbdtest330",
       "stgbnc3842",
       "nicjavavm6ae94719d",
