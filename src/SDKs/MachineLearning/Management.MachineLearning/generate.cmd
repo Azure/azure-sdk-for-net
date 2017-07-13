@@ -3,22 +3,23 @@
 :: Copyright (C) Microsoft Corporation. All Rights Reserved.
 ::
 
-:: @echo off
+@echo off
 setlocal
 
-set autoRestVersion=0.17.0-Nightly20160824
+if not "%1" == "" (set specsRepoUser="%1")
+if not "%2" == "" (set specsRepoBranch="%2")
+if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
+if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
+set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/analysisservices/resource-manager/readme.md"
 
-set webServicesSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-machinelearning/2017-01-01/swagger/webservices.json"
-set commitmentPlansSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-machinelearning/2016-05-01-preview/swagger/commitmentPlans.json"
+set autoRestVersion=1.2.0
+set sdksRoot=%~dp0..\..
 
-set repoRoot=%~dp0..\..\..\..
-set generateFolder=%~dp0Generated
-set webServicesGenerateFolder=%generateFolder%\WebServices
-set commitmentPlansGenerateFolder=%generateFolder%\CommitmentPlans
+if "%3" == "" (call npm i -g autorest)
+rd /S /Q %~dp0Generated
 
-if exist %generateFolder% rd /S /Q  %generateFolder%
-
-call "%repoRoot%\tools\autorest.gen.cmd" %webServicesSpecFile% Microsoft.Azure.Management.MachineLearning.WebServices %autoRestVersion% %webServicesGenerateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %commitmentPlansSpecFile% Microsoft.Azure.Management.MachineLearning.CommitmentPlans %autoRestVersion% %commitmentPlansGenerateFolder%
+@echo on
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --tag=package-commitmentPlans
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --tag=package-webservices
 
 endlocal

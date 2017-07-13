@@ -4,18 +4,27 @@
 ::
 
 @echo off
-set autoRestVersion=0.17.0-Nightly20160626
-if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/search/2016-09-01/swagger/searchindex.json"
-) else (
-    set specFile="%1"
-)
-set repoRoot=%~dp0..\..\..\..\..
-set generateFolder=%~dp0GeneratedSearchIndex
-set header=MICROSOFT_MIT_NO_VERSION
+setlocal
 
-if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Search %autoRestVersion% %generateFolder% %header%
+if not "%1" == "" (set specsRepoUser="%1")
+if not "%2" == "" (set specsRepoBranch="%2")
+if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
+if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
+set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/search/data-plane/readme.md"
+
+set autoRestVersion=1.2.0
+set sdksRoot=%~dp0..\..
+
+if "%3" == "" (call npm i -g autorest)
+rd /S /Q %~dp0Generated
+
+@echo on
+:: call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-searchindex --tag=null
+call autorest "https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/search/data-plane/Microsoft.Search/2016-09-01/searchindex.json" --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-searchindex --tag=null
+
+endlocal
+
+:: TODO: get rid of the following! check whether this can be replaced with composite
 
 :: Delete any extra files generated for types that are shared between SearchServiceClient and SearchIndexClient.
 del "%generateFolder%\Models\SearchRequestOptions.cs"

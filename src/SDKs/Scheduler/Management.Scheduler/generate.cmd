@@ -13,5 +13,5 @@ set generateFolder=%~dp0Generated
 
 %repoRoot%\tools\nuget.exe install autorest %source% -Version %autoRestVersion% -o %repoRoot%\packages
 
-if exist %generateFolder% rd /S /Q  %generateFolder%
+rd /S /Q  %generateFolder%
 %autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Scheduler -Input %specUrl% -outputDirectory %generateFolder% -Header NONE

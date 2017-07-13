@@ -4,14 +4,21 @@
 ::
 
 @echo off
-set autoRestVersion=1.0.0-Nightly20161212
-if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/65ffebd25af1fc66db69a2355c38bf87dcb2e3f3/arm-storage/2017-06-01/swagger/storage.json"
-) else (
-    set specFile="%1"
-)
-set repoRoot=%~dp0..\..\..\..
-set generateFolder=%~dp0Generated
+setlocal
 
-if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.Storage %autoRestVersion% %generateFolder% MICROSOFT_MIT "-FT 2"
+if not "%1" == "" (set specsRepoUser="%1")
+if not "%2" == "" (set specsRepoBranch="%2")
+if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
+if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
+set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/storage/resource-manager/readme.md"
+
+set autoRestVersion=1.2.0
+set sdksRoot=%~dp0..\..
+
+if "%3" == "" (call npm i -g autorest)
+rd /S /Q %~dp0Generated
+
+@echo on
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion%
+
+endlocal

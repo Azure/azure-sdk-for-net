@@ -4,14 +4,21 @@
 ::
 
 @echo off
-set autoRestVersion=0.17.0-Nightly20160704
-if  "%1" == "" (
-		set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-graphrbac/compositeGraphRbacManagementClient.json"
-) else (
-    set specFile="%1"
-)
-set repoRoot=%~dp0..\..\..\..
-set generateFolder=%~dp0Generated
+setlocal
 
-if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.composite.gen.cmd" %specFile% Microsoft.Azure.Graph.RBAC %autoRestVersion% %generateFolder%
+if not "%1" == "" (set specsRepoUser="%1")
+if not "%2" == "" (set specsRepoBranch="%2")
+if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
+if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
+set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/graphrbac/data-plane/readme.md"
+
+set autoRestVersion=1.2.0
+set sdksRoot=%~dp0..\..
+
+if "%3" == "" (call npm i -g autorest)
+rd /S /Q %~dp0Generated
+
+@echo on
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion%
+
+endlocal

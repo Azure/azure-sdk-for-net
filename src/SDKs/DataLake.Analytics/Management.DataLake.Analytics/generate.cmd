@@ -6,17 +6,22 @@
 @echo off
 setlocal
 
-set accountSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e43bb938a591f613483943579e81dfe0d6ee05c1/arm-datalake-analytics/account/2016-11-01/swagger/account.json"
-set jobSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e43bb938a591f613483943579e81dfe0d6ee05c1/arm-datalake-analytics/job/2016-11-01/swagger/job.json"
-set catalogSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e43bb938a591f613483943579e81dfe0d6ee05c1/arm-datalake-analytics/catalog/2016-11-01/swagger/catalog.json"
+if not "%1" == "" (set specsRepoUser="%1")
+if not "%2" == "" (set specsRepoBranch="%2")
+if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
+if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
+set specFile1="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/datalake-analytics/resource-manager/readme.md"
+set specFile2="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/datalake-analytics/data-plane/readme.md"
 
-set repoRoot=%~dp0..\..\..\..
-set generateFolder=%~dp0Generated
+set autoRestVersion=1.2.0
+set sdksRoot=%~dp0..\..
 
-if exist %generateFolder% rd /S /Q  %generateFolder%
+if "%3" == "" (call npm i -g autorest)
+rd /S /Q %~dp0Generated
 
-call autorest --latest -CodeGenerator Azure.CSharp -Input %accountSpecFile% -Namespace Microsoft.Azure.Management.DataLake.Analytics -outputDirectory %generateFolder% -Header MICROSOFT_MIT -ClientSideValidation
-call autorest --latest -CodeGenerator Azure.CSharp -Input %jobSpecFile% -Namespace Microsoft.Azure.Management.DataLake.Analytics -outputDirectory %generateFolder% -Header MICROSOFT_MIT -ClientSideValidation
-call autorest --latest -CodeGenerator Azure.CSharp -Input %catalogSpecFile% -Namespace Microsoft.Azure.Management.DataLake.Analytics -outputDirectory %generateFolder% -Header MICROSOFT_MIT -ClientSideValidation
+@echo on
+call autorest %specFile1% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion%
+call autorest %specFile2% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-catalog
+call autorest %specFile2% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-job
 
 endlocal

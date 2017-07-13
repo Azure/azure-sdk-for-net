@@ -4,14 +4,21 @@
 ::
 
 @echo off
-set autoRestVersion=1.0.0-Nightly20170209 
-if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4bb79249445a02e222e2aec3b47969e0217981de/arm-customer-insights/2017-01-01/swagger/customer-insights.json"
-) else (
-    set specFile="%1"
-)
-set repoRoot=%~dp0..\..\..\..
-set generateFolder=%~dp0Generated
+setlocal
 
-if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.CustomerInsights %autoRestVersion% %generateFolder% 
+if not "%1" == "" (set specsRepoUser="%1")
+if not "%2" == "" (set specsRepoBranch="%2")
+if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
+if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
+set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/customer-insights/resource-manager/readme.md"
+
+set autoRestVersion=1.2.0
+set sdksRoot=%~dp0..\..
+
+if "%3" == "" (call npm i -g autorest)
+rd /S /Q %~dp0Generated
+
+@echo on
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion%
+
+endlocal

@@ -6,15 +6,21 @@
 @echo off
 setlocal
 
-set accountSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/156cd442edf6badb940149878cecfba2d3198776/arm-datalake-store/account/2016-11-01/swagger/account.json"
-set filesystemSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/156cd442edf6badb940149878cecfba2d3198776/arm-datalake-store/filesystem/2016-11-01/swagger/filesystem.json"
+if not "%1" == "" (set specsRepoUser="%1")
+if not "%2" == "" (set specsRepoBranch="%2")
+if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
+if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
+set specFile1="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/datalake-store/resource-manager/readme.md"
+set specFile2="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/datalake-store/data-plane/readme.md"
 
-set repoRoot=%~dp0..\..\..\..
-set generateFolder=%~dp0Generated
+set autoRestVersion=1.2.0
+set sdksRoot=%~dp0..\..
 
-if exist %generateFolder% rd /S /Q  %generateFolder%
+if "%3" == "" (call npm i -g autorest)
+rd /S /Q %~dp0Generated
 
-call autorest --latest -CodeGenerator Azure.CSharp -Input %accountSpecFile% -Namespace Microsoft.Azure.Management.DataLake.Store -outputDirectory %generateFolder% -Header MICROSOFT_MIT -ClientSideValidation %~5
-call autorest --latest -CodeGenerator Azure.CSharp -Input %filesystemSpecFile% -Namespace Microsoft.Azure.Management.DataLake.Store -outputDirectory %generateFolder% -Header MICROSOFT_MIT -ClientSideValidation %~5
+@echo on
+call autorest %specFile1% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion%
+call autorest %specFile2% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion%
 
 endlocal

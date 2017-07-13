@@ -5,19 +5,20 @@
 
 @echo off
 setlocal
-set autoRestVersion=1.0.0-Nightly20170212
 
-if  "%1" == "" (
-	set specFile="https://github.com/Azure/azure-rest-api-specs/blob/master/keyvault/2016-10-01/swagger/keyvault.json"
-) else (
-    set specFile="%1"
-)
+if not "%1" == "" (set specsRepoUser="%1")
+if not "%2" == "" (set specsRepoBranch="%2")
+if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
+if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
+set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/keyvault/data-plane/readme.md"
 
-set repoRoot=%~dp0..\..\..\..\..
-set generateFolder=%~dp0Generated
+set autoRestVersion=1.2.0
+set sdksRoot=%~dp0..\..\..
 
-if exist %generateFolder% rd /S /Q  %generateFolder%
+if "%3" == "" (call npm i -g autorest)
+rd /S /Q %~dp0Generated
 
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile%  Microsoft.Azure.KeyVault %autoRestVersion% %generateFolder% MICROSOFT_MIT "-SyncMethods None" 
+@echo on
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion%
 
 endlocal
