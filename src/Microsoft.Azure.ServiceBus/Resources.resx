@@ -210,4 +210,7 @@
   <data name="PluginAlreadyRegistered" xml:space="preserve">
     <value>The {0} plugin has already been registered.</value>
   </data>
+  <data name="SessionFilterMissing" xml:space="preserve">
+    <value>Session filter is missing on the link. </value>
+  </data>
 </root>

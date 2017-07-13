@@ -265,7 +265,18 @@ namespace Microsoft.Azure.ServiceBus {
                 return ResourceManager.GetString("RuleFilterNotSupported", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///    Looks up a localized string similar to Session filter is missing on the link.
+        /// </summary>
+        public static string SessionFilterMissing
+        {
+            get
+            {
+                return ResourceManager.GetString("SessionFilterMissing", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///    Looks up a localized string similar to A session handler has already been registered..
         /// </summary>

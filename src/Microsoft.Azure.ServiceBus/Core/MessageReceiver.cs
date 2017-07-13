@@ -692,12 +692,16 @@ namespace Microsoft.Azure.ServiceBus.Core
             if (!source.FilterSet.TryGetValue(AmqpClientConstants.SessionFilterName, out tempSessionId))
             {
                 receivingAmqpLink.Session.SafeClose();
-                throw new ServiceBusException(false, Resources.AmqpFieldSessionId);
+                throw new ServiceBusException(true, Resources.SessionFilterMissing);
             }
-            if (!string.IsNullOrWhiteSpace(tempSessionId))
+
+            if (string.IsNullOrWhiteSpace(tempSessionId))
             {
-                this.SessionIdInternal = tempSessionId;
+                receivingAmqpLink.Session.SafeClose();
+                throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
             }
+
+            this.SessionIdInternal = tempSessionId;
             long lockedUntilUtcTicks;
             this.LockedUntilUtcInternal = receivingAmqpLink.Settings.Properties.TryGetValue(AmqpClientConstants.LockedUntilUtc, out lockedUntilUtcTicks) ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc) : DateTime.MinValue;
         }
