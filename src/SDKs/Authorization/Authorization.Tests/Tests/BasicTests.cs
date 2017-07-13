@@ -953,7 +953,7 @@ namespace Authorization.Tests
                     Assert.NotNull(operationsMetadata.Type);
                 }
 
-                var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("Microsoft.Web", "2015-07-01");
+                var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("Microsoft.Web", API_VERSION);
                 Assert.NotNull(providerOperationsMetadata);
                 Assert.NotNull(providerOperationsMetadata.DisplayName);
                 Assert.NotNull(providerOperationsMetadata.Id);
