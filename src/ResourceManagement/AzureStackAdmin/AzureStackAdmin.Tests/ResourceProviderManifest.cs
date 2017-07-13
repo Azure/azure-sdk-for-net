@@ -80,7 +80,13 @@ namespace AzureStackAdmin.Tests
                                         'timeout': 'PT0S'
                                     }
                                 ],
-                                'marketplaceType': 'NotSpecified'
+                                'marketplaceType': 'NotSpecified',
+                                'apiProfiles': [
+                                    {
+                                        'profileVersion': '2017-03-09-profile',
+                                        'apiVersion': '2015-12-01-preview'
+                                    }
+                                ]
                             }
                         ],
                         'enabled': true,
@@ -119,6 +125,8 @@ namespace AzureStackAdmin.Tests
             Assert.Equal(true, result.ProviderRegistration.Properties.ResourceTypes[0].InGlobalLocation);
             Assert.Equal(ResourceDeletionPolicy.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].ResourceDeletionPolicy);
             Assert.Equal(MarketplaceType.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].MarketplaceType);
+            Assert.Equal("2017-03-09-profile", result.ProviderRegistration.Properties.ResourceTypes[0].ApiProfiles[0].ProfileVersion);
+            Assert.Equal("2015-12-01-preview", result.ProviderRegistration.Properties.ResourceTypes[0].ApiProfiles[0].ApiVersion);
             Assert.Equal("Succeeded", result.ProviderRegistration.Properties.ProvisioningState);
             Assert.Equal("e39843e0490cf8a4c876ce0eb2e35b595cdea663", result.ProviderRegistration.Properties.Signature);
         }
@@ -171,7 +179,13 @@ namespace AzureStackAdmin.Tests
                                         'timeout': 'PT0S'
                                     }
                                 ],
-                                'marketplaceType': 'NotSpecified'
+                                'marketplaceType': 'NotSpecified',
+                                'apiProfiles': [
+                                    {
+                                        'profileVersion': '2017-03-09-profile',
+                                        'apiVersion': '2015-12-01-preview'
+                                    }
+                                ]
                             }
                         ],
                         'enabled': true,
@@ -259,6 +273,8 @@ namespace AzureStackAdmin.Tests
             Assert.Equal(true, result.ProviderRegistration.Properties.ResourceTypes[0].Endpoints[0].Enabled);
             Assert.Equal(RoutingType.Default, result.ProviderRegistration.Properties.ResourceTypes[0].RoutingType);
             Assert.Equal(true, result.ProviderRegistration.Properties.ResourceTypes[0].InGlobalLocation);
+            Assert.Equal("2017-03-09-profile", result.ProviderRegistration.Properties.ResourceTypes[0].ApiProfiles[0].ProfileVersion);
+            Assert.Equal("2015-12-01-preview", result.ProviderRegistration.Properties.ResourceTypes[0].ApiProfiles[0].ApiVersion);
             Assert.Equal(ResourceDeletionPolicy.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].ResourceDeletionPolicy);
             Assert.Equal(MarketplaceType.NotSpecified, result.ProviderRegistration.Properties.ResourceTypes[0].MarketplaceType);
             Assert.Equal(result.ProviderRegistration.Properties.Signature, "e39843e0490cf8a4c876ce0eb2e35b595cdea663");
