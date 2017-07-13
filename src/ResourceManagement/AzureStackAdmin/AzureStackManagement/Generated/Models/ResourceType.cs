@@ -43,6 +43,18 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._allowedUnauthorizedActions = value; }
         }
         
+        private IList<ApiProfile> _apiProfiles;
+        
+        /// <summary>
+        /// Optional. Gets or sets the API profiles supported by the resource
+        /// type.
+        /// </summary>
+        public IList<ApiProfile> ApiProfiles
+        {
+            get { return this._apiProfiles; }
+            set { this._apiProfiles = value; }
+        }
+        
         private IList<ResourceProviderEndpoint> _endpoints;
         
         /// <summary>
@@ -128,6 +140,7 @@ namespace Microsoft.AzureStack.Management.Models
         public ResourceType()
         {
             this.AllowedUnauthorizedActions = new LazyList<string>();
+            this.ApiProfiles = new LazyList<ApiProfile>();
             this.Endpoints = new LazyList<ResourceProviderEndpoint>();
             this.MeteredResourceIds = new LazyList<string>();
         }
