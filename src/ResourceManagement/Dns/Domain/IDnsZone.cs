@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     public interface IDnsZone  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IGroupableResource<Microsoft.Azure.Management.Dns.Fluent.IDnsZoneManager,Models.ZoneInner>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<DnsZone.Update.IUpdate>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<DnsZone.Update.IUpdate>,
+        Microsoft.Azure.Management.Dns.Fluent.IDnsZoneBeta
     {
         /// <summary>
         /// Gets entry point to manage record sets in this zone containing A (IPv4 address) records.
@@ -63,38 +64,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Gets entry point to manage record sets in this zone containing SRV (service) records.
         /// </summary>
         Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSets SrvRecordSets { get; }
-
-        /// <summary>
-        /// Gets the etag associated with this zone.
-        /// </summary>
-        string ETag { get; }
-
-        /// <return>The record sets in this zone.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> ListRecordSets();
-
-        /// <summary>
-        /// Lists all the record sets in this zone with the given suffix.
-        /// </summary>
-        /// <param name="recordSetNameSuffix">The record set name suffix.</param>
-        /// <return>The record sets.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> ListRecordSets(string recordSetNameSuffix);
-
-        /// <summary>
-        /// Lists all the record sets in this zone with each entries in each page
-        /// limited to the given size.
-        /// </summary>
-        /// <param name="pageSize">The maximum number of record sets in a page.</param>
-        /// <return>The record sets.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> ListRecordSets(int pageSize);
-
-        /// <summary>
-        /// Lists all the record sets in this zone with the given suffix, also limits
-        /// the number of entries per page to the given page size.
-        /// </summary>
-        /// <param name="recordSetNameSuffix">The record set name suffix.</param>
-        /// <param name="pageSize">The maximum number of record sets in a page.</param>
-        /// <return>The record sets.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> ListRecordSets(string recordSetNameSuffix, int pageSize);
 
         /// <summary>
         /// Gets entry point to manage record sets in this zone containing MX (mail exchange) records.

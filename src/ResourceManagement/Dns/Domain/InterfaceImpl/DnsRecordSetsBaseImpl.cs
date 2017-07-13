@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="recordSetNameSuffix">The record set name suffix.</param>
         /// <return>List of record sets.</return>
-        System.Collections.Generic.IEnumerable<RecordSetT> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSets<RecordSetT>.List(string recordSetNameSuffix)
+        System.Collections.Generic.IEnumerable<RecordSetT> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSetsBeta<RecordSetT>.List(string recordSetNameSuffix)
         {
             return this.List(recordSetNameSuffix) as System.Collections.Generic.IEnumerable<RecordSetT>;
         }
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="pageSize">The maximum number of record sets in a page.</param>
         /// <return>List of record sets.</return>
-        System.Collections.Generic.IEnumerable<RecordSetT> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSets<RecordSetT>.List(int pageSize)
+        System.Collections.Generic.IEnumerable<RecordSetT> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSetsBeta<RecordSetT>.List(int pageSize)
         {
             return this.List(pageSize) as System.Collections.Generic.IEnumerable<RecordSetT>;
         }
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="recordSetNameSuffix">The record set name suffix.</param>
         /// <param name="pageSize">The maximum number of record sets in a page.</param>
         /// <return>The record sets.</return>
-        System.Collections.Generic.IEnumerable<RecordSetT> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSets<RecordSetT>.List(string recordSetNameSuffix, int pageSize)
+        System.Collections.Generic.IEnumerable<RecordSetT> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSetsBeta<RecordSetT>.List(string recordSetNameSuffix, int pageSize)
         {
             return this.List(recordSetNameSuffix, pageSize) as System.Collections.Generic.IEnumerable<RecordSetT>;
         }
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="recordSetNameSuffix">The record set name suffix.</param>
         /// <return>An observable that emits record sets.</return>
-        async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<RecordSetT>> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSets<RecordSetT>.ListAsync(string recordSetNameSuffix, bool loadAllPages, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<RecordSetT>> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSetsBeta<RecordSetT>.ListAsync(string recordSetNameSuffix, bool loadAllPages, CancellationToken cancellationToken)
         {
             return await this.ListAsync(recordSetNameSuffix, loadAllPages, cancellationToken) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<RecordSetT>;
         }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="pageSize">The maximum number of record sets in a page.</param>
         /// <return>An observable that emits record sets.</return>
-        async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<RecordSetT>> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSets<RecordSetT>.ListAsync(int pageSize, bool loadAllPages, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<RecordSetT>> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSetsBeta<RecordSetT>.ListAsync(int pageSize, bool loadAllPages, CancellationToken cancellationToken)
         {
             return await this.ListAsync(pageSize, loadAllPages, cancellationToken) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<RecordSetT>;
         }
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="recordSetNameSuffix">The record set name suffix.</param>
         /// <param name="pageSize">The maximum number of record sets in a page.</param>
         /// <return>An observable that emits record sets.</return>
-        async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<RecordSetT>> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSets<RecordSetT>.ListAsync(string recordSetNameSuffix, int pageSize, bool loadAllPages, CancellationToken cancellationToken)
+        async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<RecordSetT>> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSetsBeta<RecordSetT>.ListAsync(string recordSetNameSuffix, int pageSize, bool loadAllPages, CancellationToken cancellationToken)
         {
             return await this.ListAsync(recordSetNameSuffix, pageSize, loadAllPages, cancellationToken) as Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<RecordSetT>;
         }

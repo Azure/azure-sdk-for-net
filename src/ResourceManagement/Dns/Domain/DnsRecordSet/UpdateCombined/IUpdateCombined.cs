@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateCombined
     /// <summary>
     /// The entirety of a record sets update as a part of parent DNS zone update.
     /// </summary>
-    public interface IUpdateCombined  :
+    public interface IUpdateCombined :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet.IUpdateARecordSet,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet.IUpdateAaaaRecordSet,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateCNameRecordSet.IUpdateCNameRecordSet,

@@ -62,8 +62,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     /// <summary>
     /// The stage of a CNAME record definition allowing to add alias.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  DefinitionStages.WithAttach.attach().</typeparam>
-    public interface IWithCNameRecordAlias<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithCNameRecordAlias<ParentT> :
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithCNameRecordAliasBeta<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The stage of a CNAME record definition allowing to add alias.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithCNameRecordAliasBeta<ParentT> 
     {
         /// <summary>
         /// Creates a CNAME record with the provided alias.
@@ -94,8 +103,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     /// <summary>
     /// The stage of the record set definition allowing to enable ETag validation.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithETagCheck<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithETagCheck<ParentT> :
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithETagCheckBeta<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the record set definition allowing to enable ETag validation.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithETagCheckBeta<ParentT> 
     {
         /// <summary>
         /// Specifies that If-None-Match header needs to set to  to prevent updating an existing record set.

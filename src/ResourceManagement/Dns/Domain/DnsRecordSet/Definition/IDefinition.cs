@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// The stage of the A record set definition allowing to add additional A records or
     /// attach the record set to the parent.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithARecordIPv4AddressOrAttachable<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithARecordIPv4AddressOrAttachable<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithARecordIPv4Address<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT>
     {
@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The entirety of a DNS zone record set definition as a part of parent definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
-    public interface IDefinition<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IDefinition<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IARecordSetBlank<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithARecordIPv4Address<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithARecordIPv4AddressOrAttachable<ParentT>,
@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The stage of the record set definition allowing to specify the Time To Live (TTL) for the records in this record set.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithTtl<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithTtl<ParentT>
     {
         /// <summary>
         /// Specifies the Time To Live for the records in the record set.
@@ -65,8 +65,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The first stage of a AAAA record definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IAaaaRecordSetBlank<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IAaaaRecordSetBlank<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAaaaRecordIPv6Address<ParentT>
     {
     }
@@ -74,8 +74,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The first stage of a SRV record definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface ISrvRecordSetBlank<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface ISrvRecordSetBlank<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithSrvRecordEntry<ParentT>
     {
     }
@@ -83,8 +83,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The stage of the CNAME record set definition allowing attach the record set to the parent.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithCNameRecordSetAttachable<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithCNameRecordSetAttachable<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT>
     {
     }
@@ -93,8 +93,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// The stage of the NS record set definition allowing to add additional NS records or
     /// attach the record set to the parent.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithNSRecordNameServerOrAttachable<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithNSRecordNameServerOrAttachable<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithNSRecordNameServer<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT>
     {
@@ -103,22 +103,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The stage of a CNAME record definition allowing to add alias.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithCNameRecordAlias<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithCNameRecordAlias<ParentT> :
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithCNameRecordAliasBeta<ParentT>
     {
-        /// <summary>
-        /// Creates a CNAME record with the provided alias.
-        /// </summary>
-        /// <param name="alias">The alias.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithCNameRecordSetAttachable<ParentT> WithAlias(string alias);
     }
 
     /// <summary>
     /// The stage of the record set definition allowing to specify metadata.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  UpdateDefinitionStages.WithAttach.attach().</typeparam>
-    public interface IWithMetadata<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithMetadata<ParentT>
     {
         /// <summary>
         /// Adds a metadata to the resource.
@@ -132,22 +127,18 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The stage of the record set definition allowing to enable ETag validation.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithETagCheck<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithETagCheck<ParentT> :
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithETagCheckBeta<ParentT>
     {
-        /// <summary>
-        /// Specifies that If-None-Match header needs to set to  to prevent updating an existing record set.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT> WithETagCheck();
     }
 
     /// <summary>
     /// The stage of the AAAA record set definition allowing to add additional AAAA records or
     /// attach the record set to the parent.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithAaaaRecordIPv6AddressOrAttachable<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithAaaaRecordIPv6AddressOrAttachable<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAaaaRecordIPv6Address<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT>
     {
@@ -157,8 +148,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// The stage of the MX record set definition allowing to add additional MX records or attach the record set
     /// to the parent.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithMXRecordMailExchangeOrAttachable<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithMXRecordMailExchangeOrAttachable<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithMXRecordMailExchange<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT>
     {
@@ -167,8 +158,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The stage of the NS record set definition allowing to add a NS record.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithNSRecordNameServer<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithNSRecordNameServer<ParentT>
     {
         /// <summary>
         /// Creates a NS record with the provided name server in this record set.
@@ -181,8 +172,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The first stage of a PTR record definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IPtrRecordSetBlank<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IPtrRecordSetBlank<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithPtrRecordTargetDomainName<ParentT>
     {
     }
@@ -191,8 +182,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// The stage of the SRV record set definition allowing to add additional SRV records or attach the record set
     /// to the parent.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithSrvRecordEntryOrAttachable<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithSrvRecordEntryOrAttachable<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithSrvRecordEntry<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT>
     {
@@ -202,8 +193,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// The stage of the TXT record set definition allowing to add additional TXT records or attach the record set
     /// to the parent.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithTxtRecordTextValueOrAttachable<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithTxtRecordTextValueOrAttachable<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithTxtRecordTextValue<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT>
     {
@@ -214,8 +205,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// At this stage, any remaining optional settings can be specified, or the DNS zone record set
     /// definition can be attached to the parent traffic manager profile definition using  DnsRecordSet.DefinitionStages.WithAttach.attach().
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  DnsRecordSet.DefinitionStages.WithAttach.attach().</typeparam>
-    public interface IWithAttach<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithAttach<ParentT> :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithTtl<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithMetadata<ParentT>,
@@ -226,8 +217,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The first stage of a CNAME record set definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface ICNameRecordSetBlank<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface ICNameRecordSetBlank<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithCNameRecordAlias<ParentT>
     {
     }
@@ -235,8 +226,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The first stage of a NS record definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface INSRecordSetBlank<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface INSRecordSetBlank<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithNSRecordNameServer<ParentT>
     {
     }
@@ -244,8 +235,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The stage of the MX record set definition allowing to add first MX record.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithMXRecordMailExchange<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithMXRecordMailExchange<ParentT>
     {
         /// <summary>
         /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
@@ -259,8 +250,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The stage of the SRV record definition allowing to add first service record.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithSrvRecordEntry<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithSrvRecordEntry<ParentT>
     {
         /// <summary>
         /// Specifies a service record for a service.
@@ -276,8 +267,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The stage of the TXT record definition allowing to add first TXT record.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithTxtRecordTextValue<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithTxtRecordTextValue<ParentT>
     {
         /// <summary>
         /// Creates a Txt record with the given text in this record set.
@@ -290,8 +281,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The stage of the A record set definition allowing to add first A record.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithARecordIPv4Address<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithARecordIPv4Address<ParentT>
     {
         /// <summary>
         /// Creates an A record with the provided IPv4 address in this record set.
@@ -305,7 +296,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// The stage of the AAAA record set definition allowing to add first AAAA record.
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithAaaaRecordIPv6Address<ParentT> 
+    public interface IWithAaaaRecordIPv6Address<ParentT>
     {
         /// <summary>
         /// Creates an AAAA record with the provided IPv6 address in this record set.
@@ -318,8 +309,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The first stage of a MX record definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IMXRecordSetBlank<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IMXRecordSetBlank<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithMXRecordMailExchange<ParentT>
     {
     }
@@ -328,8 +319,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// The stage of the PTR record set definition allowing to add additional PTR records or
     /// attach the record set to the parent.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithPtrRecordTargetDomainNameOrAttachable<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithPtrRecordTargetDomainNameOrAttachable<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithPtrRecordTargetDomainName<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT>
     {
@@ -338,8 +329,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The stage of the PTR record set definition allowing to add first CNAME record.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithPtrRecordTargetDomainName<ParentT> 
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithPtrRecordTargetDomainName<ParentT>
     {
         /// <summary>
         /// Creates a PTR record with the provided target domain name in this record set.
@@ -352,8 +343,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The first stage of an A record definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IARecordSetBlank<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IARecordSetBlank<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithARecordIPv4Address<ParentT>
     {
     }
@@ -361,9 +352,38 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition
     /// <summary>
     /// The first stage of a TXT record definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface ITxtRecordSetBlank<ParentT>  :
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface ITxtRecordSetBlank<ParentT> :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithTxtRecordTextValue<ParentT>
     {
+    }
+
+    /// <summary>
+    /// The stage of a CNAME record definition allowing to add alias.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithCNameRecordAliasBeta<ParentT> :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Creates a CNAME record with the provided alias.
+        /// </summary>
+        /// <param name="alias">The alias.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithCNameRecordSetAttachable<ParentT> WithAlias(string alias);
+    }
+
+    /// <summary>
+    /// The stage of the record set definition allowing to enable ETag validation.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithETagCheckBeta<ParentT> :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies that If-None-Match header needs to set to  to prevent updating an existing record set.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IWithAttach<ParentT> WithETagCheck();
     }
 }

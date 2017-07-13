@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 
-    internal partial class DnsZoneImpl 
+    internal partial class DnsZoneImpl
     {
         /// <summary>
         /// Refreshes the resource to sync with Azure.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// with the DNS Zone.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithETagCheck.WithETagCheck()
+        DnsZone.Update.IUpdate DnsZone.Update.IWithETagCheckBeta.WithETagCheck()
         {
             return this.WithETagCheck() as DnsZone.Update.IUpdate;
         }
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="eTagValue">The eTag value.</param>
         /// <return>The next stage of the update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithETagCheck.WithETagCheck(string eTagValue)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithETagCheckBeta.WithETagCheck(string eTagValue)
         {
             return this.WithETagCheck(eTagValue) as DnsZone.Update.IUpdate;
         }
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Specifies that If-None-Match header needs to set to  to prevent updating an existing DNS zone.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        DnsZone.Definition.IWithCreate DnsZone.Definition.IWithETagCheck.WithETagCheck()
+        DnsZone.Definition.IWithCreate DnsZone.Definition.IWithETagCheckBeta.WithETagCheck()
         {
             return this.WithETagCheck() as DnsZone.Definition.IWithCreate;
         }
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <return>The record sets in this zone.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> Microsoft.Azure.Management.Dns.Fluent.IDnsZone.ListRecordSets()
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> Microsoft.Azure.Management.Dns.Fluent.IDnsZoneBeta.ListRecordSets()
         {
             return this.ListRecordSets() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet>;
         }
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="recordSetNameSuffix">The record set name suffix.</param>
         /// <return>The record sets.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> Microsoft.Azure.Management.Dns.Fluent.IDnsZone.ListRecordSets(string recordSetNameSuffix)
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> Microsoft.Azure.Management.Dns.Fluent.IDnsZoneBeta.ListRecordSets(string recordSetNameSuffix)
         {
             return this.ListRecordSets(recordSetNameSuffix) as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet>;
         }
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="pageSize">The maximum number of record sets in a page.</param>
         /// <return>The record sets.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> Microsoft.Azure.Management.Dns.Fluent.IDnsZone.ListRecordSets(int pageSize)
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> Microsoft.Azure.Management.Dns.Fluent.IDnsZoneBeta.ListRecordSets(int pageSize)
         {
             return this.ListRecordSets(pageSize) as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet>;
         }
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="recordSetNameSuffix">The record set name suffix.</param>
         /// <param name="pageSize">The maximum number of record sets in a page.</param>
         /// <return>The record sets.</return>
-        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> Microsoft.Azure.Management.Dns.Fluent.IDnsZone.ListRecordSets(string recordSetNameSuffix, int pageSize)
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> Microsoft.Azure.Management.Dns.Fluent.IDnsZoneBeta.ListRecordSets(string recordSetNameSuffix, int pageSize)
         {
             return this.ListRecordSets(recordSetNameSuffix, pageSize) as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet>;
         }
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <summary>
         /// Gets the etag associated with this zone.
         /// </summary>
-        string Microsoft.Azure.Management.Dns.Fluent.IDnsZone.ETag
+        string Microsoft.Azure.Management.Dns.Fluent.IDnsZoneBeta.ETag
         {
             get
             {
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="name">Name of the SRV record set.</param>
         /// <param name="eTagValue">The etag to use for concurrent protection.</param>
         /// <return>The next stage of DNS zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutSrvRecordSet(string name, string eTagValue)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSetBeta.WithoutSrvRecordSet(string name, string eTagValue)
         {
             return this.WithoutSrvRecordSet(name, eTagValue) as DnsZone.Update.IUpdate;
         }
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="name">Name of the NS record set.</param>
         /// <param name="eTagValue">The etag to use for concurrent protection.</param>
         /// <return>The next stage of DNS zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutNSRecordSet(string name, string eTagValue)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSetBeta.WithoutNSRecordSet(string name, string eTagValue)
         {
             return this.WithoutNSRecordSet(name, eTagValue) as DnsZone.Update.IUpdate;
         }
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="name">Name of the PTR record set.</param>
         /// <param name="eTagValue">The etag to use for concurrent protection.</param>
         /// <return>The next stage of DNS zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutPtrRecordSet(string name, string eTagValue)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSetBeta.WithoutPtrRecordSet(string name, string eTagValue)
         {
             return this.WithoutPtrRecordSet(name, eTagValue) as DnsZone.Update.IUpdate;
         }
@@ -408,7 +408,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="name">Name of the AAAA record set.</param>
         /// <param name="eTagValue">The etag to use for concurrent protection.</param>
         /// <return>The next stage of DNS zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutAaaaRecordSet(string name, string eTagValue)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSetBeta.WithoutAaaaRecordSet(string name, string eTagValue)
         {
             return this.WithoutAaaaRecordSet(name, eTagValue) as DnsZone.Update.IUpdate;
         }
@@ -429,7 +429,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="name">Name of the TXT record set.</param>
         /// <param name="eTagValue">The etag to use for concurrent protection.</param>
         /// <return>The next stage of DNS zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutTxtRecordSet(string name, string eTagValue)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSetBeta.WithoutTxtRecordSet(string name, string eTagValue)
         {
             return this.WithoutTxtRecordSet(name, eTagValue) as DnsZone.Update.IUpdate;
         }
@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="name">Name of the MX record set.</param>
         /// <param name="eTagValue">The etag to use for concurrent protection.</param>
         /// <return>The next stage of DNS zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutMXRecordSet(string name, string eTagValue)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSetBeta.WithoutMXRecordSet(string name, string eTagValue)
         {
             return this.WithoutMXRecordSet(name, eTagValue) as DnsZone.Update.IUpdate;
         }
@@ -551,7 +551,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="name">Name of the A record set.</param>
         /// <param name="eTagValue">The etag to use for concurrent protection.</param>
         /// <return>The next stage of DNS zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutARecordSet(string name, string eTagValue)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSetBeta.WithoutARecordSet(string name, string eTagValue)
         {
             return this.WithoutARecordSet(name, eTagValue) as DnsZone.Update.IUpdate;
         }
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// <param name="name">Name of the CNAME record set.</param>
         /// <param name="eTagValue">The etag to use for concurrent protection.</param>
         /// <return>The next stage of DNS zone update.</return>
-        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSet.WithoutCNameRecordSet(string name, string eTagValue)
+        DnsZone.Update.IUpdate DnsZone.Update.IWithRecordSetBeta.WithoutCNameRecordSet(string name, string eTagValue)
         {
             return this.WithoutCNameRecordSet(name, eTagValue) as DnsZone.Update.IUpdate;
         }

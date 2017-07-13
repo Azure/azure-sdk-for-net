@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Specifies that If-None-Match header needs to set to  to prevent updating an existing record set.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        DnsRecordSet.UpdateDefinition.IWithAttach<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithETagCheck<DnsZone.Update.IUpdate>.WithETagCheck()
+        DnsRecordSet.UpdateDefinition.IWithAttach<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithETagCheckBeta<DnsZone.Update.IUpdate>.WithETagCheck()
         {
             return this.WithETagCheck() as DnsRecordSet.UpdateDefinition.IWithAttach<DnsZone.Update.IUpdate>;
         }
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Specifies that If-None-Match header needs to set to  to prevent updating an existing record set.
         /// </summary>
         /// <return>The next stage of the definition.</return>
-        DnsRecordSet.Definition.IWithAttach<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithETagCheck<DnsZone.Definition.IWithCreate>.WithETagCheck()
+        DnsRecordSet.Definition.IWithAttach<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithETagCheckBeta<DnsZone.Definition.IWithCreate>.WithETagCheck()
         {
             return this.WithETagCheck() as DnsRecordSet.Definition.IWithAttach<DnsZone.Definition.IWithCreate>;
         }
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="alias">The alias.</param>
         /// <return>The next stage of the definition.</return>
-        DnsRecordSet.UpdateDefinition.IWithCNameRecordSetAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithCNameRecordAlias<DnsZone.Update.IUpdate>.WithAlias(string alias)
+        DnsRecordSet.UpdateDefinition.IWithCNameRecordSetAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithCNameRecordAliasBeta<DnsZone.Update.IUpdate>.WithAlias(string alias)
         {
             return this.WithAlias(alias) as DnsRecordSet.UpdateDefinition.IWithCNameRecordSetAttachable<DnsZone.Update.IUpdate>;
         }
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="alias">The alias.</param>
         /// <return>The next stage of the definition.</return>
-        DnsRecordSet.Definition.IWithCNameRecordSetAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithCNameRecordAlias<DnsZone.Definition.IWithCreate>.WithAlias(string alias)
+        DnsRecordSet.Definition.IWithCNameRecordSetAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithCNameRecordAliasBeta<DnsZone.Definition.IWithCreate>.WithAlias(string alias)
         {
             return this.WithAlias(alias) as DnsRecordSet.Definition.IWithCNameRecordSetAttachable<DnsZone.Definition.IWithCreate>;
         }
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="alias">The alias.</param>
         /// <return>The next stage of the record set update.</return>
-        DnsRecordSet.UpdateCNameRecordSet.IUpdateCNameRecordSet DnsRecordSet.Update.IWithCNameRecordAlias.WithAlias(string alias)
+        DnsRecordSet.UpdateCNameRecordSet.IUpdateCNameRecordSet DnsRecordSet.Update.IWithCNameRecordAliasBeta.WithAlias(string alias)
         {
             return this.WithAlias(alias) as DnsRecordSet.UpdateCNameRecordSet.IUpdateCNameRecordSet;
         }
@@ -584,7 +584,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// with the record set.
         /// </summary>
         /// <return>The next stage of the update.</return>
-        DnsRecordSet.Update.IUpdate DnsRecordSet.Update.IWithETagCheck.WithETagCheck()
+        DnsRecordSet.Update.IUpdate DnsRecordSet.Update.IWithETagCheckBeta.WithETagCheck()
         {
             return this.WithETagCheck() as DnsRecordSet.Update.IUpdate;
         }
@@ -594,7 +594,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// </summary>
         /// <param name="eTagValue">The eTag value.</param>
         /// <return>The next stage of the update.</return>
-        DnsRecordSet.Update.IUpdate DnsRecordSet.Update.IWithETagCheck.WithETagCheck(string eTagValue)
+        DnsRecordSet.Update.IUpdate DnsRecordSet.Update.IWithETagCheckBeta.WithETagCheck(string eTagValue)
         {
             return this.WithETagCheck(eTagValue) as DnsRecordSet.Update.IUpdate;
         }

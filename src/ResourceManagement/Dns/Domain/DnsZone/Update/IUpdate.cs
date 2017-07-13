@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
     /// <summary>
     /// The stage of the DNS zone update allowing to specify record set.
     /// </summary>
-    public interface IWithRecordSet  :
+    public interface IWithRecordSet :
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IWithRecordSetBeta
     {
         /// <summary>
@@ -59,14 +59,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutPtrRecordSet(string name);
 
         /// <summary>
-        /// Removes a PTR record set in the DNS zone.
-        /// </summary>
-        /// <param name="name">Name of the PTR record set.</param>
-        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
-        /// <return>The next stage of DNS zone update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutPtrRecordSet(string name, string eTagValue);
-
-        /// <summary>
         /// Begins the description of an update of the SOA record in this DNS zone.
         /// </summary>
         /// <return>The stage representing configuration for the TXT record set.</return>
@@ -94,14 +86,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutSrvRecordSet(string name);
 
         /// <summary>
-        /// Removes a SRV record set in the DNS zone.
-        /// </summary>
-        /// <param name="name">Name of the SRV record set.</param>
-        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
-        /// <return>The next stage of DNS zone update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutSrvRecordSet(string name, string eTagValue);
-
-        /// <summary>
         /// Specifies definition of an AAAA record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">Name of the AAAA record set.</param>
@@ -121,14 +105,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         /// <param name="name">Name of the A record set.</param>
         /// <return>The next stage of DNS zone update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutARecordSet(string name);
-
-        /// <summary>
-        /// Removes a A record set in the DNS zone.
-        /// </summary>
-        /// <param name="name">Name of the A record set.</param>
-        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
-        /// <return>The next stage of DNS zone update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutARecordSet(string name, string eTagValue);
 
         /// <summary>
         /// Begins the description of an update of an existing A record set in this DNS zone.
@@ -173,14 +149,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutMXRecordSet(string name);
 
         /// <summary>
-        /// Removes a MX record set in the DNS zone.
-        /// </summary>
-        /// <param name="name">Name of the MX record set.</param>
-        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
-        /// <return>The next stage of DNS zone update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutMXRecordSet(string name, string eTagValue);
-
-        /// <summary>
         /// Specifies definition of a MX record set to be attached to the DNS zone.
         /// </summary>
         /// <param name="name">Name of the MX record set.</param>
@@ -195,27 +163,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutNSRecordSet(string name);
 
         /// <summary>
-        /// Removes a NS record set in the DNS zone.
-        /// </summary>
-        /// <param name="name">Name of the NS record set.</param>
-        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
-        /// <return>The next stage of DNS zone update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutNSRecordSet(string name, string eTagValue);
-
-        /// <summary>
         /// Removes a AAAA record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the AAAA record set.</param>
         /// <return>The next stage of DNS zone update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutAaaaRecordSet(string name);
-
-        /// <summary>
-        /// Removes a AAAA record set in the DNS zone.
-        /// </summary>
-        /// <param name="name">Name of the AAAA record set.</param>
-        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
-        /// <return>The next stage of DNS zone update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutAaaaRecordSet(string name, string eTagValue);
 
         /// <summary>
         /// Begins the description of an update of an existing NS record set in this DNS zone.
@@ -232,6 +184,96 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutCNameRecordSet(string name);
 
         /// <summary>
+        /// Removes a TXT record set in the DNS zone.
+        /// </summary>
+        /// <param name="name">Name of the TXT record set.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutTxtRecordSet(string name);
+
+    }
+
+    /// <summary>
+    /// The stage of the DNS zone update allowing to enable ETag validation.
+    /// </summary>
+    public interface IWithETagCheck :
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IWithETagCheckBeta
+    {
+    }
+
+    /// <summary>
+    /// The template for an update operation, containing all the settings that can be modified.
+    /// Call  Update.apply() to apply the changes to the resource in Azure.
+    /// </summary>
+    public interface IUpdate :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IWithRecordSet,
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IWithETagCheck,
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the DNS zone update allowing to specify record set.
+    /// </summary>
+    public interface IWithRecordSetBeta :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Removes a PTR record set in the DNS zone.
+        /// </summary>
+        /// <param name="name">Name of the PTR record set.</param>
+        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutPtrRecordSet(string name, string eTagValue);
+
+        /// <summary>
+        /// Removes a SRV record set in the DNS zone.
+        /// </summary>
+        /// <param name="name">Name of the SRV record set.</param>
+        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutSrvRecordSet(string name, string eTagValue);
+
+        /// <summary>
+        /// Removes a A record set in the DNS zone.
+        /// </summary>
+        /// <param name="name">Name of the A record set.</param>
+        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutARecordSet(string name, string eTagValue);
+
+        /// <summary>
+        /// Specifies definition of a CNAME record set.
+        /// </summary>
+        /// <param name="name">Name of the CNAME record set.</param>
+        /// <return>The stage representing configuration for the CNAME record set.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateCNameRecordSet.IUpdateCNameRecordSet UpdateCNameRecordSet(string name);
+
+        /// <summary>
+        /// Removes a MX record set in the DNS zone.
+        /// </summary>
+        /// <param name="name">Name of the MX record set.</param>
+        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutMXRecordSet(string name, string eTagValue);
+
+        /// <summary>
+        /// Removes a NS record set in the DNS zone.
+        /// </summary>
+        /// <param name="name">Name of the NS record set.</param>
+        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutNSRecordSet(string name, string eTagValue);
+
+        /// <summary>
+        /// Removes a AAAA record set in the DNS zone.
+        /// </summary>
+        /// <param name="name">Name of the AAAA record set.</param>
+        /// <param name="eTagValue">The etag to use for concurrent protection.</param>
+        /// <return>The next stage of DNS zone update.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutAaaaRecordSet(string name, string eTagValue);
+
+        /// <summary>
         /// Removes a CNAME record set in the DNS zone.
         /// </summary>
         /// <param name="name">Name of the CNAME record set.</param>
@@ -240,11 +282,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutCNameRecordSet(string name, string eTagValue);
 
         /// <summary>
-        /// Removes a TXT record set in the DNS zone.
+        /// Specifies definition of a CNAME record set.
         /// </summary>
-        /// <param name="name">Name of the TXT record set.</param>
-        /// <return>The next stage of DNS zone update.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithoutTxtRecordSet(string name);
+        /// <param name="name">Name of the CNAME record set.</param>
+        /// <return>The next stage of DNS zone definition.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.ICNameRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineCNameRecordSet(string name);
 
         /// <summary>
         /// Removes a TXT record set in the DNS zone.
@@ -258,7 +300,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
     /// <summary>
     /// The stage of the DNS zone update allowing to enable ETag validation.
     /// </summary>
-    public interface IWithETagCheck 
+    public interface IWithETagCheckBeta :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
     {
         /// <summary>
         /// Specifies that If-Match header needs to set to the current eTag value associated
@@ -273,38 +316,5 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update
         /// <param name="eTagValue">The eTag value.</param>
         /// <return>The next stage of the update.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate WithETagCheck(string eTagValue);
-    }
-
-    /// <summary>
-    /// The template for an update operation, containing all the settings that can be modified.
-    /// Call  Update.apply() to apply the changes to the resource in Azure.
-    /// </summary>
-    public interface IUpdate  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IWithRecordSet,
-        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IWithETagCheck,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Update.IUpdateWithTags<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate>
-    {
-    }
-
-    /// <summary>
-    /// The stage of the DNS zone update allowing to specify record set.
-    /// </summary>
-    public interface IWithRecordSetBeta  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
-    {
-        /// <summary>
-        /// Specifies definition of a CNAME record set.
-        /// </summary>
-        /// <param name="name">Name of the CNAME record set.</param>
-        /// <return>The stage representing configuration for the CNAME record set.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateCNameRecordSet.IUpdateCNameRecordSet UpdateCNameRecordSet(string name);
-
-        /// <summary>
-        /// Specifies definition of a CNAME record set.
-        /// </summary>
-        /// <param name="name">Name of the CNAME record set.</param>
-        /// <return>The next stage of DNS zone definition.</return>
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.ICNameRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Update.IUpdate> DefineCNameRecordSet(string name);
     }
 }
