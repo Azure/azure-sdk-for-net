@@ -1,0 +1,1272 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourcegroups/rgdnschash2564?api-version=2016-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlZ3JvdXBzL3JnZG5zY2hhc2gyNTY0P2FwaS12ZXJzaW9uPTIwMTYtMDItMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "89abe571-04ce-4475-a71a-b628728fd056"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.Fluent.ResourceManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564\",\r\n  \"name\": \"rgdnschash2564\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "181"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "feb8342b-1a14-48c0-866e-cf2ea87f2a20"
+        ],
+        "x-ms-correlation-request-id": [
+          "feb8342b-1a14-48c0-866e-cf2ea87f2a20"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023339Z:feb8342b-1a14-48c0-866e-cf2ea87f2a20"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbT9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"global\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "43"
+        ],
+        "x-ms-client-request-id": [
+          "6f2fea0d-9784-4a29-a74a-ed3278266c64"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com\",\r\n  \"name\": \"www.contoso-1322.com\",\r\n  \"type\": \"Microsoft.Network/dnszones\",\r\n  \"etag\": \"00000002-0000-0000-38f3-407080fbd201\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"maxNumberOfRecordSets\": 5000,\r\n    \"nameServers\": [\r\n      \"ns1-08.azure-dns.com.\",\r\n      \"ns2-08.azure-dns.net.\",\r\n      \"ns3-08.azure-dns.org.\",\r\n      \"ns4-08.azure-dns.info.\"\r\n    ],\r\n    \"numberOfRecordSets\": 2\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "479"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:41 GMT"
+        ],
+        "ETag": [
+          "00000002-0000-0000-38f3-407080fbd201"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "6f2fea0d-9784-4a29-a74a-ed3278266c64"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "5596cd7b-2422-4cbb-845f-20f9d2ab9ee3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023342Z:5596cd7b-2422-4cbb-845f-20f9d2ab9ee3"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbT9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"etag\": \"00000002-0000-0000-38f3-407080fbd201\",\r\n  \"properties\": {\r\n    \"maxNumberOfRecordSets\": 5000,\r\n    \"numberOfRecordSets\": 2\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "184"
+        ],
+        "x-ms-client-request-id": [
+          "73e3bbce-9065-4061-b0e9-4049eda69b9d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com\",\r\n  \"name\": \"www.contoso-1322.com\",\r\n  \"type\": \"Microsoft.Network/dnszones\",\r\n  \"etag\": \"00000003-0000-0000-38f3-407080fbd201\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"maxNumberOfRecordSets\": 5000,\r\n    \"nameServers\": [\r\n      \"ns1-08.azure-dns.com.\",\r\n      \"ns2-08.azure-dns.net.\",\r\n      \"ns3-08.azure-dns.org.\",\r\n      \"ns4-08.azure-dns.info.\"\r\n    ],\r\n    \"numberOfRecordSets\": 4\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:44 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "00000003-0000-0000-38f3-407080fbd201"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "73e3bbce-9065-4061-b0e9-4049eda69b9d"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "f0159846-b8f5-4aaf-9482-0a68f439d875"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023344Z:f0159846-b8f5-4aaf-9482-0a68f439d875"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbT9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"etag\": \"00000003-0000-0000-38f3-407080fbd201\",\r\n  \"properties\": {\r\n    \"maxNumberOfRecordSets\": 5000,\r\n    \"numberOfRecordSets\": 4\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {}\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "184"
+        ],
+        "x-ms-client-request-id": [
+          "671e4428-a14b-440f-975b-c67111374515"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com\",\r\n  \"name\": \"www.contoso-1322.com\",\r\n  \"type\": \"Microsoft.Network/dnszones\",\r\n  \"etag\": \"00000004-0000-0000-38f3-407080fbd201\",\r\n  \"location\": \"global\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"maxNumberOfRecordSets\": 5000,\r\n    \"nameServers\": [\r\n      \"ns1-08.azure-dns.com.\",\r\n      \"ns2-08.azure-dns.net.\",\r\n      \"ns3-08.azure-dns.org.\",\r\n      \"ns4-08.azure-dns.info.\"\r\n    ],\r\n    \"numberOfRecordSets\": 4\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:45 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "00000004-0000-0000-38f3-407080fbd201"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "671e4428-a14b-440f-975b-c67111374515"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "f4e2771f-4e46-4731-92a3-ad673d11bc26"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023345Z:f4e2771f-4e46-4731-92a3-ad673d11bc26"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/AAAA/www?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BQUFBL3d3dz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"www\",\r\n  \"type\": \"AAAA\",\r\n  \"properties\": {\r\n    \"TTL\": 3600,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"2001:0db8:85a3:0000:0000:8a2e:0370:7334\"\r\n      },\r\n      {\r\n        \"ipv6Address\": \"2002:0db9:85a4:0000:0000:8a2e:0371:7335\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "281"
+        ],
+        "x-ms-client-request-id": [
+          "08fdbc51-1df6-4d64-b02f-3326cbc92d0b"
+        ],
+        "If-None-Match": [
+          "*"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/AAAA/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n  \"etag\": \"eddfdbac-f971-47c8-b041-3283b0d75739\",\r\n  \"properties\": {\r\n    \"fqdn\": \"www.www.contoso-1322.com.\",\r\n    \"TTL\": 3600,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"2001:0db8:85a3:0000:0000:8a2e:0370:7334\"\r\n      },\r\n      {\r\n        \"ipv6Address\": \"2002:0db9:85a4:0000:0000:8a2e:0371:7335\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "462"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:42 GMT"
+        ],
+        "ETag": [
+          "eddfdbac-f971-47c8-b041-3283b0d75739"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "08fdbc51-1df6-4d64-b02f-3326cbc92d0b"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "d2147b43-dc90-4214-9ad1-3a33ebbde5aa"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023342Z:d2147b43-dc90-4214-9ad1-3a33ebbde5aa"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/AAAA/www?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BQUFBL3d3dz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/AAAA/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n  \"etag\": \"eddfdbac-f971-47c8-b041-3283b0d75739\",\r\n  \"properties\": {\r\n    \"TTL\": 3600,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"2001:db8:85a3::8a2e:370:7334\"\r\n      },\r\n      {\r\n        \"ipv6Address\": \"2002:db9:85a4::8a2e:371:7335\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "498"
+        ],
+        "x-ms-client-request-id": [
+          "5c3dac3f-a836-4175-b404-3b4c117e6a24"
+        ],
+        "If-Match": [
+          "eddfdbac-f971-47c8-b041-3283b0d75739-foo"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"PreconditionFailed\",\r\n  \"message\": \"The Record set www has been modified (etag mismatch).\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "95"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:44 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "5c3dac3f-a836-4175-b404-3b4c117e6a24"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "3fc89aec-c65e-482c-89f8-c1f8590b9804"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023344Z:3fc89aec-c65e-482c-89f8-c1f8590b9804"
+        ]
+      },
+      "StatusCode": 412
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/AAAA/www?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BQUFBL3d3dz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/AAAA/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n  \"etag\": \"eddfdbac-f971-47c8-b041-3283b0d75739\",\r\n  \"properties\": {\r\n    \"TTL\": 3600,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"2001:db8:85a3::8a2e:370:7334\"\r\n      },\r\n      {\r\n        \"ipv6Address\": \"2002:db9:85a4::8a2e:371:7335\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "498"
+        ],
+        "x-ms-client-request-id": [
+          "0ba1e9b6-c52c-450a-8c79-307eb5887549"
+        ],
+        "If-Match": [
+          "eddfdbac-f971-47c8-b041-3283b0d75739"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/AAAA/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n  \"etag\": \"fb6b8dd5-0f51-4b19-a373-651fab66b3d7\",\r\n  \"properties\": {\r\n    \"fqdn\": \"www.www.contoso-1322.com.\",\r\n    \"TTL\": 3600,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"2001:db8:85a3::8a2e:370:7334\"\r\n      },\r\n      {\r\n        \"ipv6Address\": \"2002:db9:85a4::8a2e:371:7335\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:46 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "fb6b8dd5-0f51-4b19-a373-651fab66b3d7"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "0ba1e9b6-c52c-450a-8c79-307eb5887549"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "f9f547d5-f05b-46a0-894b-0521386e8080"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023346Z:f9f547d5-f05b-46a0-894b-0521386e8080"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/A/www?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BL3d3dz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"www\",\r\n  \"type\": \"A\",\r\n  \"properties\": {\r\n    \"TTL\": 7200,\r\n    \"ARecords\": [\r\n      {\r\n        \"ipv4Address\": \"23.96.104.40\"\r\n      },\r\n      {\r\n        \"ipv4Address\": \"24.97.105.41\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "221"
+        ],
+        "x-ms-client-request-id": [
+          "2a1d99f5-583c-4e3c-ad0d-e3f066e52765"
+        ],
+        "If-None-Match": [
+          "*"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/A/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/A\",\r\n  \"etag\": \"a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9\",\r\n  \"properties\": {\r\n    \"fqdn\": \"www.www.contoso-1322.com.\",\r\n    \"TTL\": 7200,\r\n    \"ARecords\": [\r\n      {\r\n        \"ipv4Address\": \"23.96.104.40\"\r\n      },\r\n      {\r\n        \"ipv4Address\": \"24.97.105.41\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "399"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:43 GMT"
+        ],
+        "ETag": [
+          "a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "2a1d99f5-583c-4e3c-ad0d-e3f066e52765"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "9e295cc2-3e65-43da-a5bb-03c51cc7a29d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023343Z:9e295cc2-3e65-43da-a5bb-03c51cc7a29d"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/A/www?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BL3d3dz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/A/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/A\",\r\n  \"etag\": \"a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9\",\r\n  \"properties\": {\r\n    \"TTL\": 7200,\r\n    \"ARecords\": [\r\n      {\r\n        \"ipv4Address\": \"23.96.104.40\"\r\n      },\r\n      {\r\n        \"ipv4Address\": \"24.97.105.41\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "457"
+        ],
+        "x-ms-client-request-id": [
+          "edcd1ff5-8164-42b5-bceb-d7d724a4778d"
+        ],
+        "If-Match": [
+          "a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9-foo"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"PreconditionFailed\",\r\n  \"message\": \"The Record set www has been modified (etag mismatch).\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "95"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:44 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "edcd1ff5-8164-42b5-bceb-d7d724a4778d"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "782cb9e8-a100-4f0a-89af-a37781fb5b20"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023345Z:782cb9e8-a100-4f0a-89af-a37781fb5b20"
+        ]
+      },
+      "StatusCode": 412
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/A/www?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BL3d3dz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/A/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/A\",\r\n  \"etag\": \"a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9\",\r\n  \"properties\": {\r\n    \"TTL\": 7200,\r\n    \"ARecords\": [\r\n      {\r\n        \"ipv4Address\": \"23.96.104.40\"\r\n      },\r\n      {\r\n        \"ipv4Address\": \"24.97.105.41\"\r\n      },\r\n      {\r\n        \"ipv4Address\": \"24.97.105.45\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "515"
+        ],
+        "x-ms-client-request-id": [
+          "221e6cb7-6db8-425c-bf61-0d94f7e60612"
+        ],
+        "If-Match": [
+          "a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/A/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/A\",\r\n  \"etag\": \"1454f428-b82e-420d-aa56-d3cbb795525b\",\r\n  \"properties\": {\r\n    \"fqdn\": \"www.www.contoso-1322.com.\",\r\n    \"TTL\": 7200,\r\n    \"ARecords\": [\r\n      {\r\n        \"ipv4Address\": \"23.96.104.40\"\r\n      },\r\n      {\r\n        \"ipv4Address\": \"24.97.105.41\"\r\n      },\r\n      {\r\n        \"ipv4Address\": \"24.97.105.45\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:45 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "1454f428-b82e-420d-aa56-d3cbb795525b"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "221e6cb7-6db8-425c-bf61-0d94f7e60612"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "460ee491-eda7-461a-97bb-0c3a382cf8e0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023346Z:460ee491-eda7-461a-97bb-0c3a382cf8e0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/A?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BP2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fbfe9082-4d91-41b8-b2b6-888e64bd1a4a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/A/www\",\r\n      \"name\": \"www\",\r\n      \"type\": \"Microsoft.Network/dnszones/A\",\r\n      \"etag\": \"a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9\",\r\n      \"properties\": {\r\n        \"fqdn\": \"www.www.contoso-1322.com.\",\r\n        \"TTL\": 7200,\r\n        \"ARecords\": [\r\n          {\r\n            \"ipv4Address\": \"23.96.104.40\"\r\n          },\r\n          {\r\n            \"ipv4Address\": \"24.97.105.41\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:43 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "fbfe9082-4d91-41b8-b2b6-888e64bd1a4a"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "47c511fa-5cca-461d-bc4a-a7adb3fc62da"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023343Z:47c511fa-5cca-461d-bc4a-a7adb3fc62da"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/A?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BP2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7e0445f8-2719-4868-8468-228c8867ef21"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/A/www\",\r\n      \"name\": \"www\",\r\n      \"type\": \"Microsoft.Network/dnszones/A\",\r\n      \"etag\": \"1454f428-b82e-420d-aa56-d3cbb795525b\",\r\n      \"properties\": {\r\n        \"fqdn\": \"www.www.contoso-1322.com.\",\r\n        \"TTL\": 7200,\r\n        \"ARecords\": [\r\n          {\r\n            \"ipv4Address\": \"23.96.104.40\"\r\n          },\r\n          {\r\n            \"ipv4Address\": \"24.97.105.41\"\r\n          },\r\n          {\r\n            \"ipv4Address\": \"24.97.105.45\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:46 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "7e0445f8-2719-4868-8468-228c8867ef21"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "9b1ad988-1c64-4f36-a0f3-3be92e4325d2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023346Z:9b1ad988-1c64-4f36-a0f3-3be92e4325d2"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/AAAA?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BQUFBP2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "37f53dfc-f0d2-4179-80f7-2c1ff35b35ee"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/AAAA/www\",\r\n      \"name\": \"www\",\r\n      \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n      \"etag\": \"eddfdbac-f971-47c8-b041-3283b0d75739\",\r\n      \"properties\": {\r\n        \"fqdn\": \"www.www.contoso-1322.com.\",\r\n        \"TTL\": 3600,\r\n        \"AAAARecords\": [\r\n          {\r\n            \"ipv6Address\": \"2001:db8:85a3::8a2e:370:7334\"\r\n          },\r\n          {\r\n            \"ipv6Address\": \"2002:db9:85a4::8a2e:371:7335\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:44 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "37f53dfc-f0d2-4179-80f7-2c1ff35b35ee"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "f7bca7e8-8064-4736-801c-8d6a6e57b397"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023344Z:f7bca7e8-8064-4736-801c-8d6a6e57b397"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/AAAA?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BQUFBP2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dcc845b8-84e8-477e-9672-46771606b7f0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/AAAA/www\",\r\n      \"name\": \"www\",\r\n      \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n      \"etag\": \"fb6b8dd5-0f51-4b19-a373-651fab66b3d7\",\r\n      \"properties\": {\r\n        \"fqdn\": \"www.www.contoso-1322.com.\",\r\n        \"TTL\": 3600,\r\n        \"AAAARecords\": [\r\n          {\r\n            \"ipv6Address\": \"2001:db8:85a3::8a2e:370:7334\"\r\n          },\r\n          {\r\n            \"ipv6Address\": \"2002:db9:85a4::8a2e:371:7335\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:46 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "dcc845b8-84e8-477e-9672-46771606b7f0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "d27d242c-f1ae-4928-be86-81b44bbc49ed"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023346Z:d27d242c-f1ae-4928-be86-81b44bbc49ed"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/AAAA/www?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BQUFBL3d3dz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f7f3fd13-2ec2-48e9-ac74-35a7ff4c3506"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/AAAA/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n  \"etag\": \"eddfdbac-f971-47c8-b041-3283b0d75739\",\r\n  \"properties\": {\r\n    \"fqdn\": \"www.www.contoso-1322.com.\",\r\n    \"TTL\": 3600,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"2001:db8:85a3::8a2e:370:7334\"\r\n      },\r\n      {\r\n        \"ipv6Address\": \"2002:db9:85a4::8a2e:371:7335\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:44 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "eddfdbac-f971-47c8-b041-3283b0d75739"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f7f3fd13-2ec2-48e9-ac74-35a7ff4c3506"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "b088eb19-30a1-4445-ba51-b50df1bd074b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023344Z:b088eb19-30a1-4445-ba51-b50df1bd074b"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/AAAA/www?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BQUFBL3d3dz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2fcbaf74-8add-4144-981e-4d4bdafec54f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/AAAA/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/AAAA\",\r\n  \"etag\": \"eddfdbac-f971-47c8-b041-3283b0d75739\",\r\n  \"properties\": {\r\n    \"fqdn\": \"www.www.contoso-1322.com.\",\r\n    \"TTL\": 3600,\r\n    \"AAAARecords\": [\r\n      {\r\n        \"ipv6Address\": \"2001:db8:85a3::8a2e:370:7334\"\r\n      },\r\n      {\r\n        \"ipv6Address\": \"2002:db9:85a4::8a2e:371:7335\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:45 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "eddfdbac-f971-47c8-b041-3283b0d75739"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "2fcbaf74-8add-4144-981e-4d4bdafec54f"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "68c06b75-c907-4b2f-b581-77c704dbe73a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023345Z:68c06b75-c907-4b2f-b581-77c704dbe73a"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/A/www?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BL3d3dz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2a530e07-1702-45d9-90bc-e75338dd62eb"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/A/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/A\",\r\n  \"etag\": \"a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9\",\r\n  \"properties\": {\r\n    \"fqdn\": \"www.www.contoso-1322.com.\",\r\n    \"TTL\": 7200,\r\n    \"ARecords\": [\r\n      {\r\n        \"ipv4Address\": \"23.96.104.40\"\r\n      },\r\n      {\r\n        \"ipv4Address\": \"24.97.105.41\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:44 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "2a530e07-1702-45d9-90bc-e75338dd62eb"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "9ee737d9-f478-42b0-b518-1039c31d7f94"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023344Z:9ee737d9-f478-42b0-b518-1039c31d7f94"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnsZones/www.contoso-1322.com/A/www?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZWMwYWE1ZjctOWU3OC00MGM5LTg1Y2QtNTM1YzYzMDViMzgwL3Jlc291cmNlR3JvdXBzL3JnZG5zY2hhc2gyNTY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay9kbnNab25lcy93d3cuY29udG9zby0xMzIyLmNvbS9BL3d3dz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "77570147-0970-4f87-af76-fe0ec4d08064"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Dns.Fluent.DnsManagementClient/1.1.3.0",
+          "MacAddressHash/201d9411fad86c065cfee6858c486c3fdca96b52a713717e57f5e47fa4c5d817"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/ec0aa5f7-9e78-40c9-85cd-535c6305b380/resourceGroups/rgdnschash2564/providers/Microsoft.Network/dnszones/www.contoso-1322.com/A/www\",\r\n  \"name\": \"www\",\r\n  \"type\": \"Microsoft.Network/dnszones/A\",\r\n  \"etag\": \"a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9\",\r\n  \"properties\": {\r\n    \"fqdn\": \"www.www.contoso-1322.com.\",\r\n    \"TTL\": 7200,\r\n    \"ARecords\": [\r\n      {\r\n        \"ipv4Address\": \"23.96.104.40\"\r\n      },\r\n      {\r\n        \"ipv4Address\": \"24.97.105.41\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "private"
+        ],
+        "Date": [
+          "Thu, 13 Jul 2017 02:33:45 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "ETag": [
+          "a59aabb0-e0b3-4c5a-988d-b6ad84cd6aa9"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "77570147-0970-4f87-af76-fe0ec4d08064"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "cf3e8c3c-109b-42bf-a303-501d409c5d5f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20170713T023345Z:cf3e8c3c-109b-42bf-a303-501d409c5d5f"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanUpdateRecordSetWithExplicitETag": [
+      "rgdnschash2564",
+      "www.contoso-1322"
+    ]
+  },
+  "Variables": {
+    "ServicePrincipal": "dd05f5e5-0364-4de8-b204-d3c2ed315367",
+    "AADTenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "SubscriptionId": "ec0aa5f7-9e78-40c9-85cd-535c6305b380"
+  }
+}
