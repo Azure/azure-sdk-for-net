@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Fluent.Tests.Compute
+namespace Fluent.Tests.Compute.VirtualMachine
 {
     public class VirtualMachine
     {
@@ -25,7 +25,7 @@ namespace Fluent.Tests.Compute
         private const string VMName = "chashvm";
 
         [Fact]
-        public void CanCreateVirtualMachine()
+        public void CanCreate()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -90,7 +90,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanCreateVirtualMachinesAndRelatedResourcesInParallel()
+        public void CanCreateWithRelatedResourcesInParallel()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -200,7 +200,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanCreateVirtualMachineWithCustomData()
+        public void CanCreateWithCustomData()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -293,7 +293,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanCreateVirtualMachineWithExistingNetworkAndNewPIP()
+        public void CanCreateWithExistingNetworkAndNewPIP()
         {
             // Test for https://github.com/Azure/azure-sdk-for-net/issues/3359
             //

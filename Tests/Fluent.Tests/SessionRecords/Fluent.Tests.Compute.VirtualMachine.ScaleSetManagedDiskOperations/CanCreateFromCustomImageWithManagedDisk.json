@@ -3887,7 +3887,7 @@
     }
   ],
   "Names": {
-    "CanCreateVirtualMachineScaleSetFromCustomImageWithManagedDisk": [
+    "CanCreateFromCustomImageWithManagedDisk": [
       "pip939310",
       "img115650",
       "vmss94026",

@@ -10,12 +10,12 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Fluent.Tests.Compute
+namespace Fluent.Tests.Compute.VirtualMachine
 {
-    public class VirtualMachineBootDiagnosticsTests
+    public class BootDiagnostics
     {
         [Fact]
-        public void CanEnableBootDiagnosticsWithImplicitStorageOnManagedVMCreation()
+        public void CanEnableWithImplicitStorageOnManagedVMCreation()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -44,7 +44,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanEnableBootDiagnosticsWithCreatableStorageOnManagedVMCreation()
+        public void CanEnableWithCreatableStorageOnManagedVMCreation()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -81,7 +81,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanEnableBootDiagnosticsWithExplicitStorageOnManagedVMCreation()
+        public void CanEnableWithExplicitStorageOnManagedVMCreation()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -119,7 +119,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanDisableBootDiagnostics()
+        public void CanDisable()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -156,7 +156,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void BootDiagnosticsShouldUsesOSUnManagedDiskImplicitStorage()
+        public void ShouldUseOSUnManagedDiskImplicitStorage()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -188,7 +188,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void BootDiagnosticsShouldUseUnManagedDisksExplicitStorage()
+        public void ShouldUseUnManagedDisksExplicitStorage()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -227,7 +227,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanEnableBootDiagnosticsWithImplicitStorageOnUnManagedVMCreation()
+        public void CanEnableWithImplicitStorageOnUnManagedVMCreation()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -274,7 +274,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanEnableBootDiagnosticsWithCreatableStorageOnUnManagedVMCreation()
+        public void CanEnableWithCreatableStorageOnUnManagedVMCreation()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {

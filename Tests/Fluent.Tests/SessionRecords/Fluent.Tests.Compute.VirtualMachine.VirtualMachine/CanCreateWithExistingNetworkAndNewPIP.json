@@ -2068,7 +2068,7 @@
     }
   ],
   "Names": {
-    "CanCreateVirtualMachineWithExistingNetworkAndNewPIP": [
+    "CanCreateWithExistingNetworkAndNewPIP": [
       "rg5071",
       "vnet7268",
       "vm1076",
