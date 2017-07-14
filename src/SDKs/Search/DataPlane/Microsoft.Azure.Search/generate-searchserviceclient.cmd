@@ -15,10 +15,10 @@ set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%spec
 set sdksRoot=%~dp0..\..\..
 
 if "%3" == "" (call npm i -g autorest)
-rd /S /Q %~dp0GeneratedSearchService
+
 
 @echo on
-:: call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-searchservice --tag=null
-call autorest "--input-file=https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/search/data-plane/Microsoft.Search/2016-09-01/searchservice.json" --csharp.azure-arm --output-folder=%sdksRoot%\Search\DataPlane\Microsoft.Azure.Search\GeneratedSearchService --latest --namespace=Microsoft.Azure.Search --license-header=MICROSOFT_MIT
+:: call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-searchservice --tag=null --clear-output-folder
+call autorest "--input-file=https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/search/data-plane/Microsoft.Search/2016-09-01/searchservice.json" --csharp.azure-arm --output-folder=%sdksRoot%\Search\DataPlane\Microsoft.Azure.Search\GeneratedSearchService --latest --namespace=Microsoft.Azure.Search --license-header=MICROSOFT_MIT --clear-output-folder
 
 endlocal

@@ -14,7 +14,7 @@ if  "%1" == "" (
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated\Insights
 
-rd /S /Q  %generateFolder%
+
 call "%repoRoot%\tools\autorest.composite.gen.cmd" %specFile% Microsoft.Azure.Insights %autoRestVersion% %generateFolder% "-FT 1"
 
 if  "%2" == "" (
@@ -25,6 +25,6 @@ if  "%2" == "" (
 
 set generateFolder=%~dp0Generated\Management\Insights
 
-rd /S /Q  %generateFolder%
+
 call "%repoRoot%\tools\autorest.composite.gen.cmd" %specFile% Microsoft.Azure.Management.Insights %autoRestVersion% %generateFolder% "-FT 1"
  

@@ -17,11 +17,11 @@ set specFile2="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%spe
 set sdksRoot=%~dp0..\..
 
 if "%3" == "" (call npm i -g autorest)
-rd /S /Q %~dp0Generated\Monitor
-rd /S /Q %~dp0Generated\Management\Monitor
+
+
 
 @echo on
-call autorest %specFile1% --csharp --csharp-sdks-folder=%sdksRoot% --latest
-call autorest %specFile2% --csharp --csharp-sdks-folder=%sdksRoot% --latest
+call autorest %specFile1% --csharp --csharp-sdks-folder=%sdksRoot% --latest --clear-output-folder
+call autorest %specFile2% --csharp --csharp-sdks-folder=%sdksRoot% --latest --clear-output-folder
 
 endlocal

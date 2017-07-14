@@ -1,6 +1,6 @@
 @echo off
 set repoUser=olydis
-set repoBranch=1f665087bdda68b783aa30c214a57dc88a12de16
+set repoBranch=6c4021caff0767cfa72fd25fe2bca0a378a0aa28
 call ..\src\SDKs\StreamAnalytics\Management.StreamAnalytics\generate.cmd                              %repoUser% %repoBranch% noInstall
 call ..\src\SDKs\Storage\Management.Storage\generate.cmd                                              %repoUser% %repoBranch% noInstall
 :: ...

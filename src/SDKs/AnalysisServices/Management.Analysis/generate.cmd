@@ -12,13 +12,11 @@ if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
 if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
 set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/analysisservices/resource-manager/readme.md"
 
-
 set sdksRoot=%~dp0..\..
 
 if "%3" == "" (call npm i -g autorest)
-rd /S /Q %~dp0Generated
 
 @echo on
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --clear-output-folder
 
 endlocal
