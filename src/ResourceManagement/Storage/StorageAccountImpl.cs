@@ -201,6 +201,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         public StorageAccountImpl WithBlobStorageAccountKind()
         {
             createParameters.Kind = Models.Kind.BlobStorage;
+            // It is required to set AccessTier for BlobStorage kind, default it to Hot (as portal does)
+            createParameters.AccessTier = Models.AccessTier.Hot;
             return this;
         }
 
