@@ -28,8 +28,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:3F2076D33F84FDFAB700A1F0C8C41647:CC6968668CFE462E08B722E80135BB36
         public bool IsEnabled()
         {
-            if (this.encryptionServices.Blob != null
-                && this.encryptionServices.Blob.Enabled.HasValue)
+            if (this.encryptionServices.Blob != null && this.encryptionServices.Blob.Enabled.HasValue)
             {
                 return this.encryptionServices.Blob.Enabled.Value;
             }
@@ -39,8 +38,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:383E4E95C2764D4EF94A2DE388852F09:CE1C414F974A62AA7E3EC6809EF477EC
         public DateTime? LastEnabledTime()
         {
-            if (this.encryptionServices.Blob != null 
-                && this.encryptionServices.Blob.LastEnabledTime.HasValue)
+            if (this.encryptionServices.Blob != null && this.encryptionServices.Blob.LastEnabledTime.HasValue)
             {
                 return this.encryptionServices.Blob.LastEnabledTime.Value;
             }

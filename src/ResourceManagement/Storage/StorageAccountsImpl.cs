@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         IStorageAccounts
     {
         ///GENMHASH:CAF9C60CDF20574430EA950EFF44BAD7:203896CB3A94364B5BCBEC519D7570FE
-        internal StorageAccountsImpl(IStorageManager manager) : base(manager.Inner.StorageAccounts, manager)
+        internal StorageAccountsImpl(IStorageManager storageManager) : base(storageManager.Inner.StorageAccounts, storageManager)
         { }
 
         ///GENMHASH:42E0B61F5AA4A1130D7B90CCBAAE3A5D:818AFE85371661E9A54D33FFEE903112
@@ -42,10 +42,9 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AE7618DEFA52BF6B178D880C65E79670
         public StorageAccountImpl Define(string name)
         {
-            StorageAccountImpl wrapped = WrapModel(name);
-            wrapped.WithSku(SkuName.StandardGRS)
+            return WrapModel(name)
+                    .WithSku(SkuName.StandardGRS)
                    .WithGeneralPurposeAccountKind();
-            return wrapped;
         }
 
         protected async override Task<IPage<StorageAccountInner>> ListInnerAsync(CancellationToken cancellationToken)
@@ -70,6 +69,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         protected async override Task<StorageAccountInner> GetInnerByGroupAsync(string groupName, string name, CancellationToken cancellationToken)
         {
+            // Note: Using GetPropertiesAsync instead of GetAsync to get extended information about the storage account.
+            //
             return await Inner.GetPropertiesAsync(groupName, name, cancellationToken);
         }
 
@@ -81,14 +82,14 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:2A8077054DAAE50898DF5E1B9FCC9EE9
         protected override StorageAccountImpl WrapModel(string name)
         {
-            Management.Storage.Fluent.Models.StorageAccountInner innerObject = new StorageAccountInner();
-            return new StorageAccountImpl(name, innerObject, Manager);
+            return new StorageAccountImpl(name, new StorageAccountInner(), Manager);
         }
 
         ///GENMHASH:14BC53657DA284C1E6DC963C78A02447:55673621A81743078EBE1EB3331FB9AE
         protected override IStorageAccount WrapModel(StorageAccountInner storageAccountInner)
         {
-            if (storageAccountInner == null) {
+            if (storageAccountInner == null)
+            {
                 return null;
             }
             return new StorageAccountImpl(storageAccountInner.Name, storageAccountInner, Manager);

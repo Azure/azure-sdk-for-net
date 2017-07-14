@@ -5,18 +5,16 @@ namespace Microsoft.Azure.Management.Storage.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Fluent.Models;
     using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition;
     using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update;
-    using Microsoft.Rest;
     using System.Collections.Generic;
     using System;
 
     /// <summary>
-    /// Implementation for StorageAccount and its parent interfaces.
+    /// Implementation for IStorageAccount.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnN0b3JhZ2UuaW1wbGVtZW50YXRpb24uU3RvcmFnZUFjY291bnRJbXBs
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnN0b3JhZ2UuaW1wbGVtZW50YXRpb24uU3RvcmFnZUFjY291bnRJbXBs
     internal partial class StorageAccountImpl  :
             GroupableResource<
             IStorageAccount,
@@ -31,14 +29,12 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         IDefinition,
         IUpdate
     {
-        private string name;
         private StorageAccountCreateParametersInner createParameters;
         private StorageAccountUpdateParametersInner updateParameters;
 
         ///GENMHASH:9EC86FDAF9C3238B45EB0EE4355F4919:01A8E19E4477D51C1F8BB7C63F151C69
         internal StorageAccountImpl(string name, StorageAccountInner innerModel, IStorageManager storageManager) : base(name, innerModel, storageManager)
         {
-            this.name = name;
             createParameters = new StorageAccountCreateParametersInner();
         }
 
@@ -53,16 +49,18 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             return Inner.Sku;
         }
 
+        ///GENMHASH:C4C0D4751CA4E1904C31CE6DF0B02AC3:B5986EB96489F714DC052E1136F06A45
+        public Kind Kind()
+        {
+            // TODO: In the next major version upgrade of SDK change return type to nullable
+            //       returning the default enum value when server returns null is not expected
+            return Inner.Kind.HasValue ? Inner.Kind.Value : default(Kind);
+        }
+
         ///GENMHASH:BCE4AA46C905DCE36E6D5BDD93BA93B0:1B56C35879CE652985BD4F328B841261
         public DateTime CreationTime()
         {
             return Inner.CreationTime.HasValue ? Inner.CreationTime.Value : default(DateTime);
-        }
-
-        ///GENMHASH:C4C0D4751CA4E1904C31CE6DF0B02AC3:B5986EB96489F714DC052E1136F06A45
-        public Kind Kind()
-        {
-            return Inner.Kind.HasValue ? Inner.Kind.Value : default(Kind);
         }
 
         ///GENMHASH:13C190C95339C5E47A33E6FC4C200B03:5E23174652AE3CE52750F1DC01FB1134
@@ -80,6 +78,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:99D5BF64EA8AA0E287C9B6F77AAD6FC4:220D4662AAC7DF3BEFAF2B253278E85C
         public ProvisioningState ProvisioningState()
         {
+            // TODO: In the next major version upgrade of SDK change return type to nullable
+            //       returning the default enum value when server returns null is not expected
             return Inner.ProvisioningState.HasValue ? Inner.ProvisioningState.Value : default(ProvisioningState);
         }
 
@@ -98,19 +98,17 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:E3CB6E557BDC02538C5A6963772F3FEF:349706F064F75B85DB63EF492656563E
         public StorageAccountEncryptionKeySource EncryptionKeySource()
         {
-            if (this.Inner.Encryption == null
-                || Microsoft.Azure.Management.Storage.Fluent.Models.Encryption.KeySource == null) {
+            if (this.Inner.Encryption == null || Microsoft.Azure.Management.Storage.Fluent.Models.Encryption.KeySource == null) {
                 return null;
             }
             return StorageAccountEncryptionKeySource.Parse(Microsoft.Azure.Management.Storage.Fluent.Models.Encryption.KeySource);
         }
 
         ///GENMHASH:26FB96D5CAED2DAC6A25B7684BA6EA62:EA8D98221847758B674F32A5F6BA8D4E
-        public IReadOnlyDictionary<Microsoft.Azure.Management.Storage.Fluent.StorageService, Microsoft.Azure.Management.Storage.Fluent.IStorageAccountEncryptionStatus> EncryptionStatuses()
+        public IReadOnlyDictionary<StorageService, IStorageAccountEncryptionStatus> EncryptionStatuses()
         {
             var statuses = new Dictionary<StorageService, IStorageAccountEncryptionStatus>();
-            if (this.Inner.Encryption != null
-                && this.Inner.Encryption.Services != null)
+            if (this.Inner.Encryption != null && this.Inner.Encryption.Services != null)
             {
                 // Status of blob service
                 //
@@ -127,17 +125,9 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:F740873A801629829EA1C3C98F4FDDC4:ACAFFE3955CCFBD0C2BC6D268AECA2BA
         public AccessTier AccessTier()
         {
+            // TODO: In the next major version upgrade of SDK change return type to nullable
+            //       returning the default enum value when server returns null is not expected
             return Inner.AccessTier.HasValue ? Inner.AccessTier.Value : default(AccessTier);
-        }
-
-
-        ///GENMHASH:2751D8683222AD34691166D915065302:626481EC1E21C06AD0B6BDD35321AA29
-        public async Task<System.Collections.Generic.IReadOnlyList<Models.StorageAccountKey>> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var storageAccountListKeysResultInner = await this.Manager.Inner.StorageAccounts.ListKeysAsync(this.ResourceGroupName, this.Name, cancellationToken);
-            var result = new List<StorageAccountKey>();
-            result.AddRange(storageAccountListKeysResultInner.Keys);
-            return result;
         }
 
         ///GENMHASH:E4DFA7EA15F8324FB60C810D0C96D2FF:1BCD5CF569F11AB6F798D4F3A5BFC786
@@ -146,6 +136,14 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             return GetKeysAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
+        ///GENMHASH:2751D8683222AD34691166D915065302:626481EC1E21C06AD0B6BDD35321AA29
+        public async Task<System.Collections.Generic.IReadOnlyList<Models.StorageAccountKey>> GetKeysAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var keysResultInner = await this.Manager.Inner.StorageAccounts.ListKeysAsync(this.ResourceGroupName, this.Name, cancellationToken);
+            var keys = new List<StorageAccountKey>();
+            keys.AddRange(keysResultInner.Keys);
+            return keys;
+        }
 
         ///GENMHASH:FE5C90217FF36474FA8DE7E91403E40F:8A9D1B7CB45D0ABAC76D65E99FADA580
         public IReadOnlyList<Models.StorageAccountKey> RegenerateKey(string keyName)
@@ -156,15 +154,10 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:AC9981EE195A3F3ECFFF4F080A6FEAAD:0AE932BB7FDBF07328B9F81662B43B8C
         public async Task<System.Collections.Generic.IReadOnlyList<Models.StorageAccountKey>> RegenerateKeyAsync(string keyName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var storageAccountListKeysResultInner = await Manager.Inner.StorageAccounts.RegenerateKeyAsync(
-                ResourceGroupName,
-                Name,
-                keyName,
-                cancellationToken);
-            var result = new List<StorageAccountKey>();
-            result.AddRange(storageAccountListKeysResultInner.Keys);
-            return result;
-
+            var regeneratedKeysResultInner = await Manager.Inner.StorageAccounts.RegenerateKeyAsync(this.ResourceGroupName, this.Name, keyName, cancellationToken);
+            var regeneratedKeys = new List<StorageAccountKey>();
+            regeneratedKeys.AddRange(regeneratedKeysResultInner.Keys);
+            return regeneratedKeys;
         }
 
         ///GENMHASH:5A2D79502EDA81E37A36694062AEDC65:F43E8F467DCA84E8666ED727725A26A8
@@ -178,6 +171,8 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:59D34F73D07BE052EC4D175FC76C75FF
         protected override Task<Models.StorageAccountInner> GetInnerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
+            // Note: Using GetPropertiesAsync instead of GetAsync to get extended information about the storage account.
+            //
             return this.Manager.Inner.StorageAccounts.GetPropertiesAsync(this.ResourceGroupName, this.Name, cancellationToken);
         }
 
@@ -205,7 +200,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:04DD7C0A29E2A433420E3CC1BCC83642:AE8E0FE7D34A8D01F4AED46E07861F2F
         public StorageAccountImpl WithBlobStorageAccountKind()
         {
-            createParameters.Kind = Models.Kind.Storage;
+            createParameters.Kind = Models.Kind.BlobStorage;
             return this;
         }
 
@@ -247,7 +242,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             {
                 encryption.Services = new EncryptionServices();
             }
-            //if (Encryption.KeySource == null) // Unlike Java this is static in the generated code
+            //if (Encryption.KeySource == null) // Unlike Java this is static in the generated code with value set to "Microsoft.Storage"
             //{
             //    encryption.KeySource = "Microsoft.Storage";
             //}
@@ -302,33 +297,16 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             return this;
         }
 
-        ///GENMHASH:F3C7D5F595E480B52B33BC7ACD704928:6B5BD9106155829D3669430155DCDD3B
-        public StorageAccountImpl WithAccessTier(AccessTier accessTier)
-        {
-            if (IsInCreateMode)
-            {
-                createParameters.AccessTier = accessTier;
-            }
-            else
-            {
-                if (this.Inner.Kind != Models.Kind.BlobStorage) {
-                    throw new NotSupportedException("Access tier can not be changed for general purpose storage accounts.");
-                }
-                updateParameters.AccessTier = accessTier;
-            }
-            return this;
-        }
-
         ///GENMHASH:C6CC40946571810DF92A3D04D369CBCD:391ADF63D3B3B254E14435035F093D3D
         public StorageAccountImpl WithCustomDomain(CustomDomain customDomain)
         {
             if (IsInCreateMode)
             {
-                createParameters.CustomDomain = new CustomDomain(name);
+                createParameters.CustomDomain = customDomain;
             }
             else
             {
-                updateParameters.CustomDomain = new CustomDomain(name);
+                updateParameters.CustomDomain = customDomain;
             }
             return this;
         }
@@ -346,11 +324,29 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             return WithCustomDomain(new CustomDomain() { Name = name, UseSubDomain = useSubDomain });
         }
 
+        ///GENMHASH:F3C7D5F595E480B52B33BC7ACD704928:6B5BD9106155829D3669430155DCDD3B
+        public StorageAccountImpl WithAccessTier(AccessTier accessTier)
+        {
+            if (IsInCreateMode)
+            {
+                createParameters.AccessTier = accessTier;
+            }
+            else
+            {
+                if (this.Inner.Kind != Models.Kind.BlobStorage)
+                {
+                    throw new NotSupportedException($"Access tier can changed only for blob storage account type 'BlobStorage', the account type of this account is '{this.Inner.Kind}'");
+                }
+                updateParameters.AccessTier = accessTier;
+            }
+            return this;
+        }
+
         ///GENMHASH:507A92D4DCD93CE9595A78198DEBDFCF:173D84E645D15368413A8D483FE286BF
         private async Task<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> UpdateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             updateParameters.Tags = this.Inner.Tags;
-            var response = await Manager.Inner.StorageAccounts.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);
+            var response = await Manager.Inner.StorageAccounts.UpdateAsync(this.ResourceGroupName, this.Name, updateParameters, cancellationToken);
             SetInner(response);
             return this;
         }
@@ -362,14 +358,16 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             {
                 createParameters.Location = this.RegionName;
                 createParameters.Tags = Inner.Tags;
-                await Manager.Inner.StorageAccounts.CreateAsync(ResourceGroupName, this.name, createParameters, cancellationToken);
-                var response = await Manager.Inner.StorageAccounts.GetPropertiesAsync(this.ResourceGroupName, this.Name, cancellationToken);
-                SetInner(response);
+                await Manager.Inner.StorageAccounts.CreateAsync(ResourceGroupName, this.Name, createParameters, cancellationToken);
             }
              else
             {
                 await UpdateResourceAsync(cancellationToken);
             }
+            // Note: Using GetPropertiesAsync instead of GetAsync to get extended information about the storage account.
+            //
+            var response = await Manager.Inner.StorageAccounts.GetPropertiesAsync(this.ResourceGroupName, this.Name, cancellationToken);
+            SetInner(response);
             return this;
         }
     }
