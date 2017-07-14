@@ -12,18 +12,19 @@ if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
 if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
 set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/resources/resource-manager/readme.md"
 
-set autoRestVersion=1.2.0
+
 set sdksRoot=%~dp0..\..
 
 if "%3" == "" (call npm i -g autorest)
 rd /S /Q %~dp0Generated
 
 @echo on
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-features
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-locks
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-policy
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-subscriptions
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-links
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-managedapplications
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-features
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-links
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-locks
+:: call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-managedapplications
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-policy
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-resources
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-subscriptions
 
 endlocal
