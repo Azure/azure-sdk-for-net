@@ -1,19 +1,21 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-using Microsoft.Azure.Management.Storage.Fluent;
-using Microsoft.Azure.Management.Storage.Fluent.Models;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Rest.Azure;
-
 namespace Microsoft.Azure.Management.Storage.Fluent
 {
-    internal class StorageAccountsImpl :
-        TopLevelModifiableResources<
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
+
+    /// <summary>
+    /// The implementation of StorageAccounts and its parent interfaces.
+    /// </summary>
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LnN0b3JhZ2UuaW1wbGVtZW50YXRpb24uU3RvcmFnZUFjY291bnRzSW1wbA==
+    internal partial class StorageAccountsImpl : TopLevelModifiableResources<
                 IStorageAccount,
                 StorageAccountImpl,
                 StorageAccountInner,
@@ -21,20 +23,24 @@ namespace Microsoft.Azure.Management.Storage.Fluent
                 IStorageManager>,
         IStorageAccounts
     {
+        ///GENMHASH:CAF9C60CDF20574430EA950EFF44BAD7:203896CB3A94364B5BCBEC519D7570FE
         internal StorageAccountsImpl(IStorageManager manager) : base(manager.Inner.StorageAccounts, manager)
         { }
-        
+
+        ///GENMHASH:42E0B61F5AA4A1130D7B90CCBAAE3A5D:818AFE85371661E9A54D33FFEE903112
+        public async Task<Microsoft.Azure.Management.Storage.Fluent.CheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return new CheckNameAvailabilityResult(await Inner.CheckNameAvailabilityAsync(name, cancellationToken));
+        }
+
+        ///GENMHASH:C4C74C5CA23BE3B4CAFEFD0EF23149A0:B6DE3F3ADD30CF80937F7E47989E73C7
         public CheckNameAvailabilityResult CheckNameAvailability(string name)
         {
             return CheckNameAvailabilityAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return new CheckNameAvailabilityResult(await Inner.CheckNameAvailabilityAsync(name, cancellationToken));
-        }
-
-        public StorageAccount.Definition.IBlank Define(string name)
+        ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AE7618DEFA52BF6B178D880C65E79670
+        public StorageAccountImpl Define(string name)
         {
             StorageAccountImpl wrapped = WrapModel(name);
             wrapped.WithSku(SkuName.StandardGRS)
@@ -72,16 +78,20 @@ namespace Microsoft.Azure.Management.Storage.Fluent
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        protected override IStorageAccount WrapModel(StorageAccountInner inner)
-        {
-            return new StorageAccountImpl(inner.Name, inner, Manager);
-        }
-        
+        ///GENMHASH:2FE8C4C2D5EAD7E37787838DE0B47D92:2A8077054DAAE50898DF5E1B9FCC9EE9
         protected override StorageAccountImpl WrapModel(string name)
         {
             Management.Storage.Fluent.Models.StorageAccountInner innerObject = new StorageAccountInner();
-            return new StorageAccountImpl(name, innerObject, Manager
-            );
+            return new StorageAccountImpl(name, innerObject, Manager);
+        }
+
+        ///GENMHASH:14BC53657DA284C1E6DC963C78A02447:55673621A81743078EBE1EB3331FB9AE
+        protected override IStorageAccount WrapModel(StorageAccountInner storageAccountInner)
+        {
+            if (storageAccountInner == null) {
+                return null;
+            }
+            return new StorageAccountImpl(storageAccountInner.Name, storageAccountInner, Manager);
         }
     }
 }
