@@ -26,58 +26,7 @@ namespace Sql.Tests
                 // Basic setup
                 var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
                 ResourceGroup resourceGroup = context.CreateResourceGroup(location);
-                NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
-
-                // Create vnet 
-                string vnetName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                string subnet1Name = SqlManagementTestUtilities.GenerateName(testPrefix);
-                string subnet2Name = SqlManagementTestUtilities.GenerateName(testPrefix);
-
-                List<PrivateAccessServicePropertiesFormat> SqlPrivateAccess = new List<PrivateAccessServicePropertiesFormat>();
-                SqlPrivateAccess.Add(new PrivateAccessServicePropertiesFormat("Microsoft.Sql"));
-
-                var vnet = new VirtualNetwork()
-                {
-                    Location = location,
-
-                    AddressSpace = new AddressSpace()
-                    {
-                        AddressPrefixes = new List<string>()
-                        {
-                            "10.0.0.0/16",
-                        }
-                    },
-                    DhcpOptions = new DhcpOptions()
-                    {
-                        DnsServers = new List<string>()
-                        {
-                            "10.1.1.1",
-                            "10.1.2.4"
-                        }
-                    },
-                    Subnets = new List<Subnet>()
-                    {
-                        new Subnet()
-                        {
-                            Name = subnet1Name,
-                            AddressPrefix = "10.0.1.0/24",
-                            PrivateAccessServices = SqlPrivateAccess,
-                        },
-                        new Subnet()
-                        {
-                            Name = subnet2Name,
-                            AddressPrefix = "10.0.2.0/24",
-                            PrivateAccessServices = SqlPrivateAccess,
-                        }
-                    }
-                };
-
-                // Put Vnet
-                var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroup.Name, vnetName, vnet);
-                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
-
-                // Get Vnet
-                var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroup.Name, vnetName);
+                VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, subnetCount: 2, location: location);
 
                 Server server = context.CreateServer(resourceGroup, location);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
@@ -137,51 +86,7 @@ namespace Sql.Tests
                 // Basic setup
                 var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
                 ResourceGroup resourceGroup = context.CreateResourceGroup(location);
-                NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
-
-                // Create vnet 
-                string vnetName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                string subnetName = SqlManagementTestUtilities.GenerateName(testPrefix);
-
-                List<PrivateAccessServicePropertiesFormat> SqlPrivateAccess = new List<PrivateAccessServicePropertiesFormat>();
-                SqlPrivateAccess.Add(new PrivateAccessServicePropertiesFormat("Microsoft.Sql"));
-
-                var vnet = new VirtualNetwork()
-                {
-                    Location = location,
-
-                    AddressSpace = new AddressSpace()
-                    {
-                        AddressPrefixes = new List<string>()
-                        {
-                            "10.0.0.0/16",
-                        }
-                    },
-                    DhcpOptions = new DhcpOptions()
-                    {
-                        DnsServers = new List<string>()
-                        {
-                            "10.1.1.1",
-                            "10.1.2.4"
-                        }
-                    },
-                    Subnets = new List<Subnet>()
-                    {
-                        new Subnet()
-                        {
-                            Name = subnetName,
-                            AddressPrefix = "10.0.1.0/24",
-                            PrivateAccessServices = SqlPrivateAccess,
-                        }
-                    }
-                };
-
-                // Put Vnet
-                var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroup.Name, vnetName, vnet);
-                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
-
-                // Get Vnet
-                var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroup.Name, vnetName);
+                VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, subnetCount: 1, location: location);
 
                 Server server = context.CreateServer(resourceGroup, location);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
@@ -212,58 +117,7 @@ namespace Sql.Tests
                 // Basic setup
                 var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
                 ResourceGroup resourceGroup = context.CreateResourceGroup(location);
-                NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
-
-                // Create vnet 
-                string vnetName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                string subnet1Name = SqlManagementTestUtilities.GenerateName(testPrefix);
-                string subnet2Name = SqlManagementTestUtilities.GenerateName(testPrefix);
-
-                List<PrivateAccessServicePropertiesFormat> SqlPrivateAccess = new List<PrivateAccessServicePropertiesFormat>();
-                SqlPrivateAccess.Add(new PrivateAccessServicePropertiesFormat("Microsoft.Sql"));
-
-                var vnet = new VirtualNetwork()
-                {
-                    Location = location,
-
-                    AddressSpace = new AddressSpace()
-                    {
-                        AddressPrefixes = new List<string>()
-                        {
-                            "10.0.0.0/16",
-                        }
-                    },
-                    DhcpOptions = new DhcpOptions()
-                    {
-                        DnsServers = new List<string>()
-                        {
-                            "10.1.1.1",
-                            "10.1.2.4"
-                        }
-                    },
-                    Subnets = new List<Subnet>()
-                    {
-                        new Subnet()
-                        {
-                            Name = subnet1Name,
-                            AddressPrefix = "10.0.1.0/24",
-                            PrivateAccessServices = SqlPrivateAccess,
-                        },
-                        new Subnet()
-                        {
-                            Name = subnet2Name,
-                            AddressPrefix = "10.0.2.0/24",
-                            PrivateAccessServices = SqlPrivateAccess,
-                        }
-                    }
-                };
-
-                // Put Vnet
-                var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroup.Name, vnetName, vnet);
-                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
-
-                // Get Vnet
-                var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroup.Name, vnetName);
+                VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, subnetCount: 2, location: location);
 
                 Server server = context.CreateServer(resourceGroup, location);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
@@ -286,6 +140,65 @@ namespace Sql.Tests
                 vfr = sqlClient.VirtualNetworkRules.CreateOrUpdate(resourceGroup.Name, server.Name, vnetfirewallRuleName, rule);
                 SqlManagementTestUtilities.ValidateVirtualNetworkRule(rule, vfr, vnetfirewallRuleName);
             }
+        }
+
+        public VirtualNetwork CreateVirtualNetwork(SqlManagementTestContext context, ResourceGroup resourceGroup, int subnetCount = 1, string location = SqlManagementTestUtilities.DefaultLocationId)
+        {
+            NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
+
+            // Create vnet andinitialize subnets
+            string vnetName = SqlManagementTestUtilities.GenerateName();
+
+            List<PrivateAccessServicePropertiesFormat> SqlPrivateAccess = new List<PrivateAccessServicePropertiesFormat>()
+            {
+                 new PrivateAccessServicePropertiesFormat("Microsoft.Sql")
+            };
+
+            List<Subnet> subnetList = new List<Subnet>();
+            for (int i = 0; i<subnetCount; i++)
+            {
+                string subnetName = SqlManagementTestUtilities.GenerateName();
+                String addressPrefix = "10.0." + (i + 1) + ".0/24";
+                Subnet subnet = new Subnet()
+                {
+                    Name = subnetName,
+                    AddressPrefix = addressPrefix,
+                    PrivateAccessServices = SqlPrivateAccess,
+                };
+                subnetList.Add(subnet);
+            }
+            
+            var vnet = new VirtualNetwork()
+            {
+                Location = location,
+
+                AddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes = new List<string>()
+                        {
+                            "10.0.0.0/16",
+                        }
+                },
+                DhcpOptions = new DhcpOptions()
+                {
+                    DnsServers = new List<string>()
+                        {
+                            "10.1.1.1",
+                            "10.1.2.4"
+                        }
+                },
+                Subnets = subnetList
+            };
+
+            // Put Vnet
+            var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroup.Name, vnetName, vnet);
+            Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
+
+            // Get Vnet
+            var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroup.Name, vnetName);
+
+            return getVnetResponse;
+
         }
     }
 }
