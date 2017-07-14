@@ -211,6 +211,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets the user property bag, which can be used for custom message properties.
         /// </summary>
+        /// <remarks>
+        /// Only following value types are supported:
+        /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal, 
+        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan, Stream, byte[], 
+        /// and IList / IDictionary of supported types
+        /// </remarks>
         public IDictionary<string, object> UserProperties { get; internal set; }
 
         /// <summary>

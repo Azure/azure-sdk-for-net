@@ -4,12 +4,8 @@
 namespace Microsoft.Azure.ServiceBus.Filters
 {
     /// <summary>
-    /// Represents the false filter expression.
+    /// Matches none the messages arriving to be selected for the subscription.
     /// </summary>
-    /// <remarks>The Match None expression should be used if you want to create
-    /// a subscription that initially block all messages. Typically in this scenario is you may
-    /// want to create the subscription but want to enable this subscription at a later date. This filter will enable
-    /// that scenario. </remarks>
     public sealed class FalseFilter : SqlFilter
     {
         internal static readonly FalseFilter Default = new FalseFilter();

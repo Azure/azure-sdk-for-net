@@ -67,6 +67,7 @@ namespace Microsoft.Azure.ServiceBus
         /// You can add rules to the subscription that will decide filter which messages from the topic should reach the subscription.
         /// A default <see cref="TrueFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
+        /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
         Task AddRuleAsync(string ruleName, Filter filter);
 
@@ -79,6 +80,7 @@ namespace Microsoft.Azure.ServiceBus
         /// You can add rules to the subscription that will decide filter which messages from the topic should reach the subscription.
         /// A default <see cref="TrueFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
         /// You can add multiple rules with distinct names to the same subscription.
+        /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
         Task AddRuleAsync(RuleDescription description);
 

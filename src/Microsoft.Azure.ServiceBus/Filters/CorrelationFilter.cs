@@ -10,10 +10,21 @@ namespace Microsoft.Azure.ServiceBus.Filters
     /// Represents the correlation filter expression.
     /// </summary>
     /// <remarks>
+    /// <para>
+    /// A CorrelationFilter holds a set of conditions that are matched against one of more of an arriving message's user and system properties.
+    /// A common use is a match against the <see cref="Message.CorrelationId"/> property, but the application can also choose to match against 
+    /// <see cref="Message.ContentType"/>, <see cref="Message.Label"/>, <see cref="Message.MessageId"/>, <see cref="Message.ReplyTo"/>, 
+    /// <see cref="Message.ReplyToSessionId"/>, <see cref="Message.SessionId"/>, <see cref="Message.To"/>, and any user-defined properties. 
+    /// A match exists when an arriving message's value for a property is equal to the value specified in the correlation filter. For string expressions, 
+    /// the comparison is case-sensitive. When specifying multiple match properties, the filter combines them as a logical AND condition, 
+    /// meaning all conditions must match for the filter to match.
+    /// </para>
+    /// <para>
     /// The CorrelationFilter provides an efficient shortcut for declarations of filters that deal only with correlation equality.
     /// In this case the cost of the lexigraphical analysis of the expression can be avoided.
     /// Not only will correlation filters be optimized at declaration time, but they will also be optimized at runtime.
     /// Correlation filter matching can be reduced to a hashtable lookup, which aggregates the complexity of the set of defined correlation filters to O(1).
+    /// </para>
     /// </remarks>
     public sealed class CorrelationFilter : Filter
     {

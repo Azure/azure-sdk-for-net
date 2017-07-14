@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.Filters
 {
     /// <summary>
-    /// Matches a filter expression.
+    /// Matches all the messages arriving to be selected for the subscription.
     /// </summary>
     public sealed class TrueFilter : SqlFilter
     {

@@ -336,10 +336,12 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Receives a particular message identified by <paramref name="sequenceNumber"/>.
+        /// Receives a specific deferred message identified by <paramref name="sequenceNumber"/>.
         /// </summary>
         /// <param name="sequenceNumber">The sequence number of the message that will be received.</param>
-        /// <returns>Message with the sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found.</returns>
+        /// <returns>Message identified by sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found. 
+        /// Throws if the message has not been deferred.</returns>
+        /// <seealso cref="DeferAsync"/>
         public async Task<Message> ReceiveBySequenceNumberAsync(long sequenceNumber)
         {
             IList<Message> messages = await this.ReceiveBySequenceNumberAsync(new long[] { sequenceNumber }).ConfigureAwait(false);
@@ -352,10 +354,12 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
-        /// Receives a <see cref="IList{Message}"/> messages identified by <paramref name="sequenceNumbers"/>.
+        /// Receives a <see cref="IList{Message}"/> of deferred messages identified by <paramref name="sequenceNumbers"/>.
         /// </summary>
         /// <param name="sequenceNumbers">An <see cref="IEnumerable{T}"/> containing the sequence numbers to receive.</param>
-        /// <returns>Messages whoese sequence numbers were requested. Returns null if no messages are found.</returns>
+        /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
+        /// Throws if the messages have not been deferred.</returns>
+        /// <seealso cref="DeferAsync"/>
         public async Task<IList<Message>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
         {
             this.ThrowIfNotPeekLockMode();
@@ -470,6 +474,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
         /// In order to receive this message again in the future, you will need to save the <see cref="Message.SystemPropertiesCollection.SequenceNumber"/>
         /// and receive it using <see cref="ReceiveBySequenceNumberAsync(long)"/>.
+        /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
         /// </remarks>
         /// <returns>The asynchronous operation.</returns>
         public async Task DeferAsync(string lockToken)
