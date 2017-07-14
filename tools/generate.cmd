@@ -17,7 +17,7 @@ if "%5" == "" (call npm i -g autorest)
 
 :: code generation
 @echo on
-call autorest %configFile% --csharp --csharp-sdks-folder=%~dp0\..\src\SDKs --version=%version% --clear-output-folder
+call autorest %configFile% --csharp --csharp-sdks-folder=%~dp0\..\src\SDKs --version=%version%
 @echo off
 
 endlocal

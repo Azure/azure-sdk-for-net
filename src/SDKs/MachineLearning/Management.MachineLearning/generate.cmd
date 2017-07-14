@@ -4,22 +4,4 @@
 ::
 
 @echo off
-setlocal
-
-if not "%1" == "" (set specsRepoUser="%1")
-if not "%2" == "" (set specsRepoBranch="%2")
-if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
-if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
-set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/machinelearning/resource-manager/readme.md"
-
-
-set sdksRoot=%~dp0..\..
-
-if "%3" == "" (call npm i -g autorest)
-
-
-@echo on
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-commitmentPlans --clear-output-folder
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-webservices
-
-endlocal
+call %~dp0..\..\..\..\tools\generate.cmd machinelearning/resource-manager %*

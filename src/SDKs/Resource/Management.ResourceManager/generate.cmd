@@ -4,27 +4,4 @@
 ::
 
 @echo off
-setlocal
-
-if not "%1" == "" (set specsRepoUser="%1")
-if not "%2" == "" (set specsRepoBranch="%2")
-if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
-if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
-set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/resources/resource-manager/readme.md"
-
-
-set sdksRoot=%~dp0..\..
-
-if "%3" == "" (call npm i -g autorest)
-
-
-@echo on
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-features --clear-output-folder
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-links
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-locks
-:: call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-managedapplications
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-policy
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-resources
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-subscriptions
-
-endlocal
+call %~dp0..\..\..\..\tools\generate.cmd resources/resource-manager %*
