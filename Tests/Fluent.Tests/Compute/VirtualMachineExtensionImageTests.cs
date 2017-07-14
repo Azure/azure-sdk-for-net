@@ -11,9 +11,9 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Azure.Tests;
 
-namespace Fluent.Tests.Compute
+namespace Fluent.Tests.Compute.VirtualMachine
 {
-    public class VirtualMachineExtensionImage
+    public class ExtensionImage
     {
         [Fact]
         public void CanListExtensionImages()

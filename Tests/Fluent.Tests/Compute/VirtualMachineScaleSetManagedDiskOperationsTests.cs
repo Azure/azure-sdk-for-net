@@ -13,15 +13,14 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Fluent.Tests.Compute
+namespace Fluent.Tests.Compute.VirtualMachine
 {
-
-    public class VirtualMachineScaleSetManagedDiskOperations
+    public class ScaleSetManagedDiskOperations
     {
         private readonly Region Location = Region.USEast;
 
         [Fact]
-        public void CanCreateUpdateVirtualMachineScaleSetFromPIRWithManagedDisk()
+        public void CanCreateUpdateFromPIRWithManagedDisk()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -46,7 +45,7 @@ namespace Fluent.Tests.Compute
                             .WithSubnet("subnet1", "10.0.0.0/28")
                             .Create();
 
-                    var publicLoadBalancer = VirtualMachineScaleSet.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
+                    var publicLoadBalancer = ScaleSet.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
                     var vmScaleSet = computeManager.VirtualMachineScaleSets
                             .Define(vmssName)
                             .WithRegion(Location)
@@ -103,7 +102,7 @@ namespace Fluent.Tests.Compute
         }
 
         [Fact]
-        public void CanCreateVirtualMachineScaleSetFromCustomImageWithManagedDisk()
+        public void CanCreateFromCustomImageWithManagedDisk()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -168,7 +167,7 @@ namespace Fluent.Tests.Compute
                             .WithSubnet("subnet1", "10.0.0.0/28")
                             .Create();
 
-                    var publicLoadBalancer = VirtualMachineScaleSet.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
+                    var publicLoadBalancer = ScaleSet.CreateHttpLoadBalancers(resourceManager, resourceGroup, "1", Location);
                     var vmScaleSet = computeManager.VirtualMachineScaleSets
                             .Define(vmssName)
                             .WithRegion(Location)

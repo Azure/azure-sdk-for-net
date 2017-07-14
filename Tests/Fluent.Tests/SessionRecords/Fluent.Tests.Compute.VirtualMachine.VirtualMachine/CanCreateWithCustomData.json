@@ -1195,7 +1195,7 @@
     }
   ],
   "Names": {
-    "CanCreateVirtualMachineWithCustomData": [
+    "CanCreateWithCustomData": [
       "vm6760",
       "abc6258",
       "nicvm676060a328797",

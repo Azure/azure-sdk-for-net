@@ -2221,7 +2221,7 @@
     }
   ],
   "Names": {
-    "CanUpdateVirtualMachineScaleSetWithExtensionProtectedSettings": [
+    "CanUpdateWithExtensionProtectedSettings": [
       "javacsmrg2896",
       "vmss2352",
       "stg1468",

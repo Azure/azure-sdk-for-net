@@ -1684,7 +1684,7 @@
     }
   ],
   "Names": {
-    "CanUpdateVirtualMachineScaleSetExtensionPublicProtectedSettings": [
+    "CanUpdateExtensionPublicProtectedSettings": [
       "javacsmrg8369",
       "vmss5698",
       "stg1823",

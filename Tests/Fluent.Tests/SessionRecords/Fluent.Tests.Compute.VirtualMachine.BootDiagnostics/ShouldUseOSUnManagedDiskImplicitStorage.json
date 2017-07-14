@@ -940,7 +940,7 @@
     }
   ],
   "Names": {
-    "BootDiagnosticsShouldUsesOSUnManagedDiskImplicitStorage": [
+    "ShouldUseOSUnManagedDiskImplicitStorage": [
       "vmbdtest1931",
       "nicjavavm82c011818",
       "vnetc1b3469840de",

@@ -5735,7 +5735,7 @@
     }
   ],
   "Names": {
-    "CanCreateVirtualMachinesAndRelatedResourcesInParallel": [
+    "CanCreateWithRelatedResourcesInParallel": [
       "rgvmtest-4593",
       "pip-1603",
       "vnet-1675",

@@ -1699,7 +1699,7 @@
     }
   ],
   "Names": {
-    "CanCreateVirtualMachineScaleSetWithCustomScriptExtension": [
+    "CanCreateWithCustomScriptExtension": [
       "javacsmrg1207",
       "vmss3119",
       "vmssvnet4307",
