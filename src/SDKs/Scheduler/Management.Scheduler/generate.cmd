@@ -2,16 +2,23 @@
 :: Microsoft Azure SDK for Net - Generate library code
 :: Copyright (C) Microsoft Corporation. All Rights Reserved.
 ::
- 
-set autoRestVersion=0.16.0-Nightly20160329
-set specUrl="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c582747a6ea5d55ea976a9a3cb7c7959e7f9ce2f/arm-scheduler/2016-03-01/swagger/scheduler.json"
-set source=-Source https://www.myget.org/F/autorest/api/v2
 
-set repoRoot=%~dp0..\..\..\..
-set autoRestExe=%repoRoot%\packages\autorest.%autoRestVersion%\tools\AutoRest.exe
-set generateFolder=%~dp0Generated
+@echo off
+setlocal
 
-%repoRoot%\tools\nuget.exe install autorest %source% -Version %autoRestVersion% -o %repoRoot%\packages
+if not "%1" == "" (set specsRepoUser="%1")
+if not "%2" == "" (set specsRepoBranch="%2")
+if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
+if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
+set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/scheduler/resource-manager/readme.md"
 
-rd /S /Q  %generateFolder%
-%autoRestExe% -Modeler Swagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Scheduler -Input %specUrl% -outputDirectory %generateFolder% -Header NONE
+
+set sdksRoot=%~dp0..\..
+
+if "%3" == "" (call npm i -g autorest)
+rd /S /Q %~dp0Generated
+
+@echo on
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest
+
+endlocal

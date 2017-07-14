@@ -3,15 +3,22 @@
 :: Copyright (C) Microsoft Corporation. All Rights Reserved.
 ::
 
-@echo on
-set autoRestVersion=1.0.0-Nightly20161212
-if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-storsimple8000series/2017-06-01/swagger/storsimple.json"
-) else (
-    set specFile="%1"
-)
-set repoRoot=%~dp0..\..\..\..
-set generateFolder=%~dp0Generated
+@echo off
+setlocal
 
-rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.StorSimple8000Series %autoRestVersion% %generateFolder% -AddCredentials
+if not "%1" == "" (set specsRepoUser="%1")
+if not "%2" == "" (set specsRepoBranch="%2")
+if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
+if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
+set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/storsimple8000series/resource-manager/readme.md"
+
+
+set sdksRoot=%~dp0..\..
+
+if "%3" == "" (call npm i -g autorest)
+rd /S /Q %~dp0Generated
+
+@echo on
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest
+
+endlocal

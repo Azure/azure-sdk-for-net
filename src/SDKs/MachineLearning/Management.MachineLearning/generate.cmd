@@ -10,7 +10,7 @@ if not "%1" == "" (set specsRepoUser="%1")
 if not "%2" == "" (set specsRepoBranch="%2")
 if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
 if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
-set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/analysisservices/resource-manager/readme.md"
+set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/machinelearning/resource-manager/readme.md"
 
 
 set sdksRoot=%~dp0..\..
@@ -19,7 +19,7 @@ if "%3" == "" (call npm i -g autorest)
 rd /S /Q %~dp0Generated
 
 @echo on
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --tag=package-commitmentPlans
-call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --tag=package-webservices
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-commitmentPlans
+call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-webservices
 
 endlocal

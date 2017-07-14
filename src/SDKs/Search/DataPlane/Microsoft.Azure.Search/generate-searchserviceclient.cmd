@@ -12,14 +12,13 @@ if "%specsRepoUser%" == ""   (set specsRepoUser="Azure")
 if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
 set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/search/data-plane/readme.md"
 
-set autoRestVersion=1.2.0
-set sdksRoot=%~dp0..\..
+set sdksRoot=%~dp0..\..\..
 
 if "%3" == "" (call npm i -g autorest)
-rd /S /Q %~dp0Generated
+rd /S /Q %~dp0GeneratedSearchService
 
 @echo on
-:: call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-searchservice --tag=null
-call autorest "https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/search/data-plane/Microsoft.Search/2016-09-01/searchservice.json" --csharp --csharp-sdks-folder=%sdksRoot% --version=%autoRestVersion% --package-searchindex --tag=null
+:: call autorest %specFile% --csharp --csharp-sdks-folder=%sdksRoot% --latest --package-searchservice --tag=null
+call autorest "--input-file=https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/search/data-plane/Microsoft.Search/2016-09-01/searchservice.json" --csharp.azure-arm --output-folder=%sdksRoot%\Search\DataPlane\Microsoft.Azure.Search\GeneratedSearchService --latest --namespace=Microsoft.Azure.Search --license-header=MICROSOFT_MIT
 
 endlocal

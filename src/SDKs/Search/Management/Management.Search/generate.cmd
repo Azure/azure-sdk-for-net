@@ -13,7 +13,7 @@ if "%specsRepoBranch%" == "" (set specsRepoBranch="current")
 set specFile="https://github.com/%specsRepoUser%/azure-rest-api-specs/blob/%specsRepoBranch%/specification/search/resource-manager/readme.md"
 
 
-set sdksRoot=%~dp0..\..
+set sdksRoot=%~dp0..\..\..
 
 if "%3" == "" (call npm i -g autorest)
 rd /S /Q %~dp0Generated
