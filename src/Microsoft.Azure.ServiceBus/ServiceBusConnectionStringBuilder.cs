@@ -94,7 +94,7 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 var uriBuilder = new UriBuilder(value.Trim());
-                this.endpoint = EndpointScheme + "://" + uriBuilder.Host;
+                this.endpoint = (value.Contains("://") ? uriBuilder.Scheme : EndpointScheme) + "://" + uriBuilder.Host;
             }
         }
 

@@ -28,7 +28,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 new object[] { "ns1.servicebus.windows.net", "amqps://ns1.servicebus.windows.net" },
                 new object[] { " ns2.servicebus.windows.net ", "amqps://ns2.servicebus.windows.net" },
                 new object[] { "amqps://ns3.servicebus.windows.net", "amqps://ns3.servicebus.windows.net" },
-                new object[] { "https://ns4.servicebus.windows.net:3990", "amqps://ns4.servicebus.windows.net" },
+                new object[] { "https://ns4.servicebus.windows.net:3990", "https://ns4.servicebus.windows.net" },
                 new object[] { "ns5.servicebus.windows.net/", "amqps://ns5.servicebus.windows.net" }
             };
 
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         void ConnectionStringBuilderShouldNotFailWhileParsingUnknownProperties()
         {
-            string connectionString = "Endpoint=amqp://hello.servicebus.windows.net;SecretMessage=h=llo;EntityPath=myQ;";
+            string connectionString = "Endpoint=amqps://hello.servicebus.windows.net;SecretMessage=h=llo;EntityPath=myQ;";
             var csBuilder = new ServiceBusConnectionStringBuilder(connectionString);
             Assert.Equal("amqps://hello.servicebus.windows.net", csBuilder.Endpoint);
             Assert.Equal("myQ", csBuilder.EntityPath);
