@@ -38,6 +38,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">The IP configuration name.</param>
         /// <param name="id">Resource Id</param>
         /// <param name="subnet">The subnet.</param>
+        /// <param name="primary">Specifies the primary IP Configuration in
+        /// case the network interface has more than one IP
+        /// Configuration.</param>
         /// <param name="publicIPAddressConfiguration">The
         /// publicIPAddressConfiguration.</param>
         /// <param name="privateIPAddressVersion">Available from Api-Version
@@ -51,11 +54,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// backend address pools.</param>
         /// <param name="loadBalancerInboundNatPools">The load balancer inbound
         /// nat pools.</param>
-        public VirtualMachineScaleSetIPConfiguration(string name, string id = default(string), ApiEntityReference subnet = default(ApiEntityReference), VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetPublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
+        public VirtualMachineScaleSetIPConfiguration(string name, string id = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetPublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
             : base(id)
         {
             Name = name;
             Subnet = subnet;
+            Primary = primary;
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
             PrivateIPAddressVersion = privateIPAddressVersion;
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
@@ -74,6 +78,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public ApiEntityReference Subnet { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the primary IP Configuration in case the
+        /// network interface has more than one IP Configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.primary")]
+        public bool? Primary { get; set; }
 
         /// <summary>
         /// Gets or sets the publicIPAddressConfiguration.
