@@ -6,6 +6,12 @@ function Replace-InFile($filePath, $oldText, $newText)
 
 $generatedFolder = ".\GeneratedSearchIndex"
 
+# Delete any extra files generated for types that are shared between SearchServiceClient and SearchIndexClient.
+Remove-Item $generatedFolder\Models\SearchRequestOptions.cs
+
+# Delete extra files we don't need.
+Remove-Item $generatedFolder\DocumentsProxyOperationsExtensions.cs
+
 # Make all Proxy types internal so we can version them freely.
 Replace-InFile $generatedFolder\IDocumentsProxyOperations.cs "public partial interface IDocumentsProxyOperations" "internal partial interface IDocumentsProxyOperations"
 
