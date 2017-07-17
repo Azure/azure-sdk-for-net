@@ -180,6 +180,60 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Updates an existing elastic pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='elasticPoolName'>
+            /// The name of the elastic pool to be updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating an elastic pool.
+            /// </param>
+            public static ElasticPool Update(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, ElasticPoolUpdate parameters)
+            {
+                return operations.UpdateAsync(resourceGroupName, serverName, elasticPoolName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing elastic pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='elasticPoolName'>
+            /// The name of the elastic pool to be updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating an elastic pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ElasticPool> UpdateAsync(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, ElasticPoolUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serverName, elasticPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the elastic pool.
             /// </summary>
             /// <param name='operations'>
@@ -561,6 +615,60 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<ElasticPool> BeginCreateOrUpdateAsync(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, ElasticPool parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, elasticPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates an existing elastic pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='elasticPoolName'>
+            /// The name of the elastic pool to be updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating an elastic pool.
+            /// </param>
+            public static ElasticPool BeginUpdate(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, ElasticPoolUpdate parameters)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, serverName, elasticPoolName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing elastic pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='elasticPoolName'>
+            /// The name of the elastic pool to be updated.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating an elastic pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ElasticPool> BeginUpdateAsync(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, ElasticPoolUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, elasticPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

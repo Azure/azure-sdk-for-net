@@ -27,32 +27,4 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Disabled")]
         Disabled
     }
-    internal static class TransparentDataEncryptionStatusEnumExtension
-    {
-        internal static string ToSerializedValue(this TransparentDataEncryptionStatus? value )  =>
-            value == null ? null : (( TransparentDataEncryptionStatus )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this TransparentDataEncryptionStatus value )
-        {
-            switch( value )
-            {
-                case TransparentDataEncryptionStatus.Enabled:
-                    return "Enabled";
-                case TransparentDataEncryptionStatus.Disabled:
-                    return "Disabled";
-            }
-            return null;
-        }
-
-        internal static TransparentDataEncryptionStatus? ParseTransparentDataEncryptionStatus( this string value )
-        {
-            switch( value )
-            {
-                case "Enabled":
-                    return TransparentDataEncryptionStatus.Enabled;
-                case "Disabled":
-                    return TransparentDataEncryptionStatus.Disabled;            }
-            return null;
-        }
-    }
 }

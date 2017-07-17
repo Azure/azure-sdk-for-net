@@ -27,32 +27,4 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Enabled")]
         Enabled
     }
-    internal static class DataMaskingRuleStateEnumExtension
-    {
-        internal static string ToSerializedValue(this DataMaskingRuleState? value )  =>
-            value == null ? null : (( DataMaskingRuleState )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this DataMaskingRuleState value )
-        {
-            switch( value )
-            {
-                case DataMaskingRuleState.Disabled:
-                    return "Disabled";
-                case DataMaskingRuleState.Enabled:
-                    return "Enabled";
-            }
-            return null;
-        }
-
-        internal static DataMaskingRuleState? ParseDataMaskingRuleState( this string value )
-        {
-            switch( value )
-            {
-                case "Disabled":
-                    return DataMaskingRuleState.Disabled;
-                case "Enabled":
-                    return DataMaskingRuleState.Enabled;            }
-            return null;
-        }
-    }
 }

@@ -17,14 +17,16 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SecurityAlertPolicyEmailAccountAdmins.
+    /// Defines values for ServerConnectionType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum SecurityAlertPolicyEmailAccountAdmins
+    public enum ServerConnectionType
     {
-        [EnumMember(Value = "Enabled")]
-        Enabled,
-        [EnumMember(Value = "Disabled")]
-        Disabled
+        [EnumMember(Value = "Default")]
+        Default,
+        [EnumMember(Value = "Proxy")]
+        Proxy,
+        [EnumMember(Value = "Redirect")]
+        Redirect
     }
 }

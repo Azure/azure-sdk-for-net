@@ -63,6 +63,14 @@ namespace Sql.Tests
                 var listServers = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(2, listServers.Count());
 
+                // Update first server
+                Dictionary<string, string> newTags = new Dictionary<string, string>()
+                    {
+                        { "asdf", "zxcv" }
+                    };
+                var updateServer1 = sqlClient.Servers.Update(resourceGroup.Name, serverNameV12, new Server { Tags = newTags });
+                SqlManagementTestUtilities.ValidateServer(updateServer1, serverNameV12, login, version12, newTags, SqlManagementTestUtilities.DefaultLocationId);
+
                 // Drop server, update count
                 sqlClient.Servers.Delete(resourceGroup.Name, serverNameV12);
 

@@ -300,10 +300,10 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f28872d6-4a93-4bb1-84b9-aecb02b6af4c/resourceGroups/sqlcrudtest-2963/providers/Microsoft.Sql/servers/sqlcrudtest-5993/administrators/activedirectory?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjI4ODcyZDYtNGE5My00YmIxLTg0YjktYWVjYjAyYjZhZjRjL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTI5NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC01OTkzL2FkbWluaXN0cmF0b3JzL2FjdGl2ZWRpcmVjdG9yeT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/f28872d6-4a93-4bb1-84b9-aecb02b6af4c/resourceGroups/sqlcrudtest-2963/providers/Microsoft.Sql/servers/sqlcrudtest-5993/administrators/activeDirectory?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjI4ODcyZDYtNGE5My00YmIxLTg0YjktYWVjYjAyYjZhZjRjL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTI5NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC01OTkzL2FkbWluaXN0cmF0b3JzL2FjdGl2ZURpcmVjdG9yeT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"login\": \"DSEngAll\",\r\n    \"sid\": \"5e90ef3b-9b42-4777-819b-25c36961ea4d\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"administratorType\": \"ActiveDirectory\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"login\": \"DSEngAll\",\r\n    \"sid\": \"5e90ef3b-9b42-4777-819b-25c36961ea4d\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"administratorType\": \"activeDirectory\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -322,7 +322,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"CreateActiveDirectoryAdministrator\",\r\n  \"operationId\": \"e0f399d9-b2dd-451e-a8b6-2b5a83fa135f\",\r\n  \"percentComplete\": 0,\r\n  \"startTime\": \"2017-06-01T05:14:53.365Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"operation\": \"CreateactiveDirectoryAdministrator\",\r\n  \"operationId\": \"e0f399d9-b2dd-451e-a8b6-2b5a83fa135f\",\r\n  \"percentComplete\": 0,\r\n  \"startTime\": \"2017-06-01T05:14:53.365Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "161"
@@ -383,7 +383,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f28872d6-4a93-4bb1-84b9-aecb02b6af4c/resourceGroups/sqlcrudtest-2963/providers/Microsoft.Sql/servers/sqlcrudtest-5993/administratorOperationResults/ActiveDirectory\",\r\n  \"name\": \"ActiveDirectory\",\r\n  \"type\": \"Microsoft.Sql/servers/administrators\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"administratorType\": \"ActiveDirectory\",\r\n    \"login\": \"DSEngAll\",\r\n    \"sid\": \"5e90ef3b-9b42-4777-819b-25c36961ea4d\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f28872d6-4a93-4bb1-84b9-aecb02b6af4c/resourceGroups/sqlcrudtest-2963/providers/Microsoft.Sql/servers/sqlcrudtest-5993/administratorOperationResults/activeDirectory\",\r\n  \"name\": \"activeDirectory\",\r\n  \"type\": \"Microsoft.Sql/servers/administrators\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"administratorType\": \"activeDirectory\",\r\n    \"login\": \"DSEngAll\",\r\n    \"sid\": \"5e90ef3b-9b42-4777-819b-25c36961ea4d\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "461"
@@ -425,8 +425,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f28872d6-4a93-4bb1-84b9-aecb02b6af4c/resourceGroups/sqlcrudtest-2963/providers/Microsoft.Sql/servers/sqlcrudtest-5993/administrators/activedirectory?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjI4ODcyZDYtNGE5My00YmIxLTg0YjktYWVjYjAyYjZhZjRjL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTI5NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC01OTkzL2FkbWluaXN0cmF0b3JzL2FjdGl2ZWRpcmVjdG9yeT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/f28872d6-4a93-4bb1-84b9-aecb02b6af4c/resourceGroups/sqlcrudtest-2963/providers/Microsoft.Sql/servers/sqlcrudtest-5993/administrators/activeDirectory?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjI4ODcyZDYtNGE5My00YmIxLTg0YjktYWVjYjAyYjZhZjRjL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTI5NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC01OTkzL2FkbWluaXN0cmF0b3JzL2FjdGl2ZURpcmVjdG9yeT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -441,7 +441,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f28872d6-4a93-4bb1-84b9-aecb02b6af4c/resourceGroups/sqlcrudtest-2963/providers/Microsoft.Sql/servers/sqlcrudtest-5993/providers/Microsoft.Sql/administrators/activedirectory\",\r\n  \"name\": \"activedirectory\",\r\n  \"type\": \"Microsoft.Sql/servers/administrators\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"administratorType\": \"ActiveDirectory\",\r\n    \"login\": \"DSEngAll\",\r\n    \"sid\": \"5e90ef3b-9b42-4777-819b-25c36961ea4d\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f28872d6-4a93-4bb1-84b9-aecb02b6af4c/resourceGroups/sqlcrudtest-2963/providers/Microsoft.Sql/servers/sqlcrudtest-5993/providers/Microsoft.Sql/administrators/activeDirectory\",\r\n  \"name\": \"activeDirectory\",\r\n  \"type\": \"Microsoft.Sql/servers/administrators\",\r\n  \"location\": \"Japan East\",\r\n  \"kind\": null,\r\n  \"properties\": {\r\n    \"administratorType\": \"activeDirectory\",\r\n    \"login\": \"DSEngAll\",\r\n    \"sid\": \"5e90ef3b-9b42-4777-819b-25c36961ea4d\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
@@ -486,8 +486,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f28872d6-4a93-4bb1-84b9-aecb02b6af4c/resourceGroups/sqlcrudtest-2963/providers/Microsoft.Sql/servers/sqlcrudtest-5993/administrators/activedirectory?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjI4ODcyZDYtNGE5My00YmIxLTg0YjktYWVjYjAyYjZhZjRjL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTI5NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC01OTkzL2FkbWluaXN0cmF0b3JzL2FjdGl2ZWRpcmVjdG9yeT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/f28872d6-4a93-4bb1-84b9-aecb02b6af4c/resourceGroups/sqlcrudtest-2963/providers/Microsoft.Sql/servers/sqlcrudtest-5993/administrators/activeDirectory?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjI4ODcyZDYtNGE5My00YmIxLTg0YjktYWVjYjAyYjZhZjRjL3Jlc291cmNlR3JvdXBzL3NxbGNydWR0ZXN0LTI5NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5TcWwvc2VydmVycy9zcWxjcnVkdGVzdC01OTkzL2FkbWluaXN0cmF0b3JzL2FjdGl2ZURpcmVjdG9yeT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -502,7 +502,7 @@
           "Microsoft.Azure.Management.Sql.SqlManagementClient/1.4.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"operation\": \"DropActiveDirectoryAdministrator\",\r\n  \"operationId\": \"2af72361-315f-4226-8ad4-dfdf6bdc7dcd\",\r\n  \"percentComplete\": 0,\r\n  \"startTime\": \"2017-06-01T05:15:28.846Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"operation\": \"DropactiveDirectoryAdministrator\",\r\n  \"operationId\": \"2af72361-315f-4226-8ad4-dfdf6bdc7dcd\",\r\n  \"percentComplete\": 0,\r\n  \"startTime\": \"2017-06-01T05:15:28.846Z\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "159"
