@@ -1,6 +1,6 @@
 @echo off
 set repoUser=olydis
-set repoBranch=6c4021caff0767cfa72fd25fe2bca0a378a0aa28
+set repoBranch=batches
 set version=latest
 call ..\src\SDKs\StreamAnalytics\Management.StreamAnalytics\generate.cmd                              %version% %repoUser% %repoBranch% noInstall
 call ..\src\SDKs\Storage\Management.Storage\generate.cmd                                              %version% %repoUser% %repoBranch% noInstall
@@ -57,8 +57,7 @@ call ..\src\SDKs\ServiceBus\Management.ServiceBus\generated.cmd                 
 call ..\src\SDKs\NotificationHubs\Management.NotificationHubs\generated.cmd                           %version% %repoUser% %repoBranch% noInstall
 :: ...
 call ..\src\SDKs\Search\Management\Management.Search\generate.cmd                                     %version% %repoUser% %repoBranch% noInstall
-call ..\src\SDKs\Search\DataPlane\Microsoft.Azure.Search\generate-searchserviceclient.cmd             %version% %repoUser% %repoBranch% noInstall
-call ..\src\SDKs\Search\DataPlane\Microsoft.Azure.Search\generate-searchindexclient.cmd               %version% %repoUser% %repoBranch% noInstall
+call ..\src\SDKs\Search\DataPlane\Microsoft.Azure.Search\generate.cmd                                 %version% %repoUser% %repoBranch% noInstall
 :: ...
 call ..\src\SDKs\Relay\Management.Relay\generate.cmd                                                  %version% %repoUser% %repoBranch% noInstall
 call ..\src\SDKs\CustomerInsights\Management.CustomerInsights\generated.cmd                           %version% %repoUser% %repoBranch% noInstall
