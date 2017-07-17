@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Text;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.Network.Fluent
 {
@@ -35,12 +35,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:338B7728A13D85D7ACAC8732699C7C37:294650B9B2C42571BFFDBCB5EBB76B45
         public IDefinition<PacketCapture.Definition.IWithCreate> WithLocalPorts(IList<int> ports)
         {
-            StringBuilder portsString = new StringBuilder();
-            foreach (var port in ports)
-            {
-                portsString.Append(port).Append(DELIMITER);
-            }
-            Inner.LocalPort = portsString.Remove(portsString.Length - 2, portsString.Length - 1).ToString();
+            Inner.LocalPort = string.Join(DELIMITER, ports.ToArray());
             return this;
         }
 
@@ -87,12 +82,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:AF99AAD4C5EAD3F935A485B37854B17A:E211556588CB8D9692EBA641934E5090
         public IDefinition<PacketCapture.Definition.IWithCreate> WithRemotePorts(IList<int> ports)
         {
-            StringBuilder portsString = new StringBuilder();
-            foreach (var port in ports)
-            {
-                portsString.Append(port).Append(DELIMITER);
-            }
-            Inner.RemotePort = portsString.Remove(portsString.Length - 2, portsString.Length - 1).ToString();
+            Inner.RemotePort = string.Join(DELIMITER, ports.ToArray());
             return this;
         }
 
@@ -154,13 +144,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:CD818ED94CF11744CAF70EED383B8DE7:29CCDB22365554D7D141CD630728A92F
         public IDefinition<PacketCapture.Definition.IWithCreate> WithLocalIPAddresses(IList<string> ipAddresses)
         {
-            StringBuilder ipAddressesString = new StringBuilder();
-            foreach (var ipAddress in ipAddresses)
-            {
-                ipAddressesString.Append(ipAddress).Append(DELIMITER);
-            }
-            Inner.LocalIPAddress = ipAddressesString.Remove(ipAddressesString.Length - 2, ipAddressesString.Length - 1)
-                .ToString();
+            Inner.LocalIPAddress = string.Join(DELIMITER, ipAddresses.ToArray());
             return this;
         }
 
@@ -181,13 +165,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:AA20AAF839D759CC8BAB1F83CCC39246:2965BC21296977F42867ABB25FB4E0BE
         public IDefinition<PacketCapture.Definition.IWithCreate> WithRemoteIPAddresses(IList<string> ipAddresses)
         {
-            StringBuilder ipAddressesString = new StringBuilder();
-            foreach (var ipAddress in ipAddresses)
-            {
-                ipAddressesString.Append(ipAddress).Append(DELIMITER);
-            }
-            Inner.RemoteIPAddress = ipAddressesString.Remove(ipAddressesString.Length - 2, ipAddressesString.Length - 1)
-                .ToString();
+            Inner.RemoteIPAddress = string.Join(DELIMITER, ipAddresses.ToArray());
             return this;
         }
     }
