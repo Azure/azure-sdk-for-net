@@ -17,16 +17,12 @@ namespace Microsoft.Azure.Management.Relay.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AccessRights.
+    /// Defines values for SkuTier.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum AccessRights
+    public enum SkuTier
     {
-        [EnumMember(Value = "Manage")]
-        Manage,
-        [EnumMember(Value = "Send")]
-        Send,
-        [EnumMember(Value = "Listen")]
-        Listen
+        [EnumMember(Value = "Standard")]
+        Standard
     }
 }

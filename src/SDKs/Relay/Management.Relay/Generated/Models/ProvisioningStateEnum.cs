@@ -17,16 +17,22 @@ namespace Microsoft.Azure.Management.Relay.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AccessRights.
+    /// Defines values for ProvisioningStateEnum.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum AccessRights
+    public enum ProvisioningStateEnum
     {
-        [EnumMember(Value = "Manage")]
-        Manage,
-        [EnumMember(Value = "Send")]
-        Send,
-        [EnumMember(Value = "Listen")]
-        Listen
+        [EnumMember(Value = "Created")]
+        Created,
+        [EnumMember(Value = "Succeeded")]
+        Succeeded,
+        [EnumMember(Value = "Deleted")]
+        Deleted,
+        [EnumMember(Value = "Failed")]
+        Failed,
+        [EnumMember(Value = "Updating")]
+        Updating,
+        [EnumMember(Value = "Unknown")]
+        Unknown
     }
 }

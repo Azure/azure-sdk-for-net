@@ -22,20 +22,19 @@ namespace Microsoft.Azure.Management.Relay.Models
     /// Description of a Namespace resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RelayNamespace : TrackedResource
+    public partial class RelayUpdateParameters : ResourceNamespacePatch
     {
         /// <summary>
-        /// Initializes a new instance of the RelayNamespace class.
+        /// Initializes a new instance of the RelayUpdateParameters class.
         /// </summary>
-        public RelayNamespace()
+        public RelayUpdateParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RelayNamespace class.
+        /// Initializes a new instance of the RelayUpdateParameters class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
@@ -49,8 +48,8 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// Service Bus operations.</param>
         /// <param name="metricId">Identifier for Azure Insights
         /// metrics</param>
-        public RelayNamespace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), ProvisioningStateEnum? provisioningState = default(ProvisioningStateEnum?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string))
-            : base(location, id, name, type, tags)
+        public RelayUpdateParameters(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), ProvisioningStateEnum? provisioningState = default(ProvisioningStateEnum?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string))
+            : base(id, name, type, tags)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
@@ -103,15 +102,5 @@ namespace Microsoft.Azure.Management.Relay.Models
         [JsonProperty(PropertyName = "properties.metricId")]
         public string MetricId { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

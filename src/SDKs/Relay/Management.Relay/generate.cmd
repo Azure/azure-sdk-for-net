@@ -4,14 +4,15 @@
 ::
 
 @echo off
-set autoRestVersion=1.0.0-Nightly20170212
-if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-relay/2016-07-01/swagger/relay.json"
-) else (
-    set specFile="%1"
-)
+setlocal
+
+set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-relay/2017-04-01/swagger/relay.json"
+
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.Relay %autoRestVersion% %generateFolder% "MICROSOFT_MIT"
+
+call autorest --latest -CodeGenerator Azure.CSharp -Input %specFile% -Namespace Microsoft.Azure.Management.Relay  -outputDirectory %generateFolder% -Header MICROSOFT_MIT -ClientSideValidationntSideValidation
+
+endlocal

@@ -17,16 +17,14 @@ namespace Microsoft.Azure.Management.Relay.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AccessRights.
+    /// Defines values for KeyType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum AccessRights
+    public enum KeyType
     {
-        [EnumMember(Value = "Manage")]
-        Manage,
-        [EnumMember(Value = "Send")]
-        Send,
-        [EnumMember(Value = "Listen")]
-        Listen
+        [EnumMember(Value = "PrimaryKey")]
+        PrimaryKey,
+        [EnumMember(Value = "SecondaryKey")]
+        SecondaryKey
     }
 }
