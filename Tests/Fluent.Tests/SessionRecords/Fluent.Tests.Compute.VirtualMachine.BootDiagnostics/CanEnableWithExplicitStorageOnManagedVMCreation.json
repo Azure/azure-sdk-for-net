@@ -1005,7 +1005,7 @@
     }
   ],
   "Names": {
-    "CanEnableBootDiagnosticsWithExplicitStorageOnManagedVMCreation": [
+    "CanEnableWithExplicitStorageOnManagedVMCreation": [
       "vmbdtest8679",
       "stgbnc1149",
       "nicjavavm27c162282",

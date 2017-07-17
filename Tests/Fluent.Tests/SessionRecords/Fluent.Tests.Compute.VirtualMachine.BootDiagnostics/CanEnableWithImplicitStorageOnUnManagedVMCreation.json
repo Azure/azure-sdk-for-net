@@ -2127,7 +2127,7 @@
     }
   ],
   "Names": {
-    "CanEnableBootDiagnosticsWithImplicitStorageOnUnManagedVMCreation": [
+    "CanEnableWithImplicitStorageOnUnManagedVMCreation": [
       "vmbdtest882",
       "nicjavavm37c586647",
       "vnetc1c966506972",

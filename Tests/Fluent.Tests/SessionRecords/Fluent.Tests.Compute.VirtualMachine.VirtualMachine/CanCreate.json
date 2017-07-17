@@ -2171,7 +2171,7 @@
     }
   ],
   "Names": {
-    "CanCreateVirtualMachine": [
+    "CanCreate": [
       "rgfluentchash-7126",
       "nicchashvm26b175319",
       "vnet7ed602289c41",
