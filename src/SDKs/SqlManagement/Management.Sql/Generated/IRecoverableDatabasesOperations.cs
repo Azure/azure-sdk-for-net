@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IRecoverableDatabasesOperations
     {
         /// <summary>
-        /// Gets a Recoverable Database, which is a resource representing a
-        /// database's Geo backup
+        /// Gets a recoverable database, which is a resource representing a
+        /// database's geo backup
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<RecoverableDatabase>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of Recoverable Databases
+        /// Gets a list of recoverable databases
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can

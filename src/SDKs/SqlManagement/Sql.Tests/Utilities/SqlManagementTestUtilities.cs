@@ -154,7 +154,7 @@ namespace Sql.Tests
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
         }
 
-        public static void ValidateDatabase(Database expected, Database actual, string name)
+        public static void ValidateDatabase(dynamic expected, Database actual, string name)
         {
             Assert.Equal(name, actual.Name);
             Assert.Equal(expected.ElasticPoolName, actual.ElasticPoolName);
@@ -284,7 +284,7 @@ namespace Sql.Tests
             }
         }
 
-        public static void ValidateElasticPool(ElasticPool expected, ElasticPool actual, string name)
+        public static void ValidateElasticPool(dynamic expected, ElasticPool actual, string name)
         {
             Assert.Equal(name, actual.Name);
 

@@ -325,5 +325,119 @@ namespace Compute.Tests
                 Assert.True(passed);
             }
         }
+
+        /// <summary>
+        /// Associates a VMScaleSet with multiple IPConfigurations on a single NIC
+        /// </summary>
+        [Fact]
+        public void TestVMSSWithMultiCA()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                // Create resource group
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                bool passed = false;
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    var vnetResponse = CreateVNETWithSubnets(rgName, 2);
+                    var vmssSubnet = vnetResponse.Subnets[1];
+
+                    var secondaryCA =
+                        new VirtualMachineScaleSetIPConfiguration(
+                            name: TestUtilities.GenerateName("vmsstestnetconfig"),
+                            subnet: new ApiEntityReference() { Id = vmssSubnet.Id });
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName: rgName,
+                        vmssName: vmssName,
+                        storageAccount: storageAccountOutput,
+                        imageRef: imageRef,
+                        inputVMScaleSet: out inputVMScaleSet,
+                        vmScaleSetCustomizer:
+                            (virtualMachineScaleSet) =>
+                            {
+                                virtualMachineScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].Primary = true;
+                                virtualMachineScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations.Add(secondaryCA);
+                            },
+                        createWithPublicIpAddress: false,
+                        subnet: vmssSubnet);
+
+                    var vmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    Assert.Equal(2, vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations.Count);
+                    Assert.True(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations.Count(ip => ip.Primary == true) == 1);
+
+                    passed = true;
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Associates a VMScaleSet with a NIC that has accelerated networking enabled.
+        /// </summary>
+        [Fact]
+        public void TestVMSSAccelNtwkng()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                // Create resource group
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                bool passed = false;
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    var vnetResponse = CreateVNETWithSubnets(rgName, 2);
+                    var vmssSubnet = vnetResponse.Subnets[1];
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName: rgName,
+                        vmssName: vmssName,
+                        storageAccount: storageAccountOutput,
+                        imageRef: imageRef,
+                        inputVMScaleSet: out inputVMScaleSet,
+                        vmScaleSetCustomizer:
+                            (virtualMachineScaleSet) =>
+                            {
+                                virtualMachineScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardDS15V2;
+                                virtualMachineScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].EnableAcceleratedNetworking = true;
+                            },
+                        createWithPublicIpAddress: false,
+                        subnet: vmssSubnet);
+
+                    var vmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    Assert.True(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].EnableAcceleratedNetworking == true);
+
+                    passed = true;
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
     }
 }

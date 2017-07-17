@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
             /// </param>
@@ -50,6 +51,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
             /// </param>
@@ -75,6 +77,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
             /// </param>
@@ -90,6 +93,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
             /// </param>
@@ -111,6 +115,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
             /// </param>
@@ -131,6 +136,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
+            /// The name of a supported Azure region.
             /// </param>
             /// <param name='publisherName'>
             /// </param>

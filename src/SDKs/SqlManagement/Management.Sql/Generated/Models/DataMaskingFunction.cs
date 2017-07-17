@@ -35,48 +35,4 @@ namespace Microsoft.Azure.Management.Sql.Models
         [EnumMember(Value = "Text")]
         Text
     }
-    internal static class DataMaskingFunctionEnumExtension
-    {
-        internal static string ToSerializedValue(this DataMaskingFunction? value )  =>
-            value == null ? null : (( DataMaskingFunction )value).ToSerializedValue();
-
-        internal static string ToSerializedValue(this DataMaskingFunction value )
-        {
-            switch( value )
-            {
-                case DataMaskingFunction.CCN:
-                    return "CCN";
-                case DataMaskingFunction.Default:
-                    return "Default";
-                case DataMaskingFunction.Email:
-                    return "Email";
-                case DataMaskingFunction.Number:
-                    return "Number";
-                case DataMaskingFunction.SSN:
-                    return "SSN";
-                case DataMaskingFunction.Text:
-                    return "Text";
-            }
-            return null;
-        }
-
-        internal static DataMaskingFunction? ParseDataMaskingFunction( this string value )
-        {
-            switch( value )
-            {
-                case "CCN":
-                    return DataMaskingFunction.CCN;
-                case "Default":
-                    return DataMaskingFunction.Default;
-                case "Email":
-                    return DataMaskingFunction.Email;
-                case "Number":
-                    return DataMaskingFunction.Number;
-                case "SSN":
-                    return DataMaskingFunction.SSN;
-                case "Text":
-                    return DataMaskingFunction.Text;            }
-            return null;
-        }
-    }
 }

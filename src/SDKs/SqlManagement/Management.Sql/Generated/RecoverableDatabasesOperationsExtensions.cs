@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class RecoverableDatabasesOperationsExtensions
     {
             /// <summary>
-            /// Gets a Recoverable Database, which is a resource representing a database's
-            /// Geo backup
+            /// Gets a recoverable database, which is a resource representing a database's
+            /// geo backup
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a Recoverable Database, which is a resource representing a database's
-            /// Geo backup
+            /// Gets a recoverable database, which is a resource representing a database's
+            /// geo backup
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a list of Recoverable Databases
+            /// Gets a list of recoverable databases
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a list of Recoverable Databases
+            /// Gets a list of recoverable databases
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

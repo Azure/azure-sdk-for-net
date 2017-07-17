@@ -69,7 +69,7 @@ namespace Sql.Tests
         }
 
         [Fact]
-        public void TestUpdateElasticPoolAndListActivity()
+        public void TestUpdateElasticPoolWithCreateOrUpdateAndListActivity()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
@@ -77,75 +77,96 @@ namespace Sql.Tests
                 Server server = context.CreateServer(resourceGroup);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
-                Dictionary<string, string> tags = new Dictionary<string, string>()
-                    {
-                        { "tagKey1", "TagValue1" }
-                    };
+                Func<string, string, string, ElasticPool, ElasticPool> updateFunc = sqlClient.ElasticPools.CreateOrUpdate;
+                Func<ElasticPool> createModelFunc = () => new ElasticPool(server.Location);
+                TestUpdateElasticPool(sqlClient, resourceGroup, server, createModelFunc, updateFunc);
+            };
+        }
 
-                // Create a elasticPool with parameters Tags
-                // 
-                string epName = SqlManagementTestUtilities.GenerateName();
-                var epInput = new ElasticPool()
-                {
-                    Location = server.Location,
-                    Edition = DatabaseEdition.Standard,
-                    Tags = tags,
-                    Dtu = 100,
-                    DatabaseDtuMax = 20,
-                    DatabaseDtuMin = 0             
-                };
-                var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
-                SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
-                var epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
-                Assert.NotNull(epa);
-                Assert.Equal(1, epa.Count());
-                Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+        [Fact]
+        public void TestUpdateElasticPoolWithUpdateAndListActivity()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
-                // Update elasticPool Dtu
-                // 
-                ElasticPool epInput2 = new ElasticPool()
-                {
-                    Location = server.Location,
-                    Dtu = 200
-                };
-                returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput2);
-                SqlManagementTestUtilities.ValidateElasticPool(epInput2, returnedEp, epName);
-                epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
-                Assert.NotNull(epa);
-                Assert.Equal(2, epa.Count());
-                Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
-                Assert.Equal(1, epa.Where(a => a.Operation == "UPDATE").Count());
+                Func<string, string, string, ElasticPoolUpdate, ElasticPool> updateFunc = sqlClient.ElasticPools.Update;
+                Func<ElasticPoolUpdate> createModelFunc = () => new ElasticPoolUpdate();
+                TestUpdateElasticPool(sqlClient, resourceGroup, server, createModelFunc, updateFunc);
+            };
+        }
 
-                // Update elasticPool Dtu Max
-                // 
-                ElasticPool epInput3 = new ElasticPool()
+        private void TestUpdateElasticPool<TUpdateModel>(
+            SqlManagementClient sqlClient,
+            ResourceGroup resourceGroup,
+            Server server,
+            Func<TUpdateModel> createModelFunc,
+            Func<string, string, string, TUpdateModel, ElasticPool> updateFunc)
+        {
+            Dictionary<string, string> tags = new Dictionary<string, string>()
                 {
-                    Location = server.Location,
-                    DatabaseDtuMax = 100
+                    { "tagKey1", "TagValue1" }
                 };
-                returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput3);
-                SqlManagementTestUtilities.ValidateElasticPool(epInput3, returnedEp, epName);
-                epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
-                Assert.NotNull(epa);
-                Assert.Equal(3, epa.Count());
-                Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
-                Assert.Equal(2, epa.Where(a => a.Operation == "UPDATE").Count());
 
-                // Update elasticPool Dtu Min
-                // 
-                ElasticPool epInput4 = new ElasticPool()
-                {
-                    Location = server.Location,
-                    DatabaseDtuMin = 10
-                };
-                returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput4);
-                SqlManagementTestUtilities.ValidateElasticPool(epInput4, returnedEp, epName);
-                epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
-                Assert.NotNull(epa);
-                Assert.Equal(4, epa.Count());
-                Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
-                Assert.Equal(3, epa.Where(a => a.Operation == "UPDATE").Count());
-            }
+            // Create a elasticPool with parameters Tags
+            // 
+            string epName = SqlManagementTestUtilities.GenerateName();
+            var epInput = new ElasticPool()
+            {
+                Location = server.Location,
+                Edition = DatabaseEdition.Standard,
+                Tags = tags,
+                Dtu = 100,
+                DatabaseDtuMax = 20,
+                DatabaseDtuMin = 0
+            };
+            var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
+            SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
+            var epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
+            Assert.NotNull(epa);
+            Assert.Equal(1, epa.Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+
+            // Update elasticPool Dtu
+            // 
+            dynamic epInput2 = createModelFunc();
+            epInput2.Dtu = 200;
+
+            returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput2);
+            SqlManagementTestUtilities.ValidateElasticPool(epInput2, returnedEp, epName);
+            epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
+            Assert.NotNull(epa);
+            Assert.Equal(2, epa.Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "UPDATE").Count());
+
+            // Update elasticPool Dtu Max
+            // 
+            dynamic epInput3 = createModelFunc();
+            epInput3.DatabaseDtuMax = 100;
+
+            returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput3);
+            SqlManagementTestUtilities.ValidateElasticPool(epInput3, returnedEp, epName);
+            epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
+            Assert.NotNull(epa);
+            Assert.Equal(3, epa.Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+            Assert.Equal(2, epa.Where(a => a.Operation == "UPDATE").Count());
+
+            // Update elasticPool Dtu Min
+            // 
+            dynamic epInput4 = createModelFunc();
+            epInput4.DatabaseDtuMin = 10;
+
+            returnedEp = updateFunc(resourceGroup.Name, server.Name, epName, epInput4);
+            SqlManagementTestUtilities.ValidateElasticPool(epInput4, returnedEp, epName);
+            epa = sqlClient.ElasticPools.ListActivity(resourceGroup.Name, server.Name, epName);
+            Assert.NotNull(epa);
+            Assert.Equal(4, epa.Count());
+            Assert.Equal(1, epa.Where(a => a.Operation == "CREATE").Count());
+            Assert.Equal(3, epa.Where(a => a.Operation == "UPDATE").Count());
         }
 
         [Fact]

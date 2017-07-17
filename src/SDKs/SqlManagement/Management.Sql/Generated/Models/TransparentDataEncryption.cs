@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a database transparent data encryption .
+    /// Represents a database transparent data encryption configuration.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class TransparentDataEncryption : SubResource
