@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// deallocation.</param>
         public NodeRemoveParameter(System.Collections.Generic.IList<string> nodeList, System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
-            NodeList = nodeList;
-            ResizeTimeout = resizeTimeout;
-            NodeDeallocationOption = nodeDeallocationOption;
+            this.NodeList = nodeList;
+            this.ResizeTimeout = resizeTimeout;
+            this.NodeDeallocationOption = nodeDeallocationOption;
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (NodeList == null)
+            if (this.NodeList == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "NodeList");
             }

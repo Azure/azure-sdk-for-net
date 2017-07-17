@@ -55,18 +55,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// each job created under this schedule as metadata.</param>
         public JobSpecification(PoolInformation poolInfo, int? priority = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), System.Collections.Generic.IList<EnvironmentSetting> commonEnvironmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
-            Priority = priority;
-            DisplayName = displayName;
-            UsesTaskDependencies = usesTaskDependencies;
-            OnAllTasksComplete = onAllTasksComplete;
-            OnTaskFailure = onTaskFailure;
-            Constraints = constraints;
-            JobManagerTask = jobManagerTask;
-            JobPreparationTask = jobPreparationTask;
-            JobReleaseTask = jobReleaseTask;
-            CommonEnvironmentSettings = commonEnvironmentSettings;
-            PoolInfo = poolInfo;
-            Metadata = metadata;
+            this.Priority = priority;
+            this.DisplayName = displayName;
+            this.UsesTaskDependencies = usesTaskDependencies;
+            this.OnAllTasksComplete = onAllTasksComplete;
+            this.OnTaskFailure = onTaskFailure;
+            this.Constraints = constraints;
+            this.JobManagerTask = jobManagerTask;
+            this.JobPreparationTask = jobPreparationTask;
+            this.JobReleaseTask = jobReleaseTask;
+            this.CommonEnvironmentSettings = commonEnvironmentSettings;
+            this.PoolInfo = poolInfo;
+            this.Metadata = metadata;
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PoolInfo == null)
+            if (this.PoolInfo == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PoolInfo");
             }

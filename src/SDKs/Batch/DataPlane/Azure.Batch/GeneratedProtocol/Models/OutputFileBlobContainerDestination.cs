@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the Azure Storage container.</param>
         public OutputFileBlobContainerDestination(string containerUrl, string path = default(string))
         {
-            Path = path;
-            ContainerUrl = containerUrl;
+            this.Path = path;
+            this.ContainerUrl = containerUrl;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ContainerUrl == null)
+            if (this.ContainerUrl == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ContainerUrl");
             }

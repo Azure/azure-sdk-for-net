@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// with the job.</param>
         public JobDisableParameter(DisableJobOption disableTasks)
         {
-            DisableTasks = disableTasks;
+            this.DisableTasks = disableTasks;
         }
 
         /// <summary>

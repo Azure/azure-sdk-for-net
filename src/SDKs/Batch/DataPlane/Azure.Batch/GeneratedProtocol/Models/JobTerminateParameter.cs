@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job's TerminateReason. The default is 'UserTerminate'.</param>
         public JobTerminateParameter(string terminateReason = default(string))
         {
-            TerminateReason = terminateReason;
+            this.TerminateReason = terminateReason;
         }
 
         /// <summary>

@@ -52,14 +52,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// it explicitly if you are calling the REST API directly.</param>
         public PoolListUsageMetricsOptions(System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string filter = default(string), int? maxResults = default(int?), int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?))
         {
-            StartTime = startTime;
-            EndTime = endTime;
-            Filter = filter;
-            MaxResults = maxResults;
-            Timeout = timeout;
-            ClientRequestId = clientRequestId;
-            ReturnClientRequestId = returnClientRequestId;
-            OcpDate = ocpDate;
+            this.StartTime = startTime;
+            this.EndTime = endTime;
+            this.Filter = filter;
+            this.MaxResults = maxResults;
+            this.Timeout = timeout;
+            this.ClientRequestId = clientRequestId;
+            this.ReturnClientRequestId = returnClientRequestId;
+            this.OcpDate = ocpDate;
         }
 
         /// <summary>

@@ -43,13 +43,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// it explicitly if you are calling the REST API directly.</param>
         public JobListPreparationAndReleaseTaskStatusOptions(string filter = default(string), string select = default(string), int? maxResults = default(int?), int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?))
         {
-            Filter = filter;
-            Select = select;
-            MaxResults = maxResults;
-            Timeout = timeout;
-            ClientRequestId = clientRequestId;
-            ReturnClientRequestId = returnClientRequestId;
-            OcpDate = ocpDate;
+            this.Filter = filter;
+            this.Select = select;
+            this.MaxResults = maxResults;
+            this.Timeout = timeout;
+            this.ClientRequestId = clientRequestId;
+            this.ReturnClientRequestId = returnClientRequestId;
+            this.OcpDate = ocpDate;
         }
 
         /// <summary>

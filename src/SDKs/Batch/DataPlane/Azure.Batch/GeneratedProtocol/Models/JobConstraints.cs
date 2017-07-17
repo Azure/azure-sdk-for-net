@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// code is nonzero.</param>
         public JobConstraints(System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), int? maxTaskRetryCount = default(int?))
         {
-            MaxWallClockTime = maxWallClockTime;
-            MaxTaskRetryCount = maxTaskRetryCount;
+            this.MaxWallClockTime = maxWallClockTime;
+            this.MaxTaskRetryCount = maxTaskRetryCount;
         }
 
         /// <summary>

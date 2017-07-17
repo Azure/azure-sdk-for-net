@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// access.</param>
         public AuthenticationTokenSettings(System.Collections.Generic.IList<AccessScope> access = default(System.Collections.Generic.IList<AccessScope>))
         {
-            Access = access;
+            this.Access = access;
         }
 
         /// <summary>

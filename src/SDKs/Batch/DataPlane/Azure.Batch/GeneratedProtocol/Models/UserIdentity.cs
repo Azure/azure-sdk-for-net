@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// run.</param>
         public UserIdentity(string userName = default(string), AutoUserSpecification autoUser = default(AutoUserSpecification))
         {
-            UserName = userName;
-            AutoUser = autoUser;
+            this.UserName = userName;
+            this.AutoUser = autoUser;
         }
 
         /// <summary>

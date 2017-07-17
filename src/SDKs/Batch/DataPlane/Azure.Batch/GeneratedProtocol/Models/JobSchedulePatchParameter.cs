@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the job schedule as metadata.</param>
         public JobSchedulePatchParameter(Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
-            Schedule = schedule;
-            JobSpecification = jobSpecification;
-            Metadata = metadata;
+            this.Schedule = schedule;
+            this.JobSpecification = jobSpecification;
+            this.Metadata = metadata;
         }
 
         /// <summary>

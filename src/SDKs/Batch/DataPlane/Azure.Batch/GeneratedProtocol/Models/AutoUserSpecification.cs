@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// user.</param>
         public AutoUserSpecification(AutoUserScope? scope = default(AutoUserScope?), ElevationLevel? elevationLevel = default(ElevationLevel?))
         {
-            Scope = scope;
-            ElevationLevel = elevationLevel;
+            this.Scope = scope;
+            this.ElevationLevel = elevationLevel;
         }
 
         /// <summary>

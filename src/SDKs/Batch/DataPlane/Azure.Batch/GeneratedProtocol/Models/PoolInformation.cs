@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job is submitted.</param>
         public PoolInformation(string poolId = default(string), AutoPoolSpecification autoPoolSpecification = default(AutoPoolSpecification))
         {
-            PoolId = poolId;
-            AutoPoolSpecification = autoPoolSpecification;
+            this.PoolId = poolId;
+            this.AutoPoolSpecification = autoPoolSpecification;
         }
 
         /// <summary>

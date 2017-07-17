@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// before the dependent task can be scheduled.</param>
         public TaskDependencies(System.Collections.Generic.IList<string> taskIds = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<TaskIdRange> taskIdRanges = default(System.Collections.Generic.IList<TaskIdRange>))
         {
-            TaskIds = taskIds;
-            TaskIdRanges = taskIdRanges;
+            this.TaskIds = taskIds;
+            this.TaskIdRanges = taskIdRanges;
         }
 
         /// <summary>

@@ -39,11 +39,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// it explicitly if you are calling the REST API directly.</param>
         public ApplicationListOptions(int? maxResults = default(int?), int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?))
         {
-            MaxResults = maxResults;
-            Timeout = timeout;
-            ClientRequestId = clientRequestId;
-            ReturnClientRequestId = returnClientRequestId;
-            OcpDate = ocpDate;
+            this.MaxResults = maxResults;
+            this.Timeout = timeout;
+            this.ClientRequestId = clientRequestId;
+            this.ReturnClientRequestId = returnClientRequestId;
+            this.OcpDate = ocpDate;
         }
 
         /// <summary>
