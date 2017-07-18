@@ -40,6 +40,8 @@ namespace Sql.Tests
 
         public const string DefaultEuapPrimaryLocation = "East US 2 EUAP";
 
+        public const string DefaultEuapPrimaryLocationId = "eastus2euap";
+
         public const string DefaultLogin = "dummylogin";
 
         public const string DefaultPassword = "Un53cuRE!";
