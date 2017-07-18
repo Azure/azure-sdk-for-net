@@ -145,7 +145,7 @@ namespace Networks.Tests
 
 
         public static RouteFilter CreateDefaultRouteFilter(string resourceGroupName, string filterName, string location, 
-            NetworkManagementClient nrpClient)
+            NetworkManagementClient nrpClient, bool containsRule = false)
         {
             var filter = new RouteFilter()
             {
@@ -155,6 +155,21 @@ namespace Networks.Tests
                        {"key","value"}
                     }
             };
+
+            if (containsRule)
+            {
+                var rule = new RouteFilterRule()
+                {
+                    Name = "test",
+                    Access = ExpressRouteTests.Filter_Access,
+                    Communities = new List<string> { ExpressRouteTests.Filter_Commmunity },
+                    Location = location
+                };
+
+                var rules = new List<RouteFilterRule>();
+                rules.Add(rule);
+                filter.Rules = rules;                
+            }
 
             // Put route filter 
             var filterResponse = nrpClient.RouteFilters.CreateOrUpdate(resourceGroupName, filterName, filter);
