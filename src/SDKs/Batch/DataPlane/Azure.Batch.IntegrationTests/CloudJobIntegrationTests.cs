@@ -920,6 +920,8 @@
 
                         await unboundJob.AddTaskAsync(new[] {t1, t2}).ConfigureAwait(false);
 
+                        await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false); // Give the service some time to get the counts
+
                         var counts = await unboundJob.GetTaskCountsAsync().ConfigureAwait(false);
 
                         Assert.Equal(2, counts.Active);
@@ -957,6 +959,8 @@
 
                     //Disable the job so that we can update the pool info
                     await job.DisableAsync(DisableJobOption.Requeue).ConfigureAwait(false);
+
+                    await TestUtilities.WaitForJobStateAsync(job, TimeSpan.FromMinutes(1), JobState.Disabled).ConfigureAwait(false);
 
                     job.Constraints = new JobConstraints(maxWallClockTime: newMaxWallClockTime);
                     job.Metadata = new List<MetadataItem>()
