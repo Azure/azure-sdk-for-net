@@ -72,10 +72,9 @@ namespace Fluent.Tests.Network
                 ICreatedResources<IVirtualMachine> virtualMachines = EnsureNetwork(manager, computeManager, resourcesGroupName);
                 var vm0 = virtualMachines.ElementAt(0);
                 ITopology topology = nw.GetTopology(vm0.ResourceGroupName);
-                Assert.Equal(10, topology.Resources.Count);
-//                Assert.True(topology.Resources.ContainsKey(vm0.GetPrimaryNetworkInterface().NetworkSecurityGroupId));
-//                Assert.Equal(4,
-//                    topology.Resources[vm0.PrimaryNetworkInterfaceId].Associations.Count);
+                Assert.Equal(11, topology.Resources.Count);
+                Assert.True(topology.Resources.ContainsKey(vm0.PrimaryNetworkInterfaceId));
+                Assert.Equal(4, topology.Resources[vm0.PrimaryNetworkInterfaceId].Associations.Count);
 
                 ISecurityGroupView sgViewResult = nw.GetSecurityGroupView(virtualMachines.ElementAt(0).Id);
                 Assert.Equal(1, sgViewResult.NetworkInterfaces.Count);
@@ -141,7 +140,7 @@ namespace Fluent.Tests.Network
 
                 computeManager.VirtualMachines.DeleteById(virtualMachines.ElementAt(1).Id);
                 topology.Refresh();
-                Assert.Equal(9, topology.Resources.Count);
+                Assert.Equal(10, topology.Resources.Count);
 
                 manager.ResourceManager.ResourceGroups.DeleteByName(nw.ResourceGroupName);
                 manager.ResourceManager.ResourceGroups.DeleteByName(resourcesGroupName);
@@ -154,13 +153,13 @@ namespace Fluent.Tests.Network
             IVirtualMachines vms = computeManager.VirtualMachines;
             
             // Create an NSG
-            INetworkSecurityGroup nsg = networkManager.NetworkSecurityGroups.Define(SdkContext.RandomResourceName("nsg", 6))
+            INetworkSecurityGroup nsg = networkManager.NetworkSecurityGroups.Define(SdkContext.RandomResourceName("nsg", 8))
                 .WithRegion(REGION)
                 .WithNewResourceGroup(groupName)
                 .Create();
 
             // Create a network for the VMs
-            INetwork network = networkManager.Networks.Define(SdkContext.RandomResourceName("net", 6))
+            INetwork network = networkManager.Networks.Define(SdkContext.RandomResourceName("net", 8))
                 .WithRegion(REGION)
                 .WithExistingResourceGroup(groupName)
                 .WithAddressSpace("10.0.0.0/28")
@@ -171,12 +170,12 @@ namespace Fluent.Tests.Network
                 .WithSubnet("subnet2", "10.0.0.8/29")
                 .Create();
 
-            INetworkInterface nic = networkManager.NetworkInterfaces.Define(SdkContext.RandomResourceName("ni", 6))
+            INetworkInterface nic = networkManager.NetworkInterfaces.Define(SdkContext.RandomResourceName("ni", 8))
                 .WithRegion(REGION)
                 .WithExistingResourceGroup(groupName)
                 .WithNewPrimaryNetwork("10.0.0.0/28")
                 .WithPrimaryPrivateIPAddressDynamic()
-                .WithNewPrimaryPublicIPAddress(SdkContext.RandomResourceName("pip", 6))
+                .WithNewPrimaryPublicIPAddress(SdkContext.RandomResourceName("pip", 8))
                 .WithIPForwarding()
                 .WithExistingNetworkSecurityGroup(nsg)
                 .Create();
@@ -224,7 +223,7 @@ namespace Fluent.Tests.Network
         // create a storage account
         IStorageAccount EnsureStorageAccount(String groupName)
         {
-            return TestHelper.CreateStorageManager().StorageAccounts.Define(SdkContext.RandomResourceName("sa",6))
+            return TestHelper.CreateStorageManager().StorageAccounts.Define(SdkContext.RandomResourceName("sa", 8))
                 .WithRegion(REGION)
                 .WithExistingResourceGroup(groupName)
                 .Create();
