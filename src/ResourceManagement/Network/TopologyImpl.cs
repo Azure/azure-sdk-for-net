@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 foreach (var inner in inners)
                 {
-                    resources[inner.Name] = inner;
+                    resources[inner.Id] = inner;
                 }
             }
         }
