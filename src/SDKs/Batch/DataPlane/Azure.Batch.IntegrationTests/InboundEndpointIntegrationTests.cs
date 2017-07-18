@@ -52,21 +52,7 @@ namespace BatchClientIntegrationTests
                         {
                             ValidateEquality(expectedInboundNatPools[i], actualInboundNatPools[i]);
 
-                            if (expectedInboundNatPools[i].NetworkSecurityGroupRules != null && 
-                                expectedInboundNatPools[i].NetworkSecurityGroupRules.Count > 0)
-                            {
-                                var expectedNetworkSecurityGroups =
-                                    expectedInboundNatPools[i].NetworkSecurityGroupRules.OrderBy(nsgr => nsgr.Priority).ToList();
-                                var actualyNetworkSecurityGroups =
-                                    actualInboundNatPools[i].NetworkSecurityGroupRules.OrderBy(nsgr => nsgr.Priority).ToList();
-
-                                Assert.Equal(expectedNetworkSecurityGroups.Count, actualyNetworkSecurityGroups.Count);
-
-                                for (int j = 0; j < expectedNetworkSecurityGroups.Count; j++)
-                                {
-                                    ValidateEquality(expectedNetworkSecurityGroups[j], actualyNetworkSecurityGroups[j]);
-                                }
-                            }
+                            ValidateNatPool(expectedInboundNatPools[i], actualInboundNatPools[i]);
                         }
                     }
                     finally
@@ -77,6 +63,25 @@ namespace BatchClientIntegrationTests
             };
 
             SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
+        private static void ValidateNatPool(InboundNatPool expectedNatPool, InboundNatPool actualNatPool)
+        {
+            if (expectedNatPool.NetworkSecurityGroupRules != null &&
+                expectedNatPool.NetworkSecurityGroupRules.Count > 0)
+            {
+                var expectedNetworkSecurityGroups =
+                    expectedNatPool.NetworkSecurityGroupRules.OrderBy(nsgr => nsgr.Priority).ToList();
+                var actualNetworkSecurityGroups =
+                    actualNatPool.NetworkSecurityGroupRules.OrderBy(nsgr => nsgr.Priority).ToList();
+
+                Assert.Equal(expectedNetworkSecurityGroups.Count, actualNetworkSecurityGroups.Count);
+
+                for (int j = 0; j < expectedNetworkSecurityGroups.Count; j++)
+                {
+                    ValidateEquality(expectedNetworkSecurityGroups[j], actualNetworkSecurityGroups[j]);
+                }
+            }
         }
 
         private static CloudPool CreatePool(BatchClient batchCli, string poolId)

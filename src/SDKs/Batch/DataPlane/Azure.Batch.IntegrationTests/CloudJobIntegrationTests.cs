@@ -895,6 +895,46 @@
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task Job_GetTaskCounts_ReturnsCorrectCount()
+        {
+            Func<Task> test = async () =>
+            {
+                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                {
+                    string jobId = "TestJobGetTaskCounts-" + TestUtilities.GetMyName();
+                    try
+                    {
+                        PoolInformation poolInfo = new PoolInformation()
+                        {
+                            PoolId = "Fake"
+                        };
+
+                        CloudJob unboundJob = batchCli.JobOperations.CreateJob(jobId, poolInfo);
+                        await unboundJob.CommitAsync().ConfigureAwait(false);
+                        await unboundJob.RefreshAsync().ConfigureAwait(false);
+
+                        CloudTask t1 = new CloudTask("t1", "cmd /c dir");
+                        CloudTask t2 = new CloudTask("t2", "cmd /c ping 127.0.0.1 -n 4");
+
+                        await unboundJob.AddTaskAsync(new[] {t1, t2}).ConfigureAwait(false);
+
+                        var counts = await unboundJob.GetTaskCountsAsync().ConfigureAwait(false);
+
+                        Assert.Equal(2, counts.Active);
+                        Assert.Equal(TaskCountValidationStatus.Validated, counts.ValidationStatus);
+                    }
+                    finally
+                    {
+                        await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId);
+                    }
+                }
+            };
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
         private static async Task MutateJobAsync(string jobId, Func<CloudJob, Task> jobAction)
         {
             using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
