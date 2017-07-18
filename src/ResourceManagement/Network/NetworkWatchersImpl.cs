@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -9,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Microsoft.Azure.Management.Network.Fluent.NetworkWatcher.Definition;
     using Microsoft.Azure.Management.Network.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
 
     /// <summary>
     /// Implementation for Network Watchers.
@@ -66,13 +63,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public IEnumerable<INetworkWatcher> List()
         {
-            return Manager.ResourceManager.ResourceGroups.List()
-                .SelectMany(rg => ListByResourceGroup(rg.Name));
+            return WrapList(Inner.ListAll());
         }
 
-        public Task<IPagedCollection<INetworkWatcher>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = new CancellationToken())
+        public async Task<IPagedCollection<INetworkWatcher>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = new CancellationToken())
         {
-            throw new System.NotImplementedException();
+            var innerNetworkWatchers = await Inner.ListAllAsync(cancellationToken);
+            var result = innerNetworkWatchers.Select((innerNetworkWatcher) => WrapModel(innerNetworkWatcher));
+            return PagedCollection<INetworkWatcher, NetworkWatcherInner>.CreateFromEnumerable(result);
         }
 
         public IEnumerable<INetworkWatcher> ListByResourceGroup(string resourceGroupName)
@@ -80,30 +78,34 @@ namespace Microsoft.Azure.Management.Network.Fluent
             return WrapList(Inner.List(resourceGroupName));
         }
 
-        public Task<IPagedCollection<INetworkWatcher>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true,
+        public async Task<IPagedCollection<INetworkWatcher>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true,
             CancellationToken cancellationToken = new CancellationToken())
         {
-            throw new System.NotImplementedException();
+            var innerNetworkWatchers = await Inner.ListAsync(resourceGroupName, cancellationToken);
+            var result = innerNetworkWatchers.Select((innerNetworkWatcher) => WrapModel(innerNetworkWatcher));
+            return PagedCollection<INetworkWatcher, NetworkWatcherInner>.CreateFromEnumerable(result);
         }
 
-        public Task<IEnumerable<string>> DeleteByIdsAsync(IList<string> ids, CancellationToken cancellationToken = new CancellationToken())
+        public async Task<IEnumerable<string>> DeleteByIdsAsync(IList<string> ids, CancellationToken cancellationToken = new CancellationToken())
         {
-            throw new System.NotImplementedException();
+            var taskList = ids.Select(id => DeleteByIdAsync(id, cancellationToken)).ToList();
+            await Task.WhenAll(taskList);
+            return ids;
         }
 
         public Task<IEnumerable<string>> DeleteByIdsAsync(string[] ids, CancellationToken cancellationToken = new CancellationToken())
         {
-            throw new System.NotImplementedException();
+            return DeleteByIdsAsync(new List<string>(ids), cancellationToken);
         }
 
         public void DeleteByIds(IList<string> ids)
         {
-            throw new System.NotImplementedException();
+            DeleteByIdsAsync(ids).Wait();
         }
 
         public void DeleteByIds(params string[] ids)
         {
-            throw new System.NotImplementedException();
+            DeleteByIdsAsync(ids).Wait();
         }
     }
 }
