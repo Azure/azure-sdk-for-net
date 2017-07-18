@@ -1,3 +1,5 @@
+Write-Host $([DateTime]::UtcNow.ToString('u').Replace('Z',' UTC'))
+
 Write-Host ""
 Write-Host "1) azure-rest-api-specs repository information"
 Write-Host "GitHub user:" $Args[0]
