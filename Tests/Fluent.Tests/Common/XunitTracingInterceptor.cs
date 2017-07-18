@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,15 +9,16 @@ using Xunit.Abstractions;
 
 namespace Fluent.Tests.Common
 {
-
-//  This class allows to output http requests and responses to console for tests. To use, add following code as test class constructor:
-//
-//    public TestClass(ITestOutputHelper output)
-//    {
-//        TestHelper.TestLogger = output;
-//        ServiceClientTracing.IsEnabled = true;
-//        ServiceClientTracing.AddTracingInterceptor(new XunitTracingInterceptor(output));
-//    }
+    /// <summary>
+    /// This class allows to output http requests and responses to console for tests. To use, add following code as test class constructor:
+    ///
+    /// public TestClass(ITestOutputHelper output)
+    /// {
+    ///     TestHelper.TestLogger = output;
+    ///     ServiceClientTracing.IsEnabled = true;
+    ///     ServiceClientTracing.AddTracingInterceptor(new XunitTracingInterceptor(output));
+    /// }
+    /// </summary>
     public class XunitTracingInterceptor : IServiceClientTracingInterceptor
     {
         private ITestOutputHelper _logger;
