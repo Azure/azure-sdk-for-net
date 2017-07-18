@@ -129,8 +129,8 @@
             //(?<!//.*?) -- Make sure that any await we find is not preceeded on the same line by //
             //(?s: -- means . will match newlines in this sub-expression.
             //\\.Wait\\(\\) -- matches .Wait()
-            //\\.Result(\\.|;|\\s|,) -- matches .Result followed by a ., ;, whitespace, or ,
-            const string pattern = "(?<!//.*?)(?s:(\\.Wait\\(\\)|\\.Result(\\.|;|\\s|,)))";
+            //(?<!this\\.?)\\.Result(\\.|;|\\s|,) -- matches .Result followed by a ., ;, whitespace, or , which is not prefixed immediately by "this."
+            const string pattern = "(?<!//.*?)(?s:(\\.Wait\\(\\)|(?<!this\\.?)\\.Result(\\.|;|\\s|,)))";
 
             SourceParser sourceParser = new SourceParser(this.sourceLocation, SourceFileType, null, pattern);
 
