@@ -6,6 +6,22 @@
 @echo off
 setlocal
 
+:: help requested?
+set pot_help="%1%2"
+if not x%pot_help%==x%pot_help:help=% (set req_help=T)
+if not x%pot_help%==x%pot_help:?=%    (set req_help=T)
+if not "%req_help%" == "" (
+    echo.
+    echo Usage: generate.cmd
+    echo             ^<RP, e.g. 'network/resource-manager'^>
+    echo             ^<AutoRest version, defaults to 'latest'^>
+    echo             ^<GitHub user of azure-rest-api-specs repo, defaults to 'Azure'^>
+    echo             ^<Branch of azure-rest-api-specs repo, defaults to 'current'^>
+    echo.
+    echo Example: generate.cmd monitor/data-plane 1.1.0 olydis new-cool-feature
+    exit /B
+)
+
 :: repo information
 if not "%2" == "" (set version="%2")         else (set version="latest")
 if not "%3" == "" (set specsRepoUser="%3")   else (set specsRepoUser="Azure")
