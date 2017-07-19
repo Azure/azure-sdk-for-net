@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
 {
@@ -158,44 +156,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         {
             IEnumerable<string> filteredProjects = AllProjectList.Except<string>(IgnoredProjectList, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
             return filteredProjects?.ToList<string>();
-
-            /*
-            List<string> ignoreProjectPaths = new List<string>();
-            foreach (string iP in IgnorePathTokenList)
-            {
-                var ignorePaths = from proj in AllProjectList where proj.Contains(iP) select proj;
-                if (ignorePaths.Any<string>())
-                {
-                    ignoreProjectPaths.AddRange(ignorePaths);
-                }
-            }
-
-            filteredProjects = AllProjectList.Except<string>(ignoreProjectPaths, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-
-            return filteredProjects?.ToList<string>();
-            */
         }
 
         public List<string> GetFilteredTestProjects()
         {
             IEnumerable<string> filteredTestProjects = AllTestProjectList.Except<string>(IgnoredProjectList, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
             return filteredTestProjects?.ToList<string>();
-
-            /*
-            List<string> ignoreProjects = new List<string>();
-            foreach(string iTP in IgnorePathTokenList)
-            {
-                var ignorePaths = from proj in AllTestProjectList where proj.Contains(iTP) select proj;
-                if(ignorePaths.Any<string>())
-                {
-                    ignoreProjects.AddRange(ignorePaths);
-                }
-            }
-
-            filteredTestProjects = AllTestProjectList.Except<string>(ignoreProjects, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-
-            return filteredTestProjects?.ToList<string>();
-            */
         }
 
         public List<string> GetAllSDKProjects()
