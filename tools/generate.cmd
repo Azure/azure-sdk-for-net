@@ -8,8 +8,11 @@ setlocal
 
 :: help requested?
 set pot_help="%1%2"
-if not x%pot_help%==x%pot_help:help=% (set req_help=T)
-if not x%pot_help%==x%pot_help:?=%    (set req_help=T)
+if not "%pot_help%"=="help"        (set req_help=T)
+if not "%pot_help%"=="-help"       (set req_help=T)
+if not "%pot_help%"=="--help"      (set req_help=T)
+if not "%pot_help%"=="/help"       (set req_help=T)
+if not x%pot_help%==x%pot_help:?=% (set req_help=T)
 if not "%req_help%" == "" (
     echo.
     echo Usage: generate.cmd
@@ -19,6 +22,16 @@ if not "%req_help%" == "" (
     echo             ^<Branch of azure-rest-api-specs repo, defaults to 'current'^>
     echo.
     echo Example: generate.cmd monitor/data-plane 1.1.0 olydis new-cool-feature
+    echo.
+    echo To display this help, run either of
+    echo      generate.cmd help
+    echo      generate.cmd -help
+    echo      generate.cmd --help
+    echo      generate.cmd /help
+    echo      generate.cmd ?
+    echo      generate.cmd -?
+    echo      generate.cmd --?
+    echo      generate.cmd /?
     exit /B
 )
 
@@ -38,6 +51,7 @@ call autorest %configFile% --csharp --csharp-sdks-folder=%~dp0\..\src\SDKs --ver
 @echo off
 
 :: metadata
+mkdir %~dp0\..\src\SDKs\_metadata
 call powershell %~dp0\generateMetadata.ps1 %specsRepoUser% %specsRepoBranch% %version% %configFile% > %~dp0\..\src\SDKs\_metadata\%rp:/=_%.txt
 
 endlocal
