@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Fluent.Tests.Compute
 {
-    public class ManageVirtualNetwork
+    public class VirtualNetwork
     {
         /**
          * Main entry point.

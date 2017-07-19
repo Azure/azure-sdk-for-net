@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         private LoadBalancersImpl loadBalancers;
         private ApplicationGatewaysImpl appGateways;
         private IRouteTables routeTables;
+        private NetworkWatchersImpl networkWatchers;
 
         private NetworkManager(RestClient restClient, string subscriptionId) :
             base(restClient, subscriptionId, new NetworkManagementClient(new Uri(restClient.BaseUri),
@@ -201,6 +202,22 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 return routeTables;
             }
         }
+
+        /// <summary>
+        /// return entry point to network watchers management API entry point
+        /// </summary>
+        public INetworkWatchers NetworkWatchers
+        {
+            get
+            {
+                if (networkWatchers == null)
+                {
+                    networkWatchers = new NetworkWatchersImpl(this);
+                }
+
+                return networkWatchers;
+            }
+        }
     }
 
     public interface INetworkManagerBeta : IBeta
@@ -214,6 +231,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
         /// Entry point to application gateway management.
         /// </summary>
         IApplicationGateways ApplicationGateways { get; }
+
+        /// <summary>
+        /// return entry point to network watchers management API entry point
+        /// </summary>
+        INetworkWatchers NetworkWatchers { get; }
     }
 
     public interface INetworkManager : INetworkManagerBeta, IManager<INetworkManagementClient>

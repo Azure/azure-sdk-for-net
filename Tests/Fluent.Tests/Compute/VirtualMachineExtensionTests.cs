@@ -17,9 +17,9 @@ using System.Net.Http;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Newtonsoft.Json.Linq;
 
-namespace Fluent.Tests.Compute
+namespace Fluent.Tests.Compute.VirtualMachine
 {
-    public class VirtualMachineExtension
+    public class Extension
     {
         [Fact]
         public void CanResetPasswordUsingVMAccessExtension()

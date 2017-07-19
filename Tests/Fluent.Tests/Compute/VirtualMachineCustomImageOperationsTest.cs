@@ -12,9 +12,9 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Fluent.Tests.Compute
+namespace Fluent.Tests.Compute.VirtualMachine
 {
-    public class VirtualMachineCustomImageOperations
+    public class CustomImageOperations
     {
         private readonly Region Location = Region.USEast;
 
