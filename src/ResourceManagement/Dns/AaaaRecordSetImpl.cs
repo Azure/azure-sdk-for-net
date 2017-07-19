@@ -58,12 +58,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return ipv6Addresses;
         }
 
-        ///GENMHASH:6CC2CE509AA8735DD6507ACE8F3C9688:3F5F2CC7F3C4A3B943EC7C1953A9D2E5
-        internal  AaaaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(parent, innerModel)
+        ///GENMHASH:0DB1EF710EE5C9DF4D735B90F801CE51:F56FF3A2E46C4061C08F5FA6A4C334F3
+        internal AaaaRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(parent, innerModel)
         {
         }
 
-        ///GENMHASH:AEA8C8A92DBF6D46B8137727B5EEFACA:A6C5980717429E458E9F5A7FCB8885B4
+        ///GENMHASH:8ABF9B557B42803047EF280885243BA8:78C836DC83E601CABF099843CB28CA6A
         internal static AaaaRecordSetImpl NewRecordSet(string name, DnsZoneImpl parent)
         {
             return new AaaaRecordSetImpl(

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
     /// <summary>
     /// The entirety of the DNS zone definition.
     /// </summary>
-    public interface IDefinition  :
+    public interface IDefinition :
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IBlank,
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate
     {
@@ -21,17 +21,26 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
     /// The stage of the definition which contains all the minimum required inputs for the resource to be created
     /// (via  WithCreate.create()), but also allows for any other optional settings to be specified.
     /// </summary>
-    public interface IWithCreate  :
+    public interface IWithCreate :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
         Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithRecordSet,
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithETagCheck,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.Resource.Definition.IDefinitionWithTags<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the DNS zone definition allowing to enable ETag validation.
+    /// </summary>
+    public interface IWithETagCheck :
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithETagCheckBeta
     {
     }
 
     /// <summary>
     /// The stage of the DNS zone definition allowing to specify the resource group.
     /// </summary>
-    public interface IBlank  :
+    public interface IBlank :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.GroupableResource.Definition.IWithGroupAndRegion<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate>
     {
     }
@@ -39,7 +48,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
     /// <summary>
     /// The stage of the DNS zone definition allowing to specify record set.
     /// </summary>
-    public interface IWithRecordSet 
+    public interface IWithRecordSet :
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithRecordSetBeta
     {
         /// <summary>
         /// Specifies definition of a PTR record set.
@@ -97,5 +107,32 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition
         /// <param name="name">Name of the A record set.</param>
         /// <return>The stage representing configuration for the A record set.</return>
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.IARecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineARecordSet(string name);
+    }
+
+    /// <summary>
+    /// The stage of the DNS zone definition allowing to enable ETag validation.
+    /// </summary>
+    public interface IWithETagCheckBeta :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies that If-None-Match header needs to set to  to prevent updating an existing DNS zone.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate WithETagCheck();
+    }
+
+    /// <summary>
+    /// The stage of the DNS zone definition allowing to specify record set.
+    /// </summary>
+    public interface IWithRecordSetBeta :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies definition of a CNAME record set.
+        /// </summary>
+        /// <param name="name">Name of the CNAME record set.</param>
+        /// <return>The next stage of DNS zone definition.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Definition.ICNameRecordSetBlank<Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition.IWithCreate> DefineCNameRecordSet(string name);
     }
 }

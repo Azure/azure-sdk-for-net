@@ -8,39 +8,6 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     internal partial class SrvRecordSetImpl 
     {
         /// <summary>
-        /// Gets the metadata associated with this record set.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet.Metadata
-        {
-            get
-            {
-                return this.Metadata() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
-            }
-        }
-
-        /// <summary>
-        /// Gets TTL of the records in this record set.
-        /// </summary>
-        long Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet.TimeToLive
-        {
-            get
-            {
-                return this.TimeToLive();
-            }
-        }
-
-        /// <summary>
-        /// Gets the type of records in this record set.
-        /// </summary>
-        Models.RecordType Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet.RecordType
-        {
-            get
-            {
-                return this.RecordType();
-            }
-        }
-
-        /// <summary>
         /// Gets the SRV records in this record set.
         /// </summary>
         System.Collections.Generic.IReadOnlyList<Models.SrvRecord> Microsoft.Azure.Management.Dns.Fluent.ISrvRecordSet.Records
