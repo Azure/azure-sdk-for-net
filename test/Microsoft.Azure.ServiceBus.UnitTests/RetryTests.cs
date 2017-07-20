@@ -140,6 +140,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     }, TimeSpan.FromSeconds(8))
                 .ConfigureAwait(false));
 
+            TestUtility.Log($"Elapsed Milliseconds: {watch.Elapsed.TotalMilliseconds}");
             Assert.True(watch.Elapsed.TotalSeconds < 7);
         }
 
