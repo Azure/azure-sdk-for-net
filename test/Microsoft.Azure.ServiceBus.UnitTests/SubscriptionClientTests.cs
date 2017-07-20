@@ -38,9 +38,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 {
                     await subscriptionClient.RemoveRuleAsync(RuleDescription.DefaultRuleName);
                 }
-                catch
+                catch (Exception e)
                 {
-                    // ignored
+                    TestUtility.Log($"Remove Default Rule failed with Exception: {e.Message}");
                 }
 
                 await subscriptionClient.AddRuleAsync(new RuleDescription
@@ -64,8 +64,16 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
             finally
             {
-                await subscriptionClient.RemoveRuleAsync("RedCorrelation");
-                await subscriptionClient.AddRuleAsync(RuleDescription.DefaultRuleName, new TrueFilter());
+                try
+                {
+                    await subscriptionClient.RemoveRuleAsync("RedCorrelation");
+                    await subscriptionClient.AddRuleAsync(RuleDescription.DefaultRuleName, new TrueFilter());
+                }
+                catch (Exception e)
+                {
+                    TestUtility.Log($" Cleanup failed with Exception: {e.Message}");
+                }
+
                 await subscriptionClient.CloseAsync();
                 await topicClient.CloseAsync();
             }
@@ -89,9 +97,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 {
                     await subscriptionClient.RemoveRuleAsync(RuleDescription.DefaultRuleName);
                 }
-                catch
+                catch(Exception e)
                 {
-                    // ignored
+                    TestUtility.Log($"Remove Default Rule failed with: {e.Message}");
                 }
 
                 await subscriptionClient.AddRuleAsync(new RuleDescription
@@ -121,12 +129,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var messages = await subscriptionClient.InnerSubscriptionClient.InnerReceiver.ReceiveAsync(maxMessageCount: 2);
                 Assert.NotNull(messages);
                 Assert.True(messages.Count == 1);
-                Assert.True(messageId2.Equals(messages.First().MessageId));
+                Assert.True(messageId2.Equals(messages.First().MessageId));                
             }
             finally
             {
-                await subscriptionClient.RemoveRuleAsync("RedSql");
-                await subscriptionClient.AddRuleAsync(RuleDescription.DefaultRuleName, new TrueFilter());
+                try
+                {
+                    await subscriptionClient.RemoveRuleAsync("RedSql");
+                    await subscriptionClient.AddRuleAsync(RuleDescription.DefaultRuleName, new TrueFilter());
+                }
+                catch (Exception e)
+                {
+                    TestUtility.Log($" Cleanup failed with Exception: {e.Message}");
+                }
+
                 await subscriptionClient.CloseAsync();
                 await topicClient.CloseAsync();
             }
