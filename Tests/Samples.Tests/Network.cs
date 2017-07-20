@@ -98,5 +98,14 @@ namespace Samples.Tests
                             .GetAwaiter()
                             .GetResult());
         }
+
+        [Fact]
+        [Trait("Samples", "Network")]
+        public void ManageNetworkWatcher()
+        {
+/*            RunSampleAsTest(
+                this.GetType().FullName,
+                ManageNetworkWatcher.Program.RunSample);*/
+        }
     }
 }
