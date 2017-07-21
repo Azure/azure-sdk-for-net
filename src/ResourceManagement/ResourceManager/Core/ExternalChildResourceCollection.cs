@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         /// <summary>
         /// Commits the changes in the external child resource collection.
         /// </summary>
-        /// <param name="cacellationToken"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns>On success a task with changed child resources else a faulted task</returns>
-        public Task<List<FluentModelTImpl>> CommitAndGetAllAsync(CancellationToken cacellationToken)
+        public Task<List<FluentModelTImpl>> CommitAndGetAllAsync(CancellationToken cancellationToken)
         {
             ConcurrentBag<Exception> exceptions = new ConcurrentBag<Exception>();
             ConcurrentBag<FluentModelTImpl> comitted = new ConcurrentBag<FluentModelTImpl>();
@@ -63,79 +63,91 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             foreach (FluentModelTImpl resource in resources.Where(r => r.PendingOperation == PendingOperation.ToBeRemoved))
             {
                 FluentModelTImpl res = resource;
-                Task task = res.DeleteAsync(cacellationToken).ContinueWith(deleteTask =>
-                {
-                    if (deleteTask.IsFaulted)
+                Task task = res.DeleteAsync(cancellationToken)
+                .ContinueWith(deleteTask =>
                     {
-                        if (deleteTask.Exception.InnerException != null)
+                        if (deleteTask.IsFaulted)
                         {
-                            exceptions.Add(deleteTask.Exception.InnerException);
-                        } 
+                            if (deleteTask.Exception.InnerException != null)
+                            {
+                                exceptions.Add(deleteTask.Exception.InnerException);
+                            } 
+                            else
+                            {
+                                exceptions.Add(deleteTask.Exception);
+                            }
+                        }
                         else
                         {
-                            exceptions.Add(deleteTask.Exception);
+                            comitted.Add(res);
+                            res.PendingOperation = PendingOperation.None;
+                            FluentModelTImpl val;
+                            this.collection.TryRemove(res.Name(), out val);
                         }
-                    }
-                    else
-                    {
-                        comitted.Add(res);
-                        res.PendingOperation = PendingOperation.None;
-                        FluentModelTImpl val;
-                        this.collection.TryRemove(res.Name(), out val);
-                    }
-                });
+                    },
+                    cancellationToken,
+                    TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Default);
                 allTasks.Add(task);
             }
 
             foreach (FluentModelTImpl resource in resources.Where(r => r.PendingOperation == PendingOperation.ToBeCreated))
             {
                 FluentModelTImpl res = resource;
-                Task task = res.CreateAsync(cacellationToken).ContinueWith(createTask =>
-                {
-                    if (createTask.IsFaulted)
+                Task task = res.CreateAsync(cancellationToken)
+                .ContinueWith(createTask =>
                     {
-                        FluentModelTImpl val;
-                        this.collection.TryRemove(res.Name(), out val);
-                        if (createTask.Exception.InnerException != null)
+                        if (createTask.IsFaulted)
                         {
-                            exceptions.Add(createTask.Exception.InnerException);
+                            FluentModelTImpl val;
+                            this.collection.TryRemove(res.Name(), out val);
+                            if (createTask.Exception.InnerException != null)
+                            {
+                                exceptions.Add(createTask.Exception.InnerException);
+                            }
+                            else
+                            {
+                                exceptions.Add(createTask.Exception);
+                            }
                         }
                         else
                         {
-                            exceptions.Add(createTask.Exception);
+                            comitted.Add(res);
+                            res.PendingOperation = PendingOperation.None;
                         }
-                    }
-                    else
-                    {
-                        comitted.Add(res);
-                        res.PendingOperation = PendingOperation.None;
-                    }
-                });
+                    },
+                    cancellationToken,
+                    TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Default);
                 allTasks.Add(task);
             }
 
             foreach (FluentModelTImpl resource in resources.Where(r => r.PendingOperation == PendingOperation.ToBeUpdated))
             {
                 FluentModelTImpl res = resource;
-                Task task = res.UpdateAsync(cacellationToken).ContinueWith(updateTask =>
-                {
-                    if (updateTask.IsFaulted)
+                Task task = res.UpdateAsync(cancellationToken)
+                .ContinueWith(updateTask =>
                     {
-                        if (updateTask.Exception.InnerException != null)
+                        if (updateTask.IsFaulted)
                         {
-                            exceptions.Add(updateTask.Exception.InnerException);
+                            if (updateTask.Exception.InnerException != null)
+                            {
+                                exceptions.Add(updateTask.Exception.InnerException);
+                            }
+                            else
+                            {
+                                exceptions.Add(updateTask.Exception);
+                            }
                         }
                         else
                         {
-                            exceptions.Add(updateTask.Exception);
+                            comitted.Add(res);
+                            res.PendingOperation = PendingOperation.None;
                         }
-                    }
-                    else
-                    {
-                        comitted.Add(res);
-                        res.PendingOperation = PendingOperation.None;
-                    }
-                });
+                    },
+                    cancellationToken,
+                    TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Default);
                 allTasks.Add(task);
             }
 
@@ -156,7 +168,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
                     {
                         completionSource.SetResult(comitted.ToList());
                     }
-                });
+                },
+                cancellationToken,
+                TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default);
             return completionSource.Task;
         }
 

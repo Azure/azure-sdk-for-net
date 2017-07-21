@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:0B8B56A49D49CB3A5F0D927E7BE72FB6:15D778FA14DCB4E885FC219DB1E89EB7
         public CustomDomainValidationResult ValidateEndpointCustomDomain(string endpointName, string hostName)
         {
-            return ValidateEndpointCustomDomainAsync(endpointName, hostName).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => ValidateEndpointCustomDomainAsync(endpointName, hostName));
         }
 
         ///GENMHASH:3100428FE3EA33121B09FE78BAEAFA03:C9621675455EC620B9844FE8A5939DF2

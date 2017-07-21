@@ -93,12 +93,12 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 
         internal IRedisAccessKeys Keys()
         {
-            return GetKeysAsync().GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetKeysAsync());
         }
 
         internal IRedisAccessKeys GetKeys()
         {
-            return GetKeysAsync().GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetKeysAsync());
         }
 
         ///GENMHASH:6EE61FA0DE4D0297160B059C5B56D12A:FCE23512A2C31EB7F68F7065799142F4
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 
         internal IRedisAccessKeys RegenerateKey(RedisKeyType keyType)
         {
-            return RegenerateKeyAsync(keyType).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => RegenerateKeyAsync(keyType));
         }
 
         ///GENMHASH:861E02F6BBA5773E9337D78B346B0D6B:1E017460FECC66E20EB360CE96692158
@@ -382,7 +382,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
 
         internal IRedisAccessKeys RefreshKeys()
         {
-            return RefreshKeysAsync().GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => RefreshKeysAsync());
         }
 
         ///GENMHASH:36C3CA891B448CCCA6D3BB4C29A31470:222A26931EAF5A1984B63F0B88A1D104

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:8B3976582303B73AC81C5220073E2D55:A4104491D327BA3667E857CA7A2EC15D
         public CheckNameAvailabilityResult CheckEndpointNameAvailability(string name)
         {
-            return CheckEndpointNameAvailabilityAsync(name).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => CheckEndpointNameAvailabilityAsync(name));
         }
 
         ///GENMHASH:2CEB6E35574F5C7F1D19ADAC97C93D65:1B5FDD33003D9073F97F1C9831CA2660
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
 
         public string GenerateSsoUri(string resourceGroupName, string profileName)
         {
-            return GenerateSsoUriAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GenerateSsoUriAsync(resourceGroupName, profileName));
         }
 
         ///GENMHASH:2404C5CA15B0D5D6226D2C7D01E79303:FA381ABED6F4688FD47A380CF0F41845

@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:5E4C278C0FA45BB98AA6EAEE080D4953:FC16212D06A7CCEE646CE7693B370B6F
         public IHostNameBinding Create()
         {
-            return CreateAsync().Result;
+            return Extensions.Synchronize(() => CreateAsync());
         }
 
         ///GENMHASH:1AF7DCAA563064BE5F57020487ABA63B:9EB989BD7CA88C88EBCC64DAB83581CD

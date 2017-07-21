@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:6B6D1D91AC2FCE3076EBD61D0DB099CF
         public IPacketCapture GetByName(string name)
         {
-            return GetByNameAsync(name).Result;
+            return Extensions.Synchronize(() => GetByNameAsync(name));
         }
 
         /// <summary>

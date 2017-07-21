@@ -445,52 +445,72 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
             // Web app creation
             Inner.SiteConfig = new Models.SiteConfig();
-            var site = await CreateOrUpdateInnerAsync(Inner, cancellationToken).ContinueWith<SiteInner>(t =>
-            {
-                var innerSite = t.Result;
-                Inner.SiteConfig = null;
-                return innerSite;
-            }).ContinueWith(t =>
-            {
-                // Submit hostname bindings
-                var bindingTasks = new List<Task>();
-                foreach (var binding in hostNameBindingsToCreate.Values)
+            var site = await CreateOrUpdateInnerAsync(Inner, cancellationToken)
+            .ContinueWith<SiteInner>(t =>
                 {
-                    bindingTasks.Add(binding.CreateAsync(cancellationToken));
-                }
-                foreach (string binding in hostNameBindingsToDelete)
+                    var innerSite = t.Result;
+                    Inner.SiteConfig = null;
+                    return innerSite;
+                },
+                cancellationToken,
+                TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default)
+            .ContinueWith(t =>
                 {
-                    bindingTasks.Add(DeleteHostNameBindingAsync(binding, cancellationToken));
-                }
-                return Task.WhenAll(bindingTasks).ContinueWith(bindingt =>
-                {
-                    // Refresh after hostname bindings
-                    return GetSiteAsync(cancellationToken);
-                }).Unwrap();
-            }).Unwrap().ContinueWith(t =>
-            {
-                var innerSite = t.Result;
-                // Submit SSL bindings
-                var certTasks = new List<Task<IAppServiceCertificate>>();
-                foreach (var binding in sslBindingsToCreate.Values)
-                {
-                    binding.Inner.ToUpdate = true;
-                    certTasks.Add(binding.NewCertificateAsync(cancellationToken)());
-                    hostNameSslStateMap[binding.Inner.Name] = binding.Inner;
-                }
-                innerSite.HostNameSslStates = new List<HostNameSslState>(hostNameSslStateMap.Values);
-                if (certTasks.Any())
-                {
-                    return Task.WhenAll(certTasks).ContinueWith(cert =>
+                    // Submit hostname bindings
+                    var bindingTasks = new List<Task>();
+                    foreach (var binding in hostNameBindingsToCreate.Values)
                     {
-                        return CreateOrUpdateInnerAsync(innerSite, cancellationToken);
-                    }).Unwrap();
-                }
-                else
+                        bindingTasks.Add(binding.CreateAsync(cancellationToken));
+                    }
+                    foreach (string binding in hostNameBindingsToDelete)
+                    {
+                        bindingTasks.Add(DeleteHostNameBindingAsync(binding, cancellationToken));
+                    }
+                    return Task.WhenAll(bindingTasks)
+                    .ContinueWith(bindingt =>
+                        {
+                            // Refresh after hostname bindings
+                            return GetSiteAsync(cancellationToken);
+                        },
+                        cancellationToken,
+                        TaskContinuationOptions.ExecuteSynchronously,
+                        TaskScheduler.Default).Unwrap();
+                },
+                cancellationToken,
+                TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default).Unwrap()
+            .ContinueWith(t =>
                 {
-                    return Task.FromResult(innerSite);
-                }
-            }).Unwrap();
+                    var innerSite = t.Result;
+                    // Submit SSL bindings
+                    var certTasks = new List<Task<IAppServiceCertificate>>();
+                    foreach (var binding in sslBindingsToCreate.Values)
+                    {
+                        binding.Inner.ToUpdate = true;
+                        certTasks.Add(binding.NewCertificateAsync(cancellationToken)());
+                        hostNameSslStateMap[binding.Inner.Name] = binding.Inner;
+                    }
+                    innerSite.HostNameSslStates = new List<HostNameSslState>(hostNameSslStateMap.Values);
+                    if (certTasks.Any())
+                    {
+                        return Task.WhenAll(certTasks)
+                        .ContinueWith(cert =>
+                            {
+                                return CreateOrUpdateInnerAsync(innerSite, cancellationToken);
+                            },
+                            cancellationToken,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Default).Unwrap();
+                    }
+                    else
+                    {
+                        return Task.FromResult(innerSite);
+                    }
+                },
+                cancellationToken,
+                TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default).Unwrap();
             
             // Submit site config
             if (this.SiteConfig != null)

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
 
         public RegistryListCredentials RegenerateCredential(PasswordName passwordName)
         {
-            return this.RegenerateCredentialAsync(passwordName).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.RegenerateCredentialAsync(passwordName));
         }
 
         public override IUpdate Update()
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
 
         public RegistryListCredentials ListCredentials()
         {
-            return this.ListCredentialsAsync().GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.ListCredentialsAsync());
         }
 
         public RegistryImpl WithExistingStorageAccount(IStorageAccount storageAccount)

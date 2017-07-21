@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
             {
                 CreatorTaskGroup.Prepare();
                 CreatorTaskGroup.ExecuteAsync(cancellationToken, multiThreaded).ContinueWith(
-                    (task, state) =>
+                    (task) =>
                             {
                                 if (task.Exception != null)
                                 {
@@ -69,7 +69,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
                                     }
                                 }
                             }, 
-                    null,
                     cancellationToken,
                     TaskContinuationOptions.ExecuteSynchronously,
                     TaskScheduler.Default);
