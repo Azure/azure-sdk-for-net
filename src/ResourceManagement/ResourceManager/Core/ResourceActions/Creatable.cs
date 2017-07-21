@@ -39,35 +39,44 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
 
         public IFluentResourceT Create()
         {
-            return CreateAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize((s) =>
+                    {
+                        return ((Creatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResourceT>)s).CreateAsync(CancellationToken.None);
+                    },
+                    this);
         }
 
         public virtual Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
         {
             TaskCompletionSource<IFluentResourceT> taskCompletionSource = new TaskCompletionSource<IFluentResourceT>();
-            
+
             if (CreatorTaskGroup.IsPreparer)
             {
                 CreatorTaskGroup.Prepare();
-                CreatorTaskGroup.ExecuteAsync(cancellationToken, multiThreaded).ContinueWith(task =>
-                {
-                    if (task.Exception != null)
-                    {
-                        taskCompletionSource.SetException(task.Exception.InnerExceptions);
-                    }
-                    else
-                    {
-                        IFluentResourceT thisResource = this as IFluentResourceT;
-                        if (thisResource == null)
-                        {
-                            taskCompletionSource.SetException(new InvalidOperationException("Internal Error: Expected 'of type' '" + typeof(IFluentResourceT) + "', but got '" + this.GetType().Namespace + "'"));
-                        }
-                        else
-                        {
-                            taskCompletionSource.SetResult(thisResource);
-                        }
-                    }
-                }, TaskContinuationOptions.ExecuteSynchronously);
+                CreatorTaskGroup.ExecuteAsync(cancellationToken, multiThreaded).ContinueWith(
+                    (task, state) =>
+                            {
+                                if (task.Exception != null)
+                                {
+                                    taskCompletionSource.SetException(task.Exception.InnerExceptions);
+                                }
+                                else
+                                {
+                                    IFluentResourceT thisResource = this as IFluentResourceT;
+                                    if (thisResource == null)
+                                    {
+                                        taskCompletionSource.SetException(new InvalidOperationException("Internal Error: Expected 'of type' '" + typeof(IFluentResourceT) + "', but got '" + this.GetType().Namespace + "'"));
+                                    }
+                                    else
+                                    {
+                                        taskCompletionSource.SetResult(thisResource);
+                                    }
+                                }
+                            }, 
+                    null,
+                    cancellationToken,
+                    TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Default);
             }
             else
             {
