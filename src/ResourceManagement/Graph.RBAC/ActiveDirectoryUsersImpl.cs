@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> List()
         {
-            return WrapList(this.manager.Inner.Users.List());
+            return WrapList(Extensions.Synchronize(() => this.manager.Inner.Users.ListAsync()));
         }
 
         public IUsersOperations Inner

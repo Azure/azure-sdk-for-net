@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:1BCE81BDD651175D2AF64E39F4F2C420:E28682D27CF6E0619DBC893BDB64CB37
         public void RevokeAccess(string resourceGroupName, string snapName)
         {
-            this.Inner.RevokeAccess(resourceGroupName, snapName);
+            Extensions.Synchronize(() => this.Inner.RevokeAccessAsync(resourceGroupName, snapName));
         }
 
         ///GENMHASH:1BCE81BDD651175D2AF64E39F4F2C420:BFFE56CE1D59C3CA9284FED6EC0BD4DE

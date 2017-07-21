@@ -54,10 +54,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:E8FB723EB69B1FF154465213A3298460
         public VirtualMachineInstanceView RefreshInstanceView()
         {
-            VirtualMachineScaleSetVMInstanceViewInner instanceViewInner = Parent.Manager.Inner.VirtualMachineScaleSetVMs.GetInstanceView(
+            VirtualMachineScaleSetVMInstanceViewInner instanceViewInner = Management.ResourceManager.Fluent.Core.Extensions.Synchronize(() => Parent.Manager.Inner.VirtualMachineScaleSetVMs.GetInstanceViewAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
-                InstanceId());
+                InstanceId()));
 
             if (instanceViewInner != null) {
                 this.virtualMachineInstanceView = new VirtualMachineInstanceView()

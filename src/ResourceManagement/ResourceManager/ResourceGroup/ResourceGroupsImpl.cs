@@ -25,8 +25,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<IResourceGroup> List()
         {
-           return WrapList(Inner.List()
-                                .AsContinuousCollection(link => Inner.ListNext(link)));
+           return WrapList(Extensions.Synchronize(() => Inner.ListAsync())
+                                .AsContinuousCollection(link => Extensions.Synchronize(() => Inner.ListNextAsync(link))));
         }
 
         public bool CheckExistence(string name)
@@ -99,9 +99,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<IResourceGroup> ListByTag(string tagName, string tagValue)
         {
-            return WrapList(Inner.List(
-                    ResourceUtils.CreateODataFilterForTags(tagName, tagValue))
-                    .AsContinuousCollection((nextLink) => Inner.ListNext(nextLink)));
+            return WrapList(Extensions.Synchronize(() => Inner.ListAsync(ResourceUtils.CreateODataFilterForTags(tagName, tagValue)))
+                    .AsContinuousCollection((nextLink) => Extensions.Synchronize(() => Inner.ListNextAsync(nextLink))));
         }
 
         public async Task<IPagedCollection<IResourceGroup>> ListByTagAsync(string tagName, string tagValue, bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))

@@ -83,8 +83,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 return Extensions.Synchronize(() => ((ServicePrincipalImpl)WrapModel(inner)).RefreshCredentialsAsync());
             };
 
-            return Inner.List()
-                        .AsContinuousCollection(link => Inner.ListNext(link))
+            return Extensions.Synchronize(() => Inner.ListAsync())
+                        .AsContinuousCollection(link => Extensions.Synchronize(() => Inner.ListNextAsync(link)))
                         .Select(inner => converter(inner));
         }
 
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public override void DeleteById(string id)
         {
-            Inner.Delete(id);
+            Extensions.Synchronize(() => Inner.DeleteAsync(id));
         }
     }
 }

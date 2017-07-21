@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public bool CheckExistence(string resourceGroupName, string deploymentName)
         {
-            return Manager.Inner.Deployments.CheckExistence(resourceGroupName, deploymentName);
+            return Extensions.Synchronize(() => Manager.Inner.Deployments.CheckExistenceAsync(resourceGroupName, deploymentName));
         }
 
         public IBlank Define(string name)
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             {
                 try
                 {
-                    var deploymentExtendedInner = Manager.Inner.Deployments.Get(resourceGroup.Name, name);
+                    var deploymentExtendedInner = Extensions.Synchronize(() => Manager.Inner.Deployments.GetAsync(resourceGroup.Name, name));
                     if (deploymentExtendedInner != null)
                     {
                         return WrapModel(deploymentExtendedInner);
@@ -122,8 +122,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<IDeployment> ListByResourceGroup(string resourceGroupName)
         {
-            return Manager.Inner.Deployments.List(resourceGroupName)
-                                            .AsContinuousCollection(link => Manager.Inner.Deployments.ListNext(link))
+            return Extensions.Synchronize(() => Manager.Inner.Deployments.ListAsync(resourceGroupName))
+                                            .AsContinuousCollection(link => Extensions.Synchronize(() => Manager.Inner.Deployments.ListNextAsync(link)))
                                             .Select(inner => WrapModel(inner));
         }
 

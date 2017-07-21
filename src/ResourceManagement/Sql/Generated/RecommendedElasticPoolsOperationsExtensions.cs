@@ -24,27 +24,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     public static partial class RecommendedElasticPoolsOperationsExtensions
     {
-            /// <summary>
-            /// Gets information about an Azure SQL Recommended Elastic Pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
-            /// </param>
-            public static RecommendedElasticPoolInner Get(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName)
-            {
-                return operations.GetAsync(resourceGroupName, serverName, recommendedElasticPoolName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about an Azure SQL Recommended Elastic Pool.
             /// </summary>
@@ -72,31 +52,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets information about an Azure SQL database inside of an Azure SQL
-            /// Recommended Elastic Pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database to be retrieved.
-            /// </param>
-            public static DatabaseInner GetDatabases(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName, string databaseName)
-            {
-                return operations.GetDatabasesAsync(resourceGroupName, serverName, recommendedElasticPoolName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about an Azure SQL database inside of an Azure SQL
             /// Recommended Elastic Pool.
@@ -128,24 +84,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about Azure SQL Recommended Elastic Pools.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            public static IEnumerable<RecommendedElasticPoolInner> List(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.ListAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about Azure SQL Recommended Elastic Pools.
             /// </summary>
@@ -170,28 +109,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about an Azure SQL database inside of an Azure SQL
-            /// Recommended Elastic Pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
-            /// </param>
-            public static IEnumerable<DatabaseInner> ListDatabases(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName)
-            {
-                return operations.ListDatabasesAsync(resourceGroupName, serverName, recommendedElasticPoolName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about an Azure SQL database inside of an Azure SQL
             /// Recommended Elastic Pool.
@@ -220,27 +138,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about an recommended elastic pool metrics.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='recommendedElasticPoolName'>
-            /// The name of the Azure SQL Recommended Elastic Pool to be retrieved.
-            /// </param>
-            public static IEnumerable<RecommendedElasticPoolMetric> ListMetrics(this IRecommendedElasticPoolsOperations operations, string resourceGroupName, string serverName, string recommendedElasticPoolName)
-            {
-                return operations.ListMetricsAsync(resourceGroupName, serverName, recommendedElasticPoolName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about an recommended elastic pool metrics.
             /// </summary>

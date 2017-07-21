@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
         ///GENMHASH:3D7C4113A3F55E3E31A8AB77D2A98BC2:D096D794DD08C7A81CB4711B276ACAF0
         public void DeletePatchSchedule()
         {
-            Manager.Inner.PatchSchedules.Delete(ResourceGroupName, Name);
+            Extensions.Synchronize(() => Manager.Inner.PatchSchedules.DeleteAsync(ResourceGroupName, Name));
         }
 
         ///GENMHASH:E0A932BCE095834DF49296A5A1B250F3:9AB43882F1D20579E20CB41390D07940
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
             RedisPatchScheduleInner patchSchedules = null;
             try
             {
-                patchSchedules = Manager.Inner.PatchSchedules.Get(ResourceGroupName, Name);
+                patchSchedules = Extensions.Synchronize(() => Manager.Inner.PatchSchedules.GetAsync(ResourceGroupName, Name));
             }
             catch(CloudException ex)
             {

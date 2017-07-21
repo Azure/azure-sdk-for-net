@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:1D5C24C8FDD38263C467FE7510F78581:F289006A354128A889CBDDA7CC12862C
         public string GenerateSsoUri()
         {
-            SsoUriInner ssoUri = Manager.Inner.Profiles.GenerateSsoUri(ResourceGroupName, Name);
+            SsoUriInner ssoUri = Extensions.Synchronize(() => Manager.Inner.Profiles.GenerateSsoUriAsync(ResourceGroupName, Name));
             if (ssoUri != null)
             {
                 return ssoUri.SsoUriValue;
@@ -240,8 +240,8 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:89CD44AA5060CAB16CB0AF1FB046BC64:38BC374AC5D46ED852675FD772CAFDAD
         public IEnumerable<ResourceUsage> ListResourceUsage()
         {
-            return Manager.Inner.Profiles.ListResourceUsage(ResourceGroupName, Name)
-                .AsContinuousCollection(link => Manager.Inner.Profiles.ListResourceUsageNext(link))
+            return Extensions.Synchronize(() => Manager.Inner.Profiles.ListResourceUsageAsync(ResourceGroupName, Name))
+                .AsContinuousCollection(link => Extensions.Synchronize(() => Manager.Inner.Profiles.ListResourceUsageNextAsync(link)))
                 .Select(inner => new ResourceUsage(inner));
         }
 

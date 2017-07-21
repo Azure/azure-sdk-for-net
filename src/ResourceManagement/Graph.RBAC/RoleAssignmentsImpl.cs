@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> ListByScope(string scope)
         {
-            return WrapList(manager.RoleInner.RoleAssignments.ListForScope(scope));
+            return WrapList(Extensions.Synchronize(() => manager.RoleInner.RoleAssignments.ListForScopeAsync(scope)));
         }
 
         public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public override void DeleteById(string id)
         {
-            manager.RoleInner.RoleAssignments.DeleteById(id);
+            Extensions.Synchronize(() => manager.RoleInner.RoleAssignments.DeleteByIdAsync(id));
         }
     }
 }

@@ -22,26 +22,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// </summary>
     public static partial class CustomDomainsOperationsExtensions
     {
-            /// <summary>
-            /// Lists all of the existing custom domains within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            public static IPage<CustomDomainInner> ListByEndpoint(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName)
-            {
-                return operations.ListByEndpointAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the existing custom domains within an endpoint.
             /// </summary>
@@ -68,29 +49,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets an exisitng custom domain within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            public static CustomDomainInner Get(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName)
-            {
-                return operations.GetAsync(resourceGroupName, profileName, endpointName, customDomainName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets an exisitng custom domain within an endpoint.
             /// </summary>
@@ -120,32 +79,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates a new custom domain within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='hostName'>
-            /// The host name of the custom domain. Must be a domain name.
-            /// </param>
-            public static CustomDomainInner Create(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName)
-            {
-                return operations.CreateAsync(resourceGroupName, profileName, endpointName, customDomainName, hostName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new custom domain within an endpoint.
             /// </summary>
@@ -178,29 +112,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an existing custom domain within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            public static CustomDomainInner Delete(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName)
-            {
-                return operations.DeleteAsync(resourceGroupName, profileName, endpointName, customDomainName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an existing custom domain within an endpoint.
             /// </summary>
@@ -230,29 +142,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Disable https delivery of the custom domain.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            public static CustomDomainInner DisableCustomHttps(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName)
-            {
-                return operations.DisableCustomHttpsAsync(resourceGroupName, profileName, endpointName, customDomainName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Disable https delivery of the custom domain.
             /// </summary>
@@ -282,29 +172,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Enable https delivery of the custom domain.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            public static CustomDomainInner EnableCustomHttps(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName)
-            {
-                return operations.EnableCustomHttpsAsync(resourceGroupName, profileName, endpointName, customDomainName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Enable https delivery of the custom domain.
             /// </summary>
@@ -334,32 +202,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates a new custom domain within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='hostName'>
-            /// The host name of the custom domain. Must be a domain name.
-            /// </param>
-            public static CustomDomainInner BeginCreate(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName)
-            {
-                return operations.BeginCreateAsync(resourceGroupName, profileName, endpointName, customDomainName, hostName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new custom domain within an endpoint.
             /// </summary>
@@ -392,29 +235,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an existing custom domain within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            public static CustomDomainInner BeginDelete(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName)
-            {
-                return operations.BeginDeleteAsync(resourceGroupName, profileName, endpointName, customDomainName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an existing custom domain within an endpoint.
             /// </summary>
@@ -444,20 +265,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the existing custom domains within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<CustomDomainInner> ListByEndpointNext(this ICustomDomainsOperations operations, string nextPageLink)
-            {
-                return operations.ListByEndpointNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the existing custom domains within an endpoint.
             /// </summary>

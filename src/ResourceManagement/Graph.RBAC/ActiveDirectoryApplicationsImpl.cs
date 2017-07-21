@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 return Extensions.Synchronize(() => ((ActiveDirectoryApplicationImpl)WrapModel(inner)).RefreshCredentialsAsync());
             };
 
-            return Inner.List()
-                        .AsContinuousCollection(link => Inner.ListNext(link))
+            return Extensions.Synchronize(() => Inner.ListAsync())
+                        .AsContinuousCollection(link => Extensions.Synchronize(() => Inner.ListNextAsync(link)))
                         .Select(inner => converter(inner));
         }
 
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public ActiveDirectoryApplicationImpl GetById(string id)
         {
-            return (ActiveDirectoryApplicationImpl) Extensions.Synchronize(() => ((ActiveDirectoryApplicationImpl)WrapModel(innerCollection.Get(id))).RefreshCredentialsAsync());
+            return (ActiveDirectoryApplicationImpl) Extensions.Synchronize(() => ((ActiveDirectoryApplicationImpl)WrapModel(Extensions.Synchronize(() => innerCollection.GetAsync(id)))).RefreshCredentialsAsync());
         }
 
         public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public override void DeleteById(string id)
         {
-            innerCollection.Delete(id);
+            Extensions.Synchronize(() => innerCollection.DeleteAsync(id));
         }
     }
 }

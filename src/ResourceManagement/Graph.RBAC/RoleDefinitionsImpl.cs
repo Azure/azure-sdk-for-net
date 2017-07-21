@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleDefinition> ListByScope(string scope)
         {
-            return WrapList(manager.RoleInner.RoleDefinitions.List(scope));
+            return WrapList(Extensions.Synchronize(() => manager.RoleInner.RoleDefinitions.ListAsync(scope)));
         }
 
         internal RoleDefinitionsImpl(GraphRbacManager manager)

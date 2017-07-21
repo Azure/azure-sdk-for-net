@@ -80,11 +80,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:5DF2D34B34E97D7C050D4229F8A0ABE1
         public void Delete()
         {
-            this.innerCollection.DeleteReplicationLink(
-            this.ResourceGroupName(),
-            this.SqlServerName(),
-            this.DatabaseName(),
-            this.Name());
+            Extensions.Synchronize(() => this.innerCollection.DeleteReplicationLinkAsync(
+                        this.ResourceGroupName(),
+                        this.SqlServerName(),
+                        this.DatabaseName(),
+                        this.Name()));
         }
 
         ///GENMHASH:DD6979366C7B4F3C6845144DBE9E011A:E0A904BDF0C6E5F4C37230C1174B190E

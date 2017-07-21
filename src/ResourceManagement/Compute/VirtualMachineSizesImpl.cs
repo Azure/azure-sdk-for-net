@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:360BB74037893879A730ED7ED0A3938A:1B63D16EAADAEBB8A17A72652C7477D7
         public IEnumerable<IVirtualMachineSize> ListByRegion(string regionName)
         {
-            return WrapList(innerCollection.List(regionName));
+            return WrapList(Extensions.Synchronize(() => innerCollection.ListAsync(regionName)));
         }
 
         ///GENMHASH:271CC39CE723B6FD3D7CCA7471D4B201:039795D842B96323D94D260F3FF83299

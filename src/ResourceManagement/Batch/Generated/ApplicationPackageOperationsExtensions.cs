@@ -22,32 +22,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// </summary>
     public static partial class ApplicationPackageOperationsExtensions
     {
-            /// <summary>
-            /// Activates the specified application package.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Batch account.
-            /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
-            /// </param>
-            /// <param name='version'>
-            /// The version of the application to activate.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters for the request.
-            /// </param>
-            public static void Activate(this IApplicationPackageOperations operations, string resourceGroupName, string accountName, string applicationId, string version, ActivateApplicationPackageParametersInner parameters)
-            {
-                operations.ActivateAsync(resourceGroupName, accountName, applicationId, version, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Activates the specified application package.
             /// </summary>
@@ -77,29 +52,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 (await operations.ActivateWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, version, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Creates an application package record.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Batch account.
-            /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
-            /// </param>
-            /// <param name='version'>
-            /// The version of the application.
-            /// </param>
-            public static ApplicationPackageInner Create(this IApplicationPackageOperations operations, string resourceGroupName, string accountName, string applicationId, string version)
-            {
-                return operations.CreateAsync(resourceGroupName, accountName, applicationId, version).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates an application package record.
             /// </summary>
@@ -129,29 +82,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an application package record and its associated binary file.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Batch account.
-            /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
-            /// </param>
-            /// <param name='version'>
-            /// The version of the application to delete.
-            /// </param>
-            public static void Delete(this IApplicationPackageOperations operations, string resourceGroupName, string accountName, string applicationId, string version)
-            {
-                operations.DeleteAsync(resourceGroupName, accountName, applicationId, version).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an application package record and its associated binary file.
             /// </summary>
@@ -178,29 +109,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, applicationId, version, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets information about the specified application package.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the Batch account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Batch account.
-            /// </param>
-            /// <param name='applicationId'>
-            /// The ID of the application.
-            /// </param>
-            /// <param name='version'>
-            /// The version of the application.
-            /// </param>
-            public static ApplicationPackageInner Get(this IApplicationPackageOperations operations, string resourceGroupName, string accountName, string applicationId, string version)
-            {
-                return operations.GetAsync(resourceGroupName, accountName, applicationId, version).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about the specified application package.
             /// </summary>

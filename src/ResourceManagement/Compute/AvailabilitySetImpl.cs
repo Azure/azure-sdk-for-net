@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:8FCDE9292B4D0AE6B0FA60BC84DD60E5:0ADB8EF84E7C5EBD42CD3DED6C7CDC38
         public IEnumerable<IVirtualMachineSize> ListVirtualMachineSizes()
         {
-            return this.Manager.Inner.AvailabilitySets.ListAvailableSizes(this.ResourceGroupName, this.Name)
+            return Extensions.Synchronize(() => this.Manager.Inner.AvailabilitySets.ListAvailableSizesAsync(this.ResourceGroupName, this.Name))
                 .Select(inner => new VirtualMachineSizeImpl(inner));
         }
     }

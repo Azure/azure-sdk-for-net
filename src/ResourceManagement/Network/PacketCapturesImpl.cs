@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 return ((PacketCaptureImpl)WrapModel(inner));
             };
-            return Inner.List(parent.ResourceGroupName, parent.Name)
+            return Extensions.Synchronize(() => Inner.ListAsync(parent.ResourceGroupName, parent.Name))
                 .Select(inner => converter(inner));
         }
 

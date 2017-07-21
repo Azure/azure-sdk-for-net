@@ -24,27 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     public static partial class VirtualMachinesOperationsExtensions
     {
-            /// <summary>
-            /// Captures the VM by copying virtual hard disks of the VM and outputs a
-            /// template that can be used to create similar VMs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Capture Virtual Machine operation.
-            /// </param>
-            public static VirtualMachineCaptureResultInner Capture(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineCaptureParametersInner parameters)
-            {
-                return operations.CaptureAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Captures the VM by copying virtual hard disks of the VM and outputs a
             /// template that can be used to create similar VMs.
@@ -72,26 +52,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to create or update a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Virtual Machine operation.
-            /// </param>
-            public static VirtualMachineInner CreateOrUpdate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to create or update a virtual machine.
             /// </summary>
@@ -118,23 +79,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to delete a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.DeleteAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to delete a virtual machine.
             /// </summary>
@@ -158,28 +103,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Retrieves information about the model view or the instance view of a
-            /// virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
-            /// </param>
-            public static VirtualMachineInner Get(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, InstanceViewTypes? expand = default(InstanceViewTypes?))
-            {
-                return operations.GetAsync(resourceGroupName, vmName, expand).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Retrieves information about the model view or the instance view of a
             /// virtual machine.
@@ -208,24 +132,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Converts virtual machine disks from blob-based to managed disks. Virtual
-            /// machine must be stop-deallocated before invoking this operation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner ConvertToManagedDisks(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.ConvertToManagedDisksAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Converts virtual machine disks from blob-based to managed disks. Virtual
             /// machine must be stop-deallocated before invoking this operation.
@@ -250,24 +157,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Shuts down the virtual machine and releases the compute resources. You are
-            /// not billed for the compute resources that this virtual machine uses.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner Deallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.DeallocateAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Shuts down the virtual machine and releases the compute resources. You are
             /// not billed for the compute resources that this virtual machine uses.
@@ -292,23 +182,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Sets the state of the virtual machine to generalized.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner Generalize(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.GeneralizeAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Sets the state of the virtual machine to generalized.
             /// </summary>
@@ -332,21 +206,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the virtual machines in the specified resource group. Use the
-            /// nextLink property in the response to get the next page of virtual machines.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IPage<VirtualMachineInner> List(this IVirtualMachinesOperations operations, string resourceGroupName)
-            {
-                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the virtual machines in the specified resource group. Use the
             /// nextLink property in the response to get the next page of virtual machines.
@@ -368,18 +228,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the virtual machines in the specified subscription. Use the
-            /// nextLink property in the response to get the next page of virtual machines.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<VirtualMachineInner> ListAll(this IVirtualMachinesOperations operations)
-            {
-                return operations.ListAllAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the virtual machines in the specified subscription. Use the
             /// nextLink property in the response to get the next page of virtual machines.
@@ -398,24 +247,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all available virtual machine sizes to which the specified virtual
-            /// machine can be resized.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static IEnumerable<VirtualMachineSize> ListAvailableSizes(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.ListAvailableSizesAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all available virtual machine sizes to which the specified virtual
             /// machine can be resized.
@@ -440,25 +272,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to power off (stop) a virtual machine. The virtual machine
-            /// can be restarted with the same provisioned resources. You are still charged
-            /// for this virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner PowerOff(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.PowerOffAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to power off (stop) a virtual machine. The virtual machine
             /// can be restarted with the same provisioned resources. You are still charged
@@ -484,23 +298,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to restart a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner Restart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.RestartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to restart a virtual machine.
             /// </summary>
@@ -524,23 +322,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to start a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner Start(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.StartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to start a virtual machine.
             /// </summary>
@@ -564,23 +346,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to redeploy a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner Redeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.RedeployAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to redeploy a virtual machine.
             /// </summary>
@@ -604,27 +370,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Captures the VM by copying virtual hard disks of the VM and outputs a
-            /// template that can be used to create similar VMs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Capture Virtual Machine operation.
-            /// </param>
-            public static VirtualMachineCaptureResultInner BeginCapture(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineCaptureParametersInner parameters)
-            {
-                return operations.BeginCaptureAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Captures the VM by copying virtual hard disks of the VM and outputs a
             /// template that can be used to create similar VMs.
@@ -652,26 +398,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to create or update a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Virtual Machine operation.
-            /// </param>
-            public static VirtualMachineInner BeginCreateOrUpdate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to create or update a virtual machine.
             /// </summary>
@@ -698,23 +425,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to delete a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.BeginDeleteAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to delete a virtual machine.
             /// </summary>
@@ -738,24 +449,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Converts virtual machine disks from blob-based to managed disks. Virtual
-            /// machine must be stop-deallocated before invoking this operation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner BeginConvertToManagedDisks(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.BeginConvertToManagedDisksAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Converts virtual machine disks from blob-based to managed disks. Virtual
             /// machine must be stop-deallocated before invoking this operation.
@@ -780,24 +474,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Shuts down the virtual machine and releases the compute resources. You are
-            /// not billed for the compute resources that this virtual machine uses.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner BeginDeallocate(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.BeginDeallocateAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Shuts down the virtual machine and releases the compute resources. You are
             /// not billed for the compute resources that this virtual machine uses.
@@ -822,25 +499,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to power off (stop) a virtual machine. The virtual machine
-            /// can be restarted with the same provisioned resources. You are still charged
-            /// for this virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner BeginPowerOff(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.BeginPowerOffAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to power off (stop) a virtual machine. The virtual machine
             /// can be restarted with the same provisioned resources. You are still charged
@@ -866,23 +525,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to restart a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner BeginRestart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.BeginRestartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to restart a virtual machine.
             /// </summary>
@@ -906,23 +549,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to start a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner BeginStart(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.BeginStartAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to start a virtual machine.
             /// </summary>
@@ -946,23 +573,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// The operation to redeploy a virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='vmName'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static OperationStatusResponseInner BeginRedeploy(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
-            {
-                return operations.BeginRedeployAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The operation to redeploy a virtual machine.
             /// </summary>
@@ -986,21 +597,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the virtual machines in the specified resource group. Use the
-            /// nextLink property in the response to get the next page of virtual machines.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<VirtualMachineInner> ListNext(this IVirtualMachinesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the virtual machines in the specified resource group. Use the
             /// nextLink property in the response to get the next page of virtual machines.
@@ -1022,21 +619,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the virtual machines in the specified subscription. Use the
-            /// nextLink property in the response to get the next page of virtual machines.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<VirtualMachineInner> ListAllNext(this IVirtualMachinesOperations operations, string nextPageLink)
-            {
-                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the virtual machines in the specified subscription. Use the
             /// nextLink property in the response to get the next page of virtual machines.

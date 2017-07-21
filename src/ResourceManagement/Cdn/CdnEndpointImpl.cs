@@ -516,10 +516,10 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
             customDomainList.Clear();
             deletedCustomDomainList.Clear();
             customDomainList.AddRange(
-                Parent.Manager.Inner.CustomDomains.ListByEndpoint(
+                Extensions.Synchronize(() => Parent.Manager.Inner.CustomDomains.ListByEndpointAsync(
                     Parent.ResourceGroupName,
                     Parent.Name,
-                    Name()));
+                    Name())));
             return this;
         }
 
@@ -635,11 +635,11 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
         ///GENMHASH:89CD44AA5060CAB16CB0AF1FB046BC64:0A693DB1A3AF2F29E579F4E675DE54E9
         public IEnumerable<ResourceUsage> ListResourceUsage()
         {
-            return Parent.Manager.Inner.Endpoints.ListResourceUsage(
+            return Extensions.Synchronize(() => Parent.Manager.Inner.Endpoints.ListResourceUsageAsync(
                                             Parent.ResourceGroupName,
                                             Parent.Name,
-                                            Name())
-                     .AsContinuousCollection(link => Parent.Manager.Inner.Endpoints.ListResourceUsageNext(link))
+                                            Name()))
+                     .AsContinuousCollection(link => Extensions.Synchronize(() => Parent.Manager.Inner.Endpoints.ListResourceUsageNextAsync(link)))
                      .Select(inner => new ResourceUsage(inner));
         }
 

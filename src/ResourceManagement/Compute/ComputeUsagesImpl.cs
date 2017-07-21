@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:360BB74037893879A730ED7ED0A3938A:34BF45703D53DEAC832C7449858B69FC
         public IEnumerable<IComputeUsage> ListByRegion(string regionName)
         {
-            return WrapList(client.Usage.List(regionName)
-                .AsContinuousCollection(link => client.Usage.ListNext(link)));
+            return WrapList(Extensions.Synchronize(() => client.Usage.ListAsync(regionName))
+                .AsContinuousCollection(link => Extensions.Synchronize(() => client.Usage.ListNextAsync(link))));
         }
 
         ///GENMHASH:271CC39CE723B6FD3D7CCA7471D4B201:039795D842B96323D94D260F3FF83299

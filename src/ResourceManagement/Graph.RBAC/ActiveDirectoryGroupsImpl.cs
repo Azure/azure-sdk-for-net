@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup> List()
         {
-            return WrapList(Inner.List());
+            return WrapList(Extensions.Synchronize(() => Inner.ListAsync()));
         }
 
         public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryGroup>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))

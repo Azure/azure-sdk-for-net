@@ -22,27 +22,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     /// </summary>
     public static partial class RedisOperationsExtensions
     {
-            /// <summary>
-            /// Create or replace (overwrite/recreate, with potential downtime) an existing
-            /// Redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Redis operation.
-            /// </param>
-            public static RedisResourceInner Create(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateParametersInner parameters)
-            {
-                return operations.CreateAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create or replace (overwrite/recreate, with potential downtime) an existing
             /// Redis cache.
@@ -70,26 +50,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Update an existing Redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update Redis operation.
-            /// </param>
-            public static RedisResourceInner Update(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParametersInner parameters)
-            {
-                return operations.UpdateAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Update an existing Redis cache.
             /// </summary>
@@ -116,23 +77,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a Redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            public static void Delete(this IRedisOperations operations, string resourceGroupName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a Redis cache.
             /// </summary>
@@ -153,23 +98,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets a Redis cache (resource description).
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            public static RedisResourceInner Get(this IRedisOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a Redis cache (resource description).
             /// </summary>
@@ -193,20 +122,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all Redis caches in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IPage<RedisResourceInner> ListByResourceGroup(this IRedisOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all Redis caches in a resource group.
             /// </summary>
@@ -227,17 +143,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all Redis caches in the specified subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<RedisResourceInner> List(this IRedisOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all Redis caches in the specified subscription.
             /// </summary>
@@ -255,24 +161,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Retrieve a Redis cache's access keys. This operation requires write
-            /// permission to the cache resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            public static RedisAccessKeysInner ListKeys(this IRedisOperations operations, string resourceGroupName, string name)
-            {
-                return operations.ListKeysAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Retrieve a Redis cache's access keys. This operation requires write
             /// permission to the cache resource.
@@ -297,28 +186,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Regenerate Redis cache's access keys. This operation requires write
-            /// permission to the cache resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='keyType'>
-            /// The Redis access key to regenerate. Possible values include: 'Primary',
-            /// 'Secondary'
-            /// </param>
-            public static RedisAccessKeysInner RegenerateKey(this IRedisOperations operations, string resourceGroupName, string name, RedisKeyType keyType)
-            {
-                return operations.RegenerateKeyAsync(resourceGroupName, name, keyType).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Regenerate Redis cache's access keys. This operation requires write
             /// permission to the cache resource.
@@ -347,27 +215,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Reboot specified Redis node(s). This operation requires write permission to
-            /// the cache resource. There can be potential data loss.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Specifies which Redis node(s) to reboot.
-            /// </param>
-            public static RedisForceRebootResponseInner ForceReboot(this IRedisOperations operations, string resourceGroupName, string name, RedisRebootParametersInner parameters)
-            {
-                return operations.ForceRebootAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Reboot specified Redis node(s). This operation requires write permission to
             /// the cache resource. There can be potential data loss.
@@ -395,26 +243,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Import data into Redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for Redis import operation.
-            /// </param>
-            public static void ImportData(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParametersInner parameters)
-            {
-                operations.ImportDataAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Import data into Redis cache.
             /// </summary>
@@ -438,26 +267,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 (await operations.ImportDataWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Export data from the redis cache to blobs in a container.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for Redis export operation.
-            /// </param>
-            public static void ExportData(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParametersInner parameters)
-            {
-                operations.ExportDataAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Export data from the redis cache to blobs in a container.
             /// </summary>
@@ -481,27 +291,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 (await operations.ExportDataWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Create or replace (overwrite/recreate, with potential downtime) an existing
-            /// Redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Redis operation.
-            /// </param>
-            public static RedisResourceInner BeginCreate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateParametersInner parameters)
-            {
-                return operations.BeginCreateAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create or replace (overwrite/recreate, with potential downtime) an existing
             /// Redis cache.
@@ -529,23 +319,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a Redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            public static void BeginDelete(this IRedisOperations operations, string resourceGroupName, string name)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a Redis cache.
             /// </summary>
@@ -566,26 +340,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Import data into Redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for Redis import operation.
-            /// </param>
-            public static void BeginImportData(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParametersInner parameters)
-            {
-                operations.BeginImportDataAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Import data into Redis cache.
             /// </summary>
@@ -609,26 +364,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 (await operations.BeginImportDataWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Export data from the redis cache to blobs in a container.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for Redis export operation.
-            /// </param>
-            public static void BeginExportData(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParametersInner parameters)
-            {
-                operations.BeginExportDataAsync(resourceGroupName, name, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Export data from the redis cache to blobs in a container.
             /// </summary>
@@ -652,20 +388,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 (await operations.BeginExportDataWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Lists all Redis caches in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<RedisResourceInner> ListByResourceGroupNext(this IRedisOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all Redis caches in a resource group.
             /// </summary>
@@ -686,20 +409,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all Redis caches in the specified subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<RedisResourceInner> ListNext(this IRedisOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all Redis caches in the specified subscription.
             /// </summary>

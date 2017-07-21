@@ -22,27 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public static partial class VirtualNetworkGatewaysOperationsExtensions
     {
-            /// <summary>
-            /// Creates or updates a virtual network gateway in the specified resource
-            /// group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update virtual network gateway operation.
-            /// </param>
-            public static VirtualNetworkGatewayInner CreateOrUpdate(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a virtual network gateway in the specified resource
             /// group.
@@ -70,23 +50,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the specified virtual network gateway by resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            public static VirtualNetworkGatewayInner Get(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
-            {
-                return operations.GetAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the specified virtual network gateway by resource group.
             /// </summary>
@@ -110,23 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified virtual network gateway.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            public static void Delete(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
-            {
-                operations.DeleteAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified virtual network gateway.
             /// </summary>
@@ -147,20 +95,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets all virtual network gateways by resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IPage<VirtualNetworkGatewayInner> List(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName)
-            {
-                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all virtual network gateways by resource group.
             /// </summary>
@@ -181,28 +116,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Resets the primary of the virtual network gateway in the specified resource
-            /// group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            /// <param name='gatewayVip'>
-            /// Virtual network gateway vip address supplied to the begin reset of the
-            /// active-active feature enabled gateway.
-            /// </param>
-            public static VirtualNetworkGatewayInner Reset(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = default(string))
-            {
-                return operations.ResetAsync(resourceGroupName, virtualNetworkGatewayName, gatewayVip).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Resets the primary of the virtual network gateway in the specified resource
             /// group.
@@ -231,28 +145,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Generates VPN client package for P2S client of the virtual network gateway
-            /// in the specified resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            /// <param name='processorArchitecture'>
-            /// VPN client Processor Architecture. Possible values are: 'AMD64' and 'X86'.
-            /// Possible values include: 'Amd64', 'X86'
-            /// </param>
-            public static string Generatevpnclientpackage(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string processorArchitecture)
-            {
-                return operations.GeneratevpnclientpackageAsync(resourceGroupName, virtualNetworkGatewayName, processorArchitecture).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Generates VPN client package for P2S client of the virtual network gateway
             /// in the specified resource group.
@@ -281,26 +174,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            /// <param name='peer'>
-            /// The IP address of the peer to retrieve the status of.
-            /// </param>
-            public static BgpPeerStatusListResultInner GetBgpPeerStatus(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer = default(string))
-            {
-                return operations.GetBgpPeerStatusAsync(resourceGroupName, virtualNetworkGatewayName, peer).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
             /// </summary>
@@ -327,24 +201,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// This operation retrieves a list of routes the virtual network gateway has
-            /// learned, including routes learned from BGP peers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            public static GatewayRouteListResultInner GetLearnedRoutes(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
-            {
-                return operations.GetLearnedRoutesAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// This operation retrieves a list of routes the virtual network gateway has
             /// learned, including routes learned from BGP peers.
@@ -369,27 +226,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// This operation retrieves a list of routes the virtual network gateway is
-            /// advertising to the specified peer.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            /// <param name='peer'>
-            /// The IP address of the peer
-            /// </param>
-            public static GatewayRouteListResultInner GetAdvertisedRoutes(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer)
-            {
-                return operations.GetAdvertisedRoutesAsync(resourceGroupName, virtualNetworkGatewayName, peer).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// This operation retrieves a list of routes the virtual network gateway is
             /// advertising to the specified peer.
@@ -417,27 +254,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a virtual network gateway in the specified resource
-            /// group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update virtual network gateway operation.
-            /// </param>
-            public static VirtualNetworkGatewayInner BeginCreateOrUpdate(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGatewayInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkGatewayName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a virtual network gateway in the specified resource
             /// group.
@@ -465,23 +282,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified virtual network gateway.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            public static void BeginDelete(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified virtual network gateway.
             /// </summary>
@@ -502,28 +303,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Resets the primary of the virtual network gateway in the specified resource
-            /// group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            /// <param name='gatewayVip'>
-            /// Virtual network gateway vip address supplied to the begin reset of the
-            /// active-active feature enabled gateway.
-            /// </param>
-            public static VirtualNetworkGatewayInner BeginReset(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = default(string))
-            {
-                return operations.BeginResetAsync(resourceGroupName, virtualNetworkGatewayName, gatewayVip).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Resets the primary of the virtual network gateway in the specified resource
             /// group.
@@ -552,26 +332,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            /// <param name='peer'>
-            /// The IP address of the peer to retrieve the status of.
-            /// </param>
-            public static BgpPeerStatusListResultInner BeginGetBgpPeerStatus(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer = default(string))
-            {
-                return operations.BeginGetBgpPeerStatusAsync(resourceGroupName, virtualNetworkGatewayName, peer).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The GetBgpPeerStatus operation retrieves the status of all BGP peers.
             /// </summary>
@@ -598,24 +359,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// This operation retrieves a list of routes the virtual network gateway has
-            /// learned, including routes learned from BGP peers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            public static GatewayRouteListResultInner BeginGetLearnedRoutes(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName)
-            {
-                return operations.BeginGetLearnedRoutesAsync(resourceGroupName, virtualNetworkGatewayName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// This operation retrieves a list of routes the virtual network gateway has
             /// learned, including routes learned from BGP peers.
@@ -640,27 +384,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// This operation retrieves a list of routes the virtual network gateway is
-            /// advertising to the specified peer.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkGatewayName'>
-            /// The name of the virtual network gateway.
-            /// </param>
-            /// <param name='peer'>
-            /// The IP address of the peer
-            /// </param>
-            public static GatewayRouteListResultInner BeginGetAdvertisedRoutes(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string peer)
-            {
-                return operations.BeginGetAdvertisedRoutesAsync(resourceGroupName, virtualNetworkGatewayName, peer).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// This operation retrieves a list of routes the virtual network gateway is
             /// advertising to the specified peer.
@@ -688,20 +412,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all virtual network gateways by resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<VirtualNetworkGatewayInner> ListNext(this IVirtualNetworkGatewaysOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all virtual network gateways by resource group.
             /// </summary>

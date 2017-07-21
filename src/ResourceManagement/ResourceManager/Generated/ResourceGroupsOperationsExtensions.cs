@@ -23,23 +23,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// </summary>
     public static partial class ResourceGroupsOperationsExtensions
     {
-            /// <summary>
-            /// Get all of the resources under a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Query parameters. If null is passed returns all resource groups.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<GenericResourceInner> ListResources(this IResourceGroupsOperations operations, string resourceGroupName, ODataQuery<GenericResourceFilterInner> odataQuery = default(ODataQuery<GenericResourceFilterInner>))
-            {
-                return operations.ListResourcesAsync(resourceGroupName, odataQuery).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get all of the resources under a subscription.
             /// </summary>
@@ -63,20 +47,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Checks whether resource group exists.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to check. The name is case insensitive.
-            /// </param>
-            public static bool CheckExistence(this IResourceGroupsOperations operations, string resourceGroupName)
-            {
-                return operations.CheckExistenceAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Checks whether resource group exists.
             /// </summary>
@@ -97,24 +68,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Create a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to be created or updated.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update resource group service
-            /// operation.
-            /// </param>
-            public static ResourceGroupInner CreateOrUpdate(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroupInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create a resource group.
             /// </summary>
@@ -139,20 +93,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Delete resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to be deleted. The name is case insensitive.
-            /// </param>
-            public static void Delete(this IResourceGroupsOperations operations, string resourceGroupName)
-            {
-                operations.DeleteAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Delete resource group.
             /// </summary>
@@ -170,20 +111,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Get a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
-            /// </param>
-            public static ResourceGroupInner Get(this IResourceGroupsOperations operations, string resourceGroupName)
-            {
-                return operations.GetAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get a resource group.
             /// </summary>
@@ -204,27 +132,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Resource groups can be updated through a simple PATCH operation to a group
-            /// address. The format of the request is the same as that for creating a
-            /// resource groups, though if a field is unspecified current value will be
-            /// carried over.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to be created or updated. The name is case
-            /// insensitive.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the update state resource group service operation.
-            /// </param>
-            public static ResourceGroupInner Patch(this IResourceGroupsOperations operations, string resourceGroupName, ResourceGroupInner parameters)
-            {
-                return operations.PatchAsync(resourceGroupName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Resource groups can be updated through a simple PATCH operation to a group
             /// address. The format of the request is the same as that for creating a
@@ -252,23 +160,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Captures the specified resource group as a template.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to be created or updated.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the export template resource group operation.
-            /// </param>
-            public static ResourceGroupExportResultInner ExportTemplate(this IResourceGroupsOperations operations, string resourceGroupName, ExportTemplateRequestInner parameters)
-            {
-                return operations.ExportTemplateAsync(resourceGroupName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Captures the specified resource group as a template.
             /// </summary>
@@ -292,20 +184,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a collection of resource groups.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<ResourceGroupInner> List(this IResourceGroupsOperations operations, ODataQuery<ResourceGroupFilterInner> odataQuery = default(ODataQuery<ResourceGroupFilterInner>))
-            {
-                return ((IResourceGroupsOperations)operations).ListAsync(odataQuery).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a collection of resource groups.
             /// </summary>
@@ -326,20 +205,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Delete resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to be deleted. The name is case insensitive.
-            /// </param>
-            public static void BeginDelete(this IResourceGroupsOperations operations, string resourceGroupName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Delete resource group.
             /// </summary>
@@ -357,20 +223,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Get all of the resources under a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<GenericResourceInner> ListResourcesNext(this IResourceGroupsOperations operations, string nextPageLink)
-            {
-                return operations.ListResourcesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get all of the resources under a subscription.
             /// </summary>
@@ -391,20 +244,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a collection of resource groups.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceGroupInner> ListNext(this IResourceGroupsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a collection of resource groups.
             /// </summary>

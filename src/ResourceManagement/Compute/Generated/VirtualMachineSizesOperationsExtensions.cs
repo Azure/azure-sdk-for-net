@@ -24,20 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     public static partial class VirtualMachineSizesOperationsExtensions
     {
-            /// <summary>
-            /// Lists all available virtual machine sizes for a subscription in a location.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location upon which virtual-machine-sizes is queried.
-            /// </param>
-            public static IEnumerable<VirtualMachineSize> List(this IVirtualMachineSizesOperations operations, string location)
-            {
-                return operations.ListAsync(location).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all available virtual machine sizes for a subscription in a location.
             /// </summary>

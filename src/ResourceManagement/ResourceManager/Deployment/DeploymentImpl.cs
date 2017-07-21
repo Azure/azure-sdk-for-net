@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                     ParametersLink = ParametersLink
                 }
             };
-            Manager.Inner.Deployments.BeginCreateOrUpdate(resourceGroupName, Name, inner);
+            Extensions.Synchronize(() => Manager.Inner.Deployments.BeginCreateOrUpdateAsync(resourceGroupName, Name, inner));
             return this;
         }
 
@@ -471,7 +471,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                     ParametersLink = ParametersLink
                 }
             };
-            Manager.Inner.Deployments.CreateOrUpdate(ResourceGroupName, Name, inner);
+            Extensions.Synchronize(() => Manager.Inner.Deployments.CreateOrUpdateAsync(ResourceGroupName, Name, inner));
             return this;
         }
 

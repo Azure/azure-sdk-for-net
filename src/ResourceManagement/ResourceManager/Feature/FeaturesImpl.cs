@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<IFeature> List()
         {
-            return client.ListAll()
-                         .AsContinuousCollection(link => client.ListNext(link))
+            return Extensions.Synchronize(() => client.ListAllAsync())
+                         .AsContinuousCollection(link => Extensions.Synchronize(() => client.ListNextAsync(link)))
                          .Select(inner => WrapModel(inner));
         }
 

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:360BB74037893879A730ED7ED0A3938A:0812389C333714A6DDA6CD76F7B8FEFC
         public IEnumerable<IVirtualMachinePublisher> ListByRegion(string regionName)
         {
-            return WrapList(innerCollection.ListPublishers(regionName));
+            return WrapList(Extensions.Synchronize(() => innerCollection.ListPublishersAsync(regionName)));
         }
 
         ///GENMHASH:2ED29FF482F2137640A1CA66925828A8:FDF416505062C8F51CBE651942F05701

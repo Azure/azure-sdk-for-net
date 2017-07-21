@@ -22,23 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public static partial class ExpressRouteCircuitsOperationsExtensions
     {
-            /// <summary>
-            /// Deletes the specified express route circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            public static void Delete(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
-            {
-                operations.DeleteAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified express route circuit.
             /// </summary>
@@ -59,23 +43,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, circuitName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets information about the specified express route circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of express route circuit.
-            /// </param>
-            public static ExpressRouteCircuitInner Get(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
-            {
-                return operations.GetAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about the specified express route circuit.
             /// </summary>
@@ -99,27 +67,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates an express route circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the circuit.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update express route circuit
-            /// operation.
-            /// </param>
-            public static ExpressRouteCircuitInner CreateOrUpdate(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, ExpressRouteCircuitInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, circuitName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates an express route circuit.
             /// </summary>
@@ -147,30 +95,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the currently advertised ARP table associated with the express route
-            /// circuit in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='peeringName'>
-            /// The name of the peering.
-            /// </param>
-            /// <param name='devicePath'>
-            /// The path of the device.
-            /// </param>
-            public static ExpressRouteCircuitsArpTableListResultInner ListArpTable(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
-            {
-                return operations.ListArpTableAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the currently advertised ARP table associated with the express route
             /// circuit in a resource group.
@@ -201,30 +126,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the currently advertised routes table associated with the express
-            /// route circuit in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='peeringName'>
-            /// The name of the peering.
-            /// </param>
-            /// <param name='devicePath'>
-            /// The path of the device.
-            /// </param>
-            public static ExpressRouteCircuitsRoutesTableListResultInner ListRoutesTable(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
-            {
-                return operations.ListRoutesTableAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the currently advertised routes table associated with the express
             /// route circuit in a resource group.
@@ -255,30 +157,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the currently advertised routes table summary associated with the
-            /// express route circuit in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='peeringName'>
-            /// The name of the peering.
-            /// </param>
-            /// <param name='devicePath'>
-            /// The path of the device.
-            /// </param>
-            public static ExpressRouteCircuitsRoutesTableSummaryListResultInner ListRoutesTableSummary(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
-            {
-                return operations.ListRoutesTableSummaryAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the currently advertised routes table summary associated with the
             /// express route circuit in a resource group.
@@ -309,23 +188,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the stats from an express route circuit in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            public static ExpressRouteCircuitStatsInner GetStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
-            {
-                return operations.GetStatsAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the stats from an express route circuit in a resource group.
             /// </summary>
@@ -349,26 +212,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all stats from an express route circuit in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='peeringName'>
-            /// The name of the peering.
-            /// </param>
-            public static ExpressRouteCircuitStatsInner GetPeeringStats(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName)
-            {
-                return operations.GetPeeringStatsAsync(resourceGroupName, circuitName, peeringName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all stats from an express route circuit in a resource group.
             /// </summary>
@@ -395,20 +239,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the express route circuits in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IPage<ExpressRouteCircuitInner> List(this IExpressRouteCircuitsOperations operations, string resourceGroupName)
-            {
-                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the express route circuits in a resource group.
             /// </summary>
@@ -429,17 +260,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the express route circuits in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<ExpressRouteCircuitInner> ListAll(this IExpressRouteCircuitsOperations operations)
-            {
-                return operations.ListAllAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the express route circuits in a subscription.
             /// </summary>
@@ -457,23 +278,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified express route circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            public static void BeginDelete(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified express route circuit.
             /// </summary>
@@ -494,27 +299,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, circuitName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Creates or updates an express route circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the circuit.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update express route circuit
-            /// operation.
-            /// </param>
-            public static ExpressRouteCircuitInner BeginCreateOrUpdate(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, ExpressRouteCircuitInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, circuitName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates an express route circuit.
             /// </summary>
@@ -542,30 +327,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the currently advertised ARP table associated with the express route
-            /// circuit in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='peeringName'>
-            /// The name of the peering.
-            /// </param>
-            /// <param name='devicePath'>
-            /// The path of the device.
-            /// </param>
-            public static ExpressRouteCircuitsArpTableListResultInner BeginListArpTable(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
-            {
-                return operations.BeginListArpTableAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the currently advertised ARP table associated with the express route
             /// circuit in a resource group.
@@ -596,30 +358,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the currently advertised routes table associated with the express
-            /// route circuit in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='peeringName'>
-            /// The name of the peering.
-            /// </param>
-            /// <param name='devicePath'>
-            /// The path of the device.
-            /// </param>
-            public static ExpressRouteCircuitsRoutesTableListResultInner BeginListRoutesTable(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
-            {
-                return operations.BeginListRoutesTableAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the currently advertised routes table associated with the express
             /// route circuit in a resource group.
@@ -650,30 +389,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the currently advertised routes table summary associated with the
-            /// express route circuit in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='peeringName'>
-            /// The name of the peering.
-            /// </param>
-            /// <param name='devicePath'>
-            /// The path of the device.
-            /// </param>
-            public static ExpressRouteCircuitsRoutesTableSummaryListResultInner BeginListRoutesTableSummary(this IExpressRouteCircuitsOperations operations, string resourceGroupName, string circuitName, string peeringName, string devicePath)
-            {
-                return operations.BeginListRoutesTableSummaryAsync(resourceGroupName, circuitName, peeringName, devicePath).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the currently advertised routes table summary associated with the
             /// express route circuit in a resource group.
@@ -704,20 +420,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the express route circuits in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ExpressRouteCircuitInner> ListNext(this IExpressRouteCircuitsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the express route circuits in a resource group.
             /// </summary>
@@ -738,20 +441,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the express route circuits in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ExpressRouteCircuitInner> ListAllNext(this IExpressRouteCircuitsOperations operations, string nextPageLink)
-            {
-                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the express route circuits in a subscription.
             /// </summary>

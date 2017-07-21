@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<ILocation> ListLocations()
         {
-            return innerCollection.ListLocations(SubscriptionId)
+            return Extensions.Synchronize(() => innerCollection.ListLocationsAsync(SubscriptionId))
                          .Select(inner => new LocationImpl(inner));
         }
     }

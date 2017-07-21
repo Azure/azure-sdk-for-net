@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 return Extensions.Synchronize(() => PopulateModelAsync(inner));
             };
 
-            return Inner.ListByResourceGroup(resourceGroupName)
-                        .AsContinuousCollection(link => Inner.ListByResourceGroupNext(link))
+            return Extensions.Synchronize(() => Inner.ListByResourceGroupAsync(resourceGroupName))
+                        .AsContinuousCollection(link => Extensions.Synchronize(() => Inner.ListByResourceGroupNextAsync(link)))
                         .Select(inner => converter(inner));
         }
 
