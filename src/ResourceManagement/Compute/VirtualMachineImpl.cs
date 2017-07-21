@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:6AC69BE8BE090CDE9822C84DD5F906F3
         public VirtualMachineInstanceView RefreshInstanceView()
         {
-            return RefreshInstanceViewAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => RefreshInstanceViewAsync());
         }
 
         ///GENMHASH:D97B6272C7E7717C00D4F9B818A713C0:8DD09B90F0555BB3E1AEF7B9AF044379
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:1F383B6B989059B78D6ECB949E789CD4:D3D812C91301FB29508197FA8534CDDC
         public string Capture(string containerName, string vhdPrefix, bool overwriteVhd)
         {
-            return this.CaptureAsync(containerName, vhdPrefix, overwriteVhd).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.CaptureAsync(containerName, vhdPrefix, overwriteVhd));
         }
 
         ///GENMHASH:C345130B595C0FF585A57651EFDC3A0F:E97CAC99D13041F7FEAACC7E4508DC7B

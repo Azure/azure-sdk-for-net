@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public bool CheckExistence(string name)
         {
-            return CheckExistenceAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => CheckExistenceAsync(name));
         }
         public async Task<bool> CheckExistenceAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void DeleteByName(string name)
         {
-            DeleteByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => DeleteByNameAsync(name));
         }
 
         public async Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IResourceGroup GetByName(string name)
         {
-            return GetByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByNameAsync(name));
         }
 
         public async Task<IResourceGroup> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void BeginDeleteByName(string name)
         {
-            BeginDeleteByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => BeginDeleteByNameAsync(name));
         }
 
         public async Task BeginDeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))

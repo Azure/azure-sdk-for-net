@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public ICreatedResources<IFluentResourceT> Create(IEnumerable<ICreatable<IFluentResourceT>> creatables)
         {
-            return CreateAsync(creatables).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => CreateAsync(creatables));
         }
 
         public async Task<ICreatedResources<IFluentResourceT>> CreateAsync(

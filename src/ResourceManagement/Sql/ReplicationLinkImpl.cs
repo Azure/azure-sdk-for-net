@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:DD6979366C7B4F3C6845144DBE9E011A:E0A904BDF0C6E5F4C37230C1174B190E
         public void ForceFailoverAllowDataLoss()
         {
-            ForceFailoverAllowDataLossAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => ForceFailoverAllowDataLossAsync());
         }
         public async Task ForceFailoverAllowDataLossAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:75146396042F3B3D55B973EBEDF73CD2:6BA113CAE218C7605AC4729294DDB001
         public void Failover()
         {
-            FailoverAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => FailoverAsync());
         }
         public async Task FailoverAsync(CancellationToken cancellationToken = default(CancellationToken))
         {

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IFeature Register(string resourceProviderNamespace, string featureName)
         {
-            return RegisterAsync(resourceProviderNamespace, featureName).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() =>  RegisterAsync(resourceProviderNamespace, featureName));
         }
 
         public async Task<IFeature> RegisterAsync(

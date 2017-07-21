@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IProvider Unregister(string resourceProviderNamespace)
         {
-            return UnregisterAsync(resourceProviderNamespace).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => UnregisterAsync(resourceProviderNamespace));
         }
 
         public async Task<IProvider> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))

@@ -48,16 +48,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
             return page;
         }
 
-        public static TResult Synchronize<TResult>(Func<object, Task<TResult>> function, object state)
+        public static TResult Synchronize<TResult>(Func<Task<TResult>> function)
         {
-            return Task.Factory.StartNew(function, state, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default)
+            return Task.Factory.StartNew(function, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default)
                 .Unwrap().GetAwaiter().GetResult();
         }
 
-        public static void Synchronize<TResult>(Func<object, Task<Task>> function, object state)
+        public static void Synchronize(Func<Task> function)
         {
-            Task.Factory.StartNew(function, state, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default)
-                .Unwrap().GetAwaiter().GetResult();
+            Task.Factory.StartNew(function, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
     }
 }

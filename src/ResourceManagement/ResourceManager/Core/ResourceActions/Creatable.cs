@@ -39,11 +39,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
 
         public IFluentResourceT Create()
         {
-            return Extensions.Synchronize((s) =>
-                    {
-                        return ((Creatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResourceT>)s).CreateAsync(CancellationToken.None);
-                    },
-                    this);
+            return Extensions.Synchronize(() => this.CreateAsync(CancellationToken.None));
         }
 
         public virtual Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
@@ -97,7 +93,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
 
         public virtual IFluentResourceT CreateResource()
         {
-            return this.CreateResourceAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.CreateResourceAsync(CancellationToken.None));
         }
 
         async Task<IResourceT> IResourceCreator<IResourceT>.CreateResourceAsync(CancellationToken cancellationToken)

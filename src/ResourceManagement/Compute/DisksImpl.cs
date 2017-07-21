@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C2E2A5650639245BC0993A33DCAA5D61:AB53C4E88693DA816105A74AACCB3115
         public string GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration)
         {
-            return this.GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration));
         }
 
         ///GENMHASH:CAAAC294CEC4F5465B5368FDC3327C5D:2F567929AA028332A657F78A9A7C3964

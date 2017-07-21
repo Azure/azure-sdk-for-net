@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:7A26D184347EA91F532899FC93DA3E8B:8456BBCBBB11CEBC17C9ECE561F7920E
         public IFlowLogSettings Apply()
         {
-            return ApplyAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => ApplyAsync(CancellationToken.None));
         }
 
         ///GENMHASH:4A094106DADD6C15CD0CE10301E60136:8076B63FCD1974CC6F6FC168E61D2AE1

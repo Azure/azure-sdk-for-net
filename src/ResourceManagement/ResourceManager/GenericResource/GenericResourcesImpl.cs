@@ -23,13 +23,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public bool CheckExistence(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
         {
-            return CheckExistenceAsync(
+            return Extensions.Synchronize (() => CheckExistenceAsync(
                 resourceGroupName,
                 resourceProviderNamespace,
                 parentResourcePath,
                 resourceType,
                 resourceName,
-                apiVersion).ConfigureAwait(false).GetAwaiter().GetResult();
+                apiVersion));
         }
 
         public async Task<bool> CheckExistenceAsync(
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void MoveResources(string sourceResourceGroupName, IResourceGroup targetResourceGroup, IList<string> resources)
         {
-            MoveResourcesAsync(sourceResourceGroupName, targetResourceGroup, resources).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => MoveResourcesAsync(sourceResourceGroupName, targetResourceGroup, resources));
         }
 
         public async Task MoveResourcesAsync(

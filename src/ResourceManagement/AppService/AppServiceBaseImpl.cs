@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:EB8C33DACE377CBB07C354F38C5BEA32:391885361D8D6FDB8CD9E96400E16B73
         public override void VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
         {
-            VerifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => VerifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken));
         }
 
         ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:AD50571B7362BCAADE526027DA36B58F

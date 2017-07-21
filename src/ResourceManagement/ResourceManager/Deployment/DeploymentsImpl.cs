@@ -50,12 +50,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void DeleteById(string id)
         {
-            DeleteByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => DeleteByIdAsync(id, CancellationToken.None));
         }
 
         public void DeleteByResourceGroup(string groupName, string name)
         {
-            DeleteByResourceGroupAsync(groupName, name).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() =>  DeleteByResourceGroupAsync(groupName, name, CancellationToken.None));
         }
 
         public async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IDeployment GetByResourceGroup(string resourceGroupName, string name)
         {
-            return GetByResourceGroupAsync(resourceGroupName, name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByResourceGroupAsync(resourceGroupName, name, CancellationToken.None));
         }
 
         public async Task<IDeployment> GetByResourceGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IDeployment GetById(string id)
         {
-            return GetByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByIdAsync(id));
         }
 
         public async Task<IDeployment> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))

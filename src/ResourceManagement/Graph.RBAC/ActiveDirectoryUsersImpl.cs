@@ -16,38 +16,38 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// <summary>
     /// The implementation of Users and its parent interfaces.
     /// </summary>
-    public partial class ActiveDirectoryUsersImpl  :
-        ReadableWrappers<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUserImpl,Models.UserInner>,
+    public partial class ActiveDirectoryUsersImpl :
+        ReadableWrappers<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser, Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUserImpl, Models.UserInner>,
         IActiveDirectoryUsers,
         IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUsersOperations>
     {
         private GraphRbacManager manager;
-                public GraphRbacManager Manager()
+        public GraphRbacManager Manager()
         {
             return manager;
         }
 
-                public ActiveDirectoryUserImpl GetById(string objectId)
+        public ActiveDirectoryUserImpl GetById(string objectId)
         {
-            return (ActiveDirectoryUserImpl) GetByIdAsync(objectId).ConfigureAwait(false).GetAwaiter().GetResult();
+            return (ActiveDirectoryUserImpl) Extensions.Synchronize(() => GetByIdAsync(objectId));
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return WrapModel(await Inner.GetAsync(id, cancellationToken));
         }
-        
-                internal  ActiveDirectoryUsersImpl(GraphRbacManager manager)
+
+        internal ActiveDirectoryUsersImpl(GraphRbacManager manager)
         {
             this.manager = manager;
         }
 
-                public ActiveDirectoryUserImpl GetByName(string upn)
+        public ActiveDirectoryUserImpl GetByName(string upn)
         {
-            return (ActiveDirectoryUserImpl) GetByNameAsync(upn).ConfigureAwait(false).GetAwaiter().GetResult();
+            return (ActiveDirectoryUserImpl) Extensions.Synchronize(() => GetByNameAsync(upn));
         }
 
-                public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             UserInner inner = null;
             try
@@ -84,12 +84,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return null;
         }
 
-                public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> List()
+        public IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser> List()
         {
             return WrapList(this.manager.Inner.Users.List());
         }
 
-                public IUsersOperations Inner
+        public IUsersOperations Inner
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryUser>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryUser>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IActiveDirectoryUser, UserInner>.LoadPage(
                 async (cancellation) => await Inner.ListAsync(null, cancellation),
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 WrapModel, loadAllPages, cancellationToken);
         }
 
-                protected override IActiveDirectoryUser WrapModel(UserInner userInner)
+        protected override IActiveDirectoryUser WrapModel(UserInner userInner)
         {
             if (userInner == null)
             {

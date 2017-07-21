@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
 
         public RecordSetT GetByName(string name)
         {
-            return GetByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByNameAsync(name));
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:8702BABF19DCC459AC95CE748259A3D1
