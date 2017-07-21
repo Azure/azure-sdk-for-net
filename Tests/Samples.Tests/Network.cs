@@ -101,11 +101,11 @@ namespace Samples.Tests
 
         [Fact]
         [Trait("Samples", "Network")]
-        public void ManageNetworkWatcher()
+        public void ManageNetworkWatcherTest()
         {
-/*            RunSampleAsTest(
+            RunSampleAsTest(
                 this.GetType().FullName,
-                ManageNetworkWatcher.Program.RunSample);*/
+                ManageNetworkWatcher.Program.RunSample);
         }
     }
 }

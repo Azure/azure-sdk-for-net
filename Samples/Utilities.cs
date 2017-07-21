@@ -1830,8 +1830,12 @@ namespace Microsoft.Azure.Management.Samples.Common
                 }
                 sb.Append("\n\t\tSubnet:").Append(sgni.SecurityRuleAssociations.SubnetAssociation.Id);
                 printSecurityRule(sb, sgni.SecurityRuleAssociations.SubnetAssociation.SecurityRules);
-                sb.Append("\n\t\tNetwork interface:").Append(sgni.SecurityRuleAssociations.NetworkInterfaceAssociation.Id);
-                printSecurityRule(sb, sgni.SecurityRuleAssociations.NetworkInterfaceAssociation.SecurityRules);
+                if (sgni.SecurityRuleAssociations.NetworkInterfaceAssociation != null)
+                {
+                    sb.Append("\n\t\tNetwork interface:")
+                        .Append(sgni.SecurityRuleAssociations.NetworkInterfaceAssociation.Id);
+                    printSecurityRule(sb, sgni.SecurityRuleAssociations.NetworkInterfaceAssociation.SecurityRules);
+                }
                 sb.Append("\n\t\tDefault security rules:");
                 printSecurityRule(sb, sgni.SecurityRuleAssociations.DefaultSecurityRules);
             }
@@ -1854,6 +1858,15 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\t\t\tDescription: ").Append(rule.Description)
                     .Append("\n\t\t\tProvisioning state: ").Append(rule.ProvisioningState);
             }
+        }
+
+        public static void Print(INextHop resource)
+        {
+            StringBuilder sb = new StringBuilder("Next hop: ")
+                .Append("Next hop type: ").Append(resource.NextHopType)
+                .Append("\n\tNext hop ip address: ").Append(resource.NextHopIpAddress)
+                .Append("\n\tRoute table id: ").Append(resource.RouteTableId);
+            Utilities.Log(sb.ToString());
         }
 
         public static void CreateCertificate(string domainName, string pfxPath, string password)
