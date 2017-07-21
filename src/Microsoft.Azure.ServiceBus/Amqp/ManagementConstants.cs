@@ -32,6 +32,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             public const string PeekMessageOperation = Microsoft + ":peek-message";
             public const string AddRuleOperation = Microsoft + ":add-rule";
             public const string RemoveRuleOperation = Microsoft + ":remove-rule";
+            public const string EnumerateRulesOperation = Microsoft + ":enumerate-rules";
             public const string ScheduleMessageOperation = Microsoft + ":schedule-message";
             public const string CancelScheduledMessageOperation = Microsoft + ":cancel-scheduled-message";
         }
@@ -59,8 +60,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             public static readonly MapKey FromSequenceNumber = new MapKey("from-sequence-number");
             public static readonly MapKey MessageCount = new MapKey("message-count");
 
+            public static readonly MapKey Skip = new MapKey("skip");
+            public static readonly MapKey Top = new MapKey("top");
+            public static readonly MapKey Rules = new MapKey("rules");
             public static readonly MapKey RuleName = new MapKey("rule-name");
             public static readonly MapKey RuleDescription = new MapKey("rule-description");
+            public static readonly MapKey RuleCreatedAt = new MapKey("rule-created-at");
             public static readonly MapKey SqlFilter = new MapKey("sql-filter");
             public static readonly MapKey SqlRuleAction = new MapKey("sql-rule-action");
             public static readonly MapKey CorrelationFilter = new MapKey("correlation-filter");

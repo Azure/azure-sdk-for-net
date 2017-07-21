@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.ServiceBus.Core
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Filters;
 
@@ -15,6 +16,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         Task OnAddRuleAsync(RuleDescription description);
 
         Task OnRemoveRuleAsync(string ruleName);
+
+        Task<IEnumerable<RuleDescription>> OnGetRulesAsync(int top, int skip);
 
         Task CloseAsync();
     }

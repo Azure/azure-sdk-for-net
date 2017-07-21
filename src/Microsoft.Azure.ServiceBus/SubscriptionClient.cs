@@ -447,6 +447,31 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
+        /// Get all rules associated with the subscription.
+        /// </summary>
+        /// <returns>IEnumerable of rules</returns>
+        public async Task<IEnumerable<RuleDescription>> GetRulesAsync()
+        {
+            MessagingEventSource.Log.GetRulesStart(this.ClientId);
+            int skip = 0;
+            int top = int.MaxValue;
+            IEnumerable<RuleDescription> rules;
+
+            try
+            {
+                rules = await this.InnerSubscriptionClient.OnGetRulesAsync(top, skip);
+            }
+            catch (Exception exception)
+            {
+                MessagingEventSource.Log.GetRulesException(this.ClientId, exception);
+                throw;
+            }
+
+            MessagingEventSource.Log.GetRulesStop(this.ClientId);
+            return rules;
+        }
+
+        /// <summary>
         /// Gets a list of currently registered plugins for this SubscriptionClient.
         /// </summary>
         public override IList<ServiceBusPlugin> RegisteredPlugins => this.InnerSubscriptionClient.InnerReceiver.RegisteredPlugins;

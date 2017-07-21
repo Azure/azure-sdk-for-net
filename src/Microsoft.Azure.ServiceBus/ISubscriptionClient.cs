@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Threading;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Core;
     using Filters;
@@ -90,6 +91,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="ruleName">The name of the rule.</param>
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
         Task RemoveRuleAsync(string ruleName);
+
+        /// <summary>
+        /// Get all rules associated with the subscription.
+        /// </summary>
+        /// <returns>IEnumerable of rules</returns>
+        Task<IEnumerable<RuleDescription>> GetRulesAsync();
 
         /// <summary>
         /// Receive session messages continously from the subscription. Registers a message handler and begins a new thread to receive session-messages.

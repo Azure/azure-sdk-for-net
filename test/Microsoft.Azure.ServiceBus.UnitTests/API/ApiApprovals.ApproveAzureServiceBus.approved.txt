@@ -68,6 +68,7 @@ namespace Microsoft.Azure.ServiceBus
         string TopicPath { get; }
         System.Threading.Tasks.Task AddRuleAsync(string ruleName, Microsoft.Azure.ServiceBus.Filters.Filter filter);
         System.Threading.Tasks.Task AddRuleAsync(Microsoft.Azure.ServiceBus.Filters.RuleDescription description);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Microsoft.Azure.ServiceBus.Filters.RuleDescription>> GetRulesAsync();
         void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler);
         void RegisterSessionHandler(System.Func<Microsoft.Azure.ServiceBus.IMessageSession, Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.SessionHandlerOptions sessionHandlerOptions);
         System.Threading.Tasks.Task RemoveRuleAsync(string ruleName);
@@ -266,6 +267,7 @@ namespace Microsoft.Azure.ServiceBus
         public System.Threading.Tasks.Task AddRuleAsync(Microsoft.Azure.ServiceBus.Filters.RuleDescription description) { }
         public System.Threading.Tasks.Task CompleteAsync(string lockToken) { }
         public System.Threading.Tasks.Task DeadLetterAsync(string lockToken) { }
+        public System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Microsoft.Azure.ServiceBus.Filters.RuleDescription>> GetRulesAsync() { }
         protected override System.Threading.Tasks.Task OnClosingAsync() { }
         public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, System.Func<Microsoft.Azure.ServiceBus.Primitives.ExceptionReceivedEventArgs, System.Threading.Tasks.Task> exceptionReceivedHandler) { }
         public void RegisterMessageHandler(System.Func<Microsoft.Azure.ServiceBus.Message, System.Threading.CancellationToken, System.Threading.Tasks.Task> handler, Microsoft.Azure.ServiceBus.MessageHandlerOptions messageHandlerOptions) { }

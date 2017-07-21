@@ -1175,6 +1175,39 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        [Event(102, Level = EventLevel.Informational, Message = "{0}: GetRulesException start.")]
+        public void GetRulesStart(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(102, clientId);
+            }
+        }
+
+        [Event(103, Level = EventLevel.Informational, Message = "{0}: GetRulesException done.")]
+        public void GetRulesStop(string clientId)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(103, clientId);
+            }
+        }
+
+        [NonEvent]
+        public void GetRulesException(string clientId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.GetRulesException(clientId, exception.ToString());
+            }
+        }
+
+        [Event(104, Level = EventLevel.Error, Message = "{0}: GetRulesException Exception: {1}.")]
+        void GetRulesException(string clientId, string exception)
+        {
+            this.WriteEvent(104, clientId, exception);
+        }
+
         [NonEvent]
         public void CreatingNewLink(string clientId, bool isSessionReceiver, string sessionId, bool isRequestResponseLink, Error linkError)
         {

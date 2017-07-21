@@ -8,11 +8,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using System.Collections.Generic;
     using System.IO;
     using System.Runtime.Serialization;
-    using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.Amqp.Encoding;
-    using Microsoft.Azure.Amqp.Framing;
-    using Microsoft.Azure.ServiceBus.Filters;
-    using SBMessage = Microsoft.Azure.ServiceBus.Message;
+    using Azure.Amqp;
+    using Azure.Amqp.Encoding;
+    using Azure.Amqp.Framing;
+    using Filters;
+    using Framing;
+    using SBMessage = Message;
 
     static class AmqpMessageConverter
     {
@@ -362,6 +363,91 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return ruleDescriptionMap;
         }
 
+        public static RuleDescription GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
+        {
+            Filter filter = GetFilter(amqpDescription.Filter);
+            RuleAction action = GetRuleAction(amqpDescription.Action);
+
+            RuleDescription description = new RuleDescription(filter)
+            {
+                Action = action,
+                Name = amqpDescription.RuleName
+            };
+
+            return description;
+        }
+
+        public static Filter GetFilter(AmqpFilterCodec amqpFilter)
+        {
+            Filter filter;
+
+            switch (amqpFilter.DescriptorCode)
+            {
+                case AmqpSqlFilterCodec.Code:
+                    var amqpSqlFilter = (AmqpSqlFilterCodec)amqpFilter;
+                    filter = new SqlFilter(amqpSqlFilter.Expression);
+                    break;
+
+                case AmqpTrueFilterCodec.Code:
+                    filter = new TrueFilter();
+                    break;
+
+                case AmqpFalseFilterCodec.Code:
+                    filter = new FalseFilter();
+                    break;
+
+                case AmqpCorrelationFilterCodec.Code:
+                    var amqpCorrelationFilter = (AmqpCorrelationFilterCodec)amqpFilter;
+                    var correlationFilter = new CorrelationFilter()
+                    {
+                        CorrelationId = amqpCorrelationFilter.CorrelationId,
+                        MessageId = amqpCorrelationFilter.MessageId,
+                        To = amqpCorrelationFilter.To,
+                        ReplyTo = amqpCorrelationFilter.ReplyTo,
+                        Label = amqpCorrelationFilter.Label,
+                        SessionId = amqpCorrelationFilter.SessionId,
+                        ReplyToSessionId = amqpCorrelationFilter.ReplyToSessionId,
+                        ContentType = amqpCorrelationFilter.ContentType
+                    };
+
+                    foreach (var property in amqpCorrelationFilter.Properties)
+                    {
+                        correlationFilter.Properties.Add(property.Key.Key.ToString(), property.Value);
+                    }
+
+                    filter = correlationFilter;
+                    break;
+
+                default:
+                    throw new NotSupportedException($"Unknown filter descriptor code: {amqpFilter.DescriptorCode}");
+            }
+
+            return filter;
+        }
+
+        static RuleAction GetRuleAction(AmqpRuleActionCodec amqpAction)
+        {
+            RuleAction action;
+
+            if (amqpAction.DescriptorCode == AmqpEmptyRuleActionCodec.Code)
+            {
+                action = null;
+            }
+            else if (amqpAction.DescriptorCode == AmqpSqlRuleActionCodec.Code)
+            {
+                AmqpSqlRuleActionCodec amqpSqlAction = (AmqpSqlRuleActionCodec)amqpAction;
+                SqlRuleAction sqlAction = new SqlRuleAction(amqpSqlAction.SqlExpression);
+
+                action = sqlAction;
+            }
+            else
+            {
+                throw new NotSupportedException($"Unknown action descriptor code: {amqpAction.DescriptorCode}");
+            }
+
+            return action;
+        }
+
         static bool TryGetAmqpObjectFromNetObject(object netObject, MappingType mappingType, out object amqpObject)
         {
             amqpObject = null;
@@ -586,7 +672,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             return correlationFilterMap;
         }
-
+        
         static AmqpMap GetRuleActionMap(SqlRuleAction sqlRuleAction)
         {
             AmqpMap ruleActionMap = null;
