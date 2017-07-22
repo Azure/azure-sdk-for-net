@@ -24,130 +24,6 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class ServersOperationsExtensions
     {
             /// <summary>
-            /// Creates or updates the server's connection policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for updating a secure connection policy.
-            /// </param>
-            public static ServerConnectionPolicy CreateOrUpdateConnectionPolicy(this IServersOperations operations, string resourceGroupName, string serverName, ServerConnectionPolicy parameters)
-            {
-                return operations.CreateOrUpdateConnectionPolicyAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the server's connection policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for updating a secure connection policy.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerConnectionPolicy> CreateOrUpdateConnectionPolicyAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerConnectionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateConnectionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the server's secure connection policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            public static ServerConnectionPolicy GetConnectionPolicy(this IServersOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.GetConnectionPolicyAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the server's secure connection policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServerConnectionPolicy> GetConnectionPolicyAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetConnectionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Determines whether a resource can be created with the specified name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters to request for name availability.
-            /// </param>
-            public static CheckNameAvailabilityResponse CheckNameAvailability(this IServersOperations operations, CheckNameAvailabilityRequest parameters)
-            {
-                return operations.CheckNameAvailabilityAsync(parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Determines whether a resource can be created with the specified name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters to request for name availability.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IServersOperations operations, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets a server backup long term retention vault
             /// </summary>
             /// <param name='operations'>
@@ -232,6 +108,96 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<BackupLongTermRetentionVault> CreateBackupLongTermRetentionVaultAsync(this IServersOperations operations, string resourceGroupName, string serverName, BackupLongTermRetentionVault parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateBackupLongTermRetentionVaultWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates the server's connection policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating a secure connection policy.
+            /// </param>
+            public static ServerConnectionPolicy CreateOrUpdateConnectionPolicy(this IServersOperations operations, string resourceGroupName, string serverName, ServerConnectionPolicy parameters)
+            {
+                return operations.CreateOrUpdateConnectionPolicyAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates the server's connection policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for updating a secure connection policy.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServerConnectionPolicy> CreateOrUpdateConnectionPolicyAsync(this IServersOperations operations, string resourceGroupName, string serverName, ServerConnectionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateConnectionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the server's secure connection policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static ServerConnectionPolicy GetConnectionPolicy(this IServersOperations operations, string resourceGroupName, string serverName)
+            {
+                return operations.GetConnectionPolicyAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the server's secure connection policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServerConnectionPolicy> GetConnectionPolicyAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetConnectionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -328,6 +294,40 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Determines whether a resource can be created with the specified name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters to request for name availability.
+            /// </param>
+            public static CheckNameAvailabilityResponse CheckNameAvailability(this IServersOperations operations, CheckNameAvailabilityRequest parameters)
+            {
+                return operations.CheckNameAvailabilityAsync(parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Determines whether a resource can be created with the specified name.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters to request for name availability.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this IServersOperations operations, CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Returns server usages.
             /// </summary>
             /// <param name='operations'>
@@ -364,6 +364,138 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<IEnumerable<ServerUsage>> ListUsagesAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListUsagesWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns a list of the server encryption protectors
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static IPage<EncryptionProtector> ListEncryptionProtectors(this IServersOperations operations, string resourceGroupName, string serverName)
+            {
+                return operations.ListEncryptionProtectorsAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns a list of the server encryption protectors
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EncryptionProtector>> ListEncryptionProtectorsAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListEncryptionProtectorsWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns the server encryption protector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static EncryptionProtector GetEncryptionProtector(this IServersOperations operations, string resourceGroupName, string serverName)
+            {
+                return operations.GetEncryptionProtectorAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns the server encryption protector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EncryptionProtector> GetEncryptionProtectorAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEncryptionProtectorWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates an existing encryption protector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The requested encryption protector resource state.
+            /// </param>
+            public static EncryptionProtector CreateOrUpdateEncryptionProtector(this IServersOperations operations, string resourceGroupName, string serverName, EncryptionProtector parameters)
+            {
+                return operations.CreateOrUpdateEncryptionProtectorAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing encryption protector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The requested encryption protector resource state.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EncryptionProtector> CreateOrUpdateEncryptionProtectorAsync(this IServersOperations operations, string resourceGroupName, string serverName, EncryptionProtector parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateEncryptionProtectorWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -611,138 +743,6 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a list of the server encryption protectors
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            public static IPage<EncryptionProtector> ListEncryptionProtectors(this IServersOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.ListEncryptionProtectorsAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns a list of the server encryption protectors
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<EncryptionProtector>> ListEncryptionProtectorsAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListEncryptionProtectorsWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Returns the server encryption protector.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            public static EncryptionProtector GetEncryptionProtector(this IServersOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.GetEncryptionProtectorAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the server encryption protector.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<EncryptionProtector> GetEncryptionProtectorAsync(this IServersOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetEncryptionProtectorWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates an existing encryption protector.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The requested encryption protector resource state.
-            /// </param>
-            public static EncryptionProtector CreateOrUpdateEncryptionProtector(this IServersOperations operations, string resourceGroupName, string serverName, EncryptionProtector parameters)
-            {
-                return operations.CreateOrUpdateEncryptionProtectorAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an existing encryption protector.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The requested encryption protector resource state.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<EncryptionProtector> CreateOrUpdateEncryptionProtectorAsync(this IServersOperations operations, string resourceGroupName, string serverName, EncryptionProtector parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateEncryptionProtectorWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Updates a server backup long term retention vault
             /// </summary>
             /// <param name='operations'>
@@ -785,6 +785,54 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<BackupLongTermRetentionVault> BeginCreateBackupLongTermRetentionVaultAsync(this IServersOperations operations, string resourceGroupName, string serverName, BackupLongTermRetentionVault parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateBackupLongTermRetentionVaultWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates an existing encryption protector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The requested encryption protector resource state.
+            /// </param>
+            public static EncryptionProtector BeginCreateOrUpdateEncryptionProtector(this IServersOperations operations, string resourceGroupName, string serverName, EncryptionProtector parameters)
+            {
+                return operations.BeginCreateOrUpdateEncryptionProtectorAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing encryption protector.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='parameters'>
+            /// The requested encryption protector resource state.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EncryptionProtector> BeginCreateOrUpdateEncryptionProtectorAsync(this IServersOperations operations, string resourceGroupName, string serverName, EncryptionProtector parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateEncryptionProtectorWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -926,48 +974,34 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Updates an existing encryption protector.
+            /// Returns a list of the server encryption protectors
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
             /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The requested encryption protector resource state.
-            /// </param>
-            public static EncryptionProtector BeginCreateOrUpdateEncryptionProtector(this IServersOperations operations, string resourceGroupName, string serverName, EncryptionProtector parameters)
+            public static IPage<EncryptionProtector> ListEncryptionProtectorsNext(this IServersOperations operations, string nextPageLink)
             {
-                return operations.BeginCreateOrUpdateEncryptionProtectorAsync(resourceGroupName, serverName, parameters).GetAwaiter().GetResult();
+                return operations.ListEncryptionProtectorsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates an existing encryption protector.
+            /// Returns a list of the server encryption protectors
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='parameters'>
-            /// The requested encryption protector resource state.
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EncryptionProtector> BeginCreateOrUpdateEncryptionProtectorAsync(this IServersOperations operations, string resourceGroupName, string serverName, EncryptionProtector parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EncryptionProtector>> ListEncryptionProtectorsNextAsync(this IServersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateEncryptionProtectorWithHttpMessagesAsync(resourceGroupName, serverName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListEncryptionProtectorsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1036,40 +1070,6 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<IPage<Server>> ListByResourceGroupNextAsync(this IServersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Returns a list of the server encryption protectors
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<EncryptionProtector> ListEncryptionProtectorsNext(this IServersOperations operations, string nextPageLink)
-            {
-                return operations.ListEncryptionProtectorsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns a list of the server encryption protectors
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<EncryptionProtector>> ListEncryptionProtectorsNextAsync(this IServersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListEncryptionProtectorsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

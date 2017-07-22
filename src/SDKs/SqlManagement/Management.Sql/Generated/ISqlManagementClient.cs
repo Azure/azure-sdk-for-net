@@ -16,10 +16,6 @@ namespace Microsoft.Azure.Management.Sql
     using Newtonsoft.Json;
 
     /// <summary>
-    /// The Azure SQL Database management API provides a RESTful set of web
-    /// services that interact with Azure SQL Database services to manage your
-    /// databases. The API enables you to create, retrieve, update, and delete
-    /// databases.
     /// </summary>
     public partial interface ISqlManagementClient : System.IDisposable
     {
@@ -72,6 +68,11 @@ namespace Microsoft.Azure.Management.Sql
         IDatabasesOperations Databases { get; }
 
         /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        IServersOperations Servers { get; }
+
+        /// <summary>
         /// Gets the IRecoverableDatabasesOperations.
         /// </summary>
         IRecoverableDatabasesOperations RecoverableDatabases { get; }
@@ -85,11 +86,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the ICapabilitiesOperations.
         /// </summary>
         ICapabilitiesOperations Capabilities { get; }
-
-        /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        IServersOperations Servers { get; }
 
         /// <summary>
         /// Gets the IFirewallRulesOperations.
@@ -107,11 +103,6 @@ namespace Microsoft.Azure.Management.Sql
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IRecommendedElasticPoolsOperations.
-        /// </summary>
-        IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
-
-        /// <summary>
         /// Gets the IServerAzureADAdministratorsOperations.
         /// </summary>
         IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
@@ -122,19 +113,24 @@ namespace Microsoft.Azure.Management.Sql
         IServerCommunicationLinksOperations ServerCommunicationLinks { get; }
 
         /// <summary>
+        /// Gets the IRecommendedElasticPoolsOperations.
+        /// </summary>
+        IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
+
+        /// <summary>
         /// Gets the IFailoverGroupsOperations.
         /// </summary>
         IFailoverGroupsOperations FailoverGroups { get; }
 
         /// <summary>
-        /// Gets the IVirtualNetworkRulesOperations.
-        /// </summary>
-        IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
-
-        /// <summary>
         /// Gets the IServerKeysOperations.
         /// </summary>
         IServerKeysOperations ServerKeys { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkRulesOperations.
+        /// </summary>
+        IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
 
     }
 }

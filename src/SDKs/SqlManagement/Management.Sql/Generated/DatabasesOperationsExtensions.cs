@@ -24,6 +24,108 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class DatabasesOperationsExtensions
     {
             /// <summary>
+            /// Returns a database backup long term retention policy
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            public static BackupLongTermRetentionPolicy GetBackupLongTermRetentionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return operations.GetBackupLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns a database backup long term retention policy
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupLongTermRetentionPolicy> GetBackupLongTermRetentionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBackupLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates a database backup long term retention policy
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters to update a backup long term retention policy
+            /// </param>
+            public static BackupLongTermRetentionPolicy CreateOrUpdateLongTermRetentionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
+            {
+                return operations.CreateOrUpdateLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a database backup long term retention policy
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters to update a backup long term retention policy
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupLongTermRetentionPolicy> CreateOrUpdateLongTermRetentionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of database restore points.
             /// </summary>
             /// <param name='operations'>
@@ -66,6 +168,112 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<IEnumerable<RestorePoint>> ListRestorePointsAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListRestorePointsWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a database's threat detection policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database for which database Threat Detection policy is
+            /// defined.
+            /// </param>
+            public static DatabaseSecurityAlertPolicy GetThreatDetectionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                return operations.GetThreatDetectionPolicyAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a database's threat detection policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database for which database Threat Detection policy is
+            /// defined.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DatabaseSecurityAlertPolicy> GetThreatDetectionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetThreatDetectionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates a database's threat detection policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database for which database Threat Detection policy is
+            /// defined.
+            /// </param>
+            /// <param name='parameters'>
+            /// The database Threat Detection policy.
+            /// </param>
+            public static DatabaseSecurityAlertPolicy CreateOrUpdateThreatDetectionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicy parameters)
+            {
+                return operations.CreateOrUpdateThreatDetectionPolicyAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a database's threat detection policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database for which database Threat Detection policy is
+            /// defined.
+            /// </param>
+            /// <param name='parameters'>
+            /// The database Threat Detection policy.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DatabaseSecurityAlertPolicy> CreateOrUpdateThreatDetectionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateThreatDetectionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1562,214 +1770,6 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a database's threat detection policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database for which database Threat Detection policy is
-            /// defined.
-            /// </param>
-            public static DatabaseSecurityAlertPolicy GetThreatDetectionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                return operations.GetThreatDetectionPolicyAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a database's threat detection policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database for which database Threat Detection policy is
-            /// defined.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<DatabaseSecurityAlertPolicy> GetThreatDetectionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetThreatDetectionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates a database's threat detection policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database for which database Threat Detection policy is
-            /// defined.
-            /// </param>
-            /// <param name='parameters'>
-            /// The database Threat Detection policy.
-            /// </param>
-            public static DatabaseSecurityAlertPolicy CreateOrUpdateThreatDetectionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicy parameters)
-            {
-                return operations.CreateOrUpdateThreatDetectionPolicyAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a database's threat detection policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database for which database Threat Detection policy is
-            /// defined.
-            /// </param>
-            /// <param name='parameters'>
-            /// The database Threat Detection policy.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<DatabaseSecurityAlertPolicy> CreateOrUpdateThreatDetectionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseSecurityAlertPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateThreatDetectionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Returns a database backup long term retention policy
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
-            public static BackupLongTermRetentionPolicy GetBackupLongTermRetentionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                return operations.GetBackupLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns a database backup long term retention policy
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<BackupLongTermRetentionPolicy> GetBackupLongTermRetentionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetBackupLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates a database backup long term retention policy
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters to update a backup long term retention policy
-            /// </param>
-            public static BackupLongTermRetentionPolicy CreateOrUpdateLongTermRetentionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
-            {
-                return operations.CreateOrUpdateLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a database backup long term retention policy
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters to update a backup long term retention policy
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<BackupLongTermRetentionPolicy> CreateOrUpdateLongTermRetentionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Returns database usages.
             /// </summary>
             /// <param name='operations'>
@@ -1916,6 +1916,60 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<DatabaseBlobAuditingPolicy> CreateOrUpdateBlobAuditingPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseBlobAuditingPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateBlobAuditingPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates a database backup long term retention policy
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters to update a backup long term retention policy
+            /// </param>
+            public static BackupLongTermRetentionPolicy BeginCreateOrUpdateLongTermRetentionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
+            {
+                return operations.BeginCreateOrUpdateLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a database backup long term retention policy
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters to update a backup long term retention policy
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupLongTermRetentionPolicy> BeginCreateOrUpdateLongTermRetentionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2378,60 +2432,6 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<Database> BeginUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates a database backup long term retention policy
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters to update a backup long term retention policy
-            /// </param>
-            public static BackupLongTermRetentionPolicy BeginCreateOrUpdateLongTermRetentionPolicy(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
-            {
-                return operations.BeginCreateOrUpdateLongTermRetentionPolicyAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a database backup long term retention policy
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters to update a backup long term retention policy
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<BackupLongTermRetentionPolicy> BeginCreateOrUpdateLongTermRetentionPolicyAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginCreateOrUpdateLongTermRetentionPolicyWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="columnName">The column name on which the data masking
         /// rule is applied.</param>
         /// <param name="maskingFunction">The masking function that is used for
-        /// the data masking rule. Possible values include: 'CCN', 'Default',
+        /// the data masking rule. Possible values include: 'Default', 'CCN',
         /// 'Email', 'Number', 'SSN', 'Text'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets the masking function that is used for the data masking
-        /// rule. Possible values include: 'CCN', 'Default', 'Email', 'Number',
+        /// rule. Possible values include: 'Default', 'CCN', 'Email', 'Number',
         /// 'SSN', 'Text'
         /// </summary>
         [JsonProperty(PropertyName = "properties.maskingFunction")]

@@ -21,12 +21,6 @@ namespace Microsoft.Azure.Management.Sql
     using System.Net;
     using System.Net.Http;
 
-    /// <summary>
-    /// The Azure SQL Database management API provides a RESTful set of web
-    /// services that interact with Azure SQL Database services to manage your
-    /// databases. The API enables you to create, retrieve, update, and delete
-    /// databases.
-    /// </summary>
     public partial class SqlManagementClient : ServiceClient<SqlManagementClient>, ISqlManagementClient, IAzureClient
     {
         /// <summary>
@@ -77,6 +71,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        public virtual IServersOperations Servers { get; private set; }
+
+        /// <summary>
         /// Gets the IRecoverableDatabasesOperations.
         /// </summary>
         public virtual IRecoverableDatabasesOperations RecoverableDatabases { get; private set; }
@@ -90,11 +89,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the ICapabilitiesOperations.
         /// </summary>
         public virtual ICapabilitiesOperations Capabilities { get; private set; }
-
-        /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        public virtual IServersOperations Servers { get; private set; }
 
         /// <summary>
         /// Gets the IFirewallRulesOperations.
@@ -112,11 +106,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IRecommendedElasticPoolsOperations.
-        /// </summary>
-        public virtual IRecommendedElasticPoolsOperations RecommendedElasticPools { get; private set; }
-
-        /// <summary>
         /// Gets the IServerAzureADAdministratorsOperations.
         /// </summary>
         public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
@@ -127,19 +116,24 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerCommunicationLinksOperations ServerCommunicationLinks { get; private set; }
 
         /// <summary>
+        /// Gets the IRecommendedElasticPoolsOperations.
+        /// </summary>
+        public virtual IRecommendedElasticPoolsOperations RecommendedElasticPools { get; private set; }
+
+        /// <summary>
         /// Gets the IFailoverGroupsOperations.
         /// </summary>
         public virtual IFailoverGroupsOperations FailoverGroups { get; private set; }
 
         /// <summary>
-        /// Gets the IVirtualNetworkRulesOperations.
-        /// </summary>
-        public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
-
-        /// <summary>
         /// Gets the IServerKeysOperations.
         /// </summary>
         public virtual IServerKeysOperations ServerKeys { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkRulesOperations.
+        /// </summary>
+        public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -343,19 +337,19 @@ namespace Microsoft.Azure.Management.Sql
         private void Initialize()
         {
             Databases = new DatabasesOperations(this);
+            Servers = new ServersOperations(this);
             RecoverableDatabases = new RecoverableDatabasesOperations(this);
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
             Capabilities = new CapabilitiesOperations(this);
-            Servers = new ServersOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
             Operations = new Operations(this);
-            RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
+            RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
-            VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             ServerKeys = new ServerKeysOperations(this);
+            VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

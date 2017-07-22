@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The failover group parameters.
             /// </param>
-            public static FailoverGroup Update(this IFailoverGroupsOperations operations, string resourceGroupName, string serverName, string failoverGroupName, FailoverGroup parameters)
+            public static FailoverGroup Update(this IFailoverGroupsOperations operations, string resourceGroupName, string serverName, string failoverGroupName, FailoverGroupUpdate parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, serverName, failoverGroupName, parameters).GetAwaiter().GetResult();
             }
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FailoverGroup> UpdateAsync(this IFailoverGroupsOperations operations, string resourceGroupName, string serverName, string failoverGroupName, FailoverGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FailoverGroup> UpdateAsync(this IFailoverGroupsOperations operations, string resourceGroupName, string serverName, string failoverGroupName, FailoverGroupUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serverName, failoverGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -480,7 +480,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The failover group parameters.
             /// </param>
-            public static FailoverGroup BeginUpdate(this IFailoverGroupsOperations operations, string resourceGroupName, string serverName, string failoverGroupName, FailoverGroup parameters)
+            public static FailoverGroup BeginUpdate(this IFailoverGroupsOperations operations, string resourceGroupName, string serverName, string failoverGroupName, FailoverGroupUpdate parameters)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, serverName, failoverGroupName, parameters).GetAwaiter().GetResult();
             }
@@ -507,7 +507,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FailoverGroup> BeginUpdateAsync(this IFailoverGroupsOperations operations, string resourceGroupName, string serverName, string failoverGroupName, FailoverGroup parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FailoverGroup> BeginUpdateAsync(this IFailoverGroupsOperations operations, string resourceGroupName, string serverName, string failoverGroupName, FailoverGroupUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, failoverGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -22,10 +22,10 @@ namespace Microsoft.Azure.Management.Sql.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum DataMaskingFunction
     {
-        [EnumMember(Value = "CCN")]
-        CCN,
         [EnumMember(Value = "Default")]
         Default,
+        [EnumMember(Value = "CCN")]
+        CCN,
         [EnumMember(Value = "Email")]
         Email,
         [EnumMember(Value = "Number")]

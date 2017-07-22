@@ -5,7 +5,7 @@
 
 @echo off
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e26c0c7bcf6557dc33c29d371be0b59613d03415/arm-sql/compositeSql.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/609ab70389dd2ba4e70ce5a8836fca5019d3b699/specification/sql/resource-manager/readme.md"
 ) else (
     set specFile="%1"
 )
@@ -14,5 +14,6 @@ set generateFolder=%~dp0Generated
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
 
-autorest --latest -Modeler CompositeSwagger -CodeGenerator Azure.CSharp -Namespace Microsoft.Azure.Management.Sql -Input %specFile% -outputDirectory %generateFolder% -Header MICROSOFT_MIT %~5
+echo autorest %specFile% --latest --csharp --csharp-sdks-folder=%~dp0..
+autorest %specFile% --version=1.1.0 --csharp --csharp-sdks-folder=%~dp0..\..
 
