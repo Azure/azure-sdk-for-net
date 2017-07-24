@@ -279,16 +279,16 @@ namespace Azure.Batch.Unit.Tests
                         var response = new AzureOperationResponse<IPage<Models.ComputeNode>, Models.ComputeNodeListHeaders>
                         {
                             Body = new FakePage<Models.ComputeNode>(new[]
+                            {
+                                new Microsoft.Azure.Batch.Protocol.Models.ComputeNode
                                 {
-                                    new Microsoft.Azure.Batch.Protocol.Models.ComputeNode
-                                    {
-                                        State = Models.ComputeNodeState.Running, 
-                                        LastBootTime = dateTime,
-                                        Id = "computeNode1",
-                                    },
-                                })
+                                    State = Models.ComputeNodeState.Running,
+                                    LastBootTime = dateTime,
+                                    Id = "computeNode1",
+                                },
+                            })
                         };
-                          
+
                         var task = Task.FromResult(response);
                         return await task;
                     };

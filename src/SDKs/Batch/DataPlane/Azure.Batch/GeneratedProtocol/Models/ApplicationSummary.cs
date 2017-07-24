@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// available.</param>
         public ApplicationSummary(string id, string displayName, System.Collections.Generic.IList<string> versions)
         {
-            Id = id;
-            DisplayName = displayName;
-            Versions = versions;
+            this.Id = id;
+            this.DisplayName = displayName;
+            this.Versions = versions;
         }
 
         /// <summary>
@@ -63,15 +63,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
+            if (this.Id == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
-            if (DisplayName == null)
+            if (this.DisplayName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "DisplayName");
             }
-            if (Versions == null)
+            if (this.Versions == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Versions");
             }

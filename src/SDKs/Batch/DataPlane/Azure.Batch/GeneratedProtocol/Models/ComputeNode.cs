@@ -64,27 +64,30 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// encountered by the compute node.</param>
         /// <param name="isDedicated">Whether this compute node is a dedicated
         /// node. If false, the node is a low-priority node.</param>
-        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), System.Collections.Generic.IList<TaskInformation> recentTasks = default(System.Collections.Generic.IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ComputeNodeError> errors = default(System.Collections.Generic.IList<ComputeNodeError>), bool? isDedicated = default(bool?))
+        /// <param name="endpointConfiguration">The endpoint configuration for
+        /// the compute node.</param>
+        public ComputeNode(string id = default(string), string url = default(string), ComputeNodeState? state = default(ComputeNodeState?), SchedulingState? schedulingState = default(SchedulingState?), System.DateTime? stateTransitionTime = default(System.DateTime?), System.DateTime? lastBootTime = default(System.DateTime?), System.DateTime? allocationTime = default(System.DateTime?), string ipAddress = default(string), string affinityId = default(string), string vmSize = default(string), int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? totalTasksSucceeded = default(int?), System.Collections.Generic.IList<TaskInformation> recentTasks = default(System.Collections.Generic.IList<TaskInformation>), StartTask startTask = default(StartTask), StartTaskInformation startTaskInfo = default(StartTaskInformation), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ComputeNodeError> errors = default(System.Collections.Generic.IList<ComputeNodeError>), bool? isDedicated = default(bool?), ComputeNodeEndpointConfiguration endpointConfiguration = default(ComputeNodeEndpointConfiguration))
         {
-            Id = id;
-            Url = url;
-            State = state;
-            SchedulingState = schedulingState;
-            StateTransitionTime = stateTransitionTime;
-            LastBootTime = lastBootTime;
-            AllocationTime = allocationTime;
-            IpAddress = ipAddress;
-            AffinityId = affinityId;
-            VmSize = vmSize;
-            TotalTasksRun = totalTasksRun;
-            RunningTasksCount = runningTasksCount;
-            TotalTasksSucceeded = totalTasksSucceeded;
-            RecentTasks = recentTasks;
-            StartTask = startTask;
-            StartTaskInfo = startTaskInfo;
-            CertificateReferences = certificateReferences;
-            Errors = errors;
-            IsDedicated = isDedicated;
+            this.Id = id;
+            this.Url = url;
+            this.State = state;
+            this.SchedulingState = schedulingState;
+            this.StateTransitionTime = stateTransitionTime;
+            this.LastBootTime = lastBootTime;
+            this.AllocationTime = allocationTime;
+            this.IpAddress = ipAddress;
+            this.AffinityId = affinityId;
+            this.VmSize = vmSize;
+            this.TotalTasksRun = totalTasksRun;
+            this.RunningTasksCount = runningTasksCount;
+            this.TotalTasksSucceeded = totalTasksSucceeded;
+            this.RecentTasks = recentTasks;
+            this.StartTask = startTask;
+            this.StartTaskInfo = startTaskInfo;
+            this.CertificateReferences = certificateReferences;
+            this.Errors = errors;
+            this.IsDedicated = isDedicated;
+            this.EndpointConfiguration = endpointConfiguration;
         }
 
         /// <summary>
@@ -274,6 +277,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public bool? IsDedicated { get; set; }
 
         /// <summary>
+        /// Gets or sets the endpoint configuration for the compute node.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "endpointConfiguration")]
+        public ComputeNodeEndpointConfiguration EndpointConfiguration { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -308,6 +317,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                         element1.Validate();
                     }
                 }
+            }
+            if (this.EndpointConfiguration != null)
+            {
+                this.EndpointConfiguration.Validate();
             }
         }
     }

@@ -52,19 +52,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job will use tasks with dependencies.</param>
         public JobAddParameter(string id, PoolInformation poolInfo, string displayName = default(string), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), System.Collections.Generic.IList<EnvironmentSetting> commonEnvironmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), bool? usesTaskDependencies = default(bool?))
         {
-            Id = id;
-            DisplayName = displayName;
-            Priority = priority;
-            Constraints = constraints;
-            JobManagerTask = jobManagerTask;
-            JobPreparationTask = jobPreparationTask;
-            JobReleaseTask = jobReleaseTask;
-            CommonEnvironmentSettings = commonEnvironmentSettings;
-            PoolInfo = poolInfo;
-            OnAllTasksComplete = onAllTasksComplete;
-            OnTaskFailure = onTaskFailure;
-            Metadata = metadata;
-            UsesTaskDependencies = usesTaskDependencies;
+            this.Id = id;
+            this.DisplayName = displayName;
+            this.Priority = priority;
+            this.Constraints = constraints;
+            this.JobManagerTask = jobManagerTask;
+            this.JobPreparationTask = jobPreparationTask;
+            this.JobReleaseTask = jobReleaseTask;
+            this.CommonEnvironmentSettings = commonEnvironmentSettings;
+            this.PoolInfo = poolInfo;
+            this.OnAllTasksComplete = onAllTasksComplete;
+            this.OnTaskFailure = onTaskFailure;
+            this.Metadata = metadata;
+            this.UsesTaskDependencies = usesTaskDependencies;
         }
 
         /// <summary>
@@ -232,11 +232,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
+            if (this.Id == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
-            if (PoolInfo == null)
+            if (this.PoolInfo == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PoolInfo");
             }

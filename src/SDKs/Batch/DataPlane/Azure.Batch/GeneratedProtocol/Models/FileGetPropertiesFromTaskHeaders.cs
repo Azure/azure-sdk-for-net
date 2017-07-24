@@ -52,16 +52,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="contentLength">The length of the file.</param>
         public FileGetPropertiesFromTaskHeaders(System.Guid? clientRequestId = default(System.Guid?), System.Guid? requestId = default(System.Guid?), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? ocpCreationTime = default(System.DateTime?), bool? ocpBatchFileIsdirectory = default(bool?), string ocpBatchFileUrl = default(string), string ocpBatchFileMode = default(string), string contentType = default(string), long? contentLength = default(long?))
         {
-            ClientRequestId = clientRequestId;
-            RequestId = requestId;
-            ETag = eTag;
-            LastModified = lastModified;
-            OcpCreationTime = ocpCreationTime;
-            OcpBatchFileIsdirectory = ocpBatchFileIsdirectory;
-            OcpBatchFileUrl = ocpBatchFileUrl;
-            OcpBatchFileMode = ocpBatchFileMode;
-            ContentType = contentType;
-            ContentLength = contentLength;
+            this.ClientRequestId = clientRequestId;
+            this.RequestId = requestId;
+            this.ETag = eTag;
+            this.LastModified = lastModified;
+            this.OcpCreationTime = ocpCreationTime;
+            this.OcpBatchFileIsdirectory = ocpBatchFileIsdirectory;
+            this.OcpBatchFileUrl = ocpBatchFileUrl;
+            this.OcpBatchFileMode = ocpBatchFileMode;
+            this.ContentType = contentType;
+            this.ContentLength = contentLength;
         }
 
         /// <summary>

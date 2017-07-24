@@ -37,11 +37,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// private key.</param>
         public CertificateAddParameter(string thumbprint, string thumbprintAlgorithm, string data, CertificateFormat? certificateFormat = default(CertificateFormat?), string password = default(string))
         {
-            Thumbprint = thumbprint;
-            ThumbprintAlgorithm = thumbprintAlgorithm;
-            Data = data;
-            CertificateFormat = certificateFormat;
-            Password = password;
+            this.Thumbprint = thumbprint;
+            this.ThumbprintAlgorithm = thumbprintAlgorithm;
+            this.Data = data;
+            this.CertificateFormat = certificateFormat;
+            this.Password = password;
         }
 
         /// <summary>
@@ -93,15 +93,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Thumbprint == null)
+            if (this.Thumbprint == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Thumbprint");
             }
-            if (ThumbprintAlgorithm == null)
+            if (this.ThumbprintAlgorithm == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ThumbprintAlgorithm");
             }
-            if (Data == null)
+            if (this.Data == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Data");
             }

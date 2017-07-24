@@ -40,14 +40,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="result">The result of the task execution.</param>
         public StartTaskInformation(StartTaskState state, System.DateTime startTime, int retryCount, System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), System.DateTime? lastRetryTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
-            State = state;
-            StartTime = startTime;
-            EndTime = endTime;
-            ExitCode = exitCode;
-            FailureInfo = failureInfo;
-            RetryCount = retryCount;
-            LastRetryTime = lastRetryTime;
-            Result = result;
+            this.State = state;
+            this.StartTime = startTime;
+            this.EndTime = endTime;
+            this.ExitCode = exitCode;
+            this.FailureInfo = failureInfo;
+            this.RetryCount = retryCount;
+            this.LastRetryTime = lastRetryTime;
+            this.Result = result;
         }
 
         /// <summary>

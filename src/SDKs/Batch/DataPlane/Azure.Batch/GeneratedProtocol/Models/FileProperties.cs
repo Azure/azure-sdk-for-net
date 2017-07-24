@@ -32,11 +32,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// format.</param>
         public FileProperties(System.DateTime lastModified, long contentLength, System.DateTime? creationTime = default(System.DateTime?), string contentType = default(string), string fileMode = default(string))
         {
-            CreationTime = creationTime;
-            LastModified = lastModified;
-            ContentLength = contentLength;
-            ContentType = contentType;
-            FileMode = fileMode;
+            this.CreationTime = creationTime;
+            this.LastModified = lastModified;
+            this.ContentLength = contentLength;
+            this.ContentType = contentType;
+            this.FileMode = fileMode;
         }
 
         /// <summary>

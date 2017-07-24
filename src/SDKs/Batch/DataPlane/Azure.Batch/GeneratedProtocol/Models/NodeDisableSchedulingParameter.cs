@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node.</param>
         public NodeDisableSchedulingParameter(DisableComputeNodeSchedulingOption? nodeDisableSchedulingOption = default(DisableComputeNodeSchedulingOption?))
         {
-            NodeDisableSchedulingOption = nodeDisableSchedulingOption;
+            this.NodeDisableSchedulingOption = nodeDisableSchedulingOption;
         }
 
         /// <summary>

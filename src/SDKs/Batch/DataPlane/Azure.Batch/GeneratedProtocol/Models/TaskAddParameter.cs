@@ -57,20 +57,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// operations.</param>
         public TaskAddParameter(string id, string commandLine, string displayName = default(string), ExitConditions exitConditions = default(ExitConditions), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<OutputFile> outputFiles = default(System.Collections.Generic.IList<OutputFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), UserIdentity userIdentity = default(UserIdentity), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
-            Id = id;
-            DisplayName = displayName;
-            CommandLine = commandLine;
-            ExitConditions = exitConditions;
-            ResourceFiles = resourceFiles;
-            OutputFiles = outputFiles;
-            EnvironmentSettings = environmentSettings;
-            AffinityInfo = affinityInfo;
-            Constraints = constraints;
-            UserIdentity = userIdentity;
-            MultiInstanceSettings = multiInstanceSettings;
-            DependsOn = dependsOn;
-            ApplicationPackageReferences = applicationPackageReferences;
-            AuthenticationTokenSettings = authenticationTokenSettings;
+            this.Id = id;
+            this.DisplayName = displayName;
+            this.CommandLine = commandLine;
+            this.ExitConditions = exitConditions;
+            this.ResourceFiles = resourceFiles;
+            this.OutputFiles = outputFiles;
+            this.EnvironmentSettings = environmentSettings;
+            this.AffinityInfo = affinityInfo;
+            this.Constraints = constraints;
+            this.UserIdentity = userIdentity;
+            this.MultiInstanceSettings = multiInstanceSettings;
+            this.DependsOn = dependsOn;
+            this.ApplicationPackageReferences = applicationPackageReferences;
+            this.AuthenticationTokenSettings = authenticationTokenSettings;
         }
 
         /// <summary>
@@ -231,11 +231,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
+            if (this.Id == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
-            if (CommandLine == null)
+            if (this.CommandLine == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
             }

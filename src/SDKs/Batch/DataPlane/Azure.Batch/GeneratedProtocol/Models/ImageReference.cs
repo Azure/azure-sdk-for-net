@@ -35,10 +35,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Marketplace image.</param>
         public ImageReference(string publisher, string offer, string sku, string version = default(string))
         {
-            Publisher = publisher;
-            Offer = offer;
-            Sku = sku;
-            Version = version;
+            this.Publisher = publisher;
+            this.Offer = offer;
+            this.Sku = sku;
+            this.Version = version;
         }
 
         /// <summary>
@@ -90,15 +90,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Publisher == null)
+            if (this.Publisher == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Publisher");
             }
-            if (Offer == null)
+            if (this.Offer == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Offer");
             }
-            if (Sku == null)
+            if (this.Sku == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Sku");
             }

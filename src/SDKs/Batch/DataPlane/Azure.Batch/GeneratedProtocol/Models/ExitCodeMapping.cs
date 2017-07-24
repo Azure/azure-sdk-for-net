@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the task exits with this exit code.</param>
         public ExitCodeMapping(int code, ExitOptions exitOptions)
         {
-            Code = code;
-            ExitOptions = exitOptions;
+            this.Code = code;
+            this.ExitOptions = exitOptions;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ExitOptions == null)
+            if (this.ExitOptions == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ExitOptions");
             }
