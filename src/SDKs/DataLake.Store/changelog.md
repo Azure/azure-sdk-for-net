@@ -1,4 +1,8 @@
 ## Microsoft.Azure.Management.DataLake.Store release notes
+### Changes in 2.3.0-preview
+- Create an inheritance structure for GET and LIST ADLS
+accounts.
+- This also follows the Basic<Object> -> Object inheritance pattern.
 
 ### Changes in 2.2.0
 - Marking the 2.*.*-preview changes as stable for the second official release of the Data Lake Store SDK.

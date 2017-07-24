@@ -13,7 +13,7 @@ present.
 	  - related
 - Create a "Basic" jobInformation that is returned for LIST calls
 - Setup inheritance for GET jobs
-- Create an inheritance structure for GET and LIST ADLS and ADLA
+- Create an inheritance structure for GET and LIST ADLA
 accounts.
 - This also follows the Basic<Object> -> Object inheritance pattern.
 
