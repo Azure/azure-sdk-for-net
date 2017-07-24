@@ -14,7 +14,7 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageReleaseNotes>For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/vs17Dev/src/SDKs/Batch/DataPlane/changelog.md</PackageReleaseNotes>
+    <PackageReleaseNotes>For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/src/SDKs/Batch/DataPlane/changelog.md</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
