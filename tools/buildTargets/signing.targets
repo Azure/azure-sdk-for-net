@@ -1,21 +1,27 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
+    <ScopeScanPath Condition=" '$(Scope)' != ''">$(LibrarySourceFolder)\$(Scope.TrimEnd('\'))</ScopeScanPath>
+    <CorporateScanPaths Condition=" Exists($(ScopeScanPath))">$(ScopeScanPath)</CorporateScanPaths>
+    <CorporateScanPaths Condition=" '$(CorporateScanPaths)' == '' ">$(LibrarySourceFolder)</CorporateScanPaths>
   </PropertyGroup>
-
-  <Target Name="PreSign" Condition=" '$(CodeSign)' == 'true' ">
+  <Target Name="PreSign" >
     <GetFrameworkSdkPath>
       <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
     </GetFrameworkSdkPath>
 
     <ItemGroup>
-      <DelaySignedAssembliesToValidate Include="@(FilesToSign)" />      
+      <DelaySignedAssembliesToValidate Include="@(FilesToSign)" />
     </ItemGroup>
     <Message Text="Unsigned files .... @(DelaySignedAssembliesToValidate)" />
 
     <Message Importance="high" Text="Contains no files. Code sign will skip."
 				 Condition="'@(DelaySignedAssembliesToValidate)' == ''" />
 
+    <Message Text="Running PoliCheck on ..... $(CorporateScanPaths)" Condition=" '$(CorporateScanPaths)' != '' and '$(RunGlobalReadinessTools)' == 'true'"/>
+    <CallTarget Targets="CorporateValidation" Condition=" '$(OnPremiseBuild)' == 'true' and '$(RunGlobalReadinessTools)' == 'true' "/>
+    <!--Condition=" '$(OnPremiseBuild)'=='true' and '$(RunGlobalReadinessTools)' == 'true' "-->
+    
     <ValidateStrongNameSignatureTask
 			WindowsSdkPath="$(WindowsSdkPath)"
 			Assembly="%(DelaySignedAssembliesToValidate.Identity)"
@@ -23,7 +29,9 @@
 			ExpectedDelaySigned="true"
 			ContinueOnError="false"
 			Condition="'@(DelaySignedAssembliesToValidate)' != ''"/>
-    
+  </Target>
+
+  <Target Name="Sign" Condition=" '$(CodeSign)' == 'true' ">
     <CodeSigningTask
 			Description="Microsoft Azure SDK"
 			Keywords="Microsoft Azure .NET SDK"
@@ -32,20 +40,23 @@
 			SigningLogPath="$(LibraryRoot)\binaries"
 			ToolsPath="$(CIToolsPath)"
 			Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''" />
-    
-    <ValidateStrongNameSignatureTask
-			WindowsSdkPath="$(WindowsSdkPath)"
-			Assembly="%(DelaySignedAssembliesToValidate.Identity)"
-			ExpectedTokenSignature="$(StrongNameToken)"
-			ExpectedDelaySigned="false"
-			ContinueOnError="false"
-			Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''"/>    
   </Target>
-  <Target Name="Sign"/>
-  <Target Name="PostSign"/>  
+
+  <Target Name="PostSign" Condition=" '$(CodeSign)' == 'true' ">
+    <ValidateStrongNameSignatureTask
+    WindowsSdkPath="$(WindowsSdkPath)"
+    Assembly="%(DelaySignedAssembliesToValidate.Identity)"
+    ExpectedTokenSignature="$(StrongNameToken)"
+    ExpectedDelaySigned="false"
+    ContinueOnError="false"
+    Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''"/>
+  </Target>
+
+  <Target Name="RunSignTargets" DependsOnTargets="PreSign;Sign;PostSign"/>
+
   <Target Name="BuildMsBuildTask">
-    
-    <!--<Exec Command="$(NuGetCommand) restore $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.sln -PackagesDirectory $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\packages"/>-->
+    <!---PackagesDirectory $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\packages-->
+    <Exec Command="dotnet restore $(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.sln"/>
     <MSBuild Projects="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks\Build.Tasks\Microsoft.WindowsAzure.Build.Tasks.csproj"
 				 Targets="Build"
 				 Properties="Configuration=Debug;Platform=AnyCPU" />
@@ -53,14 +64,14 @@
 
   <Target Name="BuildCiSign" Condition=" '$(CodeSign)' == 'true' ">
     <ItemGroup>
-		<OnPremiseBuildProj Include="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise\*.csproj" />
-		<OnPremiseBuildFile Include="$(CIToolsPath)\*Tools.Build.*.dll" />
+      <OnPremiseBuildProj Include="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise\*.csproj" />
+      <OnPremiseBuildFile Include="$(CIToolsPath)\*Tools.Build.*.dll" />
     </ItemGroup>
-	      
-	<MSBuild Targets="Restore"
-		Projects="@(OnPremiseBuildProj)"
-		ContinueOnError="ErrorAndStop" />
-	
+
+    <MSBuild Targets="Restore"
+      Projects="@(OnPremiseBuildProj)"
+      ContinueOnError="ErrorAndStop" />
+
     <MSBuild Targets="Build"
          Projects="@(OnPremiseBuildProj)"
          Condition="'$(OnPremiseBuild)' == 'true'"
@@ -91,4 +102,3 @@
     <Exec Command='$(WindowsSDK_ExecutablePath_x64)\sn.exe -Vx *' Condition="$(isadmin) != 0"/>
   </Target>
 </Project>
-

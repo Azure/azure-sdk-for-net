@@ -31,6 +31,7 @@ namespace AzureRedisCache.Tests
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
         }
 
+        /*
         [Fact(Skip = "Missing cleanup.json file")]
         public void GetTest()
         {
@@ -145,6 +146,8 @@ namespace AzureRedisCache.Tests
                 Assert.Equal(beforeRegenerateResponse.SecondaryKey, afterRegenerateResponse.SecondaryKey);
             }
         }
+
+        */
 
         private static string GetSessionsDirectoryPath()
         {

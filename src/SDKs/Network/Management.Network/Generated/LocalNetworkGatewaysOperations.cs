@@ -116,6 +116,13 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "localNetworkGatewayName");
             }
+            if (localNetworkGatewayName != null)
+            {
+                if (localNetworkGatewayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "localNetworkGatewayName", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -521,6 +528,13 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "localNetworkGatewayName");
             }
+            if (localNetworkGatewayName != null)
+            {
+                if (localNetworkGatewayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "localNetworkGatewayName", 1);
+                }
+            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
@@ -740,6 +754,13 @@ namespace Microsoft.Azure.Management.Network
             if (localNetworkGatewayName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "localNetworkGatewayName");
+            }
+            if (localNetworkGatewayName != null)
+            {
+                if (localNetworkGatewayName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "localNetworkGatewayName", 1);
+                }
             }
             if (Client.SubscriptionId == null)
             {

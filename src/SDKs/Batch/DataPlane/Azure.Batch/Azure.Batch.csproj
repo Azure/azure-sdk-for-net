@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Azure.Batch</PackageId>
+    <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
+    <VersionPrefix>7.0.1</VersionPrefix>
+    <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>Microsoft.Azure.Batch</AssemblyName>
+    <PackageTags>Microsoft;Azure;Batch;windowsazureofficial</PackageTags>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageReleaseNotes>For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/vs17Dev/src/SDKs/Batch/DataPlane/changelog.md</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
+    <DefineConstants>$(DefineConstants);FullNetFx</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+    <!-- Portable is defined for legacy reasons, if updating AutoRest removes it from BatchErrorException we can remove it here -->
+    <DefineConstants>$(DefineConstants);netstandard14;PORTABLE</DefineConstants>
+  </PropertyGroup>
+    
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System.Web" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="1.0.2" />
+    <!--
+    Disable this temporarily until we can find a workaround for ReferenceOutputAssembly being broken
+    <ProjectReference Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>False</Private>
+    </ProjectReference>
+    <Analyzer Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\bin\Debug\netstandard1.4\ConfigureAwaitAnalyzer.dll" />
+    -->
+  </ItemGroup>
+</Project>

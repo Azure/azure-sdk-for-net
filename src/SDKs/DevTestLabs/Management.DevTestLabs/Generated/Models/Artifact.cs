@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
     /// An artifact.
     /// </summary>
     [JsonTransformation]
-    public partial class Artifact : IResource
+    public partial class Artifact : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Artifact class.
@@ -30,86 +30,66 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         /// <summary>
         /// Initializes a new instance of the Artifact class.
         /// </summary>
-        public Artifact(string title = default(string), string description = default(string), string filePath = default(string), string icon = default(string), string targetOsType = default(string), object parameters = default(object), string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Artifact(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string title = default(string), string description = default(string), string publisher = default(string), string filePath = default(string), string icon = default(string), string targetOsType = default(string), object parameters = default(object), DateTime? createdDate = default(DateTime?))
+            : base(id, name, type, location, tags)
         {
             Title = title;
             Description = description;
+            Publisher = publisher;
             FilePath = filePath;
             Icon = icon;
             TargetOsType = targetOsType;
             Parameters = parameters;
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
+            CreatedDate = createdDate;
         }
 
         /// <summary>
-        /// The title of the artifact.
+        /// The artifact's title.
         /// </summary>
         [JsonProperty(PropertyName = "properties.title")]
-        public string Title { get; set; }
+        public string Title { get; private set; }
 
         /// <summary>
-        /// The description of the artifact.
+        /// The artifact's description.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
         /// <summary>
-        /// The file path of the artifact.
+        /// The artifact's publisher.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publisher")]
+        public string Publisher { get; private set; }
+
+        /// <summary>
+        /// The file path to the artifact.
         /// </summary>
         [JsonProperty(PropertyName = "properties.filePath")]
-        public string FilePath { get; set; }
+        public string FilePath { get; private set; }
 
         /// <summary>
-        /// The icon of the artifact.
+        /// The URI to the artifact icon.
         /// </summary>
         [JsonProperty(PropertyName = "properties.icon")]
-        public string Icon { get; set; }
+        public string Icon { get; private set; }
 
         /// <summary>
-        /// Gets or sets the type of the target os.
+        /// The artifact's target OS.
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetOsType")]
-        public string TargetOsType { get; set; }
+        public string TargetOsType { get; private set; }
 
         /// <summary>
-        /// The parameters of the artifact.
+        /// The artifact's parameters.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
-        public object Parameters { get; set; }
+        public object Parameters { get; private set; }
 
         /// <summary>
-        /// The identifier of the resource.
+        /// The artifact's creation date.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// The name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// The location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// The tags of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "properties.createdDate")]
+        public DateTime? CreatedDate { get; private set; }
 
     }
 }

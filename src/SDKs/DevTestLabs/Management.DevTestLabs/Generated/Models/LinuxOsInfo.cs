@@ -35,8 +35,10 @@ namespace Microsoft.Azure.Management.DevTestLabs.Models
         }
 
         /// <summary>
-        /// The state of the Linux OS. Possible values include:
-        /// 'NonDeprovisioned', 'DeprovisionRequested', 'DeprovisionApplied'
+        /// The state of the Linux OS (i.e. NonDeprovisioned,
+        /// DeprovisionRequested, DeprovisionApplied). Possible values
+        /// include: 'NonDeprovisioned', 'DeprovisionRequested',
+        /// 'DeprovisionApplied'
         /// </summary>
         [JsonProperty(PropertyName = "linuxOsState")]
         public string LinuxOsState { get; set; }

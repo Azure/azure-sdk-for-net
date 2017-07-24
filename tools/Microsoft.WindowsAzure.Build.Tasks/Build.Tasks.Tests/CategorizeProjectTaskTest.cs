@@ -1,4 +1,7 @@
-﻿using Microsoft.WindowsAzure.Build.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.WindowsAzure.Build.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +10,7 @@ using System.Reflection;
 using System.IO;
 using System.Linq;
 using Microsoft.Build.Framework;
+using Microsoft.Build.Evaluation;
 
 namespace Build.Tasks.Tests
 {
@@ -24,7 +28,7 @@ namespace Build.Tasks.Tests
         [Fact]
         public void IgnoreDirTokens()
         {
-            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects cproj = new Microsoft.WindowsAzure.Build.Tasks.SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = "All";
             cproj.IgnoreDirNameForSearchingProjects = string.Join(" ", ignoreDir, "ClientIntegrationTesting", "FileStaging");
@@ -32,8 +36,8 @@ namespace Build.Tasks.Tests
             if (cproj.Execute())
             {
                 //Using a random number, basically if the number of projects drop below a certain, should fail this test
-                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() > 10);
-                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() > 10);
+                Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() > 10);
+                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() > 10);
             }
             else
             {
@@ -51,13 +55,10 @@ namespace Build.Tasks.Tests
 
             if(cproj.Execute())
             {
-                //Using a random number, basically if the number of projects drop below a certain, should fail this test
-                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() > 20);
-                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() > 20);
-            }
-            else
-            {
-                Assert.True(false);
+                int totalSdkProjectCount = cproj.net452SdkProjectsToBuild.Count() + cproj.netStd14SdkProjectsToBuild.Count<ITaskItem>();
+                Assert.Equal(112, totalSdkProjectCount);
+                Assert.Equal(54, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
+                Assert.Equal(7, cproj.net452TestProjectsToBuild.Count<ITaskItem>());
             }
         }
 
@@ -71,14 +72,22 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() == 1);
-                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() == 1);
+                Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Equal(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>(), 1);
             }
-            else
-            {
-                Assert.True(false);
-            }
+        }
 
+        [Fact]
+        public void UnSupportedProjects()
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"SDKs\Batch\DataPlane";
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(3, cproj.unSupportedProjectsToBuild.Count<ITaskItem>());
+            }
         }
 
         [Fact]
@@ -91,8 +100,8 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() > 0);
-                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() > 0);
+                Assert.True(cproj.net452SdkProjectsToBuild.Count<ITaskItem>() > 0);
+                Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() > 0);
             }
             else
             {
@@ -110,12 +119,8 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() == 1);
-                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() == 1);
-            }
-            else
-            {
-                Assert.True(false);
+                Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Equal(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>(), 1);
             }
         }
 
@@ -133,15 +138,8 @@ namespace Build.Tasks.Tests
                 //longer treated as regular nuget packages (targeting net452 and netStd1.4)
                 //but rather projects that are built without any targetFx
                 //
-                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() == 3);
-                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() == 5);
-
-                Assert.True(cproj.WellKnowSDKNet452Projects.Count() > 0);
-                Assert.True(cproj.WellKnowTestSDKNet452Projects.Count() > 0);
-            }
-            else
-            {
-                Assert.True(false);
+                Assert.Equal(7, cproj.net452SdkProjectsToBuild.Count<ITaskItem>());
+                Assert.Equal(5, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());                
             }
         }
 
@@ -158,12 +156,9 @@ namespace Build.Tasks.Tests
                 //Since HttpRecorder and TestFramework are multi-targeting, they are no 
                 //longer treated as regular nuget packages (targeting net452 and netStd1.4)
                 //but rather projects that are build without any targetFx
-                Assert.Null(cproj.SDKProjectsToBuild);
-                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() == 2);
-            }
-            else
-            {
-                Assert.True(false);
+                Assert.Equal(0, cproj.netStd14SdkProjectsToBuild.Count());
+                Assert.Equal(2, cproj.net452SdkProjectsToBuild.Count());
+                Assert.Equal(2, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
             }
         }
 
@@ -178,20 +173,15 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.True(cproj.SDKProjectsToBuild.Count<ITaskItem>() == 1);
-                Assert.True(cproj.SDKTestProjectsToBuild.Count<ITaskItem>() == 1);
-            }
-            else
-            {
-                
-                Assert.True(false);
+                Assert.Equal(1, cproj.netStd14SdkProjectsToBuild.Count<ITaskItem>());
+                Assert.Equal(1, cproj.netCore11TestProjectsToBuild.Count<ITaskItem>());
             }
         }
 
         [Fact]
         public void TestIgnoredTokesn()
         {
-            //Operational Insights have named their projects as test.csproj rather than tests.csproj
+            //Gallery projects are being ignored
             SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = @"SDKs\Gallery";
@@ -199,19 +189,21 @@ namespace Build.Tasks.Tests
 
             if (cproj.Execute())
             {
-                Assert.Null(cproj.SDKProjectsToBuild);
-                Assert.Null(cproj.SDKTestProjectsToBuild);
-            }
-            else
-            {
-                Assert.True(false);
+                Assert.Equal(0, cproj.net452SdkProjectsToBuild.Count());
+                Assert.Equal(0, cproj.netCore11TestProjectsToBuild.Count());
             }
         }
 
         private string GetSourceRootDir()
         {
             string srcRootDir = string.Empty;
-            string currDir = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
+            string currDir = Directory.GetCurrentDirectory();
+
+            if(!Directory.Exists(currDir))
+            {
+                currDir = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
+            }
+
             string dirRoot = Directory.GetDirectoryRoot(currDir);
 
             var buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);

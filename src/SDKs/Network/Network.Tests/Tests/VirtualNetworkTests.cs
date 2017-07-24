@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
@@ -29,7 +29,7 @@ namespace Networks.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualNetworks");
@@ -124,7 +124,7 @@ namespace Networks.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualNetworks");
@@ -227,7 +227,7 @@ namespace Networks.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
 
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualNetworks");
@@ -370,6 +370,106 @@ namespace Networks.Tests
                 // Delete Vnets
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnet1Name);
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnet2Name);
+            }
+        }
+
+        [Fact]
+        public void VirtualNetworkUsageTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualNetworks");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = TestUtilities.GenerateName();
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            "10.0.0.0/16",
+                        }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                        {
+                            "10.1.1.1",
+                            "10.1.2.4"
+                        }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnetName,
+                            AddressPrefix = "10.0.1.0/24",
+                        },
+                    }
+                };
+
+                // Put Vnet
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
+
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+
+                // Get Vnet usage
+                var listUsageResponse = networkManagementClient.VirtualNetworks.ListUsage(resourceGroupName, vnetName).ToList();
+                Assert.Equal(0.0, listUsageResponse[0].CurrentValue);
+
+                // Create Nic
+                string nicName = TestUtilities.GenerateName();
+                string ipConfigName = TestUtilities.GenerateName();
+
+                var nicParameters = new NetworkInterface()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                        {
+                           {"key","value"}
+                        },
+                    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                    {
+                        new NetworkInterfaceIPConfiguration()
+                        {
+                             Name = ipConfigName,
+                             PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                             PrivateIPAddress = "10.0.1.9",
+                             Subnet = new Subnet()
+                             {
+                                 Id = getSubnetResponse.Id
+                             }
+                        }
+                    }
+                };
+
+                var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
+
+                // Get Vnet usage again
+                listUsageResponse = networkManagementClient.VirtualNetworks.ListUsage(resourceGroupName, vnetName).ToList();
+                Assert.Equal(1.0, listUsageResponse[0].CurrentValue);
+
+                // Delete Vnet and Nic
+                networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
             }
         }
     }

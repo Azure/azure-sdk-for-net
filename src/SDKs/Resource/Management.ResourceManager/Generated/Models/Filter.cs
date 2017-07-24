@@ -8,17 +8,14 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for Filter.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum Filter
     {
-        [EnumMember(Value = "atScope()")]
+        [System.Runtime.Serialization.EnumMember(Value = "atScope()")]
         AtScope
     }
 }

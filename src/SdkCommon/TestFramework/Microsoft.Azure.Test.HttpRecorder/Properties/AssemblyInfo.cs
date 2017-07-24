@@ -11,7 +11,6 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("c77934b2-fc7c-4f23-b2e1-12da90bfe716")]
 
-/*
 [assembly: AssemblyTitle("HttpRecorder")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -23,5 +22,4 @@ using System.Runtime.InteropServices;
 
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.6.9.0")]
-*/
+[assembly: AssemblyFileVersion("1.8.0.0")]

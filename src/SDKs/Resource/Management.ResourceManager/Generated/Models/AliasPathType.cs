@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the AliasPathType class.
         /// </summary>
         /// <param name="path">The path of an alias.</param>
-        /// <param name="apiVersions">The api versions.</param>
+        /// <param name="apiVersions">The API versions.</param>
         public AliasPathType(string path = default(string), System.Collections.Generic.IList<string> apiVersions = default(System.Collections.Generic.IList<string>))
         {
             Path = path;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Path { get; set; }
 
         /// <summary>
-        /// Gets or sets the api versions.
+        /// Gets or sets the API versions.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "apiVersions")]
         public System.Collections.Generic.IList<string> ApiVersions { get; set; }

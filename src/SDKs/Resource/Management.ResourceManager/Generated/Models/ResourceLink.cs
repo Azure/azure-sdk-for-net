@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The resource link.
@@ -29,8 +23,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ResourceLink class.
         /// </summary>
-        /// <param name="id">The fully qualified Id of the resource link.</param>
+        /// <param name="id">The fully qualified ID of the resource
+        /// link.</param>
         /// <param name="name">The name of the resource link.</param>
+        /// <param name="properties">Properties for resource link.</param>
         public ResourceLink(string id = default(string), string name = default(string), ResourceLinkProperties properties = default(ResourceLinkProperties))
         {
             Id = id;
@@ -39,26 +35,27 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets the fully qualified Id of the resource link.
+        /// Gets the fully qualified ID of the resource link.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
         /// Gets the name of the resource link.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
+        /// Gets or sets properties for resource link.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public ResourceLinkProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
