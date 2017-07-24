@@ -17,29 +17,28 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// The common Data Lake Analytics job properties.
+    /// Data Lake Analytics Job Parameters base class for build and submit.
     /// </summary>
-    public partial class JobProperties
+    public partial class BaseJobParameters
     {
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the BaseJobParameters class.
         /// </summary>
-        public JobProperties()
+        public BaseJobParameters()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the BaseJobParameters class.
         /// </summary>
-        /// <param name="script">the script to run</param>
-        /// <param name="runtimeVersion">the runtime version of the Data Lake
-        /// Analytics engine to use for the specific type of job being
-        /// run.</param>
-        public JobProperties(string script, string runtimeVersion = default(string))
+        /// <param name="type">the job type of the current job (Hive or USql).
+        /// Possible values include: 'USql', 'Hive'</param>
+        /// <param name="properties">the job specific properties.</param>
+        public BaseJobParameters(JobType type, CreateJobProperties properties)
         {
-            RuntimeVersion = runtimeVersion;
-            Script = script;
+            Type = type;
+            Properties = properties;
             CustomInit();
         }
 
@@ -49,17 +48,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the runtime version of the Data Lake Analytics engine
-        /// to use for the specific type of job being run.
+        /// Gets or sets the job type of the current job (Hive or USql).
+        /// Possible values include: 'USql', 'Hive'
         /// </summary>
-        [JsonProperty(PropertyName = "runtimeVersion")]
-        public string RuntimeVersion { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public JobType Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the script to run
+        /// Gets or sets the job specific properties.
         /// </summary>
-        [JsonProperty(PropertyName = "script")]
-        public string Script { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public CreateJobProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -69,9 +68,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Script == null)
+            if (Properties == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Script");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (Properties != null)
+            {
+                Properties.Validate();
             }
         }
     }

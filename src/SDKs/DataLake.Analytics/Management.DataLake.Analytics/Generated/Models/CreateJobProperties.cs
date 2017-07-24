@@ -17,26 +17,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// The common Data Lake Analytics job properties.
+    /// The common Data Lake Analytics job properties for job submission.
     /// </summary>
-    public partial class JobProperties
+    public partial class CreateJobProperties
     {
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the CreateJobProperties class.
         /// </summary>
-        public JobProperties()
+        public CreateJobProperties()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the JobProperties class.
+        /// Initializes a new instance of the CreateJobProperties class.
         /// </summary>
         /// <param name="script">the script to run</param>
         /// <param name="runtimeVersion">the runtime version of the Data Lake
         /// Analytics engine to use for the specific type of job being
         /// run.</param>
-        public JobProperties(string script, string runtimeVersion = default(string))
+        public CreateJobProperties(string script, string runtimeVersion = default(string))
         {
             RuntimeVersion = runtimeVersion;
             Script = script;

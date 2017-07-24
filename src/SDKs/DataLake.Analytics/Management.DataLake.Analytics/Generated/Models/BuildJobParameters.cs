@@ -12,37 +12,33 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.DataLake;
     using Microsoft.Azure.Management.DataLake.Analytics;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store account information.
+    /// The parameters used to build a new Data Lake Analytics job.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class DataLakeStoreAccountInfo : SubResource
+    public partial class BuildJobParameters : BaseJobParameters
     {
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountInfo class.
+        /// Initializes a new instance of the BuildJobParameters class.
         /// </summary>
-        public DataLakeStoreAccountInfo()
+        public BuildJobParameters()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStoreAccountInfo class.
+        /// Initializes a new instance of the BuildJobParameters class.
         /// </summary>
-        /// <param name="name">Resource name</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="suffix">the optional suffix for the Data Lake Store
-        /// account.</param>
-        public DataLakeStoreAccountInfo(string name, string id = default(string), string type = default(string), string suffix = default(string))
-            : base(name, id, type)
+        /// <param name="type">the job type of the current job (Hive or USql).
+        /// Possible values include: 'USql', 'Hive'</param>
+        /// <param name="properties">the job specific properties.</param>
+        /// <param name="name">the friendly name of the job to build.</param>
+        public BuildJobParameters(JobType type, CreateJobProperties properties, string name = default(string))
+            : base(type, properties)
         {
-            Suffix = suffix;
+            Name = name;
             CustomInit();
         }
 
@@ -52,15 +48,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the optional suffix for the Data Lake Store account.
+        /// Gets or sets the friendly name of the job to build.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.suffix")]
-        public string Suffix { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
