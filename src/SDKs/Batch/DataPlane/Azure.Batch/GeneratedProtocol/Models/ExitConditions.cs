@@ -36,11 +36,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// other properties.</param>
         public ExitConditions(System.Collections.Generic.IList<ExitCodeMapping> exitCodes = default(System.Collections.Generic.IList<ExitCodeMapping>), System.Collections.Generic.IList<ExitCodeRangeMapping> exitCodeRanges = default(System.Collections.Generic.IList<ExitCodeRangeMapping>), ExitOptions preProcessingError = default(ExitOptions), ExitOptions fileUploadError = default(ExitOptions), ExitOptions defaultProperty = default(ExitOptions))
         {
-            ExitCodes = exitCodes;
-            ExitCodeRanges = exitCodeRanges;
-            PreProcessingError = preProcessingError;
-            FileUploadError = fileUploadError;
-            DefaultProperty = defaultProperty;
+            this.ExitCodes = exitCodes;
+            this.ExitCodeRanges = exitCodeRanges;
+            this.PreProcessingError = preProcessingError;
+            this.FileUploadError = fileUploadError;
+            this.DefaultProperty = defaultProperty;
         }
 
         /// <summary>

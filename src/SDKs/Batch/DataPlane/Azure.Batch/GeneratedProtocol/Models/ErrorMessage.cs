@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="value">The text of the message.</param>
         public ErrorMessage(string lang = default(string), string value = default(string))
         {
-            Lang = lang;
-            Value = value;
+            this.Lang = lang;
+            this.Value = value;
         }
 
         /// <summary>

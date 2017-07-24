@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// omitted, the default version is deployed.</param>
         public ApplicationPackageReference(string applicationId, string version = default(string))
         {
-            ApplicationId = applicationId;
-            Version = version;
+            this.ApplicationId = applicationId;
+            this.Version = version;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ApplicationId == null)
+            if (this.ApplicationId == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ApplicationId");
             }

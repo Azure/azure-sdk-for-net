@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// performs on tasks that depend on this task.</param>
         public ExitOptions(JobAction? jobAction = default(JobAction?), DependencyAction? dependencyAction = default(DependencyAction?))
         {
-            JobAction = jobAction;
-            DependencyAction = dependencyAction;
+            this.JobAction = jobAction;
+            this.DependencyAction = dependencyAction;
         }
 
         /// <summary>

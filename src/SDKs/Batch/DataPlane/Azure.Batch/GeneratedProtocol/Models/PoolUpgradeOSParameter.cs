@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// installed on the virtual machines in the pool.</param>
         public PoolUpgradeOSParameter(string targetOSVersion)
         {
-            TargetOSVersion = targetOSVersion;
+            this.TargetOSVersion = targetOSVersion;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TargetOSVersion == null)
+            if (this.TargetOSVersion == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "TargetOSVersion");
             }

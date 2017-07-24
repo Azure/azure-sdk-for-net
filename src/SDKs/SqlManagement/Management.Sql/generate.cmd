@@ -5,7 +5,7 @@
 
 @echo off
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/03ff383aac77901093d96c049e248d2c7a3cf4ff/arm-sql/compositeSql.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e26c0c7bcf6557dc33c29d371be0b59613d03415/arm-sql/compositeSql.json"
 ) else (
     set specFile="%1"
 )

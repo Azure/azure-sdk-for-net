@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// (inclusive).</param>
         public ExitCodeRangeMapping(int start, int end, ExitOptions exitOptions)
         {
-            Start = start;
-            End = end;
-            ExitOptions = exitOptions;
+            this.Start = start;
+            this.End = end;
+            this.ExitOptions = exitOptions;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ExitOptions == null)
+            if (this.ExitOptions == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ExitOptions");
             }

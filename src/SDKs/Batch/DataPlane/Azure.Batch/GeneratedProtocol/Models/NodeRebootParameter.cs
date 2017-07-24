@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// what to do with currently running tasks.</param>
         public NodeRebootParameter(ComputeNodeRebootOption? nodeRebootOption = default(ComputeNodeRebootOption?))
         {
-            NodeRebootOption = nodeRebootOption;
+            this.NodeRebootOption = nodeRebootOption;
         }
 
         /// <summary>

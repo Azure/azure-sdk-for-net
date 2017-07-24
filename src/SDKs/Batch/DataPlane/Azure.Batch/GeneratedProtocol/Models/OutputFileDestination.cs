@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// files are uploaded.</param>
         public OutputFileDestination(OutputFileBlobContainerDestination container = default(OutputFileBlobContainerDestination))
         {
-            Container = container;
+            this.Container = container;
         }
 
         /// <summary>

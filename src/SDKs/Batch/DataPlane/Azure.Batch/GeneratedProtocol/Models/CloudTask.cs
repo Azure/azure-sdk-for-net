@@ -73,31 +73,31 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// operations.</param>
         public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), TaskState? previousState = default(TaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), string commandLine = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<OutputFile> outputFiles = default(System.Collections.Generic.IList<OutputFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), UserIdentity userIdentity = default(UserIdentity), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
-            Id = id;
-            DisplayName = displayName;
-            Url = url;
-            ETag = eTag;
-            LastModified = lastModified;
-            CreationTime = creationTime;
-            ExitConditions = exitConditions;
-            State = state;
-            StateTransitionTime = stateTransitionTime;
-            PreviousState = previousState;
-            PreviousStateTransitionTime = previousStateTransitionTime;
-            CommandLine = commandLine;
-            ResourceFiles = resourceFiles;
-            OutputFiles = outputFiles;
-            EnvironmentSettings = environmentSettings;
-            AffinityInfo = affinityInfo;
-            Constraints = constraints;
-            UserIdentity = userIdentity;
-            ExecutionInfo = executionInfo;
-            NodeInfo = nodeInfo;
-            MultiInstanceSettings = multiInstanceSettings;
-            Stats = stats;
-            DependsOn = dependsOn;
-            ApplicationPackageReferences = applicationPackageReferences;
-            AuthenticationTokenSettings = authenticationTokenSettings;
+            this.Id = id;
+            this.DisplayName = displayName;
+            this.Url = url;
+            this.ETag = eTag;
+            this.LastModified = lastModified;
+            this.CreationTime = creationTime;
+            this.ExitConditions = exitConditions;
+            this.State = state;
+            this.StateTransitionTime = stateTransitionTime;
+            this.PreviousState = previousState;
+            this.PreviousStateTransitionTime = previousStateTransitionTime;
+            this.CommandLine = commandLine;
+            this.ResourceFiles = resourceFiles;
+            this.OutputFiles = outputFiles;
+            this.EnvironmentSettings = environmentSettings;
+            this.AffinityInfo = affinityInfo;
+            this.Constraints = constraints;
+            this.UserIdentity = userIdentity;
+            this.ExecutionInfo = executionInfo;
+            this.NodeInfo = nodeInfo;
+            this.MultiInstanceSettings = multiInstanceSettings;
+            this.Stats = stats;
+            this.DependsOn = dependsOn;
+            this.ApplicationPackageReferences = applicationPackageReferences;
+            this.AuthenticationTokenSettings = authenticationTokenSettings;
         }
 
         /// <summary>

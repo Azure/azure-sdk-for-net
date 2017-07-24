@@ -167,7 +167,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             var projTimeBefore = DateTime.Now;
             projWithMetaData = GetProjectData(allProjects, projWithMetaData);
-            //projWithMetaData = GetMetaData(allProjects, projWithMetaData);
             var projTimeAfter = DateTime.Now;
 
             Debug.WriteLine("Parsing Projects took {0}", (projTimeAfter - projTimeBefore).TotalSeconds.ToString());

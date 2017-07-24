@@ -36,11 +36,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// consumption by compute nodes in the pool.</param>
         public PoolStatistics(string url, System.DateTime startTime, System.DateTime lastUpdateTime, UsageStatistics usageStats = default(UsageStatistics), ResourceStatistics resourceStats = default(ResourceStatistics))
         {
-            Url = url;
-            StartTime = startTime;
-            LastUpdateTime = lastUpdateTime;
-            UsageStats = usageStats;
-            ResourceStats = resourceStats;
+            this.Url = url;
+            this.StartTime = startTime;
+            this.LastUpdateTime = lastUpdateTime;
+            this.UsageStats = usageStats;
+            this.ResourceStats = resourceStats;
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Url == null)
+            if (this.Url == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Url");
             }

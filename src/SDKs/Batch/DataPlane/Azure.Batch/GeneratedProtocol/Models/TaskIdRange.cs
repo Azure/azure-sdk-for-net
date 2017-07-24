@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="end">The last task ID in the range.</param>
         public TaskIdRange(int start, int end)
         {
-            Start = start;
-            End = end;
+            this.Start = start;
+            this.End = end;
         }
 
         /// <summary>

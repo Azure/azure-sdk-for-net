@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Get a list of deleted database that can be restored
+            /// Gets a list of deleted databases that can be restored
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Get a list of deleted database that can be restored
+            /// Gets a list of deleted databases that can be restored
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

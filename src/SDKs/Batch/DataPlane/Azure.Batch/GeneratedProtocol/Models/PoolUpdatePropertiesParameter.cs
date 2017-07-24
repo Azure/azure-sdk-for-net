@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// when the node is restarted.</param>
         public PoolUpdatePropertiesParameter(System.Collections.Generic.IList<CertificateReference> certificateReferences, System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences, System.Collections.Generic.IList<MetadataItem> metadata, StartTask startTask = default(StartTask))
         {
-            StartTask = startTask;
-            CertificateReferences = certificateReferences;
-            ApplicationPackageReferences = applicationPackageReferences;
-            Metadata = metadata;
+            this.StartTask = startTask;
+            this.CertificateReferences = certificateReferences;
+            this.ApplicationPackageReferences = applicationPackageReferences;
+            this.Metadata = metadata;
         }
 
         /// <summary>
@@ -108,15 +108,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (CertificateReferences == null)
+            if (this.CertificateReferences == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CertificateReferences");
             }
-            if (ApplicationPackageReferences == null)
+            if (this.ApplicationPackageReferences == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ApplicationPackageReferences");
             }
-            if (Metadata == null)
+            if (this.Metadata == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Metadata");
             }

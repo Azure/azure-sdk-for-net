@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a recoverable database
+    /// A recoverable database
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class RecoverableDatabase : ProxyResource

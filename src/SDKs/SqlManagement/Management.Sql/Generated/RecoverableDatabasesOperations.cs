@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a Recoverable Database, which is a resource representing a database's
-        /// Geo backup
+        /// Gets a recoverable database, which is a resource representing a database's
+        /// geo backup
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Returns a list of Recoverable Databases
+        /// Gets a list of recoverable databases
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain

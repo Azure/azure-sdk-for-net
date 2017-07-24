@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse<RestorableDroppedDatabase>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string restorableDroppededDatabaseId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get a list of deleted database that can be restored
+        /// Gets a list of deleted databases that can be restored
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can

@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// upload.</param>
         public OutputFile(string filePattern, OutputFileDestination destination, OutputFileUploadOptions uploadOptions)
         {
-            FilePattern = filePattern;
-            Destination = destination;
-            UploadOptions = uploadOptions;
+            this.FilePattern = filePattern;
+            this.Destination = destination;
+            this.UploadOptions = uploadOptions;
         }
 
         /// <summary>
@@ -44,12 +44,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// Both relative and absolute paths are supported. Relative paths are
-        /// relative to the task working directory. For wildcards, use * to
-        /// match any character and ** to match any directory. For example,
-        /// **\*.txt matches any file ending in .txt in the task working
-        /// directory or any subdirectory. Note that \ and / are treated
-        /// interchangeably and mapped to the correct directory separator on
-        /// the compute node operating system.
+        /// relative to the task working directory. The following wildcards are
+        /// supported: * matches 0 or more characters (for example pattern abc*
+        /// would match abc or abcdef), ** matches any directory, ? matches any
+        /// single character, [abc] matches one character in the brackets, and
+        /// [a-c] matches one character in the range. Brackets can include a
+        /// negation to match any character not specified (for example [!abc]
+        /// matches any character but a, b, or c). If a file name starts with
+        /// "." it is ignored by default but may be matched by specifying it
+        /// explicitly (for example *.gif will not match .a.gif, but .*.gif
+        /// will). A simple example: **\*.txt matches any file that does not
+        /// start in '.' and ends with .txt in the task working directory or
+        /// any subdirectory. If the filename contains a wildcard character it
+        /// can be escaped using brackets (for example abc[*] would match a
+        /// file named abc*). Note that both \ and / are treated as directory
+        /// separators on Windows, but only / is on Linux. Environment
+        /// variables (%var% on Windows or $var on Linux) are expanded prior to
+        /// the pattern being applied.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "filePattern")]
         public string FilePattern { get; set; }
@@ -75,15 +86,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (FilePattern == null)
+            if (this.FilePattern == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "FilePattern");
             }
-            if (Destination == null)
+            if (this.Destination == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Destination");
             }
-            if (UploadOptions == null)
+            if (this.UploadOptions == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "UploadOptions");
             }

@@ -63,20 +63,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// time is the time to the most recent task execution.)</param>
         public JobScheduleStatistics(string url, System.DateTime startTime, System.DateTime lastUpdateTime, System.TimeSpan userCPUTime, System.TimeSpan kernelCPUTime, System.TimeSpan wallClockTime, long readIOps, long writeIOps, double readIOGiB, double writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, System.TimeSpan waitTime)
         {
-            Url = url;
-            StartTime = startTime;
-            LastUpdateTime = lastUpdateTime;
-            UserCPUTime = userCPUTime;
-            KernelCPUTime = kernelCPUTime;
-            WallClockTime = wallClockTime;
-            ReadIOps = readIOps;
-            WriteIOps = writeIOps;
-            ReadIOGiB = readIOGiB;
-            WriteIOGiB = writeIOGiB;
-            NumSucceededTasks = numSucceededTasks;
-            NumFailedTasks = numFailedTasks;
-            NumTaskRetries = numTaskRetries;
-            WaitTime = waitTime;
+            this.Url = url;
+            this.StartTime = startTime;
+            this.LastUpdateTime = lastUpdateTime;
+            this.UserCPUTime = userCPUTime;
+            this.KernelCPUTime = kernelCPUTime;
+            this.WallClockTime = wallClockTime;
+            this.ReadIOps = readIOps;
+            this.WriteIOps = writeIOps;
+            this.ReadIOGiB = readIOGiB;
+            this.WriteIOGiB = writeIOGiB;
+            this.NumSucceededTasks = numSucceededTasks;
+            this.NumFailedTasks = numFailedTasks;
+            this.NumTaskRetries = numTaskRetries;
+            this.WaitTime = waitTime;
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Url == null)
+            if (this.Url == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Url");
             }

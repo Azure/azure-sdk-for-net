@@ -89,40 +89,40 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the entire lifetime of the pool.</param>
         public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), System.Collections.Generic.IList<ResizeError> resizeErrors = default(System.Collections.Generic.IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), System.Collections.Generic.IList<string> applicationLicenses = default(System.Collections.Generic.IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.Collections.Generic.IList<UserAccount> userAccounts = default(System.Collections.Generic.IList<UserAccount>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics))
         {
-            Id = id;
-            DisplayName = displayName;
-            Url = url;
-            ETag = eTag;
-            LastModified = lastModified;
-            CreationTime = creationTime;
-            State = state;
-            StateTransitionTime = stateTransitionTime;
-            AllocationState = allocationState;
-            AllocationStateTransitionTime = allocationStateTransitionTime;
-            VmSize = vmSize;
-            CloudServiceConfiguration = cloudServiceConfiguration;
-            VirtualMachineConfiguration = virtualMachineConfiguration;
-            ResizeTimeout = resizeTimeout;
-            ResizeErrors = resizeErrors;
-            CurrentDedicatedNodes = currentDedicatedNodes;
-            CurrentLowPriorityNodes = currentLowPriorityNodes;
-            TargetDedicatedNodes = targetDedicatedNodes;
-            TargetLowPriorityNodes = targetLowPriorityNodes;
-            EnableAutoScale = enableAutoScale;
-            AutoScaleFormula = autoScaleFormula;
-            AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
-            AutoScaleRun = autoScaleRun;
-            EnableInterNodeCommunication = enableInterNodeCommunication;
-            NetworkConfiguration = networkConfiguration;
-            StartTask = startTask;
-            CertificateReferences = certificateReferences;
-            ApplicationPackageReferences = applicationPackageReferences;
-            ApplicationLicenses = applicationLicenses;
-            MaxTasksPerNode = maxTasksPerNode;
-            TaskSchedulingPolicy = taskSchedulingPolicy;
-            UserAccounts = userAccounts;
-            Metadata = metadata;
-            Stats = stats;
+            this.Id = id;
+            this.DisplayName = displayName;
+            this.Url = url;
+            this.ETag = eTag;
+            this.LastModified = lastModified;
+            this.CreationTime = creationTime;
+            this.State = state;
+            this.StateTransitionTime = stateTransitionTime;
+            this.AllocationState = allocationState;
+            this.AllocationStateTransitionTime = allocationStateTransitionTime;
+            this.VmSize = vmSize;
+            this.CloudServiceConfiguration = cloudServiceConfiguration;
+            this.VirtualMachineConfiguration = virtualMachineConfiguration;
+            this.ResizeTimeout = resizeTimeout;
+            this.ResizeErrors = resizeErrors;
+            this.CurrentDedicatedNodes = currentDedicatedNodes;
+            this.CurrentLowPriorityNodes = currentLowPriorityNodes;
+            this.TargetDedicatedNodes = targetDedicatedNodes;
+            this.TargetLowPriorityNodes = targetLowPriorityNodes;
+            this.EnableAutoScale = enableAutoScale;
+            this.AutoScaleFormula = autoScaleFormula;
+            this.AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
+            this.AutoScaleRun = autoScaleRun;
+            this.EnableInterNodeCommunication = enableInterNodeCommunication;
+            this.NetworkConfiguration = networkConfiguration;
+            this.StartTask = startTask;
+            this.CertificateReferences = certificateReferences;
+            this.ApplicationPackageReferences = applicationPackageReferences;
+            this.ApplicationLicenses = applicationLicenses;
+            this.MaxTasksPerNode = maxTasksPerNode;
+            this.TaskSchedulingPolicy = taskSchedulingPolicy;
+            this.UserAccounts = userAccounts;
+            this.Metadata = metadata;
+            this.Stats = stats;
         }
 
         /// <summary>
@@ -492,6 +492,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             if (this.AutoScaleRun != null)
             {
                 this.AutoScaleRun.Validate();
+            }
+            if (this.NetworkConfiguration != null)
+            {
+                this.NetworkConfiguration.Validate();
             }
             if (this.StartTask != null)
             {

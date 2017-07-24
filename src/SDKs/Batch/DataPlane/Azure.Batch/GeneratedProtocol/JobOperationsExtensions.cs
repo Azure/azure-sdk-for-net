@@ -647,6 +647,64 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
+            /// Gets the task counts for the specified job.
+            /// </summary>
+            /// <remarks>
+            /// Task counts provide a count of the tasks by active, running or completed
+            /// task state, and a count of tasks which succeeded or failed. Tasks in the
+            /// preparing state are counted as running. If the validationStatus is
+            /// unvalidated, then the Batch service has not been able to check state counts
+            /// against the task states as reported in the List Tasks API. The
+            /// validationStatus may be unvalidated if the job contains more than 200,000
+            /// tasks.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='jobId'>
+            /// The ID of the job.
+            /// </param>
+            /// <param name='jobGetTaskCountsOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static TaskCounts GetTaskCounts(this IJobOperations operations, string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions))
+            {
+                return ((IJobOperations)operations).GetTaskCountsAsync(jobId, jobGetTaskCountsOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the task counts for the specified job.
+            /// </summary>
+            /// <remarks>
+            /// Task counts provide a count of the tasks by active, running or completed
+            /// task state, and a count of tasks which succeeded or failed. Tasks in the
+            /// preparing state are counted as running. If the validationStatus is
+            /// unvalidated, then the Batch service has not been able to check state counts
+            /// against the task states as reported in the List Tasks API. The
+            /// validationStatus may be unvalidated if the job contains more than 200,000
+            /// tasks.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='jobId'>
+            /// The ID of the job.
+            /// </param>
+            /// <param name='jobGetTaskCountsOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<TaskCounts> GetTaskCountsAsync(this IJobOperations operations, string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetTaskCountsWithHttpMessagesAsync(jobId, jobGetTaskCountsOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all of the jobs in the specified account.
             /// </summary>
             /// <param name='operations'>

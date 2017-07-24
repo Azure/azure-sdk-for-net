@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// of a compute node or a task that has run previously.</param>
         public AffinityInformation(string affinityId)
         {
-            AffinityId = affinityId;
+            this.AffinityId = affinityId;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (AffinityId == null)
+            if (this.AffinityId == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "AffinityId");
             }

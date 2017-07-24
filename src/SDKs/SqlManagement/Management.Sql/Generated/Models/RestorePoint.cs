@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a database restore point.
+    /// A database restore point.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class RestorePoint : ProxyResource

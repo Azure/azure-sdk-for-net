@@ -49,13 +49,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Release task runs.</param>
         public JobReleaseTask(string commandLine, string id = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), UserIdentity userIdentity = default(UserIdentity))
         {
-            Id = id;
-            CommandLine = commandLine;
-            ResourceFiles = resourceFiles;
-            EnvironmentSettings = environmentSettings;
-            MaxWallClockTime = maxWallClockTime;
-            RetentionTime = retentionTime;
-            UserIdentity = userIdentity;
+            this.Id = id;
+            this.CommandLine = commandLine;
+            this.ResourceFiles = resourceFiles;
+            this.EnvironmentSettings = environmentSettings;
+            this.MaxWallClockTime = maxWallClockTime;
+            this.RetentionTime = retentionTime;
+            this.UserIdentity = userIdentity;
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (CommandLine == null)
+            if (this.CommandLine == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
             }

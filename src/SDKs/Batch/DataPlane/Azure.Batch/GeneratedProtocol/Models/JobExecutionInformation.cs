@@ -34,11 +34,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job ended.</param>
         public JobExecutionInformation(System.DateTime startTime, System.DateTime? endTime = default(System.DateTime?), string poolId = default(string), JobSchedulingError schedulingError = default(JobSchedulingError), string terminateReason = default(string))
         {
-            StartTime = startTime;
-            EndTime = endTime;
-            PoolId = poolId;
-            SchedulingError = schedulingError;
-            TerminateReason = terminateReason;
+            this.StartTime = startTime;
+            this.EndTime = endTime;
+            this.PoolId = poolId;
+            this.SchedulingError = schedulingError;
+            this.TerminateReason = terminateReason;
         }
 
         /// <summary>
