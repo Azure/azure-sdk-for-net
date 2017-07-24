@@ -7,7 +7,7 @@
 
 Microsoft Azure is an ever-expanding set of cloud services to help your organization meet your business challenges. It’s the freedom to build, manage, and deploy applications on a massive, global network using your favorite tools and frameworks.
 
-This repo contains the libraries to allow you to easily leverage Azure from your applications and  tools.
+This repo contains the libraries to allow you to easily leverage Azure from your applications and tools.
 
 ## Package List
 
@@ -38,7 +38,7 @@ For a full list of packages built from this repository, please see our [list of 
 #### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory
  1. Open any solution, eg "SDKs\Compute\Compute.sln"
  2. Build solution from VS
-
+ 
 #### Full Build from command line
 
  1. Open VS 2017 command prompt
@@ -51,7 +51,7 @@ For a full list of packages built from this repository, please see our [list of 
 In order to build one package and run it's test
 `msbuild build.proj /t:CreateNugetPackage /p:scope=SDKs\Compute`
 Nuget package will be created in root directory under \binaries\packages
-
+ 
 ### To run the tests:
 Using Visual Studio:
   - Build.
@@ -64,7 +64,7 @@ or
 dotnet test SDKs\Compute\Compute.Tests\Compute.Tests.csproj
 
   - Refer to the "To build" section to get the command window set up.
-  - Invoke "RunTests" target from "Build.proj". RunTests will build and run tests
+  - Invoke "RunTests" target from "Build.proj". RunTests will build and run tests 
         *msbuild build.proj /t:RunTests /p:scope=SDKs\Compute*
 
 ## To on-board new libraries
@@ -85,11 +85,11 @@ In "SDKs\< Service Name >", you will find projects for services that have alread
 
  1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
  2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
- 3. Create your Swagger specification for your HTTP API. For more information see
+ 3. Create your Swagger specification for your HTTP API. For more information see 
  [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
- 4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest,
+ 4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, 
  see the [AutoRest repository](https://github.com/Azure/autorest)
- 5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
+ 5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others. 
  6. **MANDATORY**: Add or update tests for the newly generated code.
  7. Once added to the Azure SDK for .NET, build your local package using command
  e.g.
@@ -164,7 +164,7 @@ Regarding the test project, one thing that's important is to name the test proje
 
 ### Issues with Generated Code
 
-Much of the SDK code is generated from metadata specs about the REST APIs. Do not submit PRs that modify generated code. Instead,
+Much of the SDK code is generated from metadata specs about the REST APIs. Do not submit PRs that modify generated code. Instead, 
   - File an issue describing the problem,
   - Refer to the the [AutoRest project](https://github.com/azure/autorest) to view and modify the generator, or
   - Add additional methods, properties, and overloads to the SDK by adding classes in the 'Customizations' folder of a project
