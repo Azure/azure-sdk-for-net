@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Monitor;
     using Microsoft.Azure.Management.Monitor.Management;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -65,12 +66,15 @@ namespace Microsoft.Azure.Management.Monitor.Management.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (FailedLocationCount < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "FailedLocationCount", 0);
+            }
         }
     }
 }

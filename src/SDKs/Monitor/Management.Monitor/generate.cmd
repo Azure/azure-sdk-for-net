@@ -6,13 +6,13 @@
 @echo off 
 
 if  "%2" == "" (
-   set specFile1="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0fde282c1aac0c9a07c35dd7054b3723bd890d45/monitor/compositeMonitorClient.json"
+   set specFile1="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/5288e653adfe3dd6ce235a790008a8215eedb918/monitor/compositeMonitorClient.json"
 ) else (
    set specFile1="%2"
 )
 
 if  "%3" == "" (
-   set specFile2="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/186e73d857b8cad3336aed74f8959dc9dbcf8475/arm-monitor/compositeMonitorManagementClient.json"
+   set specFile2="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/5288e653adfe3dd6ce235a790008a8215eedb918/arm-monitor/compositeMonitorManagementClient.json"
 ) else (
    set specFile2="%3"
 )

@@ -11,5 +11,6 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
     <RootNamespace>Microsoft.Azure.Management.Monitor</RootNamespace>
+    <Version>0.16.1-preview</Version>
   </PropertyGroup>
 </Project>

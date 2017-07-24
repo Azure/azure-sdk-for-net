@@ -38,6 +38,35 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        public void ServiceDiagnosticSettings_UpdateTest()
+        {
+            var resource = CreateDiagnosticSettings();
+            var handler = new RecordedDelegatingHandler();
+            var monitorManagementClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(resource, monitorManagementClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            monitorManagementClient = GetMonitorManagementClient(handler);
+
+            ServiceDiagnosticSettingsResourcePatch patchResource = new ServiceDiagnosticSettingsResourcePatch(
+                tags: resource.Tags,
+                storageAccountId: resource.StorageAccountId,
+                serviceBusRuleId: resource.ServiceBusRuleId,
+                eventHubAuthorizationRuleId: resource.EventHubAuthorizationRuleId,
+                metrics: resource.Metrics,
+                logs: resource.Logs,
+                workspaceId: resource.WorkspaceId
+            );
+
+            ServiceDiagnosticSettingsResource response = monitorManagementClient.ServiceDiagnosticSettings.Update(resourceUri: ResourceUri, serviceDiagnosticSettingsResource: patchResource);
+            AreEqual(resource, response);
+        }
+
+        [Fact]
         public void ServiceDiagnosticSettings_GetTest()
         {
             var expResponse = CreateDiagnosticSettings();

@@ -99,6 +99,35 @@ namespace Monitor.Tests.BasicTests
             AreEqual(expResponse[0], actualResponse[0]);
         }
 
+        [Fact]
+        public void LogProfiles_UpdateTest()
+        {
+            LogProfileResource resource = CreateLogProfile();
+            var handler = new RecordedDelegatingHandler();
+            var monitorManagementClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(resource, monitorManagementClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            monitorManagementClient = GetMonitorManagementClient(handler);
+
+            LogProfileResourcePatch patchResource = new LogProfileResourcePatch(
+                locations: resource.Locations,
+                categories: resource.Categories,
+                retentionPolicy: resource.RetentionPolicy,
+                tags: resource.Tags,
+                serviceBusRuleId: resource.ServiceBusRuleId,
+                storageAccountId: resource.StorageAccountId
+                );
+
+            LogProfileResource actualResponse = monitorManagementClient.LogProfiles.Update(logProfileName: DefaultName, logProfilesResource: patchResource);
+            AreEqual(resource, actualResponse);
+        }
+
+
         private static LogProfileResource CreateLogProfile()
         {
             return new LogProfileResource

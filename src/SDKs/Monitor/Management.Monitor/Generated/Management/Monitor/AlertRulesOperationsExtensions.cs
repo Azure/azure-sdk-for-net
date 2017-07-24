@@ -148,6 +148,54 @@ namespace Microsoft.Azure.Management.Monitor.Management
             }
 
             /// <summary>
+            /// Updates an existing AlertRuleResource. To update other fields use the
+            /// CreateOrUpdate method.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='ruleName'>
+            /// The name of the rule.
+            /// </param>
+            /// <param name='alertRulesResource'>
+            /// Parameters supplied to the operation.
+            /// </param>
+            public static AlertRuleResource Update(this IAlertRulesOperations operations, string resourceGroupName, string ruleName, AlertRuleResourcePatch alertRulesResource)
+            {
+                return operations.UpdateAsync(resourceGroupName, ruleName, alertRulesResource).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing AlertRuleResource. To update other fields use the
+            /// CreateOrUpdate method.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='ruleName'>
+            /// The name of the rule.
+            /// </param>
+            /// <param name='alertRulesResource'>
+            /// Parameters supplied to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AlertRuleResource> UpdateAsync(this IAlertRulesOperations operations, string resourceGroupName, string ruleName, AlertRuleResourcePatch alertRulesResource, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, ruleName, alertRulesResource, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List the alert rules within a resource group.
             /// </summary>
             /// <param name='operations'>

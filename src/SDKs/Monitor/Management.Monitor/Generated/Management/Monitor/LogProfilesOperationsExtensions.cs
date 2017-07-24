@@ -130,6 +130,48 @@ namespace Microsoft.Azure.Management.Monitor.Management
             }
 
             /// <summary>
+            /// Updates an existing LogProfilesResource. To update other fields use the
+            /// CreateOrUpdate method.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='logProfileName'>
+            /// The name of the log profile.
+            /// </param>
+            /// <param name='logProfilesResource'>
+            /// Parameters supplied to the operation.
+            /// </param>
+            public static LogProfileResource Update(this ILogProfilesOperations operations, string logProfileName, LogProfileResourcePatch logProfilesResource)
+            {
+                return operations.UpdateAsync(logProfileName, logProfilesResource).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing LogProfilesResource. To update other fields use the
+            /// CreateOrUpdate method.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='logProfileName'>
+            /// The name of the log profile.
+            /// </param>
+            /// <param name='logProfilesResource'>
+            /// Parameters supplied to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<LogProfileResource> UpdateAsync(this ILogProfilesOperations operations, string logProfileName, LogProfileResourcePatch logProfilesResource, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(logProfileName, logProfilesResource, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List the log profiles.
             /// </summary>
             /// <param name='operations'>

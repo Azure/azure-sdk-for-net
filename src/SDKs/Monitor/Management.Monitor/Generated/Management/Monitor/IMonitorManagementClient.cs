@@ -80,6 +80,11 @@ namespace Microsoft.Azure.Management.Monitor.Management
         IAlertRuleIncidentsOperations AlertRuleIncidents { get; }
 
         /// <summary>
+        /// Gets the IActivityLogAlertsOperations.
+        /// </summary>
+        IActivityLogAlertsOperations ActivityLogAlerts { get; }
+
+        /// <summary>
         /// Gets the ILogProfilesOperations.
         /// </summary>
         ILogProfilesOperations LogProfiles { get; }
@@ -88,6 +93,11 @@ namespace Microsoft.Azure.Management.Monitor.Management
         /// Gets the IServiceDiagnosticSettingsOperations.
         /// </summary>
         IServiceDiagnosticSettingsOperations ServiceDiagnosticSettings { get; }
+
+        /// <summary>
+        /// Gets the IActionGroupsOperations.
+        /// </summary>
+        IActionGroupsOperations ActionGroups { get; }
 
     }
 }
