@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Azure.Management.ServiceFabric;
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,14 +35,11 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// unhealthy nodes percentage per upgrade domain </param>
         /// <param name="maxPercentDeltaUnhealthyApplications">Additional
         /// unhealthy applications percentage</param>
-        /// <param name="applicationHealthPolicies">Application health
-        /// policy</param>
-        public ClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes, int maxPercentUpgradeDomainDeltaUnhealthyNodes, int maxPercentDeltaUnhealthyApplications, IDictionary<string, ApplicationDeltaHealthPolicy> applicationHealthPolicies = default(IDictionary<string, ApplicationDeltaHealthPolicy>))
+        public ClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes, int maxPercentUpgradeDomainDeltaUnhealthyNodes, int maxPercentDeltaUnhealthyApplications)
         {
             MaxPercentDeltaUnhealthyNodes = maxPercentDeltaUnhealthyNodes;
             MaxPercentUpgradeDomainDeltaUnhealthyNodes = maxPercentUpgradeDomainDeltaUnhealthyNodes;
             MaxPercentDeltaUnhealthyApplications = maxPercentDeltaUnhealthyApplications;
-            ApplicationHealthPolicies = applicationHealthPolicies;
             CustomInit();
         }
 
@@ -71,12 +66,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "maxPercentDeltaUnhealthyApplications")]
         public int MaxPercentDeltaUnhealthyApplications { get; set; }
-
-        /// <summary>
-        /// Gets or sets application health policy
-        /// </summary>
-        [JsonProperty(PropertyName = "applicationHealthPolicies")]
-        public IDictionary<string, ApplicationDeltaHealthPolicy> ApplicationHealthPolicies { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -109,16 +98,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             if (MaxPercentDeltaUnhealthyApplications < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxPercentDeltaUnhealthyApplications", 0);
-            }
-            if (ApplicationHealthPolicies != null)
-            {
-                foreach (var valueElement in ApplicationHealthPolicies.Values)
-                {
-                    if (valueElement != null)
-                    {
-                        valueElement.Validate();
-                    }
-                }
             }
         }
     }

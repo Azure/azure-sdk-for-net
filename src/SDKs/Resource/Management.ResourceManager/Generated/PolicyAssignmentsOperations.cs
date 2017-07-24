@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         public PolicyClient Client { get; private set; }
 
         /// <summary>
-        /// Delete policy assignment.
+        /// Deletes a policy assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the policy assignment.
+        /// The scope of the policy assignment.
         /// </param>
         /// <param name='policyAssignmentName'>
-        /// Policy assignment name.
+        /// The name of the policy assignment to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -228,16 +228,21 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Create policy assignment.
+        /// Creates a policy assignment.
         /// </summary>
+        /// <remarks>
+        /// Policy assignments are inherited by child resources. For example, when you
+        /// apply a policy to a resource group that policy is assigned to all
+        /// resources in the group.
+        /// </remarks>
         /// <param name='scope'>
-        /// Scope of the policy assignment.
+        /// The scope of the policy assignment.
         /// </param>
         /// <param name='policyAssignmentName'>
-        /// Policy assignment name.
+        /// The name of the policy assignment.
         /// </param>
         /// <param name='parameters'>
-        /// Policy assignment.
+        /// Parameters for the policy assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -428,13 +433,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Get single policy assignment.
+        /// Gets a policy assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Scope of the policy assignment.
+        /// The scope of the policy assignment.
         /// </param>
         /// <param name='policyAssignmentName'>
-        /// Policy assignment name.
+        /// The name of the policy assignment to get.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -614,10 +619,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets policy assignments of the resource group.
+        /// Gets policy assignments for the resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Resource group name.
+        /// The name of the resource group that contains policy assignments.
         /// </param>
         /// <param name='filter'>
         /// The filter to apply on the operation.
@@ -819,13 +824,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets policy assignments of the resource.
+        /// Gets policy assignments for a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
+        /// The name of the resource group containing the resource. The name is case
+        /// insensitive.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// The resource provider namespace.
+        /// The namespace of the resource provider.
         /// </param>
         /// <param name='parentResourcePath'>
         /// The parent resource path.
@@ -834,7 +840,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// The resource type.
         /// </param>
         /// <param name='resourceName'>
-        /// The resource name.
+        /// The name of the resource with policy assignments.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -1064,7 +1070,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets all the policy assignments of a subscription.
+        /// Gets all the policy assignments for a subscription.
         /// </summary>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -1249,10 +1255,19 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Delete policy assignment.
+        /// Deletes a policy assignment by ID.
         /// </summary>
+        /// <remarks>
+        /// When providing a scope for the assigment, use
+        /// '/subscriptions/{subscription-id}/' for subscriptions,
+        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}'
+        /// for resource groups, and
+        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider-namespace}/{resource-type}/{resource-name}'
+        /// for resources.
+        /// </remarks>
         /// <param name='policyAssignmentId'>
-        /// Policy assignment Id
+        /// The ID of the policy assignment to delete. Use the format
+        /// '/{scope}/providers/Microsoft.Authorization/policyAssignments/{policy-assignment-name}'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1426,13 +1441,24 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Create policy assignment by Id.
+        /// Creates a policy assignment by ID.
         /// </summary>
+        /// <remarks>
+        /// Policy assignments are inherited by child resources. For example, when you
+        /// apply a policy to a resource group that policy is assigned to all
+        /// resources in the group. When providing a scope for the assigment, use
+        /// '/subscriptions/{subscription-id}/' for subscriptions,
+        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}'
+        /// for resource groups, and
+        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider-namespace}/{resource-type}/{resource-name}'
+        /// for resources.
+        /// </remarks>
         /// <param name='policyAssignmentId'>
-        /// Policy assignment Id
+        /// The ID of the policy assignment to create. Use the format
+        /// '/{scope}/providers/Microsoft.Authorization/policyAssignments/{policy-assignment-name}'.
         /// </param>
         /// <param name='parameters'>
-        /// Policy assignment.
+        /// Parameters for policy assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1617,10 +1643,19 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Get single policy assignment.
+        /// Gets a policy assignment by ID.
         /// </summary>
+        /// <remarks>
+        /// When providing a scope for the assigment, use
+        /// '/subscriptions/{subscription-id}/' for subscriptions,
+        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}'
+        /// for resource groups, and
+        /// '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider-namespace}/{resource-type}/{resource-name}'
+        /// for resources.
+        /// </remarks>
         /// <param name='policyAssignmentId'>
-        /// Policy assignment Id
+        /// The ID of the policy assignment to get. Use the format
+        /// '/{scope}/providers/Microsoft.Authorization/policyAssignments/{policy-assignment-name}'.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1794,7 +1829,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets policy assignments of the resource group.
+        /// Gets policy assignments for the resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1962,7 +1997,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets policy assignments of the resource.
+        /// Gets policy assignments for a resource.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2130,7 +2165,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Gets all the policy assignments of a subscription.
+        /// Gets all the policy assignments for a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

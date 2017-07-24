@@ -29,13 +29,13 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='clusterName'>
             /// The name of the cluster resource
             /// </param>
-            /// <param name='clusterUpdateParameters'>
+            /// <param name='parameters'>
             /// The parameters which contains the property value and property name which
             /// used to update the cluster configuration
             /// </param>
-            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParameters clusterUpdateParameters)
+            public static Cluster Update(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParameters parameters)
             {
-                return operations.UpdateAsync(resourceGroupName, clusterName, clusterUpdateParameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,16 +50,16 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='clusterName'>
             /// The name of the cluster resource
             /// </param>
-            /// <param name='clusterUpdateParameters'>
+            /// <param name='parameters'>
             /// The parameters which contains the property value and property name which
             /// used to update the cluster configuration
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParameters clusterUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> UpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, clusterUpdateParameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -117,12 +117,12 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='clusterName'>
             /// The name of the cluster resource
             /// </param>
-            /// <param name='clusterResource'>
+            /// <param name='parameters'>
             /// Put Request
             /// </param>
-            public static Cluster Create(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster clusterResource)
+            public static Cluster Create(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters)
             {
-                return operations.CreateAsync(resourceGroupName, clusterName, clusterResource).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -137,15 +137,15 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='clusterName'>
             /// The name of the cluster resource
             /// </param>
-            /// <param name='clusterResource'>
+            /// <param name='parameters'>
             /// Put Request
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> CreateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster clusterResource, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> CreateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, clusterResource, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -262,13 +262,13 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='clusterName'>
             /// The name of the cluster resource
             /// </param>
-            /// <param name='clusterUpdateParameters'>
+            /// <param name='parameters'>
             /// The parameters which contains the property value and property name which
             /// used to update the cluster configuration
             /// </param>
-            public static Cluster BeginUpdate(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParameters clusterUpdateParameters)
+            public static Cluster BeginUpdate(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParameters parameters)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, clusterName, clusterUpdateParameters).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -283,16 +283,16 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='clusterName'>
             /// The name of the cluster resource
             /// </param>
-            /// <param name='clusterUpdateParameters'>
+            /// <param name='parameters'>
             /// The parameters which contains the property value and property name which
             /// used to update the cluster configuration
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> BeginUpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParameters clusterUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> BeginUpdateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, clusterUpdateParameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -310,12 +310,12 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='clusterName'>
             /// The name of the cluster resource
             /// </param>
-            /// <param name='clusterResource'>
+            /// <param name='parameters'>
             /// Put Request
             /// </param>
-            public static Cluster BeginCreate(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster clusterResource)
+            public static Cluster BeginCreate(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters)
             {
-                return operations.BeginCreateAsync(resourceGroupName, clusterName, clusterResource).GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -330,15 +330,15 @@ namespace Microsoft.Azure.Management.ServiceFabric
             /// <param name='clusterName'>
             /// The name of the cluster resource
             /// </param>
-            /// <param name='clusterResource'>
+            /// <param name='parameters'>
             /// Put Request
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Cluster> BeginCreateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster clusterResource, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Cluster> BeginCreateAsync(this IClustersOperations operations, string resourceGroupName, string clusterName, Cluster parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, clusterResource, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

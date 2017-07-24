@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class TenantsOperationsExtensions
     {
             /// <summary>
-            /// Gets a list of tenants.
+            /// Gets the tenants for your account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of tenants.
+            /// Gets the tenants for your account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of tenants.
+            /// Gets the tenants for your account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets a list of tenants.
+            /// Gets the tenants for your account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -12,6 +12,9 @@ namespace Microsoft.Azure.Search
     using Microsoft.Spatial;
     using Newtonsoft.Json.Serialization;
 
+    /// <summary>
+    /// Builds field definitions for an Azure Search index by reflecting over a user-defined model type.
+    /// </summary>
     public static class FieldBuilder
     {
         /// <summary>

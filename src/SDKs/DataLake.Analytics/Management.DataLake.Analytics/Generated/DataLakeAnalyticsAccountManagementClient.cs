@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IComputePoliciesOperations.
+        /// </summary>
+        public virtual IComputePoliciesOperations ComputePolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IFirewallRulesOperations.
         /// </summary>
         public virtual IFirewallRulesOperations FirewallRules { get; private set; }
@@ -297,6 +302,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         private void Initialize()
         {
+            ComputePolicies = new ComputePoliciesOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
             DataLakeStoreAccounts = new DataLakeStoreAccountsOperations(this);

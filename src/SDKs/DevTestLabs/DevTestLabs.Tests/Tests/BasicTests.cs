@@ -20,7 +20,7 @@ namespace DevTestLabs.Tests
             {
                 var client = GetDevTestLabsClient(context);
 
-                var labs = client.Lab.ListBySubscription().ToList();
+                var labs = client.Labs.ListBySubscription().ToList();
                 Assert.NotEmpty(labs);
             }
         }

@@ -24,12 +24,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the ResourceGroup class.
         /// </summary>
         /// <param name="location">The location of the resource group. It
-        /// cannot be changed after the resource group has been created. Has
-        /// to be one of the supported Azure Locations, such as West US, East
-        /// US, West Europe, East Asia, etc.</param>
+        /// cannot be changed after the resource group has been created. It
+        /// muct be one of the supported Azure locations.</param>
         /// <param name="id">The ID of the resource group.</param>
-        /// <param name="name">The Name of the resource group.</param>
-        /// <param name="managedBy">Id of the resource that manages this
+        /// <param name="name">The name of the resource group.</param>
+        /// <param name="managedBy">The ID of the resource that manages this
         /// resource group.</param>
         /// <param name="tags">The tags attached to the resource group.</param>
         public ResourceGroup(string location, string id = default(string), string name = default(string), ResourceGroupProperties properties = default(ResourceGroupProperties), string managedBy = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
@@ -49,7 +48,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Name of the resource group.
+        /// Gets or sets the name of the resource group.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -61,15 +60,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 
         /// <summary>
         /// Gets or sets the location of the resource group. It cannot be
-        /// changed after the resource group has been created. Has to be one
-        /// of the supported Azure Locations, such as West US, East US, West
-        /// Europe, East Asia, etc.
+        /// changed after the resource group has been created. It muct be one
+        /// of the supported Azure locations.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets id of the resource that manages this resource group.
+        /// Gets or sets the ID of the resource that manages this resource
+        /// group.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "managedBy")]
         public string ManagedBy { get; set; }

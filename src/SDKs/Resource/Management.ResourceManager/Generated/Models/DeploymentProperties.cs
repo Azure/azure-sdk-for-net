@@ -23,18 +23,32 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentProperties class.
         /// </summary>
-        /// <param name="mode">The deployment mode. Possible values include:
-        /// 'Incremental', 'Complete'</param>
-        /// <param name="template">The template content. It can be a JObject
-        /// or a well formed JSON string. Use only one of Template or
-        /// TemplateLink.</param>
-        /// <param name="templateLink">The template URI. Use only one of
-        /// Template or TemplateLink.</param>
-        /// <param name="parameters">Deployment parameters. It can be a
-        /// JObject or a well formed JSON string. Use only one of Parameters
-        /// or ParametersLink.</param>
-        /// <param name="parametersLink">The parameters URI. Use only one of
-        /// Parameters or ParametersLink.</param>
+        /// <param name="mode">The mode that is used to deploy resources. This
+        /// value can be either Incremental or Complete. In Incremental mode,
+        /// resources are deployed without deleting existing resources that
+        /// are not included in the template. In Complete mode, resources are
+        /// deployed and existing resources in the resource group that are
+        /// not included in the template are deleted. Be careful when using
+        /// Complete mode as you may unintentionally delete resources.
+        /// Possible values include: 'Incremental', 'Complete'</param>
+        /// <param name="template">The template content. You use this element
+        /// when you want to pass the template syntax directly in the request
+        /// rather than link to an existing template. It can be a JObject or
+        /// well-formed JSON string. Use either the templateLink property or
+        /// the template property, but not both.</param>
+        /// <param name="templateLink">The URI of the template. Use either the
+        /// templateLink property or the template property, but not
+        /// both.</param>
+        /// <param name="parameters">Name and value pairs that define the
+        /// deployment parameters for the template. You use this element when
+        /// you want to provide the parameter values directly in the request
+        /// rather than link to an existing parameter file. Use either the
+        /// parametersLink property or the parameters property, but not both.
+        /// It can be a JObject or a well formed JSON string.</param>
+        /// <param name="parametersLink">The URI of parameters file. You use
+        /// this element to link to an existing parameters file. Use either
+        /// the parametersLink property or the parameters property, but not
+        /// both.</param>
         /// <param name="debugSetting">The debug setting of the
         /// deployment.</param>
         public DeploymentProperties(DeploymentMode mode, object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DebugSetting debugSetting = default(DebugSetting))
@@ -48,36 +62,50 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the template content. It can be a JObject or a well
-        /// formed JSON string. Use only one of Template or TemplateLink.
+        /// Gets or sets the template content. You use this element when you
+        /// want to pass the template syntax directly in the request rather
+        /// than link to an existing template. It can be a JObject or
+        /// well-formed JSON string. Use either the templateLink property or
+        /// the template property, but not both.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "template")]
         public object Template { get; set; }
 
         /// <summary>
-        /// Gets or sets the template URI. Use only one of Template or
-        /// TemplateLink.
+        /// Gets or sets the URI of the template. Use either the templateLink
+        /// property or the template property, but not both.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "templateLink")]
         public TemplateLink TemplateLink { get; set; }
 
         /// <summary>
-        /// Gets or sets deployment parameters. It can be a JObject or a well
-        /// formed JSON string. Use only one of Parameters or ParametersLink.
+        /// Gets or sets name and value pairs that define the deployment
+        /// parameters for the template. You use this element when you want
+        /// to provide the parameter values directly in the request rather
+        /// than link to an existing parameter file. Use either the
+        /// parametersLink property or the parameters property, but not both.
+        /// It can be a JObject or a well formed JSON string.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "parameters")]
         public object Parameters { get; set; }
 
         /// <summary>
-        /// Gets or sets the parameters URI. Use only one of Parameters or
-        /// ParametersLink.
+        /// Gets or sets the URI of parameters file. You use this element to
+        /// link to an existing parameters file. Use either the
+        /// parametersLink property or the parameters property, but not both.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "parametersLink")]
         public ParametersLink ParametersLink { get; set; }
 
         /// <summary>
-        /// Gets or sets the deployment mode. Possible values include:
-        /// 'Incremental', 'Complete'
+        /// Gets or sets the mode that is used to deploy resources. This value
+        /// can be either Incremental or Complete. In Incremental mode,
+        /// resources are deployed without deleting existing resources that
+        /// are not included in the template. In Complete mode, resources are
+        /// deployed and existing resources in the resource group that are
+        /// not included in the template are deleted. Be careful when using
+        /// Complete mode as you may unintentionally delete resources.
+        /// Possible values include: 'Incremental', 'Complete'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "mode")]
         public DeploymentMode Mode { get; set; }
