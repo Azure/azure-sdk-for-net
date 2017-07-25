@@ -63,6 +63,8 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.ProvisioningState, "Succeeded");
             Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal(1, result.Sku.Capacity);
+            Assert.Equal(ConnectionMode.All, result.QuerypoolConnectionMode);
         }
 
         [Fact]
@@ -103,6 +105,8 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
             Assert.Equal(result.BackupBlobContainerUri, AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri);
+            Assert.Equal(1, result.Sku.Capacity);
+            Assert.Equal(ConnectionMode.All, result.QuerypoolConnectionMode);
         }
 
         [Fact]
@@ -132,12 +136,14 @@ namespace AnalysisServices.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { okResponse });
 
             AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+
             AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
             {
                 Sku = AnalysisServicesTestUtilities.DefaultSku,
                 Tags = AnalysisServicesTestUtilities.DefaultTags,
                 AsAdministrators = new ServerAdministrators(AnalysisServicesTestUtilities.DefaultAdministrators),
-                BackupBlobContainerUri = AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri
+                BackupBlobContainerUri = AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri,
+                QuerypoolConnectionMode= ConnectionMode.All
             };
 
             var result = client.Servers.Update(
@@ -157,6 +163,8 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.State, "Succeeded");
             Assert.Equal(result.Tags.Count, 2);
             Assert.Equal(result.BackupBlobContainerUri, AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri);
+            Assert.Equal(1, result.Sku.Capacity);
+            Assert.Equal(ConnectionMode.All, result.QuerypoolConnectionMode);
         }
 
         [Fact]
@@ -172,6 +180,18 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Throws<ValidationException>(() => client.Servers.Update("rg", "/invalid", new AnalysisServicesServerUpdateParameters()));
             Assert.Throws<ValidationException>(() => client.Servers.Update("rg", "s", new AnalysisServicesServerUpdateParameters()));
             Assert.Throws<ValidationException>(() => client.Servers.Update("rg", "server_name_that_is_too_long", new AnalysisServicesServerUpdateParameters()));
+            Assert.Throws<ValidationException>(() => new AnalysisServicesServerUpdateParameters(sku:
+                new ResourceSku
+                {
+                    Capacity = 0
+                })
+                .Validate());
+            Assert.Throws<ValidationException>(() => new AnalysisServicesServerUpdateParameters(sku:
+                new ResourceSku
+                {
+                    Capacity = 9
+                })
+                .Validate());
         }
 
         [Fact]
@@ -456,6 +476,8 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(createdResource.State, referenceResource.State);
             Assert.Equal(createdResource.ServerFullName, referenceResource.ServerFullName);
             Assert.Equal(createdResource.AsAdministrators, referenceResource.AsAdministrators);
+            Assert.Equal(referenceResource.Sku.Capacity, createdResource.Sku.Capacity);
+            Assert.Equal(referenceResource.QuerypoolConnectionMode, createdResource.QuerypoolConnectionMode);
         }
 
         private static void VerifyServerCreationSuccess(AnalysisServicesServer createdResource)

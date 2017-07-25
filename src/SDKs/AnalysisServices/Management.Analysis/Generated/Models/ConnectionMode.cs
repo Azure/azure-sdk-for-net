@@ -10,12 +10,14 @@ namespace Microsoft.Azure.Management.Analysis.Models
 {
 
     /// <summary>
-    /// Defines values for SkuTier.
+    /// Defines values for ConnectionMode.
     /// </summary>
-    public static class SkuTier
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum ConnectionMode
     {
-        public const string Development = "Development";
-        public const string Basic = "Basic";
-        public const string Standard = "Standard";
+        [System.Runtime.Serialization.EnumMember(Value = "All")]
+        All,
+        [System.Runtime.Serialization.EnumMember(Value = "ReadOnly")]
+        ReadOnly
     }
 }
