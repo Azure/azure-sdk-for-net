@@ -28,5 +28,11 @@
     <None Update="SessionRecords\AnalysisServices.Tests.ScenarioTests.ServerOperationsTests\ScaleUpTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="SessionRecords\AnalysisServices.Tests.ScenarioTests.ServerOperationsTests\ScaleoutTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\AnalysisServices.Tests.ScenarioTests.ServerOperationsTests\ScaleOutThrowsExceptionForNonStandardSkuTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
