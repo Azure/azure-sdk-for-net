@@ -124,31 +124,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string accountName, System.Guid jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the job information for the specified job ID.
-        /// </summary>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Analytics account to execute job operations on.
-        /// </param>
-        /// <param name='jobIdentity'>
-        /// JobInfo ID.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<JobInformation>> GetWithHttpMessagesAsync(string accountName, System.Guid jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Submits a job to the specified Data Lake Analytics account.
         /// </summary>
         /// <param name='accountName'>
@@ -176,6 +151,31 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<JobInformation>> CreateWithHttpMessagesAsync(string accountName, System.Guid jobIdentity, CreateJobParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the job information for the specified job ID.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account to execute job operations on.
+        /// </param>
+        /// <param name='jobIdentity'>
+        /// JobInfo ID.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<JobInformation>> GetWithHttpMessagesAsync(string accountName, System.Guid jobIdentity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the jobs, if any, associated with the specified Data Lake
         /// Analytics account. The response includes a link to the next page of

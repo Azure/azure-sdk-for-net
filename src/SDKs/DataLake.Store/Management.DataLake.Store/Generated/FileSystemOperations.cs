@@ -53,6 +53,205 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public DataLakeStoreFileSystemManagementClient Client { get; private set; }
 
         /// <summary>
+        /// Sets or removes the expiration time on the specified file. This operation
+        /// can only be executed against files. Folders are not supported.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='path'>
+        /// The Data Lake Store path (starting with '/') of the file on which to set or
+        /// remove the expiration time.
+        /// </param>
+        /// <param name='expiryOption'>
+        /// Indicates the type of expiration to use for the file: 1. NeverExpire:
+        /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
+        /// milliseconds representing the expiration date relative to when file
+        /// expiration is updated. 3. RelativeToCreationDate: ExpireTime is an integer
+        /// in milliseconds representing the expiration date relative to file creation.
+        /// 4. Absolute: ExpireTime is an integer in milliseconds, as a Unix timestamp
+        /// relative to 1/1/1970 00:00:00. Possible values include: 'NeverExpire',
+        /// 'RelativeToNow', 'RelativeToCreationDate', 'Absolute'
+        /// </param>
+        /// <param name='expireTime'>
+        /// The time that the file will expire, corresponding to the ExpiryOption that
+        /// was set.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AdlsErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> SetFileExpiryWithHttpMessagesAsync(string accountName, string path, ExpiryOptionType expiryOption, long? expireTime = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (accountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+            }
+            if (Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (path == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "path");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            string op = "SETEXPIRY";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("path", path);
+                tracingParameters.Add("expiryOption", expiryOption);
+                tracingParameters.Add("expireTime", expireTime);
+                tracingParameters.Add("op", op);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "SetFileExpiry", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "WebHdfsExt/{path}";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlsFileSystemDnsSuffix}", Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{path}", System.Uri.EscapeDataString(path));
+            List<string> _queryParameters = new List<string>();
+            _queryParameters.Add(string.Format("expiryOption={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expiryOption, Client.SerializationSettings).Trim('"'))));
+            if (expireTime != null)
+            {
+                _queryParameters.Add(string.Format("expireTime={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expireTime, Client.SerializationSettings).Trim('"'))));
+            }
+            if (op != null)
+            {
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
+            }
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new AdlsErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    AdlsError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Appends to the specified file, optionally first creating the file if it
         /// does not yet exist. This method supports multiple concurrent appends to the
         /// file. NOTE: The target must not contain data added by Create or normal
@@ -225,205 +424,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
               _httpRequest.Content = new StreamContent(streamContents);
               _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
             }
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new AdlsErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Sets or removes the expiration time on the specified file. This operation
-        /// can only be executed against files. Folders are not supported.
-        /// </summary>
-        /// <param name='accountName'>
-        /// The Azure Data Lake Store account to execute filesystem operations on.
-        /// </param>
-        /// <param name='path'>
-        /// The Data Lake Store path (starting with '/') of the file on which to set or
-        /// remove the expiration time.
-        /// </param>
-        /// <param name='expiryOption'>
-        /// Indicates the type of expiration to use for the file: 1. NeverExpire:
-        /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
-        /// milliseconds representing the expiration date relative to when file
-        /// expiration is updated. 3. RelativeToCreationDate: ExpireTime is an integer
-        /// in milliseconds representing the expiration date relative to file creation.
-        /// 4. Absolute: ExpireTime is an integer in milliseconds, as a Unix timestamp
-        /// relative to 1/1/1970 00:00:00. Possible values include: 'NeverExpire',
-        /// 'RelativeToNow', 'RelativeToCreationDate', 'Absolute'
-        /// </param>
-        /// <param name='expireTime'>
-        /// The time that the file will expire, corresponding to the ExpiryOption that
-        /// was set.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="AdlsErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse> SetFileExpiryWithHttpMessagesAsync(string accountName, string path, ExpiryOptionType expiryOption, long? expireTime = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (accountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
-            }
-            if (Client.AdlsFileSystemDnsSuffix == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
-            }
-            if (path == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "path");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            string op = "SETEXPIRY";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("path", path);
-                tracingParameters.Add("expiryOption", expiryOption);
-                tracingParameters.Add("expireTime", expireTime);
-                tracingParameters.Add("op", op);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "SetFileExpiry", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "WebHdfsExt/{path}";
-            _url = _url.Replace("{accountName}", accountName);
-            _url = _url.Replace("{adlsFileSystemDnsSuffix}", Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{path}", System.Uri.EscapeDataString(path));
-            List<string> _queryParameters = new List<string>();
-            _queryParameters.Add(string.Format("expiryOption={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expiryOption, Client.SerializationSettings).Trim('"'))));
-            if (expireTime != null)
-            {
-                _queryParameters.Add(string.Format("expireTime={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expireTime, Client.SerializationSettings).Trim('"'))));
-            }
-            if (op != null)
-            {
-                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
-            }
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
             // Set Credentials
             if (Client.Credentials != null)
             {

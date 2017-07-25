@@ -26,6 +26,75 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public static partial class FileSystemOperationsExtensions
     {
             /// <summary>
+            /// Sets or removes the expiration time on the specified file. This operation
+            /// can only be executed against files. Folders are not supported.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Store account to execute filesystem operations on.
+            /// </param>
+            /// <param name='path'>
+            /// The Data Lake Store path (starting with '/') of the file on which to set or
+            /// remove the expiration time.
+            /// </param>
+            /// <param name='expiryOption'>
+            /// Indicates the type of expiration to use for the file: 1. NeverExpire:
+            /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
+            /// milliseconds representing the expiration date relative to when file
+            /// expiration is updated. 3. RelativeToCreationDate: ExpireTime is an integer
+            /// in milliseconds representing the expiration date relative to file creation.
+            /// 4. Absolute: ExpireTime is an integer in milliseconds, as a Unix timestamp
+            /// relative to 1/1/1970 00:00:00. Possible values include: 'NeverExpire',
+            /// 'RelativeToNow', 'RelativeToCreationDate', 'Absolute'
+            /// </param>
+            /// <param name='expireTime'>
+            /// The time that the file will expire, corresponding to the ExpiryOption that
+            /// was set.
+            /// </param>
+            public static void SetFileExpiry(this IFileSystemOperations operations, string accountName, string path, ExpiryOptionType expiryOption, long? expireTime = default(long?))
+            {
+                operations.SetFileExpiryAsync(accountName, path, expiryOption, expireTime).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sets or removes the expiration time on the specified file. This operation
+            /// can only be executed against files. Folders are not supported.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Store account to execute filesystem operations on.
+            /// </param>
+            /// <param name='path'>
+            /// The Data Lake Store path (starting with '/') of the file on which to set or
+            /// remove the expiration time.
+            /// </param>
+            /// <param name='expiryOption'>
+            /// Indicates the type of expiration to use for the file: 1. NeverExpire:
+            /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
+            /// milliseconds representing the expiration date relative to when file
+            /// expiration is updated. 3. RelativeToCreationDate: ExpireTime is an integer
+            /// in milliseconds representing the expiration date relative to file creation.
+            /// 4. Absolute: ExpireTime is an integer in milliseconds, as a Unix timestamp
+            /// relative to 1/1/1970 00:00:00. Possible values include: 'NeverExpire',
+            /// 'RelativeToNow', 'RelativeToCreationDate', 'Absolute'
+            /// </param>
+            /// <param name='expireTime'>
+            /// The time that the file will expire, corresponding to the ExpiryOption that
+            /// was set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SetFileExpiryAsync(this IFileSystemOperations operations, string accountName, string path, ExpiryOptionType expiryOption, long? expireTime = default(long?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SetFileExpiryWithHttpMessagesAsync(accountName, path, expiryOption, expireTime, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Appends to the specified file, optionally first creating the file if it
             /// does not yet exist. This method supports multiple concurrent appends to the
             /// file. NOTE: The target must not contain data added by Create or normal
@@ -114,75 +183,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task ConcurrentAppendAsync(this IFileSystemOperations operations, string accountName, string path, Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), SyncFlag? syncFlag = default(SyncFlag?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ConcurrentAppendWithHttpMessagesAsync(accountName, path, streamContents, appendMode, syncFlag, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Sets or removes the expiration time on the specified file. This operation
-            /// can only be executed against files. Folders are not supported.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            /// <param name='path'>
-            /// The Data Lake Store path (starting with '/') of the file on which to set or
-            /// remove the expiration time.
-            /// </param>
-            /// <param name='expiryOption'>
-            /// Indicates the type of expiration to use for the file: 1. NeverExpire:
-            /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
-            /// milliseconds representing the expiration date relative to when file
-            /// expiration is updated. 3. RelativeToCreationDate: ExpireTime is an integer
-            /// in milliseconds representing the expiration date relative to file creation.
-            /// 4. Absolute: ExpireTime is an integer in milliseconds, as a Unix timestamp
-            /// relative to 1/1/1970 00:00:00. Possible values include: 'NeverExpire',
-            /// 'RelativeToNow', 'RelativeToCreationDate', 'Absolute'
-            /// </param>
-            /// <param name='expireTime'>
-            /// The time that the file will expire, corresponding to the ExpiryOption that
-            /// was set.
-            /// </param>
-            public static void SetFileExpiry(this IFileSystemOperations operations, string accountName, string path, ExpiryOptionType expiryOption, long? expireTime = default(long?))
-            {
-                operations.SetFileExpiryAsync(accountName, path, expiryOption, expireTime).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Sets or removes the expiration time on the specified file. This operation
-            /// can only be executed against files. Folders are not supported.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Store account to execute filesystem operations on.
-            /// </param>
-            /// <param name='path'>
-            /// The Data Lake Store path (starting with '/') of the file on which to set or
-            /// remove the expiration time.
-            /// </param>
-            /// <param name='expiryOption'>
-            /// Indicates the type of expiration to use for the file: 1. NeverExpire:
-            /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
-            /// milliseconds representing the expiration date relative to when file
-            /// expiration is updated. 3. RelativeToCreationDate: ExpireTime is an integer
-            /// in milliseconds representing the expiration date relative to file creation.
-            /// 4. Absolute: ExpireTime is an integer in milliseconds, as a Unix timestamp
-            /// relative to 1/1/1970 00:00:00. Possible values include: 'NeverExpire',
-            /// 'RelativeToNow', 'RelativeToCreationDate', 'Absolute'
-            /// </param>
-            /// <param name='expireTime'>
-            /// The time that the file will expire, corresponding to the ExpiryOption that
-            /// was set.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task SetFileExpiryAsync(this IFileSystemOperations operations, string accountName, string path, ExpiryOptionType expiryOption, long? expireTime = default(long?), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.SetFileExpiryWithHttpMessagesAsync(accountName, path, expiryOption, expireTime, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

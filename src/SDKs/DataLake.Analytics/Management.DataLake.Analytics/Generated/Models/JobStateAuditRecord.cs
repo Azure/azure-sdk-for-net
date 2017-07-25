@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// place.</param>
         /// <param name="requestedByUser">the user who requests the
         /// change.</param>
-        /// <param name="details"> the details of the audit log.</param>
+        /// <param name="details">the details of the audit log.</param>
         public JobStateAuditRecord(string newState = default(string), System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), string requestedByUser = default(string), string details = default(string))
         {
             NewState = newState;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string RequestedByUser { get; private set; }
 
         /// <summary>
-        /// Gets  the details of the audit log.
+        /// Gets the details of the audit log.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
         public string Details { get; private set; }
