@@ -19,6 +19,7 @@ using Microsoft.Rest.Azure.OData;
 using System.Reflection;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.IO;
+using Microsoft.Rest;
 
 namespace Authorization.Tests
 {
@@ -961,6 +962,73 @@ namespace Authorization.Tests
                 Assert.NotNull(providerOperationsMetadata.Operations);
                 Assert.NotNull(providerOperationsMetadata.ResourceTypes);
                 Assert.NotNull(providerOperationsMetadata.Type);
+            }
+        }
+
+        [Fact]
+        public void GetProviderOperationsMetadataListWithInvalidAPIVersion()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+                var allProviderOperationsMetadatas = client.ProviderOperationsMetadata.List("0001-07-01");
+                Assert.Null(allProviderOperationsMetadatas);
+                //Need to confirm the returned exception
+            }
+        }
+
+        [Fact]
+        public void GetProviderOperationsMetadataListWithNullAPIVersion()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);            
+                try
+                {
+                    var allProviderOperationsMetadatas = client.ProviderOperationsMetadata.List(null);
+                }
+                catch (ValidationException ex)
+                {
+                    Assert.Equal(ValidationRules.CannotBeNull, "apiVersion");
+                }
+            }
+        }
+
+        [Fact]
+        public void GetProviderOperationsMetadataListWithInvalidProvider()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+                var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("InvalidMicrosoft", API_VERSION);
+                Assert.Null(providerOperationsMetadata);
+                //Need to confirm the returned exception
+            }
+        }
+
+        [Fact]
+        public void GetProviderOperationsMetadataListWithNullProvider()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
+                try
+                {
+                    var providerOperationsMetadata = client.ProviderOperationsMetadata.Get(null, API_VERSION);
+                }
+                catch (ValidationException ex)
+                {
+                    Assert.Equal(ValidationRules.CannotBeNull, "resourceProviderNamespace");
+                }
+
             }
         }
 
