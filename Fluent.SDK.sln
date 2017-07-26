@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26507.0
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Fluent", "src\ResourceManagement\Azure.Fluent\Microsoft.Azure.Management.Fluent.csproj", "{63C863DD-68A6-461D-8BA8-4A1E8EB85D0D}"
 EndProject
@@ -36,6 +36,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Storage.Fluent", "src\ResourceManagement\Storage\Microsoft.Azure.Management.Storage.Fluent.csproj", "{C80B079C-3D5C-4D04-B8BF-2894946AD00F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.TrafficManager.Fluent", "src\ResourceManagement\TrafficManager\Microsoft.Azure.Management.TrafficManager.Fluent.csproj", "{33D9AAF3-9BCE-49BC-8D9F-B400C53C934F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.EventHub.Fluent", "src\ResourceManagement\EventHub\Microsoft.Azure.Management.EventHub.Fluent.csproj", "{6E9CB016-8636-406A-85F8-68A4C8F4E016}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,10 @@ Global
 		{33D9AAF3-9BCE-49BC-8D9F-B400C53C934F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D9AAF3-9BCE-49BC-8D9F-B400C53C934F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D9AAF3-9BCE-49BC-8D9F-B400C53C934F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E9CB016-8636-406A-85F8-68A4C8F4E016}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
