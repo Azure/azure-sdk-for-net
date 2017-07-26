@@ -496,7 +496,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.WriteEvent(47, namespaceName, entityName);
+                this.WriteEvent(47, namespaceName, entityName, receiveMode);
             }
         }
 
