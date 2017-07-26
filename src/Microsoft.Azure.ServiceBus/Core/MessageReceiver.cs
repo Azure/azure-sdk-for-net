@@ -1079,7 +1079,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                             }
                         }
 
-                        throw AmqpExceptionHelper.ToMessagingContractException(error);
+                        throw error.ToMessagingContractException();
                     }
                 }
             }
@@ -1224,7 +1224,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             if (this.LinkError != null &&
                 this.LinkError.Condition.Equals(AmqpClientConstants.SessionLockLostError))
             {
-                throw AmqpExceptionHelper.ToMessagingContractException(this.LinkError);
+                throw this.LinkError.ToMessagingContractException();
             }
         }
 

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.Azure.ServiceBus.Primitives;
-
 namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using System;
@@ -14,6 +12,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Encoding;
     using Microsoft.Azure.Amqp.Framing;
+    using Microsoft.Azure.ServiceBus.Primitives;
 
     static class AmqpExceptionHelper
     {
@@ -82,7 +81,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return exception;
         }
 
-        public static Exception ToMessagingContractException(Error error, bool connectionError = false)
+        public static Exception ToMessagingContractException(this Error error, bool connectionError = false)
         {
             if (error == null)
             {
@@ -92,7 +91,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return ToMessagingContractException(error.Condition.Value, error.Description, connectionError);
         }
 
-        public static Exception ToMessagingContractException(string condition, string message, bool connectionError = false)
+        static Exception ToMessagingContractException(string condition, string message, bool connectionError = false)
         {
             if (string.Equals(condition, AmqpClientConstants.TimeoutError.Value))
             {
@@ -162,12 +161,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return new ServiceBusException(true, message);
         }
 
-        public static Exception GetClientException(Exception exception)
-        {
-            return GetClientException(exception, null);
-        }
-
-        public static Exception GetClientException(Exception exception, string referenceId)
+        public static Exception GetClientException(Exception exception, string referenceId = null, Exception innerException = null)
         {
             StringBuilder builder = new StringBuilder();
             builder.AppendFormat(CultureInfo.InvariantCulture, exception.Message);
@@ -177,27 +171,36 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             string message = builder.ToString();
+            var aggregateException = innerException == null ? exception : new AggregateException(exception, innerException);
 
             switch (exception)
             {
                 case SocketException _:
+                    message = builder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {((SocketException)exception).SocketErrorCode}").ToString();
+                    return new ServiceBusCommunicationException(message, aggregateException);
+
                 case IOException _:
-                    return new ServiceBusCommunicationException(message, exception);
+                    var socketException = exception.InnerException as SocketException;
+                    if (socketException != null)
+                    {
+                        message = builder.AppendFormat(CultureInfo.InvariantCulture, $" ErrorCode: {socketException.SocketErrorCode}").ToString();
+                    }
+                    return new ServiceBusCommunicationException(message, aggregateException);
 
                 case AmqpException amqpException:
-                    return ToMessagingContractException(amqpException.Error);
+                    return amqpException.Error.ToMessagingContractException();
 
                 case OperationCanceledException operationCanceledException when operationCanceledException.InnerException is AmqpException amqpException:
-                    return ToMessagingContractException(amqpException.Error);
+                    return amqpException.Error.ToMessagingContractException();
 
                 case OperationCanceledException _:
-                    return new ServiceBusException(true, message, exception);
+                    return new ServiceBusException(true, message, aggregateException);
 
                 case TimeoutException _:
-                    return new ServiceBusTimeoutException(message, exception);
+                    return new ServiceBusTimeoutException(message, aggregateException);
             }
 
-            return exception;
+            return aggregateException;
         }
 
         public static string GetTrackingId(this AmqpLink link)
@@ -210,6 +213,30 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             return null;
+        }
+
+        public static Exception GetInnerException(this AmqpObject amqpObject)
+        {
+            Exception innerException;
+            switch (amqpObject)
+            {
+                case AmqpSession amqpSession:
+                    innerException = amqpSession.TerminalException ?? amqpSession.Connection.TerminalException;
+                    break;
+
+                case AmqpLink amqpLink:
+                    innerException = amqpLink.TerminalException ?? amqpLink.Session.TerminalException ?? amqpLink.Session.Connection.TerminalException;
+                    break;
+
+                case RequestResponseAmqpLink amqpReqRespLink:
+                    innerException = amqpReqRespLink.TerminalException ?? amqpReqRespLink.Session.TerminalException ?? amqpReqRespLink.Session.Connection.TerminalException;
+                    break;
+
+                default:
+                    return null;
+            }
+
+            return innerException == null ? null : GetClientException(innerException);
         }
     }
 }

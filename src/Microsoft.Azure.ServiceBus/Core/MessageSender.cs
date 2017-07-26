@@ -335,7 +335,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     if (outcome.DescriptorCode != Accepted.Code)
                     {
                         Rejected rejected = (Rejected)outcome;
-                        throw Fx.Exception.AsError(AmqpExceptionHelper.ToMessagingContractException(rejected.Error));
+                        throw Fx.Exception.AsError(rejected.Error.ToMessagingContractException());
                     }
                 }
                 catch (Exception exception)
