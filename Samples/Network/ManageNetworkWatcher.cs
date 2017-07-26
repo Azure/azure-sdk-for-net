@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Network.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management.Storage.Fluent;
 
@@ -32,7 +34,6 @@ namespace ManageNetworkWatcher
          *      Stop a packet capture
          *      Get a packet capture
          *      Delete a packet capture
-         *      Download a packet capture
          *  - Verify IP flow – verify if traffic is allowed to or from a virtual machine
          *      Get the IP address of a NIC on a virtual machine
          *      Test IP flow on the NIC
@@ -44,7 +45,6 @@ namespace ManageNetworkWatcher
          *      Get flow log settings
          *      Enable NSG flow log
          *      Disable NSG flow log
-         *      Download a flow log
          *  - Delete network watcher
          */
         public static void RunSample(IAzure azure)
@@ -93,21 +93,19 @@ namespace ManageNetworkWatcher
                         .Attach()
                     .Create();
                 Utilities.Log("Creating virtual network...");
-                INetwork virtualNetwork = azure.Networks.Define(vnetName)
+                ICreatable<INetwork> virtualNetwork = azure.Networks.Define(vnetName)
                     .WithRegion(region)
                     .WithExistingResourceGroup(rgName)
                     .WithAddressSpace("192.168.0.0/16")
                     .DefineSubnet(subnetName)
                         .WithAddressPrefix("192.168.2.0/24")
                         .WithExistingNetworkSecurityGroup(nsg)
-                        .Attach()
-                    .Create();
+                        .Attach();
                 Utilities.Log("Creating virtual machine...");
                 IVirtualMachine vm = azure.VirtualMachines.Define(vmName)
                     .WithRegion(region)
                     .WithExistingResourceGroup(rgName)
-                    .WithExistingPrimaryNetwork(virtualNetwork)
-                    .WithSubnet(subnetName)
+                    .WithNewPrimaryNetwork(virtualNetwork)
                     .WithPrimaryPrivateIPAddressDynamic()
                     .WithNewPrimaryPublicIPAddress(dnsLabel)
                     .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UbuntuServer14_04_Lts)
@@ -138,7 +136,6 @@ namespace ManageNetworkWatcher
                     .WithTimeLimitInSeconds(1500)
                     .DefinePacketCaptureFilter
                         .WithProtocol(PcProtocol.TCP)
-                        .WithLocalIPAddresses(new List<string>() { "127.0.0.1", "127.0.0.5" })
                         .Attach()
                     .Create();
                 Utilities.Log("Created packet capture");
@@ -157,9 +154,6 @@ namespace ManageNetworkWatcher
                 // Delete a packet capture
                 Utilities.Log("Deleting packet capture");
                 nw.PacketCaptures.DeleteByName(packetCapture.Name);
-
-                // Download a packet capture
-
 
                 //============================================================
                 // Verify IP flow – verify if traffic is allowed to or from a virtual machine
@@ -204,8 +198,7 @@ namespace ManageNetworkWatcher
                 // Configure Network Security Group Flow Logs
 
                 // Get flow log settings
-                IFlowLogSettings flowLogSettings =
-                    nw.GetFlowLogSettings(vm.GetPrimaryNetworkInterface().NetworkSecurityGroupId);
+                IFlowLogSettings flowLogSettings = nw.GetFlowLogSettings(nsg.Id);
                 Utilities.Print(flowLogSettings);
 
                 // Enable NSG flow log
@@ -223,8 +216,6 @@ namespace ManageNetworkWatcher
                     .Apply();
                 Utilities.Print(flowLogSettings);
 
-                // Download a flow log
-
                 //============================================================
                 // Delete network watcher
                 Utilities.Log("Deleting network watcher");
@@ -235,14 +226,13 @@ namespace ManageNetworkWatcher
             {
                 try
                 {
+                    Utilities.Log("Deleting Resource Group: " + rgName);
+                    azure.ResourceGroups.BeginDeleteByName(rgName);
                     if (nw != null)
                     {
-                        Utilities.Log("Deleting network watcher: " + nw.Name);
-                        azure.NetworkWatchers.DeleteById(nw.Id);
+                        Utilities.Log("Deleting network watcher resource group: " + nw.ResourceGroupName);
+                        azure.ResourceGroups.BeginDeleteByName(nw.ResourceGroupName);
                     }
-                    Utilities.Log("Deleting Resource Group: " + rgName);
-                    azure.ResourceGroups.DeleteByName(rgName);
-                    Utilities.Log("Deleted Resource Group: " + rgName);
                 }
                 catch (NullReferenceException)
                 {
