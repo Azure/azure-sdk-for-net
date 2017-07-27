@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.DevTestLab.Fluent", "src\ResourceManagement\DevTestLab\Microsoft.Azure.Management.DevTestLab.Fluent.csproj", "{28EEEDD3-5701-489D-BA0F-CE703F631E12}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Devices.Fluent", "src\ResourceManagement\Devices\Microsoft.Azure.Management.Devices.Fluent.csproj", "{0D5A89E7-9192-4DDA-8653-1631A68B7160}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,10 @@ Global
 		{28EEEDD3-5701-489D-BA0F-CE703F631E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28EEEDD3-5701-489D-BA0F-CE703F631E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28EEEDD3-5701-489D-BA0F-CE703F631E12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D5A89E7-9192-4DDA-8653-1631A68B7160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D5A89E7-9192-4DDA-8653-1631A68B7160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D5A89E7-9192-4DDA-8653-1631A68B7160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D5A89E7-9192-4DDA-8653-1631A68B7160}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
