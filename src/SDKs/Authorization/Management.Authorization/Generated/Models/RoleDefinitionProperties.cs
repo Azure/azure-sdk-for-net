@@ -6,15 +6,16 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
+
 namespace Microsoft.Azure.Management.Authorization.Models
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Linq;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Authorization;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Role definition properties.
@@ -24,11 +25,20 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Initializes a new instance of the RoleDefinitionProperties class.
         /// </summary>
-        public RoleDefinitionProperties() { }
+        public RoleDefinitionProperties()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RoleDefinitionProperties class.
         /// </summary>
+        /// <param name="roleName">The role name.</param>
+        /// <param name="description">The role definition description.</param>
+        /// <param name="type">The role type.</param>
+        /// <param name="permissions">Role definition permissions.</param>
+        /// <param name="assignableScopes">Role definition assignable
+        /// scopes.</param>
         public RoleDefinitionProperties(string roleName = default(string), string description = default(string), string type = default(string), IList<Permission> permissions = default(IList<Permission>), IList<string> assignableScopes = default(IList<string>))
         {
             RoleName = roleName;
@@ -36,22 +46,28 @@ namespace Microsoft.Azure.Management.Authorization.Models
             Type = type;
             Permissions = permissions;
             AssignableScopes = assignableScopes;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets role name.
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the role name.
         /// </summary>
         [JsonProperty(PropertyName = "roleName")]
         public string RoleName { get; set; }
 
         /// <summary>
-        /// Gets or sets role definition description.
+        /// Gets or sets the role definition description.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets role type.
+        /// Gets or sets the role type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

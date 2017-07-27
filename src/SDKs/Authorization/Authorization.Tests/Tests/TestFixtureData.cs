@@ -57,7 +57,6 @@ namespace Authorization.Tests
             {
                 this.CleanupTestData(MockContext.Start(this.GetType().FullName));
             }
-			TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
 
 			using (MockContext context = MockContext.Start(this.GetType().FullName))
             {                
