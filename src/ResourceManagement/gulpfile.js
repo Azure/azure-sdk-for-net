@@ -143,12 +143,6 @@ var mappings = {
         'package': 'Microsoft.Azure.Management.Relay.Fluent',
         'args': '--payload-flattening-threshold=1'
     },
-    'servermanagement': {
-        'dir': 'ServerManagement',
-        'source': 'arm-servermanagement/2016-07-01-preview/swagger/servermanagement.json',
-        'package': 'Microsoft.Azure.Management.ServerManagement.Fluent',
-        'args': '--payload-flattening-threshold=1'
-    },
     'storsimple8000series': {
         'dir': 'StorSimple',
         'source': 'arm-storsimple8000series/2017-06-01/swagger/storsimple.json',
