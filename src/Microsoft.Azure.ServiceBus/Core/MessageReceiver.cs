@@ -344,9 +344,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>Message identified by sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found. 
         /// Throws if the message has not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public async Task<Message> ReceiveBySequenceNumberAsync(long sequenceNumber)
+        public async Task<Message> ReceiveDeferredMessageAsync(long sequenceNumber)
         {
-            IList<Message> messages = await this.ReceiveBySequenceNumberAsync(new long[] { sequenceNumber }).ConfigureAwait(false);
+            IList<Message> messages = await this.ReceiveDeferredMessageAsync(new long[] { sequenceNumber }).ConfigureAwait(false);
             if (messages != null && messages.Count > 0)
             {
                 return messages[0];
@@ -362,12 +362,12 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public async Task<IList<Message>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
+        public async Task<IList<Message>> ReceiveDeferredMessageAsync(IEnumerable<long> sequenceNumbers)
         {
             this.ThrowIfNotPeekLockMode();
             int count = MessageReceiver.ValidateSequenceNumbers(sequenceNumbers);
 
-            MessagingEventSource.Log.MessageReceiveBySequenceNumberStart(this.ClientId, count, sequenceNumbers);
+            MessagingEventSource.Log.MessageReceiveDeferredMessageStart(this.ClientId, count, sequenceNumbers);
 
             IList<Message> messages = null;
             try
@@ -375,17 +375,17 @@ namespace Microsoft.Azure.ServiceBus.Core
                 await this.RetryPolicy.RunOperation(
                     async () =>
                     {
-                        messages = await this.OnReceiveBySequenceNumberAsync(sequenceNumbers).ConfigureAwait(false);
+                        messages = await this.OnReceiveDeferredMessageAsync(sequenceNumbers).ConfigureAwait(false);
                     }, this.OperationTimeout)
                     .ConfigureAwait(false);
             }
             catch (Exception exception)
             {
-                MessagingEventSource.Log.MessageReceiveBySequenceNumberException(this.ClientId, exception);
+                MessagingEventSource.Log.MessageReceiveDeferredMessageException(this.ClientId, exception);
                 throw;
             }
 
-            MessagingEventSource.Log.MessageReceiveBySequenceNumberStop(this.ClientId, messages?.Count ?? 0);
+            MessagingEventSource.Log.MessageReceiveDeferredMessageStop(this.ClientId, messages?.Count ?? 0);
 
             return messages;
         }
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
         /// In order to receive this message again in the future, you will need to save the <see cref="Message.SystemPropertiesCollection.SequenceNumber"/>
-        /// and receive it using <see cref="ReceiveBySequenceNumberAsync(long)"/>.
+        /// and receive it using <see cref="ReceiveDeferredMessageAsync(long)"/>.
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
         /// </remarks>
         /// <returns>The asynchronous operation.</returns>
@@ -893,7 +893,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary></summary>
         /// <param name="sequenceNumbers"></param>
         /// <returns>The asynchronous operation.</returns>
-        protected virtual async Task<IList<Message>> OnReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers)
+        protected virtual async Task<IList<Message>> OnReceiveDeferredMessageAsync(IEnumerable<long> sequenceNumbers)
         {
             List<Message> messages = new List<Message>();
             try

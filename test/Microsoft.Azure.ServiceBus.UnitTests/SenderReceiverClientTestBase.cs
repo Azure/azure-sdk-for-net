@@ -99,12 +99,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(receivedMessages.Count() == messageCount - deferMessagesCount);
 
             // Receive / Abandon deferred messages
-            receivedMessages = await messageReceiver.ReceiveBySequenceNumberAsync(sequenceNumbers);
+            receivedMessages = await messageReceiver.ReceiveDeferredMessageAsync(sequenceNumbers);
             Assert.True(receivedMessages.Count() == 5);
             await TestUtility.DeferMessagesAsync(messageReceiver, receivedMessages);
 
             // Receive Again and Check delivery count
-            receivedMessages = await messageReceiver.ReceiveBySequenceNumberAsync(sequenceNumbers);
+            receivedMessages = await messageReceiver.ReceiveDeferredMessageAsync(sequenceNumbers);
             int count = receivedMessages.Count(message => message.SystemProperties.DeliveryCount == 3);
             Assert.True(count == receivedMessages.Count());
 

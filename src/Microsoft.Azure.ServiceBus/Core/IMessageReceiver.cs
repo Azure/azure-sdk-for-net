@@ -97,7 +97,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>Message identified by sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found. 
         /// Throws if the message has not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        Task<Message> ReceiveBySequenceNumberAsync(long sequenceNumber);
+        Task<Message> ReceiveDeferredMessageAsync(long sequenceNumber);
 
         /// <summary>
         /// Receives a <see cref="IList{Message}"/> of deferred messages identified by <paramref name="sequenceNumbers"/>.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        Task<IList<Message>> ReceiveBySequenceNumberAsync(IEnumerable<long> sequenceNumbers);
+        Task<IList<Message>> ReceiveDeferredMessageAsync(IEnumerable<long> sequenceNumbers);
 
         /// <summary>
         /// Completes a series of <see cref="Message"/> using a list of lock tokens. This will delete the message from the service.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// A lock token can be found in <see cref="Message.SystemPropertiesCollection.LockToken"/>, 
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBus.ReceiveMode.PeekLock"/>. 
         /// In order to receive this message again in the future, you will need to save the <see cref="Message.SystemPropertiesCollection.SequenceNumber"/>
-        /// and receive it using <see cref="ReceiveBySequenceNumberAsync(long)"/>.
+        /// and receive it using <see cref="ReceiveDeferredMessageAsync(long)"/>.
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
         /// </remarks>
         /// <returns>The asynchronous operation.</returns>

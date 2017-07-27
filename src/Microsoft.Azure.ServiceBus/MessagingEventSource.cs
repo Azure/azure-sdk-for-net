@@ -309,23 +309,23 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiveBySequenceNumberStart(string clientId, int messageCount, IEnumerable<long> sequenceNumbers)
+        public void MessageReceiveDeferredMessageStart(string clientId, int messageCount, IEnumerable<long> sequenceNumbers)
         {
             if (this.IsEnabled())
             {
                 string formattedsequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
-                this.MessageReceiveBySequenceNumberStart(clientId, messageCount, formattedsequenceNumbers);
+                this.MessageReceiveDeferredMessageStart(clientId, messageCount, formattedsequenceNumbers);
             }
         }
 
-        [Event(28, Level = EventLevel.Informational, Message = "{0}: ReceiveBySequenceNumberAsync start. MessageCount = {1}, LockTokens = {2}")]
-        void MessageReceiveBySequenceNumberStart(string clientId, int messageCount, string sequenceNumbers)
+        [Event(28, Level = EventLevel.Informational, Message = "{0}: ReceiveDeferredMessageAsync start. MessageCount = {1}, LockTokens = {2}")]
+        void MessageReceiveDeferredMessageStart(string clientId, int messageCount, string sequenceNumbers)
         {
             this.WriteEvent(28, clientId, messageCount, sequenceNumbers);
         }
 
-        [Event(29, Level = EventLevel.Informational, Message = "{0}: ReceiveBySequenceNumberAsync done. Received '{1}' messages")]
-        public void MessageReceiveBySequenceNumberStop(string clientId, int messageCount)
+        [Event(29, Level = EventLevel.Informational, Message = "{0}: ReceiveDeferredMessageAsync done. Received '{1}' messages")]
+        public void MessageReceiveDeferredMessageStop(string clientId, int messageCount)
         {
             if (this.IsEnabled())
             {
@@ -334,16 +334,16 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void MessageReceiveBySequenceNumberException(string clientId, Exception exception)
+        public void MessageReceiveDeferredMessageException(string clientId, Exception exception)
         {
             if (this.IsEnabled())
             {
-                this.MessageReceiveBySequenceNumberException(clientId, exception.ToString());
+                this.MessageReceiveDeferredMessageException(clientId, exception.ToString());
             }
         }
 
-        [Event(30, Level = EventLevel.Error, Message = "{0}: ReceiveBySequenceNumberAsync Exception: {1}.")]
-        void MessageReceiveBySequenceNumberException(string clientId, string exception)
+        [Event(30, Level = EventLevel.Error, Message = "{0}: ReceiveDeferredMessageAsync Exception: {1}.")]
+        void MessageReceiveDeferredMessageException(string clientId, string exception)
         {
             this.WriteEvent(30, clientId, exception);
         }
