@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Billing.Fluent", "src\ResourceManagement\Billing\Microsoft.Azure.Management.Billing.Fluent.csproj", "{153715E6-A0D9-457C-9FF6-EEC40966C4AF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.CognitiveServices.Fluent", "src\ResourceManagement\CognitiveServices\Microsoft.Azure.Management.CognitiveServices.Fluent.csproj", "{665E982C-C73C-4F38-BD98-EDC1FDDFFB94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,10 @@ Global
 		{153715E6-A0D9-457C-9FF6-EEC40966C4AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{153715E6-A0D9-457C-9FF6-EEC40966C4AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{153715E6-A0D9-457C-9FF6-EEC40966C4AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{665E982C-C73C-4F38-BD98-EDC1FDDFFB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{665E982C-C73C-4F38-BD98-EDC1FDDFFB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{665E982C-C73C-4F38-BD98-EDC1FDDFFB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{665E982C-C73C-4F38-BD98-EDC1FDDFFB94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
