@@ -8,61 +8,18 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.UpdateDefinition;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
+    using Java.Io;
     using System;
-    using System.IO;
+    using Org.Joda.Time;
 
-    public partial class PasswordCredentialImpl<T> where T : class
+    internal partial class PasswordCredentialImpl<T> 
     {
-        /// <summary>
-        /// Gets the name of the resource.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
-        {
-            get
-            {
-                return this.Name();
-            }
-        }
-
-        /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id();
-            }
-        }
-
-        /// <summary>
-        /// Export the information of this service principal into an auth file.
-        /// </summary>
-        /// <param name="outputStream">The output stream to export the file.</param>
-        /// <return>The next stage in credential definition.</return>
-        PasswordCredential.UpdateDefinition.IWithAttach<T> PasswordCredential.UpdateDefinition.IWithAuthFile<T>.WithAuthFileToExport(StreamWriter outputStream)
-        {
-            return this.WithAuthFileToExport(outputStream) as PasswordCredential.UpdateDefinition.IWithAttach<T>;
-        }
-
-        /// <summary>
-        /// Export the information of this service principal into an auth file.
-        /// </summary>
-        /// <param name="outputStream">The output stream to export the file.</param>
-        /// <return>The next stage in credential definition.</return>
-        PasswordCredential.Definition.IWithAttach<T> PasswordCredential.Definition.IWithAuthFile<T>.WithAuthFileToExport(StreamWriter outputStream)
-        {
-            return this.WithAuthFileToExport(outputStream) as PasswordCredential.Definition.IWithAttach<T>;
-        }
-
         /// <summary>
         /// Specifies the duration for which password or key would be valid. Default value is 1 year.
         /// </summary>
         /// <param name="duration">The duration of validity.</param>
         /// <return>The next stage in credential definition.</return>
-        PasswordCredential.UpdateDefinition.IWithAttach<T> PasswordCredential.UpdateDefinition.IWithDuration<T>.WithDuration(TimeSpan duration)
+        PasswordCredential.UpdateDefinition.IWithAttach<T> PasswordCredential.UpdateDefinition.IWithDuration<T>.WithDuration(Duration duration)
         {
             return this.WithDuration(duration) as PasswordCredential.UpdateDefinition.IWithAttach<T>;
         }
@@ -72,7 +29,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="duration">The duration of validity.</param>
         /// <return>The next stage in credential definition.</return>
-        PasswordCredential.Definition.IWithAttach<T> PasswordCredential.Definition.IWithDuration<T>.WithDuration(TimeSpan duration)
+        PasswordCredential.Definition.IWithAttach<T> PasswordCredential.Definition.IWithDuration<T>.WithDuration(Duration duration)
         {
             return this.WithDuration(duration) as PasswordCredential.Definition.IWithAttach<T>;
         }
@@ -89,17 +46,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         /// <summary>
-        /// Gets key value.
-        /// </summary>
-        string Microsoft.Azure.Management.Graph.RBAC.Fluent.ICredential.Value
-        {
-            get
-            {
-                return this.Value();
-            }
-        }
-
-        /// <summary>
         /// Gets end date.
         /// </summary>
         System.DateTime Microsoft.Azure.Management.Graph.RBAC.Fluent.ICredential.EndDate
@@ -111,21 +57,34 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         /// <summary>
-        /// Attaches the child definition to the parent resource update.
+        /// Gets key value.
         /// </summary>
-        /// <return>The next stage of the parent definition.</return>
-        T Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<T>.Attach()
+        string Microsoft.Azure.Management.Graph.RBAC.Fluent.ICredential.Value
         {
-            return this.Attach() as T;
+            get
+            {
+                return this.Value();
+            }
         }
 
         /// <summary>
-        /// Attaches the child definition to the parent resource definiton.
+        /// Specifies the "subscription=" field in the auth file.
         /// </summary>
-        /// <return>The next stage of the parent definition.</return>
-        T Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<T>.Attach()
+        /// <param name="subscriptionId">The UUID of the subscription.</param>
+        /// <return>The next stage in credential definition.</return>
+        PasswordCredential.UpdateDefinition.IWithAttach<T> PasswordCredential.UpdateDefinition.IWithSubscriptionInAuthFile<T>.WithSubscriptionId(string subscriptionId)
         {
-            return this.Attach() as T;
+            return this.WithSubscriptionId(subscriptionId) as PasswordCredential.UpdateDefinition.IWithAttach<T>;
+        }
+
+        /// <summary>
+        /// Specifies the "subscription=" field in the auth file.
+        /// </summary>
+        /// <param name="subscriptionId">The UUID of the subscription.</param>
+        /// <return>The next stage in credential definition.</return>
+        PasswordCredential.Definition.IWithAttach<T> PasswordCredential.Definition.IWithSubscriptionInAuthFile<T>.WithSubscriptionId(string subscriptionId)
+        {
+            return this.WithSubscriptionId(subscriptionId) as PasswordCredential.Definition.IWithAttach<T>;
         }
 
         /// <summary>
@@ -146,6 +105,26 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         PasswordCredential.Definition.IWithAttach<T> PasswordCredential.Definition.IWithKey<T>.WithPasswordValue(string password)
         {
             return this.WithPasswordValue(password) as PasswordCredential.Definition.IWithAttach<T>;
+        }
+
+        /// <summary>
+        /// Export the information of this service principal into an auth file.
+        /// </summary>
+        /// <param name="outputStream">The output stream to export the file.</param>
+        /// <return>The next stage in credential definition.</return>
+        PasswordCredential.UpdateDefinition.IWithSubscriptionInAuthFile<T> PasswordCredential.UpdateDefinition.IWithAuthFile<T>.WithAuthFileToExport(OutputStream outputStream)
+        {
+            return this.WithAuthFileToExport(outputStream) as PasswordCredential.UpdateDefinition.IWithSubscriptionInAuthFile<T>;
+        }
+
+        /// <summary>
+        /// Export the information of this service principal into an auth file.
+        /// </summary>
+        /// <param name="outputStream">The output stream to export the file.</param>
+        /// <return>The next stage in credential definition.</return>
+        PasswordCredential.Definition.IWithSubscriptionInAuthFile<T> PasswordCredential.Definition.IWithAuthFile<T>.WithAuthFileToExport(OutputStream outputStream)
+        {
+            return this.WithAuthFileToExport(outputStream) as PasswordCredential.Definition.IWithSubscriptionInAuthFile<T>;
         }
 
         /// <summary>

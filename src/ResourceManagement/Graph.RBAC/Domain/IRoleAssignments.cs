@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition;
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
@@ -36,7 +35,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="scope">The scope of the role assignments.</param>
         /// <return>An observable of role assignments.</return>
-        Task<IPagedCollection<IRoleAssignment>> ListByScopeAsync(string scope, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment> ListByScopeAsync(string scope, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List role assignments in a scope.

@@ -30,7 +30,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private ApplicationUpdateParametersInner updateParameters;
         private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.IPasswordCredential> cachedPasswordCredentials;
         private Dictionary<string,Microsoft.Azure.Management.Graph.RBAC.Fluent.ICertificateCredential> cachedCertificateCredentials;
-                public ActiveDirectoryApplicationImpl WithAvailableToOtherTenants(bool availableToOtherTenants)
+
+        string IHasId.Id => Inner.ObjectId;
+
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
+
+        public ActiveDirectoryApplicationImpl WithAvailableToOtherTenants(bool availableToOtherTenants)
         {
             if (IsInCreateMode())
             {

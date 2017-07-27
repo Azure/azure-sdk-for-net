@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using System;
+    using Java.Net;
     using System.Collections.Generic;
 
     /// <summary>
@@ -14,11 +14,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// </summary>
     public interface IActiveDirectoryApplication  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IIndexable,
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Models.ApplicationInner>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IUpdatable<ActiveDirectoryApplication.Update.IUpdate>
     {
         /// <summary>
@@ -59,6 +56,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <summary>
         /// Gets the home page of the application.
         /// </summary>
-        Uri SignOnUrl { get; }
+        Java.Net.URL SignOnUrl { get; }
     }
 }

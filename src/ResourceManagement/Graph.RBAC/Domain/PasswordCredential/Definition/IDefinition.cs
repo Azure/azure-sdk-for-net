@@ -2,37 +2,34 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition
 {
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
+    using Java.Io;
     using System;
-    using System.IO;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.Attachable.ChildResource.Definition;
+    using Org.Joda.Time;
 
     /// <summary>
-    /// The final stage of the credential definition.
-    /// At this stage, more settings can be specified, or the credential definition can be
-    /// attached to the parent application / service principal definition
-    /// using  WithAttach.attach().
+    /// The entirety of a credential definition.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
-    public interface IWithAttach<ParentT>  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithStartDate<ParentT>,
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithDuration<ParentT>,
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAuthFile<ParentT>
+    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
+    public interface IDefinition<ParentT>  :
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IBlank<ParentT>,
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithSubscriptionInAuthFile<ParentT>,
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT>
     {
     }
 
     /// <summary>
-    /// The credential definition stage allowing the the password or certificate to be set.
+    /// A credential definition stage allowing exporting the auth file for the service principal.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IWithKey<ParentT> 
+    public interface IWithAuthFile<ParentT> 
     {
         /// <summary>
-        /// Use a password as a key.
+        /// Export the information of this service principal into an auth file.
         /// </summary>
-        /// <param name="password">The password value.</param>
+        /// <param name="outputStream">The output stream to export the file.</param>
         /// <return>The next stage in credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT> WithPasswordValue(string password);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithSubscriptionInAuthFile<ParentT> WithAuthFileToExport(OutputStream outputStream);
     }
 
     /// <summary>
@@ -50,12 +47,40 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
     }
 
     /// <summary>
-    /// The entirety of a credential definition.
+    /// The credential definition stage allowing the the password or certificate to be set.
     /// </summary>
-    /// <typeparam name="ParentT">The return type of the final  Attachable.attach().</typeparam>
-    public interface IDefinition<ParentT>  :
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IBlank<ParentT>,
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithKey<ParentT> 
+    {
+        /// <summary>
+        /// Use a password as a key.
+        /// </summary>
+        /// <param name="password">The password value.</param>
+        /// <return>The next stage in credential definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT> WithPasswordValue(string password);
+    }
+
+    /// <summary>
+    /// The final stage of the credential definition.
+    /// At this stage, more settings can be specified, or the credential definition can be
+    /// attached to the parent application / service principal definition
+    /// using  WithAttach.attach().
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    public interface IWithAttach<ParentT>  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Attachable.ChildResource.Definition.IInDefinition<ParentT>,
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithStartDate<ParentT>,
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithDuration<ParentT>,
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAuthFile<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The first stage of a credential definition.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IBlank<ParentT>  :
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithKey<ParentT>
     {
     }
 
@@ -70,28 +95,20 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Defini
         /// </summary>
         /// <param name="duration">The duration of validity.</param>
         /// <return>The next stage in credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT> WithDuration(TimeSpan duration);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT> WithDuration(Duration duration);
     }
 
     /// <summary>
-    /// A credential definition stage allowing exporting the auth file for the service principal.
-    /// </summary>
-    public interface IWithAuthFile<ParentT> 
-    {
-        /// <summary>
-        /// Export the information of this service principal into an auth file.
-        /// </summary>
-        /// <param name="outputStream">The output stream to export the file.</param>
-        /// <return>The next stage in credential definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT> WithAuthFileToExport(StreamWriter outputStream);
-    }
-
-    /// <summary>
-    /// The first stage of a credential definition.
+    /// A credential definition stage allowing the subscription in the auth file to be set.
     /// </summary>
     /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
-    public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithKey<ParentT>
+    public interface IWithSubscriptionInAuthFile<ParentT> 
     {
+        /// <summary>
+        /// Specifies the "subscription=" field in the auth file.
+        /// </summary>
+        /// <param name="subscriptionId">The UUID of the subscription.</param>
+        /// <return>The next stage in credential definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.PasswordCredential.Definition.IWithAttach<ParentT> WithSubscriptionId(string subscriptionId);
     }
 }

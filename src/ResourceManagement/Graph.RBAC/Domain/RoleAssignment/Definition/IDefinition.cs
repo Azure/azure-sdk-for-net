@@ -2,30 +2,39 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition
 {
-    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
-    using Microsoft.Azure.Management.ResourceManager.Fluent;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
 
     /// <summary>
-    /// The stage of role assignment definition allowing specifying the role.
+    /// The first stage of the role assignment definition.
     /// </summary>
-    public interface IWithRole 
+    public interface IBlank  :
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithAssignee
     {
-        /// <summary>
-        /// Specifies the name of a built in role for this assignment.
-        /// </summary>
-        /// <param name="role">The name of the role.</param>
-        /// <return>The next stage in role assignment definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithScope WithBuiltInRole(BuiltInRole role);
+    }
 
-        /// <summary>
-        /// Specifies the ID of the custom role for this assignment.
-        /// </summary>
-        /// <param name="roleDefinitionId">ID of the custom role definition.</param>
-        /// <return>The next stage in role assignment definition.</return>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithScope WithRoleDefinition(string roleDefinitionId);
+    /// <summary>
+    /// An role assignment definition with sufficient inputs to create a new
+    /// role assignment in the cloud, but exposing additional optional inputs to
+    /// specify.
+    /// </summary>
+    public interface IWithCreate  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment>
+    {
+    }
+
+    /// <summary>
+    /// Container interface for all the definitions that need to be implemented.
+    /// </summary>
+    public interface IDefinition  :
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IBlank,
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithRole,
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithScope,
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithCreate
+    {
     }
 
     /// <summary>
@@ -64,14 +73,23 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition
     }
 
     /// <summary>
-    /// Container interface for all the definitions that need to be implemented.
+    /// The stage of role assignment definition allowing specifying the role.
     /// </summary>
-    public interface IDefinition  :
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IBlank,
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithRole,
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithScope,
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithCreate
+    public interface IWithRole 
     {
+        /// <summary>
+        /// Specifies the name of a built in role for this assignment.
+        /// </summary>
+        /// <param name="role">The name of the role.</param>
+        /// <return>The next stage in role assignment definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithScope WithBuiltInRole(BuiltInRole role);
+
+        /// <summary>
+        /// Specifies the ID of the custom role for this assignment.
+        /// </summary>
+        /// <param name="roleDefinitionId">ID of the custom role definition.</param>
+        /// <return>The next stage in role assignment definition.</return>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithScope WithRoleDefinition(string roleDefinitionId);
     }
 
     /// <summary>
@@ -120,23 +138,5 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition
         /// <param name="objectId">The object ID of an Active Directory identity.</param>
         /// <return>The next stage in role assignment definition.</return>
         Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithRole ForObjectId(string objectId);
-    }
-
-    /// <summary>
-    /// An role assignment definition with sufficient inputs to create a new
-    /// role assignment in the cloud, but exposing additional optional inputs to
-    /// specify.
-    /// </summary>
-    public interface IWithCreate  :
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IRoleAssignment>
-    {
-    }
-
-    /// <summary>
-    /// The first stage of the role assignment definition.
-    /// </summary>
-    public interface IBlank  :
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition.IWithAssignee
-    {
     }
 }

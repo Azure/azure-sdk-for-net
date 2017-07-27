@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Rest;
     using System;
     using System.Linq;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition;
 
     /// <summary>
     /// The implementation of ServicePrincipals and its parent interfaces.
@@ -105,7 +106,15 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                protected override IServicePrincipal WrapModel(ServicePrincipalInner servicePrincipalInner)
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager
+        {
+            get
+            {
+                return manager;
+            }
+        }
+
+        protected override IServicePrincipal WrapModel(ServicePrincipalInner servicePrincipalInner)
         {
             return servicePrincipalInner == null ? null : new ServicePrincipalImpl(servicePrincipalInner, manager);
         }
@@ -121,6 +130,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         public override void DeleteById(string id)
         {
             Inner.Delete(id);
+        }
+
+        IServicePrincipal ISupportsGettingById<IServicePrincipal>.GetById(string id)
+        {
+            return WrapModel(manager.Inner.ServicePrincipals.Get(id));
+        }
+
+        IBlank ISupportsCreating<IBlank>.Define(string name)
+        {
+            return WrapModel(name);
         }
     }
 }

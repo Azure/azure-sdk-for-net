@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using System.Linq;
     using Rest.Azure;
     using System.Net;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUser.Definition;
+    using System;
 
     /// <summary>
     /// The implementation of Users and its parent interfaces.
@@ -97,7 +99,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryUser>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => throw new NotImplementedException();
+
+        public async Task<Microsoft.Azure.Management.ResourceManager.Fluent.Core.IPagedCollection<IActiveDirectoryUser>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await PagedCollection<IActiveDirectoryUser, UserInner>.LoadPage(
                 async (cancellation) => await Inner.ListAsync(null, cancellation),
@@ -112,6 +116,26 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 return null;
             }
             return new ActiveDirectoryUserImpl(userInner, manager);
+        }
+
+        IActiveDirectoryUser ISupportsGettingById<IActiveDirectoryUser>.GetById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBlank Define(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
         }
     }
 }

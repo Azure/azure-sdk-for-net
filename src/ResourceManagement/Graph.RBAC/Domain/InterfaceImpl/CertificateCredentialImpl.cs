@@ -8,12 +8,11 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.CertificateCredential.UpdateDefinition;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
+    using Java.Io;
     using System;
-    using System.IO;
+    using Org.Joda.Time;
 
-    public partial class CertificateCredentialImpl<T> where T : class
+    internal partial class CertificateCredentialImpl<T> 
     {
         /// <summary>
         /// Export the information of this service principal into an auth file.
@@ -40,7 +39,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="certificate">The certificate content.</param>
         /// <return>The next stage in credential definition.</return>
-        CertificateCredential.UpdateDefinition.IWithAttach<T> CertificateCredential.UpdateDefinition.IWithPublicKey<T>.WithPublicKey(byte[] certificate)
+        CertificateCredential.UpdateDefinition.IWithAttach<T> CertificateCredential.UpdateDefinition.IWithPublicKey<T>.WithPublicKey(params byte[] certificate)
         {
             return this.WithPublicKey(certificate) as CertificateCredential.UpdateDefinition.IWithAttach<T>;
         }
@@ -50,31 +49,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="certificate">The certificate content.</param>
         /// <return>The next stage in credential definition.</return>
-        CertificateCredential.Definition.IWithAttach<T> CertificateCredential.Definition.IWithPublicKey<T>.WithPublicKey(byte[] certificate)
+        CertificateCredential.Definition.IWithAttach<T> CertificateCredential.Definition.IWithPublicKey<T>.WithPublicKey(params byte[] certificate)
         {
             return this.WithPublicKey(certificate) as CertificateCredential.Definition.IWithAttach<T>;
-        }
-
-        /// <summary>
-        /// Gets the name of the resource.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName.Name
-        {
-            get
-            {
-                return this.Name();
-            }
-        }
-
-        /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id();
-            }
         }
 
         /// <summary>
@@ -82,7 +59,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="outputStream">The output stream to export the file.</param>
         /// <return>The next stage in credential definition.</return>
-        CertificateCredential.UpdateDefinition.IWithAuthFileCertificate<T> CertificateCredential.UpdateDefinition.IWithAuthFile<T>.WithAuthFileToExport(StreamWriter outputStream)
+        CertificateCredential.UpdateDefinition.IWithAuthFileCertificate<T> CertificateCredential.UpdateDefinition.IWithAuthFile<T>.WithAuthFileToExport(OutputStream outputStream)
         {
             return this.WithAuthFileToExport(outputStream) as CertificateCredential.UpdateDefinition.IWithAuthFileCertificate<T>;
         }
@@ -92,7 +69,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="outputStream">The output stream to export the file.</param>
         /// <return>The next stage in credential definition.</return>
-        CertificateCredential.Definition.IWithAuthFileCertificate<T> CertificateCredential.Definition.IWithAuthFile<T>.WithAuthFileToExport(StreamWriter outputStream)
+        CertificateCredential.Definition.IWithAuthFileCertificate<T> CertificateCredential.Definition.IWithAuthFile<T>.WithAuthFileToExport(OutputStream outputStream)
         {
             return this.WithAuthFileToExport(outputStream) as CertificateCredential.Definition.IWithAuthFileCertificate<T>;
         }
@@ -102,7 +79,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="duration">The duration of validity.</param>
         /// <return>The next stage in credential definition.</return>
-        CertificateCredential.UpdateDefinition.IWithAttach<T> CertificateCredential.UpdateDefinition.IWithDuration<T>.WithDuration(TimeSpan duration)
+        CertificateCredential.UpdateDefinition.IWithAttach<T> CertificateCredential.UpdateDefinition.IWithDuration<T>.WithDuration(Duration duration)
         {
             return this.WithDuration(duration) as CertificateCredential.UpdateDefinition.IWithAttach<T>;
         }
@@ -112,7 +89,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="duration">The duration of validity.</param>
         /// <return>The next stage in credential definition.</return>
-        CertificateCredential.Definition.IWithAttach<T> CertificateCredential.Definition.IWithDuration<T>.WithDuration(TimeSpan duration)
+        CertificateCredential.Definition.IWithAttach<T> CertificateCredential.Definition.IWithDuration<T>.WithDuration(Duration duration)
         {
             return this.WithDuration(duration) as CertificateCredential.Definition.IWithAttach<T>;
         }
@@ -151,15 +128,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         }
 
         /// <summary>
-        /// Attaches the child definition to the parent resource update.
-        /// </summary>
-        /// <return>The next stage of the parent definition.</return>
-        T Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<T>.Attach()
-        {
-            return this.Attach() as T;
-        }
-
-        /// <summary>
         /// Export the information of this service principal into an auth file.
         /// </summary>
         /// <param name="privateKeyPassword">The password for the private key.</param>
@@ -177,15 +145,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         CertificateCredential.Definition.IWithAttach<T> CertificateCredential.Definition.IWithAuthFileCertificatePassword<T>.WithPrivateKeyPassword(string privateKeyPassword)
         {
             return this.WithPrivateKeyPassword(privateKeyPassword) as CertificateCredential.Definition.IWithAttach<T>;
-        }
-
-        /// <summary>
-        /// Attaches the child definition to the parent resource definiton.
-        /// </summary>
-        /// <return>The next stage of the parent definition.</return>
-        T Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<T>.Attach()
-        {
-            return this.Attach() as T;
         }
 
         /// <summary>
@@ -229,7 +188,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="secret">The secret key content.</param>
         /// <return>The next stage in credential definition.</return>
-        CertificateCredential.UpdateDefinition.IWithAttach<T> CertificateCredential.UpdateDefinition.IWithSymmetricKey<T>.WithSecretKey(byte[] secret)
+        CertificateCredential.UpdateDefinition.IWithAttach<T> CertificateCredential.UpdateDefinition.IWithSymmetricKey<T>.WithSecretKey(params byte[] secret)
         {
             return this.WithSecretKey(secret) as CertificateCredential.UpdateDefinition.IWithAttach<T>;
         }
@@ -239,7 +198,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// </summary>
         /// <param name="secret">The secret key content.</param>
         /// <return>The next stage in credential definition.</return>
-        CertificateCredential.Definition.IWithAttach<T> CertificateCredential.Definition.IWithSymmetricKey<T>.WithSecretKey(byte[] secret)
+        CertificateCredential.Definition.IWithAttach<T> CertificateCredential.Definition.IWithSymmetricKey<T>.WithSecretKey(params byte[] secret)
         {
             return this.WithSecretKey(secret) as CertificateCredential.Definition.IWithAttach<T>;
         }

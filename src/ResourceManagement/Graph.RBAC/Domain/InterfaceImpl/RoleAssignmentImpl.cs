@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
-    public partial class RoleAssignmentImpl 
+    internal partial class RoleAssignmentImpl 
     {
         /// <summary>
         /// Gets the role assignment scope.
@@ -122,28 +122,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         RoleAssignment.Definition.IWithScope RoleAssignment.Definition.IWithRole.WithRoleDefinition(string roleDefinitionId)
         {
             return this.WithRoleDefinition(roleDefinitionId) as RoleAssignment.Definition.IWithScope;
-        }
-
-        /// <summary>
-        /// Gets the resource ID string.
-        /// </summary>
-        string Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasId.Id
-        {
-            get
-            {
-                return this.Id();
-            }
-        }
-
-        /// <summary>
-        /// Gets the manager client of this resource type.
-        /// </summary>
-        Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager>.Manager
-        {
-            get
-            {
-                return this.Manager() as Microsoft.Azure.Management.Graph.RBAC.Fluent.GraphRbacManager;
-            }
         }
 
         /// <summary>
