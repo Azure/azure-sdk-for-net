@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Monitor.Management
             /// <param name='serviceDiagnosticSettingsResource'>
             /// Parameters supplied to the operation.
             /// </param>
-            public static ServiceDiagnosticSettingsResource Update(this IServiceDiagnosticSettingsOperations operations, string resourceUri, ServiceDiagnosticSettingsResource serviceDiagnosticSettingsResource)
+            public static ServiceDiagnosticSettingsResource Update(this IServiceDiagnosticSettingsOperations operations, string resourceUri, ServiceDiagnosticSettingsResourcePatch serviceDiagnosticSettingsResource)
             {
                 return operations.UpdateAsync(resourceUri, serviceDiagnosticSettingsResource).GetAwaiter().GetResult();
             }
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Monitor.Management
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServiceDiagnosticSettingsResource> UpdateAsync(this IServiceDiagnosticSettingsOperations operations, string resourceUri, ServiceDiagnosticSettingsResource serviceDiagnosticSettingsResource, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServiceDiagnosticSettingsResource> UpdateAsync(this IServiceDiagnosticSettingsOperations operations, string resourceUri, ServiceDiagnosticSettingsResourcePatch serviceDiagnosticSettingsResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceUri, serviceDiagnosticSettingsResource, null, cancellationToken).ConfigureAwait(false))
                 {

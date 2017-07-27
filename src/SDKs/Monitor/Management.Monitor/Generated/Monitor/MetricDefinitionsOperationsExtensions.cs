@@ -25,13 +25,7 @@ namespace Microsoft.Azure.Management.Monitor
     public static partial class MetricDefinitionsOperationsExtensions
     {
             /// <summary>
-            /// Lists the metric definitions for the resource.&lt;br&gt;The **$filter**
-            /// parameter is optional, and can be used to only retrieve certain metric
-            /// definitions.&lt;br&gt;For example, get just the definition for the CPU
-            /// percentage counter: $filter=name.value eq '\Processor(_Total)\% Processor
-            /// Time'.&lt;br&gt;This **$filter** is very restricted and allows only clauses
-            /// of the form **'name eq &lt;value&gt;'** separated by **or** logical
-            /// operators.&lt;br&gt;**NOTE**: No other syntax is allowed.
+            /// Lists the metric definitions for the resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -48,13 +42,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Lists the metric definitions for the resource.&lt;br&gt;The **$filter**
-            /// parameter is optional, and can be used to only retrieve certain metric
-            /// definitions.&lt;br&gt;For example, get just the definition for the CPU
-            /// percentage counter: $filter=name.value eq '\Processor(_Total)\% Processor
-            /// Time'.&lt;br&gt;This **$filter** is very restricted and allows only clauses
-            /// of the form **'name eq &lt;value&gt;'** separated by **or** logical
-            /// operators.&lt;br&gt;**NOTE**: No other syntax is allowed.
+            /// Lists the metric definitions for the resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

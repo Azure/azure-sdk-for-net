@@ -37,6 +37,44 @@ namespace Monitor.Tests.BasicTests
         }
 
         [Fact]
+        public void UpdateSettingTest()
+        {
+            AutoscaleSettingResource resource = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "CpuPercentage");
+            resource.Tags = new Dictionary<string, string>
+            {
+                { "key2", "val2" }
+            };
+            resource.Enabled = false;
+
+            var handler = new RecordedDelegatingHandler();
+            var monitorManagementClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(resource, monitorManagementClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + resource.Name + "\",\"id\":\"" + resource.Id + "\",");
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            monitorManagementClient = GetMonitorManagementClient(handler);
+
+            AutoscaleSettingResourcePatch pathResource = new AutoscaleSettingResourcePatch(
+                name: resource.Name,
+                tags: new Dictionary<string, string>
+                {
+                    { "key2", "val2" }
+                },
+                notifications: resource.Notifications,
+                enabled: false,
+                profiles: resource.Profiles,
+                targetResourceUri: resource.TargetResourceUri
+            );
+
+            var actualResponse = monitorManagementClient.AutoscaleSettings.Update(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1", autoscaleSettingResource: pathResource);
+            AreEqual(resource, actualResponse);
+        }
+
+        [Fact]
         public void Autoscale_GetSetting()
         {
             var expResponse = CreateAutoscaleSetting(ResourceUri, "CpuPercentage", string.Empty);

@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.Monitor.Management
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> UpdateWithHttpMessagesAsync(string resourceUri, ServiceDiagnosticSettingsResource serviceDiagnosticSettingsResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServiceDiagnosticSettingsResource>> UpdateWithHttpMessagesAsync(string resourceUri, ServiceDiagnosticSettingsResourcePatch serviceDiagnosticSettingsResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)
             {

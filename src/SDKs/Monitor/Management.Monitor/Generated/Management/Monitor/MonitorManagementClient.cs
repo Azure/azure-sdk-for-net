@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.Monitor.Management
         public virtual IAlertRuleIncidentsOperations AlertRuleIncidents { get; private set; }
 
         /// <summary>
+        /// Gets the IActivityLogAlertsOperations.
+        /// </summary>
+        public virtual IActivityLogAlertsOperations ActivityLogAlerts { get; private set; }
+
+        /// <summary>
         /// Gets the ILogProfilesOperations.
         /// </summary>
         public virtual ILogProfilesOperations LogProfiles { get; private set; }
@@ -93,6 +98,11 @@ namespace Microsoft.Azure.Management.Monitor.Management
         /// Gets the IServiceDiagnosticSettingsOperations.
         /// </summary>
         public virtual IServiceDiagnosticSettingsOperations ServiceDiagnosticSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IActionGroupsOperations.
+        /// </summary>
+        public virtual IActionGroupsOperations ActionGroups { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the MonitorManagementClient class.
@@ -298,8 +308,10 @@ namespace Microsoft.Azure.Management.Monitor.Management
             AutoscaleSettings = new AutoscaleSettingsOperations(this);
             AlertRules = new AlertRulesOperations(this);
             AlertRuleIncidents = new AlertRuleIncidentsOperations(this);
+            ActivityLogAlerts = new ActivityLogAlertsOperations(this);
             LogProfiles = new LogProfilesOperations(this);
             ServiceDiagnosticSettings = new ServiceDiagnosticSettingsOperations(this);
+            ActionGroups = new ActionGroupsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
