@@ -65,11 +65,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
 
                 profile.Endpoints = new[]
                 {
-                    new Endpoint
+                    new Endpoint(id: null, name: "My external endpoint", type: "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints")
                     {
-                        Id = null,
-                        Name = "My external endpoint",
-                        Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
                         TargetResourceId = null,
                         Target = "foobar.contoso.com",
                         EndpointLocation = "North Europe",
@@ -107,7 +104,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                         TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName));
                 }
 
-                List<Profile> listResponse = trafficManagerClient.Profiles.ListAllInResourceGroup(resourceGroup.Name).ToList();
+                List<Profile> listResponse = trafficManagerClient.Profiles.ListByResourceGroup(resourceGroup.Name).ToList();
 
                 Assert.Equal(5, listResponse.Count);
 
@@ -135,7 +132,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                         TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName));
                 }
 
-                IEnumerable<Profile> listResponse = trafficManagerClient.Profiles.ListAll();
+                IEnumerable<Profile> listResponse = trafficManagerClient.Profiles.ListBySubscription();
 
                 // Just in case the subscription had some other profiles
                 Assert.True(5 <= listResponse.Count());

@@ -30,18 +30,17 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// <summary>
         /// Initializes a new instance of the DnsConfig class.
         /// </summary>
-        /// <param name="relativeName">Gets or sets the relative DNS name
-        /// provided by this Traffic Manager profile.  This value is combined
-        /// with the DNS domain name used by Azure Traffic Manager to form the
-        /// fully-qualified domain name (FQDN) of the profile.</param>
-        /// <param name="fqdn">Gets or sets the fully-qualified domain name
-        /// (FQDN) of the Traffic Manager profile.  This is formed from the
-        /// concatenation of the RelativeName with the DNS domain used by Azure
-        /// Traffic Manager.</param>
-        /// <param name="ttl">Gets or sets the DNS Time-To-Live (TTL), in
-        /// seconds.  This informs the local DNS resolvers and DNS clients how
-        /// long to cache DNS responses provided by this Traffic Manager
-        /// profile.</param>
+        /// <param name="relativeName">The relative DNS name provided by this
+        /// Traffic Manager profile. This value is combined with the DNS domain
+        /// name used by Azure Traffic Manager to form the fully-qualified
+        /// domain name (FQDN) of the profile.</param>
+        /// <param name="fqdn">The fully-qualified domain name (FQDN) of the
+        /// Traffic Manager profile. This is formed from the concatenation of
+        /// the RelativeName with the DNS domain used by Azure Traffic
+        /// Manager.</param>
+        /// <param name="ttl">The DNS Time-To-Live (TTL), in seconds. This
+        /// informs the local DNS resolvers and DNS clients how long to cache
+        /// DNS responses provided by this Traffic Manager profile.</param>
         public DnsConfig(string relativeName = default(string), string fqdn = default(string), long? ttl = default(long?))
         {
             RelativeName = relativeName;
@@ -57,7 +56,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
 
         /// <summary>
         /// Gets or sets the relative DNS name provided by this Traffic Manager
-        /// profile.  This value is combined with the DNS domain name used by
+        /// profile. This value is combined with the DNS domain name used by
         /// Azure Traffic Manager to form the fully-qualified domain name
         /// (FQDN) of the profile.
         /// </summary>
@@ -65,15 +64,15 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         public string RelativeName { get; set; }
 
         /// <summary>
-        /// Gets or sets the fully-qualified domain name (FQDN) of the Traffic
-        /// Manager profile.  This is formed from the concatenation of the
-        /// RelativeName with the DNS domain used by Azure Traffic Manager.
+        /// Gets the fully-qualified domain name (FQDN) of the Traffic Manager
+        /// profile. This is formed from the concatenation of the RelativeName
+        /// with the DNS domain used by Azure Traffic Manager.
         /// </summary>
         [JsonProperty(PropertyName = "fqdn")]
-        public string Fqdn { get; set; }
+        public string Fqdn { get; private set; }
 
         /// <summary>
-        /// Gets or sets the DNS Time-To-Live (TTL), in seconds.  This informs
+        /// Gets or sets the DNS Time-To-Live (TTL), in seconds. This informs
         /// the local DNS resolvers and DNS clients how long to cache DNS
         /// responses provided by this Traffic Manager profile.
         /// </summary>

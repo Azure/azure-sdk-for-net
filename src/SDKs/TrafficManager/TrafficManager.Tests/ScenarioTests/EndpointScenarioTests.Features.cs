@@ -33,11 +33,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
 
                 Assert.Equal("Geographic", profile.TrafficRoutingMethod);
 
-                Endpoint endpoint = new Endpoint
+                Endpoint endpoint = new Endpoint(id: null, name: "My external endpoint", type: "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints")
                 {
-                    Id = null,
-                    Name = "My external endpoint",
-                    Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
                     TargetResourceId = null,
                     Target = "foobar.contoso.com",
                     EndpointStatus = "Enabled",

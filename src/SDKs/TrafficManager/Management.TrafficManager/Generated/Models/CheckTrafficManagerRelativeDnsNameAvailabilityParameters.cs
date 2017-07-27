@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// Initializes a new instance of the
         /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class.
         /// </summary>
-        /// <param name="name">Gets or sets the name of the resource.</param>
-        /// <param name="type">Gets or sets the type of the resource.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
         public CheckTrafficManagerRelativeDnsNameAvailabilityParameters(string name = default(string), string type = default(string))
         {
             Name = name;
