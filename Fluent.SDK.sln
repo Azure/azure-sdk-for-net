@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Consumption.Fluent", "src\ResourceManagement\Consumption\Microsoft.Azure.Management.Consumption.Fluent.csproj", "{7538AD9B-8B0D-4FC7-A588-664870D7DA69}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.CustomerInsights.Fluent", "src\ResourceManagement\CustomerInsights\Microsoft.Azure.Management.CustomerInsights.Fluent.csproj", "{13259162-BE9F-490C-AF20-8A74F7F4F476}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,10 @@ Global
 		{7538AD9B-8B0D-4FC7-A588-664870D7DA69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7538AD9B-8B0D-4FC7-A588-664870D7DA69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7538AD9B-8B0D-4FC7-A588-664870D7DA69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13259162-BE9F-490C-AF20-8A74F7F4F476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13259162-BE9F-490C-AF20-8A74F7F4F476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13259162-BE9F-490C-AF20-8A74F7F4F476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13259162-BE9F-490C-AF20-8A74F7F4F476}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
