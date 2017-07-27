@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ServiceFabric.Fluent", "src\ResourceManagement\ServiceFabric\Microsoft.Azure.Management.ServiceFabric.Fluent.csproj", "{1B0C2B74-44F3-4C07-AF40-657EDB616FF6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.NotificationHubs.Fluent", "src\ResourceManagement\NotificationHubs\Microsoft.Azure.Management.NotificationHubs.Fluent.csproj", "{BEEA19F1-8147-48D2-AE18-32CE3A3EB807}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{1B0C2B74-44F3-4C07-AF40-657EDB616FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B0C2B74-44F3-4C07-AF40-657EDB616FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B0C2B74-44F3-4C07-AF40-657EDB616FF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEEA19F1-8147-48D2-AE18-32CE3A3EB807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEEA19F1-8147-48D2-AE18-32CE3A3EB807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEEA19F1-8147-48D2-AE18-32CE3A3EB807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEEA19F1-8147-48D2-AE18-32CE3A3EB807}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
