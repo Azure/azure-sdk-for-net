@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         ///GENMHASH:C4C74C5CA23BE3B4CAFEFD0EF23149A0:B6DE3F3ADD30CF80937F7E47989E73C7
         public ICheckNameAvailabilityResult CheckNameAvailability(string name)
         {
-            return this.CheckNameAvailabilityAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.CheckNameAvailabilityAsync(name));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AD7C28D26EC1F237B93E54AD31899691

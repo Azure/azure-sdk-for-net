@@ -23,17 +23,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// </summary>
     public static partial class ObjectsOperationsExtensions
     {
-            /// <summary>
-            /// Gets the details for the currently logged-in user.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static AADObjectInner GetCurrentUser(this IObjectsOperations operations)
-            {
-                return operations.GetCurrentUserAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the details for the currently logged-in user.
             /// </summary>
@@ -51,20 +41,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets AD group membership for the specified AD object IDs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// Objects filtering parameters.
-            /// </param>
-            public static IPage<AADObjectInner> GetObjectsByObjectIds(this IObjectsOperations operations, GetObjectsParametersInner parameters)
-            {
-                return operations.GetObjectsByObjectIdsAsync(parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets AD group membership for the specified AD object IDs.
             /// </summary>
@@ -85,20 +62,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets AD group membership for the specified AD object IDs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextLink'>
-            /// Next link for the list operation.
-            /// </param>
-            public static IPage<AADObjectInner> GetObjectsByObjectIdsNext(this IObjectsOperations operations, string nextLink)
-            {
-                return operations.GetObjectsByObjectIdsNextAsync(nextLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets AD group membership for the specified AD object IDs.
             /// </summary>

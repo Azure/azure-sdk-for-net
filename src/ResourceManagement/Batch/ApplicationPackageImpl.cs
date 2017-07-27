@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:B194B6D94E13B7450F78AF5DC15946BE
         public void Delete()
         {
-            DeleteAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => DeleteAsync());
         }
 
         ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:9B272804AD473CBF3C5DEE818D16023C

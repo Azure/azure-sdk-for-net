@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
 
         public RegistryListCredentials ListCredentials(string groupName, string registryName)
         {
-            return this.Inner.ListCredentialsAsync(groupName, registryName).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.Inner.ListCredentialsAsync(groupName, registryName));
         }
 
         public async Task<RegistryListCredentials> RegenerateCredentialAsync(string groupName, string registryName, PasswordName passwordName, CancellationToken cancellationToken = default(CancellationToken))

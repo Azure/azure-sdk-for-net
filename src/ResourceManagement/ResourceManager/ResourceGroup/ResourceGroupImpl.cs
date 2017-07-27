@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IResourceGroupExportResult ExportTemplate(ResourceGroupExportTemplateOptions options)
         {
-            return ExportTemplateAsync(options).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => ExportTemplateAsync(options));
         }
 
         public async Task<IResourceGroupExportResult> ExportTemplateAsync(ResourceGroupExportTemplateOptions options, CancellationToken cancellationToken = default(CancellationToken))
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public override IResourceGroup CreateResource()
         {
-            return CreateResourceAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => CreateResourceAsync(CancellationToken.None));
         }
     }
 }

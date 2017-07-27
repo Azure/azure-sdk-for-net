@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void Delay(int milliseconds)
         {
-            this.DelayAsync(milliseconds, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => this.DelayAsync(milliseconds, CancellationToken.None));
         }
     }
 }

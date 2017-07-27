@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:A5C3605D6EBCBFB12152B28DBA2D191F:78A0104FC3E1707F4CA255D832A69FFD
         public IVirtualMachineImage GetImage(Region region, string publisherName, string offerName, string skuName, string version)
         {
-            VirtualMachineImageInner innerImage = this.client.Get(region.Name,
-                publisherName, offerName, skuName, version);
+            VirtualMachineImageInner innerImage = Extensions.Synchronize(() => this.client.GetAsync(
+                region.Name, publisherName, offerName, skuName, version));
             if (innerImage == null)
             {
                 return null;
@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:A5C3605D6EBCBFB12152B28DBA2D191F:78A0104FC3E1707F4CA255D832A69FFD
         public IVirtualMachineImage GetImage(string region, string publisherName, string offerName, string skuName, string version)
         {
-            VirtualMachineImageInner innerImage = this.client.Get(region,
-                publisherName, offerName, skuName, version);
+            VirtualMachineImageInner innerImage = Extensions.Synchronize(() => this.client.GetAsync(region,
+                publisherName, offerName, skuName, version));
             if (innerImage == null)
             {
                 return null;

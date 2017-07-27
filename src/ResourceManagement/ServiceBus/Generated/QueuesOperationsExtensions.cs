@@ -23,24 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// </summary>
     public static partial class QueuesOperationsExtensions
     {
-            /// <summary>
-            /// Gets the queues within a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            public static IPage<QueueInner> ListByNamespace(this IQueuesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the queues within a namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
@@ -65,30 +48,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a Service Bus queue. This operation is idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update a queue resource.
-            /// </param>
-            public static QueueInner CreateOrUpdate(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, QueueInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, queueName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a Service Bus queue. This operation is idempotent.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
@@ -119,27 +79,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a queue from the specified namespace in a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            public static void Delete(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName, queueName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a queue from the specified namespace in a resource group.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
@@ -164,27 +104,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, queueName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Returns a description for the specified queue.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            public static QueueInner Get(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName, queueName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns a description for the specified queue.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
@@ -212,27 +132,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all authorization rules for a queue.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleInner> ListAuthorizationRules(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName)
-            {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, queueName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all authorization rules for a queue.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
@@ -260,32 +160,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates an authorization rule for a queue.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            /// <param name='rights'>
-            /// The rights associated with the rule.
-            /// </param>
-            public static SharedAccessAuthorizationRuleInner CreateOrUpdateAuthorizationRule(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, IList<AccessRights?> rights)
-            {
-                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, queueName, authorizationRuleName, rights).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates an authorization rule for a queue.
             /// </summary>
@@ -318,30 +193,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a queue authorization rule.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705609.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            public static void DeleteAuthorizationRule(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
-            {
-                operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, queueName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a queue authorization rule.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705609.aspx" />
@@ -369,30 +221,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, queueName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets an authorization rule for a queue by rule name.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705611.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            public static SharedAccessAuthorizationRuleInner GetAuthorizationRule(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
-            {
-                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, queueName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets an authorization rule for a queue by rule name.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705611.aspx" />
@@ -423,30 +252,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Primary and secondary connection strings to the queue.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705608.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            public static ResourceListKeysInner ListKeys(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, namespaceName, queueName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Primary and secondary connection strings to the queue.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705608.aspx" />
@@ -477,34 +283,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Regenerates the primary or secondary connection strings to the queue.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705606.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='queueName'>
-            /// The queue name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            /// <param name='policykey'>
-            /// Key that needs to be regenerated. Possible values include: 'PrimaryKey',
-            /// 'SecondaryKey'
-            /// </param>
-            public static ResourceListKeysInner RegenerateKeys(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, Policykey? policykey = default(Policykey?))
-            {
-                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, queueName, authorizationRuleName, policykey).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Regenerates the primary or secondary connection strings to the queue.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705606.aspx" />
@@ -539,21 +318,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the queues within a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<QueueInner> ListByNamespaceNext(this IQueuesOperations operations, string nextPageLink)
-            {
-                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the queues within a namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
@@ -575,21 +340,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all authorization rules for a queue.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleInner> ListAuthorizationRulesNext(this IQueuesOperations operations, string nextPageLink)
-            {
-                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all authorization rules for a queue.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />

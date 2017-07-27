@@ -48,16 +48,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:8761D0D225B7C49A7A5025186E94B263:BA170CE7D8B4381095CF80F0B121B545
         public void PowerOff()
         {
-            this.PowerOffAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            ResourceManager.Fluent.Core.Extensions.Synchronize(() => this.PowerOffAsync());
         }
 
         ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:E8FB723EB69B1FF154465213A3298460
         public VirtualMachineInstanceView RefreshInstanceView()
         {
-            VirtualMachineScaleSetVMInstanceViewInner instanceViewInner = Parent.Manager.Inner.VirtualMachineScaleSetVMs.GetInstanceView(
+            VirtualMachineScaleSetVMInstanceViewInner instanceViewInner = Management.ResourceManager.Fluent.Core.Extensions.Synchronize(() => Parent.Manager.Inner.VirtualMachineScaleSetVMs.GetInstanceViewAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
-                InstanceId());
+                InstanceId()));
 
             if (instanceViewInner != null) {
                 this.virtualMachineInstanceView = new VirtualMachineInstanceView()
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:667E734583F577A898C6389A3D9F4C09:E31C3E6AAB81275E957AEE7FFC644CBF
         public void Deallocate()
         {
-            this.DeallocateAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            ResourceManager.Fluent.Core.Extensions.Synchronize(() => this.DeallocateAsync());
         }
 
         ///GENMHASH:C6D786A0345B2C4ADB349E573A0BF6C7:424FABAED1A1FB32529BDB97BA59F68B
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:3AF56414924A2B5C8018E43635C23E6D
         public void Delete()
         {
-            DeleteAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            ResourceManager.Fluent.Core.Extensions.Synchronize(() => DeleteAsync());
         }
 
         ///GENMHASH:84A1C38F299C7713046CF6F1527D8F63:1B67F25B1C5584321081FAB1AF143179
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:DB561BC9EF939094412065B65EB3D2EA:EE9FAF4FEA996048F4927C08CF0BBB9F
         public void Reimage()
         {
-            this.ReimageAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            ResourceManager.Fluent.Core.Extensions.Synchronize(() => this.ReimageAsync());
         }
 
         ///GENMHASH:8DDA5FB2E9E6E0697D0969997C1BE9C4:9DD8966D7074391F9512E63BBEB93FA9
@@ -483,13 +483,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:8DC054450782B914522C4E063E233AAE
         public void Restart()
         {
-            this.RestartAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            ResourceManager.Fluent.Core.Extensions.Synchronize(() => this.RestartAsync());
         }
 
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:0E335374306A3050322A5D1E4C468CF8
         public void Start()
         {
-            this.StartAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            ResourceManager.Fluent.Core.Extensions.Synchronize(() => this.StartAsync());
         }
 
         ///GENMHASH:882F1CC2224D95370B7A4269ED87EC4F:FA558C03B2F8DB0C8883E9CE9D380464
@@ -504,7 +504,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:44ACDDF0B04148CC3F9347EA7C0643B4
         public IVirtualMachineScaleSetVM Refresh()
         {
-            return RefreshAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return ResourceManager.Fluent.Core.Extensions.Synchronize(() => RefreshAsync());
         }
         public async Task<IVirtualMachineScaleSetVM> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
         {

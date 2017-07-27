@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public IEnumerable<INetworkWatcher> List()
         {
-            return WrapList(Inner.ListAll());
+            return WrapList(Extensions.Synchronize(() => Inner.ListAllAsync()));
         }
 
         public async Task<IPagedCollection<INetworkWatcher>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = new CancellationToken())
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public IEnumerable<INetworkWatcher> ListByResourceGroup(string resourceGroupName)
         {
-            return WrapList(Inner.List(resourceGroupName));
+            return WrapList(Extensions.Synchronize(() => Inner.ListAsync(resourceGroupName)));
         }
 
         public async Task<IPagedCollection<INetworkWatcher>> ListByResourceGroupAsync(string resourceGroupName, bool loadAllPages = true,

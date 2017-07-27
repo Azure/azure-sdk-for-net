@@ -22,11 +22,13 @@ namespace Microsoft.Azure.Management.Storage.Fluent
 
         public IEnumerable<IStorageUsage> List()
         {
-            if (client.List() == null)
+            var storageUsage = Extensions.Synchronize(() => client.ListAsync());
+            
+            if(storageUsage == null)
             {
                 return new List<IStorageUsage>();
             }
-            return WrapList(client.List());
+            return WrapList(storageUsage);
         }
 
         public async Task<IPagedCollection<IStorageUsage>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))

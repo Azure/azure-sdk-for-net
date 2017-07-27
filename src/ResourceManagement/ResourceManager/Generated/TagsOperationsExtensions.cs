@@ -22,23 +22,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// </summary>
     public static partial class TagsOperationsExtensions
     {
-            /// <summary>
-            /// Delete a subscription resource tag value.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='tagName'>
-            /// The name of the tag.
-            /// </param>
-            /// <param name='tagValue'>
-            /// The value of the tag.
-            /// </param>
-            public static void DeleteValue(this ITagsOperations operations, string tagName, string tagValue)
-            {
-                operations.DeleteValueAsync(tagName, tagValue).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Delete a subscription resource tag value.
             /// </summary>
@@ -59,23 +43,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 (await operations.DeleteValueWithHttpMessagesAsync(tagName, tagValue, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Create a subscription resource tag value.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='tagName'>
-            /// The name of the tag.
-            /// </param>
-            /// <param name='tagValue'>
-            /// The value of the tag.
-            /// </param>
-            public static TagValueInner CreateOrUpdateValue(this ITagsOperations operations, string tagName, string tagValue)
-            {
-                return operations.CreateOrUpdateValueAsync(tagName, tagValue).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create a subscription resource tag value.
             /// </summary>
@@ -99,20 +67,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Create a subscription resource tag.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='tagName'>
-            /// The name of the tag.
-            /// </param>
-            public static TagDetailsInner CreateOrUpdate(this ITagsOperations operations, string tagName)
-            {
-                return operations.CreateOrUpdateAsync(tagName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create a subscription resource tag.
             /// </summary>
@@ -133,20 +88,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Delete a subscription resource tag.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='tagName'>
-            /// The name of the tag.
-            /// </param>
-            public static void Delete(this ITagsOperations operations, string tagName)
-            {
-                operations.DeleteAsync(tagName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Delete a subscription resource tag.
             /// </summary>
@@ -164,17 +106,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(tagName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Get a list of subscription resource tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<TagDetailsInner> List(this ITagsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get a list of subscription resource tags.
             /// </summary>
@@ -192,20 +124,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get a list of subscription resource tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<TagDetailsInner> ListNext(this ITagsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get a list of subscription resource tags.
             /// </summary>

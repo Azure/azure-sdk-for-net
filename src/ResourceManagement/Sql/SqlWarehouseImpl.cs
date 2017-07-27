@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.Management.Sql.Fluent
 {
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:638E920B34EB7CDD894A8A261D1A3364:F65A55844E1B000D318C0439E7EDE006
         public void ResumeDataWarehouse()
         {
-            ResumeDataWarehouseAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => ResumeDataWarehouseAsync());
         }
 
         public async Task ResumeDataWarehouseAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:CC45B434E5AD72F7D764B575FE4DBBB0:BA80FAB6E26489720ABD292F74B22257
         public void PauseDataWarehouse()
         {
-            PauseDataWarehouseAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => PauseDataWarehouseAsync());
         }
 
         public async Task PauseDataWarehouseAsync(CancellationToken cancellationToken = default(CancellationToken))

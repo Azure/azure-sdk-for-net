@@ -22,23 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public static partial class NetworkSecurityGroupsOperationsExtensions
     {
-            /// <summary>
-            /// Deletes the specified network security group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            public static void Delete(this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName)
-            {
-                operations.DeleteAsync(resourceGroupName, networkSecurityGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified network security group.
             /// </summary>
@@ -59,26 +43,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets the specified network security group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            /// <param name='expand'>
-            /// Expands referenced resources.
-            /// </param>
-            public static NetworkSecurityGroupInner Get(this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, networkSecurityGroupName, expand).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the specified network security group.
             /// </summary>
@@ -105,28 +70,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a network security group in the specified resource
-            /// group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update network security group
-            /// operation.
-            /// </param>
-            public static NetworkSecurityGroupInner CreateOrUpdate(this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroupInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a network security group in the specified resource
             /// group.
@@ -155,17 +99,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network security groups in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<NetworkSecurityGroupInner> ListAll(this INetworkSecurityGroupsOperations operations)
-            {
-                return operations.ListAllAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network security groups in a subscription.
             /// </summary>
@@ -183,20 +117,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network security groups in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IPage<NetworkSecurityGroupInner> List(this INetworkSecurityGroupsOperations operations, string resourceGroupName)
-            {
-                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network security groups in a resource group.
             /// </summary>
@@ -217,23 +138,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified network security group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            public static void BeginDelete(this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, networkSecurityGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified network security group.
             /// </summary>
@@ -254,28 +159,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, networkSecurityGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Creates or updates a network security group in the specified resource
-            /// group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkSecurityGroupName'>
-            /// The name of the network security group.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create or update network security group
-            /// operation.
-            /// </param>
-            public static NetworkSecurityGroupInner BeginCreateOrUpdate(this INetworkSecurityGroupsOperations operations, string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroupInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, networkSecurityGroupName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a network security group in the specified resource
             /// group.
@@ -304,20 +188,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network security groups in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NetworkSecurityGroupInner> ListAllNext(this INetworkSecurityGroupsOperations operations, string nextPageLink)
-            {
-                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network security groups in a subscription.
             /// </summary>
@@ -338,20 +209,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all network security groups in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NetworkSecurityGroupInner> ListNext(this INetworkSecurityGroupsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all network security groups in a resource group.
             /// </summary>

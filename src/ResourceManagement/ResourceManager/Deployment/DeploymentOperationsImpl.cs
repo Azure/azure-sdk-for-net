@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IDeploymentOperation GetById(string operationId)
         {
-            return WrapModel(client.Get(deployment.ResourceGroupName, deployment.Name, operationId));
+            return WrapModel(Extensions.Synchronize(() => client.GetAsync(deployment.ResourceGroupName, deployment.Name, operationId)));
         }
 
         public async Task<IDeploymentOperation> GetByIdAsync(string operationId, CancellationToken cancellationToken = default(CancellationToken))
@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<IDeploymentOperation> List()
         {
-            return client.List(deployment.ResourceGroupName, deployment.Name)
-                         .AsContinuousCollection(link => client.ListNext(link))
+            return Extensions.Synchronize(() => client.ListAsync(deployment.ResourceGroupName, deployment.Name))
+                         .AsContinuousCollection(link => Extensions.Synchronize(() => client.ListNextAsync(link)))
                          .Select(inner => WrapModel(inner));
         }
 

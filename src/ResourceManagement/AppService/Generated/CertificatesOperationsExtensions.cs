@@ -22,20 +22,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public static partial class CertificatesOperationsExtensions
     {
-            /// <summary>
-            /// Get all certificates for a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Get all certificates for a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<CertificateInner> List(this ICertificatesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get all certificates for a subscription.
             /// </summary>
@@ -56,23 +43,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get all certificates in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get all certificates in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            public static IPage<CertificateInner> ListByResourceGroup(this ICertificatesOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get all certificates in a resource group.
             /// </summary>
@@ -96,26 +67,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get a certificate.
-            /// </summary>
-            /// <remarks>
-            /// Get a certificate.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the certificate.
-            /// </param>
-            public static CertificateInner Get(this ICertificatesOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get a certificate.
             /// </summary>
@@ -142,29 +94,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Create or update a certificate.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a certificate.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the certificate.
-            /// </param>
-            /// <param name='certificateEnvelope'>
-            /// Details of certificate, if it exists already.
-            /// </param>
-            public static CertificateInner CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string name, CertificateInner certificateEnvelope)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, name, certificateEnvelope).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create or update a certificate.
             /// </summary>
@@ -194,26 +124,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Delete a certificate.
-            /// </summary>
-            /// <remarks>
-            /// Delete a certificate.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the certificate.
-            /// </param>
-            public static void Delete(this ICertificatesOperations operations, string resourceGroupName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Delete a certificate.
             /// </summary>
@@ -237,29 +148,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Create or update a certificate.
-            /// </summary>
-            /// <remarks>
-            /// Create or update a certificate.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='name'>
-            /// Name of the certificate.
-            /// </param>
-            /// <param name='certificateEnvelope'>
-            /// Details of certificate, if it exists already.
-            /// </param>
-            public static CertificateInner Update(this ICertificatesOperations operations, string resourceGroupName, string name, CertificateInner certificateEnvelope)
-            {
-                return operations.UpdateAsync(resourceGroupName, name, certificateEnvelope).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create or update a certificate.
             /// </summary>
@@ -289,23 +178,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get all certificates for a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Get all certificates for a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<CertificateInner> ListNext(this ICertificatesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get all certificates for a subscription.
             /// </summary>
@@ -329,23 +202,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get all certificates in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get all certificates in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<CertificateInner> ListByResourceGroupNext(this ICertificatesOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get all certificates in a resource group.
             /// </summary>

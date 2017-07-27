@@ -22,26 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public static partial class SubnetsOperationsExtensions
     {
-            /// <summary>
-            /// Deletes the specified subnet.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkName'>
-            /// The name of the virtual network.
-            /// </param>
-            /// <param name='subnetName'>
-            /// The name of the subnet.
-            /// </param>
-            public static void Delete(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName)
-            {
-                operations.DeleteAsync(resourceGroupName, virtualNetworkName, subnetName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified subnet.
             /// </summary>
@@ -65,29 +46,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets the specified subnet by virtual network and resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkName'>
-            /// The name of the virtual network.
-            /// </param>
-            /// <param name='subnetName'>
-            /// The name of the subnet.
-            /// </param>
-            /// <param name='expand'>
-            /// Expands referenced resources.
-            /// </param>
-            public static SubnetInner Get(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, virtualNetworkName, subnetName, expand).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the specified subnet by virtual network and resource group.
             /// </summary>
@@ -117,29 +76,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a subnet in the specified virtual network.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkName'>
-            /// The name of the virtual network.
-            /// </param>
-            /// <param name='subnetName'>
-            /// The name of the subnet.
-            /// </param>
-            /// <param name='subnetParameters'>
-            /// Parameters supplied to the create or update subnet operation.
-            /// </param>
-            public static SubnetInner CreateOrUpdate(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, SubnetInner subnetParameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, virtualNetworkName, subnetName, subnetParameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a subnet in the specified virtual network.
             /// </summary>
@@ -169,23 +106,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all subnets in a virtual network.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkName'>
-            /// The name of the virtual network.
-            /// </param>
-            public static IPage<SubnetInner> List(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName)
-            {
-                return operations.ListAsync(resourceGroupName, virtualNetworkName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all subnets in a virtual network.
             /// </summary>
@@ -209,26 +130,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified subnet.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkName'>
-            /// The name of the virtual network.
-            /// </param>
-            /// <param name='subnetName'>
-            /// The name of the subnet.
-            /// </param>
-            public static void BeginDelete(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, virtualNetworkName, subnetName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified subnet.
             /// </summary>
@@ -252,29 +154,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Creates or updates a subnet in the specified virtual network.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkName'>
-            /// The name of the virtual network.
-            /// </param>
-            /// <param name='subnetName'>
-            /// The name of the subnet.
-            /// </param>
-            /// <param name='subnetParameters'>
-            /// Parameters supplied to the create or update subnet operation.
-            /// </param>
-            public static SubnetInner BeginCreateOrUpdate(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, SubnetInner subnetParameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, virtualNetworkName, subnetName, subnetParameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a subnet in the specified virtual network.
             /// </summary>
@@ -304,20 +184,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all subnets in a virtual network.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SubnetInner> ListNext(this ISubnetsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all subnets in a virtual network.
             /// </summary>

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:6B6D1D91AC2FCE3076EBD61D0DB099CF
         public IPacketCapture GetByName(string name)
         {
-            return GetByNameAsync(name).Result;
+            return Extensions.Synchronize(() => GetByNameAsync(name));
         }
 
         /// <summary>
@@ -80,8 +80,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:C2DC9CFAB6C291D220DD4F29AFF1BBEC:7459D8B9F8BB0A1EBD2FC4702A86F2F5
         public void DeleteByName(string name)
         {
-            DeleteByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
-
+            Extensions.Synchronize(() => DeleteByNameAsync(name));
         }
 
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:A848F2676FADFFFDD0FBF4834FC5D602
@@ -91,7 +90,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
             {
                 return ((PacketCaptureImpl)WrapModel(inner));
             };
-            return Inner.List(parent.ResourceGroupName, parent.Name)
+            return Extensions.Synchronize(() => Inner.ListAsync(parent.ResourceGroupName, parent.Name))
                 .Select(inner => converter(inner));
         }
 

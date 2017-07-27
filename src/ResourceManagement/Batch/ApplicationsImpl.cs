@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
                 return childResources;
             }
 
-            var applicationList = Parent.Manager.Inner.Application.List(Parent.ResourceGroupName, Parent.Name);
+            var applicationList = Extensions.Synchronize(() => Parent.Manager.Inner.Application.ListAsync(Parent.ResourceGroupName, Parent.Name));
 
             foreach (var application in applicationList)
             {

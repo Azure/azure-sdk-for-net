@@ -22,26 +22,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// </summary>
     public static partial class OriginsOperationsExtensions
     {
-            /// <summary>
-            /// Lists all of the existing origins within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            public static IPage<OriginInner> ListByEndpoint(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName)
-            {
-                return operations.ListByEndpointAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the existing origins within an endpoint.
             /// </summary>
@@ -68,29 +49,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets an existing origin within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
-            /// </param>
-            public static OriginInner Get(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName)
-            {
-                return operations.GetAsync(resourceGroupName, profileName, endpointName, originName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets an existing origin within an endpoint.
             /// </summary>
@@ -120,32 +79,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Updates an existing origin within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
-            /// </param>
-            /// <param name='originUpdateProperties'>
-            /// Origin properties
-            /// </param>
-            public static OriginInner Update(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParametersInner originUpdateProperties)
-            {
-                return operations.UpdateAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates an existing origin within an endpoint.
             /// </summary>
@@ -178,32 +112,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Updates an existing origin within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='originName'>
-            /// Name of the origin which is unique within the endpoint.
-            /// </param>
-            /// <param name='originUpdateProperties'>
-            /// Origin properties
-            /// </param>
-            public static OriginInner BeginUpdate(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParametersInner originUpdateProperties)
-            {
-                return operations.BeginUpdateAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates an existing origin within an endpoint.
             /// </summary>
@@ -236,20 +145,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the existing origins within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<OriginInner> ListByEndpointNext(this IOriginsOperations operations, string nextPageLink)
-            {
-                return operations.ListByEndpointNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the existing origins within an endpoint.
             /// </summary>

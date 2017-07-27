@@ -44,11 +44,11 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public IVirtualMachineScaleSetNetworkInterface GetByVirtualMachineInstanceId(string instanceId, string name)
         {
-            NetworkInterfaceInner networkInterfaceInner = Manager().Inner.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterface(
+            NetworkInterfaceInner networkInterfaceInner = Extensions.Synchronize(() => Manager().Inner.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterfaceAsync(
                 resourceGroupName,
                 scaleSetName,
                 instanceId,
-                name);
+                name));
             if (networkInterfaceInner == null)
             {
                 return null;
@@ -58,16 +58,14 @@ namespace Microsoft.Azure.Management.Network.Fluent
 
         public IEnumerable<IVirtualMachineScaleSetNetworkInterface> List()
         {
-            return WrapList(Manager().Inner.NetworkInterfaces
-                .ListVirtualMachineScaleSetNetworkInterfaces(resourceGroupName, scaleSetName)
-                .AsContinuousCollection(link => Manager().Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesNext(link)));
+            return WrapList(Extensions.Synchronize(() => Manager().Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, scaleSetName))
+                .AsContinuousCollection(link => Extensions.Synchronize(() => Manager().Inner.NetworkInterfaces.ListVirtualMachineScaleSetNetworkInterfacesNextAsync(link))));
         }
 
         public IEnumerable<IVirtualMachineScaleSetNetworkInterface> ListByVirtualMachineInstanceId(string instanceId)
         {
-            return WrapList(Manager().Inner.NetworkInterfaces
-                .ListVirtualMachineScaleSetVMNetworkInterfaces(resourceGroupName, scaleSetName, instanceId)
-                .AsContinuousCollection(link => Manager().Inner.NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfacesNext(link)));
+            return WrapList(Extensions.Synchronize(() => Manager().Inner.NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfacesAsync(resourceGroupName, scaleSetName, instanceId))
+                .AsContinuousCollection(link => Extensions.Synchronize(() => Manager().Inner.NetworkInterfaces.ListVirtualMachineScaleSetVMNetworkInterfacesNextAsync(link))));
         }
 
         protected override IVirtualMachineScaleSetNetworkInterface WrapModel(NetworkInterfaceInner inner)

@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:2048E8AC80AC022225C462CE7FD14A6F:5B568A74BA34923154B4D31492B0C92D
         public void Deallocate(string groupName, string name)
         {
-            this.Inner.Deallocate(groupName, name);
+            Extensions.Synchronize(() => this.Inner.DeallocateAsync(groupName, name));
         }
 
         ///GENMHASH:00E88CFB1570D8A0A8E9FDE81CE27B2D:41D46BEAFAD59BFEA295012F3A5791B5
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:00E88CFB1570D8A0A8E9FDE81CE27B2D:504A7551D91B09781F4903910609216C
         public void Generalize(string groupName, string name)
         {
-            this.Inner.Generalize(groupName, name);
+            Extensions.Synchronize(() => this.Inner.GeneralizeAsync(groupName, name));
         }
 
         ///GENMHASH:9F1310A4445A183902C9AF672DA34354:F32BEF843CE33ABB858763CFD92B9A36
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:9F1310A4445A183902C9AF672DA34354:83A472D7E09E0673F32CBA699DC15325
         public void PowerOff(string groupName, string name)
         {
-            this.Inner.PowerOff(groupName, name);
+            Extensions.Synchronize(() => this.Inner.PowerOffAsync(groupName, name));
         }
 
         ///GENMHASH:CD0E967F30C27C522C0DE3E4523C6CDD:8C9B139D9CD48BE89CACA8348E2E8469
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:CD0E967F30C27C522C0DE3E4523C6CDD:A8F52D851502AC1A4DED0213F947A99D
         public void Restart(string groupName, string name)
         {
-            this.Inner.Restart(groupName, name);
+            Extensions.Synchronize(() => this.Inner.RestartAsync(groupName, name));
         }
 
         ///GENMHASH:F5C1D0B90DEED77EE54F7CEB164C727E:4E2B451086A707DC66F26388A688071E
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F5C1D0B90DEED77EE54F7CEB164C727E:C9C91090340AC7B92658ED0FECEB6F8F
         public void Start(string groupName, string name)
         {
-            this.Inner.Start(groupName, name);
+            Extensions.Synchronize(() => this.Inner.StartAsync(groupName, name));
         }
 
         ///GENMHASH:5BA0ADF7CF4FCFD811B372F59A1C376E:0961DB2042C5E898ED8D9586E90E4F33
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:5BA0ADF7CF4FCFD811B372F59A1C376E:4FE4D054ADD4EAF10A50571AB9FC3FD0
         public void Redeploy(string groupName, string name)
         {
-            this.Inner.Redeploy(groupName, name);
+            Extensions.Synchronize(() => this.Inner.RedeployAsync(groupName, name));
         }
 
         ///GENMHASH:7DBF1DD4080EA265532035CF9FB8D313:1A99BFC30D31869BE5E39DD7E4E0639D
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:7DBF1DD4080EA265532035CF9FB8D313:C9EA85EF9B4A5425DA3BF761D0D65796
         public void MigrateToManaged(string groupName, string name)
         {
-            this.Inner.ConvertToManagedDisks(groupName, name);
+            Extensions.Synchronize(() => this.Inner.ConvertToManagedDisksAsync(groupName, name));
         }
 
         ///GENMHASH:E5D7B16A7B6C705114CC71E8BB2B20E1:6975A84E6594FF8DEA88E6C992B0B500
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:E5D7B16A7B6C705114CC71E8BB2B20E1:3352FEB5932DA51CF51CFE2F1E02A3C7
         public string Capture(string groupName, string name, string containerName, string vhdPrefix, bool overwriteVhd)
         {
-            return this.CaptureAsync(groupName, name, containerName, vhdPrefix, overwriteVhd).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.CaptureAsync(groupName, name, containerName, vhdPrefix, overwriteVhd));
         }
 
         ///GENMHASH:56C0F52C716CCBD879A6E9E8D44C3FA8:971714229723AE4B74BC25F6C0AF31AE

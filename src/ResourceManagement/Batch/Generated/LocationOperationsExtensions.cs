@@ -22,21 +22,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     /// </summary>
     public static partial class LocationOperationsExtensions
     {
-            /// <summary>
-            /// Gets the Batch service quotas for the specified subscription at the given
-            /// location.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='locationName'>
-            /// The region for which to retrieve Batch service quotas.
-            /// </param>
-            public static BatchLocationQuotaInner GetQuotas(this ILocationOperations operations, string locationName)
-            {
-                return operations.GetQuotasAsync(locationName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the Batch service quotas for the specified subscription at the given
             /// location.

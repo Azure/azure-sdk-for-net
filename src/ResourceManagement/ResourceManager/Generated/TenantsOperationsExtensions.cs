@@ -22,17 +22,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// </summary>
     public static partial class TenantsOperationsExtensions
     {
-            /// <summary>
-            /// Gets a list of the tenantIds.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<TenantIdDescription> List(this ITenantsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of the tenantIds.
             /// </summary>
@@ -50,20 +40,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a list of the tenantIds.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<TenantIdDescription> ListNext(this ITenantsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a list of the tenantIds.
             /// </summary>

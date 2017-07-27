@@ -5,11 +5,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Threading;
     using System.Threading.Tasks;
     using Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// Implementation of VirtualMachineEncryption.
     /// </summary>
-///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFbmNyeXB0aW9uSW1wbA==
+    ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmNvbXB1dGUuaW1wbGVtZW50YXRpb24uVmlydHVhbE1hY2hpbmVFbmNyeXB0aW9uSW1wbA==
     internal partial class VirtualMachineEncryptionImpl  :
         IVirtualMachineEncryption
     {
@@ -51,25 +52,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:E41DD646C1F7D0458D57765D5AA21BD2:1A8F2584537929C0B602DAC8BEA90F0A
         public IDiskVolumeEncryptionMonitor Enable(string keyVaultId, string aadClientId, string aadSecret)
         {
-            return EnableAsync(keyVaultId, aadClientId, aadSecret).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => EnableAsync(keyVaultId, aadClientId, aadSecret));
         }
 
         ///GENMHASH:9D6DD1865EFFEE09432AB8D009095748:DC1C703A2CBB98499CF5B5775B6772AA
         public IDiskVolumeEncryptionMonitor Enable(WindowsVMDiskEncryptionConfiguration encryptionSettings)
         {
-            return EnableAsync(encryptionSettings).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => EnableAsync(encryptionSettings));
         }
 
         ///GENMHASH:B90504B6DA9457416BB33BED5A9AA699:DC1C703A2CBB98499CF5B5775B6772AA
         public IDiskVolumeEncryptionMonitor Enable(LinuxVMDiskEncryptionConfiguration encryptionSettings)
         {
-            return EnableAsync(encryptionSettings).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => EnableAsync(encryptionSettings));
         }
 
         ///GENMHASH:111E7E7282F1AF5C0D13E925EE81F501:FBB9648A0907B504CC31792F37E4880E
         public IDiskVolumeEncryptionMonitor Disable(DiskVolumeType volumeType)
         {
-            return DisableAsync(volumeType).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => DisableAsync(volumeType));
         }
 
         ///GENMHASH:63180E26DE0748370CBF1E688F400DA7:5A16D5F74FDBF1874F9D0EA507F123B3
@@ -100,7 +101,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C6ABD3D452DBDFE8506CA443FC27C3BF:D1A986AAA62E86256065FD08F6B69054
         public IDiskVolumeEncryptionMonitor GetMonitor()
         {
-            return GetMonitorAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetMonitorAsync());
         }
     }
 }
