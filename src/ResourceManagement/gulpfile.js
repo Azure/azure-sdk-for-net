@@ -112,6 +112,18 @@ var mappings = {
         'package': 'Microsoft.Azure.Management.ContainerRegistry.Fluent',
         'args': '-FT 1',
     },
+    'search': {
+        'dir': 'Search',
+        'source': 'arm-search/2015-08-19/swagger/search.json',
+        'package': 'Microsoft.Azure.Management.Search.Fluent',
+        'args': '-FT 1'
+    },
+    'scheduler': {
+        'dir': 'Scheduler',
+        'source': 'arm-scheduler/2016-03-01/swagger/scheduler.json',
+        'package': 'Microsoft.Azure.Management.Scheduler.Fluent',
+        'args': '-FT 1'
+    },
     'documentdb': {
         'dir': 'DocumentDB',
         'source': 'arm-documentdb/2015-04-08/swagger/documentdb.json',
