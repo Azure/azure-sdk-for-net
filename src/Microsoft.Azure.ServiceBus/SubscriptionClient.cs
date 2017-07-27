@@ -140,6 +140,15 @@ namespace Microsoft.Azure.ServiceBus
         public ReceiveMode ReceiveMode { get; }
 
         /// <summary>
+        /// Duration after which individual operations will timeout.
+        /// </summary>
+        public override TimeSpan OperationTimeout
+        {
+            get => this.ServiceBusConnection.OperationTimeout;
+            set => this.ServiceBusConnection.OperationTimeout = value;
+        }
+
+        /// <summary>
         /// Prefetch speeds up the message flow by aiming to have a message readily available for local retrieval when and before the application asks for one using Receive.
         /// Setting a non-zero value prefetches PrefetchCount number of messages.
         /// Setting the value to zero turns prefetch off.</summary>

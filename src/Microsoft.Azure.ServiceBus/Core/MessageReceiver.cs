@@ -202,6 +202,14 @@ namespace Microsoft.Azure.ServiceBus.Core
         public virtual string Path { get; private set; }
 
         /// <summary>
+        /// Duration after which individual operations will timeout.
+        /// </summary>
+        public override TimeSpan OperationTimeout {
+            get => this.ServiceBusConnection.OperationTimeout;
+            set => this.ServiceBusConnection.OperationTimeout = value;
+        }
+
+        /// <summary>
         /// Gets the DateTime that the current receiver is locked until. This is only applicable when Sessions are used.
         /// </summary>
         internal DateTime LockedUntilUtcInternal { get; set; }

@@ -111,6 +111,15 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </summary>
         public virtual string Path { get; private set; }
 
+        /// <summary>
+        /// Duration after which individual operations will timeout.
+        /// </summary>
+        public override TimeSpan OperationTimeout
+        {
+            get => this.ServiceBusConnection.OperationTimeout;
+            set => this.ServiceBusConnection.OperationTimeout = value;
+        }
+
         internal MessagingEntityType? EntityType { get; private set; }
 
         ServiceBusConnection ServiceBusConnection { get; }

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Duration after which individual operations will timeout.
         /// </summary>
-        public TimeSpan OperationTimeout { get; internal set; }
+        public abstract TimeSpan OperationTimeout { get; set; }
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.

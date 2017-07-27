@@ -127,6 +127,15 @@ namespace Microsoft.Azure.ServiceBus
         public ReceiveMode ReceiveMode { get; }
 
         /// <summary>
+        /// Duration after which individual operations will timeout.
+        /// </summary>
+        public override TimeSpan OperationTimeout
+        {
+            get => this.ServiceBusConnection.OperationTimeout;
+            set => this.ServiceBusConnection.OperationTimeout = value;
+        }
+
+        /// <summary>
         /// Gets the name of the queue.
         /// </summary>
         public string Path => this.QueueName;

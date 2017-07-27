@@ -141,6 +141,15 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public string EntityPath { get; }
 
+        /// <summary>
+        /// Duration after which individual operations will timeout.
+        /// </summary>
+        public override TimeSpan OperationTimeout
+        {
+            get => this.ServiceBusConnection.OperationTimeout;
+            set => this.ServiceBusConnection.OperationTimeout = value;
+        }
+
         MessagingEntityType? EntityType { get; }
 
         int PrefetchCount { get; }

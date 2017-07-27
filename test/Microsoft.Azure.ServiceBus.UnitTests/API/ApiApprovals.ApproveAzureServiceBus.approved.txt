@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus
         protected ClientEntity(string clientId, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy) { }
         public string ClientId { get; }
         public bool IsClosedOrClosing { get; }
-        public System.TimeSpan OperationTimeout { get; }
+        public abstract System.TimeSpan OperationTimeout { get; set; }
         public abstract System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public Microsoft.Azure.ServiceBus.RetryPolicy RetryPolicy { get; }
         public System.Threading.Tasks.Task CloseAsync() { }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus
     {
         string ClientId { get; }
         bool IsClosedOrClosing { get; }
-        System.TimeSpan OperationTimeout { get; }
+        System.TimeSpan OperationTimeout { get; set; }
         System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         System.Threading.Tasks.Task CloseAsync();
         void RegisterPlugin(Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin serviceBusPlugin);
@@ -134,6 +134,7 @@ namespace Microsoft.Azure.ServiceBus
     {
         public QueueClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public QueueClient(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public override System.TimeSpan OperationTimeout { get; set; }
         public string Path { get; }
         public int PrefetchCount { get; set; }
         public string QueueName { get; }
@@ -226,6 +227,7 @@ namespace Microsoft.Azure.ServiceBus
         public SessionClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public SessionClient(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public string EntityPath { get; }
+        public override System.TimeSpan OperationTimeout { get; set; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync() { }
         public System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(System.TimeSpan serverWaitTime) { }
@@ -256,6 +258,7 @@ namespace Microsoft.Azure.ServiceBus
     {
         public SubscriptionClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, string subscriptionName, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public override System.TimeSpan OperationTimeout { get; set; }
         public string Path { get; }
         public int PrefetchCount { get; set; }
         public Microsoft.Azure.ServiceBus.ReceiveMode ReceiveMode { get; }
@@ -301,6 +304,7 @@ namespace Microsoft.Azure.ServiceBus
     {
         public TopicClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public TopicClient(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public override System.TimeSpan OperationTimeout { get; set; }
         public string Path { get; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public string TopicName { get; }
@@ -365,6 +369,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public MessageReceiver(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public MessageReceiver(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public long LastPeekedSequenceNumber { get; }
+        public override System.TimeSpan OperationTimeout { get; set; }
         public string Path { get; }
         public int PrefetchCount { get; set; }
         public Microsoft.Azure.ServiceBus.ReceiveMode ReceiveMode { get; set; }
@@ -404,6 +409,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     {
         public MessageSender(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public MessageSender(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public override System.TimeSpan OperationTimeout { get; set; }
         public string Path { get; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public System.Threading.Tasks.Task CancelScheduledMessageAsync(long sequenceNumber) { }

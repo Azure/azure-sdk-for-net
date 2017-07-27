@@ -27,7 +27,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Duration after which individual operations will timeout.
         /// </summary>
-        TimeSpan OperationTimeout { get; }
+        TimeSpan OperationTimeout { get; set; }
 
         /// <summary>
         /// Closes the Client. Closes the connections opened by it.

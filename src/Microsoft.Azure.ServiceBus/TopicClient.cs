@@ -91,6 +91,15 @@ namespace Microsoft.Azure.ServiceBus
         public string TopicName { get; }
 
         /// <summary>
+        /// Duration after which individual operations will timeout.
+        /// </summary>
+        public override TimeSpan OperationTimeout
+        {
+            get => this.ServiceBusConnection.OperationTimeout;
+            set => this.ServiceBusConnection.OperationTimeout = value;
+        }
+
+        /// <summary>
         /// Gets the name of the topic.
         /// </summary>
         public string Path => this.TopicName;
