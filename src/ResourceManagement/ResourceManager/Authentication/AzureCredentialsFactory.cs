@@ -166,11 +166,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Authentication
             };
 
             AzureCredentials credentials;
-            if (config.ContainsKey("key"))
+            if (config.ContainsKey("key") && config["key"] != null)
             {
                 credentials = FromServicePrincipal(config["client"], config["key"], config["tenant"], env);
             }
-            else if (config.ContainsKey("certificate"))
+            else if (config.ContainsKey("certificate") && config["certificate"] != null)
             {
                 string certificatePath = config["certificate"].Replace("\\:", ":").Replace("\\\\", "\\");
                 if (!File.Exists(certificatePath))
