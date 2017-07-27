@@ -42,15 +42,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// last attempt to delete this certificate.</param>
         public Certificate(string thumbprint = default(string), string thumbprintAlgorithm = default(string), string url = default(string), CertificateState? state = default(CertificateState?), System.DateTime? stateTransitionTime = default(System.DateTime?), CertificateState? previousState = default(CertificateState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), string publicData = default(string), DeleteCertificateError deleteCertificateError = default(DeleteCertificateError))
         {
-            Thumbprint = thumbprint;
-            ThumbprintAlgorithm = thumbprintAlgorithm;
-            Url = url;
-            State = state;
-            StateTransitionTime = stateTransitionTime;
-            PreviousState = previousState;
-            PreviousStateTransitionTime = previousStateTransitionTime;
-            PublicData = publicData;
-            DeleteCertificateError = deleteCertificateError;
+            this.Thumbprint = thumbprint;
+            this.ThumbprintAlgorithm = thumbprintAlgorithm;
+            this.Url = url;
+            this.State = state;
+            this.StateTransitionTime = stateTransitionTime;
+            this.PreviousState = previousState;
+            this.PreviousStateTransitionTime = previousStateTransitionTime;
+            this.PublicData = publicData;
+            this.DeleteCertificateError = deleteCertificateError;
         }
 
         /// <summary>

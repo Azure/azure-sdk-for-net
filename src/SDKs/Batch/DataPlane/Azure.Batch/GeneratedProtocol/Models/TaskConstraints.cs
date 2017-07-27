@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// code is nonzero.</param>
         public TaskConstraints(System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), int? maxTaskRetryCount = default(int?))
         {
-            MaxWallClockTime = maxWallClockTime;
-            RetentionTime = retentionTime;
-            MaxTaskRetryCount = maxTaskRetryCount;
+            this.MaxWallClockTime = maxWallClockTime;
+            this.RetentionTime = retentionTime;
+            this.MaxTaskRetryCount = maxTaskRetryCount;
         }
 
         /// <summary>

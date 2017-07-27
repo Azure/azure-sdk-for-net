@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="properties">The file properties.</param>
         public NodeFile(string name = default(string), string url = default(string), bool? isDirectory = default(bool?), FileProperties properties = default(FileProperties))
         {
-            Name = name;
-            Url = url;
-            IsDirectory = isDirectory;
-            Properties = properties;
+            this.Name = name;
+            this.Url = url;
+            this.IsDirectory = isDirectory;
+            this.Properties = properties;
         }
 
         /// <summary>

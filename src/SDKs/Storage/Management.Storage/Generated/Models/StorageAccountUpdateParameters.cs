@@ -46,6 +46,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// tags can be provided for a resource. Each tag must have a key no
         /// greater in length than 128 characters and a value no greater in
         /// length than 256 characters.</param>
+        /// <param name="identity">The identity of the resource.</param>
         /// <param name="customDomain">Custom domain assigned to the storage
         /// account by the user. Name is the CNAME source. Only one custom
         /// domain is supported per storage account at this time. To clear the
@@ -58,14 +59,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// include: 'Hot', 'Cool'</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
-        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?))
+        /// <param name="networkAcls">Network ACL</param>
+        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?), StorageNetworkAcls networkAcls = default(StorageNetworkAcls))
         {
             Sku = sku;
             Tags = tags;
+            Identity = identity;
             CustomDomain = customDomain;
             Encryption = encryption;
             AccessTier = accessTier;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
+            NetworkAcls = networkAcls;
         }
 
         /// <summary>
@@ -85,6 +89,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets custom domain assigned to the storage account by the
@@ -118,6 +128,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         public bool? EnableHttpsTrafficOnly { get; set; }
 
         /// <summary>
+        /// Gets or sets network ACL
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkAcls")]
+        public StorageNetworkAcls NetworkAcls { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -132,6 +148,14 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (CustomDomain != null)
             {
                 CustomDomain.Validate();
+            }
+            if (Encryption != null)
+            {
+                Encryption.Validate();
+            }
+            if (NetworkAcls != null)
+            {
+                NetworkAcls.Validate();
             }
         }
     }

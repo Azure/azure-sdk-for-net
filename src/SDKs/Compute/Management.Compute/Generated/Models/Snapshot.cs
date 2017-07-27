@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="accountType">the storage account type of the disk.
-        /// Possible values include: 'Standard_LRS', 'Premium_LRS'</param>
+        /// <param name="managedBy">A relative URI containing the ID of the VM
+        /// that has the disk attached.</param>
         /// <param name="timeCreated">The time when the disk was
         /// created.</param>
         /// <param name="osType">The Operating System type. Possible values
@@ -54,29 +54,32 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk's size.</param>
         /// <param name="encryptionSettings">Encryption settings for disk or
         /// snapshot</param>
-        /// <param name="ownerId">A relative URI containing the VM id that has
-        /// the disk attached.</param>
         /// <param name="provisioningState">The disk provisioning
         /// state.</param>
-        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), StorageAccountTypes? accountType = default(StorageAccountTypes?), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings), string ownerId = default(string), string provisioningState = default(string))
+        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), DiskSku sku = default(DiskSku), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
-            AccountType = accountType;
+            ManagedBy = managedBy;
+            Sku = sku;
             TimeCreated = timeCreated;
             OsType = osType;
             CreationData = creationData;
             DiskSizeGB = diskSizeGB;
             EncryptionSettings = encryptionSettings;
-            OwnerId = ownerId;
             ProvisioningState = provisioningState;
         }
 
         /// <summary>
-        /// Gets or sets the storage account type of the disk. Possible values
-        /// include: 'Standard_LRS', 'Premium_LRS'
+        /// Gets a relative URI containing the ID of the VM that has the disk
+        /// attached.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.accountType")]
-        public StorageAccountTypes? AccountType { get; set; }
+        [JsonProperty(PropertyName = "managedBy")]
+        public string ManagedBy { get; protected set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public DiskSku Sku { get; set; }
 
         /// <summary>
         /// Gets the time when the disk was created.
@@ -113,13 +116,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryptionSettings")]
         public EncryptionSettings EncryptionSettings { get; set; }
-
-        /// <summary>
-        /// Gets a relative URI containing the VM id that has the disk
-        /// attached.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.ownerId")]
-        public string OwnerId { get; protected set; }
 
         /// <summary>
         /// Gets the disk provisioning state.

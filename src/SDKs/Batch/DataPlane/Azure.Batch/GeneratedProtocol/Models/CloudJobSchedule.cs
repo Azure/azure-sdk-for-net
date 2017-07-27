@@ -53,21 +53,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// job schedule.</param>
         public CloudJobSchedule(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), JobScheduleState? state = default(JobScheduleState?), System.DateTime? stateTransitionTime = default(System.DateTime?), JobScheduleState? previousState = default(JobScheduleState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), JobScheduleExecutionInformation executionInfo = default(JobScheduleExecutionInformation), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), JobScheduleStatistics stats = default(JobScheduleStatistics))
         {
-            Id = id;
-            DisplayName = displayName;
-            Url = url;
-            ETag = eTag;
-            LastModified = lastModified;
-            CreationTime = creationTime;
-            State = state;
-            StateTransitionTime = stateTransitionTime;
-            PreviousState = previousState;
-            PreviousStateTransitionTime = previousStateTransitionTime;
-            Schedule = schedule;
-            JobSpecification = jobSpecification;
-            ExecutionInfo = executionInfo;
-            Metadata = metadata;
-            Stats = stats;
+            this.Id = id;
+            this.DisplayName = displayName;
+            this.Url = url;
+            this.ETag = eTag;
+            this.LastModified = lastModified;
+            this.CreationTime = creationTime;
+            this.State = state;
+            this.StateTransitionTime = stateTransitionTime;
+            this.PreviousState = previousState;
+            this.PreviousStateTransitionTime = previousStateTransitionTime;
+            this.Schedule = schedule;
+            this.JobSpecification = jobSpecification;
+            this.ExecutionInfo = executionInfo;
+            this.Metadata = metadata;
+            this.Stats = stats;
         }
 
         /// <summary>

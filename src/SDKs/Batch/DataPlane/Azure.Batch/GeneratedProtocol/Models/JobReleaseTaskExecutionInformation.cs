@@ -45,14 +45,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="result">The result of the task execution.</param>
         public JobReleaseTaskExecutionInformation(System.DateTime startTime, JobReleaseTaskState state, System.DateTime? endTime = default(System.DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
-            StartTime = startTime;
-            EndTime = endTime;
-            State = state;
-            TaskRootDirectory = taskRootDirectory;
-            TaskRootDirectoryUrl = taskRootDirectoryUrl;
-            ExitCode = exitCode;
-            FailureInfo = failureInfo;
-            Result = result;
+            this.StartTime = startTime;
+            this.EndTime = endTime;
+            this.State = state;
+            this.TaskRootDirectory = taskRootDirectory;
+            this.TaskRootDirectoryUrl = taskRootDirectoryUrl;
+            this.ExitCode = exitCode;
+            this.FailureInfo = failureInfo;
+            this.Result = result;
         }
 
         /// <summary>

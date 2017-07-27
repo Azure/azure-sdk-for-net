@@ -5,19 +5,17 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Text;
 using Xunit;
+using CM = Microsoft.Azure.Management.Compute.Models;
 
 namespace Compute.Tests
 {
@@ -54,7 +52,7 @@ namespace Compute.Tests
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                Sku = new Sku()
+                Sku = new CM.Sku()
                 {
                     Capacity = 2,
                     Name = VirtualMachineSizeTypes.StandardA0,
@@ -90,7 +88,7 @@ namespace Compute.Tests
                     {
                         ComputerNamePrefix = "test",
                         AdminUsername = "Foo12",
-                        AdminPassword = "BaR@123" + rgName,
+                        AdminPassword = PLACEHOLDER,
                         CustomData = Convert.ToBase64String(Encoding.UTF8.GetBytes("Custom data"))
                     },
                     NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
@@ -252,10 +250,12 @@ namespace Compute.Tests
         {
             Assert.NotNull(vmScaleSetInstanceView.Statuses);
             Assert.NotNull(vmScaleSetInstanceView);
-            // TODO: AutoRest
-            Assert.NotNull(vmScaleSetInstanceView.Extensions);
-            int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
-            Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            if (vmScaleSet.VirtualMachineProfile.ExtensionProfile != null)
+            {
+                Assert.NotNull(vmScaleSetInstanceView.Extensions);
+                int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
+                Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            }
         }
 
         protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false)

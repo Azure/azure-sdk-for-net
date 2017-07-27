@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Cognitive Services error body.
+    /// </summary>
     public partial class ErrorBody
     {
         /// <summary>

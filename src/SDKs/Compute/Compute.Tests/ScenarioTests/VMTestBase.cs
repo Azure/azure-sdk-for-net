@@ -5,11 +5,10 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -18,12 +17,14 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using Xunit;
+using CM=Microsoft.Azure.Management.Compute.Models;
 
 namespace Compute.Tests
 {
     public class VMTestBase
     {
         protected const string TestPrefix = "crptestar";
+        protected const string PLACEHOLDER = "[PLACEHOLDER]";
 
         protected ResourceManagementClient m_ResourcesClient;
         protected ComputeManagementClient m_CrpClient;
@@ -86,6 +87,7 @@ namespace Compute.Tests
             {
                 if (m_windowsImageReference == null)
                 {
+                    Trace.TraceInformation("Querying available Windows Server image from PIR...");
                     m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
                 }
                 return m_windowsImageReference;
@@ -93,9 +95,10 @@ namespace Compute.Tests
 
             if (m_linuxImageReference == null)
             {
+                Trace.TraceInformation("Querying available Ubuntu image from PIR...");
                 // If this sku disappears, query latest with 
                 // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
-                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "15.10");
+                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "17.04");
             }
             return m_linuxImageReference;
         }
@@ -115,7 +118,7 @@ namespace Compute.Tests
         protected DiskEncryptionSettings GetEncryptionSettings(bool addKek = false)
         {
             string testVaultId =
-                @"/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/resourceGroups/RgTest1/providers/Microsoft.KeyVault/vaults/TestVault123";
+                @"/subscriptions/" + this.m_subId + @"/resourceGroups/RgTest1/providers/Microsoft.KeyVault/vaults/TestVault123";
             string encryptionKeyFakeUri = @"https://testvault123.vault.azure.net/secrets/Test1/514ceb769c984379a7e0230bdd703272";
 
             DiskEncryptionSettings diskEncryptionSettings = new DiskEncryptionSettings
@@ -617,6 +620,10 @@ namespace Compute.Tests
                     },
                 PlatformFaultDomainCount = hasManagedDisks ? 2 : 3,
                 PlatformUpdateDomainCount = 5,
+                Sku = new CM.Sku
+                {
+                    Name = hasManagedDisks ? "Aligned" : "Classic"
+                }
             };
 
             // Create an Availability Set and then create a VM inside this availability set
@@ -687,7 +694,7 @@ namespace Compute.Tests
                 OsProfile = new OSProfile
                 {
                     AdminUsername = "Foo12",
-                    AdminPassword = "BaR@123" + rgName,
+                    AdminPassword = PLACEHOLDER,
                     ComputerName = "test"
                 }
             };

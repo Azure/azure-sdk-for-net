@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(job.Id);
             var jobOutputContainer = storageAccount.CreateCloudBlobClient().GetContainerReference(jobOutputContainerName);
 
-            await jobOutputContainer.CreateIfNotExistsAsync(cancellationToken);
+            await jobOutputContainer.CreateIfNotExistsAsync(BlobContainerPublicAccessType.Off, null, null, cancellationToken);
         }
 
         /// <summary>

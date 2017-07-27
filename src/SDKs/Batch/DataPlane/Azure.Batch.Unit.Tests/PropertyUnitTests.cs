@@ -141,6 +141,9 @@ namespace Azure.Batch.Unit.Tests
                 new ComparerPropertyMapping(typeof(VirtualMachineConfiguration), typeof(Protocol.Models.VirtualMachineConfiguration), "OSDisk", "OsDisk"),
 
                 new ComparerPropertyMapping(typeof(TaskSchedulingPolicy), typeof(Protocol.Models.TaskSchedulingPolicy), "ComputeNodeFillType", "NodeFillType"),
+
+                new ComparerPropertyMapping(typeof(PoolEndpointConfiguration), typeof(Protocol.Models.PoolEndpointConfiguration), "InboundNatPools", "InboundNATPools"),
+                new ComparerPropertyMapping(typeof(InboundEndpoint), typeof(Protocol.Models.InboundEndpoint), "PublicFqdn", "PublicFQDN"),
             };
 
             Random rand = new Random();
@@ -196,7 +199,7 @@ namespace Azure.Batch.Unit.Tests
                     taskRangeSpecification,
                     omTaskRangeSpecification,
                     fileStagingProviderSpecification,
-                    batchClientBehaviorSpecification
+                    batchClientBehaviorSpecification,
                 });
 
             // We need a custom comparison rule for certificate references because they are a different type in the proxy vs
@@ -230,7 +233,6 @@ namespace Azure.Batch.Unit.Tests
                 },
                 type1PropertyName: "Access",
                 type2PropertyName: "Access");
-
 
             this.objectComparer = new ObjectComparer(
                 comparisonRules: new List<ComparisonRule>() { certificateReferenceComparisonRule, accessScopeComparisonRule },
@@ -273,7 +275,6 @@ namespace Azure.Batch.Unit.Tests
             reference.Visibility = visibility == null ? null : UtilitiesInternal.CertificateVisibilityToList(visibility.Value);
 
             return reference;
-
         }
 
         private Protocol.Models.AuthenticationTokenSettings BuildAuthenticationTokenSettings(Random rand)

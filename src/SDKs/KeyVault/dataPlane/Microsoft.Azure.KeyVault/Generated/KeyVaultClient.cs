@@ -14,6 +14,7 @@ namespace Microsoft.Azure.KeyVault
     using Rest.Serialization;
     using Models;
     using Newtonsoft.Json;
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -193,10 +194,13 @@ namespace Microsoft.Azure.KeyVault
         }
         /// <summary>
         /// Creates a new key, stores it, then returns key parameters and attributes to
-        /// the client. The create key operation can be used to create any key type in
-        /// Azure Key Vault. If the named key already exists, Azure Key Vault creates a
-        /// new version of the key. Authorization: Requires the keys/create permission.
+        /// the client.
         /// </summary>
+        /// <remarks>
+        /// The create key operation can be used to create any key type in Azure Key
+        /// Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -432,11 +436,13 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Imports an externally created key, stores it, and returns key parameters
-        /// and attributes to the client. The import key operation may be used to
-        /// import any key type into an Azure Key Vault. If the named key already
-        /// exists, Azure Key Vault creates a new version of the key. Authorization:
-        /// requires the keys/import permission.
+        /// and attributes to the client.
         /// </summary>
+        /// <remarks>
+        /// The import key operation may be used to import any key type into an Azure
+        /// Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -659,12 +665,14 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Deletes a key of any type from storage in Azure Key Vault. The delete key
-        /// operation cannot be used to remove individual versions of a key. This
-        /// operation removes the cryptographic material associated with the key, which
-        /// means the key is not usable for Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt
-        /// operations. Authorization: Requires the keys/delete permission.
+        /// Deletes a key of any type from storage in Azure Key Vault.
         /// </summary>
+        /// <remarks>
+        /// The delete key operation cannot be used to remove individual versions of a
+        /// key. This operation removes the cryptographic material associated with the
+        /// key, which means the key is not usable for Sign/Verify, Wrap/Unwrap or
+        /// Encrypt/Decrypt operations.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -851,10 +859,11 @@ namespace Microsoft.Azure.KeyVault
         /// <summary>
         /// The update key operation changes specified attributes of a stored key and
         /// can be applied to any key type and key version stored in Azure Key Vault.
-        /// The cryptographic material of a key itself cannot be changed. In order to
-        /// perform this operation, the key must already exist in the Key Vault.
-        /// Authorization: requires the keys/update permission.
         /// </summary>
+        /// <remarks>
+        /// In order to perform this operation, the key must already exist in the Key
+        /// Vault. Note: The cryptographic material of a key itself cannot be changed.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -1071,11 +1080,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Gets the public part of a stored key. The get key operation is applicable
-        /// to all key types. If the requested key is symmetric, then no key material
-        /// is released in the response. Authorization: Requires the keys/get
-        /// permission.
+        /// Gets the public part of a stored key.
         /// </summary>
+        /// <remarks>
+        /// The get key operation is applicable to all key types. If the requested key
+        /// is symmetric, then no key material is released in the response.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -1269,10 +1279,11 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Retrieves a list of individual key versions with the same key name. The
-        /// full key identifier, attributes, and tags are provided in the response.
-        /// Authorization: Requires the keys/list permission.
+        /// Retrieves a list of individual key versions with the same key name.
         /// </summary>
+        /// <remarks>
+        /// The full key identifier, attributes, and tags are provided in the response.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -1476,6 +1487,14 @@ namespace Microsoft.Azure.KeyVault
         /// <summary>
         /// List keys in the specified vault.
         /// </summary>
+        /// <remarks>
+        /// Retrieves a list of the keys in the Key Vault as JSON Web Key structures
+        /// that contain the public part of a stored key. The LIST operation is
+        /// applicable to all key types, however only the base key
+        /// identifier,attributes, and tags are provided in the response. Individual
+        /// versions of a key are not listed in the response. Authorization: Requires
+        /// the keys/list permission.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -1669,8 +1688,22 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Requests that a backup of the specified key be downloaded to the client.
-        /// Authorization: Requires the keys/backup permission.
         /// </summary>
+        /// <remarks>
+        /// The Key Backup operation exports a key from Azure Key Vault in a protected
+        /// form. Note that this operation does NOT return key material in a form that
+        /// can be used outside the Azure Key Vault system, the returned key material
+        /// is either protected to a Azure Key Vault HSM or to Azure Key Vault itself.
+        /// The intent of this operation is to allow a client to GENERATE a key in one
+        /// Azure Key Vault instance, BACKUP the key, and then RESTORE it into another
+        /// Azure Key Vault instance. The BACKUP operation may be used to export, in
+        /// protected form, any key type from Azure Key Vault. Individual versions of a
+        /// key cannot be backed up. BACKUP / RESTORE can be performed within
+        /// geographical boundaries only; meaning that a BACKUP from one geographical
+        /// area cannot be restored to another geographical area. For example, a backup
+        /// from the US geographical area cannot be restored in an EU geographical
+        /// area.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -1855,9 +1888,22 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Restores a backed up key to a vault. Authorization: Requires the
-        /// keys/restore permission.
+        /// Restores a backed up key to a vault.
         /// </summary>
+        /// <remarks>
+        /// Imports a previously backed up key into Azure Key Vault, restoring the key,
+        /// its key identifier, attributes and access control policies. The RESTORE
+        /// operation may be used to import a previously backed up key. Individual
+        /// versions of a key cannot be restored. The key is restored in its entirety
+        /// with the same key name as it had when it was backed up. If the key name is
+        /// not available in the target Key Vault, the RESTORE operation will be
+        /// rejected. While the key name is retained during restore, the final key
+        /// identifier will change if the key is restored to a different vault. Restore
+        /// will restore all versions and preserve version identifiers. The RESTORE
+        /// operation is subject to security constraints: The target Key Vault must be
+        /// owned by the same Microsoft Azure Subscription as the source Key Vault The
+        /// user must have RESTORE permission in the target Key Vault.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -2053,8 +2099,19 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Encrypts an arbitrary sequence of bytes using an encryption key that is
-        /// stored in a key vault. Authorization: requires the keys/encrypt permission.
+        /// stored in a key vault.
         /// </summary>
+        /// <remarks>
+        /// The ENCRYPT operation encrypts an arbitrary sequence of bytes using an
+        /// encryption key that is stored in Azure Key Vault. Note that the ENCRYPT
+        /// operation only supports a single block of data, the size of which is
+        /// dependent on the target key and the encryption algorithm to be used. The
+        /// ENCRYPT operation is only strictly necessary for symmetric keys stored in
+        /// Azure Key Vault since protection with an asymmetric key can be performed
+        /// using public portion of the key. This operation is supported for asymmetric
+        /// keys as a convenience for callers that have a key-reference but do not have
+        /// access to the public key material.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -2282,9 +2339,17 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Decrypts a single block of encrypted data, using the specified key.
-        /// Authorization: requires the keys/decrypt permission.
+        /// Decrypts a single block of encrypted data.
         /// </summary>
+        /// <remarks>
+        /// The DECRYPT operation decrypts a well-formed block of ciphertext using the
+        /// target encryption key and specified algorithm. This operation is the
+        /// reverse of the ENCRYPT operation; only a single block of data may be
+        /// decrypted, the size of this block is dependent on the target key and the
+        /// algorithm to be used. The DECRYPT operation applies to asymmetric and
+        /// symmetric keys stored in Azure Key Vault since it uses the private portion
+        /// of the key.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -2512,9 +2577,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Creates a signature from a digest using the specified key. Authorization:
-        /// Requires the keys/sign permission.
+        /// Creates a signature from a digest using the specified key.
         /// </summary>
+        /// <remarks>
+        /// The SIGN operation is applicable to asymmetric and symmetric keys stored in
+        /// Azure Key Vault since this operation uses the private portion of the key.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -2743,9 +2811,16 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Verifies a signature using a specified key. Authorization: Requires the
-        /// keys/verify permission.
+        /// Verifies a signature using a specified key.
         /// </summary>
+        /// <remarks>
+        /// The VERIFY operation is applicable to symmetric keys stored in Azure Key
+        /// Vault. VERIFY is not strictly necessary for asymmetric keys stored in Azure
+        /// Key Vault since signature verification can be performed using the public
+        /// portion of the key but this operation is supported as a convenience for
+        /// callers that only have a key-reference and not the public portion of the
+        /// key.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -2983,9 +3058,17 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Wraps a symmetric key using a specified key. Authorization: Requires the
-        /// keys/wrapKey permission.
+        /// Wraps a symmetric key using a specified key.
         /// </summary>
+        /// <remarks>
+        /// The WRAP operation supports encryption of a symmetric key using a key
+        /// encryption key that has previously been stored in an Azure Key Vault. The
+        /// WRAP operation is only strictly necessary for symmetric keys stored in
+        /// Azure Key Vault since protection with an asymmetric key can be performed
+        /// using the public portion of the key. This operation is supported for
+        /// asymmetric keys as a convenience for callers that have a key-reference but
+        /// do not have access to the public key material.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -3214,8 +3297,14 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Unwraps a symmetric key using the specified key that was initially used for
-        /// wrapping that key. Authorization: Requires the keys/unwrapKey permission.
+        /// wrapping that key.
         /// </summary>
+        /// <remarks>
+        /// The UNWRAP operation supports decryption of a symmetric key using the
+        /// target key encryption key. This operation is the reverse of the WRAP
+        /// operation. The UNWRAP operation applies to asymmetric and symmetric keys
+        /// stored in Azure Key Vault since it uses the private portion of the key.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -4178,9 +4267,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Sets a secret in a specified key vault. Authorization: requires the
-        /// secrets/set permission.
+        /// Sets a secret in a specified key vault.
         /// </summary>
+        /// <remarks>
+        /// The SET operation adds a secret to the Azure Key Vault. If the named secret
+        /// already exists, Azure Key Vault creates a new version of that secret.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -4403,9 +4495,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Deletes a secret from a specified key vault. Authorization: requires the
-        /// secrets/delete permission.
+        /// Deletes a secret from a specified key vault.
         /// </summary>
+        /// <remarks>
+        /// The DELETE operation applies to any secret stored in Azure Key Vault.
+        /// DELETE cannot be applied to an individual version of a secret.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -4591,8 +4686,13 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Updates the attributes associated with a specified secret in a given key
-        /// vault.  Authorization: requires the secrets/set permission.
+        /// vault.
         /// </summary>
+        /// <remarks>
+        /// The UPDATE operation changes specified attributes of an existing stored
+        /// secret. Attributes that are not specified in the request are left
+        /// unchanged. The value of a secret itself cannot be changed.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -4809,9 +4909,11 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Get a specified secret from a given key vault. Authorization: requires the
-        /// secrets/get permission.
+        /// Get a specified secret from a given key vault.
         /// </summary>
+        /// <remarks>
+        /// The GET operation is applicable to any secret stored in Azure Key Vault.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -5005,9 +5107,13 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List secrets in a specified key vault.  Authorization: requires the
-        /// secrets/list permission.
+        /// List secrets in a specified key vault
         /// </summary>
+        /// <remarks>
+        /// The LIST operation is applicable to the entire vault, however only the base
+        /// secret identifier and attributes are provided in the response. Individual
+        /// secret versions are not listed in the response.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -5200,9 +5306,14 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List the versions of the specified secret. Authorization: requires the
-        /// secrets/list permission.
+        /// List the versions of the specified secret.
         /// </summary>
+        /// <remarks>
+        /// The LIST VERSIONS operation can be applied to all versions having the same
+        /// secret name in the same key vault. The full secret identifier and
+        /// attributes are provided in the response. No values are returned for the
+        /// secrets and only current versions of a secret are listed.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -6523,9 +6634,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List certificates in a specified key vault. Authorization: requires the
-        /// certificates/list permission.
+        /// List certificates in a specified key vault
         /// </summary>
+        /// <remarks>
+        /// The GetCertificates operation returns the set of certificates resources in
+        /// the specified key vault.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -6718,9 +6832,13 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Deletes a certificate from a specified key vault. Authorization: requires
-        /// the certificates/delete permission.
+        /// Deletes a certificate from a specified key vault.
         /// </summary>
+        /// <remarks>
+        /// Deletes all versions of a certificate object along with its associated
+        /// policy. Delete certificate cannot be used to remove individual versions of
+        /// a certificate object.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -6905,9 +7023,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
+        /// Sets the certificate contacts for the specified key vault.
+        /// </summary>
+        /// <remarks>
         /// Sets the certificate contacts for the specified key vault. Authorization:
         /// requires the certificates/managecontacts permission.
-        /// </summary>
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -7097,9 +7218,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Lists the certificate contacts for a specified key vault. Authorization:
-        /// requires the certificates/managecontacts permission.
+        /// Lists the certificate contacts for a specified key vault.
         /// </summary>
+        /// <remarks>
+        /// The GetCertificateContacts operation returns the set of certificate contact
+        /// resources in the specified key vault.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -7275,9 +7399,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
+        /// Deletes the certificate contacts for a specified key vault.
+        /// </summary>
+        /// <remarks>
         /// Deletes the certificate contacts for a specified key vault certificate.
         /// Authorization: requires the certificates/managecontacts permission.
-        /// </summary>
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -7453,9 +7580,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List certificate issuers for a specified key vault. Authorization: requires
-        /// the certificates/listIssuers permission.
+        /// List certificate issuers for a specified key vault.
         /// </summary>
+        /// <remarks>
+        /// The GetCertificateIssuers operation returns the set of certificate issuer
+        /// resources in the specified key vault
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -7648,9 +7778,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Sets the specified certificate issuer. Authorization: requires the
-        /// certificates/setIssuers permission.
+        /// Sets the specified certificate issuer.
         /// </summary>
+        /// <remarks>
+        /// The SetCertificateIssuer operation adds or updates the specified
+        /// certificate issuer.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -7866,9 +7999,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Updates the specified certificate issuer. Authorization: requires the
-        /// certificates/setIssuers permission.
+        /// Updates the specified certificate issuer.
         /// </summary>
+        /// <remarks>
+        /// The UpdateCertificateIssuer operation performs an update on the specified
+        /// certificate issuer entity.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -8080,9 +8216,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Lists the specified certificate issuer. Authorization: requires the
-        /// certificates/getIssuers permission.
+        /// Lists the specified certificate issuer.
         /// </summary>
+        /// <remarks>
+        /// The GetCertificateIssuer operation returns the specified certificate issuer
+        /// resources in the specified key vault
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -8267,9 +8406,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Deletes the specified certificate issuer. Authorization: requires the
-        /// certificates/deleteIssuers permission.
+        /// Deletes the specified certificate issuer.
         /// </summary>
+        /// <remarks>
+        /// The DeleteCertificateIssuer operation permanently removes the specified
+        /// certificate issuer from the vault.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -8454,10 +8596,11 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Creates a new certificate. If this is the first version, the certificate
-        /// resource is created. Authorization: requires the certificates/create
-        /// permission.
+        /// Creates a new certificate.
         /// </summary>
+        /// <remarks>
+        /// If this is the first version, the certificate resource is created.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -8676,9 +8819,14 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Imports a certificate into a specified key vault. Authorization: requires
-        /// the certificates/import permission.
+        /// Imports a certificate into a specified key vault.
         /// </summary>
+        /// <remarks>
+        /// Imports an existing valid certificate, containing a private key, into Azure
+        /// Key Vault. The certificate to be imported can be in either PFX or PEM
+        /// format. If the certificate is in PEM format the PEM file must contain the
+        /// key as well as x509 certificates.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -8911,9 +9059,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List the versions of a certificate. Authorization: requires the
-        /// certificates/get permission.
+        /// List the versions of a certificate.
         /// </summary>
+        /// <remarks>
+        /// The GetCertificateVersions operation returns the versions of a certificate
+        /// in the specified key vault
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -9115,9 +9266,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Lists the policy for a certificate. Authorization: requires the
-        /// certificates/get permission.
+        /// Lists the policy for a certificate.
         /// </summary>
+        /// <remarks>
+        /// The GetCertificatePolicy operation returns the specified certificate policy
+        /// resources in the specified key vault
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -9302,10 +9456,11 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Updates the policy for a certificate. Set specified members in the
-        /// certificate policy. Leave others as null. Authorization: requires the
-        /// certificates/update permission.
+        /// Updates the policy for a certificate.
         /// </summary>
+        /// <remarks>
+        /// Set specified members in the certificate policy. Leave others as null.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -9505,8 +9660,12 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Updates the specified attributes associated with the given certificate.
-        /// Authorization: requires the certificates/update permission.
         /// </summary>
+        /// <remarks>
+        /// The UpdateCertificate operation applies the specified update on the given
+        /// certificate; note the only elements being updated are the certificate's
+        /// attributes.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -10497,8 +10656,13 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Merges a certificate or a certificate chain with a key pair existing on the
-        /// server. Authorization: requires the certificates/update permission.
+        /// server.
         /// </summary>
+        /// <remarks>
+        /// The MergeCertificate operation performs the merging of a certificate or
+        /// certificate chain with a key pair currently available in the service.
+        /// Authorization: requires the certificates/update permission.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -10710,9 +10874,14 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List deleted certificates in the specified vault. Authorization: requires
-        /// the certificates/list permission.
+        /// Lists the deleted certificates in the specified vault, currently available
+        /// for recovery.
         /// </summary>
+        /// <remarks>
+        /// The GetDeletedCertificates operation retrieves the certificates in the
+        /// current vault which are in a deleted state and ready for recovery or
+        /// purging.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -10905,9 +11074,13 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Retrieves the deleted certificate information plus its attributes.
-        /// Authorization: requires the certificates/get permission.
+        /// Retrieves information about the specified deleted certificate.
         /// </summary>
+        /// <remarks>
+        /// The GetDeletedCertificate operation retrieves the deleted certificate
+        /// information plus its attributes, such as retention interval, scheduled
+        /// permanent deletion and the current deletion recovery level.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -11092,9 +11265,14 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Permanently deletes the specified certificate. aka purges the certificate.
-        /// Authorization: requires the certificates/purge permission.
+        /// Permanently deletes the specified deleted certificate.
         /// </summary>
+        /// <remarks>
+        /// The PurgeDeletedCertificate operation performs an irreversible deletion of
+        /// the specified certificate, without possibility for recovery. The operation
+        /// is not available if the recovery level does not specify 'Purgeable'.
+        /// Requires the explicit granting of the 'purge' permission.
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -11259,8 +11437,14 @@ namespace Microsoft.Azure.KeyVault
 
         /// <summary>
         /// Recovers the deleted certificate back to its current version under
-        /// /certificates. Authorization: requires the certificates/recover permission.
+        /// /certificates.
         /// </summary>
+        /// <remarks>
+        /// The RecoverDeletedCertificate operation performs the reversal of the Delete
+        /// operation. The operation is applicable in vaults enabled for soft-delete,
+        /// and must be issued during the retention interval (available in the deleted
+        /// certificate's attributes).
+        /// </remarks>
         /// <param name='vaultBaseUrl'>
         /// The vault name, for example https://myvault.vault.azure.net.
         /// </param>
@@ -11445,10 +11629,2359 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Retrieves a list of individual key versions with the same key name. The
-        /// full key identifier, attributes, and tags are provided in the response.
-        /// Authorization: Requires the keys/list permission.
+        /// List storage accounts managed by specified key vault
         /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='maxresults'>
+        /// Maximum number of results to return in a page. If not specified the service
+        /// will return up to 25 results.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<StorageAccountItem>>> GetStorageAccountsWithHttpMessagesAsync(string vaultBaseUrl, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (maxresults > 25)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "maxresults", 25);
+            }
+            if (maxresults < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "maxresults", 1);
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("maxresults", maxresults);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetStorageAccounts", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            List<string> _queryParameters = new List<string>();
+            if (maxresults != null)
+            {
+                _queryParameters.Add(string.Format("maxresults={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(maxresults, SerializationSettings).Trim('"'))));
+            }
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<StorageAccountItem>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<StorageAccountItem>>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Deletes a storage account.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// The name of the storage account.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<StorageBundle>> DeleteStorageAccountWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (storageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageAccountName");
+            }
+            if (storageAccountName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageAccountName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageAccountName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("storageAccountName", storageAccountName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteStorageAccount", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage/{storage-account-name}";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{storage-account-name}", System.Uri.EscapeDataString(storageAccountName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<StorageBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<StorageBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gets information about a specified storage account.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// The name of the storage account.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<StorageBundle>> GetStorageAccountWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (storageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageAccountName");
+            }
+            if (storageAccountName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageAccountName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageAccountName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("storageAccountName", storageAccountName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetStorageAccount", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage/{storage-account-name}";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{storage-account-name}", System.Uri.EscapeDataString(storageAccountName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<StorageBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<StorageBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates or updates a new storage account.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// The name of the storage account.
+        /// </param>
+        /// <param name='resourceId'>
+        /// Storage account resource id.
+        /// </param>
+        /// <param name='activeKeyName'>
+        /// Current active storage account key name.
+        /// </param>
+        /// <param name='autoRegenerateKey'>
+        /// whether keyvault should manage the storage account for the user.
+        /// </param>
+        /// <param name='regenerationPeriod'>
+        /// The key regeneration time duration specified in ISO-8601 format.
+        /// </param>
+        /// <param name='storageAccountAttributes'>
+        /// The attributes of the storage account.
+        /// </param>
+        /// <param name='tags'>
+        /// Application specific metadata in the form of key-value pairs.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<StorageBundle>> SetStorageAccountWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, string resourceId, string activeKeyName, bool autoRegenerateKey, string regenerationPeriod = default(string), StorageAccountAttributes storageAccountAttributes = default(StorageAccountAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (storageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageAccountName");
+            }
+            if (storageAccountName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageAccountName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageAccountName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (resourceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
+            }
+            if (activeKeyName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "activeKeyName");
+            }
+            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters();
+            if (resourceId != null || activeKeyName != null || regenerationPeriod != null || storageAccountAttributes != null || tags != null)
+            {
+                parameters.ResourceId = resourceId;
+                parameters.ActiveKeyName = activeKeyName;
+                parameters.AutoRegenerateKey = autoRegenerateKey;
+                parameters.RegenerationPeriod = regenerationPeriod;
+                parameters.StorageAccountAttributes = storageAccountAttributes;
+                parameters.Tags = tags;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("storageAccountName", storageAccountName);
+                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "SetStorageAccount", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage/{storage-account-name}";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{storage-account-name}", System.Uri.EscapeDataString(storageAccountName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, SerializationSettings);
+                _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<StorageBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<StorageBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Updates the specified attributes associated with the given storage account.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// The name of the storage account.
+        /// </param>
+        /// <param name='activeKeyName'>
+        /// The current active storage account key name.
+        /// </param>
+        /// <param name='autoRegenerateKey'>
+        /// whether keyvault should manage the storage account for the user.
+        /// </param>
+        /// <param name='regenerationPeriod'>
+        /// The key regeneration time duration specified in ISO-8601 format.
+        /// </param>
+        /// <param name='storageAccountAttributes'>
+        /// The attributes of the storage account.
+        /// </param>
+        /// <param name='tags'>
+        /// Application specific metadata in the form of key-value pairs.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<StorageBundle>> UpdateStorageAccountWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, string activeKeyName = default(string), bool? autoRegenerateKey = default(bool?), string regenerationPeriod = default(string), StorageAccountAttributes storageAccountAttributes = default(StorageAccountAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (storageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageAccountName");
+            }
+            if (storageAccountName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageAccountName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageAccountName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            StorageAccountUpdateParameters parameters = new StorageAccountUpdateParameters();
+            if (activeKeyName != null || autoRegenerateKey != null || regenerationPeriod != null || storageAccountAttributes != null || tags != null)
+            {
+                parameters.ActiveKeyName = activeKeyName;
+                parameters.AutoRegenerateKey = autoRegenerateKey;
+                parameters.RegenerationPeriod = regenerationPeriod;
+                parameters.StorageAccountAttributes = storageAccountAttributes;
+                parameters.Tags = tags;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("storageAccountName", storageAccountName);
+                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateStorageAccount", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage/{storage-account-name}";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{storage-account-name}", System.Uri.EscapeDataString(storageAccountName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PATCH");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, SerializationSettings);
+                _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<StorageBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<StorageBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Regenerates the specified key value for the given storage account.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// The name of the storage account.
+        /// </param>
+        /// <param name='keyName'>
+        /// The storage account key name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<StorageBundle>> RegenerateStorageAccountKeyWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (storageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageAccountName");
+            }
+            if (storageAccountName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageAccountName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageAccountName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (keyName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "keyName");
+            }
+            StorageAccountRegenerteKeyParameters parameters = new StorageAccountRegenerteKeyParameters();
+            if (keyName != null)
+            {
+                parameters.KeyName = keyName;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("storageAccountName", storageAccountName);
+                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "RegenerateStorageAccountKey", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage/{storage-account-name}/regeneratekey";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{storage-account-name}", System.Uri.EscapeDataString(storageAccountName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters, SerializationSettings);
+                _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<StorageBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<StorageBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// List storage SAS definitions for the given storage account.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// The name of the storage account.
+        /// </param>
+        /// <param name='maxresults'>
+        /// Maximum number of results to return in a page. If not specified the service
+        /// will return up to 25 results.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<SasDefinitionItem>>> GetSasDefinitionsWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, int? maxresults = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (storageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageAccountName");
+            }
+            if (storageAccountName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageAccountName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageAccountName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (maxresults > 25)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "maxresults", 25);
+            }
+            if (maxresults < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "maxresults", 1);
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("storageAccountName", storageAccountName);
+                tracingParameters.Add("maxresults", maxresults);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSasDefinitions", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage/{storage-account-name}/sas";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{storage-account-name}", System.Uri.EscapeDataString(storageAccountName));
+            List<string> _queryParameters = new List<string>();
+            if (maxresults != null)
+            {
+                _queryParameters.Add(string.Format("maxresults={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(maxresults, SerializationSettings).Trim('"'))));
+            }
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<SasDefinitionItem>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<SasDefinitionItem>>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Deletes a SAS definition from a specified storage account.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// The name of the storage account.
+        /// </param>
+        /// <param name='sasDefinitionName'>
+        /// The name of the SAS definition.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<SasDefinitionBundle>> DeleteSasDefinitionWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, string sasDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (storageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageAccountName");
+            }
+            if (storageAccountName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageAccountName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageAccountName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (sasDefinitionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "sasDefinitionName");
+            }
+            if (sasDefinitionName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sasDefinitionName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "sasDefinitionName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("storageAccountName", storageAccountName);
+                tracingParameters.Add("sasDefinitionName", sasDefinitionName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteSasDefinition", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage/{storage-account-name}/sas/{sas-definition-name}";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{storage-account-name}", System.Uri.EscapeDataString(storageAccountName));
+            _url = _url.Replace("{sas-definition-name}", System.Uri.EscapeDataString(sasDefinitionName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<SasDefinitionBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<SasDefinitionBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gets information about a SAS definition for the specified storage account.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// The name of the storage account.
+        /// </param>
+        /// <param name='sasDefinitionName'>
+        /// The name of the SAS definition.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<SasDefinitionBundle>> GetSasDefinitionWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, string sasDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (storageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageAccountName");
+            }
+            if (storageAccountName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageAccountName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageAccountName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (sasDefinitionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "sasDefinitionName");
+            }
+            if (sasDefinitionName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sasDefinitionName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "sasDefinitionName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("storageAccountName", storageAccountName);
+                tracingParameters.Add("sasDefinitionName", sasDefinitionName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSasDefinition", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage/{storage-account-name}/sas/{sas-definition-name}";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{storage-account-name}", System.Uri.EscapeDataString(storageAccountName));
+            _url = _url.Replace("{sas-definition-name}", System.Uri.EscapeDataString(sasDefinitionName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<SasDefinitionBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<SasDefinitionBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates or updates a new SAS definition for the specified storage account.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// The name of the storage account.
+        /// </param>
+        /// <param name='sasDefinitionName'>
+        /// The name of the SAS definition.
+        /// </param>
+        /// <param name='parameters'>
+        /// Sas definition creation metadata in the form of key-value pairs.
+        /// </param>
+        /// <param name='sasDefinitionAttributes'>
+        /// The attributes of the SAS definition.
+        /// </param>
+        /// <param name='tags'>
+        /// Application specific metadata in the form of key-value pairs.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<SasDefinitionBundle>> SetSasDefinitionWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, string sasDefinitionName, IDictionary<string, string> parameters, SasDefinitionAttributes sasDefinitionAttributes = default(SasDefinitionAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (storageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageAccountName");
+            }
+            if (storageAccountName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageAccountName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageAccountName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (sasDefinitionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "sasDefinitionName");
+            }
+            if (sasDefinitionName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sasDefinitionName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "sasDefinitionName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            SasDefinitionCreateParameters parameters1 = new SasDefinitionCreateParameters();
+            if (parameters != null || sasDefinitionAttributes != null || tags != null)
+            {
+                parameters1.Parameters = parameters;
+                parameters1.SasDefinitionAttributes = sasDefinitionAttributes;
+                parameters1.Tags = tags;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("storageAccountName", storageAccountName);
+                tracingParameters.Add("sasDefinitionName", sasDefinitionName);
+                tracingParameters.Add("parameters1", parameters1);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "SetSasDefinition", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage/{storage-account-name}/sas/{sas-definition-name}";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{storage-account-name}", System.Uri.EscapeDataString(storageAccountName));
+            _url = _url.Replace("{sas-definition-name}", System.Uri.EscapeDataString(sasDefinitionName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(parameters1 != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters1, SerializationSettings);
+                _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<SasDefinitionBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<SasDefinitionBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Updates the specified attributes associated with the given SAS definition.
+        /// </summary>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='storageAccountName'>
+        /// The name of the storage account.
+        /// </param>
+        /// <param name='sasDefinitionName'>
+        /// The name of the SAS definition.
+        /// </param>
+        /// <param name='parameters'>
+        /// Sas definition update metadata in the form of key-value pairs.
+        /// </param>
+        /// <param name='sasDefinitionAttributes'>
+        /// The attributes of the SAS definition.
+        /// </param>
+        /// <param name='tags'>
+        /// Application specific metadata in the form of key-value pairs.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<SasDefinitionBundle>> UpdateSasDefinitionWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, string sasDefinitionName, IDictionary<string, string> parameters = default(IDictionary<string, string>), SasDefinitionAttributes sasDefinitionAttributes = default(SasDefinitionAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (storageAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageAccountName");
+            }
+            if (storageAccountName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(storageAccountName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "storageAccountName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (sasDefinitionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "sasDefinitionName");
+            }
+            if (sasDefinitionName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sasDefinitionName, "^[0-9a-zA-Z]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "sasDefinitionName", "^[0-9a-zA-Z]+$");
+                }
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            SasDefinitionUpdateParameters parameters1 = new SasDefinitionUpdateParameters();
+            if (parameters != null || sasDefinitionAttributes != null || tags != null)
+            {
+                parameters1.Parameters = parameters;
+                parameters1.SasDefinitionAttributes = sasDefinitionAttributes;
+                parameters1.Tags = tags;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
+                tracingParameters.Add("storageAccountName", storageAccountName);
+                tracingParameters.Add("sasDefinitionName", sasDefinitionName);
+                tracingParameters.Add("parameters1", parameters1);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateSasDefinition", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "storage/{storage-account-name}/sas/{sas-definition-name}";
+            _url = _url.Replace("{vaultBaseUrl}", vaultBaseUrl);
+            _url = _url.Replace("{storage-account-name}", System.Uri.EscapeDataString(storageAccountName));
+            _url = _url.Replace("{sas-definition-name}", System.Uri.EscapeDataString(sasDefinitionName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PATCH");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(parameters1 != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(parameters1, SerializationSettings);
+                _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<SasDefinitionBundle>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<SasDefinitionBundle>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves a list of individual key versions with the same key name.
+        /// </summary>
+        /// <remarks>
+        /// The full key identifier, attributes, and tags are provided in the response.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -11617,6 +14150,14 @@ namespace Microsoft.Azure.KeyVault
         /// <summary>
         /// List keys in the specified vault.
         /// </summary>
+        /// <remarks>
+        /// Retrieves a list of the keys in the Key Vault as JSON Web Key structures
+        /// that contain the public part of a stored key. The LIST operation is
+        /// applicable to all key types, however only the base key
+        /// identifier,attributes, and tags are provided in the response. Individual
+        /// versions of a key are not listed in the response. Authorization: Requires
+        /// the keys/list permission.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -11952,9 +14493,13 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List secrets in a specified key vault.  Authorization: requires the
-        /// secrets/list permission.
+        /// List secrets in a specified key vault
         /// </summary>
+        /// <remarks>
+        /// The LIST operation is applicable to the entire vault, however only the base
+        /// secret identifier and attributes are provided in the response. Individual
+        /// secret versions are not listed in the response.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -12121,9 +14666,14 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List the versions of the specified secret. Authorization: requires the
-        /// secrets/list permission.
+        /// List the versions of the specified secret.
         /// </summary>
+        /// <remarks>
+        /// The LIST VERSIONS operation can be applied to all versions having the same
+        /// secret name in the same key vault. The full secret identifier and
+        /// attributes are provided in the response. No values are returned for the
+        /// secrets and only current versions of a secret are listed.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -12459,9 +15009,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List certificates in a specified key vault. Authorization: requires the
-        /// certificates/list permission.
+        /// List certificates in a specified key vault
         /// </summary>
+        /// <remarks>
+        /// The GetCertificates operation returns the set of certificates resources in
+        /// the specified key vault.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -12628,9 +15181,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List certificate issuers for a specified key vault. Authorization: requires
-        /// the certificates/listIssuers permission.
+        /// List certificate issuers for a specified key vault.
         /// </summary>
+        /// <remarks>
+        /// The GetCertificateIssuers operation returns the set of certificate issuer
+        /// resources in the specified key vault
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -12797,9 +15353,12 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List the versions of a certificate. Authorization: requires the
-        /// certificates/get permission.
+        /// List the versions of a certificate.
         /// </summary>
+        /// <remarks>
+        /// The GetCertificateVersions operation returns the versions of a certificate
+        /// in the specified key vault
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -12966,9 +15525,14 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// List deleted certificates in the specified vault. Authorization: requires
-        /// the certificates/list permission.
+        /// Lists the deleted certificates in the specified vault, currently available
+        /// for recovery.
         /// </summary>
+        /// <remarks>
+        /// The GetDeletedCertificates operation retrieves the certificates in the
+        /// current vault which are in a deleted state and ready for recovery or
+        /// purging.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -13116,6 +15680,346 @@ namespace Microsoft.Azure.KeyVault
                 try
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<Page<DeletedCertificateItem>>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// List storage accounts managed by specified key vault
+        /// </summary>
+        /// <remarks>
+        /// The GetCertificateVersions operation returns the versions of a certificate
+        /// in the specified key vault
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<StorageAccountItem>>> GetStorageAccountsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (nextPageLink == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetStorageAccountsNext", tracingParameters);
+            }
+            // Construct URL
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<StorageAccountItem>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<StorageAccountItem>>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// List storage SAS definitions for the given storage account.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="KeyVaultErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<SasDefinitionItem>>> GetSasDefinitionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (nextPageLink == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSasDefinitionsNext", tracingParameters);
+            }
+            // Construct URL
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new KeyVaultErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    KeyVaultError _errorBody =  SafeJsonConvert.DeserializeObject<KeyVaultError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<SasDefinitionItem>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<SasDefinitionItem>>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

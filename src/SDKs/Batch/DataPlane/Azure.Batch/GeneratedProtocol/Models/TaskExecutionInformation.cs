@@ -43,15 +43,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="result">The result of the task execution.</param>
         public TaskExecutionInformation(int retryCount, int requeueCount, System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), System.DateTime? lastRetryTime = default(System.DateTime?), System.DateTime? lastRequeueTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
-            StartTime = startTime;
-            EndTime = endTime;
-            ExitCode = exitCode;
-            FailureInfo = failureInfo;
-            RetryCount = retryCount;
-            LastRetryTime = lastRetryTime;
-            RequeueCount = requeueCount;
-            LastRequeueTime = lastRequeueTime;
-            Result = result;
+            this.StartTime = startTime;
+            this.EndTime = endTime;
+            this.ExitCode = exitCode;
+            this.FailureInfo = failureInfo;
+            this.RetryCount = retryCount;
+            this.LastRetryTime = lastRetryTime;
+            this.RequeueCount = requeueCount;
+            this.LastRequeueTime = lastRequeueTime;
+            this.Result = result;
         }
 
         /// <summary>

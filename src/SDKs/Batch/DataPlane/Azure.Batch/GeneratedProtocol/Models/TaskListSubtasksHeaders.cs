@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// modified.</param>
         public TaskListSubtasksHeaders(System.Guid? clientRequestId = default(System.Guid?), System.Guid? requestId = default(System.Guid?), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?))
         {
-            ClientRequestId = clientRequestId;
-            RequestId = requestId;
-            ETag = eTag;
-            LastModified = lastModified;
+            this.ClientRequestId = clientRequestId;
+            this.RequestId = requestId;
+            this.ETag = eTag;
+            this.LastModified = lastModified;
         }
 
         /// <summary>

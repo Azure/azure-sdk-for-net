@@ -8,8 +8,8 @@ using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Test;
 using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
@@ -30,7 +30,7 @@ namespace Networks.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
                 var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient,
@@ -125,7 +125,7 @@ namespace Networks.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
                 var redisClient = RedisCacheManagementTestUtilities.GetRedisManagementClientWithHandler(context, handler3);
 
@@ -180,7 +180,7 @@ namespace Networks.Tests
                 redisClient.Redis.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, redisName, parameters: new RedisCreateOrUpdateParameters
                     {
                         Location = location,
-                        Sku = new Sku()
+                        Sku = new Microsoft.Azure.Management.Redis.Models.Sku()
                         {
                             Name = SkuName.Premium,
                             Family = SkuFamily.P,
@@ -203,6 +203,86 @@ namespace Networks.Tests
 
                 getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
                 Assert.Equal(1, getSubnetResponse.ResourceNavigationLinks.Count);
+            }
+        }
+
+        [Fact]
+        public void SubnetPrivateAccessTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1, true);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                // Temporary hardcoded location as auto-selected eastus doesn't support the feature completely
+                var location = "westcentralus";
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                string vnetName = TestUtilities.GenerateName();
+                string subnet1Name = TestUtilities.GenerateName();
+
+                List<PrivateAccessServiceResult> availableServices =
+                    networkManagementClient.AvailablePrivateAccessServices.List(location).ToList();
+                string serviceName = availableServices[0].Name;
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            "10.0.0.0/16",
+                        }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                        {
+                            "10.1.1.1",
+                            "10.1.2.4"
+                        }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnet1Name,
+                            AddressPrefix = "10.0.0.0/24",
+                            PrivateAccessServices = new List<PrivateAccessServicePropertiesFormat>()
+                            {
+                                new PrivateAccessServicePropertiesFormat()
+                                {
+                                    Service = serviceName
+                                }
+                            }
+                        }
+                    }
+                };
+
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+
+                #region Verification
+
+                var getVnetResponse = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnetName);
+
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnet1Name);
+
+                // Verify the getSubnetResponse
+                Assert.True(AreSubnetsEqual(getVnetResponse.Subnets[0], getSubnetResponse));
+                Assert.Equal(serviceName, getSubnetResponse.PrivateAccessServices[0].Service);
+
+                #endregion
             }
         }
 

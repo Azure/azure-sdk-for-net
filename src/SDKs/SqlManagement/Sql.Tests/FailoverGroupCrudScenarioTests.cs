@@ -1,13 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Threading;
 using Xunit;
 
 namespace Sql.Tests
@@ -17,18 +21,19 @@ namespace Sql.Tests
         [Fact]
         public void TestCrudFailoverGroup()
         {
-            string testPrefix = "sqlcrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewResourceGroup(suiteName, "TestCrudFailoverGroup", testPrefix, (resClient, sqlClient, resourceGroup) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create primary and partner servers
                 //
-                Server sourceServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultStagePrimaryLocation);
-                Server targetServer = SqlManagementTestUtilities.CreateServer(sqlClient, resourceGroup, testPrefix, SqlManagementTestUtilities.DefaultStageSecondaryLocation);
+                var sourceServer = context.CreateServer(resourceGroup);
+                var targetServer = context.CreateServer(resourceGroup, location: SqlManagementTestUtilities.DefaultSecondaryLocationId);
 
                 // Create a failover group
                 //
-                string failoverGroupName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string failoverGroupName = SqlManagementTestUtilities.GenerateName();
                 var fgInput = new FailoverGroup()
                 {
                     ReadOnlyEndpoint = new FailoverGroupReadOnlyEndpoint()
@@ -93,7 +98,27 @@ namespace Sql.Tests
                 Assert.Equal(1, failoverGroupsOnSecondary.Count());
 
                 var primaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, sourceServer.Name, databaseName);
-                var secondaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, targetServer.Name, databaseName);
+
+                // A brief wait may be needed until the secondary database is fully created
+                Database secondaryDatabase;
+                DateTime startTime = DateTime.UtcNow;
+                TimeSpan retryTime = TimeSpan.FromMinutes(2);
+                TimeSpan retryDelay = HttpMockServer.Mode == HttpRecorderMode.Record ? TimeSpan.FromSeconds(5) : TimeSpan.Zero;
+                while (true)
+                {
+                    try
+                    {
+                        secondaryDatabase = sqlClient.Databases.Get(resourceGroup.Name, targetServer.Name, databaseName);
+                        break;
+                    }
+                    catch (CloudException e) when (
+                        e.Response.StatusCode == HttpStatusCode.NotFound 
+                            && DateTime.UtcNow < startTime + retryTime)
+                    {
+                        Thread.Sleep(retryDelay);
+                    }
+                }
+
                 Assert.NotNull(primaryDatabase.FailoverGroupId);
                 Assert.NotNull(secondaryDatabase.FailoverGroupId);
 
@@ -116,7 +141,7 @@ namespace Sql.Tests
                 Assert.Null(secondaryDatabase.FailoverGroupId);
                 Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.FailoverGroups.Get(resourceGroup.Name, sourceServer.Name, failoverGroupName));
                 Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.FailoverGroups.Get(resourceGroup.Name, targetServer.Name, failoverGroupName));
-            });
+            }
         }
     }
 }

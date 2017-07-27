@@ -30,6 +30,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='name'>
+            /// The storage account name.
             /// </param>
             public static CheckNameAvailabilityResult CheckNameAvailability(this IStorageAccountsOperations operations, string name)
             {
@@ -43,6 +44,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='name'>
+            /// The storage account name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -410,6 +412,8 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='keyName'>
+            /// The name of storage keys that want to be regenerated, possible vaules are
+            /// key1, key2.
             /// </param>
             public static StorageAccountListKeysResult RegenerateKey(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string keyName)
             {
@@ -432,6 +436,8 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='keyName'>
+            /// The name of storage keys that want to be regenerated, possible vaules are
+            /// key1, key2.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

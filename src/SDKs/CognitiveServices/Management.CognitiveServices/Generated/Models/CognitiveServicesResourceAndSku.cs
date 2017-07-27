@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Cognitive Services resource type and SKU.
+    /// </summary>
     public partial class CognitiveServicesResourceAndSku
     {
         /// <summary>
@@ -27,6 +30,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// class.
         /// </summary>
         /// <param name="resourceType">Resource Namespace and Type</param>
+        /// <param name="sku">The SKU of Cognitive Services account.</param>
         public CognitiveServicesResourceAndSku(string resourceType = default(string), Sku sku = default(Sku))
         {
             ResourceType = resourceType;
@@ -40,6 +44,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public string ResourceType { get; set; }
 
         /// <summary>
+        /// Gets or sets the SKU of Cognitive Services account.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }

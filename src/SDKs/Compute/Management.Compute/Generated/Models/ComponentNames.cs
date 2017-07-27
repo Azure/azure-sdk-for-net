@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Defines values for ComponentNames.
     /// </summary>
-    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ComponentNames
     {
         [EnumMember(Value = "Microsoft-Windows-Shell-Setup")]

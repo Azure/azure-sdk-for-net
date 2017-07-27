@@ -12,12 +12,17 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="2.28.3" />
-    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.7.0,2.0.0)" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
-
-    <!--<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.6,3.0)" />-->
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.5,4.0.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj"/>
+    <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj"/>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   
 </Project>

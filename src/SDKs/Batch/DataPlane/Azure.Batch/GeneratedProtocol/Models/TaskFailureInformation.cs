@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// error.</param>
         public TaskFailureInformation(ErrorCategory category, string code = default(string), string message = default(string), System.Collections.Generic.IList<NameValuePair> details = default(System.Collections.Generic.IList<NameValuePair>))
         {
-            Category = category;
-            Code = code;
-            Message = message;
-            Details = details;
+            this.Category = category;
+            this.Code = code;
+            this.Message = message;
+            this.Details = details;
         }
 
         /// <summary>

@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// compute node.</param>
         public ComputeNodeGetRemoteLoginSettingsResult(string remoteLoginIPAddress, int remoteLoginPort)
         {
-            RemoteLoginIPAddress = remoteLoginIPAddress;
-            RemoteLoginPort = remoteLoginPort;
+            this.RemoteLoginIPAddress = remoteLoginIPAddress;
+            this.RemoteLoginPort = remoteLoginPort;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (RemoteLoginIPAddress == null)
+            if (this.RemoteLoginIPAddress == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "RemoteLoginIPAddress");
             }

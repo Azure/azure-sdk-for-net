@@ -52,19 +52,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// network writes across all nodes in the pool.</param>
         public ResourceStatistics(System.DateTime startTime, System.DateTime lastUpdateTime, double avgCPUPercentage, double avgMemoryGiB, double peakMemoryGiB, double avgDiskGiB, double peakDiskGiB, long diskReadIOps, long diskWriteIOps, double diskReadGiB, double diskWriteGiB, double networkReadGiB, double networkWriteGiB)
         {
-            StartTime = startTime;
-            LastUpdateTime = lastUpdateTime;
-            AvgCPUPercentage = avgCPUPercentage;
-            AvgMemoryGiB = avgMemoryGiB;
-            PeakMemoryGiB = peakMemoryGiB;
-            AvgDiskGiB = avgDiskGiB;
-            PeakDiskGiB = peakDiskGiB;
-            DiskReadIOps = diskReadIOps;
-            DiskWriteIOps = diskWriteIOps;
-            DiskReadGiB = diskReadGiB;
-            DiskWriteGiB = diskWriteGiB;
-            NetworkReadGiB = networkReadGiB;
-            NetworkWriteGiB = networkWriteGiB;
+            this.StartTime = startTime;
+            this.LastUpdateTime = lastUpdateTime;
+            this.AvgCPUPercentage = avgCPUPercentage;
+            this.AvgMemoryGiB = avgMemoryGiB;
+            this.PeakMemoryGiB = peakMemoryGiB;
+            this.AvgDiskGiB = avgDiskGiB;
+            this.PeakDiskGiB = peakDiskGiB;
+            this.DiskReadIOps = diskReadIOps;
+            this.DiskWriteIOps = diskWriteIOps;
+            this.DiskReadGiB = diskReadGiB;
+            this.DiskWriteGiB = diskWriteGiB;
+            this.NetworkReadGiB = networkReadGiB;
+            this.NetworkWriteGiB = networkWriteGiB;
         }
 
         /// <summary>

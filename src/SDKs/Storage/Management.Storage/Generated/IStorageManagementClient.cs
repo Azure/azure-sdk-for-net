@@ -71,6 +71,11 @@ namespace Microsoft.Azure.Management.Storage
 
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IStorageAccountsOperations.
         /// </summary>
         IStorageAccountsOperations StorageAccounts { get; }

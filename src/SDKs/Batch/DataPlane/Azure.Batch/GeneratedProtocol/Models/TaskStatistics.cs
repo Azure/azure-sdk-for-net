@@ -52,17 +52,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// recent task execution.)</param>
         public TaskStatistics(string url, System.DateTime startTime, System.DateTime lastUpdateTime, System.TimeSpan userCPUTime, System.TimeSpan kernelCPUTime, System.TimeSpan wallClockTime, long readIOps, long writeIOps, double readIOGiB, double writeIOGiB, System.TimeSpan waitTime)
         {
-            Url = url;
-            StartTime = startTime;
-            LastUpdateTime = lastUpdateTime;
-            UserCPUTime = userCPUTime;
-            KernelCPUTime = kernelCPUTime;
-            WallClockTime = wallClockTime;
-            ReadIOps = readIOps;
-            WriteIOps = writeIOps;
-            ReadIOGiB = readIOGiB;
-            WriteIOGiB = writeIOGiB;
-            WaitTime = waitTime;
+            this.Url = url;
+            this.StartTime = startTime;
+            this.LastUpdateTime = lastUpdateTime;
+            this.UserCPUTime = userCPUTime;
+            this.KernelCPUTime = kernelCPUTime;
+            this.WallClockTime = wallClockTime;
+            this.ReadIOps = readIOps;
+            this.WriteIOps = writeIOps;
+            this.ReadIOGiB = readIOGiB;
+            this.WriteIOGiB = writeIOGiB;
+            this.WaitTime = waitTime;
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Url == null)
+            if (this.Url == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Url");
             }

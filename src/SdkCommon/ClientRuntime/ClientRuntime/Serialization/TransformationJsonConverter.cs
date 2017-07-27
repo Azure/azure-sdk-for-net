@@ -83,7 +83,9 @@ namespace Microsoft.Rest.Serialization
 
                 if (parentPath.Length > 0)
                 {
-                    string jsonPath = string.Concat(parentPath.Select(p => $"['{p}']"));
+                    //Json 6.0.8 for netCore will not support [parent][child] path so switching it 
+                    //string jsonPath = string.Concat(parentPath.Select(p => $"[{p}]"));
+                    string jsonPath = string.Join(".", parentPath);
                     propertyValueToken = jsonObject.SelectToken(jsonPath, false);
                     if (propertyValueToken != null)
                     {

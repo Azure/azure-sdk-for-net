@@ -32,9 +32,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ResourceUpdate class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
-        public ResourceUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ResourceUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
         {
             Tags = tags;
+            Sku = sku;
         }
 
         /// <summary>
@@ -42,6 +43,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public DiskSku Sku { get; set; }
 
     }
 }

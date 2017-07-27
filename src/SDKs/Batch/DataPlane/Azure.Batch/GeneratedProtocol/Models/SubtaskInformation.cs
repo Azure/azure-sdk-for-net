@@ -45,17 +45,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="result">The result of the task execution.</param>
         public SubtaskInformation(int? id = default(int?), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), SubtaskState? state = default(SubtaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), SubtaskState? previousState = default(SubtaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
-            Id = id;
-            NodeInfo = nodeInfo;
-            StartTime = startTime;
-            EndTime = endTime;
-            ExitCode = exitCode;
-            FailureInfo = failureInfo;
-            State = state;
-            StateTransitionTime = stateTransitionTime;
-            PreviousState = previousState;
-            PreviousStateTransitionTime = previousStateTransitionTime;
-            Result = result;
+            this.Id = id;
+            this.NodeInfo = nodeInfo;
+            this.StartTime = startTime;
+            this.EndTime = endTime;
+            this.ExitCode = exitCode;
+            this.FailureInfo = failureInfo;
+            this.State = state;
+            this.StateTransitionTime = stateTransitionTime;
+            this.PreviousState = previousState;
+            this.PreviousStateTransitionTime = previousStateTransitionTime;
+            this.Result = result;
         }
 
         /// <summary>
