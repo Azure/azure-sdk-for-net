@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     {
         #region Fluent private collections
         private IServiceBusNamespaces namespaces;
+        private IServiceBusOperations operations;
         #endregion
 
 
@@ -84,11 +85,25 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 return namespaces;
             }
         }
+
+        public IServiceBusOperations Operations
+        {
+            get
+            {
+                if (operations == null)
+                {
+                    operations = new ServiceBusOperationsImpl(this);
+                }
+                return operations;
+            }
+        }
     }
 
     public interface IServiceBusManager : IManager<IServiceBusManagementClient>, IBeta
     {
         IServiceBusNamespaces Namespaces { get; }
+
+        IServiceBusOperations Operations { get; }
     }
 }
 

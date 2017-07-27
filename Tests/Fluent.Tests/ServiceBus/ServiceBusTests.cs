@@ -18,6 +18,23 @@ namespace Fluent.Tests
     public class ServiceBus
     {
         [Fact]
+        public void CanListOperations()
+        {
+            using (var context = FluentMockContext.Start(this.GetType().FullName))
+            {
+                var serviceBusManager = TestHelper.CreateServiceBusManager();
+                var operations = serviceBusManager.Operations.List();
+                Assert.True(operations.Count() > 0);
+                foreach (var operation in operations)
+                {
+                    Assert.NotNull(operation.DisplayInformation);
+                    Assert.NotNull(operation.Name);
+                }
+            }
+        }
+
+
+        [Fact]
         public void CanCRUDOnSimpleNamespace()
         {
             using (var context = FluentMockContext.Start(this.GetType().FullName))
