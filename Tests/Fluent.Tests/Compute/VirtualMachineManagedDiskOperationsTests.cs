@@ -11,9 +11,9 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using Xunit;
 
-namespace Fluent.Tests.Compute
+namespace Fluent.Tests.Compute.VirtualMachine
 {
-    public class VirtualMachineManagedDiskOperations
+    public class ManagedDiskOperations
     {
         private readonly Region Location = Region.USEast;
         private readonly KnownLinuxVirtualMachineImage LinuxImage = KnownLinuxVirtualMachineImage.UbuntuServer16_04_Lts;

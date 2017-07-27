@@ -4,6 +4,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine extension image version.
@@ -13,21 +15,24 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName
     {
         /// <summary>
+        /// Gets the region in which virtual machine extension image version is available.
+        /// </summary>
+        string RegionName { get; }
+
+        /// <summary>
         /// Gets the resource ID of the extension image version.
         /// </summary>
         string Id { get; }
 
         /// <summary>
-        /// Gets the region in which virtual machine extension image version is available.
+        /// Gets the virtual machine extension image type this version belongs to.
         /// </summary>
-        string RegionName { get; }
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageType Type { get; }
 
         /// <return>Virtual machine extension image this version represents.</return>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage GetImage();
 
-        /// <summary>
-        /// Gets the virtual machine extension image type this version belongs to.
-        /// </summary>
-        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageType Type { get; }
+        /// <return>Virtual machine extension image this version represents.</return>
+        Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> GetImageAsync(CancellationToken cancellationToken);
     }
 }

@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
+    using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
@@ -20,7 +22,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchCreation<Microsoft.Azure.Management.Dns.Fluent.IDnsZone>,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsBatchDeletion,
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasManager<Microsoft.Azure.Management.Dns.Fluent.IDnsZoneManager>,
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Dns.Fluent.IZonesOperations>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasInner<Microsoft.Azure.Management.Dns.Fluent.IZonesOperations>,
+        Microsoft.Azure.Management.Dns.Fluent.IDnsZonesBeta
     {
     }
 }

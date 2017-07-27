@@ -14,14 +14,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor>
     {
         /// <summary>
+        /// Gets operating system type of the virtual machine.
+        /// </summary>
+        Models.OperatingSystemTypes OSType { get; }
+
+        /// <summary>
         /// Gets operating system disk encryption status.
         /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.EncryptionStatus OSDiskStatus { get; }
 
-        /// <summary>
-        /// Gets the encryption progress message.
-        /// </summary>
-        string ProgressMessage { get; }
+        /// <return>A representation of the deferred computation of this call returning the encryption status once the refresh is done.</return>
+        Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> RefreshAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets data disks encryption status.
@@ -29,8 +32,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.Compute.Fluent.EncryptionStatus DataDiskStatus { get; }
 
         /// <summary>
-        /// Gets operating system type of the virtual machine.
+        /// Gets the encryption progress message.
         /// </summary>
-        Models.OperatingSystemTypes OSType { get; }
+        string ProgressMessage { get; }
     }
 }

@@ -12,12 +12,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Models;
     using System;
     using ResourceManager.Fluent.Core.ChildResourceActions;
+    using System.Linq;
 
     /// <summary>
     /// Implementation of DnsRecordSet.
     /// </summary>
     ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5EbnNSZWNvcmRTZXRJbXBs
-    internal abstract partial class DnsRecordSetImpl  :
+    internal partial class DnsRecordSetImpl  :
         ExternalChildResource<IDnsRecordSet, RecordSetInner, IDnsZone, DnsZoneImpl>,
         IDnsRecordSet,
         IDefinition<DnsZone.Definition.IWithCreate>,
@@ -25,6 +26,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         IUpdateCombined
     {
         protected RecordSetInner recordSetRemoveInfo;
+        private ETagState eTagState = new ETagState();
 
         ///GENMHASH:4F856FB578CC3E1352902BE5686B7CC9:D624DD59AB1913F5FF4AECA70621F115
         private RecordSetInner Prepare(RecordSetInner resource)
@@ -80,7 +82,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             }
         }
 
-        ///GENMHASH:F9C01790C5D58B1748BB35183FF3B0D8:5457AA11A0051BA4663F3248B60D5E39
+        ///GENMHASH:F9C01790C5D58B1748BB35183FF3B0D8:000E3438232752188E9F410E5DCAC466
         private async Task<IDnsRecordSet> CreateOrUpdateAsync(RecordSetInner resource, CancellationToken cancellationToken = default(CancellationToken))
         {
             RecordSetInner inner = await Parent.Manager.Inner.RecordSets.CreateOrUpdateAsync(
@@ -89,8 +91,11 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 Name(),
                 RecordType(),
                 resource,
+                ifMatch: this.eTagState.IfMatchValueOnUpdate(resource.Etag),
+                ifNoneMatch: this.eTagState.IfNonMatchValueOnCreate(),
                 cancellationToken: cancellationToken);
             SetInner(inner);
+            this.eTagState.Clear();
             return this;
         }
 
@@ -153,7 +158,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return Inner.TTL.Value;
         }
 
-        ///GENMHASH:EC29C72674344ADABB3A944C3E2479DB:5ED48E280A79185C34BAD7FC806CCBB5
+        ///GENMHASH:97641C527D3F880E3D6A071B23B1C220:5ED48E280A79185C34BAD7FC806CCBB5
         public DnsRecordSetImpl WithoutIPv4Address(string ipv4Address)
         {
             this.recordSetRemoveInfo.ARecords
@@ -161,7 +166,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this;
         }
 
-        ///GENMHASH:504BA34CAE2BA25152B7E5B0E29E8C87:5DA00DC8D7A2405A86C3DDBFD2B0DDC7
+        ///GENMHASH:8629B1E65EA81A8A3221F7E2E342A5FD:5DA00DC8D7A2405A86C3DDBFD2B0DDC7
         public DnsRecordSetImpl WithoutIPv6Address(string ipv6Address)
         {
             this.recordSetRemoveInfo.AaaaRecords
@@ -183,7 +188,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this;
         }
 
-        ///GENMHASH:0CFE78AB79C5BF41808567966F348D74:F96F4FA644159C0CD0EBB1C5B9EEF1A0
+        ///GENMHASH:DC461002C137D25BAA574C45A4E811DF:F96F4FA644159C0CD0EBB1C5B9EEF1A0
         internal DnsRecordSetImpl WithIPv6Address(string ipv6Address)
         {
             Inner.AaaaRecords
@@ -191,9 +196,20 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this;
         }
 
-        protected abstract RecordSetInner PrepareForUpdate(RecordSetInner resource);
+        ///GENMHASH:7D787B3687385E18B312D5F6D6DA9444:B566554D9AFEED430A7C1AC9E97ADBDB
+        protected virtual RecordSetInner PrepareForUpdate(RecordSetInner resource)
+        {
+            return resource;
+        }
 
-        ///GENMHASH:C99F2F80022268E13D703B3379BD3B58:E0FC813C874E3B3480E4DA74E4253BCC
+        ///GENMHASH:C638904A9672FCBF061409871819AB8D:41137108673CA51222538BEBDE37F159
+        public DnsRecordSetImpl WithAlias(string alias)
+        {
+            Inner.CnameRecord.Cname = alias;
+            return this;
+        }
+
+        ///GENMHASH:4CA65F8144FED160954BD87CFFBC0595:E0FC813C874E3B3480E4DA74E4253BCC
         internal DnsRecordSetImpl WithIPv4Address(string ipv4Address)
         {
             Inner.ARecords.Add(new ARecord { Ipv4Address = ipv4Address });
@@ -216,7 +232,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             }
         }
 
-        ///GENMHASH:F08598A17ADD014E223DFD77272641FF:0D896236D48569C34CE1A91B25C2906D
+        ///GENMHASH:F08598A17ADD014E223DFD77272641FF:A945C11E2DCC935424E5B666E47F3D2C
         public async override Task<IDnsRecordSet> UpdateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             RecordSetInner resource = await Parent.Manager.Inner.RecordSets.GetAsync(
@@ -227,6 +243,12 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 cancellationToken);
             resource = Prepare(resource);
             return await CreateOrUpdateAsync(resource, cancellationToken);
+        }
+
+        ///GENMHASH:4913BE5E272184975DDDF5335B476BBD:88ACBC17B6D51A9C055E4CC9834ED144
+        public string ETag()
+        {
+            return this.Inner.Etag;
         }
 
         ///GENMHASH:ACA2D5620579D8158A29586CA1FF4BC6:43D11CBDAF5A13A288B18B4C8884B621
@@ -244,10 +266,32 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this.Parent;
         }
 
+        ///GENMHASH:791593DE94E8D431FBB634CF0578A424:D24CFEDBDBC40A8AF2B5216EA0D7C954
+        public DnsRecordSetImpl WithETagCheck()
+        {
+            this.eTagState.WithImplicitETagCheckOnCreate();
+            this.eTagState.WithImplicitETagCheckOnUpdate();
+            return this;
+        }
+
+        ///GENMHASH:CAE9667D3C5220302471B1AF817CBA6A:A7E77BD98437FA8383ED7A6B96761FD4
+        public DnsRecordSetImpl WithETagCheck(string eTagValue)
+        {
+            this.eTagState.WithExplicitETagCheckOnUpdate(eTagValue);
+            return this;
+        }
+
         ///GENMHASH:6D37E4EB187608D1444EE0B12AEEAB67:4B5F1BDCC88474FFF19319243A41B6F7
         public DnsRecordSetImpl WithRefreshTimeInSeconds(long refreshTimeInSeconds)
         {
             Inner.SoaRecord.RefreshTime = refreshTimeInSeconds;
+            return this;
+        }
+
+        ///GENMHASH:1DB2BF1F42540E5CABB126B2B9970516:12FBAC3B63C70ED810BCC3C5AE182F93
+        internal DnsRecordSetImpl WithETagOnDelete(string eTagValue)
+        {
+            this.eTagState.WithExplicitETagCheckOnDelete(eTagValue);
             return this;
         }
 
@@ -258,20 +302,31 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this;
         }
 
-        ///GENMHASH:B9A12A61DE5C3FD7372657598F28C736:ED60A90C82E8718F17C634907FC0D9F7
+        ///GENMHASH:B9A12A61DE5C3FD7372657598F28C736:C0E78FE3325BAB97993FBD6D1EC3DD20
         public DnsRecordSetImpl WithoutText(string text)
         {
-            List<string> value = new List<string>();
-            value.Add(text);
+            if (text == null) {
+                return this;
+            }
+            List<string> chunks = new List<string>();
+            chunks.Add(text);
+            return WithoutText(chunks);
+        }
+
+        ///GENMHASH:7514E74617844D31FA17DECC30EC7487:D45180FF29FB5C16A3FD358D567C01FD
+        public DnsRecordSetImpl WithoutText(IList<string> textChunks)
+        {
             this.recordSetRemoveInfo.TxtRecords
-                .Add(new TxtRecord { Value = value });
+                .Add(new TxtRecord { Value = textChunks });
             return this;
         }
 
         ///GENMHASH:3802EA6243E9AF80A622FF944E74B5EA:8520CAFB7CB8489C528CA99FBB8E0916
         public RecordType RecordType()
         {
-            return (RecordType) Enum.Parse(typeof(RecordType), Inner.Type);
+            var fullyQualifiedType = this.Inner.Type;
+            var parts = fullyQualifiedType.Split('/');
+            return (RecordType)Enum.Parse(typeof(RecordType), parts[parts.Length - 1]);
         }
 
         ///GENMHASH:A8504DD39B3F14EC8A5C6530FB22292A:5BA5A4ACBB2C6A840606E1F8F35C4054
@@ -285,10 +340,14 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             {
                 Inner.Metadata.Add(key, value);
             }
+            else
+            {
+                Inner.Metadata[key] = value;
+            }
             return this;
         }
 
-        ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:4A10213038743768C271AE3184DC5B16
+        ///GENMHASH:5AD91481A0966B059A478CD4E9DD9466:12B69CFE7F6114AB5C15C38A5DAE43C8
         protected override async Task<RecordSetInner> GetInnerAsync(CancellationToken cancellationToken)
         {
             return await Parent.Manager.Inner.RecordSets.GetAsync(
@@ -298,7 +357,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 RecordType(), cancellationToken: cancellationToken);
         }
 
-        ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:4983E2059828207A0EBDD76459661F4B
+        ///GENMHASH:0FEDA307DAD2022B36843E8905D26EAD:2B9DD1C564ED2E952CDE4348D8C25EE7
         public async override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await Parent.Manager.Inner.RecordSets.DeleteAsync(
@@ -306,6 +365,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 Parent.Name,
                 Name(),
                 RecordType(),
+                ifMatch: this.eTagState.IfMatchValueOnDelete(),
                 cancellationToken: cancellationToken);
         }
 
@@ -342,8 +402,8 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this;
         }
 
-        ///GENMHASH:C9AB5BEB0FF2C1CFD204A7692C092D2D:2603823A7ECCC53B6CAF90D20F5F9E24
-        protected  DnsRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(innerModel.Name, parent, innerModel)
+        ///GENMHASH:640F81D4B0689D165D5047EC30E0213C:0D6144F158DEA8BB449CD2540A30B54C
+        internal DnsRecordSetImpl(DnsZoneImpl parent, RecordSetInner innerModel) : base(innerModel.Name, parent, innerModel)
         {
             this.recordSetRemoveInfo = new RecordSetInner
             {
@@ -372,8 +432,19 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:6300EBC9252C6530D70C1A6340171C08:607AD7BECB4F73629F32C84583686875
         public DnsRecordSetImpl WithText(string text)
         {
+            if (text == null)
+            {
+                return this;
+            }
             List<string> value = new List<string>();
-            value.Add(text);
+            if (text.Length < 255)
+            {
+                value.Add(text);
+            }
+            else
+            {
+                value.AddRange(Enumerable.Range(0, (int)(Math.Ceiling(text.Length / (double)255))).Select(i => text.Substring(i * 255, 255)));
+            }
             Inner.TxtRecords.Add(new TxtRecord { Value = value });
             return this;
         }
@@ -381,6 +452,85 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsZone.Update.IUpdate ISettable<DnsZone.Update.IUpdate>.Parent()
         {
             return this.Parent;
+        }
+
+
+        ///GENTHASH:Y29tLm1pY3Jvc29mdC5henVyZS5tYW5hZ2VtZW50LmRucy5pbXBsZW1lbnRhdGlvbi5EbnNSZWNvcmRTZXRJbXBsLkVUYWdTdGF0ZQ==
+        class ETagState
+        {
+            private bool doImplicitETagCheckOnCreate;
+            private bool doImplicitETagCheckOnUpdate;
+            private string eTagOnUpdate;
+            private string eTagOnDelete;
+
+            ///GENMHASH:A2B627C663DDB747C621FCA1D7BE24A8:76A309CFA4E29C8A8F8C92BCF73A1AB6
+            public ETagState WithExplicitETagCheckOnUpdate(string eTagValue)
+            {
+                this.eTagOnUpdate = eTagValue;
+                return this;
+            }
+
+            ///GENMHASH:E56828D96951375F4EF1730388DE7346:5A4ECB9B6B7CBD3113C2CAA49D6DD200
+            public ETagState WithImplicitETagCheckOnUpdate()
+            {
+                this.doImplicitETagCheckOnUpdate = true;
+                return this;
+            }
+
+            ///GENMHASH:D3CEF7E2B598DD354274A5AFE552A662:A20A52DB2A85D7C3C8296FDFB1961372
+            public string IfMatchValueOnDelete()
+            {
+                return this.eTagOnDelete;
+            }
+
+            ///GENMHASH:BDEEEC08EF65465346251F0F99D16258:C50E159EF615C54F8F31030BCA0B7576
+            public ETagState Clear()
+            {
+                this.doImplicitETagCheckOnCreate = false;
+                this.doImplicitETagCheckOnUpdate = false;
+                this.eTagOnUpdate = null;
+                this.eTagOnDelete = null;
+                return this;
+            }
+
+            ///GENMHASH:212FE0B4DFB2C1FB72091A3F8865BE1B:CE3736CC8D80616CC9B9031CC0D0E5CA
+            public string IfNonMatchValueOnCreate()
+            {
+                if (this.doImplicitETagCheckOnCreate)
+                {
+                    return "*";
+                }
+                return null;
+            }
+
+            ///GENMHASH:2FE5CB6C2E7B55F99613F61DA9EF4F1D:E1C7BCC3B078606C167311CDD4A1A54B
+            public string IfMatchValueOnUpdate(string currentETagValue)
+            {
+                string eTagValue = null;
+                if (this.doImplicitETagCheckOnUpdate)
+                {
+                    eTagValue = currentETagValue;
+                }
+                if (this.eTagOnUpdate != null)
+                {
+                    eTagValue = this.eTagOnUpdate;
+                }
+                return eTagValue;
+            }
+
+            ///GENMHASH:C8126BDFD9A21FF4295AF1F12B4EA871:99938E9DF848049CBB209F4237FC0B7B
+            public ETagState WithExplicitETagCheckOnDelete(string eTagValue)
+            {
+                this.eTagOnDelete = eTagValue;
+                return this;
+            }
+
+            ///GENMHASH:441A98D786D840B5B136CFD0CE477BAA:FFF1B40244858F3A733FD6117C08970B
+            public ETagState WithImplicitETagCheckOnCreate()
+            {
+                this.doImplicitETagCheckOnCreate = true;
+                return this;
+            }
         }
     }
 }

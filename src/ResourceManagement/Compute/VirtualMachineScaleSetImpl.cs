@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:5C1E5D4B34E988B57615D99543B65A28:FA6DEF6159D987B906C75A28496BD099
-        public VirtualMachineScaleSetImpl WithOsDiskCaching(CachingTypes cachingType)
+        public VirtualMachineScaleSetImpl WithOSDiskCaching(CachingTypes cachingType)
         {
             Inner
                 .VirtualMachineProfile
@@ -251,13 +251,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:123FF0223083F789E78E45771A759A9C:FFF894943EBDE56EEC0675ADF0891867
-        public CachingTypes OsDiskCachingType()
+        public CachingTypes OSDiskCachingType()
         {
             return Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching.Value;
         }
 
         ///GENMHASH:C5EB453493B1100152604C49B4350246:13A96702474EC693EFE5444489CDEDCC
-        public VirtualMachineScaleSetImpl WithOsDiskName(string name)
+        public VirtualMachineScaleSetImpl WithOSDiskName(string name)
         {
             Inner
                 .VirtualMachineProfile
@@ -455,7 +455,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:F0B439C5B2A4923B3B36B77503386DA7:B38C06867B5D878680004A07BD077546
-        public long Capacity()
+        public int Capacity()
         {
             return (int)Inner.Sku.Capacity.Value;
         }
@@ -954,7 +954,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:90924DCFADE551C6E90B738982E6C2F7:8E8BCFD08143E85B586E9D48D32AF4E0
-        public VirtualMachineScaleSetImpl WithOsDiskStorageAccountType(StorageAccountTypes accountType)
+        public VirtualMachineScaleSetImpl WithOSDiskStorageAccountType(StorageAccountTypes accountType)
         {
             this.managedDataDisks.SetDefaultStorageAccountType(accountType);
             return this;
@@ -1202,7 +1202,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     osDisk.ManagedDisk = null;
                     if (osDisk.Name == null)
                     {
-                        WithOsDiskName(this.Name + "-os-disk");
+                        WithOSDiskName(this.Name + "-os-disk");
                     }
                 }
             }
@@ -1212,7 +1212,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             }
             if (Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching == null)
             {
-                WithOsDiskCaching(CachingTypes.ReadWrite);
+                WithOSDiskCaching(CachingTypes.ReadWrite);
             }
         }
 
@@ -1570,7 +1570,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 // ODDisk CreateOption: FROM_IMAGE
                 //
-                if (this.OsType() == OperatingSystemTypes.Linux || this.isMarketplaceLinuxImage)
+                if (this.OSType() == OperatingSystemTypes.Linux || this.isMarketplaceLinuxImage)
                 {
                     if (osProfile.LinuxConfiguration == null)
                     {
@@ -1790,13 +1790,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:39841E710EB7DD7AE8E99B918CA0EEEA:C48030ECFE011DCB363EBC211AAE918D
-        public string OsDiskName()
+        public string OSDiskName()
         {
             return Inner.VirtualMachineProfile.StorageProfile.OsDisk.Name;
         }
 
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:637A809EDFD013CAD03D1C7CE71A5FD8
-        public OperatingSystemTypes OsType()
+        public OperatingSystemTypes OSType()
         {
             return Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType.GetValueOrDefault();
         }

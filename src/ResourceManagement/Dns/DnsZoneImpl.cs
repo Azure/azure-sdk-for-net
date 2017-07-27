@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         private ISrvRecordSets srvRecordSets;
         private ITxtRecordSets txtRecordSets;
         private DnsRecordSetsImpl recordSetsImpl;
+        private string dnsZoneETag;
 
         ///GENMHASH:33CE6A50234E86DD2006E428BDBB63DF:FFB0399D38F75C513DB4745F5D8C0E9F
         public DnsRecordSetImpl DefinePtrRecordSet(string name)
@@ -55,10 +56,21 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         {
             return this.aRecordSets;
         }
-
+        
+        ///GENMHASH:1F806E4CBC9AF647A64C1631E4524D83:F08C99E11B7048517EE726026B9D7B91
+        public DnsZoneImpl WithCNameRecordSet(string name, string alias)
+        {
+            recordSetsImpl.WithCNameRecordSet(name, alias);
+            return this;
+        }
+        
         ///GENMHASH:2EBE0E253F1D6DB178F3433FF5310EA8:676B110D94D76F014EEEE150AEE3144F
         public IReadOnlyList<string> NameServers()
         {
+            if (Inner.NameServers == null)
+            {
+                return new List<string>();
+            }
             return Inner.NameServers?.ToList();
         }
 
@@ -68,24 +80,23 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return recordSetsImpl.DefineARecordSet(name);
         }
 
-        ///GENMHASH:59991185F1E4DCE6CD53407115062A4D:E56D214B54EED0F5CA056506698B3A2B
-        public DnsZoneImpl WithCNameRecordSet(string name, string alias)
-        {
-            recordSetsImpl.WithCNameRecordSet(name, alias);
-            return this;
-        }
-
-        ///GENMHASH:1F53B3ABC8D3DD332F7B6932E224AA8C:8D7D9D9E77BFB11F3297690E49391493
+        ///GENMHASH:1F53B3ABC8D3DD332F7B6932E224AA8C:5DE8F63E4D78168B2EC742B4E14FF460
         public DnsZoneImpl WithoutPtrRecordSet(string name)
         {
-            recordSetsImpl.WithoutPtrRecordSet(name);
+            return this.WithoutPtrRecordSet(name, null);
+        }
+
+        ///GENMHASH:C9A7146C9B1311BD2295FF461FD54E80:6FBFF1647C0BF93094CA21512F31CDB0
+        public DnsZoneImpl WithoutPtrRecordSet(string name, string eTag)
+        {
+            recordSetsImpl.WithoutPtrRecordSet(name, eTag);
             return this;
         }
 
         ///GENMHASH:92C4BF577DB6715BC383624BAE7694E5:F61135431BDB8F0F20AAC7E8F1DAA179
         public long MaxNumberOfRecordSets()
         {
-            return Inner.MaxNumberOfRecordSets.Value;
+            return Inner.MaxNumberOfRecordSets.HasValue ? Inner.MaxNumberOfRecordSets.Value : 0;
         }
 
         ///GENMHASH:4412D5DEE797756911CD87C84F382A35:8933C3344596C85C396329822B55F61D
@@ -106,7 +117,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return recordSetsImpl.UpdateTxtRecordSet(name);
         }
 
-        ///GENMHASH:EE1082F2F97076B859060B336D52A16B:73E10727349F87730D611072370EFB6E
+        ///GENMHASH:EE1082F2F97076B859060B336D52A16B:D92A2603A69DACAF219D702920E38B76
         private void InitRecordSets()
         {
             this.aRecordSets = new ARecordSetsImpl(this);
@@ -120,22 +131,29 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             this.recordSetsImpl.ClearPendingOperations();
         }
 
-        ///GENMHASH:3BE07D98F4ADC1B06829114EA2606ED4:3C28045E01B03B7494D3302D6A7D064D
+        ///GENMHASH:46C9C87DA2C900034A20B7DB46BD77F5:1DA0B75A59F0F7EA35F5896C50FF1674
         public DnsRecordSetImpl DefineNSRecordSet(string name)
         {
             return recordSetsImpl.DefineNSRecordSet(name);
         }
 
-        ///GENMHASH:8F3B63282E3A22D23CA9B093FA6A44F8:20E3842CCAFDF776C20B1023B1BA21C4
+        ///GENMHASH:5CC95DD8B9468242DBEEF10F96E9EECF:38DD916F9A94FC35BD4A0989BACBA7C2
         public DnsRecordSetImpl UpdateMXRecordSet(string name)
         {
             return recordSetsImpl.UpdateMXRecordSet(name);
         }
 
-        ///GENMHASH:6A236BC9874C63721A7695A7FE9A4C18:8E60906622FD55B055D5983DD550D216
+        ///GENMHASH:6A236BC9874C63721A7695A7FE9A4C18:62D250C4665A5EB885FF4EB68C6CDECE
         public DnsZoneImpl WithoutSrvRecordSet(string name)
         {
-            recordSetsImpl.WithoutSrvRecordSet(name);
+            recordSetsImpl.WithoutSrvRecordSet(name, null);
+            return this;
+        }
+
+        ///GENMHASH:EC620CE3EF72DD020734D0F57C7057F2:50499B3F2D7F7D7AD2BE5E0349AD9C6B
+        public DnsZoneImpl WithoutSrvRecordSet(string name, string eTag)
+        {
+            recordSetsImpl.WithoutSrvRecordSet(name, eTag);
             return this;
         }
 
@@ -175,26 +193,109 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this.srvRecordSets;
         }
 
-        ///GENMHASH:5121804C5EF1A7CB4B5C344EFB2BD758:60833011EC968E62025764949BC25A79
+        ///GENMHASH:5121804C5EF1A7CB4B5C344EFB2BD758:D541888961AD74A86A658F00E4B05473
         public DnsZoneImpl WithoutARecordSet(string name)
         {
-            recordSetsImpl.WithoutARecordSet(name);
+            return this.WithoutARecordSet(name, null);
+        }
+
+        ///GENMHASH:B52E7C54A2094CF7BC537D1CC67AD933:B8A798352224F54D9E1D30018F30BB68
+        public DnsZoneImpl WithoutARecordSet(string name, string eTag)
+        {
+            recordSetsImpl.WithoutARecordSet(name, eTag);
             return this;
         }
 
-        ///GENMHASH:54D2D45FDDD815CD9CB65600866E9EB0:6462A500BE7F66FC6CFF8010C7DFB6C1
+        ///GENMHASH:4913BE5E272184975DDDF5335B476BBD:88ACBC17B6D51A9C055E4CC9834ED144
+        public string ETag()
+        {
+            return this.Inner.Etag;
+        }
+
+        ///GENMHASH:AD6BE020D87A1FB1A7984887D3A945F6:9BB7605D73C9042DD071BBDE7C3B1BA3
+        public IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> ListRecordSets()
+        {
+            return this.ListRecordSetsIntern(null, null);
+        }
+
+        ///GENMHASH:C7F16AA02D02CBF87CCC8862D08C1466:B09101AB23BBB35855F7C2A6A1D83C2A
+        public IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> ListRecordSets(string recordSetNameSuffix)
+        {
+            return this.ListRecordSetsIntern(recordSetNameSuffix, null);
+        }
+
+        ///GENMHASH:3CBC468A730B7550412EEA9CB7234833:62AA8C34C5A8D473B0E450D3BDBA0F1E
+        public IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> ListRecordSets(int pageSize)
+        {
+            return this.ListRecordSetsIntern(null, pageSize);
+        }
+
+        ///GENMHASH:D8DD6F1A4E44E62105E4B9AA26CD9AD3:9D05C7F6EF3046ACCC3A3FC33174E0F9
+        public IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> ListRecordSets(string recordSetNameSuffix, int pageSize)
+        {
+            return this.ListRecordSetsIntern(recordSetNameSuffix, pageSize);
+        }
+
+        ///GENMHASH:4F52CFFC8EB4D698DB3A4C3B1E187BD0:066E16471A496BBA90633388ACB75206
+        public DnsRecordSetImpl UpdateCNameRecordSet(string name)
+        {
+            return recordSetsImpl.UpdateCNameRecordSet(name);
+        }
+
+        ///GENMHASH:791593DE94E8D431FBB634CF0578A424:B9A84F7258ADA4688FCB65555E502356
+        public DnsZoneImpl WithETagCheck()
+        {
+            if (IsInCreateMode) {
+                this.dnsZoneETag = "*";
+                return this;
+            }
+            return this.WithETagCheck(this.Inner.Etag);
+        }
+
+        ///GENMHASH:CAE9667D3C5220302471B1AF817CBA6A:4215D16B5B94BA109439FA15BFA72800
+        public DnsZoneImpl WithETagCheck(string eTagValue)
+        {
+            this.dnsZoneETag = eTagValue;
+            return this;
+        }
+
+        ///GENMHASH:9AE527899D61D17A703966B76C70745E:2504EABC711E0C4024D6109846A65F7C
         public DnsZoneImpl WithoutMXRecordSet(string name)
         {
-            recordSetsImpl.WithoutMXRecordSet(name);
+            return this.WithoutMXRecordSet(name, null);
+        }
+
+        ///GENMHASH:CAE11DD729AC8148C1BB19AC98C19A66:6D14E692FE907A7C399F73CC723B491C
+        public DnsZoneImpl WithoutMXRecordSet(string name, string eTag)
+        {
+            recordSetsImpl.WithoutMXRecordSet(name, eTag);
             return this;
         }
 
         ///GENMHASH:0202A00A1DCF248D2647DBDBEF2CA865:EF3CE1F98A96F8DA517AE632974073AA
         public async override Task<IDnsZone> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-
-            var innerResource = await Manager.Inner.Zones.CreateOrUpdateAsync(ResourceGroupName, Name, Inner, cancellationToken: cancellationToken);
+            ZoneInner innerResource;
+            if (IsInCreateMode)
+            {
+                innerResource = await Manager.Inner.Zones.CreateOrUpdateAsync(ResourceGroupName, 
+                    Name, 
+                    Inner,
+                    ifMatch: null,
+                    ifNoneMatch: this.dnsZoneETag,
+                    cancellationToken: cancellationToken);
+            }
+            else
+            {
+                innerResource = await Manager.Inner.Zones.CreateOrUpdateAsync(ResourceGroupName,
+                    Name,
+                    Inner,
+                    ifMatch: this.dnsZoneETag,
+                    ifNoneMatch: null,
+                    cancellationToken: cancellationToken);
+            }
             SetInner(innerResource);
+            this.dnsZoneETag = null;
             await recordSetsImpl.CommitAndGetAllAsync(cancellationToken);
             return this;
         }
@@ -211,7 +312,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return recordSetsImpl.UpdatePtrRecordSet(name);
         }
 
-        ///GENMHASH:766D91058115C559BE5B14A9C7056073:45786BE7DC1F8A260526EC385F813C1B
+        ///GENMHASH:7FD0DE0CD548F2703A15E4BAA97D6873:3D5969EEF23E4C353B1011DB95AC7B15
         public DnsRecordSetImpl DefineMXRecordSet(string name)
         {
             return recordSetsImpl.DefineMXRecordSet(name);
@@ -224,11 +325,46 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             InitRecordSets();
         }
 
-        ///GENMHASH:3F0A6CC3DBBB3330F47E8737215D7ECE:08F4FF93F43929543646D0EBF2903504
+        ///GENMHASH:3F0A6CC3DBBB3330F47E8737215D7ECE:89EB3CA649B988C6CE1268D1D2437E71
         public ISoaRecordSet GetSoaRecordSet()
         {
             RecordSetInner inner = Manager.Inner.RecordSets.Get(ResourceGroupName, Name, "@", RecordType.SOA);
             return new SoaRecordSetImpl(this, inner);
+        }
+
+        ///GENMHASH:DAB4AD5D3ECB1C104BA24998D652F125:360292BEDD7386B9C66109E12C8F07EB
+        private IEnumerable<Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet> ListRecordSetsIntern(string recordSetSuffix, int? pageSize)
+        {
+            return Manager.Inner.RecordSets.ListByDnsZone(ResourceGroupName,
+                Name,
+                top: pageSize,
+                recordsetnamesuffix: recordSetSuffix).Select(inner =>
+                {
+                    var recordSet = new DnsRecordSetImpl(this, inner);
+                    switch(recordSet.RecordType())
+                    {
+                        case RecordType.A:
+                            return new ARecordSetImpl(this, inner);
+                        case RecordType.AAAA:
+                            return new AaaaRecordSetImpl(this, inner);
+                        case RecordType.CNAME:
+                            return new CNameRecordSetImpl(this, inner);
+                        case RecordType.MX:
+                            return new MXRecordSetImpl(this, inner);
+                        case RecordType.NS:
+                            return new NSRecordSetImpl(this, inner);
+                        case RecordType.PTR:
+                            return new PtrRecordSetImpl(this, inner);
+                        case RecordType.SOA:
+                            return new SoaRecordSetImpl(this, inner);
+                        case RecordType.SRV:
+                            return new SrvRecordSetImpl(this, inner);
+                        case RecordType.TXT:
+                            return new TxtRecordSetImpl(this, inner);
+                        default:
+                            return recordSet;
+                    }
+                });
         }
 
         ///GENMHASH:9AB7664BD0C8EE192BC61FD76EFCAF87:F3CAC648F4ECD829852ED6ADB4E1A338
@@ -261,7 +397,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         ///GENMHASH:E10C7FF5C36891D769128853352DD627:C2BD0B555A21A8D13988A3FB8138875D
         public DnsZoneImpl WithoutAaaaRecordSet(string name)
         {
-            recordSetsImpl.WithoutAaaaRecordSet(name);
+            return this.WithoutAaaaRecordSet(name, null);
+        }
+
+        ///GENMHASH:762F03CE80F4A9BF3ADBEEC0D41DB5AF:0C4D21F444FFB1EF936C1B1D1AE3A942
+        public DnsZoneImpl WithoutAaaaRecordSet(string name, string eTag)
+        {
+            recordSetsImpl.WithoutAaaaRecordSet(name, eTag);
             return this;
         }
 
@@ -271,17 +413,29 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this.txtRecordSets;
         }
 
-        ///GENMHASH:EDF384FBE686F4A04431E3BC18889398:B6C34FCD3D80CE6399DBF488AC70440F
+        ///GENMHASH:3CAFB4506578B44622E2A442A3CD8788:BAB752D3A1C75B0A4AACB01ABC60D250
         public DnsZoneImpl WithoutCNameRecordSet(string name)
         {
-            recordSetsImpl.WithoutCNameRecordSet(name);
+            return this.WithoutCNameRecordSet(name, null);
+        }
+
+        ///GENMHASH:69DD1218436902CDC3B7BC8695982064:96CEC3DC66305E02C742E45C265DC665
+        public DnsZoneImpl WithoutCNameRecordSet(string name, string eTag)
+        {
+            recordSetsImpl.WithoutCNameRecordSet(name, eTag);
             return this;
+        }
+
+        ///GENMHASH:D5078976D64C68B60845416B4A519771:01D3AFD955DB0833B9A627FE561F323F
+        public DnsRecordSetImpl DefineCNameRecordSet(string name)
+        {
+            return recordSetsImpl.DefineCNameRecordSet(name);
         }
 
         ///GENMHASH:6367F8A407349BBB833D3790CE7781BE:E5617108F877DD24CA72463B3D7BBB6D
         public long NumberOfRecordSets()
         {
-            return Inner.NumberOfRecordSets.Value;
+            return Inner.NumberOfRecordSets.HasValue ? Inner.NumberOfRecordSets.Value : 0;
         }
 
         ///GENMHASH:9346CB4D0F5C719EB9C7E3A3AE77D732:CF958FACD1F19347590706D6D905C707
@@ -290,23 +444,35 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return this.mxRecordSets;
         }
 
-        ///GENMHASH:ECF2482EF49EC3D1CB1FA4A823939109:CFA02769236E87811E8DDA4F0363D6EC
+        ///GENMHASH:ECF2482EF49EC3D1CB1FA4A823939109:7E0994466D2DD0EFB8D1887B0196BE7A
         public DnsZoneImpl WithoutTxtRecordSet(string name)
         {
-            recordSetsImpl.WithoutTxtRecordSet(name);
+            return this.WithoutTxtRecordSet(name, null);
+        }
+
+        ///GENMHASH:2AAD8D85A395EE1384B1E0A6010A750B:1C3A4C0AE733A58BBF09EC9FCB441723
+        public DnsZoneImpl WithoutTxtRecordSet(string name, string eTag)
+        {
+            recordSetsImpl.WithoutTxtRecordSet(name, eTag);
             return this;
         }
 
-        ///GENMHASH:329EC651435AC8A74D3A1349985D55EE:F2A93F30A698AE9ED05A108FF9F65CFB
+        ///GENMHASH:CC4422F1AB1A272DA6DBEBD9DD8767DF:070360140FDAF9C6E1A75749391C90AC
         public DnsRecordSetImpl UpdateNSRecordSet(string name)
         {
             return recordSetsImpl.UpdateNSRecordSet(name);
         }
 
-        ///GENMHASH:DBFF1C1D58718301508DC884197E6B5A:0944E077B82EF0CBECB458CFBCC47DDA
+        ///GENMHASH:A84F222A2C667953801DCF98F7DE030D:923487771CD86EE9B0CD6AB037014FE9
         public DnsZoneImpl WithoutNSRecordSet(string name)
         {
-            recordSetsImpl.WithoutNSRecordSet(name);
+            return this.WithoutNSRecordSet(name, null);
+        }
+
+        ///GENMHASH:0A638BEAEF3AE7294B3373C1072B1E0A:2B26177638239DD0FDCDF40F74E0B5E8
+        public DnsZoneImpl WithoutNSRecordSet(string name, string eTag)
+        {
+            recordSetsImpl.WithoutNSRecordSet(name, eTag);
             return this;
         }
     }

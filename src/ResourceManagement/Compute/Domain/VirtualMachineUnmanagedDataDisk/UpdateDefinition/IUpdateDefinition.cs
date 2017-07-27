@@ -13,18 +13,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataD
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition.IWithAttach<ParentT>
     {
         /// <summary>
-        /// Specifies the logical unit number for the data disk.
-        /// </summary>
-        /// <param name="lun">The logical unit number.</param>
-        /// <return>The next stage of data disk definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition.IWithVhdAttachedDiskSettings<ParentT> WithLun(int lun);
-
-        /// <summary>
         /// Specifies the size in GB the disk needs to be resized.
         /// </summary>
         /// <param name="sizeInGB">The disk size in GB.</param>
         /// <return>The next stage of data disk definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition.IWithVhdAttachedDiskSettings<ParentT> WithSizeInGB(int sizeInGB);
+
+        /// <summary>
+        /// Specifies the logical unit number for the data disk.
+        /// </summary>
+        /// <param name="lun">The logical unit number.</param>
+        /// <return>The next stage of data disk definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition.IWithVhdAttachedDiskSettings<ParentT> WithLun(int lun);
 
         /// <summary>
         /// Specifies the caching type for the data disk.
@@ -41,13 +41,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataD
     public interface IWithDiskSource<ParentT> 
     {
         /// <summary>
-        /// Specifies that disk needs to be created with a new VHD of given size.
-        /// </summary>
-        /// <param name="sizeInGB">The initial disk size in GB.</param>
-        /// <return>The next stage of data disk definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition.IWithNewVhdDiskSettings<ParentT> WithNewVhd(int sizeInGB);
-
-        /// <summary>
         /// Specifies the existing source VHD of the disk.
         /// </summary>
         /// <param name="storageAccountName">The storage account name.</param>
@@ -55,6 +48,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataD
         /// <param name="vhdName">The name of the VHD file to attach.</param>
         /// <return>The next stage of data disk definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition.IWithVhdAttachedDiskSettings<ParentT> WithExistingVhd(string storageAccountName, string containerName, string vhdName);
+
+        /// <summary>
+        /// Specifies that disk needs to be created with a new VHD of given size.
+        /// </summary>
+        /// <param name="sizeInGB">The initial disk size in GB.</param>
+        /// <return>The next stage of data disk definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.UpdateDefinition.IWithNewVhdDiskSettings<ParentT> WithNewVhd(int sizeInGB);
     }
 
     /// <summary>

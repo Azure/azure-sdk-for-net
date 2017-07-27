@@ -16,11 +16,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
     public interface IWithExtension 
     {
         /// <summary>
-        /// Removes the extension with the specified name from the virtual machines in the scale set.
+        /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
         /// </summary>
-        /// <param name="name">The reference name of the extension to be removed/uninstalled.</param>
-        /// <return>The next stage of the update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithoutExtension(string name);
+        /// <param name="name">The reference name for the extension.</param>
+        /// <return>The first stage of the extension reference update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IUpdate UpdateExtension(string name);
 
         /// <summary>
         /// Begins the definition of an extension reference to be attached to the virtual machines in the scale set.
@@ -30,11 +30,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Updat
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply> DefineNewExtension(string name);
 
         /// <summary>
-        /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
+        /// Removes the extension with the specified name from the virtual machines in the scale set.
         /// </summary>
-        /// <param name="name">The reference name for the extension.</param>
-        /// <return>The first stage of the extension reference update.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSetExtension.Update.IUpdate UpdateExtension(string name);
+        /// <param name="name">The reference name of the extension to be removed/uninstalled.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Update.IWithApply WithoutExtension(string name);
     }
 
     /// <summary>

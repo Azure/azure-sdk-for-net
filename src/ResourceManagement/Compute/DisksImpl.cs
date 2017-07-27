@@ -33,13 +33,25 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             await Inner.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        ///GENMHASH:1BCE81BDD651175D2AF64E39F4F2C420:BFFE56CE1D59C3CA9284FED6EC0BD4DE
+        ///GENMHASH:1BCE81BDD651175D2AF64E39F4F2C420:F211289A9C0637B5973069548F05CECE
+        public void RevokeAccess(string resourceGroupName, string diskName)
+        {
+            this.Inner.RevokeAccess(resourceGroupName, diskName);
+        }
+
+        ///GENMHASH:C2E2A5650639245BC0993A33DCAA5D61:AB53C4E88693DA816105A74AACCB3115
+        public string GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration)
+        {
+            return this.GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        ///GENMHASH:CAAAC294CEC4F5465B5368FDC3327C5D:2F567929AA028332A657F78A9A7C3964
         public async Task RevokeAccessAsync(string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
         {
             await Inner.RevokeAccessAsync(resourceGroupName, diskName, cancellationToken);
         }
 
-        ///GENMHASH:C2E2A5650639245BC0993A33DCAA5D61:5ED639AB5B297A577FFD766897FD02B8
+        ///GENMHASH:5E14BE5799A25FD072BFBD2635947666:F9F576DF5B4E696FFA8774883C7E48E2
         public async Task<string> GrantAccessAsync(
             string resourceGroupName, 
             string diskName, 

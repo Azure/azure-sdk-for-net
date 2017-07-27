@@ -8,17 +8,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     internal partial class ComputeUsageImpl 
     {
         /// <summary>
-        /// Gets the name of the type of usage.
-        /// </summary>
-        Models.UsageName Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Name
-        {
-            get
-            {
-                return this.Name() as Models.UsageName;
-            }
-        }
-
-        /// <summary>
         /// Gets the maximum count of the resources that can be allocated in the
         /// subscription.
         /// </summary>
@@ -31,13 +20,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the unit of measurement.
+        /// Gets the name of the type of usage.
         /// </summary>
-        Models.ComputeUsageUnit Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Unit
+        Models.UsageName Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Name
         {
             get
             {
-                return this.Unit() as Models.ComputeUsageUnit;
+                return this.Name() as Models.UsageName;
             }
         }
 
@@ -49,6 +38,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.CurrentValue();
+            }
+        }
+
+        /// <summary>
+        /// Gets the unit of measurement.
+        /// </summary>
+        Models.ComputeUsageUnit Microsoft.Azure.Management.Compute.Fluent.IComputeUsage.Unit
+        {
+            get
+            {
+                return this.Unit() as Models.ComputeUsageUnit;
             }
         }
     }

@@ -4,6 +4,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Microsoft.Azure.Management.Compute.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     internal partial class VirtualMachineExtensionImageVersionImpl 
     {
@@ -22,6 +24,12 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion.GetImage()
         {
             return this.GetImage() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage;
+        }
+
+        /// <return>Virtual machine extension image this version represents.</return>
+        Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersion.GetImageAsync(CancellationToken cancellationToken)
+        {
+            return this.GetImageAsync(cancellationToken) as Task<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImage>;
         }
 
         /// <summary>

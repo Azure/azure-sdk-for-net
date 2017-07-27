@@ -28,13 +28,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         ///GENMHASH:1BAF4F1B601F89251ABCFE6CC4867026:5FB785552E5FD74C28F297EA7778027A
-        public OperatingSystemTypes OsType()
+        public OperatingSystemTypes OSType()
         {
             return OperatingSystemTypes.Windows;
         }
 
         ///GENMHASH:D1037603B1F11C451DD830F07021E503:EE1AB39DC25D0E54E8D460F4A5A910E3
-        public EncryptionStatus OsDiskStatus()
+        public EncryptionStatus OSDiskStatus()
         {
             if (!HasEncryptionDetails()) {
                 return EncryptionStatus.NotEncrypted;
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             if (!HasEncryptionDetails()) {
                 return null;
             }
-            return $"OSDisk: {OsDiskStatus()} DataDisk: {DataDiskStatus()}";
+            return $"OSDisk: {OSDiskStatus()} DataDisk: {DataDiskStatus()}";
         }
     }
 }

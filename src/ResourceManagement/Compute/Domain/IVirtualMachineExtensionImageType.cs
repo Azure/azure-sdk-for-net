@@ -13,11 +13,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName
     {
         /// <summary>
-        /// Gets the resource ID of the virtual machine extension image type.
-        /// </summary>
-        string Id { get; }
-
-        /// <summary>
         /// Gets Virtual machine image extension versions available in this type.
         /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionImageVersions Versions { get; }
@@ -31,5 +26,10 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets the publisher of this virtual machine extension image type.
         /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher Publisher { get; }
+
+        /// <summary>
+        /// Gets the resource ID of the virtual machine extension image type.
+        /// </summary>
+        string Id { get; }
     }
 }

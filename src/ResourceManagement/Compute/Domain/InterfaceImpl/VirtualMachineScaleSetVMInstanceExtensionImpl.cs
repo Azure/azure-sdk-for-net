@@ -98,17 +98,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the tags for this virtual machine extension.
-        /// </summary>
-        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.Tags
-        {
-            get
-            {
-                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
-            }
-        }
-
-        /// <summary>
         /// Gets the public settings of the virtual machine extension as key value pairs.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<string,object> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.PublicSettings
@@ -116,6 +105,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.PublicSettings() as System.Collections.Generic.IReadOnlyDictionary<string,object>;
+            }
+        }
+
+        /// <summary>
+        /// Gets the tags for this virtual machine extension.
+        /// </summary>
+        System.Collections.Generic.IReadOnlyDictionary<string,string> Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtensionBase.Tags
+        {
+            get
+            {
+                return this.Tags() as System.Collections.Generic.IReadOnlyDictionary<string,string>;
             }
         }
     }

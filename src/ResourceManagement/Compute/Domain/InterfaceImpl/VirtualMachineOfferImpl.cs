@@ -19,17 +19,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         }
 
         /// <summary>
-        /// Gets the publisher of this virtual machine image offer.
-        /// </summary>
-        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer.Publisher
-        {
-            get
-            {
-                return this.Publisher() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher;
-            }
-        }
-
-        /// <summary>
         /// Gets virtual machine image SKUs available in this offer.
         /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSkus Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer.Skus
@@ -37,6 +26,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             get
             {
                 return this.Skus() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSkus;
+            }
+        }
+
+        /// <summary>
+        /// Gets the publisher of this virtual machine image offer.
+        /// </summary>
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer.Publisher
+        {
+            get
+            {
+                return this.Publisher() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher;
             }
         }
 

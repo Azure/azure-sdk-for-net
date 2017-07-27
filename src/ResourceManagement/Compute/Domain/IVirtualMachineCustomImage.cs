@@ -15,6 +15,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineCustomImage>
     {
         /// <summary>
+        /// Gets operating system disk image in this image.
+        /// </summary>
+        Models.ImageOSDisk OSDiskImage { get; }
+
+        /// <summary>
         /// Gets true if this image was created by capturing a virtual machine.
         /// </summary>
         bool IsCreatedFromVirtualMachine { get; }
@@ -28,10 +33,5 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// Gets data disk images in this image, indexed by the disk LUN.
         /// </summary>
         System.Collections.Generic.IReadOnlyDictionary<int,Models.ImageDataDisk> DataDiskImages { get; }
-
-        /// <summary>
-        /// Gets operating system disk image in this image.
-        /// </summary>
-        Models.ImageOSDisk OSDiskImage { get; }
     }
 }

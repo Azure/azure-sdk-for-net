@@ -11,9 +11,9 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.IHasName
     {
         /// <summary>
-        /// Gets the region where this virtual machine image offer SKU is available.
+        /// Gets the virtual machine offer name that this SKU belongs to.
         /// </summary>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Region { get; }
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer Offer { get; }
 
         /// <summary>
         /// Gets virtual machine images in the SKU.
@@ -21,13 +21,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineImagesInSku Images { get; }
 
         /// <summary>
-        /// Gets the virtual machine offer name that this SKU belongs to.
-        /// </summary>
-        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineOffer Offer { get; }
-
-        /// <summary>
         /// Gets the publisher of this virtual machine image offer SKU.
         /// </summary>
         Microsoft.Azure.Management.Compute.Fluent.IVirtualMachinePublisher Publisher { get; }
+
+        /// <summary>
+        /// Gets the region where this virtual machine image offer SKU is available.
+        /// </summary>
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.Region Region { get; }
     }
 }

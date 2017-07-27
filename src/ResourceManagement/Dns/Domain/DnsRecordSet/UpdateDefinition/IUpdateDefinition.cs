@@ -20,6 +20,15 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
+    /// The first stage of a CNAME record set definition.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of  DefinitionStages.WithAttach.attach().</typeparam>
+    public interface ICNameRecordSetBlank<ParentT>  :
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithCNameRecordAlias<ParentT>
+    {
+    }
+
+    /// <summary>
     /// The stage of the A record set definition allowing to add first A record.
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
@@ -51,12 +60,66 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     }
 
     /// <summary>
+    /// The stage of a CNAME record definition allowing to add alias.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithCNameRecordAlias<ParentT> :
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithCNameRecordAliasBeta<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The stage of a CNAME record definition allowing to add alias.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithCNameRecordAliasBeta<ParentT> 
+    {
+        /// <summary>
+        /// Creates a CNAME record with the provided alias.
+        /// </summary>
+        /// <param name="alias">The alias.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithCNameRecordSetAttachable<ParentT> WithAlias(string alias);
+    }
+
+    /// <summary>
     /// The first stage of an MX record definition.
     /// </summary>
     /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
     public interface IMXRecordSetBlank<ParentT>  :
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithMXRecordMailExchange<ParentT>
     {
+    }
+
+    /// <summary>
+    /// The stage of the CNAME record set definition allowing attach the record set to the parent.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of  UpdateDefinitionStages.WithAttach.attach().</typeparam>
+    public interface IWithCNameRecordSetAttachable<ParentT>  :
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithAttach<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the record set definition allowing to enable ETag validation.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithETagCheck<ParentT> :
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithETagCheckBeta<ParentT>
+    {
+    }
+
+    /// <summary>
+    /// The stage of the record set definition allowing to enable ETag validation.
+    /// </summary>
+    /// <typeparam name="ParentT">The stage of the parent definition to return to after attaching this definition.</typeparam>
+    public interface IWithETagCheckBeta<ParentT> 
+    {
+        /// <summary>
+        /// Specifies that If-None-Match header needs to set to  to prevent updating an existing record set.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithAttach<ParentT> WithETagCheck();
     }
 
     /// <summary>
@@ -164,8 +227,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
     /// <typeparam name="ParentT">The return type of  DnsRecordSet.UpdateDefinitionStages.WithAttach.attach().</typeparam>
     public interface IWithAttach<ParentT>  :
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update.IInUpdate<ParentT>,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithTtl<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithMetadata<ParentT>,
-        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithTtl<ParentT>
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithETagCheck<ParentT>
     {
     }
 
@@ -218,6 +282,9 @@ namespace Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IAaaaRecordSetBlank<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6Address<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithAaaaRecordIPv6AddressOrAttachable<ParentT>,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.ICNameRecordSetBlank<ParentT>,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithCNameRecordAlias<ParentT>,
+        Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithCNameRecordSetAttachable<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IMXRecordSetBlank<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithMXRecordMailExchange<ParentT>,
         Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition.IWithMXRecordMailExchangeOrAttachable<ParentT>,

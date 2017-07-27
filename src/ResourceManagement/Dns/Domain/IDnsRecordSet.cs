@@ -27,5 +27,10 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         /// Gets the type of records in this record set.
         /// </summary>
         Models.RecordType RecordType { get; }
+
+        /// <summary>
+        /// Gets the etag associated with the record set.
+        /// </summary>
+        string ETag { get; }
     }
 }

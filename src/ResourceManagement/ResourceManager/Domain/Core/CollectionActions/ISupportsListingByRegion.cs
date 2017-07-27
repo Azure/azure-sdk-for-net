@@ -5,6 +5,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
 {
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Provides access to listing Azure resources of a specific type based on their region.
@@ -29,5 +31,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActio
         /// <returns>list of resources</returns>
         IEnumerable<T> ListByRegion (string regionName);
 
+        /// <summary>
+        /// Lists all the resources of the specified type in the specified region.
+        /// </summary>
+        /// <param name="region">the selected Azure region</param>
+        /// <param name="cancellationToken">the cancellation token</param>
+        /// <returns>a representation of the deferred computation of this call, returning the requested resources</returns>
+        Task<IPagedCollection<T>> ListByRegionAsync(Region region, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Lists all the resources of the specified type in the specified region.
+        /// </summary>
+        /// <param name="region">the selected Azure region</param>
+        /// <param name="cancellationToken">the cancellation token</param>
+        /// <returns>a representation of the deferred computation of this call, returning the requested resources</returns>
+        Task<IPagedCollection<T>> ListByRegionAsync(string region, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

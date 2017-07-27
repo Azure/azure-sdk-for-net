@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Collections.Generic;
     using ResourceManager.Fluent.Core.ChildResourceActions;
     using System;
+    using Microsoft.Azure.Management.ResourceManager.Fluent;
 
     /// <summary>
     /// The implementation for DataDisk and its create and update interfaces.
@@ -106,12 +107,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             return this;
         }
 
-        ///GENMHASH:6C7A66561217BAE3245D6F32A1496CC9:2923A60F8399D284424553D90A01711B
-        private static string BlobUrl(string storageAccountName, string containerName, string blobName)
+        ///GENMHASH:6C7A66561217BAE3245D6F32A1496CC9:F62A7A9F922FB129B2C4B985117F6230
+        private string BlobUrl(string storageAccountName, string containerName, string blobName)
         {
-
-            // Future: Get the storage domain from the environment
-            return "https://" + storageAccountName + ".blob.core.windows.net" + "/" + containerName + "/" + blobName;
+            AzureEnvironment azureEnvironment = this.Parent.Environment();
+            return "https://" + storageAccountName + ".blob" + azureEnvironment.StorageEndpointSuffix + "/" + containerName + "/" + blobName;
         }
 
         ///GENMHASH:638DE13F1D4D90A0515B35BE7FE1BE5C:8FABD54B6B9CC34ECD0DAE095274C8FB

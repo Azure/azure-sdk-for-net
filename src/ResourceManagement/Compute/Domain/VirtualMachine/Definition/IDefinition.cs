@@ -23,13 +23,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// </summary>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithFromImageCreateOptionsUnmanaged WithUnmanagedDisks();
-
-        /// <summary>
-        /// Specifies the custom data for the virtual machine.
-        /// </summary>
-        /// <param name="base64EncodedCustomData">The base64 encoded custom data.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithFromImageCreateOptionsManaged WithCustomData(string base64EncodedCustomData);
     }
 
     /// <summary>
@@ -74,11 +67,65 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     public interface IWithOS 
     {
         /// <summary>
+        /// Specifies a specialized operating system unmanaged disk to be attached to the virtual machine.
+        /// </summary>
+        /// <param name="osDiskUrl">OsDiskUrl the URL to the OS disk in the Azure Storage account.</param>
+        /// <param name="osType">The OS type.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate WithSpecializedOSUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType);
+
+        /// <summary>
+        /// Specifies a known marketplace Linux image to be used for the virtual machine's OS.
+        /// </summary>
+        /// <param name="knownImage">A known market-place image.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsernameManagedOrUnmanaged WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage);
+
+        /// <summary>
+        /// Specifies that the latest version of a marketplace Linux image is to be used as the virtual machine's OS.
+        /// </summary>
+        /// <param name="publisher">Specifies the publisher of an image.</param>
+        /// <param name="offer">Specifies an offer of the image.</param>
+        /// <param name="sku">Specifies a SKU of the image.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsernameManagedOrUnmanaged WithLatestLinuxImage(string publisher, string offer, string sku);
+
+        /// <summary>
+        /// Specifies a user (generalized) Linux image to be used for the virtual machine's OS.
+        /// </summary>
+        /// <param name="imageUrl">The URL of a VHD.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsernameUnmanaged WithStoredLinuxImage(string imageUrl);
+
+        /// <summary>
+        /// Specifies that the latest version of a marketplace Windows image should to be used as the virtual machine's OS.
+        /// </summary>
+        /// <param name="publisher">Specifies the publisher of the image.</param>
+        /// <param name="offer">Specifies the offer of the image.</param>
+        /// <param name="sku">Specifies the SKU of the image.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged WithLatestWindowsImage(string publisher, string offer, string sku);
+
+        /// <summary>
+        /// Specifies the resource ID of a Linux custom image to be used as the virtual machines' OS.
+        /// </summary>
+        /// <param name="customImageId">The resource ID of a custom image.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsernameManaged WithLinuxCustomImage(string customImageId);
+
+        /// <summary>
         /// Specifies a known marketplace Windows image to be used for the virtual machine's OS.
         /// </summary>
         /// <param name="knownImage">A known market-place image.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage);
+
+        /// <summary>
+        /// Specifies a version of a marketplace Windows image to be used as the virtual machine's OS.
+        /// </summary>
+        /// <param name="imageReference">Describes publisher, offer, SKU and version of the market-place image.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged WithSpecificWindowsImageVersion(ImageReference imageReference);
 
         /// <summary>
         /// Specifies a version of a market-place Linux image to be used as the virtual machine's OS.
@@ -96,52 +143,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithSpecializedOSDisk(IDisk disk, OperatingSystemTypes osType);
 
         /// <summary>
-        /// Specifies a known marketplace Linux image to be used for the virtual machine's OS.
-        /// </summary>
-        /// <param name="knownImage">A known market-place image.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsernameManagedOrUnmanaged WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage);
-
-        /// <summary>
-        /// Specifies the user (generalized) Windows image to be used for the virtual machine's OS.
-        /// </summary>
-        /// <param name="imageUrl">The URL of a VHD.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsernameUnmanaged WithStoredWindowsImage(string imageUrl);
-
-        /// <summary>
-        /// Specifies a version of a marketplace Windows image to be used as the virtual machine's OS.
-        /// </summary>
-        /// <param name="imageReference">Describes publisher, offer, SKU and version of the market-place image.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged WithSpecificWindowsImageVersion(ImageReference imageReference);
-
-        /// <summary>
-        /// Specifies a user (generalized) Linux image to be used for the virtual machine's OS.
-        /// </summary>
-        /// <param name="imageUrl">The URL of a VHD.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsernameUnmanaged WithStoredLinuxImage(string imageUrl);
-
-        /// <summary>
-        /// Specifies that the latest version of a marketplace Linux image is to be used as the virtual machine's OS.
-        /// </summary>
-        /// <param name="publisher">Specifies the publisher of an image.</param>
-        /// <param name="offer">Specifies an offer of the image.</param>
-        /// <param name="sku">Specifies a SKU of the image.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsernameManagedOrUnmanaged WithLatestLinuxImage(string publisher, string offer, string sku);
-
-        /// <summary>
-        /// Specifies that the latest version of a marketplace Windows image should to be used as the virtual machine's OS.
-        /// </summary>
-        /// <param name="publisher">Specifies the publisher of the image.</param>
-        /// <param name="offer">Specifies the offer of the image.</param>
-        /// <param name="sku">Specifies the SKU of the image.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsernameManagedOrUnmanaged WithLatestWindowsImage(string publisher, string offer, string sku);
-
-        /// <summary>
         /// Specifies the resource ID of a Windows custom image to be used as the virtual machine's OS.
         /// </summary>
         /// <param name="customImageId">The resource ID of the custom image.</param>
@@ -149,19 +150,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsernameManaged WithWindowsCustomImage(string customImageId);
 
         /// <summary>
-        /// Specifies a specialized operating system unmanaged disk to be attached to the virtual machine.
+        /// Specifies the user (generalized) Windows image to be used for the virtual machine's OS.
         /// </summary>
-        /// <param name="osDiskUrl">OsDiskUrl the URL to the OS disk in the Azure Storage account.</param>
-        /// <param name="osType">The OS type.</param>
+        /// <param name="imageUrl">The URL of a VHD.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate WithSpecializedOSUnmanagedDisk(string osDiskUrl, OperatingSystemTypes osType);
-
-        /// <summary>
-        /// Specifies the resource ID of a Linux custom image to be used as the virtual machines' OS.
-        /// </summary>
-        /// <param name="customImageId">The resource ID of a custom image.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxRootUsernameManaged WithLinuxCustomImage(string customImageId);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsAdminUsernameUnmanaged WithStoredWindowsImage(string imageUrl);
     }
 
     /// <summary>
@@ -170,6 +163,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     public interface IWithFromImageCreateOptionsManaged  :
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate
     {
+        /// <summary>
+        /// Specifies the custom data for the virtual machine.
+        /// </summary>
+        /// <param name="base64EncodedCustomData">The base64 encoded custom data.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithFromImageCreateOptionsManaged WithCustomData(string base64EncodedCustomData);
+
         /// <summary>
         /// Specifies the computer name for the virtual machine.
         /// </summary>
@@ -197,19 +197,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     public interface IWithPrimaryNetworkInterface 
     {
         /// <summary>
-        /// Associates an existing network interface with the virtual machine as its primary network interface.
-        /// </summary>
-        /// <param name="networkInterface">An existing network interface.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithExistingPrimaryNetworkInterface(INetworkInterface networkInterface);
-
-        /// <summary>
         /// Creates a new network interface to associate with the virtual machine as its primary network interface,
         /// based on the provided definition.
         /// </summary>
         /// <param name="creatable">A creatable definition for a new network interface.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithNewPrimaryNetworkInterface(ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> creatable);
+
+        /// <summary>
+        /// Associates an existing network interface with the virtual machine as its primary network interface.
+        /// </summary>
+        /// <param name="networkInterface">An existing network interface.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithExistingPrimaryNetworkInterface(INetworkInterface networkInterface);
     }
 
     /// <summary>
@@ -239,6 +239,15 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     public interface IWithUnmanagedDataDisk 
     {
         /// <summary>
+        /// Attaches an existing unmanaged VHD as a data disk to the virtual machine.
+        /// </summary>
+        /// <param name="storageAccountName">A storage account name.</param>
+        /// <param name="containerName">The name of the container holding the VHD file.</param>
+        /// <param name="vhdName">The name for the VHD file.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate WithExistingUnmanagedDataDisk(string storageAccountName, string containerName, string vhdName);
+
+        /// <summary>
         /// Attaches a new blank unmanaged data disk to the virtual machine.
         /// </summary>
         /// <param name="sizeInGB">The disk size in GB.</param>
@@ -251,15 +260,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="name">The name for the data disk.</param>
         /// <return>The first stage of an unmanaged data disk definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachineUnmanagedDataDisk.Definition.IBlank<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate> DefineUnmanagedDataDisk(string name);
-
-        /// <summary>
-        /// Attaches an existing unmanaged VHD as a data disk to the virtual machine.
-        /// </summary>
-        /// <param name="storageAccountName">A storage account name.</param>
-        /// <param name="containerName">The name of the container holding the VHD file.</param>
-        /// <param name="vhdName">The name for the VHD file.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate WithExistingUnmanagedDataDisk(string storageAccountName, string containerName, string vhdName);
     }
 
     /// <summary>
@@ -268,6 +268,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     public interface IWithNetwork  :
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPrimaryNetworkInterface
     {
+        /// <summary>
+        /// Associates an existing virtual network with the virtual machine's primary network interface.
+        /// </summary>
+        /// <param name="network">An existing virtual network.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithSubnet WithExistingPrimaryNetwork(INetwork network);
+
         /// <summary>
         /// Creates a new virtual network to associate with the virtual machine's primary network interface, based on
         /// the provided definition.
@@ -284,13 +291,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="addressSpace">The address space for the virtual network.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPrivateIP WithNewPrimaryNetwork(string addressSpace);
-
-        /// <summary>
-        /// Associates an existing virtual network with the virtual machine's primary network interface.
-        /// </summary>
-        /// <param name="network">An existing virtual network.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithSubnet WithExistingPrimaryNetwork(INetwork network);
     }
 
     /// <summary>
@@ -315,17 +315,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManaged WithWinRM(WinRMListener listener);
 
         /// <summary>
+        /// Disables automatic updates.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManaged WithoutAutoUpdate();
+
+        /// <summary>
         /// Specifies the time-zone.
         /// </summary>
         /// <param name="timeZone">A time zone.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManaged WithTimeZone(string timeZone);
-
-        /// <summary>
-        /// Disables automatic updates.
-        /// </summary>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManaged WithoutAutoUpdate();
     }
 
     /// <summary>
@@ -368,7 +368,8 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithAvailabilitySet,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithSecondaryNetworkInterface,
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithExtension,
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPlan
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithPlan,
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithBootDiagnostics
     {
     }
 
@@ -394,17 +395,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateUnmanaged WithWinRM(WinRMListener listener);
 
         /// <summary>
+        /// Specifies that automatic updates should be disabled.
+        /// </summary>
+        /// <return>The stage representing creatable Windows VM definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateUnmanaged WithoutAutoUpdate();
+
+        /// <summary>
         /// Specifies the time-zone.
         /// </summary>
         /// <param name="timeZone">The timezone.</param>
         /// <return>The stage representing creatable Windows VM definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateUnmanaged WithTimeZone(string timeZone);
-
-        /// <summary>
-        /// Specifies that automatic updates should be disabled.
-        /// </summary>
-        /// <return>The stage representing creatable Windows VM definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateUnmanaged WithoutAutoUpdate();
     }
 
     /// <summary>
@@ -481,18 +482,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithUnmanagedCreate
     {
         /// <summary>
-        /// Specifies the computer name for the virtual machine.
-        /// </summary>
-        /// <param name="computerName">A computer name.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithFromImageCreateOptionsUnmanaged WithComputerName(string computerName);
-
-        /// <summary>
         /// Specifies the custom data for the virtual machine.
         /// </summary>
         /// <param name="base64EncodedCustomData">Base64 encoded custom data.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithFromImageCreateOptionsUnmanaged WithCustomData(string base64EncodedCustomData);
+
+        /// <summary>
+        /// Specifies the computer name for the virtual machine.
+        /// </summary>
+        /// <param name="computerName">A computer name.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithFromImageCreateOptionsUnmanaged WithComputerName(string computerName);
     }
 
     /// <summary>
@@ -519,11 +520,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate
     {
         /// <summary>
-        /// Specifies the storage account type for the managed OS disk.
+        /// Specifies the default caching type for managed data disks.
         /// </summary>
-        /// <param name="accountType">Storage account type.</param>
+        /// <param name="storageAccountType">A storage account type.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithOSDiskStorageAccountType(StorageAccountTypes accountType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithDataDiskDefaultStorageAccountType(StorageAccountTypes storageAccountType);
 
         /// <summary>
         /// Specifies the default caching type for the managed data disks.
@@ -533,11 +534,11 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithDataDiskDefaultCachingType(CachingTypes cachingType);
 
         /// <summary>
-        /// Specifies the default caching type for managed data disks.
+        /// Specifies the storage account type for the managed OS disk.
         /// </summary>
-        /// <param name="storageAccountType">A storage account type.</param>
+        /// <param name="accountType">Storage account type.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithDataDiskDefaultStorageAccountType(StorageAccountTypes storageAccountType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithOSDiskStorageAccountType(StorageAccountTypes accountType);
     }
 
     /// <summary>
@@ -545,6 +546,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     /// </summary>
     public interface IWithPublicIPAddress 
     {
+        /// <summary>
+        /// Associates an existing public IP address with the VM's primary network interface.
+        /// </summary>
+        /// <param name="publicIPAddress">An existing public IP address.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress);
+
         /// <summary>
         /// Creates a new public IP address to associate with the VM's primary network interface.
         /// </summary>
@@ -560,13 +568,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="leafDnsLabel">A leaf domain label.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithNewPrimaryPublicIPAddress(string leafDnsLabel);
-
-        /// <summary>
-        /// Associates an existing public IP address with the VM's primary network interface.
-        /// </summary>
-        /// <param name="publicIPAddress">An existing public IP address.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithOS WithExistingPrimaryPublicIPAddress(IPublicIPAddress publicIPAddress);
 
         /// <summary>
         /// Specifies that the VM should not have a public IP address.
@@ -610,16 +611,16 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// Specifies the purchase plan for the virtual machine.
         /// </summary>
         /// <param name="plan">A purchase plan.</param>
-        /// <param name="promotionCode">A promotion code.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithPromotionalPlan(PurchasePlan plan, string promotionCode);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithPlan(PurchasePlan plan);
 
         /// <summary>
         /// Specifies the purchase plan for the virtual machine.
         /// </summary>
         /// <param name="plan">A purchase plan.</param>
+        /// <param name="promotionCode">A promotion code.</param>
         /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithPlan(PurchasePlan plan);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithPromotionalPlan(PurchasePlan plan, string promotionCode);
     }
 
     /// <summary>
@@ -643,18 +644,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     public interface IWithLinuxRootPasswordOrPublicKeyManagedOrUnmanaged 
     {
         /// <summary>
-        /// Specifies the SSH public key.
-        /// </summary>
-        /// <param name="publicKey">An SSH public key in the PEM format.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateManagedOrUnmanaged WithSsh(string publicKey);
-
-        /// <summary>
         /// Specifies the SSH root password for the Linux virtual machine.
         /// </summary>
         /// <param name="rootPassword">A password following the complexity criteria for Azure Linux VM passwords.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateManagedOrUnmanaged WithRootPassword(string rootPassword);
+
+        /// <summary>
+        /// Specifies the SSH public key.
+        /// </summary>
+        /// <param name="publicKey">An SSH public key in the PEM format.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateManagedOrUnmanaged WithSsh(string publicKey);
     }
 
     /// <summary>
@@ -662,50 +663,6 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     /// </summary>
     public interface IWithManagedDataDisk 
     {
-        /// <summary>
-        /// Specifies that a managed disk should be created explicitly with the given definition and
-        /// attached to the virtual machine as a data disk.
-        /// </summary>
-        /// <param name="creatable">A creatable disk definition.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithNewDataDisk(ICreatable<Microsoft.Azure.Management.Compute.Fluent.IDisk> creatable);
-
-        /// <summary>
-        /// Specifies that a managed disk needs to be created explicitly with the given definition and
-        /// attach to the virtual machine as data disk.
-        /// </summary>
-        /// <param name="creatable">A creatable disk.</param>
-        /// <param name="lun">The data disk LUN.</param>
-        /// <param name="cachingType">A data disk caching type.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithNewDataDisk(ICreatable<Microsoft.Azure.Management.Compute.Fluent.IDisk> creatable, int lun, CachingTypes cachingType);
-
-        /// <summary>
-        /// Specifies that a managed disk needs to be created implicitly with the given size.
-        /// </summary>
-        /// <param name="sizeInGB">The size of the managed disk in GB.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithNewDataDisk(int sizeInGB);
-
-        /// <summary>
-        /// Specifies that a managed disk needs to be created implicitly with the given settings.
-        /// </summary>
-        /// <param name="sizeInGB">The size of the managed disk in GB.</param>
-        /// <param name="lun">The disk LUN.</param>
-        /// <param name="cachingType">The caching type.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType);
-
-        /// <summary>
-        /// Specifies that a managed disk needs to be created implicitly with the given settings.
-        /// </summary>
-        /// <param name="sizeInGB">The size of the managed disk in GB.</param>
-        /// <param name="lun">The disk LUN.</param>
-        /// <param name="cachingType">The caching type.</param>
-        /// <param name="storageAccountType">The storage account type.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType, StorageAccountTypes storageAccountType);
-
         /// <summary>
         /// Specifies the data disk to be created from the data disk image in the virtual machine image.
         /// </summary>
@@ -757,6 +714,50 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="cachingType">A caching type.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithExistingDataDisk(IDisk disk, int newSizeInGB, int lun, CachingTypes cachingType);
+
+        /// <summary>
+        /// Specifies that a managed disk should be created explicitly with the given definition and
+        /// attached to the virtual machine as a data disk.
+        /// </summary>
+        /// <param name="creatable">A creatable disk definition.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithNewDataDisk(ICreatable<Microsoft.Azure.Management.Compute.Fluent.IDisk> creatable);
+
+        /// <summary>
+        /// Specifies that a managed disk needs to be created explicitly with the given definition and
+        /// attach to the virtual machine as data disk.
+        /// </summary>
+        /// <param name="creatable">A creatable disk.</param>
+        /// <param name="lun">The data disk LUN.</param>
+        /// <param name="cachingType">A data disk caching type.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithNewDataDisk(ICreatable<Microsoft.Azure.Management.Compute.Fluent.IDisk> creatable, int lun, CachingTypes cachingType);
+
+        /// <summary>
+        /// Specifies that a managed disk needs to be created implicitly with the given size.
+        /// </summary>
+        /// <param name="sizeInGB">The size of the managed disk in GB.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithNewDataDisk(int sizeInGB);
+
+        /// <summary>
+        /// Specifies that a managed disk needs to be created implicitly with the given settings.
+        /// </summary>
+        /// <param name="sizeInGB">The size of the managed disk in GB.</param>
+        /// <param name="lun">The disk LUN.</param>
+        /// <param name="cachingType">The caching type.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType);
+
+        /// <summary>
+        /// Specifies that a managed disk needs to be created implicitly with the given settings.
+        /// </summary>
+        /// <param name="sizeInGB">The size of the managed disk in GB.</param>
+        /// <param name="lun">The disk LUN.</param>
+        /// <param name="cachingType">The caching type.</param>
+        /// <param name="storageAccountType">The storage account type.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithManagedCreate WithNewDataDisk(int sizeInGB, int lun, CachingTypes cachingType, StorageAccountTypes storageAccountType);
     }
 
     /// <summary>
@@ -779,18 +780,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOSDiskSizeInGB(int size);
 
         /// <summary>
-        /// Specifies the name for the OS Disk.
-        /// </summary>
-        /// <param name="name">An OS disk name.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOSDiskName(string name);
-
-        /// <summary>
         /// Specifies the caching type for the OS disk.
         /// </summary>
         /// <param name="cachingType">A caching type.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOSDiskCaching(CachingTypes cachingType);
+
+        /// <summary>
+        /// Specifies the name for the OS Disk.
+        /// </summary>
+        /// <param name="name">An OS disk name.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithOSDiskName(string name);
     }
 
     /// <summary>
@@ -830,6 +831,40 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
         /// <param name="adminPassword">A password following the complexity criteria for Azure Windows VM passwords.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithWindowsCreateManaged WithAdminPassword(string adminPassword);
+    }
+
+    /// <summary>
+    /// The stage of the virtual machine definition allowing to enable boot diagnostics.
+    /// </summary>
+    public interface IWithBootDiagnostics  :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithBootDiagnostics();
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="creatable">The storage account to be created and used for store the boot diagnostics.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithBootDiagnostics(ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable);
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="storageAccount">An existing storage account to be uses to store the boot diagnostics.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithBootDiagnostics(IStorageAccount storageAccount);
+
+        /// <summary>
+        /// Specifies that boot diagnostics needs to be enabled in the virtual machine.
+        /// </summary>
+        /// <param name="storageAccountBlobEndpointUri">A storage account blob endpoint to store the boot diagnostics.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate WithBootDiagnostics(string storageAccountBlobEndpointUri);
     }
 
     /// <summary>
@@ -939,18 +974,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     public interface IWithLinuxRootPasswordOrPublicKeyManaged 
     {
         /// <summary>
-        /// Specifies an SSH public key.
-        /// </summary>
-        /// <param name="publicKey">An SSH public key in the PEM format.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateManaged WithSsh(string publicKey);
-
-        /// <summary>
         /// Specifies the SSH root password for the Linux virtual machine.
         /// </summary>
         /// <param name="rootPassword">A password, following the complexity criteria for Azure Linux VM passwords.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateManaged WithRootPassword(string rootPassword);
+
+        /// <summary>
+        /// Specifies an SSH public key.
+        /// </summary>
+        /// <param name="publicKey">An SSH public key in the PEM format.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateManaged WithSsh(string publicKey);
     }
 
     /// <summary>
@@ -967,17 +1002,17 @@ namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition
     public interface IWithLinuxRootPasswordOrPublicKeyUnmanaged 
     {
         /// <summary>
-        /// Specifies an SSH public key.
-        /// </summary>
-        /// <param name="publicKey">An SSH public key in the PEM format.</param>
-        /// <return>The next stage of the definition.</return>
-        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateUnmanaged WithSsh(string publicKey);
-
-        /// <summary>
         /// Specifies an SSH root password for the Linux virtual machine.
         /// </summary>
         /// <param name="rootPassword">A password following the complexity criteria for Azure Linux VM passwords.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateUnmanaged WithRootPassword(string rootPassword);
+
+        /// <summary>
+        /// Specifies an SSH public key.
+        /// </summary>
+        /// <param name="publicKey">An SSH public key in the PEM format.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithLinuxCreateUnmanaged WithSsh(string publicKey);
     }
 }

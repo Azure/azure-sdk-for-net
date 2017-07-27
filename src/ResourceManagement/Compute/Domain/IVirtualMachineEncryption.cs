@@ -9,8 +9,18 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// <summary>
     /// Virtual machine encryption related operations.
     /// </summary>
-    public interface IVirtualMachineEncryption : IVirtualMachineEncryptionBeta
+    public interface IVirtualMachineEncryption 
     {
+        /// <summary>
+        /// Disable encryption for virtual machine disks.
+        /// </summary>
+        /// <param name="volumeType">Volume type to disable encryption.</param>
+        /// <return>A representation of the deferred computation of this call, returning the current volume decryption status.</return>
+        Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> DisableAsync(DiskVolumeType volumeType, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <return>Observable that emits current volume encryption/decryption status.</return>
+        Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> GetMonitorAsync(CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// Enable encryption for virtual machine disks.
         /// </summary>
@@ -34,14 +44,37 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         /// <return>Current volume encryption status.</return>
         Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor Enable(LinuxVMDiskEncryptionConfiguration encryptionSettings);
 
-        /// <return>Current volume decryption status.</return>
-        Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor GetMonitor();
-
         /// <summary>
         /// Disable encryption for virtual machine disks.
         /// </summary>
         /// <param name="volumeType">Volume type to disable encryption.</param>
         /// <return>Current volume encryption status.</return>
         Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor Disable(DiskVolumeType volumeType);
+
+        /// <summary>
+        /// Enable encryption for virtual machine disks.
+        /// </summary>
+        /// <param name="keyVaultId">Resource ID of the key vault to store the disk encryption key.</param>
+        /// <param name="aadClientId">Client ID of an AAD application which has permission to the key vault.</param>
+        /// <param name="aadSecret">Client secret corresponding to the aadClientId.</param>
+        /// <return>A representation of the deferred computation of this call, returning the current volume encryption status.</return>
+        Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> EnableAsync(string keyVaultId, string aadClientId, string aadSecret, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Enable encryption for Windows virtual machine disks.
+        /// </summary>
+        /// <param name="encryptionSettings">Encryption settings for windows virtual machine.</param>
+        /// <return>A representation of the deferred computation of this call, returning the current volume encryption status.</return>
+        Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> EnableAsync(WindowsVMDiskEncryptionConfiguration encryptionSettings, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Enable encryption for Linux virtual machine disks.
+        /// </summary>
+        /// <param name="encryptionSettings">Encryption settings for windows virtual machine.</param>
+        /// <return>A representation of the deferred computation of this call, returning the current volume encryption status.</return>
+        Task<Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor> EnableAsync(LinuxVMDiskEncryptionConfiguration encryptionSettings, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <return>Current volume decryption status.</return>
+        Microsoft.Azure.Management.Compute.Fluent.IDiskVolumeEncryptionMonitor GetMonitor();
     }
 }
