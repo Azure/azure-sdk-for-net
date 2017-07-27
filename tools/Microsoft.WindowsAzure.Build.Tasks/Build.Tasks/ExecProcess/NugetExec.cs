@@ -32,22 +32,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
 
 
         public string ApiKey { get; set; }
-        //{
-        //    get
-        //    {
-        //        if(string.IsNullOrEmpty(_apiKey))
-        //        {
-        //            _apiKey = Constants.NugetDefaults.DEFAULT_API_KEY;
-        //        }
-
-        //        return _apiKey;
-        //    }
-
-        //    set
-        //    {
-        //        _apiKey = value;
-        //    }
-        //}
 
         public string PublishToPath
         {
@@ -124,8 +108,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
             string displayArgs = string.Empty;
             if(nupkgPath.Contains("symbols"))
             {
-                args = string.Format("push {0} -source {1} -NonInteractive -Timeout {2} -SymbolSource {3}", nupkgPath, PublishSymbolToPath, Constants.NugetDefaults.NUGET_TIMEOUT, PublishSymbolToPath);
-                displayArgs = string.Format("{0} {1}", NugetExePath, args);
+                args = string.Format("push {0} -source {1} -NonInteractive -Timeout {2} -SymbolSource {3} -ApiKey {4} ", nupkgPath, PublishSymbolToPath, Constants.NugetDefaults.NUGET_TIMEOUT, PublishSymbolToPath, ApiKey);
+                displayArgs = string.Format("push {0} -source {1} -NonInteractive -Timeout {2} -SymbolSource {3} -ApiKey {4} ", nupkgPath, PublishSymbolToPath, Constants.NugetDefaults.NUGET_TIMEOUT, PublishSymbolToPath, "<ApiKey>");
             }
             else
             {
