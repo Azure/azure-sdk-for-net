@@ -7,7 +7,7 @@ setlocal
 set autoRestVersion=1.0.0-Nightly20170129
 
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/19f63015ea5a8a0fc64b9d7e2cdfeac447d93eaf/arm-batch/2017-05-01/swagger/BatchManagement.json"
+    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/118315820bf944185beaa95b51ca647ec1a87e1b/specification/batch/resource-manager/Microsoft.Batch/2017-05-01/BatchManagement.json"
 ) else (
     set specFile="%1"
 )
