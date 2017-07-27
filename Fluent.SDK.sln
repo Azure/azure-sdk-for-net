@@ -59,6 +59,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Logic.Fluent", "src\ResourceManagement\Logic\Microsoft.Azure.Management.Logic.Fluent.csproj", "{B4F8F116-107E-4DA3-A129-084022D2F06B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.MachineLearning.Fluent", "src\ResourceManagement\MachineLearning\Microsoft.Azure.Management.MachineLearning.Fluent.csproj", "{81CEE721-ECD7-4945-BB74-8092AA18A1E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -177,6 +179,10 @@ Global
 		{B4F8F116-107E-4DA3-A129-084022D2F06B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4F8F116-107E-4DA3-A129-084022D2F06B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4F8F116-107E-4DA3-A129-084022D2F06B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81CEE721-ECD7-4945-BB74-8092AA18A1E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81CEE721-ECD7-4945-BB74-8092AA18A1E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81CEE721-ECD7-4945-BB74-8092AA18A1E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81CEE721-ECD7-4945-BB74-8092AA18A1E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
