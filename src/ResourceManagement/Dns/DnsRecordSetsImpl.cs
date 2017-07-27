@@ -14,13 +14,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     {
         private const long defaultTtlInSeconds = 3600;
 
-        ///GENMHASH:33CE6A50234E86DD2006E428BDBB63DF:09BF34D10B63453EB734D3C16BE93E66
+        ///GENMHASH:33CE6A50234E86DD2006E428BDBB63DF:30201AA27A5A98E1712A29F13778AEE9
         internal DnsRecordSetImpl DefinePtrRecordSet(string name)
         {
             return this.SetDefaults(base.PrepareDefine(PtrRecordSetImpl.NewRecordSet(name, Parent)));
         }
 
-        ///GENMHASH:22B43E023856C663DE5242D855A7FD7E:709AC8F2DD250142A76B94E642D35A79
+        ///GENMHASH:22B43E023856C663DE5242D855A7FD7E:2034830894BF8B9F5B1349D42E84B6F9
         internal DnsRecordSetImpl UpdateSrvRecordSet(string name)
         {
             return base.PrepareUpdate(SrvRecordSetImpl.NewRecordSet(name, Parent));
@@ -32,13 +32,13 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             this.collection.Clear();
         }
 
-        ///GENMHASH:11F6C7A282BFB4C2631CAE48D9B23761:91DAA152E5541E2ED4906D3FFDE4C24A
+        ///GENMHASH:11F6C7A282BFB4C2631CAE48D9B23761:97124592B616D3F5FD334710FD6A460A
         internal DnsRecordSetImpl DefineARecordSet(string name)
         {
             return this.SetDefaults(base.PrepareDefine(ARecordSetImpl.NewRecordSet(name, Parent)));
         }
 
-        ///GENMHASH:59991185F1E4DCE6CD53407115062A4D:722C71889B2C1576A4C5173BBA782847
+        ///GENMHASH:1F806E4CBC9AF647A64C1631E4524D83:15CC59C3355994491CE8B7C76344C34D
         internal void WithCNameRecordSet(string name, string alias)
         {
             CNameRecordSetImpl recordSet = CNameRecordSetImpl.NewRecordSet(name, Parent);
@@ -46,95 +46,100 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             this.SetDefaults(base.PrepareDefine(recordSet.WithTimeToLive(defaultTtlInSeconds)));
         }
 
-        ///GENMHASH:1F53B3ABC8D3DD332F7B6932E224AA8C:95152C98D37950C84476AE785919D52A
-        internal void WithoutPtrRecordSet(string name)
+        ///GENMHASH:C9A7146C9B1311BD2295FF461FD54E80:661C2511C19BA0F92D83F060EC17686F
+        internal void WithoutPtrRecordSet(string name, string eTagValue)
         {
-            base.PrepareRemove(PtrRecordSetImpl.NewRecordSet(name, Parent));
+            base.PrepareRemove(PtrRecordSetImpl.NewRecordSet(name, Parent).WithETagOnDelete(eTagValue));
         }
 
         /// <summary>
         /// Creates new DnsRecordSetsImpl.
         /// </summary>
-        /// <param name="client">The client to perform REST calls on record sets.</param>
         /// <param name="parent">The parent DNS zone of the record set.</param>
-        ///GENMHASH:F9E2D3727D66DFA1253AB4BD2195C4B1:824964281DB07BCB6FFFF714E2A80FA0
-        internal  DnsRecordSetsImpl(DnsZoneImpl parent) : base(parent, "RecordSet")
+        ///GENMHASH:679769A0C3AB0DC0D68CC67BCE854713:3408A9E4E134A47B47F8849E354922EB
+        internal DnsRecordSetsImpl(DnsZoneImpl parent) : base(parent, "RecordSet")
         {
         }
 
-        ///GENMHASH:19FB56D67F1C3171819C68171374B827:7ACC685EA8F25E6EAF3F794374C9E88E
+        ///GENMHASH:19FB56D67F1C3171819C68171374B827:9120AD659996B031DCB7C692C41F8828
         internal DnsRecordSetImpl UpdateAaaaRecordSet(string name)
         {
             return base.PrepareUpdate(AaaaRecordSetImpl.NewRecordSet(name, Parent));
         }
 
-        ///GENMHASH:62675C05A328D2B3015CB3D2B125891F:2BB09F59288948492593E33CD613400F
+        ///GENMHASH:62675C05A328D2B3015CB3D2B125891F:21202F5AA1FBBD1F9E5DB7B71022F1CB
         internal DnsRecordSetImpl UpdateTxtRecordSet(string name)
         {
             return base.PrepareUpdate(TxtRecordSetImpl.NewRecordSet(name, Parent));
         }
 
-        ///GENMHASH:3BE07D98F4ADC1B06829114EA2606ED4:681C93C815E8FF939B5CFDF763BA0BF8
+        ///GENMHASH:46C9C87DA2C900034A20B7DB46BD77F5:4CD2654453EBD92C92BC47075793C28F
         internal DnsRecordSetImpl DefineNSRecordSet(string name)
         {
             return this.SetDefaults(base.PrepareDefine(NSRecordSetImpl.NewRecordSet(name, Parent)));
         }
 
-        ///GENMHASH:8F3B63282E3A22D23CA9B093FA6A44F8:D5391A93F9C3766E6D0E2B89779EC239
+        ///GENMHASH:5CC95DD8B9468242DBEEF10F96E9EECF:65D7F2059CC1C64C3DD92597A04E6BA4
         internal DnsRecordSetImpl UpdateMXRecordSet(string name)
         {
             return base.PrepareUpdate(MXRecordSetImpl.NewRecordSet(name, Parent));
         }
 
-        ///GENMHASH:6A236BC9874C63721A7695A7FE9A4C18:0192D8DCC266E4C9BD1DD2971E321284
-        internal void WithoutSrvRecordSet(string name)
+        ///GENMHASH:EC620CE3EF72DD020734D0F57C7057F2:1B291A760BFBA465B86B473C301C6278
+        internal void WithoutSrvRecordSet(string name, string eTagValue)
         {
-            base.PrepareRemove(SrvRecordSetImpl.NewRecordSet(name, Parent));
+            base.PrepareRemove(SrvRecordSetImpl.NewRecordSet(name, Parent).WithETagOnDelete(eTagValue));
         }
 
-        ///GENMHASH:76F011335BBB78AE07E7C19B287C17C2:AEC114564261521EDB0FB780A853D60D
+        ///GENMHASH:76F011335BBB78AE07E7C19B287C17C2:28BE6F1DD0B79FD244BAFB93257566AC
         internal DnsRecordSetImpl DefineAaaaRecordSet(string name)
         {
             return this.SetDefaults(base.PrepareDefine(AaaaRecordSetImpl.NewRecordSet(name, Parent)));
         }
 
-        ///GENMHASH:6CCAD6D4D3A8F0925655956402A80C0F:9DB4A46D41F3A95155FB459800D57EE0
+        ///GENMHASH:6CCAD6D4D3A8F0925655956402A80C0F:C9CEFA6CBE51DAD3746646E5D5A29363
         internal DnsRecordSetImpl DefineTxtRecordSet(string name)
         {
             return this.SetDefaults(base.PrepareDefine(TxtRecordSetImpl.NewRecordSet(name, Parent)));
         }
 
-        ///GENMHASH:5121804C5EF1A7CB4B5C344EFB2BD758:D973B16B89A82B65B4E6CD8E37533244
-        internal void WithoutARecordSet(string name)
+        ///GENMHASH:B52E7C54A2094CF7BC537D1CC67AD933:96A6C5A1D364B5BF691E2D2C3CE73911
+        internal void WithoutARecordSet(string name, string eTagValue)
         {
-            base.PrepareRemove(ARecordSetImpl.NewRecordSet(name, Parent));
+            base.PrepareRemove(ARecordSetImpl.NewRecordSet(name, Parent).WithETagOnDelete(eTagValue));
         }
 
-        ///GENMHASH:54D2D45FDDD815CD9CB65600866E9EB0:CC31A505901FD47CF2610924AB1E6670
-        internal void WithoutMXRecordSet(string name)
+        ///GENMHASH:4F52CFFC8EB4D698DB3A4C3B1E187BD0:3FBE768F6D1CB0F7CD6734B2CAF6EAA4
+        internal DnsRecordSetImpl UpdateCNameRecordSet(string name)
         {
-            base.PrepareRemove(MXRecordSetImpl.NewRecordSet(name, Parent));
+            return this.PrepareUpdate(CNameRecordSetImpl.NewRecordSet(name, this.Parent));
         }
 
-        ///GENMHASH:DEFDD202FC66399CE6F4DC2385FFBE4E:27B8D0A18BE2BCCE96B837CA9B695464
+        ///GENMHASH:CAE11DD729AC8148C1BB19AC98C19A66:E45581AE5C46A0FE18E2A1DD0A2CCCFD
+        internal void WithoutMXRecordSet(string name, string eTagValue)
+        {
+            base.PrepareRemove(MXRecordSetImpl.NewRecordSet(name, Parent).WithETagOnDelete(eTagValue));
+        }
+
+        ///GENMHASH:DEFDD202FC66399CE6F4DC2385FFBE4E:14A42864F2BD8170C54648B80D594EAE
         internal DnsRecordSetImpl UpdateARecordSet(string name)
         {
             return base.PrepareUpdate(ARecordSetImpl.NewRecordSet(name, Parent));
         }
 
-        ///GENMHASH:52729C9C39AC4D628145F797BF5100E5:1982A79775C12D7B3FC2506568759338
+        ///GENMHASH:52729C9C39AC4D628145F797BF5100E5:E879FCC900581FF0F2E1A6390496B6B5
         internal DnsRecordSetImpl UpdatePtrRecordSet(string name)
         {
             return base.PrepareUpdate(PtrRecordSetImpl.NewRecordSet(name, Parent));
         }
 
-        ///GENMHASH:766D91058115C559BE5B14A9C7056073:374F2C4865988ED72AACF9B485DA9454
+        ///GENMHASH:7FD0DE0CD548F2703A15E4BAA97D6873:E0DD5160A509D33589ABF4C98C436DD9
         internal DnsRecordSetImpl DefineMXRecordSet(string name)
         {
             return this.SetDefaults(base.PrepareDefine(MXRecordSetImpl.NewRecordSet(name, Parent)));
         }
 
-        ///GENMHASH:9AB7664BD0C8EE192BC61FD76EFCAF87:4C0D34487731D9C6F793472DA460A2A0
+        ///GENMHASH:9AB7664BD0C8EE192BC61FD76EFCAF87:FCDEEB64BF192A5C748A33711BAFB5CB
         internal DnsRecordSetImpl DefineSrvRecordSet(string name)
         {
             return this.SetDefaults(base.PrepareDefine(SrvRecordSetImpl.NewRecordSet(name, Parent)));
@@ -146,40 +151,46 @@ namespace Microsoft.Azure.Management.Dns.Fluent
             return recordSet.WithTimeToLive(defaultTtlInSeconds);
         }
 
-        ///GENMHASH:E10C7FF5C36891D769128853352DD627:876C2D07B1DBD4C4068AE2FD33CB00F7
-        internal void WithoutAaaaRecordSet(string name)
+        ///GENMHASH:762F03CE80F4A9BF3ADBEEC0D41DB5AF:EF8391D0A55BD3AE0A43B8DF9F219881
+        internal void WithoutAaaaRecordSet(string name, string eTagValue)
         {
-            base.PrepareRemove(AaaaRecordSetImpl.NewRecordSet(name, Parent));
+            base.PrepareRemove(AaaaRecordSetImpl.NewRecordSet(name, Parent).WithETagOnDelete(eTagValue));
         }
 
-        ///GENMHASH:EDF384FBE686F4A04431E3BC18889398:18768AB27F01069942917D1C1419E5B1
-        internal void WithoutCNameRecordSet(string name)
+        ///GENMHASH:69DD1218436902CDC3B7BC8695982064:C475FC32598A569356704FFFEB377798
+        internal void WithoutCNameRecordSet(string name, string eTagValue)
         {
-            base.PrepareRemove(CNameRecordSetImpl.NewRecordSet(name, Parent));
+            this.PrepareRemove(CNameRecordSetImpl.NewRecordSet(name, Parent).WithETagOnDelete(eTagValue));
         }
 
-        ///GENMHASH:307087E2D68C3C7331CD91AE28C42489:A544C4DB97263ACD321136702E297EB8
+        ///GENMHASH:D5078976D64C68B60845416B4A519771:C6D9FE23F88DD0A91B8AFADCF6747DA3
+        internal DnsRecordSetImpl DefineCNameRecordSet(string name)
+        {
+            return this.SetDefaults(base.PrepareDefine(CNameRecordSetImpl.NewRecordSet(name, this.Parent)));
+        }
+
+        ///GENMHASH:307087E2D68C3C7331CD91AE28C42489:B22C11E1F7EF21FF71D46CA02658B558
         internal DnsRecordSetImpl UpdateSoaRecordSet()
         {
             return base.PrepareUpdate(SoaRecordSetImpl.NewRecordSet(Parent));
         }
 
-        ///GENMHASH:ECF2482EF49EC3D1CB1FA4A823939109:3627164D124D8341C78C833267F1AA85
-        internal void WithoutTxtRecordSet(string name)
+        ///GENMHASH:2AAD8D85A395EE1384B1E0A6010A750B:27BB73B236A4A4AEB05FD1E551F32CA1
+        internal void WithoutTxtRecordSet(string name, string eTagValue)
         {
-            base.PrepareRemove(TxtRecordSetImpl.NewRecordSet(name, Parent));
+            base.PrepareRemove(TxtRecordSetImpl.NewRecordSet(name, this.Parent).WithETagOnDelete(eTagValue));
         }
 
-        ///GENMHASH:329EC651435AC8A74D3A1349985D55EE:203F4CA316E50BB09C1868097CC9C75C
+        ///GENMHASH:CC4422F1AB1A272DA6DBEBD9DD8767DF:7A219FC32D8DF9309477349CADDC6FAC
         internal DnsRecordSetImpl UpdateNSRecordSet(string name)
         {
             return base.PrepareUpdate(NSRecordSetImpl.NewRecordSet(name, Parent));
         }
 
-        ///GENMHASH:DBFF1C1D58718301508DC884197E6B5A:AFBA3BF40171221C8B0981419D4FA585
-        internal void WithoutNSRecordSet(string name)
+        ///GENMHASH:0A638BEAEF3AE7294B3373C1072B1E0A:FB6B9486A3534F4BD163041C4A2F7188
+        internal void WithoutNSRecordSet(string name, string eTagValue)
         {
-            base.PrepareRemove(NSRecordSetImpl.NewRecordSet(name, Parent));
+            this.PrepareRemove(NSRecordSetImpl.NewRecordSet(name, Parent).WithETagOnDelete(eTagValue));
         }
     }
 }

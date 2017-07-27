@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Dns.Fluent
 {
+    using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.Dns.Fluent.DnsZone.Definition;
     using Microsoft.Azure.Management.Dns.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
@@ -26,6 +28,54 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsZone.Definition.IBlank Microsoft.Azure.Management.ResourceManager.Fluent.Core.CollectionActions.ISupportsCreating<DnsZone.Definition.IBlank>.Define(string name)
         {
             return this.Define(name) as DnsZone.Definition.IBlank;
+        }
+
+        /// <summary>
+        /// Asynchronously delete the zone from Azure, identifying it by its resource ID.
+        /// </summary>
+        /// <param name="id">The resource ID of the resource to delete.</param>
+        /// <param name="eTagValue">The ETag value to set on IfMatch header for concurrency protection.</param>
+        /// <return>A representation of the deferred computation this delete call.</return>
+        async Task Microsoft.Azure.Management.Dns.Fluent.IDnsZonesBeta.DeleteByIdAsync(string id, string eTagValue, CancellationToken cancellationToken)
+        {
+ 
+            await this.DeleteByIdAsync(id, eTagValue, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes a resource from Azure, identifying it by its resource ID.
+        /// </summary>
+        /// <param name="id">The resource ID of the resource to delete.</param>
+        /// <param name="eTagValue">The ETag value to set on IfMatch header for concurrency protection.</param>
+        void Microsoft.Azure.Management.Dns.Fluent.IDnsZonesBeta.DeleteById(string id, string eTagValue)
+        {
+ 
+            this.DeleteById(id, eTagValue);
+        }
+
+        /// <summary>
+        /// Asynchronously deletes the zone from Azure, identifying it by its name and its resource group.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group the resource is part of.</param>
+        /// <param name="zoneName">The name of the zone.</param>
+        /// <param name="eTagValue">The ETag value to set on IfMatch header for concurrency protection.</param>
+        /// <return>A representation of the deferred computation this delete call.</return>
+        async Task Microsoft.Azure.Management.Dns.Fluent.IDnsZonesBeta.DeleteByResourceGroupNameAsync(string resourceGroupName, string zoneName, string eTagValue, CancellationToken cancellationToken)
+        {
+ 
+            await this.DeleteByResourceGroupNameAsync(resourceGroupName, zoneName, eTagValue, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes the zone from Azure, identifying it by its name and its resource group.
+        /// </summary>
+        /// <param name="resourceGroupName">The resource group the resource is part of.</param>
+        /// <param name="zoneName">The name of the zone.</param>
+        /// <param name="eTagValue">The ETag value to set on IfMatch header for concurrency protection.</param>
+        void Microsoft.Azure.Management.Dns.Fluent.IDnsZonesBeta.DeleteByResourceGroupName(string resourceGroupName, string zoneName, string eTagValue)
+        {
+ 
+            this.DeleteByResourceGroupName(resourceGroupName, zoneName, eTagValue);
         }
     }
 }

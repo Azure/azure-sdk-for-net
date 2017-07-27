@@ -6,6 +6,8 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+
 namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
     using Microsoft.Azure;
@@ -16,9 +18,9 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// <summary>
     /// Defines values for Access.
     /// </summary>
-    public static class Access
+    public class Access : ExpandableStringEnum<Access>
     {
-        public const string Allow = "Allow";
-        public const string Deny = "Deny";
+        public static readonly Access Allow = Parse("Allow");
+        public static readonly Access Deny = Parse("Deny");
     }
 }

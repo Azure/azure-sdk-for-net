@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.Update;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateARecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateAaaaRecordSet;
+    using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateCNameRecordSet;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateCombined;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateDefinition;
     using Microsoft.Azure.Management.Dns.Fluent.DnsRecordSet.UpdateMXRecordSet;
@@ -24,8 +25,26 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Update;
     using System.Collections.Generic;
 
-    internal abstract partial class DnsRecordSetImpl 
+    internal partial class DnsRecordSetImpl 
     {
+        /// <summary>
+        /// Specifies that If-None-Match header needs to set to  to prevent updating an existing record set.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        DnsRecordSet.UpdateDefinition.IWithAttach<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithETagCheckBeta<DnsZone.Update.IUpdate>.WithETagCheck()
+        {
+            return this.WithETagCheck() as DnsRecordSet.UpdateDefinition.IWithAttach<DnsZone.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Specifies that If-None-Match header needs to set to  to prevent updating an existing record set.
+        /// </summary>
+        /// <return>The next stage of the definition.</return>
+        DnsRecordSet.Definition.IWithAttach<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithETagCheckBeta<DnsZone.Definition.IWithCreate>.WithETagCheck()
+        {
+            return this.WithETagCheck() as DnsRecordSet.Definition.IWithAttach<DnsZone.Definition.IWithCreate>;
+        }
+
         /// <summary>
         /// Removes a service record for a service.
         /// </summary>
@@ -176,6 +195,36 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
+        /// Removes a Txt record with the given text (split into 255 char chunks) from this record set.
+        /// </summary>
+        /// <param name="textChunks">The text value as list.</param>
+        /// <return>The next stage of the record set update.</return>
+        DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet DnsRecordSet.Update.IWithTxtRecordTextValueBeta.WithoutText(IList<string> textChunks)
+        {
+            return this.WithoutText(textChunks) as DnsRecordSet.UpdateTxtRecordSet.IUpdateTxtRecordSet;
+        }
+
+        /// <summary>
+        /// Creates a CNAME record with the provided alias.
+        /// </summary>
+        /// <param name="alias">The alias.</param>
+        /// <return>The next stage of the definition.</return>
+        DnsRecordSet.UpdateDefinition.IWithCNameRecordSetAttachable<DnsZone.Update.IUpdate> DnsRecordSet.UpdateDefinition.IWithCNameRecordAliasBeta<DnsZone.Update.IUpdate>.WithAlias(string alias)
+        {
+            return this.WithAlias(alias) as DnsRecordSet.UpdateDefinition.IWithCNameRecordSetAttachable<DnsZone.Update.IUpdate>;
+        }
+
+        /// <summary>
+        /// Creates a CNAME record with the provided alias.
+        /// </summary>
+        /// <param name="alias">The alias.</param>
+        /// <return>The next stage of the definition.</return>
+        DnsRecordSet.Definition.IWithCNameRecordSetAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithCNameRecordAliasBeta<DnsZone.Definition.IWithCreate>.WithAlias(string alias)
+        {
+            return this.WithAlias(alias) as DnsRecordSet.Definition.IWithCNameRecordSetAttachable<DnsZone.Definition.IWithCreate>;
+        }
+
+        /// <summary>
         /// Creates and assigns priority to a MX record with the provided mail exchange server in this record set.
         /// </summary>
         /// <param name="mailExchangeHostName">The host name of the mail exchange server.</param>
@@ -289,6 +338,16 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsRecordSet.Definition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Definition.IWithCreate> DnsRecordSet.Definition.IWithAaaaRecordIPv6Address<DnsZone.Definition.IWithCreate>.WithIPv6Address(string ipv6Address)
         {
             return this.WithIPv6Address(ipv6Address) as DnsRecordSet.Definition.IWithAaaaRecordIPv6AddressOrAttachable<DnsZone.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// The new alias for the CNAME record set.
+        /// </summary>
+        /// <param name="alias">The alias.</param>
+        /// <return>The next stage of the record set update.</return>
+        DnsRecordSet.UpdateCNameRecordSet.IUpdateCNameRecordSet DnsRecordSet.Update.IWithCNameRecordAliasBeta.WithAlias(string alias)
+        {
+            return this.WithAlias(alias) as DnsRecordSet.UpdateCNameRecordSet.IUpdateCNameRecordSet;
         }
 
         /// <summary>
@@ -430,6 +489,17 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         }
 
         /// <summary>
+        /// Gets the etag associated with the record set.
+        /// </summary>
+        string Microsoft.Azure.Management.Dns.Fluent.IDnsRecordSet.ETag
+        {
+            get
+            {
+                return this.ETag();
+            }
+        }
+
+        /// <summary>
         /// Removes an AAAA record with the provided IPv6 address from this record set.
         /// </summary>
         /// <param name="ipv6Address">The IPv6 address.</param>
@@ -507,6 +577,26 @@ namespace Microsoft.Azure.Management.Dns.Fluent
         DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet DnsRecordSet.Update.IWithPtrRecordTargetDomainName.WithoutTargetDomainName(string targetDomainName)
         {
             return this.WithoutTargetDomainName(targetDomainName) as DnsRecordSet.UpdatePtrRecordSet.IUpdatePtrRecordSet;
+        }
+
+        /// <summary>
+        /// Specifies that If-Match header needs to set to the current eTag value associated
+        /// with the record set.
+        /// </summary>
+        /// <return>The next stage of the update.</return>
+        DnsRecordSet.Update.IUpdate DnsRecordSet.Update.IWithETagCheckBeta.WithETagCheck()
+        {
+            return this.WithETagCheck() as DnsRecordSet.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies that if-Match header needs to set to the given eTag value.
+        /// </summary>
+        /// <param name="eTagValue">The eTag value.</param>
+        /// <return>The next stage of the update.</return>
+        DnsRecordSet.Update.IUpdate DnsRecordSet.Update.IWithETagCheckBeta.WithETagCheck(string eTagValue)
+        {
+            return this.WithETagCheck(eTagValue) as DnsRecordSet.Update.IUpdate;
         }
     }
 }

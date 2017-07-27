@@ -4,21 +4,19 @@
 using Azure.Tests;
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Dns.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.Dns.Fluent.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.Dns
 {
-    public class Dns
+    public class ZoneRecordSet
     {
         [Fact]
-        public void CanCreateUpdateDnsZone()
+        public void CanCreateUpdate()
         {
             using (var context = FluentMockContext.Start(GetType().FullName))
             {
@@ -27,7 +25,6 @@ namespace Fluent.Tests
                 var topLevelDomain = $"{TestUtilities.GenerateName("www.contoso-")}.com";
 
                 var azure = TestHelper.CreateRollupClient();
-
                 try
                 {
                     IDnsZone dnsZone = azure.DnsZones.Define(topLevelDomain)
@@ -140,6 +137,80 @@ namespace Fluent.Tests
                     var cnameRecordSets = dnsZone.CNameRecordSets.List();
                     Assert.True(cnameRecordSets.Count() == 2);
 
+                    // Check Generic record set listing
+                    var recordSets = dnsZone.ListRecordSets();
+                    var typeToCount = new Dictionary<RecordType, int>();
+                    typeToCount.Add(RecordType.A, 0);
+                    typeToCount.Add(RecordType.AAAA, 0);
+                    typeToCount.Add(RecordType.CNAME, 0);
+                    typeToCount.Add(RecordType.MX, 0);
+                    typeToCount.Add(RecordType.NS, 0);
+                    typeToCount.Add(RecordType.PTR, 0);
+                    typeToCount.Add(RecordType.SOA, 0);
+                    typeToCount.Add(RecordType.SRV, 0);
+                    typeToCount.Add(RecordType.TXT, 0);
+                    foreach (var recordSet in recordSets)
+                    {
+                        Assert.NotNull(recordSet);
+                        switch (recordSet.RecordType)
+                        {
+                            case RecordType.TXT:
+                                var txtRS = (ITxtRecordSet)recordSet;
+                                Assert.NotNull(txtRS);
+                                typeToCount[RecordType.TXT] = typeToCount[RecordType.TXT] + 1;
+                                break;
+                            case RecordType.SRV:
+                                var srvRS = (ISrvRecordSet)recordSet;
+                                Assert.NotNull(srvRS);
+                                typeToCount[RecordType.SRV] = typeToCount[RecordType.SRV] + 1;
+                                break;
+                            case RecordType.SOA:
+                                var soaRS = (ISoaRecordSet)recordSet;
+                                Assert.NotNull(soaRS);
+                                typeToCount[RecordType.SOA] = typeToCount[RecordType.SOA] + 1;
+                                break;
+                            case RecordType.PTR:
+                                var ptrRS = (IPtrRecordSet)recordSet;
+                                Assert.NotNull(ptrRS);
+                                typeToCount[RecordType.PTR] = typeToCount[RecordType.PTR] + 1;
+                                break;
+                            case RecordType.A:
+                                var aRS = (IARecordSet)recordSet;
+                                Assert.NotNull(aRS);
+                                typeToCount[RecordType.A] = typeToCount[RecordType.A] + 1;
+                                break;
+                            case RecordType.AAAA:
+                                var aaaaRS = (IAaaaRecordSet)recordSet;
+                                Assert.NotNull(aaaaRS);
+                                typeToCount[RecordType.AAAA] = typeToCount[RecordType.AAAA] + 1;
+                                break;
+                            case RecordType.CNAME:
+                                var cnameRS = (ICNameRecordSet)recordSet;
+                                Assert.NotNull(cnameRS);
+                                typeToCount[RecordType.CNAME] = typeToCount[RecordType.CNAME] + 1;
+                                break;
+                            case RecordType.MX:
+                                var mxRS = (IMXRecordSet)recordSet;
+                                Assert.NotNull(mxRS);
+                                typeToCount[RecordType.MX] = typeToCount[RecordType.MX] + 1;
+                                break;
+                            case RecordType.NS:
+                                var nsRS = (INSRecordSet)recordSet;
+                                Assert.NotNull(nsRS);
+                                typeToCount[RecordType.NS] = typeToCount[RecordType.NS] + 1;
+                                break;
+                        }
+                    }
+                    Assert.Equal(1, typeToCount[RecordType.SOA]);
+                    Assert.Equal(1, typeToCount[RecordType.A]);
+                    Assert.Equal(1, typeToCount[RecordType.AAAA]);
+                    Assert.Equal(1, typeToCount[RecordType.MX]);
+                    Assert.Equal(2, typeToCount[RecordType.NS]);
+                    Assert.Equal(2, typeToCount[RecordType.TXT]);
+                    Assert.Equal(1, typeToCount[RecordType.SRV]);
+                    Assert.Equal(2, typeToCount[RecordType.PTR]);
+                    Assert.Equal(2, typeToCount[RecordType.CNAME]);
+
                     dnsZone.Update()
                         .WithoutTxtRecordSet("www")
                         .WithoutCNameRecordSet("userguide")
@@ -245,14 +316,14 @@ namespace Fluent.Tests
                     Assert.True(mxRecordSet.Records[0].Exchange.StartsWith("mail.contoso-mail-exchange1.com"));
 
                     azure.DnsZones.DeleteById(dnsZone.Id);
-                }
-                finally
+                } finally
                 {
                     try
-                    { 
-                        azure.ResourceGroups.DeleteByName(groupName);
+                    {
+                        azure.ResourceGroups.BeginDeleteByName(groupName);
                     }
-                    catch { }
+                    catch
+                    {}
                 }
             }
         }
