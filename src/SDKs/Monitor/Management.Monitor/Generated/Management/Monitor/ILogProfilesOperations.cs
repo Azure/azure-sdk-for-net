@@ -91,6 +91,32 @@ namespace Microsoft.Azure.Management.Monitor.Management
         /// </exception>
         Task<AzureOperationResponse<LogProfileResource>> CreateOrUpdateWithHttpMessagesAsync(string logProfileName, LogProfileResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates an existing LogProfilesResource. To update other fields use
+        /// the CreateOrUpdate method.
+        /// </summary>
+        /// <param name='logProfileName'>
+        /// The name of the log profile.
+        /// </param>
+        /// <param name='logProfilesResource'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<LogProfileResource>> UpdateWithHttpMessagesAsync(string logProfileName, LogProfileResourcePatch logProfilesResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List the log profiles.
         /// </summary>
         /// <param name='customHeaders'>

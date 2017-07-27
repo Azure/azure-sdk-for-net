@@ -180,6 +180,54 @@ namespace Microsoft.Azure.Management.Monitor.Management
             }
 
             /// <summary>
+            /// Updates an existing AutoscaleSettingsResource. To update other fields use
+            /// the CreateOrUpdate method.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='autoscaleSettingName'>
+            /// The autoscale setting name.
+            /// </param>
+            /// <param name='autoscaleSettingResource'>
+            /// Parameters supplied to the operation.
+            /// </param>
+            public static AutoscaleSettingResource Update(this IAutoscaleSettingsOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourcePatch autoscaleSettingResource)
+            {
+                return operations.UpdateAsync(resourceGroupName, autoscaleSettingName, autoscaleSettingResource).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing AutoscaleSettingsResource. To update other fields use
+            /// the CreateOrUpdate method.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='autoscaleSettingName'>
+            /// The autoscale setting name.
+            /// </param>
+            /// <param name='autoscaleSettingResource'>
+            /// Parameters supplied to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AutoscaleSettingResource> UpdateAsync(this IAutoscaleSettingsOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourcePatch autoscaleSettingResource, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, autoscaleSettingName, autoscaleSettingResource, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the autoscale settings for a resource group
             /// </summary>
             /// <param name='operations'>

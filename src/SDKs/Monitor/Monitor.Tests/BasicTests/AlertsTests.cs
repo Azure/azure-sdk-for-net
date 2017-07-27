@@ -16,6 +16,28 @@ namespace Monitor.Tests.BasicTests
     public class AlertsTests : TestBase
     {
         [Fact]
+        public void CreateOrUpdateRuleTest()
+        {
+            AlertRuleResource expectedParameters = GetCreateOrUpdateRuleParameter();
+
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, insightsClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expectedParameters.Name + "\",\"id\":\"" + expectedParameters.Id + "\",");
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetMonitorManagementClient(handler);
+
+            var result = insightsClient.AlertRules.CreateOrUpdate(resourceGroupName: "rg1", ruleName: expectedParameters.Name, parameters: expectedParameters);
+
+            AreEqual(expectedParameters, result);
+        }
+
+        [Fact]
         public void GetIncidentTest()
         {
             var expectedIncident = GetIncidents().First();
@@ -35,6 +57,95 @@ namespace Monitor.Tests.BasicTests
                 incidentName: "i1");
 
             AreEqual(expectedIncident, actualIncident);
+        }
+
+        [Fact]
+        public void ListIncidentsTest()
+        {
+            var expectedIncidentsResponse = new List<Incident>
+            {
+                new Incident(
+                    activatedTime: DateTime.Parse("2014-08-01T00:00:00Z"),
+                    isActive: false,
+                    name: "i1",
+                    resolvedTime: DateTime.Parse("2014-08-01T00:00:00Z"),
+                    ruleName: "r1"
+                    )
+            };
+
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(string.Concat("{ \"value\":", expectedIncidentsResponse.ToJson(), "}"))
+            };
+
+            var handler = new RecordedDelegatingHandler(response);
+            var insightsClient = GetMonitorManagementClient(handler);
+
+            var actualIncidents = insightsClient.AlertRuleIncidents.ListByAlertRule(
+                resourceGroupName: "rg1",
+                ruleName: "r1");
+
+            AreEqual(expectedIncidentsResponse, actualIncidents.ToList());
+        }
+
+        [Fact]
+        public void ListRulesTest()
+        {
+            var expResponse = GetRuleResourceCollection();
+
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expResponse[0].Name + "\",\"id\":\"" + expResponse[0].Id + "\",");
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(string.Concat("{ \"value\":", serializedObject, "}"))
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetMonitorManagementClient(handler);
+
+            var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: " rg1");
+            AreEqual(expResponse, actualResponse.ToList<AlertRuleResource>());
+        }
+
+        [Fact]
+        public void UpdateRulesTest()
+        {
+            AlertRuleResource resource = GetRuleResourceCollection().FirstOrDefault();
+            resource.IsEnabled = false;
+            resource.Tags = new Dictionary<string, string>()
+            {
+                {"key2", "val2"}
+            };
+
+            var handler = new RecordedDelegatingHandler();
+            var monitorManagementClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(resource, monitorManagementClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + resource.Name + "\",\"id\":\"" + resource.Id + "\",");
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            monitorManagementClient = GetMonitorManagementClient(handler);
+
+            AlertRuleResourcePatch pathResource = new AlertRuleResourcePatch(
+                name: resource.Name,
+                isEnabled: false,
+                tags: new Dictionary<string, string>()
+                {
+                    {"key2", "val2"}
+                },
+                actions: resource.Actions,
+                condition: resource.Condition,
+                description: resource.Description,
+                lastUpdatedTime: resource.LastUpdatedTime
+            );
+
+            var actualResponse = monitorManagementClient.AlertRules.Update(resourceGroupName: " rg1", ruleName: resource.Name, alertRulesResource: pathResource);
+            AreEqual(resource, actualResponse);
         }
 
         private static List<Incident> GetIncidents()
@@ -68,35 +179,6 @@ namespace Monitor.Tests.BasicTests
             }
         }
 
-        [Fact]
-        public void ListIncidentsTest()
-        {
-            var expectedIncidentsResponse = new List<Incident>
-            {
-                new Incident(
-                    activatedTime: DateTime.Parse("2014-08-01T00:00:00Z"),
-                    isActive: false,
-                    name: "i1",
-                    resolvedTime: DateTime.Parse("2014-08-01T00:00:00Z"),
-                    ruleName: "r1"
-                    )
-            };
-
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(string.Concat("{ \"value\":", expectedIncidentsResponse.ToJson(), "}"))
-            };
-
-            var handler = new RecordedDelegatingHandler(response);
-            var insightsClient = GetMonitorManagementClient(handler);
-
-            var actualIncidents = insightsClient.AlertRuleIncidents.ListByAlertRule(
-                resourceGroupName: "rg1",
-                ruleName: "r1");
-
-            AreEqual(expectedIncidentsResponse, actualIncidents.ToList());
-        }
-
         private void AreEqual(IList<Incident> exp, IList<Incident> act)
         {
             if (exp != null)
@@ -119,48 +201,6 @@ namespace Monitor.Tests.BasicTests
             }
         }
 
-        [Fact]
-        public void CreateOrUpdateRuleTest()
-        {
-            AlertRuleResource expectedParameters = GetCreateOrUpdateRuleParameter();
-
-            var handler = new RecordedDelegatingHandler();
-            var insightsClient = GetMonitorManagementClient(handler);
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, insightsClient.SerializationSettings);
-            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expectedParameters.Name + "\",\"id\":\"" + expectedParameters.Id + "\",");
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(serializedObject)
-            };
-
-            handler = new RecordedDelegatingHandler(expectedResponse);
-            insightsClient = GetMonitorManagementClient(handler);
-
-            var result = insightsClient.AlertRules.CreateOrUpdate(resourceGroupName: "rg1", ruleName: expectedParameters.Name, parameters: expectedParameters);
-
-            AreEqual(expectedParameters, result);
-        }
-
-        [Fact]
-        public void ListRulesTest()
-        {
-            var expResponse = GetRuleResourceCollection();
-
-            var handler = new RecordedDelegatingHandler();
-            var insightsClient = GetMonitorManagementClient(handler);
-            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
-            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expResponse[0].Name + "\",\"id\":\"" + expResponse[0].Id + "\",");
-            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(string.Concat("{ \"value\":", serializedObject, "}"))
-            };
-
-            handler = new RecordedDelegatingHandler(expectedResponse);
-            insightsClient = GetMonitorManagementClient(handler);
-
-            var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: " rg1");
-            AreEqual(expResponse, actualResponse.ToList<AlertRuleResource>());
-        }
 
         private void AreEqual(AlertRuleResource exp, AlertRuleResource act)
         {
