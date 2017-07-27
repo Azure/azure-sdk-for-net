@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:36E25639805611CF89054C004B22BB15
         protected async override Task<IPage<ProfileInner>> ListInnerAsync(CancellationToken cancellationToken)
         {
-            return ConvertToPage(await Inner.ListAllAsync(cancellationToken));
+            return ConvertToPage(await Inner.ListBySubscriptionAsync(cancellationToken));
         }
 
         protected async override Task<IPage<ProfileInner>> ListInnerNextAsync(string nextLink, CancellationToken cancellationToken)
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         ///GENMHASH:95834C6C7DA388E666B705A62A7D02BF:2A90E64B785A8609460D87572CE513A1
         protected async override Task<IPage<ProfileInner>> ListInnerByGroupAsync(string groupName, CancellationToken cancellationToken)
         {
-            return ConvertToPage(await Inner.ListAllInResourceGroupAsync(groupName, cancellationToken));
+            return ConvertToPage(await Inner.ListByResourceGroupAsync(groupName, cancellationToken));
         }
 
         protected async override Task<IPage<ProfileInner>> ListInnerByGroupNextAsync(string nextLink, CancellationToken cancellationToken)

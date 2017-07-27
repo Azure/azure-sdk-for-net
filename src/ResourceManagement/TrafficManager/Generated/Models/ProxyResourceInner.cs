@@ -12,52 +12,59 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.Models
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.TrafficManager;
     using Microsoft.Azure.Management.TrafficManager.Fluent;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to check Traffic Manager name operation.
+    /// The resource model definition for a ARM proxy resource. It will have
+    /// everything other than required location and tags
     /// </summary>
-    public partial class CheckTrafficManagerRelativeDnsNameAvailabilityParameters
+    public partial class ProxyResourceInner
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class.
+        /// Initializes a new instance of the ProxyResourceInner class.
         /// </summary>
-        public CheckTrafficManagerRelativeDnsNameAvailabilityParameters()
+        public ProxyResourceInner()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class.
+        /// Initializes a new instance of the ProxyResourceInner class.
         /// </summary>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        public CheckTrafficManagerRelativeDnsNameAvailabilityParameters(string name = default(string), string type = default(string))
+        public ProxyResourceInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Id = id;
             Name = name;
             Type = type;
-            CustomInit();
         }
 
         /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
+        /// Resource Id
         /// </summary>
-        partial void CustomInit();
+        [JsonProperty(PropertyName = "id")]
+        public virtual string Id { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the name of the resource.
+        /// Resource name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the resource.
+        /// Resource type
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
 
     }
 }
