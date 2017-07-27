@@ -20,61 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\ClassicAdministratorListTests.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentAtScopeAndAboveTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentByIdTests.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentListByFilterTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentListForScopeTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentListWithAssignedToFilterTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentPagingTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentsCreateDeleteTests.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleAssignmentsListGetTests.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionCreateTests.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionsByIdTests.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionsListGetTests.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionsListWithFilterTests.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.BasicTests\RoleDefinitionUpdateTests.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.PermissionsTests\GetNonExistentResourceGroupPermissions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.PermissionsTests\GetNonExistentResourcePermissions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.PermissionsTests\GetResourceGroupPermissions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.PermissionsTests\GetResourcePermissions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\Authorization.Tests.TestExecutionContext\.ctor.json">
+    <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

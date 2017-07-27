@@ -8,13 +8,11 @@
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+	using System.Linq;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Authorization;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Role assignment properties with scope.
@@ -22,36 +20,48 @@ namespace Microsoft.Azure.Management.Authorization.Models
     public partial class RoleAssignmentPropertiesWithScope
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// RoleAssignmentPropertiesWithScope class.
+        /// Initializes a new instance of the RoleAssignmentPropertiesWithScope
+        /// class.
         /// </summary>
-        public RoleAssignmentPropertiesWithScope() { }
+        public RoleAssignmentPropertiesWithScope()
+        {
+          CustomInit();
+        }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// RoleAssignmentPropertiesWithScope class.
+        /// Initializes a new instance of the RoleAssignmentPropertiesWithScope
+        /// class.
         /// </summary>
+        /// <param name="scope">The role assignment scope.</param>
+        /// <param name="roleDefinitionId">The role definition ID.</param>
+        /// <param name="principalId">The principal ID.</param>
         public RoleAssignmentPropertiesWithScope(string scope = default(string), string roleDefinitionId = default(string), string principalId = default(string))
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets role assignment scope.
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the role assignment scope.
         /// </summary>
         [JsonProperty(PropertyName = "scope")]
         public string Scope { get; set; }
 
         /// <summary>
-        /// Gets or sets role definition id.
+        /// Gets or sets the role definition ID.
         /// </summary>
         [JsonProperty(PropertyName = "roleDefinitionId")]
         public string RoleDefinitionId { get; set; }
 
         /// <summary>
-        /// Gets or sets principal Id.
+        /// Gets or sets the principal ID.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; set; }
