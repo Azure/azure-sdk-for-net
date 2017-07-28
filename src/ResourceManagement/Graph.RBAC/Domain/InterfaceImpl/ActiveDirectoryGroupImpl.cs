@@ -10,15 +10,15 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
 
-    internal partial class ActiveDirectoryGroupImpl 
+    public partial class ActiveDirectoryGroupImpl 
     {
         /// <summary>
         /// Lists the members in the group.
         /// </summary>
         /// <return>An unmodifiable set of the members.</return>
-        async Task<Task<IPagedCollection<IActiveDirectoryObject>>> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup.ListMembersAsync(CancellationToken cancellationToken)
+        async Task<IPagedCollection<IActiveDirectoryObject>> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup.ListMembersAsync(CancellationToken cancellationToken)
         {
-            return await this.ListMembersAsync(cancellationToken) as Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject;
+            return await this.ListMembersAsync(cancellationToken) as IPagedCollection<IActiveDirectoryObject>;
         }
 
         /// <summary>

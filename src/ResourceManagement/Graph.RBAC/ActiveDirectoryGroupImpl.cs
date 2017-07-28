@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     {
         private GraphRbacManager manager;
         private GroupCreateParametersInner createParameters;
-        private ISet<string> memebersToAdd;
+        private ISet<string> membersToAdd;
         private ISet<string> membersToRemove;
 
         string IHasId.Id => Inner.ObjectId;
@@ -45,6 +45,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                     : base(innerModel.DisplayName, innerModel)
         {
             this.manager = manager;
+            this.createParameters = new GroupCreateParametersInner
+            {
+                DisplayName = innerModel.DisplayName
+            };
+            membersToAdd = new HashSet<string>();
+            membersToRemove = new HashSet<string>();
         }
 
                 public string Id()
@@ -55,6 +61,61 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 public bool SecurityEnabled()
         {
             return Inner.SecurityEnabled ?? false;
+        }
+
+        public ActiveDirectoryGroupImpl WithEmailAlias(String mailNickname)
+        {
+            // User providing domain
+            if (mailNickname.Contains("@"))
+            {
+                string[] parts = mailNickname.Split(new char[] { '@' });
+                mailNickname = parts[0];
+            }
+            createParameters.MailNickname = mailNickname;
+            return this;
+        }
+
+        public ActiveDirectoryGroupImpl WithMember(string objectId)
+        {
+            membersToAdd.Add(string.Format("https://{0}/{1}/directoryObjects/{2}",
+                manager.Inner.BaseUri.Host, manager.tenantId, objectId));
+            return this;
+        }
+
+        public ActiveDirectoryGroupImpl WithMember(IActiveDirectoryUser user)
+        {
+            return WithMember(user.Id);
+        }
+
+        public ActiveDirectoryGroupImpl WithMember(IActiveDirectoryGroup group)
+        {
+            return WithMember(group.Id);
+        }
+
+        public ActiveDirectoryGroupImpl WithMember(IServicePrincipal servicePrincipal)
+        {
+            return WithMember(servicePrincipal.Id);
+        }
+
+        public ActiveDirectoryGroupImpl WithoutMember(string objectId)
+        {
+            membersToRemove.Add(objectId);
+            return this;
+        }
+
+        public ActiveDirectoryGroupImpl WithoutMember(IActiveDirectoryUser user)
+        {
+            return WithoutMember(user.Id);
+        }
+
+        public ActiveDirectoryGroupImpl WithoutMember(IActiveDirectoryGroup group)
+        {
+            return WithoutMember(group.Id);
+        }
+
+        public ActiveDirectoryGroupImpl WithoutMember(IServicePrincipal servicePrincipal)
+        {
+            return WithoutMember(servicePrincipal.Id);
         }
 
         public IEnumerable<IActiveDirectoryObject> ListMembers()
@@ -92,9 +153,41 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-        public override Task<IActiveDirectoryGroup> CreateResourceAsync(CancellationToken cancellationToken)
+        public bool IsInCreateMode()
         {
-            throw new NotImplementedException();
+            return Id() == null;
+        }
+
+        public override async Task<IActiveDirectoryGroup> CreateResourceAsync(CancellationToken cancellationToken)
+        {
+            if (IsInCreateMode())
+            {
+                ADGroupInner inner = await manager.Inner.Groups.CreateAsync(createParameters, cancellationToken);
+                SetInner(inner);
+            }
+
+            if (membersToRemove.Count > 0)
+            {
+                foreach (string remove in membersToRemove)
+                {
+                    await manager.Inner.Groups.RemoveMemberAsync(Id(), remove, cancellationToken);
+                }
+                membersToRemove.Clear();
+            }
+
+            if (membersToAdd.Count > 0)
+            {
+                foreach (string add in membersToAdd)
+                {
+                    await manager.Inner.Groups.AddMemberAsync(Id(), new GroupAddMemberParametersInner
+                    {
+                        Url = add
+                    }, cancellationToken);
+                }
+                membersToAdd.Clear();
+            }
+
+            return this;
         }
 
         protected override Task<ADGroupInner> GetInnerAsync(CancellationToken cancellationToken)

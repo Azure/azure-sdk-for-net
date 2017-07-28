@@ -39,6 +39,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// Lists the members in the group.
         /// </summary>
         /// <return>An unmodifiable set of the members.</return>
-        Task<Task<IPagedCollection<IActiveDirectoryObject>>> ListMembersAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<IPagedCollection<IActiveDirectoryObject>> ListMembersAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

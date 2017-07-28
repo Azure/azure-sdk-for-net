@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
                 public bool IsInCreateMode()
         {
-            return true;
+            return Id() == null;
         }
 
                 public ServicePrincipalImpl WithNewRoleInResourceGroup(BuiltInRole role, IResourceGroup resourceGroup)
