@@ -68,20 +68,18 @@ namespace Microsoft.Rest.Serialization
             string typeDiscriminator = (string)item[Discriminator];
             Type resultType = GetDerivedType(objectType, typeDiscriminator) ?? objectType;
 
-            // create instance of correct type (but naively determined property types)
-            var result = item.ToObject(resultType);
+            // create instance of correct type
+            var contract = (JsonObjectContract)serializer.ContractResolver.ResolveContract(resultType);
+            var result = contract.DefaultCreator();
 
-            // fix up properties
-            if (serializer.ContractResolver.ResolveContract(resultType) is JsonObjectContract contract)
+            // parse properties
+            foreach (var expectedProperty in contract.Properties)
             {
-                foreach (var expectedProperty in contract.Properties)
+                var property = item.SelectToken(expectedProperty.PropertyName);
+                if (property != null)
                 {
-                    var property = item.SelectToken(expectedProperty.PropertyName);
-                    if (property != null)
-                    {
-                        var propertyValue = property.ToObject(expectedProperty.PropertyType, serializer);
-                        expectedProperty.ValueProvider.SetValue(result, propertyValue);
-                    }
+                    var propertyValue = property.ToObject(expectedProperty.PropertyType, serializer);
+                    expectedProperty.ValueProvider.SetValue(result, propertyValue);
                 }
             }
 
