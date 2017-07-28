@@ -122,7 +122,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = "https://www.nuget.org/api/v2/package/";
-            pubNug.SkipSymbolPublishing = true;
+            pubNug.SkipSymbolPublishing = false;
             pubNug.ApiKey = "1234";
             
             try
@@ -136,6 +136,14 @@ namespace Build.Tasks.Tests.PublishNugetTests
                     Assert.Equal("The specified API key is invalid", ex.Message);
                 }
             }
+        }
+
+        [Fact]
+        public void DefaultPublishPaths()
+        {
+            NugetExec nugEx = new NugetExec();
+            Assert.Equal("https://www.nuget.org/api/v2/package/", nugEx.PublishToPath);
+            Assert.Equal("nuget.smbsrc.net", nugEx.PublishSymbolToPath);
         }
 
         [Fact]
