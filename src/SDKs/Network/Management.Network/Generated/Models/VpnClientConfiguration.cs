@@ -42,12 +42,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Virtual network gateway.</param>
         /// <param name="vpnClientProtocols">VpnClientProtocols for Virtual
         /// network gateway.</param>
-        public VpnClientConfiguration(AddressSpace vpnClientAddressPool = default(AddressSpace), IList<VpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnClientRootCertificate>), IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnClientRevokedCertificate>), IList<string> vpnClientProtocols = default(IList<string>))
+        /// <param name="radiusServerAddress">The radius server address
+        /// property of the VirtualNetworkGateway resource for vpn client
+        /// connection.</param>
+        /// <param name="radiusServerSecret">The radius secret property of the
+        /// VirtualNetworkGateway resource for vpn client connection.</param>
+        public VpnClientConfiguration(AddressSpace vpnClientAddressPool = default(AddressSpace), IList<VpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnClientRootCertificate>), IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnClientRevokedCertificate>), IList<string> vpnClientProtocols = default(IList<string>), string radiusServerAddress = default(string), string radiusServerSecret = default(string))
         {
             VpnClientAddressPool = vpnClientAddressPool;
             VpnClientRootCertificates = vpnClientRootCertificates;
             VpnClientRevokedCertificates = vpnClientRevokedCertificates;
             VpnClientProtocols = vpnClientProtocols;
+            RadiusServerAddress = radiusServerAddress;
+            RadiusServerSecret = radiusServerSecret;
             CustomInit();
         }
 
@@ -81,6 +88,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "vpnClientProtocols")]
         public IList<string> VpnClientProtocols { get; set; }
+
+        /// <summary>
+        /// Gets or sets the radius server address property of the
+        /// VirtualNetworkGateway resource for vpn client connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "radiusServerAddress")]
+        public string RadiusServerAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the radius secret property of the
+        /// VirtualNetworkGateway resource for vpn client connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "radiusServerSecret")]
+        public string RadiusServerSecret { get; set; }
 
     }
 }
