@@ -13,18 +13,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
 {
     public class NugetExec : ShellExec
     {
-        #region CONST
-        //const string NUGET_PATH = "nuget.exe";
-        //const string NUGET_PUBLISH_URL = "https://www.nuget.org/api/v2/package/";
-        //const string NUGET_SYMBOL_PUBLISH_URL = "nuget.smbsrc.net";
-        //const int NUGET_TIMEOUT = 60; //Seconds
-        //const string DEFAULT_API_KEY = "1234";
-        #endregion
-
-
         #region Fields
         string _defaultNugetArgsFormat;
-        //string _apiKey;
         string _publishToPath;
         string _publishSymbolToPath;
         string _nugetExePath;
@@ -55,9 +45,23 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
         {
             get
             {
-                if (string.IsNullOrEmpty(_publishToPath))
+                // We check if nuget publishing is happening to a non-standard location (e.g. local hard drive or anything other than the officialy nuget publish location
+                // If anything non-standard nuget publish location, symbol path will be same as the provided nuget publish location
+                if (string.IsNullOrEmpty(_publishSymbolToPath))
                 {
-                    _publishSymbolToPath = Constants.NugetDefaults.NUGET_SYMBOL_PUBLISH_URL;
+                    if (string.IsNullOrEmpty(PublishToPath))
+                    {
+                        _publishSymbolToPath = Constants.NugetDefaults.NUGET_SYMBOL_PUBLISH_URL;
+                    }
+                    else if(PublishToPath.Contains(Constants.NugetDefaults.NUGET_PUBLISH_URL))
+                    {
+                        _publishSymbolToPath = Constants.NugetDefaults.NUGET_SYMBOL_PUBLISH_URL;
+                    }
+                    else
+                    {
+                        _publishSymbolToPath = PublishToPath;
+                    }
+                    
                 }
 
                 return _publishSymbolToPath;
@@ -99,7 +103,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
 
         public NugetExec() : this(Constants.NugetDefaults.NUGET_PATH)
         {
-            //_defaultNugetArgsFormat = "push {0} -source {1} -ApiKey {2} -NonInteractive -Timeout {3}";
         }
 
         public NugetPublishStatus Publish(string nupkgPath)
@@ -144,7 +147,15 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
             // Check if publishing symbols has to be skipped
             if (SkipPublishingSymbols == false)
             {
-                if (nugPubStatus.NugetPublishExitCode == 0)
+                // Check if nuget was published, not checking will result in nullRef
+                if (SkipPublishingNuget == false)
+                {
+                    if (nugPubStatus.NugetPublishExitCode == 0)
+                    {
+                        publishStatusList.Add(Publish(nugPkgs.Item2));
+                    }
+                }
+                else
                 {
                     publishStatusList.Add(Publish(nugPkgs.Item2));
                 }
