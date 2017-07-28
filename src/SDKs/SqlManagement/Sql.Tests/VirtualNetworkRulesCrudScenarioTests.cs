@@ -26,7 +26,7 @@ namespace Sql.Tests
                 // Basic setup
                 var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
                 ResourceGroup resourceGroup = context.CreateResourceGroup(location);
-                VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, subnetCount: 2, location: location);
+                VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, location: location, subnetCount: 2);
 
                 Server server = context.CreateServer(resourceGroup, location);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
@@ -86,7 +86,7 @@ namespace Sql.Tests
                 // Basic setup
                 var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
                 ResourceGroup resourceGroup = context.CreateResourceGroup(location);
-                VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, subnetCount: 1, location: location);
+                VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, location: location, subnetCount: 1);
 
                 Server server = context.CreateServer(resourceGroup, location);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
@@ -117,7 +117,7 @@ namespace Sql.Tests
                 // Basic setup
                 var location = SqlManagementTestUtilities.DefaultEuapPrimaryLocationId;
                 ResourceGroup resourceGroup = context.CreateResourceGroup(location);
-                VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, subnetCount: 2, location: location);
+                VirtualNetwork getVnetResponse = CreateVirtualNetwork(context, resourceGroup, location: location, subnetCount: 2);
 
                 Server server = context.CreateServer(resourceGroup, location);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
@@ -142,7 +142,7 @@ namespace Sql.Tests
             }
         }
 
-        public VirtualNetwork CreateVirtualNetwork(SqlManagementTestContext context, ResourceGroup resourceGroup, int subnetCount = 1, string location = SqlManagementTestUtilities.DefaultLocationId)
+        public VirtualNetwork CreateVirtualNetwork(SqlManagementTestContext context, ResourceGroup resourceGroup, string location, int subnetCount = 1)
         {
             NetworkManagementClient networkClient = context.GetClient<NetworkManagementClient>();
 

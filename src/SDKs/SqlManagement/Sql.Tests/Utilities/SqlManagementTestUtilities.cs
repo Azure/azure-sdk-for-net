@@ -26,24 +26,74 @@ namespace Sql.Tests
 {
     public class SqlManagementTestUtilities
     {
-        public const string DefaultLocationId = "japaneast";
+        private static readonly TestEnvironment _environment = new TestEnvironment(TryGetEnvironmentOrAppSetting("TEST_CSM_ORGID_AUTHENTICATION"));
 
-        public const string DefaultLocation =  "Japan East";
+        // We now load default locations from environment variable.
+        // Tests were recorded with this appended to DefaultLocationId=japaneast;DefaultLocation=Japan East;DefaultSecondaryLocationId=centralus;DefaultSecondaryLocation=Central US;DefaultStagePrimaryLocation=North Europe;DefaultStageSecondaryLocation=SouthEast Asia;DefaultEuapPrimaryLocation=East US 2 EUAP;DefaultEuapPrimaryLocationId=eastus2euap
+        public static string DefaultLocation
+        {
+            get
+            {
+                return _environment.ConnectionString.KeyValuePairs["DefaultLocation"];
+            }
+        }
+        public static string DefaultLocationId
+        {
+            get
+            {
+                return _environment.ConnectionString.KeyValuePairs["DefaultLocationId"];
+            }
+        }
 
-        public const string DefaultSecondaryLocationId = "centralus";
+        public static string DefaultSecondaryLocationId
+        {
+            get
+            {
+                return _environment.ConnectionString.KeyValuePairs["DefaultSecondaryLocationId"];
+            }
+        }
 
-        public const string DefaultSecondaryLocation = "Central US";
+        public static string DefaultSecondaryLocation
+        {
+            get
+            {
+                return _environment.ConnectionString.KeyValuePairs["DefaultSecondaryLocation"];
+            }
+        }
 
-        public const string DefaultStagePrimaryLocation = "North Europe";
+        public static string DefaultStagePrimaryLocation
+        {
+            get
+            {
+                return _environment.ConnectionString.KeyValuePairs["DefaultStagePrimaryLocation"];
+            }
+        }
 
-        public const string DefaultStageSecondaryLocation = "SouthEast Asia";
+        public static string DefaultStageSecondaryLocation
+        {
+            get
+            {
+                return _environment.ConnectionString.KeyValuePairs["DefaultStageSecondaryLocation"];
+            }
+        }
 
-        public const string DefaultEuapPrimaryLocation = "East US 2 EUAP";
+        public static string DefaultEuapPrimaryLocation
+        {
+            get
+            {
+                return _environment.ConnectionString.KeyValuePairs["DefaultEuapPrimaryLocation"];
+            }
+        }
 
-        public const string DefaultEuapPrimaryLocationId = "eastus2euap";
+        public static string DefaultEuapPrimaryLocationId
+        {
+            get
+            {
+                return _environment.ConnectionString.KeyValuePairs["DefaultEuapPrimaryLocationId"];
+            }
+        }
 
         public const string DefaultLogin = "dummylogin";
-
         public const string DefaultPassword = "Un53cuRE!";
 
         public static SqlManagementClient GetSqlManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
@@ -368,7 +418,7 @@ namespace Sql.Tests
             }
         }
 
-        public static void RunTestInNewResourceGroup(string suiteName, string testName, string resourcePrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup> test, string location = DefaultLocationId)
+        public static void RunTestInNewResourceGroup(string suiteName, string testName, string resourcePrefix, string location, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup> test)
         {
             RunTest(suiteName, testName, (resourceClient, sqlClient) =>
             {
@@ -397,11 +447,16 @@ namespace Sql.Tests
             });
         }
 
-        internal static void RunTestInNewV12Server(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server> test, string location = DefaultLocationId)
+        internal static void RunTestInNewV12Server(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server> test)
         {
-            RunTestInNewResourceGroup(suiteName, testName, testPrefix, (resClient, sqlClient, resGroup) =>
+            RunTestInNewV12Server(suiteName, testName, testPrefix, test, SqlManagementTestUtilities.DefaultLocation);
+        }
+
+        internal static void RunTestInNewV12Server(string suiteName, string testName, string testPrefix, Action<ResourceManagementClient, SqlManagementClient, ResourceGroup, Server> test, string location)
+        {
+            RunTestInNewResourceGroup(suiteName, testName, testPrefix, location, (resClient, sqlClient, resGroup) =>
             {
-                var v12Server = CreateServer(sqlClient, resGroup, testPrefix, location);
+                var v12Server = CreateServer(sqlClient, resGroup, location, testPrefix);
                 test(resClient, sqlClient, resGroup, v12Server);
             });
         }
@@ -431,7 +486,7 @@ namespace Sql.Tests
             return Task.WhenAll(createDbTasks);
         }
 
-        internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string testPrefix = TestPrefix, string location = DefaultLocationId)
+        internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string location, string testPrefix = TestPrefix)
         {
             string version12 = "12.0";
             string serverName = GenerateName(testPrefix);
