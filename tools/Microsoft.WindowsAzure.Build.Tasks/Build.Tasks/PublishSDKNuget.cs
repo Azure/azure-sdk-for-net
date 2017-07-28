@@ -93,7 +93,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         
         public bool SkipNugetPublishing { get; set; }
 
-        public bool DebugOutput { get; set; }
+        public bool TaskDebugOutput { get; set; }
 
         public List<NugetPublishStatus> NugetPublishStatus { get; private set; }
 
@@ -236,7 +236,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         private void DebugInfo()
         {
-            if(DebugOutput)
+            if(TaskDebugOutput)
             {
                 LogInfo("UserId: {0}", UserId);
                 LogInfo("Nuget Package Name: {0}", NugetPackageName);

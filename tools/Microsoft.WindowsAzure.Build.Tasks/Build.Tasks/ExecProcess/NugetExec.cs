@@ -147,7 +147,15 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
             // Check if publishing symbols has to be skipped
             if (SkipPublishingSymbols == false)
             {
-                if (nugPubStatus.NugetPublishExitCode == 0)
+                // Check if nuget was published, not checking will result in nullRef
+                if (SkipPublishingNuget == false)
+                {
+                    if (nugPubStatus.NugetPublishExitCode == 0)
+                    {
+                        publishStatusList.Add(Publish(nugPkgs.Item2));
+                    }
+                }
+                else
                 {
                     publishStatusList.Add(Publish(nugPkgs.Item2));
                 }

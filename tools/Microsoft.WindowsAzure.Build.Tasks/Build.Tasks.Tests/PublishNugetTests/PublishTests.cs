@@ -113,7 +113,27 @@ namespace Build.Tasks.Tests.PublishNugetTests
             }
         }
 
+        [Fact]
+        public void DefaultPublishPaths()
+        {
+            NugetExec nugEx = new NugetExec();
+            Assert.Equal("https://www.nuget.org/api/v2/package/", nugEx.PublishToPath);
+            Assert.Equal("https://nuget.smbsrc.net", nugEx.PublishSymbolToPath);
+        }
+
         #region Error Tests
+
+        [Fact]
+        public void PublishOnlySymbol()
+        {
+            PublishSDKNuget pubNug = new PublishSDKNuget();
+            pubNug.PackageOutputPath = NugetPkgBuiltDir;
+            pubNug.NugetPackageName = NUGET_PKG_NAME;
+            pubNug.PublishNugetToPath = "https://www.nuget.org/api/v2/package/";
+            pubNug.SkipNugetPublishing = true;
+            pubNug.ApiKey = "1234";
+            Assert.ThrowsAny<ApplicationException>(() => pubNug.Execute());
+        }
 
         [Fact]
         public void PublishWithUnAuthenticatedKey()
@@ -136,14 +156,6 @@ namespace Build.Tasks.Tests.PublishNugetTests
                     Assert.Equal("The specified API key is invalid", ex.Message);
                 }
             }
-        }
-
-        [Fact]
-        public void DefaultPublishPaths()
-        {
-            NugetExec nugEx = new NugetExec();
-            Assert.Equal("https://www.nuget.org/api/v2/package/", nugEx.PublishToPath);
-            Assert.Equal("nuget.smbsrc.net", nugEx.PublishSymbolToPath);
         }
 
         [Fact]
