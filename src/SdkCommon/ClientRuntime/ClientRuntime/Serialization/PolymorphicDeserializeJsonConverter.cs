@@ -2,8 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Rest.Serialization
 {
@@ -36,13 +38,13 @@ namespace Microsoft.Rest.Serialization
         }
 
         /// <summary>
-        /// Returns true if the object being deserialized is the base type. False otherwise.
+        /// Returns true if the object being deserialized is assignable to the base type. False otherwise.
         /// </summary>
         /// <param name="objectType">The type of the object to check.</param>
-        /// <returns>True if the object being deserialized is the base type. False otherwise.</returns>
+        /// <returns>True if the object being deserialized is assignable to the base type. False otherwise.</returns>
         public override bool CanConvert(Type objectType)
         {
-            return typeof (T) == objectType;
+            return typeof(T).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         /// <summary>
@@ -63,13 +65,27 @@ namespace Microsoft.Rest.Serialization
             }
 
             JObject item = JObject.Load(reader);
-            string typeDiscriminator = (string) item[Discriminator];
-            Type derivedType = GetDerivedType(typeof (T), typeDiscriminator);
-            if (derivedType != null)
+            string typeDiscriminator = (string)item[Discriminator];
+            Type resultType = GetDerivedType(objectType, typeDiscriminator) ?? objectType;
+
+            // create instance of correct type (but naively determined property types)
+            var result = item.ToObject(resultType);
+
+            // fix up properties
+            if (serializer.ContractResolver.ResolveContract(resultType) is JsonObjectContract contract)
             {
-                return item.ToObject(derivedType, serializer);
+                foreach (var expectedProperty in contract.Properties)
+                {
+                    var property = item.SelectToken(expectedProperty.PropertyName);
+                    if (property != null)
+                    {
+                        var propertyValue = property.ToObject(expectedProperty.PropertyType, serializer);
+                        expectedProperty.ValueProvider.SetValue(result, propertyValue);
+                    }
+                }
             }
-            return item.ToObject(objectType);
+
+            return result;
         }
 
         /// <summary>
