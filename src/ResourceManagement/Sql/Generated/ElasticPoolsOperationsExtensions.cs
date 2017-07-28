@@ -24,32 +24,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
     /// </summary>
     public static partial class ElasticPoolsOperationsExtensions
     {
-            /// <summary>
-            /// Creates a new Azure SQL elastic pool or updates an existing Azure SQL
-            /// elastic pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be operated on (Updated or
-            /// created).
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for creating or updating an Elastic Pool.
-            /// </param>
-            public static ElasticPoolInner CreateOrUpdate(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, ElasticPoolInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serverName, elasticPoolName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new Azure SQL elastic pool or updates an existing Azure SQL
             /// elastic pool.
@@ -82,27 +57,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the Azure SQL elastic pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be deleted.
-            /// </param>
-            public static void Delete(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
-            {
-                operations.DeleteAsync(resourceGroupName, serverName, elasticPoolName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the Azure SQL elastic pool.
             /// </summary>
@@ -127,27 +82,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, elasticPoolName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets information about an Azure SQL elastic pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
-            /// </param>
-            public static ElasticPoolInner Get(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
-            {
-                return operations.GetAsync(resourceGroupName, serverName, elasticPoolName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about an Azure SQL elastic pool.
             /// </summary>
@@ -175,24 +110,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about Azure SQL elastic pools.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            public static IEnumerable<ElasticPoolInner> ListByServer(this IElasticPoolsOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about Azure SQL elastic pools.
             /// </summary>
@@ -217,28 +135,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about Azure SQL elastic pool activities.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool for which to get the current
-            /// activity.
-            /// </param>
-            public static IEnumerable<ElasticPoolActivityInner> ListActivity(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
-            {
-                return operations.ListActivityAsync(resourceGroupName, serverName, elasticPoolName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about Azure SQL elastic pool activities.
             /// </summary>
@@ -267,28 +164,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about activity on Azure SQL databases inside of an
-            /// Azure SQL elastic pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool.
-            /// </param>
-            public static IEnumerable<ElasticPoolDatabaseActivityInner> ListDatabaseActivity(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
-            {
-                return operations.ListDatabaseActivityAsync(resourceGroupName, serverName, elasticPoolName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about activity on Azure SQL databases inside of an
             /// Azure SQL elastic pool.
@@ -317,31 +193,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets information about an Azure SQL database inside of an Azure SQL elastic
-            /// pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the Azure SQL database to be retrieved.
-            /// </param>
-            public static DatabaseInner GetDatabase(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, string databaseName)
-            {
-                return operations.GetDatabaseAsync(resourceGroupName, serverName, elasticPoolName, databaseName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets information about an Azure SQL database inside of an Azure SQL elastic
             /// pool.
@@ -373,28 +225,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns information about an Azure SQL database inside of an Azure SQL
-            /// elastic pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be retrieved.
-            /// </param>
-            public static IEnumerable<DatabaseInner> ListDatabases(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName)
-            {
-                return operations.ListDatabasesAsync(resourceGroupName, serverName, elasticPoolName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns information about an Azure SQL database inside of an Azure SQL
             /// elastic pool.
@@ -423,32 +254,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates a new Azure SQL elastic pool or updates an existing Azure SQL
-            /// elastic pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the Azure SQL server.
-            /// </param>
-            /// <param name='elasticPoolName'>
-            /// The name of the Azure SQL Elastic Pool to be operated on (Updated or
-            /// created).
-            /// </param>
-            /// <param name='parameters'>
-            /// The required parameters for creating or updating an Elastic Pool.
-            /// </param>
-            public static ElasticPoolInner BeginCreateOrUpdate(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, string elasticPoolName, ElasticPoolInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, elasticPoolName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new Azure SQL elastic pool or updates an existing Azure SQL
             /// elastic pool.

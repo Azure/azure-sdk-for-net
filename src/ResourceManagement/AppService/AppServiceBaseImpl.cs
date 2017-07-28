@@ -42,8 +42,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         public override void Stop()
         {
-            Manager.Inner.WebApps.Stop(ResourceGroupName, Name);
-
+            Extensions.Synchronize(() => Manager.Inner.WebApps.StopAsync(ResourceGroupName, Name));
         }
 
         ///GENMHASH:6779D3D3C7AB7AAAE805BA0ABEE95C51:512E3D0409D7A159D1D192520CB3A8DB
@@ -112,7 +111,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:1AD5C303B4B7C1709305A18733B506B2:B2AAE3FC1D57B875FAA6AD38F9DB069C
         public override void ResetSlotConfigurations()
         {
-            Manager.Inner.WebApps.ResetProductionSlotConfig(ResourceGroupName, Name);
+            Extensions.Synchronize(() => Manager.Inner.WebApps.ResetProductionSlotConfigAsync(ResourceGroupName, Name));
         }
 
         ///GENMHASH:2EDD4B59BAFACBDD881E1EB427AFB76D:6899DBE410B89E7D8EEB69725B8CE588
@@ -136,13 +135,13 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:192EA146CBED61BBAAC7B336DA07F261
         public override void Restart()
         {
-            Manager.Inner.WebApps.Restart(ResourceGroupName, Name);
+            Extensions.Synchronize(() => Manager.Inner.WebApps.RestartAsync(ResourceGroupName, Name));
         }
 
         ///GENMHASH:3F0152723C985A22C1032733AB942C96:9A3E19132DCD027C4BA1BBB085642F29
         public override IPublishingProfile GetPublishingProfile()
         {
-            Stream stream = Manager.Inner.WebApps.ListPublishingProfileXmlWithSecrets(ResourceGroupName, Name, new CsmPublishingProfileOptionsInner());
+            Stream stream = Extensions.Synchronize(() => Manager.Inner.WebApps.ListPublishingProfileXmlWithSecretsAsync(ResourceGroupName, Name, new CsmPublishingProfileOptionsInner()));
             StreamReader reader = new StreamReader(stream);
             string xml = reader.ReadToEnd();
             return new PublishingProfileImpl(xml);
@@ -157,10 +156,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:924482EE7AA6A01820720743C2A59A72:AA2A43E94B10FDB1A9E9E89ED9CA279B
         public override void ApplySlotConfigurations(string slotName)
         {
-            Manager.Inner.WebApps.ApplySlotConfigToProduction(ResourceGroupName, Name, new CsmSlotEntityInner()
+            Extensions.Synchronize(() => Manager.Inner.WebApps.ApplySlotConfigToProductionAsync(ResourceGroupName, Name, new CsmSlotEntityInner()
             {
                 TargetSlot = slotName
-            });
+            }));
             Refresh();
         }
 
@@ -204,7 +203,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:8C5F8B18192B4F8FD7D43AB4D318EA69:E232113DB866C8D255AE12F7A61042E8
         public override IReadOnlyDictionary<string, IHostNameBinding> GetHostNameBindings()
         {
-            var collectionInner = Manager.Inner.WebApps.ListHostNameBindings(ResourceGroupName, Name);
+            var collectionInner = Extensions.Synchronize(() => Manager.Inner.WebApps.ListHostNameBindingsAsync(ResourceGroupName, Name));
             var hostNameBindings = new List<IHostNameBinding>();
             foreach (var inner in collectionInner)
             {
@@ -218,7 +217,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:EB8C33DACE377CBB07C354F38C5BEA32:391885361D8D6FDB8CD9E96400E16B73
         public override void VerifyDomainOwnership(string certificateOrderName, string domainVerificationToken)
         {
-            VerifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => VerifyDomainOwnershipAsync(certificateOrderName, domainVerificationToken));
         }
 
         ///GENMHASH:9EC0529BA0D08B75AD65E98A4BA01D5D:AD50571B7362BCAADE526027DA36B58F
@@ -230,14 +229,14 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:BC96AA8FDB678157AC1E6F0AA511AB65:20A70C4EEFBA9DE9AD6AA6D9133187D7
         public override IWebAppSourceControl GetSourceControl()
         {
-            SiteSourceControlInner siteSourceControlInner = Manager.Inner.WebApps.GetSourceControl(ResourceGroupName, Name);
+            SiteSourceControlInner siteSourceControlInner = Extensions.Synchronize(() => Manager.Inner.WebApps.GetSourceControlAsync(ResourceGroupName, Name));
             return new WebAppSourceControlImpl<FluentT, FluentImplT, DefAfterRegionT, DefAfterGroupT, UpdateT>(siteSourceControlInner, (FluentImplT) this);
         }
 
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:57465AB4A649A705C9DC2183EE743214
         public override void Start()
         {
-            Manager.Inner.WebApps.Start(ResourceGroupName, Name);
+            Extensions.Synchronize(() => Manager.Inner.WebApps.StartAsync(ResourceGroupName, Name));
         }
 
         ///GENMHASH:B22FA99F4432342EBBDB2AB426A8D2A2:DB92CE96AE133E965FE6DE31D475D7ED
@@ -253,10 +252,10 @@ namespace Microsoft.Azure.Management.AppService.Fluent
         ///GENMHASH:DFC52755A97E7B13EB10FA2EB9538E4A:FCF3A2AD2F52743B995DDA1FE7D020CB
         public override void Swap(string slotName)
         {
-            Manager.Inner.WebApps.SwapSlotWithProduction(ResourceGroupName, Name, new CsmSlotEntityInner
+            Extensions.Synchronize(() => Manager.Inner.WebApps.SwapSlotWithProductionAsync(ResourceGroupName, Name, new CsmSlotEntityInner
             {
                 TargetSlot = slotName
-            });
+            }));
             Refresh();
         }
 

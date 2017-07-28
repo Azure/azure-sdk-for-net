@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:1BCE81BDD651175D2AF64E39F4F2C420:F211289A9C0637B5973069548F05CECE
         public void RevokeAccess(string resourceGroupName, string diskName)
         {
-            this.Inner.RevokeAccess(resourceGroupName, diskName);
+            Extensions.Synchronize(() => this.Inner.RevokeAccessAsync(resourceGroupName, diskName));
         }
 
         ///GENMHASH:C2E2A5650639245BC0993A33DCAA5D61:AB53C4E88693DA816105A74AACCB3115
         public string GrantAccess(string resourceGroupName, string diskName, AccessLevel accessLevel, int accessDuration)
         {
-            return this.GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.GrantAccessAsync(resourceGroupName, diskName, accessLevel, accessDuration));
         }
 
         ///GENMHASH:CAAAC294CEC4F5465B5368FDC3327C5D:2F567929AA028332A657F78A9A7C3964

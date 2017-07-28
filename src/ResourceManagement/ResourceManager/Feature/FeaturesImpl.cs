@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<IFeature> List()
         {
-            return client.ListAll()
-                         .AsContinuousCollection(link => client.ListNext(link))
+            return Extensions.Synchronize(() => client.ListAllAsync())
+                         .AsContinuousCollection(link => Extensions.Synchronize(() => client.ListNextAsync(link)))
                          .Select(inner => WrapModel(inner));
         }
 
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IFeature Register(string resourceProviderNamespace, string featureName)
         {
-            return RegisterAsync(resourceProviderNamespace, featureName).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() =>  RegisterAsync(resourceProviderNamespace, featureName));
         }
 
         public async Task<IFeature> RegisterAsync(

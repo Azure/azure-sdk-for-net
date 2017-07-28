@@ -103,15 +103,17 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
             try
             {
-                await authFile.WriteLineAsync(string.Format("client={0}", servicePrincipal.ApplicationId()));
-                await authFile.WriteLineAsync(string.Format("certificate={0}", NormalizeAuthFilePath(privateKeyPath)));
-                await authFile.WriteLineAsync(string.Format("certificatePassword={0}", privateKeyPassword));
-                await authFile.WriteLineAsync(string.Format("tenant={0}", servicePrincipal.Manager().tenantId));
-                await authFile.WriteLineAsync(string.Format("subscription={0}", servicePrincipal.assignedSubscription));
-                await authFile.WriteLineAsync(string.Format("authURL={0}", NormalizeAuthFileUrl(environment.AuthenticationEndpoint)));
-                await authFile.WriteLineAsync(string.Format("baseURL={0}", NormalizeAuthFileUrl(environment.ResourceManagerEndpoint)));
-                await authFile.WriteLineAsync(string.Format("graphURL={0}", NormalizeAuthFileUrl(environment.GraphEndpoint)));
-                await authFile.WriteLineAsync(string.Format("managementURI={0}", NormalizeAuthFileUrl(environment.ManagementEnpoint)));
+                await authFile.WriteLineAsync("{");
+                await authFile.WriteLineAsync(string.Format("  \"clientId\": \"{0}\",", servicePrincipal.ApplicationId()));
+                await authFile.WriteLineAsync(string.Format("  \"clientCertificate\": \"{0}\",", NormalizeAuthFilePath(privateKeyPath)));
+                await authFile.WriteLineAsync(string.Format("  \"clientCertificatePassword\": \"{0}\",", privateKeyPassword));
+                await authFile.WriteLineAsync(string.Format("  \"tenantId\": \"{0}\",", servicePrincipal.Manager().tenantId));
+                await authFile.WriteLineAsync(string.Format("  \"subscriptionId\": \"{0}\",", servicePrincipal.assignedSubscription));
+                await authFile.WriteLineAsync(string.Format("  \"activeDirectoryEndpointUrl\": \"{0}\",", environment.AuthenticationEndpoint));
+                await authFile.WriteLineAsync(string.Format("  \"resourceManagerEndpointUrl\": \"{0}\",", environment.ResourceManagerEndpoint));
+                await authFile.WriteLineAsync(string.Format("  \"activeDirectoryGraphResourceId\": \"{0}\",", environment.GraphEndpoint));
+                await authFile.WriteLineAsync(string.Format("  \"managementEndpointUrl\": \"{0}\"", environment.ManagementEnpoint));
+                await authFile.WriteLineAsync("}");
             }
             finally
             {
@@ -156,7 +158,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         private string NormalizeAuthFilePath(string path)
         {
-            return path.Replace("\\", "\\\\").Replace(":", "\\:");
+            return path.Replace("\\", "\\\\");
         }
 
         public CertificateCredentialImpl<T> WithPrivateKeyFile(string privateKeyPath)

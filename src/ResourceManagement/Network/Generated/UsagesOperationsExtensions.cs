@@ -22,20 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public static partial class UsagesOperationsExtensions
     {
-            /// <summary>
-            /// Lists compute usages for a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location where resource usage is queried.
-            /// </param>
-            public static IPage<Usage> List(this IUsagesOperations operations, string location)
-            {
-                return operations.ListAsync(location).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists compute usages for a subscription.
             /// </summary>
@@ -56,20 +43,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists compute usages for a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Usage> ListNext(this IUsagesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists compute usages for a subscription.
             /// </summary>

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         
         public CheckNameAvailabilityResult CheckNameAvailability(string name)
         {
-            return CheckNameAvailabilityAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => CheckNameAvailabilityAsync(name));
         }
 
         public async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(string name, CancellationToken cancellationToken = default(CancellationToken))

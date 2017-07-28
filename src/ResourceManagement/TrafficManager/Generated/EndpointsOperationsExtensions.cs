@@ -22,33 +22,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
     /// </summary>
     public static partial class EndpointsOperationsExtensions
     {
-            /// <summary>
-            /// Update a Traffic Manager endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group containing the Traffic Manager endpoint to
-            /// be updated.
-            /// </param>
-            /// <param name='profileName'>
-            /// The name of the Traffic Manager profile.
-            /// </param>
-            /// <param name='endpointType'>
-            /// The type of the Traffic Manager endpoint to be updated.
-            /// </param>
-            /// <param name='endpointName'>
-            /// The name of the Traffic Manager endpoint to be updated.
-            /// </param>
-            /// <param name='parameters'>
-            /// The Traffic Manager endpoint parameters supplied to the Update operation.
-            /// </param>
-            public static EndpointInner Update(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointType, string endpointName, EndpointInner parameters)
-            {
-                return operations.UpdateAsync(resourceGroupName, profileName, endpointType, endpointName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Update a Traffic Manager endpoint.
             /// </summary>
@@ -82,29 +56,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a Traffic Manager endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group containing the Traffic Manager endpoint.
-            /// </param>
-            /// <param name='profileName'>
-            /// The name of the Traffic Manager profile.
-            /// </param>
-            /// <param name='endpointType'>
-            /// The type of the Traffic Manager endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// The name of the Traffic Manager endpoint.
-            /// </param>
-            public static EndpointInner Get(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointType, string endpointName)
-            {
-                return operations.GetAsync(resourceGroupName, profileName, endpointType, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a Traffic Manager endpoint.
             /// </summary>
@@ -134,34 +86,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Create or update a Traffic Manager endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group containing the Traffic Manager endpoint to
-            /// be created or updated.
-            /// </param>
-            /// <param name='profileName'>
-            /// The name of the Traffic Manager profile.
-            /// </param>
-            /// <param name='endpointType'>
-            /// The type of the Traffic Manager endpoint to be created or updated.
-            /// </param>
-            /// <param name='endpointName'>
-            /// The name of the Traffic Manager endpoint to be created or updated.
-            /// </param>
-            /// <param name='parameters'>
-            /// The Traffic Manager endpoint parameters supplied to the CreateOrUpdate
-            /// operation.
-            /// </param>
-            public static EndpointInner CreateOrUpdate(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointType, string endpointName, EndpointInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, profileName, endpointType, endpointName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create or update a Traffic Manager endpoint.
             /// </summary>
@@ -194,30 +119,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes a Traffic Manager endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group containing the Traffic Manager endpoint to
-            /// be deleted.
-            /// </param>
-            /// <param name='profileName'>
-            /// The name of the Traffic Manager profile.
-            /// </param>
-            /// <param name='endpointType'>
-            /// The type of the Traffic Manager endpoint to be deleted.
-            /// </param>
-            /// <param name='endpointName'>
-            /// The name of the Traffic Manager endpoint to be deleted.
-            /// </param>
-            public static DeleteOperationResultInner Delete(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointType, string endpointName)
-            {
-                return operations.DeleteAsync(resourceGroupName, profileName, endpointType, endpointName).GetAwaiter().GetResult();
             }
 
             /// <summary>

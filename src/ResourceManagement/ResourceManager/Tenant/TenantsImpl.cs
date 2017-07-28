@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         IEnumerable<ITenant> ISupportsListing<ITenant>.List()
         {
-            return innerCollection.List()
-                                  .AsContinuousCollection(link => innerCollection.ListNext(link))
+            return Extensions.Synchronize(() => innerCollection.ListAsync())
+                                  .AsContinuousCollection(link => Extensions.Synchronize(() => innerCollection.ListNextAsync(link)))
                                   .Select(inner => WrapModel(inner));
         }
 

@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         ///GENMHASH:5002116800CBAC02BBC1B4BF62BC4942:A2A025A9F2772D74D0B8615C6144E641
         public T GetById(string id)
         {
-            return GetByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByIdAsync(id));
         }
 
         public async Task<T> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
         {
             try
             {
-                return GetByParentAsync(resourceGroup, parentName, name).ConfigureAwait(false).GetAwaiter().GetResult();
+                return Extensions.Synchronize(() => GetByParentAsync(resourceGroup, parentName, name));
             }
             catch (CloudException ex) when (ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public IEnumerable<T> ListByParent(string resourceGroupName, string parentName)
         {
-            return ListByParentAsync(resourceGroupName, parentName).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => ListByParentAsync(resourceGroupName, parentName));
         }
 
         public async Task<IPagedCollection<T>> ListByParentAsync(ParentT parentResource, CancellationToken cancellationToken = default(CancellationToken))
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core
 
         public override void DeleteById(string id)
         {
-            DeleteByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => DeleteByIdAsync(id));
         }
 
         ///GENMHASH:4D33A73A344E127F784620E76B686786:F75A1B8CEFE83AE0B483457A2928324B

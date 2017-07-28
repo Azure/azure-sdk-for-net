@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
     using Microsoft.Azure.Management.Storage.Fluent;
     using System.Collections.Generic;
     using Models;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     internal partial class BatchAccountImpl 
     {
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <return>The access keys for this Batch account.</return>
         Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.GetKeys()
         {
-            return this.GetKeysAsync().GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.GetKeysAsync());
         }
 
         /// <summary>
@@ -133,7 +134,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// </summary>
         void Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.SynchronizeAutoStorageKeys()
         {
-            this.SynchronizeAutoStorageKeysAsync().GetAwaiter().GetResult(); ;
+            Extensions.Synchronize(() => this.SynchronizeAutoStorageKeysAsync()); ;
         }
 
         /// <summary>
@@ -143,7 +144,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <return>Regenerated access keys for this Batch account.</return>
         Microsoft.Azure.Management.Batch.Fluent.BatchAccountKeys Microsoft.Azure.Management.Batch.Fluent.IBatchAccount.RegenerateKeys(AccountKeyType keyType)
         {
-            return this.RegenerateKeysAsync(keyType).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.RegenerateKeysAsync(keyType));
         }
 
         /// <summary>

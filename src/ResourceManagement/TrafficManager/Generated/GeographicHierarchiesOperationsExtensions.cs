@@ -29,18 +29,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static TrafficManagerGeographicHierarchyInner GetDefault(this IGeographicHierarchiesOperations operations)
-            {
-                return operations.GetDefaultAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the default Geographic Hierarchy used by the Geographic traffic
-            /// routing method.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>

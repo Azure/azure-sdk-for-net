@@ -73,10 +73,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:CD775E31F43CBA6304D6EEA9E01682A1:FE7D9343E169D0420CF0E1FC9A9A3736
         public IReadOnlyList<Microsoft.Azure.Management.Sql.Fluent.ISqlDatabase> ListDatabases()
         {
-            var databases = Manager.Inner.RecommendedElasticPools.ListDatabases(
+            var databases = Extensions.Synchronize(() => Manager.Inner.RecommendedElasticPools.ListDatabasesAsync(
                 ResourceGroupName(),
                 SqlServerName(),
-                Name());
+                Name()));
 
             return databases.Select(databaseInner => (ISqlDatabase)new SqlDatabaseImpl(
                 databaseInner.Name,
@@ -117,11 +117,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:1C25D7B8D9084176A24655682A78634D:F7EA0DF49958322A52E6952D781B9782
         public ISqlDatabase GetDatabase(string databaseName)
         {
-            DatabaseInner databaseInner = Manager.Inner.RecommendedElasticPools.GetDatabases(
+            DatabaseInner databaseInner = Extensions.Synchronize(() => Manager.Inner.RecommendedElasticPools.GetDatabasesAsync(
                 ResourceGroupName(),
                 SqlServerName(),
                 Name(),
-                databaseName);
+                databaseName));
 
             return new SqlDatabaseImpl(databaseInner.Name, databaseInner, Manager);
         }
@@ -129,10 +129,10 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:77909FCEE2BCE7A1585A5D65D695B384:13846C17B14D55E5F3A4AE220EAFBEDC
         public IReadOnlyList<IRecommendedElasticPoolMetric> ListMetrics()
         {
-            var metricInner = Manager.Inner.RecommendedElasticPools.ListMetrics(
+            var metricInner = Extensions.Synchronize(() => Manager.Inner.RecommendedElasticPools.ListMetricsAsync(
                 ResourceGroupName(),
                 SqlServerName(),
-                Name());
+                Name()));
             return metricInner.Select(recommendedElasticPoolMetricInner => (IRecommendedElasticPoolMetric)new RecommendedElasticPoolMetricImpl(recommendedElasticPoolMetricInner)).ToList();
         }
 

@@ -24,23 +24,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
     /// </summary>
     public static partial class DatabaseAccountsOperationsExtensions
     {
-            /// <summary>
-            /// Retrieves the properties of an existing Azure DocumentDB database account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            public static DatabaseAccountInner Get(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName)
-            {
-                return operations.GetAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Retrieves the properties of an existing Azure DocumentDB database account.
             /// </summary>
@@ -64,25 +48,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Patches the properties of an existing Azure DocumentDB database account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            /// <param name='tags'>
-            /// </param>
-            public static DatabaseAccountInner Patch(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, IDictionary<string, string> tags)
-            {
-                return operations.PatchAsync(resourceGroupName, accountName, tags).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Patches the properties of an existing Azure DocumentDB database account.
             /// </summary>
@@ -108,26 +74,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates an Azure DocumentDB database account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            /// <param name='createUpdateParameters'>
-            /// The parameters to provide for the current database account.
-            /// </param>
-            public static DatabaseAccountInner CreateOrUpdate(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, DatabaseAccountCreateUpdateParametersInner createUpdateParameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, accountName, createUpdateParameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates an Azure DocumentDB database account.
             /// </summary>
@@ -154,23 +101,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an existing Azure DocumentDB database account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            public static void Delete(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName)
-            {
-                operations.DeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an existing Azure DocumentDB database account.
             /// </summary>
@@ -191,30 +122,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Changes the failover priority for the Azure DocumentDB database account. A
-            /// failover priority of 0 indicates a write region. The maximum value for a
-            /// failover priority = (total number of regions - 1). Failover priority values
-            /// must be unique for each of the regions in which the database account
-            /// exists.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            /// <param name='failoverPoliciesProperty'>
-            /// List of failover policies.
-            /// </param>
-            public static void FailoverPriorityChange(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, IList<FailoverPolicyInner> failoverPoliciesProperty = default(IList<FailoverPolicyInner>))
-            {
-                operations.FailoverPriorityChangeAsync(resourceGroupName, accountName, failoverPoliciesProperty).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Changes the failover priority for the Azure DocumentDB database account. A
             /// failover priority of 0 indicates a write region. The maximum value for a
@@ -242,18 +150,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 (await operations.FailoverPriorityChangeWithHttpMessagesAsync(resourceGroupName, accountName, failoverPoliciesProperty, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Lists all the Azure DocumentDB database accounts available under the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IEnumerable<DatabaseAccountInner> List(this IDatabaseAccountsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all the Azure DocumentDB database accounts available under the
             /// subscription.
@@ -272,21 +169,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all the Azure DocumentDB database accounts available under the given
-            /// resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            public static IEnumerable<DatabaseAccountInner> ListByResourceGroup(this IDatabaseAccountsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all the Azure DocumentDB database accounts available under the given
             /// resource group.
@@ -308,23 +191,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists the access keys for the specified Azure DocumentDB database account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            public static DatabaseAccountListKeysResultInner ListKeys(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists the access keys for the specified Azure DocumentDB database account.
             /// </summary>
@@ -348,24 +215,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists the connection strings for the specified Azure DocumentDB database
-            /// account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            public static DatabaseAccountListConnectionStringsResultInner ListConnectionStrings(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName)
-            {
-                return operations.ListConnectionStringsAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists the connection strings for the specified Azure DocumentDB database
             /// account.
@@ -390,24 +240,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists the read-only access keys for the specified Azure DocumentDB database
-            /// account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            public static DatabaseAccountListReadOnlyKeysResultInner ListReadOnlyKeys(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName)
-            {
-                return operations.ListReadOnlyKeysAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists the read-only access keys for the specified Azure DocumentDB database
             /// account.
@@ -432,28 +265,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Regenerates an access key for the specified Azure DocumentDB database
-            /// account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            /// <param name='keyKind'>
-            /// The access key to regenerate. Possible values include: 'primary',
-            /// 'secondary', 'primaryReadonly', 'secondaryReadonly'
-            /// </param>
-            public static void RegenerateKey(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, string keyKind)
-            {
-                operations.RegenerateKeyAsync(resourceGroupName, accountName, keyKind).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Regenerates an access key for the specified Azure DocumentDB database
             /// account.
@@ -479,22 +291,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 (await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, accountName, keyKind, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Checks that the Azure DocumentDB account name already exists. A valid
-            /// account name may contain only lowercase letters, numbers, and the '-'
-            /// character, and must be between 3 and 50 characters.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            public static bool CheckNameExists(this IDatabaseAccountsOperations operations, string accountName)
-            {
-                return operations.CheckNameExistsAsync(accountName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Checks that the Azure DocumentDB account name already exists. A valid
             /// account name may contain only lowercase letters, numbers, and the '-'
@@ -517,25 +314,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Patches the properties of an existing Azure DocumentDB database account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            /// <param name='tags'>
-            /// </param>
-            public static DatabaseAccountInner BeginPatch(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, IDictionary<string, string> tags)
-            {
-                return operations.BeginPatchAsync(resourceGroupName, accountName, tags).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Patches the properties of an existing Azure DocumentDB database account.
             /// </summary>
@@ -561,26 +340,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates an Azure DocumentDB database account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            /// <param name='createUpdateParameters'>
-            /// The parameters to provide for the current database account.
-            /// </param>
-            public static DatabaseAccountInner BeginCreateOrUpdate(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, DatabaseAccountCreateUpdateParametersInner createUpdateParameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, accountName, createUpdateParameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates an Azure DocumentDB database account.
             /// </summary>
@@ -607,23 +367,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an existing Azure DocumentDB database account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            public static void BeginDelete(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an existing Azure DocumentDB database account.
             /// </summary>
@@ -644,30 +388,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Changes the failover priority for the Azure DocumentDB database account. A
-            /// failover priority of 0 indicates a write region. The maximum value for a
-            /// failover priority = (total number of regions - 1). Failover priority values
-            /// must be unique for each of the regions in which the database account
-            /// exists.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            /// <param name='failoverPoliciesProperty'>
-            /// List of failover policies.
-            /// </param>
-            public static void BeginFailoverPriorityChange(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, IList<FailoverPolicyInner> failoverPoliciesProperty = default(IList<FailoverPolicyInner>))
-            {
-                operations.BeginFailoverPriorityChangeAsync(resourceGroupName, accountName, failoverPoliciesProperty).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Changes the failover priority for the Azure DocumentDB database account. A
             /// failover priority of 0 indicates a write region. The maximum value for a
@@ -695,28 +416,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
                 (await operations.BeginFailoverPriorityChangeWithHttpMessagesAsync(resourceGroupName, accountName, failoverPoliciesProperty, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Regenerates an access key for the specified Azure DocumentDB database
-            /// account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// DocumentDB database account name.
-            /// </param>
-            /// <param name='keyKind'>
-            /// The access key to regenerate. Possible values include: 'primary',
-            /// 'secondary', 'primaryReadonly', 'secondaryReadonly'
-            /// </param>
-            public static void BeginRegenerateKey(this IDatabaseAccountsOperations operations, string resourceGroupName, string accountName, string keyKind)
-            {
-                operations.BeginRegenerateKeyAsync(resourceGroupName, accountName, keyKind).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Regenerates an access key for the specified Azure DocumentDB database
             /// account.

@@ -22,20 +22,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public static partial class ProviderOperationsExtensions
     {
-            /// <summary>
-            /// Get available application frameworks and their versions
-            /// </summary>
-            /// <remarks>
-            /// Get available application frameworks and their versions
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static object GetAvailableStacks(this IProviderOperations operations)
-            {
-                return operations.GetAvailableStacksAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get available application frameworks and their versions
             /// </summary>
@@ -56,20 +43,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get available application frameworks and their versions
-            /// </summary>
-            /// <remarks>
-            /// Get available application frameworks and their versions
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static object GetAvailableStacksOnPrem(this IProviderOperations operations)
-            {
-                return operations.GetAvailableStacksOnPremAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get available application frameworks and their versions
             /// </summary>

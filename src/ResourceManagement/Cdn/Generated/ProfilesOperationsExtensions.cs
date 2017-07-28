@@ -24,17 +24,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// </summary>
     public static partial class ProfilesOperationsExtensions
     {
-            /// <summary>
-            /// Lists all of the CDN profiles within an Azure subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<ProfileInner> List(this IProfilesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the CDN profiles within an Azure subscription.
             /// </summary>
@@ -52,20 +42,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the CDN profiles within a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            public static IPage<ProfileInner> ListByResourceGroup(this IProfilesOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the CDN profiles within a resource group.
             /// </summary>
@@ -86,24 +63,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets a CDN profile with the specified profile name under the specified
-            /// subscription and resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            public static ProfileInner Get(this IProfilesOperations operations, string resourceGroupName, string profileName)
-            {
-                return operations.GetAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a CDN profile with the specified profile name under the specified
             /// subscription and resource group.
@@ -128,27 +88,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates a new CDN profile with a profile name under the specified
-            /// subscription and resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='profile'>
-            /// Profile properties needed to create a new profile.
-            /// </param>
-            public static ProfileInner Create(this IProfilesOperations operations, string resourceGroupName, string profileName, ProfileInner profile)
-            {
-                return operations.CreateAsync(resourceGroupName, profileName, profile).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new CDN profile with a profile name under the specified
             /// subscription and resource group.
@@ -176,27 +116,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Updates an existing CDN profile with the specified profile name under the
-            /// specified subscription and resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='tags'>
-            /// Profile tags
-            /// </param>
-            public static ProfileInner Update(this IProfilesOperations operations, string resourceGroupName, string profileName, IDictionary<string, string> tags)
-            {
-                return operations.UpdateAsync(resourceGroupName, profileName, tags).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates an existing CDN profile with the specified profile name under the
             /// specified subscription and resource group.
@@ -224,25 +144,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an existing CDN profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all of the sub-resources including
-            /// endpoints, origins and custom domains.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            public static void Delete(this IProfilesOperations operations, string resourceGroupName, string profileName)
-            {
-                operations.DeleteAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an existing CDN profile with the specified parameters. Deleting a
             /// profile will result in the deletion of all of the sub-resources including
@@ -265,28 +167,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, profileName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal.
-            /// Supplemnetal portal is used to configure advanced feature capabilities that
-            /// are not yet available in the Azure portal, such as core reports in a
-            /// standard profile; rules engine, advanced HTTP reports, and real-time stats
-            /// and alerts in a premium profile. The SSO URI changes approximately every 10
-            /// minutes.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            public static SsoUriInner GenerateSsoUri(this IProfilesOperations operations, string resourceGroupName, string profileName)
-            {
-                return operations.GenerateSsoUriAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Generates a dynamic SSO URI used to sign in to the CDN supplemental portal.
             /// Supplemnetal portal is used to configure advanced feature capabilities that
@@ -315,23 +196,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Checks the quota and actual usage of endpoints under the given CDN profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            public static IPage<ResourceUsageInner> ListResourceUsage(this IProfilesOperations operations, string resourceGroupName, string profileName)
-            {
-                return operations.ListResourceUsageAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Checks the quota and actual usage of endpoints under the given CDN profile.
             /// </summary>
@@ -355,27 +220,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates a new CDN profile with a profile name under the specified
-            /// subscription and resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='profile'>
-            /// Profile properties needed to create a new profile.
-            /// </param>
-            public static ProfileInner BeginCreate(this IProfilesOperations operations, string resourceGroupName, string profileName, ProfileInner profile)
-            {
-                return operations.BeginCreateAsync(resourceGroupName, profileName, profile).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new CDN profile with a profile name under the specified
             /// subscription and resource group.
@@ -403,27 +248,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Updates an existing CDN profile with the specified profile name under the
-            /// specified subscription and resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='tags'>
-            /// Profile tags
-            /// </param>
-            public static ProfileInner BeginUpdate(this IProfilesOperations operations, string resourceGroupName, string profileName, IDictionary<string, string> tags)
-            {
-                return operations.BeginUpdateAsync(resourceGroupName, profileName, tags).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates an existing CDN profile with the specified profile name under the
             /// specified subscription and resource group.
@@ -451,25 +276,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an existing CDN profile with the specified parameters. Deleting a
-            /// profile will result in the deletion of all of the sub-resources including
-            /// endpoints, origins and custom domains.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            public static void BeginDelete(this IProfilesOperations operations, string resourceGroupName, string profileName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an existing CDN profile with the specified parameters. Deleting a
             /// profile will result in the deletion of all of the sub-resources including
@@ -492,20 +299,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, profileName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Lists all of the CDN profiles within an Azure subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ProfileInner> ListNext(this IProfilesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the CDN profiles within an Azure subscription.
             /// </summary>
@@ -526,20 +320,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the CDN profiles within a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ProfileInner> ListByResourceGroupNext(this IProfilesOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the CDN profiles within a resource group.
             /// </summary>
@@ -560,20 +341,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Checks the quota and actual usage of endpoints under the given CDN profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceUsageInner> ListResourceUsageNext(this IProfilesOperations operations, string nextPageLink)
-            {
-                return operations.ListResourceUsageNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Checks the quota and actual usage of endpoints under the given CDN profile.
             /// </summary>

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         public IEnumerable<IVirtualMachineImage> List()
         {
             List<IVirtualMachineImage> firstPage = new List<IVirtualMachineImage>();
-            var innerImages = innerCollection.List(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name);
+            var innerImages = Extensions.Synchronize(() => innerCollection.ListAsync(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name));
 
             foreach(var innerImage in innerImages)
             {
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                     sku.Offer.Name,
                     sku.Name,
                     version,
-                    innerCollection.Get(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name, version)));
+                    Extensions.Synchronize(() => innerCollection.GetAsync(sku.Region.Name, sku.Publisher.Name, sku.Offer.Name, sku.Name, version))));
             }
             return firstPage;
         }

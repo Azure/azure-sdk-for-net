@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public bool CheckExistence(string resourceGroupName, string deploymentName)
         {
-            return Manager.Inner.Deployments.CheckExistence(resourceGroupName, deploymentName);
+            return Extensions.Synchronize(() => Manager.Inner.Deployments.CheckExistenceAsync(resourceGroupName, deploymentName));
         }
 
         public IBlank Define(string name)
@@ -50,12 +50,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public void DeleteById(string id)
         {
-            DeleteByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => DeleteByIdAsync(id, CancellationToken.None));
         }
 
         public void DeleteByResourceGroup(string groupName, string name)
         {
-            DeleteByResourceGroupAsync(groupName, name).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() =>  DeleteByResourceGroupAsync(groupName, name, CancellationToken.None));
         }
 
         public async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IDeployment GetByResourceGroup(string resourceGroupName, string name)
         {
-            return GetByResourceGroupAsync(resourceGroupName, name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByResourceGroupAsync(resourceGroupName, name, CancellationToken.None));
         }
 
         public async Task<IDeployment> GetByResourceGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IDeployment GetById(string id)
         {
-            return GetByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByIdAsync(id));
         }
 
         public async Task<IDeployment> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
             {
                 try
                 {
-                    var deploymentExtendedInner = Manager.Inner.Deployments.Get(resourceGroup.Name, name);
+                    var deploymentExtendedInner = Extensions.Synchronize(() => Manager.Inner.Deployments.GetAsync(resourceGroup.Name, name));
                     if (deploymentExtendedInner != null)
                     {
                         return WrapModel(deploymentExtendedInner);
@@ -122,8 +122,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
 
         public IEnumerable<IDeployment> ListByResourceGroup(string resourceGroupName)
         {
-            return Manager.Inner.Deployments.List(resourceGroupName)
-                                            .AsContinuousCollection(link => Manager.Inner.Deployments.ListNext(link))
+            return Extensions.Synchronize(() => Manager.Inner.Deployments.ListAsync(resourceGroupName))
+                                            .AsContinuousCollection(link => Extensions.Synchronize(() => Manager.Inner.Deployments.ListNextAsync(link)))
                                             .Select(inner => WrapModel(inner));
         }
 

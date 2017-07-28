@@ -24,23 +24,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
     /// </summary>
     public static partial class EndpointsOperationsExtensions
     {
-            /// <summary>
-            /// Lists existing CDN endpoints.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            public static IPage<EndpointInner> ListByProfile(this IEndpointsOperations operations, string resourceGroupName, string profileName)
-            {
-                return operations.ListByProfileAsync(resourceGroupName, profileName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists existing CDN endpoints.
             /// </summary>
@@ -64,27 +48,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets an existing CDN endpoint with the specified endpoint name under the
-            /// specified subscription, resource group and profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            public static EndpointInner Get(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
-            {
-                return operations.GetAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets an existing CDN endpoint with the specified endpoint name under the
             /// specified subscription, resource group and profile.
@@ -112,30 +76,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates a new CDN endpoint with the specified endpoint name under the
-            /// specified subscription, resource group and profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='endpoint'>
-            /// Endpoint properties
-            /// </param>
-            public static EndpointInner Create(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointInner endpoint)
-            {
-                return operations.CreateAsync(resourceGroupName, profileName, endpointName, endpoint).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new CDN endpoint with the specified endpoint name under the
             /// specified subscription, resource group and profile.
@@ -166,33 +107,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Updates an existing CDN endpoint with the specified endpoint name under the
-            /// specified subscription, resource group and profile. Only tags and Origin
-            /// HostHeader can be updated after creating an endpoint. To update origins,
-            /// use the Update Origin operation. To update custom domains, use the Update
-            /// Custom Domain operation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='endpointUpdateProperties'>
-            /// Endpoint update properties
-            /// </param>
-            public static EndpointInner Update(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointUpdateParametersInner endpointUpdateProperties)
-            {
-                return operations.UpdateAsync(resourceGroupName, profileName, endpointName, endpointUpdateProperties).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates an existing CDN endpoint with the specified endpoint name under the
             /// specified subscription, resource group and profile. Only tags and Origin
@@ -226,27 +141,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an existing CDN endpoint with the specified endpoint name under the
-            /// specified subscription, resource group and profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            public static void Delete(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
-            {
-                operations.DeleteAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an existing CDN endpoint with the specified endpoint name under the
             /// specified subscription, resource group and profile.
@@ -271,26 +166,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Starts an existing CDN endpoint that is on a stopped state.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            public static EndpointInner Start(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
-            {
-                return operations.StartAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Starts an existing CDN endpoint that is on a stopped state.
             /// </summary>
@@ -317,26 +193,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Stops an existing running CDN endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            public static EndpointInner Stop(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
-            {
-                return operations.StopAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Stops an existing running CDN endpoint.
             /// </summary>
@@ -363,30 +220,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Removes a content from CDN.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='contentPaths'>
-            /// The path to the content to be purged. Can describe a file path or a wild
-            /// card directory.
-            /// </param>
-            public static void PurgeContent(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
-            {
-                operations.PurgeContentAsync(resourceGroupName, profileName, endpointName, contentPaths).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Removes a content from CDN.
             /// </summary>
@@ -414,30 +248,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 (await operations.PurgeContentWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, contentPaths, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Pre-loads a content to CDN. Available for Verizon Profiles.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='contentPaths'>
-            /// The path to the content to be loaded. Path should be a relative file URL of
-            /// the origin.
-            /// </param>
-            public static void LoadContent(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
-            {
-                operations.LoadContentAsync(resourceGroupName, profileName, endpointName, contentPaths).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Pre-loads a content to CDN. Available for Verizon Profiles.
             /// </summary>
@@ -465,30 +276,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 (await operations.LoadContentWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, contentPaths, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Validates the custom domain mapping to ensure it maps to the correct CDN
-            /// endpoint in DNS.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='hostName'>
-            /// The host name of the custom domain. Must be a domain name.
-            /// </param>
-            public static ValidateCustomDomainOutputInner ValidateCustomDomain(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, string hostName)
-            {
-                return operations.ValidateCustomDomainAsync(resourceGroupName, profileName, endpointName, hostName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Validates the custom domain mapping to ensure it maps to the correct CDN
             /// endpoint in DNS.
@@ -519,27 +307,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Checks the quota and usage of geo filters and custom domains under the
-            /// given endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            public static IPage<ResourceUsageInner> ListResourceUsage(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
-            {
-                return operations.ListResourceUsageAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Checks the quota and usage of geo filters and custom domains under the
             /// given endpoint.
@@ -567,30 +335,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates a new CDN endpoint with the specified endpoint name under the
-            /// specified subscription, resource group and profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='endpoint'>
-            /// Endpoint properties
-            /// </param>
-            public static EndpointInner BeginCreate(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointInner endpoint)
-            {
-                return operations.BeginCreateAsync(resourceGroupName, profileName, endpointName, endpoint).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a new CDN endpoint with the specified endpoint name under the
             /// specified subscription, resource group and profile.
@@ -621,33 +366,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Updates an existing CDN endpoint with the specified endpoint name under the
-            /// specified subscription, resource group and profile. Only tags and Origin
-            /// HostHeader can be updated after creating an endpoint. To update origins,
-            /// use the Update Origin operation. To update custom domains, use the Update
-            /// Custom Domain operation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='endpointUpdateProperties'>
-            /// Endpoint update properties
-            /// </param>
-            public static EndpointInner BeginUpdate(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointUpdateParametersInner endpointUpdateProperties)
-            {
-                return operations.BeginUpdateAsync(resourceGroupName, profileName, endpointName, endpointUpdateProperties).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates an existing CDN endpoint with the specified endpoint name under the
             /// specified subscription, resource group and profile. Only tags and Origin
@@ -681,27 +400,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an existing CDN endpoint with the specified endpoint name under the
-            /// specified subscription, resource group and profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            public static void BeginDelete(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an existing CDN endpoint with the specified endpoint name under the
             /// specified subscription, resource group and profile.
@@ -726,26 +425,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Starts an existing CDN endpoint that is on a stopped state.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            public static EndpointInner BeginStart(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
-            {
-                return operations.BeginStartAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Starts an existing CDN endpoint that is on a stopped state.
             /// </summary>
@@ -772,26 +452,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Stops an existing running CDN endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            public static EndpointInner BeginStop(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
-            {
-                return operations.BeginStopAsync(resourceGroupName, profileName, endpointName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Stops an existing running CDN endpoint.
             /// </summary>
@@ -818,30 +479,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Removes a content from CDN.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='contentPaths'>
-            /// The path to the content to be purged. Can describe a file path or a wild
-            /// card directory.
-            /// </param>
-            public static void BeginPurgeContent(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
-            {
-                operations.BeginPurgeContentAsync(resourceGroupName, profileName, endpointName, contentPaths).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Removes a content from CDN.
             /// </summary>
@@ -869,30 +507,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 (await operations.BeginPurgeContentWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, contentPaths, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Pre-loads a content to CDN. Available for Verizon Profiles.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile which is unique within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint under the profile which is unique globally.
-            /// </param>
-            /// <param name='contentPaths'>
-            /// The path to the content to be loaded. Path should be a relative file URL of
-            /// the origin.
-            /// </param>
-            public static void BeginLoadContent(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, IList<string> contentPaths)
-            {
-                operations.BeginLoadContentAsync(resourceGroupName, profileName, endpointName, contentPaths).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Pre-loads a content to CDN. Available for Verizon Profiles.
             /// </summary>
@@ -920,20 +535,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 (await operations.BeginLoadContentWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, contentPaths, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Lists existing CDN endpoints.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<EndpointInner> ListByProfileNext(this IEndpointsOperations operations, string nextPageLink)
-            {
-                return operations.ListByProfileNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists existing CDN endpoints.
             /// </summary>
@@ -954,21 +556,7 @@ namespace Microsoft.Azure.Management.Cdn.Fluent
                 }
             }
 
-            /// <summary>
-            /// Checks the quota and usage of geo filters and custom domains under the
-            /// given endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ResourceUsageInner> ListResourceUsageNext(this IEndpointsOperations operations, string nextPageLink)
-            {
-                return operations.ListResourceUsageNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Checks the quota and usage of geo filters and custom domains under the
             /// given endpoint.

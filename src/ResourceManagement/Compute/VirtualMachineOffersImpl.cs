@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:CF6916AB824B8B57D0C4089778CE6C55
         public IEnumerable<IVirtualMachineOffer> List()
         {
-            return WrapList(innerCollection.ListOffers(publisher.Region.Name, publisher.Name));
+            return WrapList(Extensions.Synchronize(() => innerCollection.ListOffersAsync(publisher.Region.Name, publisher.Name)));
         }
 
         public async Task<IPagedCollection<IVirtualMachineOffer>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))

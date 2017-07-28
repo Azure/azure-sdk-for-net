@@ -22,20 +22,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
     /// </summary>
     public static partial class WebSiteManagementClientExtensions
     {
-            /// <summary>
-            /// Gets publishing user
-            /// </summary>
-            /// <remarks>
-            /// Gets publishing user
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static UserInner GetPublishingUser(this IWebSiteManagementClient operations)
-            {
-                return operations.GetPublishingUserAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets publishing user
             /// </summary>
@@ -56,23 +43,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Updates publishing user
-            /// </summary>
-            /// <remarks>
-            /// Updates publishing user
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='userDetails'>
-            /// Details of publishing user
-            /// </param>
-            public static UserInner UpdatePublishingUser(this IWebSiteManagementClient operations, UserInner userDetails)
-            {
-                return operations.UpdatePublishingUserAsync(userDetails).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates publishing user
             /// </summary>
@@ -96,20 +67,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the source controls available for Azure websites.
-            /// </summary>
-            /// <remarks>
-            /// Gets the source controls available for Azure websites.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<SourceControlInner> ListSourceControls(this IWebSiteManagementClient operations)
-            {
-                return operations.ListSourceControlsAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the source controls available for Azure websites.
             /// </summary>
@@ -130,26 +88,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Updates source control token
-            /// </summary>
-            /// <remarks>
-            /// Updates source control token
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='sourceControlType'>
-            /// Type of source control
-            /// </param>
-            /// <param name='requestMessage'>
-            /// Source control token information
-            /// </param>
-            public static SourceControlInner UpdateSourceControl(this IWebSiteManagementClient operations, string sourceControlType, SourceControlInner requestMessage)
-            {
-                return operations.UpdateSourceControlAsync(sourceControlType, requestMessage).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates source control token
             /// </summary>
@@ -176,30 +115,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Check if a resource name is available.
-            /// </summary>
-            /// <remarks>
-            /// Check if a resource name is available.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Resource name to verify.
-            /// </param>
-            /// <param name='type'>
-            /// Resource type used for verification. Possible values include: 'Site',
-            /// 'Slot', 'HostingEnvironment'
-            /// </param>
-            /// <param name='isFqdn'>
-            /// Is fully qualified domain name.
-            /// </param>
-            public static ResourceNameAvailabilityInner CheckNameAvailability(this IWebSiteManagementClient operations, string name, string type, bool? isFqdn = default(bool?))
-            {
-                return operations.CheckNameAvailabilityAsync(name, type, isFqdn).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Check if a resource name is available.
             /// </summary>
@@ -230,28 +146,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get a list of available geographical regions.
-            /// </summary>
-            /// <remarks>
-            /// Get a list of available geographical regions.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='sku'>
-            /// Name of SKU used to filter the regions. Possible values include: 'Free',
-            /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic', 'Isolated'
-            /// </param>
-            /// <param name='linuxWorkersEnabled'>
-            /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions
-            /// that support Linux workers.
-            /// </param>
-            public static IPage<GeoRegionInner> ListGeoRegions(this IWebSiteManagementClient operations, string sku = default(string), bool? linuxWorkersEnabled = default(bool?))
-            {
-                return operations.ListGeoRegionsAsync(sku, linuxWorkersEnabled).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get a list of available geographical regions.
             /// </summary>
@@ -280,20 +175,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// List all premier add-on offers.
-            /// </summary>
-            /// <remarks>
-            /// List all premier add-on offers.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<PremierAddOnOfferInner> ListPremierAddOnOffers(this IWebSiteManagementClient operations)
-            {
-                return operations.ListPremierAddOnOffersAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// List all premier add-on offers.
             /// </summary>
@@ -314,20 +196,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// List all SKUs.
-            /// </summary>
-            /// <remarks>
-            /// List all SKUs.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static SkuInfosInner ListSkus(this IWebSiteManagementClient operations)
-            {
-                return operations.ListSkusAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// List all SKUs.
             /// </summary>
@@ -348,26 +217,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Move resources between resource groups.
-            /// </summary>
-            /// <remarks>
-            /// Move resources between resource groups.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='moveResourceEnvelope'>
-            /// Object that represents the resource to move.
-            /// </param>
-            public static void Move(this IWebSiteManagementClient operations, string resourceGroupName, CsmMoveResourceEnvelopeInner moveResourceEnvelope)
-            {
-                operations.MoveAsync(resourceGroupName, moveResourceEnvelope).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Move resources between resource groups.
             /// </summary>
@@ -391,26 +241,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 (await operations.MoveWithHttpMessagesAsync(resourceGroupName, moveResourceEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Validate if a resource can be created.
-            /// </summary>
-            /// <remarks>
-            /// Validate if a resource can be created.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='validateRequest'>
-            /// Request with the resources to validate.
-            /// </param>
-            public static ValidateResponseInner Validate(this IWebSiteManagementClient operations, string resourceGroupName, ValidateRequestInner validateRequest)
-            {
-                return operations.ValidateAsync(resourceGroupName, validateRequest).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Validate if a resource can be created.
             /// </summary>
@@ -437,26 +268,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Validate whether a resource can be moved.
-            /// </summary>
-            /// <remarks>
-            /// Validate whether a resource can be moved.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group to which the resource belongs.
-            /// </param>
-            /// <param name='moveResourceEnvelope'>
-            /// Object that represents the resource to move.
-            /// </param>
-            public static void ValidateMove(this IWebSiteManagementClient operations, string resourceGroupName, CsmMoveResourceEnvelopeInner moveResourceEnvelope)
-            {
-                operations.ValidateMoveAsync(resourceGroupName, moveResourceEnvelope).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Validate whether a resource can be moved.
             /// </summary>
@@ -480,23 +292,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 (await operations.ValidateMoveWithHttpMessagesAsync(resourceGroupName, moveResourceEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets the source controls available for Azure websites.
-            /// </summary>
-            /// <remarks>
-            /// Gets the source controls available for Azure websites.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SourceControlInner> ListSourceControlsNext(this IWebSiteManagementClient operations, string nextPageLink)
-            {
-                return operations.ListSourceControlsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the source controls available for Azure websites.
             /// </summary>
@@ -520,23 +316,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// Get a list of available geographical regions.
-            /// </summary>
-            /// <remarks>
-            /// Get a list of available geographical regions.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<GeoRegionInner> ListGeoRegionsNext(this IWebSiteManagementClient operations, string nextPageLink)
-            {
-                return operations.ListGeoRegionsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get a list of available geographical regions.
             /// </summary>
@@ -560,23 +340,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
                 }
             }
 
-            /// <summary>
-            /// List all premier add-on offers.
-            /// </summary>
-            /// <remarks>
-            /// List all premier add-on offers.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PremierAddOnOfferInner> ListPremierAddOnOffersNext(this IWebSiteManagementClient operations, string nextPageLink)
-            {
-                return operations.ListPremierAddOnOffersNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// List all premier add-on offers.
             /// </summary>
