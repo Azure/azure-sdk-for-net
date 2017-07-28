@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:C4C74C5CA23BE3B4CAFEFD0EF23149A0:B6DE3F3ADD30CF80937F7E47989E73C7
         public CheckNameAvailabilityResult CheckNameAvailability(string name)
         {
-            return CheckNameAvailabilityAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => CheckNameAvailabilityAsync(name));
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:AE7618DEFA52BF6B178D880C65E79670

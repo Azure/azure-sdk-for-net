@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         ///GENMHASH:5C58E472AE184041661005E7B2D7EE30:6B6D1D91AC2FCE3076EBD61D0DB099CF
         public T GetByName(string name)
         {
-            return GetByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetByNameAsync(name));
         }
 
         public abstract Task DeleteByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         ///GENMHASH:C2DC9CFAB6C291D220DD4F29AFF1BBEC:7459D8B9F8BB0A1EBD2FC4702A86F2F5
         public void DeleteByName(string name)
         {
-            DeleteByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => DeleteByNameAsync(name));
         }
 
         ///GENMHASH:D3FBF3E757A0D33222555A7D439A3F12:A13124E7BC21C819368C8CFA9F3DBE5F
@@ -76,8 +76,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:874C7A8E3CDF988B4BDA901B0FE62ABD
         public IEnumerable<T> List()
         {
-            return WrapList(ListInnerFirstPageAsync(default(CancellationToken)).ConfigureAwait(false).GetAwaiter().GetResult()
-                            .AsContinuousCollection(link => ListInnerNextPageAsync(link, default(CancellationToken)).ConfigureAwait(false).GetAwaiter().GetResult()));
+            return WrapList(Extensions.Synchronize(() => ListInnerFirstPageAsync(default(CancellationToken)))
+                            .AsContinuousCollection(link => Extensions.Synchronize(() => ListInnerNextPageAsync(link, default(CancellationToken)))));
         }
 
         public async Task<IPagedCollection<T>> ListAsync(bool loadAllPages = true, CancellationToken cancellationToken = default(CancellationToken))

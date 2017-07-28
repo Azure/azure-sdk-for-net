@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:65E6085BB9054A86F6A84772E3F5A9EC:EBCADD6850E9711DA91415429B1577E3
         public void Delete()
         {
-            Manager.Inner.Databases.Delete(ResourceGroupName, SqlServerName(), Name);
+            Extensions.Synchronize(() => Manager.Inner.Databases.DeleteAsync(ResourceGroupName, SqlServerName(), Name));
         }
 
         ///GENMHASH:B23645FC2F779DBC6F44B880C488B561:FD8121B9F8029AC826DD64E68A0C727C
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             if (Inner.UpgradeHint == null)
             {
-                SetInner(Manager.Inner.Databases.Get(ResourceGroupName, SqlServerName(), Name, "upgradeHint"));
+                SetInner(Extensions.Synchronize(() => Manager.Inner.Databases.GetAsync(ResourceGroupName, SqlServerName(), Name, "upgradeHint")));
             }
             if (Inner.UpgradeHint != null)
             {
@@ -166,8 +166,8 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         ///GENMHASH:94274C9965DC54702B64A387A19F1F2B:CBA2A056219E542449E5F7E9EBA4B7D8
         public IReadOnlyDictionary<string, Microsoft.Azure.Management.Sql.Fluent.IReplicationLink> ListReplicationLinks()
         {
-            var replicationLinks = Manager.Inner.Databases.ListReplicationLinks(
-                ResourceGroupName, SqlServerName(), Name);
+            var replicationLinks = Extensions.Synchronize(() => Manager.Inner.Databases.ListReplicationLinksAsync(
+                ResourceGroupName, SqlServerName(), Name));
 
             IDictionary<string, IReplicationLink> result = new Dictionary<string, IReplicationLink>();
             foreach (var replicationLink in replicationLinks)
@@ -197,8 +197,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             Func<DatabaseMetric, DatabaseMetricImpl> convertor = (databaseMetricInner) => new DatabaseMetricImpl(databaseMetricInner);
 
-            return Manager.Inner.Databases
-                .ListUsages(ResourceGroupName,SqlServerName(),Name)
+            return Extensions.Synchronize(() => Manager.Inner.Databases.ListUsagesAsync(ResourceGroupName,SqlServerName(),Name))
                 .Select(inner => convertor(inner)).ToList();
         }
 
@@ -236,10 +235,11 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         public ITransparentDataEncryption GetTransparentDataEncryption()
         {
             return new TransparentDataEncryptionImpl(
-                Manager.Inner.Databases.GetTransparentDataEncryptionConfiguration(
+                Extensions.Synchronize(() => Manager.Inner.Databases.GetTransparentDataEncryptionConfigurationAsync(
                     ResourceGroupName,
                     SqlServerName(),
-                    Name), Manager.Inner.Databases);
+                    Name)), 
+                Manager.Inner.Databases);
         }
 
         ///GENMHASH:4002186478A1CB0B59732EBFB18DEB3A:D460F07553280DBC1866880BA0BD8AEF
@@ -269,8 +269,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
         {
             Func<RestorePointInner, RestorePointImpl> convertor = (restorePointInner) => new RestorePointImpl(restorePointInner);
 
-            return Manager.Inner.Databases
-                .ListRestorePoints(ResourceGroupName, SqlServerName(), Name)
+            return Extensions.Synchronize(() => Manager.Inner.Databases.ListRestorePointsAsync(ResourceGroupName, SqlServerName(), Name))
                 .Select(inner => convertor(inner)).ToList();
         }
 
@@ -330,7 +329,7 @@ namespace Microsoft.Azure.Management.Sql.Fluent
             var serviceTierAdvisorMap = new Dictionary<string, IServiceTierAdvisor>();
 
             foreach (var serviceTierAdvisorInner
-                in Manager.Inner.Databases.ListServiceTierAdvisors(ResourceGroupName, SqlServerName(), Name))
+                in Extensions.Synchronize(() => Manager.Inner.Databases.ListServiceTierAdvisorsAsync(ResourceGroupName, SqlServerName(), Name)))
             {
                 serviceTierAdvisorMap.Add(serviceTierAdvisorInner.Name, new ServiceTierAdvisorImpl(serviceTierAdvisorInner,
                     Manager.Inner.Databases));

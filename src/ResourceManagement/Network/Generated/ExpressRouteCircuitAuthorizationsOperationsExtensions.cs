@@ -22,27 +22,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     /// </summary>
     public static partial class ExpressRouteCircuitAuthorizationsOperationsExtensions
     {
-            /// <summary>
-            /// Deletes the specified authorization from the specified express route
-            /// circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='authorizationName'>
-            /// The name of the authorization.
-            /// </param>
-            public static void Delete(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName)
-            {
-                operations.DeleteAsync(resourceGroupName, circuitName, authorizationName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified authorization from the specified express route
             /// circuit.
@@ -67,26 +47,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, circuitName, authorizationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets the specified authorization from the specified express route circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='authorizationName'>
-            /// The name of the authorization.
-            /// </param>
-            public static ExpressRouteCircuitAuthorizationInner Get(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName)
-            {
-                return operations.GetAsync(resourceGroupName, circuitName, authorizationName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the specified authorization from the specified express route circuit.
             /// </summary>
@@ -113,30 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates an authorization in the specified express route circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='authorizationName'>
-            /// The name of the authorization.
-            /// </param>
-            /// <param name='authorizationParameters'>
-            /// Parameters supplied to the create or update express route circuit
-            /// authorization operation.
-            /// </param>
-            public static ExpressRouteCircuitAuthorizationInner CreateOrUpdate(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationInner authorizationParameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates an authorization in the specified express route circuit.
             /// </summary>
@@ -167,23 +105,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all authorizations in an express route circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the circuit.
-            /// </param>
-            public static IPage<ExpressRouteCircuitAuthorizationInner> List(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName)
-            {
-                return operations.ListAsync(resourceGroupName, circuitName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all authorizations in an express route circuit.
             /// </summary>
@@ -207,27 +129,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified authorization from the specified express route
-            /// circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='authorizationName'>
-            /// The name of the authorization.
-            /// </param>
-            public static void BeginDelete(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, circuitName, authorizationName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified authorization from the specified express route
             /// circuit.
@@ -252,30 +154,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, circuitName, authorizationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Creates or updates an authorization in the specified express route circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='circuitName'>
-            /// The name of the express route circuit.
-            /// </param>
-            /// <param name='authorizationName'>
-            /// The name of the authorization.
-            /// </param>
-            /// <param name='authorizationParameters'>
-            /// Parameters supplied to the create or update express route circuit
-            /// authorization operation.
-            /// </param>
-            public static ExpressRouteCircuitAuthorizationInner BeginCreateOrUpdate(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationInner authorizationParameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates an authorization in the specified express route circuit.
             /// </summary>
@@ -306,20 +185,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all authorizations in an express route circuit.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ExpressRouteCircuitAuthorizationInner> ListNext(this IExpressRouteCircuitAuthorizationsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all authorizations in an express route circuit.
             /// </summary>

@@ -23,24 +23,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// </summary>
     public static partial class ResourcesOperationsExtensions
     {
-            /// <summary>
-            /// Move resources from one resource group to another. The resources being
-            /// moved should all be in the same resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='sourceResourceGroupName'>
-            /// Source resource group name.
-            /// </param>
-            /// <param name='parameters'>
-            /// move resources' parameters.
-            /// </param>
-            public static void MoveResources(this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfoInner parameters)
-            {
-                operations.MoveResourcesAsync(sourceResourceGroupName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Move resources from one resource group to another. The resources being
             /// moved should all be in the same resource group.
@@ -62,20 +45,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 (await operations.MoveResourcesWithHttpMessagesAsync(sourceResourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Get all of the resources under a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<GenericResourceInner> List(this IResourcesOperations operations, ODataQuery<GenericResourceFilterInner> odataQuery = default(ODataQuery<GenericResourceFilterInner>))
-            {
-                return ((IResourcesOperations)operations).ListAsync(odataQuery).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get all of the resources under a subscription.
             /// </summary>
@@ -96,34 +66,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Checks whether resource exists.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='parentResourcePath'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceType'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceName'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='apiVersion'>
-            /// </param>
-            public static bool CheckExistence(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
-            {
-                return operations.CheckExistenceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Checks whether resource exists.
             /// </summary>
@@ -158,34 +101,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Delete resource and all of its resources.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='parentResourcePath'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceType'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceName'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='apiVersion'>
-            /// </param>
-            public static void Delete(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
-            {
-                operations.DeleteAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Delete resource and all of its resources.
             /// </summary>
@@ -217,37 +133,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Create a resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='parentResourcePath'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceType'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceName'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='apiVersion'>
-            /// </param>
-            /// <param name='parameters'>
-            /// Create or update resource parameters.
-            /// </param>
-            public static GenericResourceInner CreateOrUpdate(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResourceInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create a resource.
             /// </summary>
@@ -285,34 +171,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns a resource belonging to a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='parentResourcePath'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceType'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='resourceName'>
-            /// Resource identity.
-            /// </param>
-            /// <param name='apiVersion'>
-            /// </param>
-            public static GenericResourceInner Get(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
-            {
-                return operations.GetAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns a resource belonging to a resource group.
             /// </summary>
@@ -347,24 +206,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Move resources from one resource group to another. The resources being
-            /// moved should all be in the same resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='sourceResourceGroupName'>
-            /// Source resource group name.
-            /// </param>
-            /// <param name='parameters'>
-            /// move resources' parameters.
-            /// </param>
-            public static void BeginMoveResources(this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfoInner parameters)
-            {
-                operations.BeginMoveResourcesAsync(sourceResourceGroupName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Move resources from one resource group to another. The resources being
             /// moved should all be in the same resource group.
@@ -386,20 +228,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 (await operations.BeginMoveResourcesWithHttpMessagesAsync(sourceResourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Get all of the resources under a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<GenericResourceInner> ListNext(this IResourcesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Get all of the resources under a subscription.
             /// </summary>

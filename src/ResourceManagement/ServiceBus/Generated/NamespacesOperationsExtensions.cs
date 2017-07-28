@@ -23,22 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// </summary>
     public static partial class NamespacesOperationsExtensions
     {
-            /// <summary>
-            /// Check the give namespace name availability.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// The Name to check the namespce name availability and The namespace name can
-            /// contain only letters, numbers, and hyphens. The namespace must start with a
-            /// letter, and it must end with a letter or number.
-            /// </param>
-            public static CheckNameAvailabilityResultInner CheckNameAvailabilityMethod(this INamespacesOperations operations, string name)
-            {
-                return operations.CheckNameAvailabilityMethodAsync(name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Check the give namespace name availability.
             /// </summary>
@@ -61,19 +46,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the available namespaces within the subscription, irrespective of
-            /// the resource groups.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<NamespaceModelInner> List(this INamespacesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the available namespaces within the subscription, irrespective of
             /// the resource groups.
@@ -93,21 +66,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the available namespaces within a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            public static IPage<NamespaceModelInner> ListByResourceGroup(this INamespacesOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the available namespaces within a resource group.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
@@ -129,28 +88,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a service namespace. Once created, this namespace's
-            /// resource manifest is immutable. This operation is idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639408.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a namespace resource.
-            /// </param>
-            public static NamespaceModelInner CreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceModelInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a service namespace. Once created, this namespace's
             /// resource manifest is immutable. This operation is idempotent.
@@ -179,25 +117,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an existing namespace. This operation also removes all associated
-            /// resources under the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639389.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            public static void Delete(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an existing namespace. This operation also removes all associated
             /// resources under the namespace.
@@ -220,24 +140,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets a description for the specified namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639379.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            public static NamespaceModelInner Get(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a description for the specified namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639379.aspx" />
@@ -262,27 +165,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Updates a service namespace. Once created, this namespace's resource
-            /// manifest is immutable. This operation is idempotent.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update a namespace resource.
-            /// </param>
-            public static NamespaceModelInner Update(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceUpdateParametersInner parameters)
-            {
-                return operations.UpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates a service namespace. Once created, this namespace's resource
             /// manifest is immutable. This operation is idempotent.
@@ -310,24 +193,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the authorization rules for a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleInner> ListAuthorizationRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the authorization rules for a namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
@@ -352,30 +218,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates an authorization rule for a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639410.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            /// <param name='rights'>
-            /// The rights associated with the rule.
-            /// </param>
-            public static SharedAccessAuthorizationRuleInner CreateOrUpdateAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, IList<AccessRights?> rights)
-            {
-                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, rights).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates an authorization rule for a namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639410.aspx" />
@@ -406,27 +249,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a namespace authorization rule.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639417.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            public static void DeleteAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
-            {
-                operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a namespace authorization rule.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639417.aspx" />
@@ -451,27 +274,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets an authorization rule for a namespace by rule name.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639392.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            public static SharedAccessAuthorizationRuleInner GetAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
-            {
-                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets an authorization rule for a namespace by rule name.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639392.aspx" />
@@ -499,27 +302,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the primary and secondary connection strings for the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639398.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            public static ResourceListKeysInner ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the primary and secondary connection strings for the namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639398.aspx" />
@@ -547,31 +330,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Regenerates the primary or secondary connection strings for the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt718977.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            /// <param name='policykey'>
-            /// Key that needs to be regenerated. Possible values include: 'PrimaryKey',
-            /// 'SecondaryKey'
-            /// </param>
-            public static ResourceListKeysInner RegenerateKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, Policykey? policykey = default(Policykey?))
-            {
-                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, authorizationRuleName, policykey).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Regenerates the primary or secondary connection strings for the namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt718977.aspx" />
@@ -603,28 +362,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a service namespace. Once created, this namespace's
-            /// resource manifest is immutable. This operation is idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639408.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a namespace resource.
-            /// </param>
-            public static NamespaceModelInner BeginCreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceModelInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a service namespace. Once created, this namespace's
             /// resource manifest is immutable. This operation is idempotent.
@@ -653,25 +391,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an existing namespace. This operation also removes all associated
-            /// resources under the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639389.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            public static void BeginDelete(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an existing namespace. This operation also removes all associated
             /// resources under the namespace.
@@ -694,22 +414,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets all the available namespaces within the subscription, irrespective of
-            /// the resource groups.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NamespaceModelInner> ListNext(this INamespacesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the available namespaces within the subscription, irrespective of
             /// the resource groups.
@@ -732,21 +437,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the available namespaces within a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NamespaceModelInner> ListByResourceGroupNext(this INamespacesOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the available namespaces within a resource group.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
@@ -768,21 +459,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the authorization rules for a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleInner> ListAuthorizationRulesNext(this INamespacesOperations operations, string nextPageLink)
-            {
-                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the authorization rules for a namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />

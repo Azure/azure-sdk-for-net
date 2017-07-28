@@ -22,17 +22,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
     /// </summary>
     public static partial class OperationsExtensions
     {
-            /// <summary>
-            /// Lists all of the available Azure Container Registry REST API operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<OperationDefinition> List(this IOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the available Azure Container Registry REST API operations.
             /// </summary>
@@ -50,20 +40,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all of the available Azure Container Registry REST API operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<OperationDefinition> ListNext(this IOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all of the available Azure Container Registry REST API operations.
             /// </summary>

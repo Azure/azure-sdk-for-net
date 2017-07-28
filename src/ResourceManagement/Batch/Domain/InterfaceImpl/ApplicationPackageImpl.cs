@@ -17,8 +17,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         /// <param name="format">The format of the uploaded Batch application package, either "zip" or "tar".</param>
         void Microsoft.Azure.Management.Batch.Fluent.IApplicationPackageBeta.Activate(string format)
         {
-
-            this.ActivateAsync(format).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => this.ActivateAsync(format));
         }
 
         /// <summary>

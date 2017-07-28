@@ -22,22 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     public static partial class UsageOperationsExtensions
     {
-            /// <summary>
-            /// Gets, for the specified location, the current compute resource usage
-            /// information as well as the limits for compute resources under the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location for which resource usage is queried.
-            /// </param>
-            public static IPage<Usage> List(this IUsageOperations operations, string location)
-            {
-                return operations.ListAsync(location).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets, for the specified location, the current compute resource usage
             /// information as well as the limits for compute resources under the
@@ -60,22 +45,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets, for the specified location, the current compute resource usage
-            /// information as well as the limits for compute resources under the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Usage> ListNext(this IUsageOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets, for the specified location, the current compute resource usage
             /// information as well as the limits for compute resources under the

@@ -22,38 +22,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
     /// </summary>
     public static partial class RecordSetsOperationsExtensions
     {
-            /// <summary>
-            /// Updates a record set within a DNS zone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='zoneName'>
-            /// The name of the DNS zone (without a terminating dot).
-            /// </param>
-            /// <param name='relativeRecordSetName'>
-            /// The name of the record set, relative to the name of the zone.
-            /// </param>
-            /// <param name='recordType'>
-            /// The type of DNS record in this record set. Possible values include: 'A',
-            /// 'AAAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update operation.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// The etag of the record set. Omit this value to always overwrite the current
-            /// record set. Specify the last-seen etag value to prevent accidentally
-            /// overwritting concurrent changes.
-            /// </param>
-            public static RecordSetInner Update(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetInner parameters, string ifMatch = default(string))
-            {
-                return operations.UpdateAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, ifMatch).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Updates a record set within a DNS zone.
             /// </summary>
@@ -92,44 +61,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates or updates a record set within a DNS zone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='zoneName'>
-            /// The name of the DNS zone (without a terminating dot).
-            /// </param>
-            /// <param name='relativeRecordSetName'>
-            /// The name of the record set, relative to the name of the zone.
-            /// </param>
-            /// <param name='recordType'>
-            /// The type of DNS record in this record set. Record sets of type SOA can be
-            /// updated but not created (they are created when the DNS zone is created).
-            /// Possible values include: 'A', 'AAAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA',
-            /// 'SRV', 'TXT'
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate operation.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// The etag of the record set. Omit this value to always overwrite the current
-            /// record set. Specify the last-seen etag value to prevent accidentally
-            /// overwritting any concurrent changes.
-            /// </param>
-            /// <param name='ifNoneMatch'>
-            /// Set to '*' to allow a new record set to be created, but to prevent updating
-            /// an existing record set. Other values will be ignored.
-            /// </param>
-            public static RecordSetInner CreateOrUpdate(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, RecordSetInner parameters, string ifMatch = default(string), string ifNoneMatch = default(string))
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, parameters, ifMatch, ifNoneMatch).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates or updates a record set within a DNS zone.
             /// </summary>
@@ -174,36 +106,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a record set from a DNS zone. This operation cannot be undone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='zoneName'>
-            /// The name of the DNS zone (without a terminating dot).
-            /// </param>
-            /// <param name='relativeRecordSetName'>
-            /// The name of the record set, relative to the name of the zone.
-            /// </param>
-            /// <param name='recordType'>
-            /// The type of DNS record in this record set. Record sets of type SOA cannot
-            /// be deleted (they are deleted when the DNS zone is deleted). Possible values
-            /// include: 'A', 'AAAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
-            /// </param>
-            /// <param name='ifMatch'>
-            /// The etag of the record set. Omit this value to always delete the current
-            /// record set. Specify the last-seen etag value to prevent accidentally
-            /// deleting any concurrent changes.
-            /// </param>
-            public static void Delete(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType, string ifMatch = default(string))
-            {
-                operations.DeleteAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, ifMatch).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a record set from a DNS zone. This operation cannot be undone.
             /// </summary>
@@ -237,30 +140,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets a record set.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='zoneName'>
-            /// The name of the DNS zone (without a terminating dot).
-            /// </param>
-            /// <param name='relativeRecordSetName'>
-            /// The name of the record set, relative to the name of the zone.
-            /// </param>
-            /// <param name='recordType'>
-            /// The type of DNS record in this record set. Possible values include: 'A',
-            /// 'AAAA', 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
-            /// </param>
-            public static RecordSetInner Get(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, string relativeRecordSetName, RecordType recordType)
-            {
-                return operations.GetAsync(resourceGroupName, zoneName, relativeRecordSetName, recordType).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets a record set.
             /// </summary>
@@ -291,36 +171,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists the record sets of a specified type in a DNS zone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='zoneName'>
-            /// The name of the DNS zone (without a terminating dot).
-            /// </param>
-            /// <param name='recordType'>
-            /// The type of record sets to enumerate. Possible values include: 'A', 'AAAA',
-            /// 'CNAME', 'MX', 'NS', 'PTR', 'SOA', 'SRV', 'TXT'
-            /// </param>
-            /// <param name='top'>
-            /// The maximum number of record sets to return. If not specified, returns up
-            /// to 100 record sets.
-            /// </param>
-            /// <param name='recordsetnamesuffix'>
-            /// The suffix label of the record set name that has to be used to filter the
-            /// record set enumerations. If this parameter is specified, Enumeration will
-            /// return only records that end with .&lt;recordSetNameSuffix&gt;
-            /// </param>
-            public static IPage<RecordSetInner> ListByType(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, RecordType recordType, int? top = default(int?), string recordsetnamesuffix = default(string))
-            {
-                return operations.ListByTypeAsync(resourceGroupName, zoneName, recordType, top, recordsetnamesuffix).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists the record sets of a specified type in a DNS zone.
             /// </summary>
@@ -357,32 +208,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all record sets in a DNS zone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='zoneName'>
-            /// The name of the DNS zone (without a terminating dot).
-            /// </param>
-            /// <param name='top'>
-            /// The maximum number of record sets to return. If not specified, returns up
-            /// to 100 record sets.
-            /// </param>
-            /// <param name='recordsetnamesuffix'>
-            /// The suffix label of the record set name that has to be used to filter the
-            /// record set enumerations. If this parameter is specified, Enumeration will
-            /// return only records that end with .&lt;recordSetNameSuffix&gt;
-            /// </param>
-            public static IPage<RecordSetInner> ListByDnsZone(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, int? top = default(int?), string recordsetnamesuffix = default(string))
-            {
-                return operations.ListByDnsZoneAsync(resourceGroupName, zoneName, top, recordsetnamesuffix).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all record sets in a DNS zone.
             /// </summary>
@@ -415,20 +241,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists the record sets of a specified type in a DNS zone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<RecordSetInner> ListByTypeNext(this IRecordSetsOperations operations, string nextPageLink)
-            {
-                return operations.ListByTypeNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists the record sets of a specified type in a DNS zone.
             /// </summary>
@@ -449,20 +262,7 @@ namespace Microsoft.Azure.Management.Dns.Fluent
                 }
             }
 
-            /// <summary>
-            /// Lists all record sets in a DNS zone.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<RecordSetInner> ListByDnsZoneNext(this IRecordSetsOperations operations, string nextPageLink)
-            {
-                return operations.ListByDnsZoneNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Lists all record sets in a DNS zone.
             /// </summary>

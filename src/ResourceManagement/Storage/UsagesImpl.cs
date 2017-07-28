@@ -26,11 +26,12 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         ///GENMHASH:7D6013E8B95E991005ED921F493EFCE4:50D821C2930D637FC2173CD8C27AF5F7
         public IEnumerable<Microsoft.Azure.Management.Storage.Fluent.IStorageUsage> List()
         {
-            if (client.List() == null)
+            var storageUsages = Extensions.Synchronize(() => client.ListAsync());
+            if (storageUsages == null)
             {
                 return new List<IStorageUsage>();
             }
-            return WrapList(client.List());
+            return WrapList(storageUsages);
         }
 
         ///GENMHASH:7F5BEBF638B801886F5E13E6CCFF6A4E:FF27DF14BEE91BED69598A874F25301A

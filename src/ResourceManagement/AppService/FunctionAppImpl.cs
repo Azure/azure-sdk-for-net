@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         public string GetMasterKey()
         {
-            return GetMasterKeyAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetMasterKeyAsync());
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.AppService.Fluent
 
         public void SyncTriggers()
         {
-            SyncTriggersAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => SyncTriggersAsync());
         }
 
         public async Task SyncTriggersAsync(CancellationToken cancellationToken = default(CancellationToken))

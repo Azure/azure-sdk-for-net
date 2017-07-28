@@ -21,8 +21,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
 
         public abstract Task<IFluentResourceT> ExecuteAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true);
 
-        public IFluentResourceT Execute() {
-            return ExecuteAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+        public IFluentResourceT Execute()
+        {
+            return Extensions.Synchronize(() => ExecuteAsync(CancellationToken.None));
         }
-   }
+    }
 }

@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:667E734583F577A898C6389A3D9F4C09:B1A3725E3B60B26D7F37CA7ABFE371B0
         public void Deallocate()
         {
-            Manager.Inner.VirtualMachines.Deallocate(this.ResourceGroupName, this.Name);
+            Extensions.Synchronize(() => Manager.Inner.VirtualMachines.DeallocateAsync(this.ResourceGroupName, this.Name));
             Refresh();
         }
 
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:F5949CB4AFA8DD0B8DED0F369B12A8F6:6AC69BE8BE090CDE9822C84DD5F906F3
         public VirtualMachineInstanceView RefreshInstanceView()
         {
-            return RefreshInstanceViewAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => RefreshInstanceViewAsync());
         }
 
         ///GENMHASH:D97B6272C7E7717C00D4F9B818A713C0:8DD09B90F0555BB3E1AEF7B9AF044379
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0745971EF3F2CE7276C7E535722C5E6C:F7A7B3A36B61441CF0850BDE432A2805
         public void Generalize()
         {
-            Manager.Inner.VirtualMachines.Generalize(this.ResourceGroupName, this.Name);
+            Extensions.Synchronize(() => Manager.Inner.VirtualMachines.GeneralizeAsync(this.ResourceGroupName, this.Name));
         }
 
         public async Task GeneralizeAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:8761D0D225B7C49A7A5025186E94B263:21AAF0008CE6CF3F9846F2DFE1CBEBCB
         public void PowerOff()
         {
-            Manager.Inner.VirtualMachines.PowerOff(this.ResourceGroupName, this.Name);
+            Extensions.Synchronize(() => Manager.Inner.VirtualMachines.PowerOffAsync(this.ResourceGroupName, this.Name));
         }
 
         public async Task PowerOffAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:08CFC096AC6388D1C0E041ECDF099E3D:4479808A1E2B2A23538E662AD3F721EE
         public void Restart()
         {
-            Manager.Inner.VirtualMachines.Restart(this.ResourceGroupName, this.Name);
+            Extensions.Synchronize(() => Manager.Inner.VirtualMachines.RestartAsync(this.ResourceGroupName, this.Name));
         }
 
         public async Task RestartAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:0F38250A3837DF9C2C345D4A038B654B:5723E041D4826DFBE50B8B49C31EAF08
         public void Start()
         {
-            Manager.Inner.VirtualMachines.Start(this.ResourceGroupName, this.Name);
+            Extensions.Synchronize(() => Manager.Inner.VirtualMachines.StartAsync(this.ResourceGroupName, this.Name));
         }
 
         public async Task StartAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -191,8 +191,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:D9EB75AF88B1A07EDC0965B26A7F7C04:E30F1E083D68AA7A68C7128405BA3741
         public void Redeploy()
         {
-            Manager.Inner.VirtualMachines.Redeploy(this.ResourceGroupName, this.Name);
-
+            Extensions.Synchronize(() => Manager.Inner.VirtualMachines.RedeployAsync(this.ResourceGroupName, this.Name));
         }
 
         public async Task RedeployAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -217,14 +216,14 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:842FBE4DCB8BFE1B50632DBBE157AEA8:B5262187B60CE486998F800E9A96B659
         public IEnumerable<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes()
         {
-            return Manager.Inner.VirtualMachines.ListAvailableSizes(this.ResourceGroupName,this.Name)
+            return Extensions.Synchronize(() => Manager.Inner.VirtualMachines.ListAvailableSizesAsync(this.ResourceGroupName,this.Name))
                 .Select(inner => new VirtualMachineSizeImpl(inner));
         }
 
         ///GENMHASH:1F383B6B989059B78D6ECB949E789CD4:D3D812C91301FB29508197FA8534CDDC
         public string Capture(string containerName, string vhdPrefix, bool overwriteVhd)
         {
-            return this.CaptureAsync(containerName, vhdPrefix, overwriteVhd).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.CaptureAsync(containerName, vhdPrefix, overwriteVhd));
         }
 
         ///GENMHASH:C345130B595C0FF585A57651EFDC3A0F:E97CAC99D13041F7FEAACC7E4508DC7B

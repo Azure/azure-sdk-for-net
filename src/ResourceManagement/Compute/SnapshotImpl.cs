@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     using System.Threading.Tasks;
     using Models;
     using ResourceManager.Fluent;
+    using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
     /// <summary>
     /// The implementation for Snapshot and its create and update interfaces.
@@ -107,7 +108,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:DAC486F08AF23F259E630032FC20FAF1:3FE53F300A729DFBC3C1F55BBB117CA1
         public string GrantAccess(int accessDurationInSeconds)
         {
-            return this.GrantAccessAsync(accessDurationInSeconds).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.GrantAccessAsync(accessDurationInSeconds));
         }
 
         ///GENMHASH:0305227D84160F6D01FAC3F90C4D3B17:B17E3BD9F6452F930B5081BFB28B816E
@@ -236,7 +237,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:C14080365CC6F93E30BB51B78DED7084:769384CE5F12D8DA31D146E04DAD108F
         public void RevokeAccess()
         {
-            RevokeAccessAsync().GetAwaiter().GetResult();
+            Extensions.Synchronize(() => RevokeAccessAsync());
         }
 
         ///GENMHASH:920045A2761D4D5D5F5E2E52D43917D0:28B657BB52464897349F96AD3FEE7B7C

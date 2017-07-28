@@ -22,26 +22,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
     /// </summary>
     public static partial class VaultsOperationsExtensions
     {
-            /// <summary>
-            /// Create or update a key vault in the specified subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the server belongs.
-            /// </param>
-            /// <param name='vaultName'>
-            /// Name of the vault
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters to create or update the vault
-            /// </param>
-            public static VaultInner CreateOrUpdate(this IVaultsOperations operations, string resourceGroupName, string vaultName, VaultCreateOrUpdateParametersInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, vaultName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create or update a key vault in the specified subscription.
             /// </summary>
@@ -68,23 +49,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the specified Azure key vault.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the vault belongs.
-            /// </param>
-            /// <param name='vaultName'>
-            /// The name of the vault to delete
-            /// </param>
-            public static void Delete(this IVaultsOperations operations, string resourceGroupName, string vaultName)
-            {
-                operations.DeleteAsync(resourceGroupName, vaultName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the specified Azure key vault.
             /// </summary>
@@ -105,23 +70,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vaultName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets the specified Azure key vault.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the vault belongs.
-            /// </param>
-            /// <param name='vaultName'>
-            /// The name of the vault.
-            /// </param>
-            public static VaultInner Get(this IVaultsOperations operations, string resourceGroupName, string vaultName)
-            {
-                return operations.GetAsync(resourceGroupName, vaultName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the specified Azure key vault.
             /// </summary>
@@ -145,24 +94,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 }
             }
 
-            /// <summary>
-            /// The List operation gets information about the vaults associated with the
-            /// subscription and within the specified resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Resource Group to which the vault belongs.
-            /// </param>
-            /// <param name='top'>
-            /// Maximum number of results to return.
-            /// </param>
-            public static IPage<VaultInner> ListByResourceGroup(this IVaultsOperations operations, string resourceGroupName, int? top = default(int?))
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName, top).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The List operation gets information about the vaults associated with the
             /// subscription and within the specified resource group.
@@ -187,21 +119,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 }
             }
 
-            /// <summary>
-            /// The List operation gets information about the vaults associated with the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='top'>
-            /// Maximum number of results to return.
-            /// </param>
-            public static IPage<VaultInner> List(this IVaultsOperations operations, int? top = default(int?))
-            {
-                return operations.ListAsync(top).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The List operation gets information about the vaults associated with the
             /// subscription.
@@ -223,21 +141,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 }
             }
 
-            /// <summary>
-            /// The List operation gets information about the vaults associated with the
-            /// subscription and within the specified resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<VaultInner> ListByResourceGroupNext(this IVaultsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The List operation gets information about the vaults associated with the
             /// subscription and within the specified resource group.
@@ -259,21 +163,7 @@ namespace Microsoft.Azure.Management.KeyVault.Fluent
                 }
             }
 
-            /// <summary>
-            /// The List operation gets information about the vaults associated with the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<VaultInner> ListNext(this IVaultsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// The List operation gets information about the vaults associated with the
             /// subscription.

@@ -24,27 +24,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     /// </summary>
     public static partial class PatchSchedulesOperationsExtensions
     {
-            /// <summary>
-            /// Create or replace the patching schedule for Redis cache (requires Premium
-            /// SKU).
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the Redis cache.
-            /// </param>
-            /// <param name='scheduleEntriesProperty'>
-            /// List of patch schedules for a Redis cache.
-            /// </param>
-            public static RedisPatchScheduleInner CreateOrUpdate(this IPatchSchedulesOperations operations, string resourceGroupName, string name, IList<ScheduleEntryInner> scheduleEntriesProperty)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, name, scheduleEntriesProperty).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create or replace the patching schedule for Redis cache (requires Premium
             /// SKU).
@@ -72,23 +52,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes the patching schedule of a redis cache (requires Premium SKU).
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the redis cache.
-            /// </param>
-            public static void Delete(this IPatchSchedulesOperations operations, string resourceGroupName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes the patching schedule of a redis cache (requires Premium SKU).
             /// </summary>
@@ -109,23 +73,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets the patching schedule of a redis cache (requires Premium SKU).
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the redis cache.
-            /// </param>
-            public static RedisPatchScheduleInner Get(this IPatchSchedulesOperations operations, string resourceGroupName, string name)
-            {
-                return operations.GetAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the patching schedule of a redis cache (requires Premium SKU).
             /// </summary>

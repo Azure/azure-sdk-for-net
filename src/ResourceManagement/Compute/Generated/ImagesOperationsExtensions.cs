@@ -22,26 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     /// </summary>
     public static partial class ImagesOperationsExtensions
     {
-            /// <summary>
-            /// Create or update an image.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='imageName'>
-            /// The name of the image.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Image operation.
-            /// </param>
-            public static ImageInner CreateOrUpdate(this IImagesOperations operations, string resourceGroupName, string imageName, ImageInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, imageName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create or update an image.
             /// </summary>
@@ -68,23 +49,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an Image.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='imageName'>
-            /// The name of the image.
-            /// </param>
-            public static OperationStatusResponseInner Delete(this IImagesOperations operations, string resourceGroupName, string imageName)
-            {
-                return operations.DeleteAsync(resourceGroupName, imageName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an Image.
             /// </summary>
@@ -108,26 +73,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets an image.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='imageName'>
-            /// The name of the image.
-            /// </param>
-            /// <param name='expand'>
-            /// The expand expression to apply on the operation.
-            /// </param>
-            public static ImageInner Get(this IImagesOperations operations, string resourceGroupName, string imageName, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, imageName, expand).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets an image.
             /// </summary>
@@ -154,20 +100,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the list of images under a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IPage<ImageInner> ListByResourceGroup(this IImagesOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the list of images under a resource group.
             /// </summary>
@@ -188,19 +121,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the list of Images in the subscription. Use nextLink property in the
-            /// response to get the next page of Images. Do this till nextLink is not null
-            /// to fetch all the Images.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<ImageInner> List(this IImagesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the list of Images in the subscription. Use nextLink property in the
             /// response to get the next page of Images. Do this till nextLink is not null
@@ -220,26 +141,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Create or update an image.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='imageName'>
-            /// The name of the image.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Image operation.
-            /// </param>
-            public static ImageInner BeginCreateOrUpdate(this IImagesOperations operations, string resourceGroupName, string imageName, ImageInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, imageName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Create or update an image.
             /// </summary>
@@ -266,23 +168,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes an Image.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='imageName'>
-            /// The name of the image.
-            /// </param>
-            public static OperationStatusResponseInner BeginDelete(this IImagesOperations operations, string resourceGroupName, string imageName)
-            {
-                return operations.BeginDeleteAsync(resourceGroupName, imageName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes an Image.
             /// </summary>
@@ -306,20 +192,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the list of images under a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ImageInner> ListByResourceGroupNext(this IImagesOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the list of images under a resource group.
             /// </summary>
@@ -340,22 +213,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the list of Images in the subscription. Use nextLink property in the
-            /// response to get the next page of Images. Do this till nextLink is not null
-            /// to fetch all the Images.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ImageInner> ListNext(this IImagesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the list of Images in the subscription. Use nextLink property in the
             /// response to get the next page of Images. Do this till nextLink is not null

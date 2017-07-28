@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
         public Models.DatabaseAccountListKeysResultInner ListKeys()
         {
-            return this.ListKeysAsync().GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.ListKeysAsync());
         }
 
         public string IPRangeFilter()
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
         public Models.DatabaseAccountListConnectionStringsResultInner ListConnectionStrings()
         {
-            return this.ListConnectionStringsAsync().GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.ListConnectionStringsAsync());
         }
 
         internal DocumentDBAccountImpl(string name, Models.DatabaseAccountInner innerObject, IDocumentDBManager manager) :
@@ -334,8 +334,7 @@ namespace Microsoft.Azure.Management.DocumentDB.Fluent
 
         public void RegenerateKey(string keyKind)
         {
-            this.RegenerateKeyAsync(keyKind).GetAwaiter().GetResult();
-
+            Extensions.Synchronize(() => this.RegenerateKeyAsync(keyKind));
         }
 
         private static string FixDBName(string name)

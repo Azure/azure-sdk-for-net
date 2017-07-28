@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:25941804086E52163BC33944A2FAC34F:B4CF07412D871BC54604665642E679CA
         public IPacketCaptureStatus GetStatus()
         {
-            return GetStatusAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => GetStatusAsync(CancellationToken.None));
         }
 
         ///GENMHASH:2357B38E494D9F10171A28E135CB1715:3961EA7B900ECE15CB8B6D76F00F665B
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
         ///GENMHASH:EB854F18026EDB6E01762FA4580BE789:42462B796F15B0EB6E603ACA753873C0
         public void Stop()
         {
-            StopAsync(CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            Extensions.Synchronize(() => StopAsync(CancellationToken.None));
         }
     }
 }

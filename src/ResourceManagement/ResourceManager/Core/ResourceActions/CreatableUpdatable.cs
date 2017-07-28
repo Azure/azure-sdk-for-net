@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions
         
         public IFluentResourceT Apply()
         {
-            return ApplyAsync(CancellationToken.None, true).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() =>  ApplyAsync(CancellationToken.None, true));
         }
 
         public virtual async Task<IFluentResourceT> ApplyAsync(

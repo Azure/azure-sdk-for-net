@@ -22,18 +22,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
     /// </summary>
     public static partial class FeaturesOperationsExtensions
     {
-            /// <summary>
-            /// Gets all the preview features that are available through AFEC for the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<FeatureResultInner> ListAll(this IFeaturesOperations operations)
-            {
-                return operations.ListAllAsync().GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the preview features that are available through AFEC for the
             /// subscription.
@@ -52,21 +41,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the preview features in a provider namespace that are available
-            /// through AFEC for the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// The namespace of the resource provider for getting features.
-            /// </param>
-            public static IPage<FeatureResultInner> List(this IFeaturesOperations operations, string resourceProviderNamespace)
-            {
-                return operations.ListAsync(resourceProviderNamespace).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the preview features in a provider namespace that are available
             /// through AFEC for the subscription.
@@ -88,23 +63,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets the preview feature with the specified name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// The resource provider namespace for the feature.
-            /// </param>
-            /// <param name='featureName'>
-            /// The name of the feature to get.
-            /// </param>
-            public static FeatureResultInner Get(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
-            {
-                return operations.GetAsync(resourceProviderNamespace, featureName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the preview feature with the specified name.
             /// </summary>
@@ -128,23 +87,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Registers the preview feature for the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceProviderNamespace'>
-            /// The namespace of the resource provider.
-            /// </param>
-            /// <param name='featureName'>
-            /// The name of the feature to register.
-            /// </param>
-            public static FeatureResultInner Register(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
-            {
-                return operations.RegisterAsync(resourceProviderNamespace, featureName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Registers the preview feature for the subscription.
             /// </summary>
@@ -168,21 +111,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the preview features that are available through AFEC for the
-            /// subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<FeatureResultInner> ListAllNext(this IFeaturesOperations operations, string nextPageLink)
-            {
-                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the preview features that are available through AFEC for the
             /// subscription.
@@ -204,21 +133,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the preview features in a provider namespace that are available
-            /// through AFEC for the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<FeatureResultInner> ListNext(this IFeaturesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the preview features in a provider namespace that are available
             /// through AFEC for the subscription.

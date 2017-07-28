@@ -23,24 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
     /// </summary>
     public static partial class TopicsOperationsExtensions
     {
-            /// <summary>
-            /// Gets all the topics in a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639388.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            public static IPage<TopicInner> ListByNamespace(this ITopicsOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the topics in a namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639388.aspx" />
@@ -65,30 +48,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates a topic in the specified namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639409.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a topic resource.
-            /// </param>
-            public static TopicInner CreateOrUpdate(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, TopicInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, topicName, parameters).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates a topic in the specified namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639409.aspx" />
@@ -119,27 +79,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a topic from the specified namespace and resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639404.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            public static void Delete(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName, topicName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a topic from the specified namespace and resource group.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639404.aspx" />
@@ -164,27 +104,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Returns a description for the specified topic.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639399.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            public static TopicInner Get(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName, topicName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns a description for the specified topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639399.aspx" />
@@ -212,27 +132,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets authorization rules for a topic.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720681.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleInner> ListAuthorizationRules(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
-            {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, topicName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets authorization rules for a topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720681.aspx" />
@@ -260,33 +160,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Creates an authorizatio rule for the specified topic.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720678.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            /// <param name='rights'>
-            /// The rights associated with the rule.
-            /// </param>
-            public static SharedAccessAuthorizationRuleInner CreateOrUpdateAuthorizationRule(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName, IList<AccessRights?> rights)
-            {
-                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, topicName, authorizationRuleName, rights).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Creates an authorizatio rule for the specified topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720678.aspx" />
@@ -320,30 +194,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Returns the specified authorization rule.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720676.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            public static SharedAccessAuthorizationRuleInner GetAuthorizationRule(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName)
-            {
-                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, topicName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Returns the specified authorization rule.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720676.aspx" />
@@ -374,30 +225,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Deletes a topic authorization rule.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720681.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            public static void DeleteAuthorizationRule(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName)
-            {
-                operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, topicName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Deletes a topic authorization rule.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720681.aspx" />
@@ -425,30 +253,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
-            /// <summary>
-            /// Gets the primary and secondary connection strings for the topic.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720677.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            public static ResourceListKeysInner ListKeys(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, namespaceName, topicName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets the primary and secondary connection strings for the topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720677.aspx" />
@@ -479,34 +284,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Regenerates primary or secondary connection strings for the topic.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720679.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='topicName'>
-            /// The topic name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            /// <param name='policykey'>
-            /// Key that needs to be regenerated. Possible values include: 'PrimaryKey',
-            /// 'SecondaryKey'
-            /// </param>
-            public static ResourceListKeysInner RegenerateKeys(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName, Policykey? policykey = default(Policykey?))
-            {
-                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, topicName, authorizationRuleName, policykey).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Regenerates primary or secondary connection strings for the topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720679.aspx" />
@@ -541,21 +319,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets all the topics in a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639388.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<TopicInner> ListByNamespaceNext(this ITopicsOperations operations, string nextPageLink)
-            {
-                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets all the topics in a namespace.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639388.aspx" />
@@ -577,21 +341,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Fluent
                 }
             }
 
-            /// <summary>
-            /// Gets authorization rules for a topic.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720681.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleInner> ListAuthorizationRulesNext(this ITopicsOperations operations, string nextPageLink)
-            {
-                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
+            
             /// <summary>
             /// Gets authorization rules for a topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720681.aspx" />

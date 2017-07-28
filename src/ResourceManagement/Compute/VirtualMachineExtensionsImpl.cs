@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
         ///GENMHASH:310B2185D2F2431DF2BBDBC06E585C74:F003E4397C7BD6AC051C07C6076BF2D5
         public IReadOnlyDictionary<string, IVirtualMachineExtension> AsMap()
         {
-            return this.AsMapAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return Extensions.Synchronize(() => this.AsMapAsync());
         }
 
         /// <summary>
