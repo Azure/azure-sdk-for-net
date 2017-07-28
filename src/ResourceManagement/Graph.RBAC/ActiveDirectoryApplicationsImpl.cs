@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Rest;
     using System;
     using System.Linq;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryApplication.Definition;
 
     /// <summary>
     /// The implementation of Applications and its parent interfaces.
@@ -23,10 +24,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     {
         private IApplicationsOperations innerCollection;
         private GraphRbacManager manager;
-                public GraphRbacManager Manager()
-        {
-            return this.manager;
-        }
 
                 public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -70,7 +67,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                public ActiveDirectoryApplicationImpl GetById(string id)
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
+
+        public ActiveDirectoryApplicationImpl GetById(string id)
         {
             return (ActiveDirectoryApplicationImpl)((ActiveDirectoryApplicationImpl)WrapModel(innerCollection.Get(id))).RefreshCredentialsAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
@@ -126,6 +125,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         public override void DeleteById(string id)
         {
             innerCollection.Delete(id);
+        }
+
+        IActiveDirectoryApplication ISupportsGettingById<IActiveDirectoryApplication>.GetById(string id)
+        {
+            return WrapModel(manager.Inner.Applications.Get(id));
+        }
+
+        IBlank ISupportsCreating<IBlank>.Define(string name)
+        {
+            return WrapModel(name);
         }
     }
 }

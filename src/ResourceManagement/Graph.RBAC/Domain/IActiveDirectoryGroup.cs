@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// Lists the members in the group.
         /// </summary>
         /// <return>An unmodifiable set of the members.</return>
-        System.Collections.Generic.ISet<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject> ListMembers();
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject> ListMembers();
 
         /// <summary>
         /// Gets mail field.
@@ -39,6 +39,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// Lists the members in the group.
         /// </summary>
         /// <return>An unmodifiable set of the members.</return>
-        Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject> ListMembersAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<Task<IPagedCollection<IActiveDirectoryObject>>> ListMembersAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

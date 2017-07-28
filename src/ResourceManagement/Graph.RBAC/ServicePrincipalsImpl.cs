@@ -30,11 +30,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             this.manager = graphRbacManager;
         }
 
-                public GraphRbacManager Manager()
-        {
-            return this.manager;
-        }
-
                 public ServicePrincipalImpl GetById(string id)
         {
             return (ServicePrincipalImpl) GetByIdAsync(id).ConfigureAwait(false).GetAwaiter().GetResult();

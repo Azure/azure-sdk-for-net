@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// Lists the members in the group.
         /// </summary>
         /// <return>An unmodifiable set of the members.</return>
-        async Task<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroupBeta.ListMembersAsync(CancellationToken cancellationToken)
+        async Task<Task<IPagedCollection<IActiveDirectoryObject>>> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup.ListMembersAsync(CancellationToken cancellationToken)
         {
             return await this.ListMembersAsync(cancellationToken) as Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject;
         }
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// Lists the members in the group.
         /// </summary>
         /// <return>An unmodifiable set of the members.</return>
-        System.Collections.Generic.ISet<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroupBeta.ListMembers()
+        System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup.ListMembers()
         {
             return this.ListMembers() as System.Collections.Generic.ISet<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject>;
         }

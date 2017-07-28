@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
 
-    internal partial class ActiveDirectoryApplicationsImpl 
+    public partial class ActiveDirectoryApplicationsImpl 
     {
     }
 }
