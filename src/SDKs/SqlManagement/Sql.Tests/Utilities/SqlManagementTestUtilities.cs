@@ -503,7 +503,7 @@ namespace Sql.Tests
                     });
 
                     // Validate TDE is on by default
-                    TransparentDataEncryption tde = sqlClient.Databases.GetTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, database.Name);
+                    TransparentDataEncryption tde = sqlClient.TransparentDataEncryptions.Get(resourceGroup.Name, server.Name, database.Name);
                     Assert.Equal(TransparentDataEncryptionStatus.Enabled, tde.Status);
 
                     // Prepare vault permissions for the server

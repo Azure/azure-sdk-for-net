@@ -343,12 +343,12 @@ namespace Sql.Tests
 
                 // Get TDE config
                 // Recently changed to be enabled by default
-                var config = sqlClient.Databases.GetTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName);
+                var config = sqlClient.TransparentDataEncryptions.Get(resourceGroup.Name, server.Name, dbName);
                 Assert.Equal(TransparentDataEncryptionStatus.Enabled, config.Status);
 
                 // Update TDE config
                 config.Status = TransparentDataEncryptionStatus.Disabled;
-                config = sqlClient.Databases.CreateOrUpdateTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, dbName, config);
+                config = sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
                 Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
             }
         }

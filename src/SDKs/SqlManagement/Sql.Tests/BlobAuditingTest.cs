@@ -68,7 +68,7 @@ namespace Sql.Tests
                 // ******* Database blob auditing *******
 
                 string dbName = databases[0].Name;
-                DatabaseBlobAuditingPolicy defaultDatabasePolicyResponse = sqlClient.Databases.GetBlobAuditingPolicy(resourceGroup.Name, server.Name, dbName);
+                DatabaseBlobAuditingPolicy defaultDatabasePolicyResponse = sqlClient.DatabaseBlobAuditingPolicies.Get(resourceGroup.Name, server.Name, dbName);
 
                 // Verify that the initial Get request contains the default policy.
                 VerifyDatabaseAuditingPolicyInformation(GetDefaultDatabaseBlobAuditingProperties(), defaultDatabasePolicyResponse);
@@ -84,9 +84,9 @@ namespace Sql.Tests
                     StorageAccountSubscriptionId = new Guid("00000000-1234-0000-5678-000000000000"),
                     IsStorageSecondaryKeyInUse = false
                 };
-                sqlClient.Databases.CreateOrUpdateBlobAuditingPolicy(resourceGroup.Name, server.Name, dbName, updatedDatabasePolicy);
+                sqlClient.DatabaseBlobAuditingPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updatedDatabasePolicy);
 
-                var getUpdatedDatabasePolicyResponse = sqlClient.Databases.GetBlobAuditingPolicy(resourceGroup.Name, server.Name, dbName);
+                var getUpdatedDatabasePolicyResponse = sqlClient.DatabaseBlobAuditingPolicies.Get(resourceGroup.Name, server.Name, dbName);
                 // Verify that the Get request contains the updated policy.
                 VerifyDatabaseAuditingPolicyInformation(updatedDatabasePolicy, getUpdatedDatabasePolicyResponse);
             }

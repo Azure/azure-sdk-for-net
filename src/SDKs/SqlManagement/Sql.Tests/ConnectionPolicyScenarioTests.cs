@@ -20,15 +20,15 @@ namespace Sql.Tests
 
                 // Get initial connection policy
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
-                ServerConnectionPolicy policy = sqlClient.Servers.GetConnectionPolicy(resourceGroup.Name, server.Name);
+                ServerConnectionPolicy policy = sqlClient.ServerConnectionPolicies.Get(resourceGroup.Name, server.Name);
                 Assert.Equal(ServerConnectionType.Default, policy.ConnectionType);
 
                 // Update connection policy
-                policy = sqlClient.Servers.CreateOrUpdateConnectionPolicy(resourceGroup.Name, server.Name, new ServerConnectionPolicy(ServerConnectionType.Proxy));
+                policy = sqlClient.ServerConnectionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, new ServerConnectionPolicy(ServerConnectionType.Proxy));
                 Assert.Equal(ServerConnectionType.Proxy, policy.ConnectionType);
 
                 // Get again
-                policy = sqlClient.Servers.GetConnectionPolicy(resourceGroup.Name, server.Name);
+                policy = sqlClient.ServerConnectionPolicies.Get(resourceGroup.Name, server.Name);
                 Assert.Equal(ServerConnectionType.Proxy, policy.ConnectionType);
             }
         }

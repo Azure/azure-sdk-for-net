@@ -61,7 +61,7 @@ namespace Sql.Tests
                 // ******* Database threat detection *******
 
                 string dbName = databases[0].Name;
-                DatabaseSecurityAlertPolicy defaultDatabasePolicyResponse = sqlClient.Databases.GetThreatDetectionPolicy(resourceGroup.Name, server.Name, dbName);
+                DatabaseSecurityAlertPolicy defaultDatabasePolicyResponse = sqlClient.DatabaseThreatDetectionPolicies.Get(resourceGroup.Name, server.Name, dbName);
 
                 // Verify that the initial Get request contains the default policy.
                 VerifyDatabaseSecurityAlertPolicyInformation(GetDefaultDatabaseSecurityAlertProperties(), defaultDatabasePolicyResponse);
@@ -78,9 +78,9 @@ namespace Sql.Tests
                     StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
                     UseServerDefault = SecurityAlertPolicyUseServerDefault.Disabled,
                 };
-                sqlClient.Databases.CreateOrUpdateThreatDetectionPolicy(resourceGroup.Name, server.Name, dbName, updatedDatabasePolicy);
+                sqlClient.DatabaseThreatDetectionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updatedDatabasePolicy);
 
-                var getUpdatedDatabasePolicyResponse = sqlClient.Databases.GetThreatDetectionPolicy(resourceGroup.Name, server.Name, dbName);
+                var getUpdatedDatabasePolicyResponse = sqlClient.DatabaseThreatDetectionPolicies.Get(resourceGroup.Name, server.Name, dbName);
 
                 // Verify that the Get request contains the updated policy.
                 VerifyDatabaseSecurityAlertPolicyInformation(updatedDatabasePolicy, getUpdatedDatabasePolicyResponse);

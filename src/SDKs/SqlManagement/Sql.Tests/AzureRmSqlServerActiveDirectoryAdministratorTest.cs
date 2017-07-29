@@ -38,7 +38,7 @@ namespace Sql.Tests
                 sqlClient.ServerAzureADAdministrators.Delete(resourceGroup.Name, server.Name);
                 
                 // List all Active Directory Admin
-                List<ServerAzureADAdministrator> admins = sqlClient.ServerAzureADAdministrators.List(resourceGroup.Name,server.Name) as List<ServerAzureADAdministrator>;
+                List<ServerAzureADAdministrator> admins = sqlClient.ServerAzureADAdministrators.ListByServer(resourceGroup.Name,server.Name) as List<ServerAzureADAdministrator>;
                 Assert.True(admins == null || admins.Count == 0);
                 
             });
