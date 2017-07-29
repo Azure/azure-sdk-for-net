@@ -257,7 +257,7 @@ namespace Fluent.Tests
                 {
                     try
                     {
-                        azure.ResourceGroups.DeleteByName(groupName);
+                        azure.ResourceGroups.BeginDeleteByName(groupName);
                     }
                     catch { }
                 }
