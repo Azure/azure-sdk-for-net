@@ -17,9 +17,12 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
         TopLevelModifiableResources<ITrafficManagerProfile, TrafficManagerProfileImpl, ProfileInner, IProfilesOperations, ITrafficManager>,
         ITrafficManagerProfiles
     {
+        private IGeographicHierarchiesBeta geographicHierarchies;
+
         ///GENMHASH:84B6E84F790DD3CF43388254CEEE3609:519A2844AD55FAC6990427C640AC9D4B
         internal TrafficManagerProfilesImpl(TrafficManager trafficManager) : base(trafficManager.Inner.Profiles, trafficManager)
         {
+            this.geographicHierarchies = new GeographicHierarchiesImpl(trafficManager, trafficManager.Inner.GeographicHierarchies);
         }
 
         ///GENMHASH:0679DF8CA692D1AC80FC21655835E678:B9B028D620AC932FDF66D2783E476B0D
@@ -42,6 +45,12 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent
                 await Inner.CheckTrafficManagerRelativeDnsNameAvailabilityAsync(
                     dnsNameLabel, 
                     "Microsoft.Network/trafficManagerProfiles"));
+        }
+
+        ///GENMHASH:875C07AF573FB7A6B4C57642740BC90A:B51EF456AE67D2EF8EF100C6611084A4
+        public IGeographicLocation GetGeographicHierarchyRoot()
+        {
+            return this.geographicHierarchies.GetRoot();
         }
 
         ///GENMHASH:8ACFB0E23F5F24AD384313679B65F404:6A5AFD43FB6D60947DE42BF4153B3E35

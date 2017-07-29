@@ -21,12 +21,12 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.Models
     /// Class representing a region in the Geographic hierarchy used with the
     /// Geographic traffic routing method.
     /// </summary>
-    public partial class GeographicHierarchyRegion
+    public partial class RegionInner
     {
         /// <summary>
         /// Initializes a new instance of the Region class.
         /// </summary>
-        public GeographicHierarchyRegion()
+        public RegionInner()
         {
           CustomInit();
         }
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.Models
         /// <param name="name">The name of the region</param>
         /// <param name="regions">The list of Regions grouped under this Region
         /// in the Geographic Hierarchy.</param>
-        public GeographicHierarchyRegion(string code = default(string), string name = default(string), IList<GeographicHierarchyRegion> regions = default(IList<GeographicHierarchyRegion>))
+        public RegionInner(string code = default(string), string name = default(string), IList<RegionInner> regions = default(IList<RegionInner>))
         {
             Code = code;
             Name = name;
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.Models
         /// Geographic Hierarchy.
         /// </summary>
         [JsonProperty(PropertyName = "regions")]
-        public IList<GeographicHierarchyRegion> Regions { get; set; }
+        public IList<RegionInner> Regions { get; set; }
 
     }
 }
