@@ -7,11 +7,12 @@
 setlocal
 
 :: help requested?
-set pot_help="%1%2"
-if not "%pot_help%"=="help"        (set req_help=T)
-if not "%pot_help%"=="-help"       (set req_help=T)
-if not "%pot_help%"=="--help"      (set req_help=T)
-if not "%pot_help%"=="/help"       (set req_help=T)
+set pot_help=%1%2
+if "%pot_help%"==""            (set req_help=T)
+if "%pot_help%"=="help"        (set req_help=T)
+if "%pot_help%"=="-help"       (set req_help=T)
+if "%pot_help%"=="--help"      (set req_help=T)
+if "%pot_help%"=="/help"       (set req_help=T)
 if not x%pot_help%==x%pot_help:?=% (set req_help=T)
 if not "%req_help%" == "" (
     echo.
@@ -24,6 +25,7 @@ if not "%req_help%" == "" (
     echo Example: generate.cmd monitor/data-plane 1.1.0 olydis new-cool-feature
     echo.
     echo To display this help, run either of
+    echo      generate.cmd
     echo      generate.cmd help
     echo      generate.cmd -help
     echo      generate.cmd --help
