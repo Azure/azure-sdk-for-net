@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="endTime">The time at which the schedule ended.</param>
         public JobScheduleExecutionInformation(System.DateTime? nextRunTime = default(System.DateTime?), RecentJob recentJob = default(RecentJob), System.DateTime? endTime = default(System.DateTime?))
         {
-            NextRunTime = nextRunTime;
-            RecentJob = recentJob;
-            EndTime = endTime;
+            this.NextRunTime = nextRunTime;
+            this.RecentJob = recentJob;
+            this.EndTime = endTime;
         }
 
         /// <summary>

@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the job schedule as metadata.</param>
         public JobScheduleUpdateParameter(Schedule schedule, JobSpecification jobSpecification, System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
-            Schedule = schedule;
-            JobSpecification = jobSpecification;
-            Metadata = metadata;
+            this.Schedule = schedule;
+            this.JobSpecification = jobSpecification;
+            this.Metadata = metadata;
         }
 
         /// <summary>
@@ -77,11 +77,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Schedule == null)
+            if (this.Schedule == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Schedule");
             }
-            if (JobSpecification == null)
+            if (this.JobSpecification == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "JobSpecification");
             }

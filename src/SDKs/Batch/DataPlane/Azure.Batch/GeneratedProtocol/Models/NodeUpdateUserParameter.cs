@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// remote login to the compute node.</param>
         public NodeUpdateUserParameter(string password = default(string), System.DateTime? expiryTime = default(System.DateTime?), string sshPublicKey = default(string))
         {
-            Password = password;
-            ExpiryTime = expiryTime;
-            SshPublicKey = sshPublicKey;
+            this.Password = password;
+            this.ExpiryTime = expiryTime;
+            this.SshPublicKey = sshPublicKey;
         }
 
         /// <summary>

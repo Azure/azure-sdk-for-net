@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="url">The URL of the job.</param>
         public RecentJob(string id = default(string), string url = default(string))
         {
-            Id = id;
-            Url = url;
+            this.Id = id;
+            this.Url = url;
         }
 
         /// <summary>

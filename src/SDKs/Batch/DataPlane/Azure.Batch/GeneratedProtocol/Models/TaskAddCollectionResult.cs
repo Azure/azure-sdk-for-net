@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// operation.</param>
         public TaskAddCollectionResult(System.Collections.Generic.IList<TaskAddResult> value = default(System.Collections.Generic.IList<TaskAddResult>))
         {
-            Value = value;
+            this.Value = value;
         }
 
         /// <summary>

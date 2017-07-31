@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the dedicated compute node cores being part of the pool.</param>
         public UsageStatistics(System.DateTime startTime, System.DateTime lastUpdateTime, System.TimeSpan dedicatedCoreTime)
         {
-            StartTime = startTime;
-            LastUpdateTime = lastUpdateTime;
-            DedicatedCoreTime = dedicatedCoreTime;
+            this.StartTime = startTime;
+            this.LastUpdateTime = lastUpdateTime;
+            this.DedicatedCoreTime = dedicatedCoreTime;
         }
 
         /// <summary>

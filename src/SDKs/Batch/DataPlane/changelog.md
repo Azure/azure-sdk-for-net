@@ -3,6 +3,15 @@
 ### Upcoming changes
 These changes are planned but haven't been published yet.
 
+### Changes in 7.1.0
+#### Features
+- Added support for detailed aggregate task counts via a new `JobOperations.GetJobTaskCounts` API. Also available on `CloudJob.GetTaskCounts`.
+- Added support for specifying inbound endpoints on pool compute nodes, via a new `CloudPool.PoolEndpointConfiguration` property.  This allows specific ports on the node to be addressed externally.
+
+#### REST API version
+This version of the Batch .NET client library targets version 2017-06-01.5.1 of the Azure Batch REST API.
+
+
 ### Changes in 7.0.1
 #### Bug fixes
 - Fixed a bug where requests using HTTP DELETE (for example, `DeletePool` and `DeleteJob`) failed with an authentication error in the netstandard package. This was due to a change made to `HttpClient` in netcore.

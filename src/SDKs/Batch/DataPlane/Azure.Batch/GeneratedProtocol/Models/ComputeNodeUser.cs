@@ -33,11 +33,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// remote login to the compute node.</param>
         public ComputeNodeUser(string name, bool? isAdmin = default(bool?), System.DateTime? expiryTime = default(System.DateTime?), string password = default(string), string sshPublicKey = default(string))
         {
-            Name = name;
-            IsAdmin = isAdmin;
-            ExpiryTime = expiryTime;
-            Password = password;
-            SshPublicKey = sshPublicKey;
+            this.Name = name;
+            this.IsAdmin = isAdmin;
+            this.ExpiryTime = expiryTime;
+            this.Password = password;
+            this.SshPublicKey = sshPublicKey;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
+            if (this.Name == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
             }

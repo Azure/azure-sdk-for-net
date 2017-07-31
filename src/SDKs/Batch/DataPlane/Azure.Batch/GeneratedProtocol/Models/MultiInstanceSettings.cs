@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// line.</param>
         public MultiInstanceSettings(int numberOfInstances, string coordinationCommandLine = default(string), System.Collections.Generic.IList<ResourceFile> commonResourceFiles = default(System.Collections.Generic.IList<ResourceFile>))
         {
-            NumberOfInstances = numberOfInstances;
-            CoordinationCommandLine = coordinationCommandLine;
-            CommonResourceFiles = commonResourceFiles;
+            this.NumberOfInstances = numberOfInstances;
+            this.CoordinationCommandLine = coordinationCommandLine;
+            this.CommonResourceFiles = commonResourceFiles;
         }
 
         /// <summary>

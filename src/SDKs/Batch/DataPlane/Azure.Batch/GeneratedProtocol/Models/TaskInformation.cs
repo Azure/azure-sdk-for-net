@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task.</param>
         public TaskInformation(TaskState taskState, string taskUrl = default(string), string jobId = default(string), string taskId = default(string), int? subtaskId = default(int?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation))
         {
-            TaskUrl = taskUrl;
-            JobId = jobId;
-            TaskId = taskId;
-            SubtaskId = subtaskId;
-            TaskState = taskState;
-            ExecutionInfo = executionInfo;
+            this.TaskUrl = taskUrl;
+            this.JobId = jobId;
+            this.TaskId = taskId;
+            this.SubtaskId = subtaskId;
+            this.TaskState = taskState;
+            this.ExecutionInfo = executionInfo;
         }
 
         /// <summary>

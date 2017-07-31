@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the pool as metadata.</param>
         public PoolPatchParameter(StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
-            StartTask = startTask;
-            CertificateReferences = certificateReferences;
-            ApplicationPackageReferences = applicationPackageReferences;
-            Metadata = metadata;
+            this.StartTask = startTask;
+            this.CertificateReferences = certificateReferences;
+            this.ApplicationPackageReferences = applicationPackageReferences;
+            this.Metadata = metadata;
         }
 
         /// <summary>

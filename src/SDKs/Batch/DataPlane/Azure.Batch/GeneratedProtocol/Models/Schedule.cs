@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// time.</param>
         public Schedule(System.DateTime? doNotRunUntil = default(System.DateTime?), System.DateTime? doNotRunAfter = default(System.DateTime?), System.TimeSpan? startWindow = default(System.TimeSpan?), System.TimeSpan? recurrenceInterval = default(System.TimeSpan?))
         {
-            DoNotRunUntil = doNotRunUntil;
-            DoNotRunAfter = doNotRunAfter;
-            StartWindow = startWindow;
-            RecurrenceInterval = recurrenceInterval;
+            this.DoNotRunUntil = doNotRunUntil;
+            this.DoNotRunAfter = doNotRunAfter;
+            this.StartWindow = startWindow;
+            this.RecurrenceInterval = recurrenceInterval;
         }
 
         /// <summary>

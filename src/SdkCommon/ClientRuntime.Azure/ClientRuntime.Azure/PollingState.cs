@@ -84,6 +84,8 @@ namespace Microsoft.Rest.Azure
 
         private string _status;
 
+        private CloudException _cloudException;
+
         /// <summary>
         /// Gets or sets polling status.
         /// </summary>
@@ -187,13 +189,23 @@ namespace Microsoft.Rest.Azure
         {
             get
             {
-                return new CloudException(string.Format(CultureInfo.InvariantCulture, 
-                    Resources.LongRunningOperationFailed, Status))
+                if(_cloudException == null)
                 {
-                    Body = Error,
-                    Request = new HttpRequestMessageWrapper(Request, Request.Content.AsString()),
-                    Response = new HttpResponseMessageWrapper(Response, Response.Content.AsString())
-                };
+                    _cloudException = new CloudException(string.Format(CultureInfo.InvariantCulture,
+                                            Resources.LongRunningOperationFailed, Status))
+                    {
+                        Body = Error,
+                        Request = new HttpRequestMessageWrapper(Request, Request.Content.AsString()),
+                        Response = new HttpResponseMessageWrapper(Response, Response.Content.AsString())
+                    };
+                }
+
+                return _cloudException;
+            }
+
+            internal set
+            {
+                _cloudException = value;
             }
         }
 

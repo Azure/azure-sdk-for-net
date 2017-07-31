@@ -67,29 +67,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// lifetime of the job.</param>
         public CloudJob(string id = default(string), string displayName = default(string), bool? usesTaskDependencies = default(bool?), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), JobState? state = default(JobState?), System.DateTime? stateTransitionTime = default(System.DateTime?), JobState? previousState = default(JobState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), int? priority = default(int?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), System.Collections.Generic.IList<EnvironmentSetting> commonEnvironmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), PoolInformation poolInfo = default(PoolInformation), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), JobExecutionInformation executionInfo = default(JobExecutionInformation), JobStatistics stats = default(JobStatistics))
         {
-            Id = id;
-            DisplayName = displayName;
-            UsesTaskDependencies = usesTaskDependencies;
-            Url = url;
-            ETag = eTag;
-            LastModified = lastModified;
-            CreationTime = creationTime;
-            State = state;
-            StateTransitionTime = stateTransitionTime;
-            PreviousState = previousState;
-            PreviousStateTransitionTime = previousStateTransitionTime;
-            Priority = priority;
-            Constraints = constraints;
-            JobManagerTask = jobManagerTask;
-            JobPreparationTask = jobPreparationTask;
-            JobReleaseTask = jobReleaseTask;
-            CommonEnvironmentSettings = commonEnvironmentSettings;
-            PoolInfo = poolInfo;
-            OnAllTasksComplete = onAllTasksComplete;
-            OnTaskFailure = onTaskFailure;
-            Metadata = metadata;
-            ExecutionInfo = executionInfo;
-            Stats = stats;
+            this.Id = id;
+            this.DisplayName = displayName;
+            this.UsesTaskDependencies = usesTaskDependencies;
+            this.Url = url;
+            this.ETag = eTag;
+            this.LastModified = lastModified;
+            this.CreationTime = creationTime;
+            this.State = state;
+            this.StateTransitionTime = stateTransitionTime;
+            this.PreviousState = previousState;
+            this.PreviousStateTransitionTime = previousStateTransitionTime;
+            this.Priority = priority;
+            this.Constraints = constraints;
+            this.JobManagerTask = jobManagerTask;
+            this.JobPreparationTask = jobPreparationTask;
+            this.JobReleaseTask = jobReleaseTask;
+            this.CommonEnvironmentSettings = commonEnvironmentSettings;
+            this.PoolInfo = poolInfo;
+            this.OnAllTasksComplete = onAllTasksComplete;
+            this.OnTaskFailure = onTaskFailure;
+            this.Metadata = metadata;
+            this.ExecutionInfo = executionInfo;
+            this.Stats = stats;
         }
 
         /// <summary>

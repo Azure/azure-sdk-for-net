@@ -8,13 +8,11 @@
 
 namespace Microsoft.Azure.Management.Authorization.Models
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+	using System.Linq;
+	using Microsoft.Azure;
+    using Microsoft.Azure.Management;
+    using Microsoft.Azure.Management.Authorization;
     using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Role assignment properties.
@@ -24,25 +22,41 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Initializes a new instance of the RoleAssignmentProperties class.
         /// </summary>
-        public RoleAssignmentProperties() { }
+        public RoleAssignmentProperties()
+        {
+          CustomInit();
+        }
 
         /// <summary>
         /// Initializes a new instance of the RoleAssignmentProperties class.
         /// </summary>
+        /// <param name="roleDefinitionId">The role definition ID used in the
+        /// role assignment.</param>
+        /// <param name="principalId">The principal ID assigned to the role.
+        /// This maps to the ID inside the Active Directory. It can point to a
+        /// user, service principal, or security group.</param>
         public RoleAssignmentProperties(string roleDefinitionId = default(string), string principalId = default(string))
         {
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
+            CustomInit();
         }
 
         /// <summary>
-        /// Gets or sets role definition id.
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the role definition ID used in the role assignment.
         /// </summary>
         [JsonProperty(PropertyName = "roleDefinitionId")]
         public string RoleDefinitionId { get; set; }
 
         /// <summary>
-        /// Gets or sets principal Id.
+        /// Gets or sets the principal ID assigned to the role. This maps to
+        /// the ID inside the Active Directory. It can point to a user, service
+        /// principal, or security group.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; set; }

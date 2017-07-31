@@ -52,16 +52,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="result">The result of the task execution.</param>
         public JobPreparationTaskExecutionInformation(System.DateTime startTime, JobPreparationTaskState state, int retryCount, System.DateTime? endTime = default(System.DateTime?), string taskRootDirectory = default(string), string taskRootDirectoryUrl = default(string), int? exitCode = default(int?), TaskFailureInformation failureInfo = default(TaskFailureInformation), System.DateTime? lastRetryTime = default(System.DateTime?), TaskExecutionResult? result = default(TaskExecutionResult?))
         {
-            StartTime = startTime;
-            EndTime = endTime;
-            State = state;
-            TaskRootDirectory = taskRootDirectory;
-            TaskRootDirectoryUrl = taskRootDirectoryUrl;
-            ExitCode = exitCode;
-            FailureInfo = failureInfo;
-            RetryCount = retryCount;
-            LastRetryTime = lastRetryTime;
-            Result = result;
+            this.StartTime = startTime;
+            this.EndTime = endTime;
+            this.State = state;
+            this.TaskRootDirectory = taskRootDirectory;
+            this.TaskRootDirectoryUrl = taskRootDirectoryUrl;
+            this.ExitCode = exitCode;
+            this.FailureInfo = failureInfo;
+            this.RetryCount = retryCount;
+            this.LastRetryTime = lastRetryTime;
+            this.Result = result;
         }
 
         /// <summary>

@@ -7,13 +7,13 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a5949526-d805-4782-b507-b556e230e0e5"
+          "c42156f6-dcf6-449a-8470-1c10e7a27441"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
+          "FxVersion/4.6.25211.01",
           "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.5.0.0"
         ]
       },
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 08 Jun 2017 23:20:38 GMT"
+          "Thu, 25 May 2017 07:14:40 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -42,16 +42,16 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "westus2:1e7e4205-cf95-40a3-a78d-aff641a83f52"
+          "southeastasia:9fa50e45-d87b-4dc6-ad49-375e5339c915"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14979"
+          "14726"
         ],
         "x-ms-correlation-request-id": [
-          "b7f76d95-207c-4c9c-a579-2879da42e39c"
+          "45ffa78b-9eec-416c-8fa3-20707db2578b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170608T232038Z:b7f76d95-207c-4c9c-a579-2879da42e39c"
+          "SOUTHEASTASIA:20170525T071440Z:45ffa78b-9eec-416c-8fa3-20707db2578b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

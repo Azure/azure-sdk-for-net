@@ -49,13 +49,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// modified since the specified time.</param>
         public FileGetFromComputeNodeOptions(int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?), string ocpRange = default(string), System.DateTime? ifModifiedSince = default(System.DateTime?), System.DateTime? ifUnmodifiedSince = default(System.DateTime?))
         {
-            Timeout = timeout;
-            ClientRequestId = clientRequestId;
-            ReturnClientRequestId = returnClientRequestId;
-            OcpDate = ocpDate;
-            OcpRange = ocpRange;
-            IfModifiedSince = ifModifiedSince;
-            IfUnmodifiedSince = ifUnmodifiedSince;
+            this.Timeout = timeout;
+            this.ClientRequestId = clientRequestId;
+            this.ReturnClientRequestId = returnClientRequestId;
+            this.OcpDate = ocpDate;
+            this.OcpRange = ocpRange;
+            this.IfModifiedSince = ifModifiedSince;
+            this.IfUnmodifiedSince = ifUnmodifiedSince;
         }
 
         /// <summary>

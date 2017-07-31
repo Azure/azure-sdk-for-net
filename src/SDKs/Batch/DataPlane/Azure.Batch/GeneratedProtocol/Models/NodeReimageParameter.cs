@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// and what to do with currently running tasks.</param>
         public NodeReimageParameter(ComputeNodeReimageOption? nodeReimageOption = default(ComputeNodeReimageOption?))
         {
-            NodeReimageOption = nodeReimageOption;
+            this.NodeReimageOption = nodeReimageOption;
         }
 
         /// <summary>

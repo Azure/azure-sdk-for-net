@@ -41,12 +41,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// node.</param>
         public StartTask(string commandLine, System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), UserIdentity userIdentity = default(UserIdentity), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
         {
-            CommandLine = commandLine;
-            ResourceFiles = resourceFiles;
-            EnvironmentSettings = environmentSettings;
-            UserIdentity = userIdentity;
-            MaxTaskRetryCount = maxTaskRetryCount;
-            WaitForSuccess = waitForSuccess;
+            this.CommandLine = commandLine;
+            this.ResourceFiles = resourceFiles;
+            this.EnvironmentSettings = environmentSettings;
+            this.UserIdentity = userIdentity;
+            this.MaxTaskRetryCount = maxTaskRetryCount;
+            this.WaitForSuccess = waitForSuccess;
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (CommandLine == null)
+            if (this.CommandLine == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
             }

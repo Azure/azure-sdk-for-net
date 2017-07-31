@@ -55,19 +55,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// run on a low-priority compute node.</param>
         public JobManagerTask(string id, string commandLine, string displayName = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<OutputFile> outputFiles = default(System.Collections.Generic.IList<OutputFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings), bool? allowLowPriorityNode = default(bool?))
         {
-            Id = id;
-            DisplayName = displayName;
-            CommandLine = commandLine;
-            ResourceFiles = resourceFiles;
-            OutputFiles = outputFiles;
-            EnvironmentSettings = environmentSettings;
-            Constraints = constraints;
-            KillJobOnCompletion = killJobOnCompletion;
-            UserIdentity = userIdentity;
-            RunExclusive = runExclusive;
-            ApplicationPackageReferences = applicationPackageReferences;
-            AuthenticationTokenSettings = authenticationTokenSettings;
-            AllowLowPriorityNode = allowLowPriorityNode;
+            this.Id = id;
+            this.DisplayName = displayName;
+            this.CommandLine = commandLine;
+            this.ResourceFiles = resourceFiles;
+            this.OutputFiles = outputFiles;
+            this.EnvironmentSettings = environmentSettings;
+            this.Constraints = constraints;
+            this.KillJobOnCompletion = killJobOnCompletion;
+            this.UserIdentity = userIdentity;
+            this.RunExclusive = runExclusive;
+            this.ApplicationPackageReferences = applicationPackageReferences;
+            this.AuthenticationTokenSettings = authenticationTokenSettings;
+            this.AllowLowPriorityNode = allowLowPriorityNode;
         }
 
         /// <summary>
@@ -195,11 +195,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// is not re-downloaded; the existing copy on the compute node is
         /// used. If a referenced application package cannot be installed, for
         /// example because the package has been deleted or because download
-        /// failed, the task fails with a scheduling error. This property is
-        /// currently not supported on jobs running on pools created using the
-        /// virtualMachineConfiguration (IaaS) property. If a task specifying
-        /// applicationPackageReferences runs on such a pool, it fails with a
-        /// scheduling error with code TaskSchedulingConstraintFailed.
+        /// failed, the task fails with a scheduling error.
         /// </remarks>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
         public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
@@ -239,11 +235,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
+            if (this.Id == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
-            if (CommandLine == null)
+            if (this.CommandLine == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
             }

@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// autoscale formula.</param>
         public PoolEnableAutoScaleParameter(string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?))
         {
-            AutoScaleFormula = autoScaleFormula;
-            AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
+            this.AutoScaleFormula = autoScaleFormula;
+            this.AutoScaleEvaluationInterval = autoScaleEvaluationInterval;
         }
 
         /// <summary>
