@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
+    using System;
 
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
@@ -19,7 +20,14 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private string servicePrincipalName;
         private string roleDefinitionId;
         private string roleName;
-                public GraphRbacManager Manager()
+
+        string IHasId.Id => Inner.Id;
+
+        string IHasName.Name => Inner.Name;
+
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
+
+        public GraphRbacManager Manager()
         {
             return manager;
         }

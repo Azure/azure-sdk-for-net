@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <return>An unmodifiable set of the members.</return>
         System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject> Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup.ListMembers()
         {
-            return this.ListMembers() as System.Collections.Generic.ISet<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject>;
+            return this.ListMembers() as System.Collections.Generic.IEnumerable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryObject>;
         }
 
         /// <summary>

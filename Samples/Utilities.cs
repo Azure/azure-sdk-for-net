@@ -1637,7 +1637,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             StringBuilder builder = new StringBuilder()
                 .Append("Active Directory Application: ").Append(application.Id)
                 .Append("\n\tName: ").Append(application.Name)
-                .Append("\n\tSign on URL: ").Append(application.SignOnUrl)
+                .Append("\n\tSign on URL: ").Append(application.SignOnUrl.ToString())
                 .Append("\n\tReply URLs:");
             foreach (string replyUrl in application.ReplyUrls)
             {

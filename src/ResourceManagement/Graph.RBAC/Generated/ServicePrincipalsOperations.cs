@@ -1156,7 +1156,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<PasswordCredential>>> ListPasswordCredentialsWithHttpMessagesAsync(string objectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<Models.PasswordCredential>>> ListPasswordCredentialsWithHttpMessagesAsync(string objectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (objectId == null)
             {
@@ -1279,7 +1279,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<PasswordCredential>>();
+            var _result = new AzureOperationResponse<IEnumerable<Models.PasswordCredential>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1292,7 +1292,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<PasswordCredential>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Models.PasswordCredential>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

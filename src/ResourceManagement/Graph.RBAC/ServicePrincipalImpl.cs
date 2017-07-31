@@ -95,6 +95,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             return WithNewRole(role, "subscriptions/" + subscriptionId);
         }
 
+        public ServicePrincipalImpl WithoutRole(IRoleAssignment roleAssignment)
+        {
+            this.rolesToDelete.Add(roleAssignment.Id);
+            return this;
+        }
+
                 public CertificateCredentialImpl<T> DefineCertificateCredential<T>(string name) where T : class
         {
             return new CertificateCredentialImpl<T>(name, (IHasCredential<T>) this);
@@ -135,6 +141,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             {
                 AccountEnabled = true
             };
+            this.cachedRoleAssignments = new Dictionary<string, IRoleAssignment>();
             this.rolesToCreate = new Dictionary<string, BuiltInRole>();
             this.rolesToDelete = new HashSet<string>();
             this.cachedCertificateCredentials = new Dictionary<string, ICertificateCredential>();
@@ -233,14 +240,30 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 SubmitCredentialsAsync(this, cancellationToken),
                 SubmitRolesAsync(this, cancellationToken));
 
-            foreach (PasswordCredentialImpl<IWithCreate> password in passwordCredentialsToCreate)
+            foreach (IPasswordCredential password in passwordCredentialsToCreate)
             {
-                await password.ExportAuthFileAsync(this, cancellationToken);
+                if (password is PasswordCredentialImpl<IWithCreate>)
+                {
+                    await ((PasswordCredentialImpl<IWithCreate>) password).ExportAuthFileAsync(this, cancellationToken);
+                }
+                else
+                {
+                    await ((PasswordCredentialImpl<IUpdate>)password).ExportAuthFileAsync(this, cancellationToken);
+                }
             }
-            foreach (CertificateCredentialImpl<IWithCreate> certificate in certificateCredentialsToCreate)
+            foreach (ICertificateCredential certificate in certificateCredentialsToCreate)
             {
-                await certificate.ExportAuthFileAsync(this, cancellationToken);
+                if (certificate is CertificateCredentialImpl<IWithCreate>)
+                {
+                    await ((CertificateCredentialImpl<IWithCreate>)certificate).ExportAuthFileAsync(this, cancellationToken);
+                }
+                else
+                {
+                    await ((CertificateCredentialImpl<IUpdate>)certificate).ExportAuthFileAsync(this, cancellationToken);
+                }
             }
+            passwordCredentialsToCreate.Clear();
+            certificateCredentialsToCreate.Clear();
 
             return await RefreshCredentialsAsync(cancellationToken);
         }
@@ -255,7 +278,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
             if (certificateCredentialsToCreate.Count > 0 || certificateCredentialsToDelete.Count > 0)
             {
-                Dictionary<string, ICertificateCredential> newCerts = new Dictionary<string, ICertificateCredential>(cachedCertificateCredentials);
+                var newCerts = new Dictionary<string, ICertificateCredential>(cachedCertificateCredentials);
                 foreach (string delete in certificateCredentialsToDelete)
                 {
                     newCerts.Remove(delete);
@@ -274,7 +297,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
             if (passwordCredentialsToCreate.Count > 0 || passwordCredentialsToDelete.Count > 0)
             {
-                Dictionary<string, IPasswordCredential> newPasses = new Dictionary<string, IPasswordCredential>(cachedPasswordCredentials);
+                var newPasses = new Dictionary<string, IPasswordCredential>(cachedPasswordCredentials);
                 foreach (string delete in passwordCredentialsToDelete)
                 {
                     newPasses.Remove(delete);

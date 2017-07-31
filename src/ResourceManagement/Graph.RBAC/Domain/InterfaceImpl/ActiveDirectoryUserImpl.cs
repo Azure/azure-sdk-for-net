@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 
-    internal partial class ActiveDirectoryUserImpl 
+    public partial class ActiveDirectoryUserImpl 
     {
         /// <summary>
         /// Specifies whether the user account is enabled.
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <summary>
         /// Gets the usage location of the user.
         /// </summary>
-        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUserBeta.UsageLocation
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.CountryISOCode Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser.UsageLocation
         {
             get
             {

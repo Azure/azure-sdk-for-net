@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
     using System.Linq;
+    using System;
 
     /// <summary>
     /// The implementation of RoleDefinitions and its parent interfaces.
@@ -76,7 +77,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                protected override IRoleDefinition WrapModel(RoleDefinitionInner roleDefinitionInner)
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
+
+        protected override IRoleDefinition WrapModel(RoleDefinitionInner roleDefinitionInner)
         {
             if (roleDefinitionInner == null)
             {
@@ -93,6 +96,11 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
                 return null;
             }
             return WrapModel(inners.First());
+        }
+
+        IRoleDefinition ISupportsGettingById<IRoleDefinition>.GetById(string id)
+        {
+            return WrapModel(manager.RoleInner.RoleDefinitions.GetById(id));
         }
     }
 }

@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
-    using Java.Net;
     using System.Collections.Generic;
 
     /// <summary>
@@ -56,6 +55,6 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <summary>
         /// Gets the home page of the application.
         /// </summary>
-        Java.Net.URL SignOnUrl { get; }
+        System.Uri SignOnUrl { get; }
     }
 }

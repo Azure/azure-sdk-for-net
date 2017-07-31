@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
 
-    internal partial class RoleAssignmentsImpl 
+    public partial class RoleAssignmentsImpl 
     {
         /// <summary>
         /// List role assignments in a scope.

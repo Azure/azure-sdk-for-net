@@ -275,11 +275,11 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         /// <summary>
         /// Gets the home page of the application.
         /// </summary>
-        Java.Net.URL Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication.SignOnUrl
+        System.Uri Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryApplication.SignOnUrl
         {
             get
             {
-                return this.SignOnUrl() as Java.Net.URL;
+                return this.SignOnUrl() as System.Uri;
             }
         }
 

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     /// The implementation of Users and its parent interfaces.
     /// </summary>
     public partial class ActiveDirectoryUsersImpl  :
-        ReadableWrappers<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUserImpl,Models.UserInner>,
+        CreatableResources<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryUser,Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryUserImpl,Models.UserInner>,
         IActiveDirectoryUsers,
         IHasInner<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUsersOperations>
     {
@@ -120,22 +120,35 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 
         IActiveDirectoryUser ISupportsGettingById<IActiveDirectoryUser>.GetById(string id)
         {
-            throw new NotImplementedException();
+            return WrapModel(manager.Inner.Users.Get(id));
         }
 
         public IBlank Define(string name)
         {
-            throw new NotImplementedException();
+            return WrapModel(name);
         }
 
-        public void DeleteById(string id)
+        public override void DeleteById(string id)
         {
-            throw new NotImplementedException();
+            manager.Inner.Users.Delete(id);
         }
 
-        public Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task DeleteByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            await manager.Inner.Users.DeleteAsync(id, cancellationToken);
+        }
+
+        protected override ActiveDirectoryUserImpl WrapModel(string name)
+        {
+            return new ActiveDirectoryUserImpl(new UserInner
+            {
+                DisplayName = name
+            }, manager);
+        }
+
+        IActiveDirectoryUser ISupportsGettingByName<IActiveDirectoryUser>.GetByName(string name)
+        {
+            return GetByNameAsync(name).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }

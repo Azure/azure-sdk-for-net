@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
 
-    internal partial class RoleDefinitionsImpl 
+    public partial class RoleDefinitionsImpl 
     {
         /// <summary>
         /// Gets the information about a role definition based on scope and name.

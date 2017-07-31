@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Rest;
     using System;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.RoleAssignment.Definition;
 
     /// <summary>
     /// The implementation of RoleAssignments and its parent interfaces.
@@ -76,7 +77,9 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
             }
         }
 
-                internal  RoleAssignmentsImpl(GraphRbacManager manager)
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => throw new NotImplementedException();
+
+        internal  RoleAssignmentsImpl(GraphRbacManager manager)
         {
             this.manager = manager;
         }
@@ -101,6 +104,16 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         public override void DeleteById(string id)
         {
             manager.RoleInner.RoleAssignments.DeleteById(id);
+        }
+
+        IRoleAssignment ISupportsGettingById<IRoleAssignment>.GetById(string id)
+        {
+            return WrapModel(manager.RoleInner.RoleAssignments.GetById(id));
+        }
+
+        IBlank ISupportsCreating<IBlank>.Define(string name)
+        {
+            return WrapModel(name);
         }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
@@ -25,7 +26,12 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
         private string servicePrincipalName;
         private string roleDefinitionId;
         private string roleName;
-                public RoleAssignmentImpl ForUser(IActiveDirectoryUser user)
+
+        string IHasId.Id => Inner.Id;
+
+        GraphRbacManager IHasManager<GraphRbacManager>.Manager => manager;
+
+        public RoleAssignmentImpl ForUser(IActiveDirectoryUser user)
         {
             this.objectId = user.Id;
             return this;

@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using System.Collections.Generic;
 
-    internal partial class RoleDefinitionImpl 
+    public partial class RoleDefinitionImpl 
     {
         /// <summary>
         /// Gets role definition assignable scopes.
