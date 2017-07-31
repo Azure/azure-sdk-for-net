@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="virtualNetworkResourceId">A URL of vnet, subnet,
         /// classicVnet or classicSubnet.</param>
-        /// <param name="action">The action of virtual network ACL rule.
-        /// Possible values include: 'Allow'</param>
-        /// <param name="state">Gets the state of virtual network ACL rule.
+        /// <param name="action">The action of virtual network rule. Possible
+        /// values include: 'Allow'</param>
+        /// <param name="state">Gets the state of virtual network rule.
         /// Possible values include: 'provisioning', 'deprovisioning',
         /// 'succeeded', 'failed', 'networkSourceDeleted'</param>
         public VirtualNetworkRule(string virtualNetworkResourceId, Action? action = default(Action?), State? state = default(State?))
@@ -49,15 +49,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string VirtualNetworkResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets the action of virtual network ACL rule. Possible
-        /// values include: 'Allow'
+        /// Gets or sets the action of virtual network rule. Possible values
+        /// include: 'Allow'
         /// </summary>
         [JsonProperty(PropertyName = "action")]
         public Action? Action { get; set; }
 
         /// <summary>
-        /// Gets the state of virtual network ACL rule. Possible values
-        /// include: 'provisioning', 'deprovisioning', 'succeeded', 'failed',
+        /// Gets the state of virtual network rule. Possible values include:
+        /// 'provisioning', 'deprovisioning', 'succeeded', 'failed',
         /// 'networkSourceDeleted'
         /// </summary>
         [JsonProperty(PropertyName = "state")]

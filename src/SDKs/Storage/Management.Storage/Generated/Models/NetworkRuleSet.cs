@@ -17,17 +17,17 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// Network ACL
+    /// Network rule set
     /// </summary>
-    public partial class StorageNetworkAcls
+    public partial class NetworkRuleSet
     {
         /// <summary>
-        /// Initializes a new instance of the StorageNetworkAcls class.
+        /// Initializes a new instance of the NetworkRuleSet class.
         /// </summary>
-        public StorageNetworkAcls() { }
+        public NetworkRuleSet() { }
 
         /// <summary>
-        /// Initializes a new instance of the StorageNetworkAcls class.
+        /// Initializes a new instance of the NetworkRuleSet class.
         /// </summary>
         /// <param name="defaultAction">Specifies the default action of allow
         /// or deny when no other rules match. Possible values include:
@@ -37,10 +37,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// of Logging|Metrics|AzureServices (For example, "Logging, Metrics"),
         /// or None to bypass none of those traffics. Possible values include:
         /// 'None', 'Logging', 'Metrics', 'AzureServices'</param>
-        /// <param name="virtualNetworkRules">Sets the virtual network ACL
+        /// <param name="virtualNetworkRules">Sets the virtual network
         /// rules</param>
         /// <param name="ipRules">Sets the IP ACL rules</param>
-        public StorageNetworkAcls(DefaultAction defaultAction, string bypass = default(string), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<IPRule> ipRules = default(IList<IPRule>))
+        public NetworkRuleSet(DefaultAction defaultAction, string bypass = default(string), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<IPRule> ipRules = default(IList<IPRule>))
         {
             Bypass = bypass;
             VirtualNetworkRules = virtualNetworkRules;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string Bypass { get; set; }
 
         /// <summary>
-        /// Gets or sets sets the virtual network ACL rules
+        /// Gets or sets sets the virtual network rules
         /// </summary>
         [JsonProperty(PropertyName = "virtualNetworkRules")]
         public IList<VirtualNetworkRule> VirtualNetworkRules { get; set; }

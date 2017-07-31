@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// include: 'Hot', 'Cool'</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
-        /// <param name="networkAcls">Network ACL</param>
-        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?), StorageNetworkAcls networkAcls = default(StorageNetworkAcls))
+        /// <param name="networkRuleSet">Network rule set</param>
+        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet))
         {
             Sku = sku;
             Tags = tags;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             Encryption = encryption;
             AccessTier = accessTier;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
-            NetworkAcls = networkAcls;
+            NetworkRuleSet = networkRuleSet;
         }
 
         /// <summary>
@@ -128,10 +128,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         public bool? EnableHttpsTrafficOnly { get; set; }
 
         /// <summary>
-        /// Gets or sets network ACL
+        /// Gets or sets network rule set
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkAcls")]
-        public StorageNetworkAcls NetworkAcls { get; set; }
+        public NetworkRuleSet NetworkRuleSet { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -153,9 +153,9 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 Encryption.Validate();
             }
-            if (NetworkAcls != null)
+            if (NetworkRuleSet != null)
             {
-                NetworkAcls.Validate();
+                NetworkRuleSet.Validate();
             }
         }
     }

@@ -60,13 +60,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="encryption">Provides the encryption settings on the
         /// account. If left unspecified the account encryption settings will
         /// remain the same. The default setting is unencrypted.</param>
-        /// <param name="networkAcls">Network ACL</param>
+        /// <param name="networkRuleSet">Network rule set</param>
         /// <param name="accessTier">Required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
         /// include: 'Hot', 'Cool'</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
-        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), StorageNetworkAcls networkAcls = default(StorageNetworkAcls), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?))
+        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?))
         {
             Sku = sku;
             Kind = kind;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             Identity = identity;
             CustomDomain = customDomain;
             Encryption = encryption;
-            NetworkAcls = networkAcls;
+            NetworkRuleSet = networkRuleSet;
             AccessTier = accessTier;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
         }
@@ -138,10 +138,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         public Encryption Encryption { get; set; }
 
         /// <summary>
-        /// Gets or sets network ACL
+        /// Gets or sets network rule set
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkAcls")]
-        public StorageNetworkAcls NetworkAcls { get; set; }
+        public NetworkRuleSet NetworkRuleSet { get; set; }
 
         /// <summary>
         /// Gets or sets required for storage accounts where kind =
@@ -186,9 +186,9 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 Encryption.Validate();
             }
-            if (NetworkAcls != null)
+            if (NetworkRuleSet != null)
             {
-                NetworkAcls.Validate();
+                NetworkRuleSet.Validate();
             }
         }
     }
