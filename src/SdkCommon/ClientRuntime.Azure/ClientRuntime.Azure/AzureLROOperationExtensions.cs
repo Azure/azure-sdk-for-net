@@ -228,7 +228,6 @@ namespace Microsoft.Rest.Azure
                         Response = new HttpResponseMessageWrapper(pollingState.Response, responseContent)
                     };
                 }
-                //}
             }
             else if (azureResponse != null)
             {
