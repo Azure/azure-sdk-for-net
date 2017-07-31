@@ -652,6 +652,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
             catch (Exception ex)
             {
+                // If the message changes in the response, this assert will also have to be updated.
                 Assert.Contains("DeploymentDocument", ex.Message);
             }
         }
