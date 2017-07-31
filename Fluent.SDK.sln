@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.KeyVault.Fluent", "src\ResourceManagement\KeyVault\Microsoft.Azure.Management.KeyVault.Fluent.csproj", "{1911A39E-FA13-48F6-A7DD-98B0A7EE973B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Network.Fluent", "src\ResourceManagement\Network\Microsoft.Azure.Management.Network.Fluent.csproj", "{D691D295-110E-4451-8E3B-A34C0131E7F8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Redis.Fluent", "src\ResourceManagement\RedisCache\Microsoft.Azure.Management.Redis.Fluent.csproj", "{399E50C9-629E-4FD3-9F19-B7DFA64C9E40}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ResourceManager.Fluent", "src\ResourceManagement\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent.csproj", "{E5C3B599-F17E-4BE2-9E67-97246EB14162}"
@@ -64,6 +62,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Relay.Fluent", "src\ResourceManagement\Relay\Microsoft.Azure.Management.Relay.Fluent.csproj", "{683CEC93-0470-442B-B354-CB1061AA7A55}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.StorSimple.Fluent", "src\ResourceManagement\StorSimple\Microsoft.Azure.Management.StorSimple.Fluent.csproj", "{046B7792-F579-4F39-B7AA-1A9B37692D92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.Network.Fluent", "src\ResourceManagement\Network\Microsoft.Azure.Management.Network.Fluent.csproj", "{88481C19-87BA-4746-BFB3-FAB663434EB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.Monitor.Fluent", "src\ResourceManagement\Monitor\Microsoft.Azure.Management.Monitor.Fluent.csproj", "{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,10 +113,6 @@ Global
 		{1911A39E-FA13-48F6-A7DD-98B0A7EE973B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1911A39E-FA13-48F6-A7DD-98B0A7EE973B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1911A39E-FA13-48F6-A7DD-98B0A7EE973B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D691D295-110E-4451-8E3B-A34C0131E7F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D691D295-110E-4451-8E3B-A34C0131E7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D691D295-110E-4451-8E3B-A34C0131E7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D691D295-110E-4451-8E3B-A34C0131E7F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{399E50C9-629E-4FD3-9F19-B7DFA64C9E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{399E50C9-629E-4FD3-9F19-B7DFA64C9E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{399E50C9-629E-4FD3-9F19-B7DFA64C9E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -195,6 +193,14 @@ Global
 		{046B7792-F579-4F39-B7AA-1A9B37692D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{046B7792-F579-4F39-B7AA-1A9B37692D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{046B7792-F579-4F39-B7AA-1A9B37692D92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88481C19-87BA-4746-BFB3-FAB663434EB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88481C19-87BA-4746-BFB3-FAB663434EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88481C19-87BA-4746-BFB3-FAB663434EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88481C19-87BA-4746-BFB3-FAB663434EB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9EBCC4-C26F-4197-A4E0-E6FDDDC4F1F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
