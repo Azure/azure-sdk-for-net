@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
     using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateExternalEndpoint;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The stage of the traffic manager profile endpoint update allowing to specify the endpoint weight.
@@ -79,7 +80,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerProfile.Update.IUpdate>,
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithRoutingWeight,
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithRoutingPriority,
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithTrafficDisabledOrEnabled
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithTrafficDisabledOrEnabled,
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IWithGeographicLocationBeta
     {
     }
 
@@ -128,4 +130,58 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
         /// <return>The next stage of the endpoint update.</return>
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.UpdateExternalEndpoint.IUpdateExternalEndpoint ToFqdn(string externalFqdn);
     }
+
+    /// <summary>
+    /// The stage of the traffic manager update definition allowing to specify the geographic region.
+    /// </summary>
+    public interface IWithGeographicLocationBeta :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies the list of geographic location for the endpoint that will be used when the parent profile is
+        /// configured with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocations">The geographic locations.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithGeographicLocations(IList<Microsoft.Azure.Management.TrafficManager.Fluent.IGeographicLocation> geographicLocations);
+
+        /// <summary>
+        /// Specifies the list of geographic location for the endpoint that will be used when the parent profile is
+        /// configured with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocationCodes">The geographic location codes.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithGeographicLocations(IList<string> geographicLocationCodes);
+
+        /// <summary>
+        /// Specifies the geographic location to be removed from the endpoint's geographic location entries.
+        /// </summary>
+        /// <param name="geographicLocation">The geographic location.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithoutGeographicLocation(IGeographicLocation geographicLocation);
+
+        /// <summary>
+        /// Specifies the geographic location to be removed from the endpoint's geographic location entries.
+        /// </summary>
+        /// <param name="geographicLocationCode">The geographic location code.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithoutGeographicLocation(string geographicLocationCode);
+
+        /// <summary>
+        /// Specifies the geographic location for the endpoint that will be used when the parent profile is configured
+        /// with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocation">The geographic location.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithGeographicLocation(IGeographicLocation geographicLocation);
+
+        /// <summary>
+        /// Specifies the geographic location for the endpoint that will be used when the parent profile is configured
+        /// with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocationCode">The geographic location code.</param>
+        /// <return>The next stage of the update.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Update.IUpdate WithGeographicLocation(string geographicLocationCode);
+    }
+
 }

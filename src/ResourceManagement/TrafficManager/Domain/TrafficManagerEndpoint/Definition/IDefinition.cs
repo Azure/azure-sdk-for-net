@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
     using Microsoft.Azure.Management.TrafficManager.Fluent;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The final stage of the traffic manager profile endpoint definition.
@@ -16,7 +17,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
         Microsoft.Azure.Management.ResourceManager.Fluent.Core.ChildResource.Definition.IInDefinition<ParentT>,
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithRoutingWeight<ParentT>,
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithRoutingPriority<ParentT>,
-        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithTrafficDisabled<ParentT>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithTrafficDisabled<ParentT>,
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithGeographicLocationBeta<ParentT>
     {
     }
 
@@ -198,5 +200,45 @@ namespace Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoin
         /// <param name="externalFqdn">The external FQDN.</param>
         /// <return>The next stage of the definition.</return>
         Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithSourceTrafficRegion<ParentT> ToFqdn(string externalFqdn);
+    }
+
+    /// <summary>
+    /// The stage of the traffic manager endpoint definition allowing to specify the geographic region.
+    /// </summary>
+    /// <typeparam name="ParentT">The return type of  WithAttach.attach().</typeparam>
+    public interface IWithGeographicLocationBeta<ParentT> :
+        Microsoft.Azure.Management.ResourceManager.Fluent.Core.IBeta
+    {
+        /// <summary>
+        /// Specifies the list of geographic location for the endpoint that will be used when the parent profile is
+        /// configured with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocations">The geographic locations.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<ParentT> WithGeographicLocations(IList<Microsoft.Azure.Management.TrafficManager.Fluent.IGeographicLocation> geographicLocations);
+
+        /// <summary>
+        /// Specifies the list of geographic location for the endpoint that will be used when the parent profile is
+        /// configured with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocationCodes">The geographic location codes.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<ParentT> WithGeographicLocations(IList<string> geographicLocationCodes);
+
+        /// <summary>
+        /// Specifies the geographic location for the endpoint that will be used when the parent profile is configured
+        /// with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocation">The geographic location.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<ParentT> WithGeographicLocation(IGeographicLocation geographicLocation);
+
+        /// <summary>
+        /// Specifies the geographic location for the endpoint that will be used when the parent profile is configured
+        /// with Geographic based routing method  TrafficRoutingMethod.GEOGRAPHIC.
+        /// </summary>
+        /// <param name="geographicLocationCode">The geographic location code.</param>
+        /// <return>The next stage of the definition.</return>
+        Microsoft.Azure.Management.TrafficManager.Fluent.TrafficManagerEndpoint.Definition.IWithAttach<ParentT> WithGeographicLocation(string geographicLocationCode);
     }
 }
