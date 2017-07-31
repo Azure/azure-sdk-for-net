@@ -37,23 +37,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IEnumerable<MetricInner> List(this IMetricsOperations operations, string resourceUri, ODataQuery<MetricInner> odataQuery = default(ODataQuery<MetricInner>))
-            {
-                return ((IMetricsOperations)operations).ListAsync(resourceUri, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the metric values for a resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceUri'>
-            /// The identifier of the resource.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>

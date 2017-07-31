@@ -41,30 +41,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the CreateOrUpdate authorization policy operation.
             /// </param>
-            public static AuthorizationPolicyResourceFormatInner CreateOrUpdate(this IAuthorizationPoliciesOperations operations, string resourceGroupName, string hubName, string authorizationPolicyName, AuthorizationPolicyResourceFormatInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, hubName, authorizationPolicyName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates an authorization policy or updates an existing authorization
-            /// policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='authorizationPolicyName'>
-            /// The name of the policy.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate authorization policy operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -74,26 +50,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets an authorization policy in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='authorizationPolicyName'>
-            /// The name of the policy.
-            /// </param>
-            public static AuthorizationPolicyResourceFormatInner Get(this IAuthorizationPoliciesOperations operations, string resourceGroupName, string hubName, string authorizationPolicyName)
-            {
-                return operations.GetAsync(resourceGroupName, hubName, authorizationPolicyName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -134,23 +90,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='hubName'>
             /// The name of the hub.
             /// </param>
-            public static IPage<AuthorizationPolicyResourceFormatInner> ListByHub(this IAuthorizationPoliciesOperations operations, string resourceGroupName, string hubName)
-            {
-                return operations.ListByHubAsync(resourceGroupName, hubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the authorization policies in a specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -160,26 +99,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Regenerates the primary policy key of the specified authorization policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='authorizationPolicyName'>
-            /// The name of the policy.
-            /// </param>
-            public static AuthorizationPolicyInner RegeneratePrimaryKey(this IAuthorizationPoliciesOperations operations, string resourceGroupName, string hubName, string authorizationPolicyName)
-            {
-                return operations.RegeneratePrimaryKeyAsync(resourceGroupName, hubName, authorizationPolicyName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,26 +142,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='authorizationPolicyName'>
             /// The name of the policy.
             /// </param>
-            public static AuthorizationPolicyInner RegenerateSecondaryKey(this IAuthorizationPoliciesOperations operations, string resourceGroupName, string hubName, string authorizationPolicyName)
-            {
-                return operations.RegenerateSecondaryKeyAsync(resourceGroupName, hubName, authorizationPolicyName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Regenerates the secondary policy key of the specified authorization policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='authorizationPolicyName'>
-            /// The name of the policy.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -252,20 +151,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all the authorization policies in a specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<AuthorizationPolicyResourceFormatInner> ListByHubNext(this IAuthorizationPoliciesOperations operations, string nextPageLink)
-            {
-                return operations.ListByHubNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

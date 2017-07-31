@@ -39,26 +39,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='incidentName'>
             /// The name of the incident to retrieve.
             /// </param>
-            public static IncidentInner Get(this IAlertRuleIncidentsOperations operations, string resourceGroupName, string ruleName, string incidentName)
-            {
-                return operations.GetAsync(resourceGroupName, ruleName, incidentName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets an incident associated to an alert rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='ruleName'>
-            /// The name of the rule.
-            /// </param>
-            /// <param name='incidentName'>
-            /// The name of the incident to retrieve.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -68,23 +48,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a list of incidents associated to an alert rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='ruleName'>
-            /// The name of the rule.
-            /// </param>
-            public static IEnumerable<IncidentInner> ListByAlertRule(this IAlertRuleIncidentsOperations operations, string resourceGroupName, string ruleName)
-            {
-                return operations.ListByAlertRuleAsync(resourceGroupName, ruleName).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -33,40 +33,12 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='logProfileName'>
             /// The name of the log profile.
             /// </param>
-            public static void Delete(this ILogProfilesOperations operations, string logProfileName)
-            {
-                operations.DeleteAsync(logProfileName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the log profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='logProfileName'>
-            /// The name of the log profile.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this ILogProfilesOperations operations, string logProfileName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(logProfileName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the log profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='logProfileName'>
-            /// The name of the log profile.
-            /// </param>
-            public static LogProfileResourceInner Get(this ILogProfilesOperations operations, string logProfileName)
-            {
-                return operations.GetAsync(logProfileName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -87,23 +59,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Create or update a log profile in Azure Monitoring REST API.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='logProfileName'>
-            /// The name of the log profile.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the operation.
-            /// </param>
-            public static LogProfileResourceInner CreateOrUpdate(this ILogProfilesOperations operations, string logProfileName, LogProfileResourceInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(logProfileName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -142,24 +97,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='logProfilesResource'>
             /// Parameters supplied to the operation.
             /// </param>
-            public static LogProfileResourceInner Update(this ILogProfilesOperations operations, string logProfileName, LogProfileResourcePatchInner logProfilesResource)
-            {
-                return operations.UpdateAsync(logProfileName, logProfilesResource).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an existing LogProfilesResource. To update other fields use the
-            /// CreateOrUpdate method.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='logProfileName'>
-            /// The name of the log profile.
-            /// </param>
-            /// <param name='logProfilesResource'>
-            /// Parameters supplied to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -169,17 +106,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List the log profiles.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IEnumerable<LogProfileResourceInner> List(this ILogProfilesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>

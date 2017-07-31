@@ -31,20 +31,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static IPage<AutoscaleSettingResourceInner> ListByResourceGroup(this IAutoscaleSettingsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the autoscale settings for a resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -54,26 +40,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or updates an autoscale setting.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='autoscaleSettingName'>
-            /// The autoscale setting name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the operation.
-            /// </param>
-            public static AutoscaleSettingResourceInner CreateOrUpdate(this IAutoscaleSettingsOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourceInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, autoscaleSettingName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -114,46 +80,12 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='autoscaleSettingName'>
             /// The autoscale setting name.
             /// </param>
-            public static void Delete(this IAutoscaleSettingsOperations operations, string resourceGroupName, string autoscaleSettingName)
-            {
-                operations.DeleteAsync(resourceGroupName, autoscaleSettingName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes and autoscale setting
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='autoscaleSettingName'>
-            /// The autoscale setting name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IAutoscaleSettingsOperations operations, string resourceGroupName, string autoscaleSettingName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, autoscaleSettingName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets an autoscale setting
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='autoscaleSettingName'>
-            /// The autoscale setting name.
-            /// </param>
-            public static AutoscaleSettingResourceInner Get(this IAutoscaleSettingsOperations operations, string resourceGroupName, string autoscaleSettingName)
-            {
-                return operations.GetAsync(resourceGroupName, autoscaleSettingName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -195,27 +127,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='autoscaleSettingResource'>
             /// Parameters supplied to the operation.
             /// </param>
-            public static AutoscaleSettingResourceInner Update(this IAutoscaleSettingsOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingResourcePatchInner autoscaleSettingResource)
-            {
-                return operations.UpdateAsync(resourceGroupName, autoscaleSettingName, autoscaleSettingResource).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an existing AutoscaleSettingsResource. To update other fields use
-            /// the CreateOrUpdate method.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='autoscaleSettingName'>
-            /// The autoscale setting name.
-            /// </param>
-            /// <param name='autoscaleSettingResource'>
-            /// Parameters supplied to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -225,20 +136,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Lists the autoscale settings for a resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<AutoscaleSettingResourceInner> ListByResourceGroupNext(this IAutoscaleSettingsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

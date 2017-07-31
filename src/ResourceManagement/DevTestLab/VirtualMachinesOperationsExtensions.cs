@@ -40,26 +40,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<LabVirtualMachineInner> List(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, ODataQuery<LabVirtualMachineInner> odataQuery = default(ODataQuery<LabVirtualMachineInner>))
-            {
-                return ((IVirtualMachinesOperations)operations).ListAsync(resourceGroupName, labName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List virtual machines in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -69,30 +49,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get virtual machine.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example:
-            /// 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'
-            /// </param>
-            public static LabVirtualMachineInner Get(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, labName, name, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -144,30 +100,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='labVirtualMachine'>
             /// A virtual machine.
             /// </param>
-            public static LabVirtualMachineInner CreateOrUpdate(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, LabVirtualMachineInner labVirtualMachine)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labName, name, labVirtualMachine).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or replace an existing Virtual machine. This operation can take a
-            /// while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='labVirtualMachine'>
-            /// A virtual machine.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -194,55 +126,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Delete(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete virtual machine. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Modify properties of virtual machines.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='labVirtualMachine'>
-            /// A virtual machine.
-            /// </param>
-            public static LabVirtualMachineInner Update(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, LabVirtualMachineFragmentInner labVirtualMachine)
-            {
-                return operations.UpdateAsync(resourceGroupName, labName, name, labVirtualMachine).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -293,60 +182,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='dataDiskProperties'>
             /// Request body for adding a new or existing data disk to a virtual machine.
             /// </param>
-            public static void AddDataDisk(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, DataDiskPropertiesInner dataDiskProperties)
-            {
-                operations.AddDataDiskAsync(resourceGroupName, labName, name, dataDiskProperties).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Attach a new or existing data disk to virtual machine. This operation can
-            /// take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='dataDiskProperties'>
-            /// Request body for adding a new or existing data disk to a virtual machine.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task AddDataDiskAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, DataDiskPropertiesInner dataDiskProperties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.AddDataDiskWithHttpMessagesAsync(resourceGroupName, labName, name, dataDiskProperties, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Apply artifacts to virtual machine. This operation can take a while to
-            /// complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='artifacts'>
-            /// The list of artifacts to apply.
-            /// </param>
-            public static void ApplyArtifacts(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, IList<ArtifactInstallPropertiesInner> artifacts = default(IList<ArtifactInstallPropertiesInner>))
-            {
-                operations.ApplyArtifactsAsync(resourceGroupName, labName, name, artifacts).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -392,57 +233,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Claim(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.ClaimAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Take ownership of an existing virtual machine This operation can take a
-            /// while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ClaimAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ClaimWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Detach the specified disk from the virtual machine. This operation can take
-            /// a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='existingLabDiskId'>
-            /// Specifies the disk resource ID to detach from virtual machine.
-            /// </param>
-            public static void DetachDataDisk(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, string existingLabDiskId = default(string))
-            {
-                operations.DetachDataDiskAsync(resourceGroupName, labName, name, existingLabDiskId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -487,26 +283,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            public static ApplicableScheduleInner ListApplicableSchedules(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                return operations.ListApplicableSchedulesAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all applicable schedules
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -516,26 +292,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Start a virtual machine. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static void Start(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.StartAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -576,56 +332,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            public static void Stop(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.StopAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Stop a virtual machine This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task StopAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.StopWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Create or replace an existing Virtual machine. This operation can take a
-            /// while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='labVirtualMachine'>
-            /// A virtual machine.
-            /// </param>
-            public static LabVirtualMachineInner BeginCreateOrUpdate(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, LabVirtualMachineInner labVirtualMachine)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, labName, name, labVirtualMachine).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -673,56 +385,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            public static void BeginDelete(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete virtual machine. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginDeleteAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Attach a new or existing data disk to virtual machine. This operation can
-            /// take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='dataDiskProperties'>
-            /// Request body for adding a new or existing data disk to a virtual machine.
-            /// </param>
-            public static void BeginAddDataDisk(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, DataDiskPropertiesInner dataDiskProperties)
-            {
-                operations.BeginAddDataDiskAsync(resourceGroupName, labName, name, dataDiskProperties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -771,57 +439,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='artifacts'>
             /// The list of artifacts to apply.
             /// </param>
-            public static void BeginApplyArtifacts(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, IList<ArtifactInstallPropertiesInner> artifacts = default(IList<ArtifactInstallPropertiesInner>))
-            {
-                operations.BeginApplyArtifactsAsync(resourceGroupName, labName, name, artifacts).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Apply artifacts to virtual machine. This operation can take a while to
-            /// complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='artifacts'>
-            /// The list of artifacts to apply.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginApplyArtifactsAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, IList<ArtifactInstallPropertiesInner> artifacts = default(IList<ArtifactInstallPropertiesInner>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginApplyArtifactsWithHttpMessagesAsync(resourceGroupName, labName, name, artifacts, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Take ownership of an existing virtual machine This operation can take a
-            /// while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static void BeginClaim(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.BeginClaimAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -867,56 +490,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='existingLabDiskId'>
             /// Specifies the disk resource ID to detach from virtual machine.
             /// </param>
-            public static void BeginDetachDataDisk(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, string existingLabDiskId = default(string))
-            {
-                operations.BeginDetachDataDiskAsync(resourceGroupName, labName, name, existingLabDiskId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Detach the specified disk from the virtual machine. This operation can take
-            /// a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            /// <param name='existingLabDiskId'>
-            /// Specifies the disk resource ID to detach from virtual machine.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginDetachDataDiskAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, string existingLabDiskId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDetachDataDiskWithHttpMessagesAsync(resourceGroupName, labName, name, existingLabDiskId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Start a virtual machine. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
-            public static void BeginStart(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.BeginStartAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -957,46 +536,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the virtual machine.
             /// </param>
-            public static void BeginStop(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.BeginStopAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Stop a virtual machine This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the virtual machine.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginStopAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginStopWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List virtual machines in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<LabVirtualMachineInner> ListNext(this IVirtualMachinesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -43,29 +43,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IEnumerable<UsageMetricInner> List(this IUsageMetricsOperations operations, string resourceUri, string apiVersion, ODataQuery<UsageMetricInner> odataQuery = default(ODataQuery<UsageMetricInner>))
-            {
-                return ((IUsageMetricsOperations)operations).ListAsync(resourceUri, apiVersion, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The List operation lists the usage metrics for the
-            /// resource.&lt;br&gt;**WARNING**: This operation will be *deprecated* in the
-            /// next release.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceUri'>
-            /// The identifier of the resource.
-            /// </param>
-            /// <param name='apiVersion'>
-            /// Client Api Version. NOTE: This is not a client property, it must be
-            /// explicit in the call and there is no default value.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>

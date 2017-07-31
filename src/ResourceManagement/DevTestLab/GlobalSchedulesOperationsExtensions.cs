@@ -32,20 +32,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<ScheduleInner> ListBySubscription(this IGlobalSchedulesOperations operations, ODataQuery<ScheduleInner> odataQuery = default(ODataQuery<ScheduleInner>))
-            {
-                return ((IGlobalSchedulesOperations)operations).ListBySubscriptionAsync(odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List schedules in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -69,23 +55,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<ScheduleInner> ListByResourceGroup(this IGlobalSchedulesOperations operations, string resourceGroupName, ODataQuery<ScheduleInner> odataQuery = default(ODataQuery<ScheduleInner>))
-            {
-                return ((IGlobalSchedulesOperations)operations).ListByResourceGroupAsync(resourceGroupName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List schedules in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -95,26 +64,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get schedule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=status)'
-            /// </param>
-            public static ScheduleInner Get(this IGlobalSchedulesOperations operations, string resourceGroupName, string name, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, name, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,26 +107,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='schedule'>
             /// A schedule.
             /// </param>
-            public static ScheduleInner CreateOrUpdate(this IGlobalSchedulesOperations operations, string resourceGroupName, string name, ScheduleInner schedule)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, name, schedule).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or replace an existing schedule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
-            /// <param name='schedule'>
-            /// A schedule.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -201,49 +130,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the schedule.
             /// </param>
-            public static void Delete(this IGlobalSchedulesOperations operations, string resourceGroupName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete schedule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IGlobalSchedulesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Modify properties of schedules.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
-            /// <param name='schedule'>
-            /// A schedule.
-            /// </param>
-            public static ScheduleInner Update(this IGlobalSchedulesOperations operations, string resourceGroupName, string name, ScheduleFragmentInner schedule)
-            {
-                return operations.UpdateAsync(resourceGroupName, name, schedule).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -284,50 +176,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the schedule.
             /// </param>
-            public static void Execute(this IGlobalSchedulesOperations operations, string resourceGroupName, string name)
-            {
-                operations.ExecuteAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Execute a schedule. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ExecuteAsync(this IGlobalSchedulesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ExecuteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Updates a schedule's target resource Id. This operation can take a while to
-            /// complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
-            /// <param name='retargetScheduleProperties'>
-            /// Properties for retargeting a virtual machine schedule.
-            /// </param>
-            public static void Retarget(this IGlobalSchedulesOperations operations, string resourceGroupName, string name, RetargetSchedulePropertiesInner retargetScheduleProperties)
-            {
-                operations.RetargetAsync(resourceGroupName, name, retargetScheduleProperties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -366,50 +220,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the schedule.
             /// </param>
-            public static void BeginExecute(this IGlobalSchedulesOperations operations, string resourceGroupName, string name)
-            {
-                operations.BeginExecuteAsync(resourceGroupName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Execute a schedule. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginExecuteAsync(this IGlobalSchedulesOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginExecuteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Updates a schedule's target resource Id. This operation can take a while to
-            /// complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the schedule.
-            /// </param>
-            /// <param name='retargetScheduleProperties'>
-            /// Properties for retargeting a virtual machine schedule.
-            /// </param>
-            public static void BeginRetarget(this IGlobalSchedulesOperations operations, string resourceGroupName, string name, RetargetSchedulePropertiesInner retargetScheduleProperties)
-            {
-                operations.BeginRetargetAsync(resourceGroupName, name, retargetScheduleProperties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -445,20 +261,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ScheduleInner> ListBySubscriptionNext(this IGlobalSchedulesOperations operations, string nextPageLink)
-            {
-                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List schedules in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -468,20 +270,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List schedules in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ScheduleInner> ListByResourceGroupNext(this IGlobalSchedulesOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

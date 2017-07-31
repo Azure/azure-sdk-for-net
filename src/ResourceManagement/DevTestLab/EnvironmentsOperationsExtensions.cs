@@ -41,29 +41,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<DtlEnvironmentInner> List(this IEnvironmentsOperations operations, string resourceGroupName, string labName, string userName, ODataQuery<DtlEnvironmentInner> odataQuery = default(ODataQuery<DtlEnvironmentInner>))
-            {
-                return ((IEnvironmentsOperations)operations).ListAsync(resourceGroupName, labName, userName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List environments in a given user profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user profile.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -73,33 +50,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get environment.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user profile.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the environment.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example:
-            /// 'properties($select=deploymentProperties)'
-            /// </param>
-            public static DtlEnvironmentInner Get(this IEnvironmentsOperations operations, string resourceGroupName, string labName, string userName, string name, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, labName, userName, name, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -157,33 +107,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='dtlEnvironment'>
             /// An environment, which is essentially an ARM template deployment.
             /// </param>
-            public static DtlEnvironmentInner CreateOrUpdate(this IEnvironmentsOperations operations, string resourceGroupName, string labName, string userName, string name, DtlEnvironmentInner dtlEnvironment)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labName, userName, name, dtlEnvironment).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or replace an existing environment. This operation can take a while
-            /// to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user profile.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the environment.
-            /// </param>
-            /// <param name='dtlEnvironment'>
-            /// An environment, which is essentially an ARM template deployment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -213,62 +136,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the environment.
             /// </param>
-            public static void Delete(this IEnvironmentsOperations operations, string resourceGroupName, string labName, string userName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, labName, userName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete environment. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user profile.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the environment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IEnvironmentsOperations operations, string resourceGroupName, string labName, string userName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, labName, userName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Create or replace an existing environment. This operation can take a while
-            /// to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user profile.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the environment.
-            /// </param>
-            /// <param name='dtlEnvironment'>
-            /// An environment, which is essentially an ARM template deployment.
-            /// </param>
-            public static DtlEnvironmentInner BeginCreateOrUpdate(this IEnvironmentsOperations operations, string resourceGroupName, string labName, string userName, string name, DtlEnvironmentInner dtlEnvironment)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, labName, userName, name, dtlEnvironment).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -322,49 +195,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the environment.
             /// </param>
-            public static void BeginDelete(this IEnvironmentsOperations operations, string resourceGroupName, string labName, string userName, string name)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, labName, userName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete environment. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user profile.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the environment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginDeleteAsync(this IEnvironmentsOperations operations, string resourceGroupName, string labName, string userName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, labName, userName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List environments in a given user profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<DtlEnvironmentInner> ListNext(this IEnvironmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

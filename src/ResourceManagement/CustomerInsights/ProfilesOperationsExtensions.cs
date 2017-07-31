@@ -42,29 +42,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the create/delete Profile type operation
             /// </param>
-            public static ProfileResourceFormatInner CreateOrUpdate(this IProfilesOperations operations, string resourceGroupName, string hubName, string profileName, ProfileResourceFormatInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, hubName, profileName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a profile within a Hub, or updates an existing profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='profileName'>
-            /// The name of the profile.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create/delete Profile type operation
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -74,29 +51,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets information about the specified profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='profileName'>
-            /// The name of the profile.
-            /// </param>
-            /// <param name='localeCode'>
-            /// Locale of profile to retrieve, default is en-us.
-            /// </param>
-            public static ProfileResourceFormatInner Get(this IProfilesOperations operations, string resourceGroupName, string hubName, string profileName, string localeCode = "en-us")
-            {
-                return operations.GetAsync(resourceGroupName, hubName, profileName, localeCode).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -146,55 +100,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='localeCode'>
             /// Locale of profile to retrieve, default is en-us.
             /// </param>
-            public static void Delete(this IProfilesOperations operations, string resourceGroupName, string hubName, string profileName, string localeCode = "en-us")
-            {
-                operations.DeleteAsync(resourceGroupName, hubName, profileName, localeCode).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a profile within a hub
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='profileName'>
-            /// The name of the profile.
-            /// </param>
-            /// <param name='localeCode'>
-            /// Locale of profile to retrieve, default is en-us.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IProfilesOperations operations, string resourceGroupName, string hubName, string profileName, string localeCode = "en-us", CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, hubName, profileName, localeCode, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets all profile in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='localeCode'>
-            /// Locale of profile to retrieve, default is en-us.
-            /// </param>
-            public static IPage<ProfileResourceFormatInner> ListByHub(this IProfilesOperations operations, string resourceGroupName, string hubName, string localeCode = "en-us")
-            {
-                return operations.ListByHubAsync(resourceGroupName, hubName, localeCode).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -240,28 +151,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='profileName'>
             /// The name of the profile.
             /// </param>
-            public static IList<KpiDefinitionInner> GetEnrichingKpis(this IProfilesOperations operations, string resourceGroupName, string hubName, string profileName)
-            {
-                return operations.GetEnrichingKpisAsync(resourceGroupName, hubName, profileName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the KPIs that enrich the profile Type identified by the supplied name.
-            /// Enrichment happens through participants of the Interaction on an
-            /// Interaction KPI and through Relationships for Profile KPIs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='profileName'>
-            /// The name of the profile.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -271,29 +160,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates a profile within a Hub, or updates an existing profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='profileName'>
-            /// The name of the profile.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create/delete Profile type operation
-            /// </param>
-            public static ProfileResourceFormatInner BeginCreateOrUpdate(this IProfilesOperations operations, string resourceGroupName, string hubName, string profileName, ProfileResourceFormatInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, hubName, profileName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -343,49 +209,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='localeCode'>
             /// Locale of profile to retrieve, default is en-us.
             /// </param>
-            public static void BeginDelete(this IProfilesOperations operations, string resourceGroupName, string hubName, string profileName, string localeCode = "en-us")
-            {
-                operations.BeginDeleteAsync(resourceGroupName, hubName, profileName, localeCode).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a profile within a hub
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='profileName'>
-            /// The name of the profile.
-            /// </param>
-            /// <param name='localeCode'>
-            /// Locale of profile to retrieve, default is en-us.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginDeleteAsync(this IProfilesOperations operations, string resourceGroupName, string hubName, string profileName, string localeCode = "en-us", CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, hubName, profileName, localeCode, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets all profile in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ProfileResourceFormatInner> ListByHubNext(this IProfilesOperations operations, string nextPageLink)
-            {
-                return operations.ListByHubNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -38,26 +38,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<IntegrationAccountPartnerInner> ListByIntegrationAccounts(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountPartnerFilterInner> odataQuery = default(ODataQuery<IntegrationAccountPartnerFilterInner>))
-            {
-                return ((IPartnersOperations)operations).ListByIntegrationAccountsAsync(resourceGroupName, integrationAccountName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of integration account partners.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -67,26 +47,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets an integration account partner.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='partnerName'>
-            /// The integration account partner name.
-            /// </param>
-            public static IntegrationAccountPartnerInner Get(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, string partnerName)
-            {
-                return operations.GetAsync(resourceGroupName, integrationAccountName, partnerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -133,29 +93,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='partner'>
             /// The integration account partner.
             /// </param>
-            public static IntegrationAccountPartnerInner CreateOrUpdate(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, string partnerName, IntegrationAccountPartnerInner partner)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, integrationAccountName, partnerName, partner).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates an integration account partner.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='partnerName'>
-            /// The integration account partner name.
-            /// </param>
-            /// <param name='partner'>
-            /// The integration account partner.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -182,46 +119,12 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='partnerName'>
             /// The integration account partner name.
             /// </param>
-            public static void Delete(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, string partnerName)
-            {
-                operations.DeleteAsync(resourceGroupName, integrationAccountName, partnerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an integration account partner.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='partnerName'>
-            /// The integration account partner name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IPartnersOperations operations, string resourceGroupName, string integrationAccountName, string partnerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, integrationAccountName, partnerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a list of integration account partners.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<IntegrationAccountPartnerInner> ListByIntegrationAccountsNext(this IPartnersOperations operations, string nextPageLink)
-            {
-                return operations.ListByIntegrationAccountsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

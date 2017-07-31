@@ -32,19 +32,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<LocalizableString> List(this IEventCategoriesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the list of available event categories supported in the Activity Logs
-            /// Service.&lt;br&gt;The current list includes the following: Aministrative,
-            /// Security, ServiceHealth, Alert, Recommendation, Policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>

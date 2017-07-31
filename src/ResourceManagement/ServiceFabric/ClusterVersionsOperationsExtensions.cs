@@ -36,25 +36,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
             /// Cluster operating system, the default means all. Possible values include:
             /// 'Default', 'Windows', 'Linux'
             /// </param>
-            public static IPage<ClusterCodeVersionsResult> List(this IClusterVersionsOperations operations, string location, string environment)
-            {
-                return operations.ListAsync(location, environment).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List cluster code versions by location
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location for the cluster code versions, this is different from cluster
-            /// location
-            /// </param>
-            /// <param name='environment'>
-            /// Cluster operating system, the default means all. Possible values include:
-            /// 'Default', 'Windows', 'Linux'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -64,20 +45,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List cluster code versions by location
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ClusterCodeVersionsResult> ListNext(this IClusterVersionsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -32,21 +32,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='resourceUri'>
             /// The identifier of the resource.
             /// </param>
-            public static ServiceDiagnosticSettingsResourceInner Get(this IServiceDiagnosticSettingsOperations operations, string resourceUri)
-            {
-                return operations.GetAsync(resourceUri).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the active diagnostic settings for the specified resource.
-            /// **WARNING**: This method will be deprecated in future releases.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceUri'>
-            /// The identifier of the resource.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -71,24 +56,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='parameters'>
             /// Parameters supplied to the operation.
             /// </param>
-            public static ServiceDiagnosticSettingsResourceInner CreateOrUpdate(this IServiceDiagnosticSettingsOperations operations, string resourceUri, ServiceDiagnosticSettingsResourceInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceUri, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update new diagnostic settings for the specified resource.
-            /// **WARNING**: This method will be deprecated in future releases.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceUri'>
-            /// The identifier of the resource.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -98,25 +65,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Updates an existing ServiceDiagnosticSettingsResource. To update other
-            /// fields use the CreateOrUpdate method. **WARNING**: This method will be
-            /// deprecated in future releases.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceUri'>
-            /// The identifier of the resource.
-            /// </param>
-            /// <param name='serviceDiagnosticSettingsResource'>
-            /// Parameters supplied to the operation.
-            /// </param>
-            public static ServiceDiagnosticSettingsResourceInner Update(this IServiceDiagnosticSettingsOperations operations, string resourceUri, ServiceDiagnosticSettingsResourcePatchInner serviceDiagnosticSettingsResource)
-            {
-                return operations.UpdateAsync(resourceUri, serviceDiagnosticSettingsResource).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -38,26 +38,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<FormulaInner> List(this IFormulasOperations operations, string resourceGroupName, string labName, ODataQuery<FormulaInner> odataQuery = default(ODataQuery<FormulaInner>))
-            {
-                return ((IFormulasOperations)operations).ListAsync(resourceGroupName, labName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List formulas in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -67,29 +47,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get formula.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the formula.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=description)'
-            /// </param>
-            public static FormulaInner Get(this IFormulasOperations operations, string resourceGroupName, string labName, string name, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, labName, name, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -140,30 +97,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='formula'>
             /// A formula for creating a VM, specifying an image base and other parameters
             /// </param>
-            public static FormulaInner CreateOrUpdate(this IFormulasOperations operations, string resourceGroupName, string labName, string name, FormulaInner formula)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labName, name, formula).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or replace an existing Formula. This operation can take a while to
-            /// complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the formula.
-            /// </param>
-            /// <param name='formula'>
-            /// A formula for creating a VM, specifying an image base and other parameters
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -173,26 +106,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete formula.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the formula.
-            /// </param>
-            public static void Delete(this IFormulasOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -237,30 +150,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='formula'>
             /// A formula for creating a VM, specifying an image base and other parameters
             /// </param>
-            public static FormulaInner BeginCreateOrUpdate(this IFormulasOperations operations, string resourceGroupName, string labName, string name, FormulaInner formula)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, labName, name, formula).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or replace an existing Formula. This operation can take a while to
-            /// complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the formula.
-            /// </param>
-            /// <param name='formula'>
-            /// A formula for creating a VM, specifying an image base and other parameters
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -270,20 +159,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List formulas in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<FormulaInner> ListNext(this IFormulasOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -38,26 +38,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<WorkflowRunInner> List(this IWorkflowRunsOperations operations, string resourceGroupName, string workflowName, ODataQuery<WorkflowRunFilterInner> odataQuery = default(ODataQuery<WorkflowRunFilterInner>))
-            {
-                return ((IWorkflowRunsOperations)operations).ListAsync(resourceGroupName, workflowName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of workflow runs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -67,26 +47,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a workflow run.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='runName'>
-            /// The workflow run name.
-            /// </param>
-            public static WorkflowRunInner Get(this IWorkflowRunsOperations operations, string resourceGroupName, string workflowName, string runName)
-            {
-                return operations.GetAsync(resourceGroupName, workflowName, runName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,46 +90,12 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='runName'>
             /// The workflow run name.
             /// </param>
-            public static void Cancel(this IWorkflowRunsOperations operations, string resourceGroupName, string workflowName, string runName)
-            {
-                operations.CancelAsync(resourceGroupName, workflowName, runName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Cancels a workflow run.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='runName'>
-            /// The workflow run name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task CancelAsync(this IWorkflowRunsOperations operations, string resourceGroupName, string workflowName, string runName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.CancelWithHttpMessagesAsync(resourceGroupName, workflowName, runName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a list of workflow runs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<WorkflowRunInner> ListNext(this IWorkflowRunsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

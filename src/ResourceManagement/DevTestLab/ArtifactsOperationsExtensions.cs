@@ -41,29 +41,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<ArtifactInner> List(this IArtifactsOperations operations, string resourceGroupName, string labName, string artifactSourceName, ODataQuery<ArtifactInner> odataQuery = default(ODataQuery<ArtifactInner>))
-            {
-                return ((IArtifactsOperations)operations).ListAsync(resourceGroupName, labName, artifactSourceName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List artifacts in a given artifact source.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='artifactSourceName'>
-            /// The name of the artifact source.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -73,32 +50,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get artifact.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='artifactSourceName'>
-            /// The name of the artifact source.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the artifact.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=title)'
-            /// </param>
-            public static ArtifactInner Get(this IArtifactsOperations operations, string resourceGroupName, string labName, string artifactSourceName, string name, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, labName, artifactSourceName, name, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -155,33 +106,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='generateArmTemplateRequest'>
             /// Parameters for generating an ARM template for deploying artifacts.
             /// </param>
-            public static ArmTemplateInfoInner GenerateArmTemplate(this IArtifactsOperations operations, string resourceGroupName, string labName, string artifactSourceName, string name, GenerateArmTemplateRequestInner generateArmTemplateRequest)
-            {
-                return operations.GenerateArmTemplateAsync(resourceGroupName, labName, artifactSourceName, name, generateArmTemplateRequest).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Generates an ARM template for the given artifact, uploads the required
-            /// files to a storage account, and validates the generated artifact.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='artifactSourceName'>
-            /// The name of the artifact source.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the artifact.
-            /// </param>
-            /// <param name='generateArmTemplateRequest'>
-            /// Parameters for generating an ARM template for deploying artifacts.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -191,20 +115,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List artifacts in a given artifact source.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ArtifactInner> ListNext(this IArtifactsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

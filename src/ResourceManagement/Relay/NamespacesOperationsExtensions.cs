@@ -35,22 +35,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// contain only letters, numbers, and hyphens. The namespace must start with a
             /// letter, and it must end with a letter or number.
             /// </param>
-            public static CheckNameAvailabilityResultInner CheckNameAvailabilityMethod(this INamespacesOperations operations, string name)
-            {
-                return operations.CheckNameAvailabilityMethodAsync(name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Check the give namespace name availability.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// The Name to check the namespce name availability and The namespace name can
-            /// contain only letters, numbers, and hyphens. The namespace must start with a
-            /// letter, and it must end with a letter or number.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -60,18 +44,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Lists all the available namespaces within the subscription irrespective of
-            /// the resourceGroups.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<RelayNamespaceInner> List(this INamespacesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -101,20 +73,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='resourceGroupName'>
             /// Name of the Resource group within the Azure subscription.
             /// </param>
-            public static IPage<RelayNamespaceInner> ListByResourceGroup(this INamespacesOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all the available namespaces within the ResourceGroup.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -124,26 +82,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Create Azure Relay namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
-            /// </param>
-            public static RelayNamespaceInner CreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, RelayNamespaceInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -185,47 +123,12 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='namespaceName'>
             /// The Namespace Name
             /// </param>
-            public static void Delete(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an existing namespace. This operation also removes all associated
-            /// resources under the namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Returns the description for the specified namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            public static RelayNamespaceInner Get(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -267,27 +170,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='parameters'>
             /// Parameters for updating a namespace resource.
             /// </param>
-            public static RelayNamespaceInner Update(this INamespacesOperations operations, string resourceGroupName, string namespaceName, RelayUpdateParametersInner parameters)
-            {
-                return operations.UpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a namespace. Once created, this namespace's resource
-            /// manifest is immutable. This operation is idempotent.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for updating a namespace resource.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -311,23 +193,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='namespaceName'>
             /// The Namespace Name
             /// </param>
-            public static IPage<AuthorizationRuleInner> ListAuthorizationRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Authorization rules for a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -337,29 +202,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or Updates an authorization rule for a namespace
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
-            /// </param>
-            /// <param name='rights'>
-            /// The rights associated with the rule.
-            /// </param>
-            public static AuthorizationRuleInner CreateOrUpdateAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, IList<AccessRights?> rights = default(IList<AccessRights?>))
-            {
-                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, rights).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -406,52 +248,12 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='authorizationRuleName'>
             /// The authorizationRule name.
             /// </param>
-            public static void DeleteAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
-            {
-                operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a namespace authorization rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAuthorizationRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Authorization rule for a namespace by name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
-            /// </param>
-            public static AuthorizationRuleInner GetAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
-            {
-                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -478,26 +280,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Primary and Secondary ConnectionStrings to the namespace
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
-            /// </param>
-            public static AccessKeysInner ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -544,29 +326,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to regenerate Auth Rule.
             /// </param>
-            public static AccessKeysInner RegenerateKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyParametersInner parameters)
-            {
-                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Regenerates the Primary or Secondary ConnectionStrings to the namespace
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to regenerate Auth Rule.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -576,26 +335,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Create Azure Relay namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
-            /// </param>
-            public static RelayNamespaceInner BeginCreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, RelayNamespaceInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -637,45 +376,12 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='namespaceName'>
             /// The Namespace Name
             /// </param>
-            public static void BeginDelete(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an existing namespace. This operation also removes all associated
-            /// resources under the namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginDeleteAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Lists all the available namespaces within the subscription irrespective of
-            /// the resourceGroups.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<RelayNamespaceInner> ListNext(this INamespacesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -708,20 +414,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RelayNamespaceInner> ListByResourceGroupNext(this INamespacesOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all the available namespaces within the ResourceGroup.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -731,20 +423,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Authorization rules for a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<AuthorizationRuleInner> ListAuthorizationRulesNext(this INamespacesOperations operations, string nextPageLink)
-            {
-                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

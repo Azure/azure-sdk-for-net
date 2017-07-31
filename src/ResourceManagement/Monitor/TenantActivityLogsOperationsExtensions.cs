@@ -46,34 +46,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*,
             /// *subStatus*, *subscriptionId*
             /// </param>
-            public static IPage<EventDataInner> List(this ITenantActivityLogsOperations operations, ODataQuery<EventDataInner> odataQuery = default(ODataQuery<EventDataInner>), string select = default(string))
-            {
-                return ((ITenantActivityLogsOperations)operations).ListAsync(odataQuery, select).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is
-            /// applicable to the API to get the Activity Logs for the subscription is
-            /// applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing
-            /// to point out here is that this API does *not* retrieve the logs at the
-            /// individual subscription of the tenant but only surfaces the logs that were
-            /// generated at the tenant level.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='select'>
-            /// Used to fetch events with only the given properties.&lt;br&gt;The
-            /// **$select** argument is a comma separated list of property names to be
-            /// returned. Possible values are: *authorization*, *claims*, *correlationId*,
-            /// *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*,
-            /// *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*,
-            /// *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*,
-            /// *subStatus*, *subscriptionId*
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -83,25 +55,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is
-            /// applicable to the API to get the Activity Logs for the subscription is
-            /// applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing
-            /// to point out here is that this API does *not* retrieve the logs at the
-            /// individual subscription of the tenant but only surfaces the logs that were
-            /// generated at the tenant level.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<EventDataInner> ListNext(this ITenantActivityLogsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

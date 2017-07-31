@@ -38,27 +38,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
             /// The parameters which contains the property value and property name which
             /// used to update the cluster configuration
             /// </param>
-            public static ClusterInner Update(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParametersInner parameters)
-            {
-                return operations.UpdateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Update cluster configuration
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the resource belongs or get created
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the cluster resource
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters which contains the property value and property name which
-            /// used to update the cluster configuration
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -68,23 +47,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get cluster resource
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the resource belongs or get created
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the cluster resource
-            /// </param>
-            public static ClusterInner Get(this IClustersOperations operations, string resourceGroupName, string clusterName)
-            {
-                return operations.GetAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -125,26 +87,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
             /// <param name='parameters'>
             /// Put Request
             /// </param>
-            public static ClusterInner Create(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterInner parameters)
-            {
-                return operations.CreateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create cluster resource
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the resource belongs or get created
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the cluster resource
-            /// </param>
-            /// <param name='parameters'>
-            /// Put Request
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -154,23 +96,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete cluster resource
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the resource belongs or get created
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the cluster resource
-            /// </param>
-            public static void Delete(this IClustersOperations operations, string resourceGroupName, string clusterName)
-            {
-                operations.DeleteAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -202,20 +127,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
             /// <param name='resourceGroupName'>
             /// The name of the resource group to which the resource belongs or get created
             /// </param>
-            public static IPage<ClusterInner> ListByResourceGroup(this IClustersOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List cluster resource by resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the resource belongs or get created
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -233,17 +144,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<ClusterInner> List(this IClustersOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List cluster resource
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -253,27 +153,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Update cluster configuration
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the resource belongs or get created
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the cluster resource
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters which contains the property value and property name which
-            /// used to update the cluster configuration
-            /// </param>
-            public static ClusterInner BeginUpdate(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterUpdateParametersInner parameters)
-            {
-                return operations.BeginUpdateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -318,26 +197,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
             /// <param name='parameters'>
             /// Put Request
             /// </param>
-            public static ClusterInner BeginCreate(this IClustersOperations operations, string resourceGroupName, string clusterName, ClusterInner parameters)
-            {
-                return operations.BeginCreateAsync(resourceGroupName, clusterName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create cluster resource
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the resource belongs or get created
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the cluster resource
-            /// </param>
-            /// <param name='parameters'>
-            /// Put Request
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -358,20 +217,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ClusterInner> ListByResourceGroupNext(this IClustersOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List cluster resource by resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -381,20 +226,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List cluster resource
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ClusterInner> ListNext(this IClustersOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

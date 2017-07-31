@@ -34,23 +34,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='hubName'>
             /// The name of the hub.
             /// </param>
-            public static IPage<RoleAssignmentResourceFormatInner> ListByHub(this IRoleAssignmentsOperations operations, string resourceGroupName, string hubName)
-            {
-                return operations.ListByHubAsync(resourceGroupName, hubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the role assignments for the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -60,29 +43,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or updates a role assignment in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='assignmentName'>
-            /// The assignment name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate RoleAssignment operation.
-            /// </param>
-            public static RoleAssignmentResourceFormatInner CreateOrUpdate(this IRoleAssignmentsOperations operations, string resourceGroupName, string hubName, string assignmentName, RoleAssignmentResourceFormatInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, hubName, assignmentName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -129,26 +89,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='assignmentName'>
             /// The name of the role assignment.
             /// </param>
-            public static RoleAssignmentResourceFormatInner Get(this IRoleAssignmentsOperations operations, string resourceGroupName, string hubName, string assignmentName)
-            {
-                return operations.GetAsync(resourceGroupName, hubName, assignmentName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the role assignment in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='assignmentName'>
-            /// The name of the role assignment.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -158,26 +98,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the role assignment in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='assignmentName'>
-            /// The name of the role assignment.
-            /// </param>
-            public static void Delete(this IRoleAssignmentsOperations operations, string resourceGroupName, string hubName, string assignmentName)
-            {
-                operations.DeleteAsync(resourceGroupName, hubName, assignmentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,29 +141,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the CreateOrUpdate RoleAssignment operation.
             /// </param>
-            public static RoleAssignmentResourceFormatInner BeginCreateOrUpdate(this IRoleAssignmentsOperations operations, string resourceGroupName, string hubName, string assignmentName, RoleAssignmentResourceFormatInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, hubName, assignmentName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a role assignment in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='assignmentName'>
-            /// The assignment name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate RoleAssignment operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -253,20 +150,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all the role assignments for the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<RoleAssignmentResourceFormatInner> ListByHubNext(this IRoleAssignmentsOperations operations, string nextPageLink)
-            {
-                return operations.ListByHubNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -40,29 +40,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the CreateOrUpdate Link operation.
             /// </param>
-            public static LinkResourceFormatInner CreateOrUpdate(this ILinksOperations operations, string resourceGroupName, string hubName, string linkName, LinkResourceFormatInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, hubName, linkName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a link or updates an existing link in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='linkName'>
-            /// The name of the link.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate Link operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -72,26 +49,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a link in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='linkName'>
-            /// The name of the link.
-            /// </param>
-            public static LinkResourceFormatInner Get(this ILinksOperations operations, string resourceGroupName, string hubName, string linkName)
-            {
-                return operations.GetAsync(resourceGroupName, hubName, linkName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -135,49 +92,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='linkName'>
             /// The name of the link.
             /// </param>
-            public static void Delete(this ILinksOperations operations, string resourceGroupName, string hubName, string linkName)
-            {
-                operations.DeleteAsync(resourceGroupName, hubName, linkName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a link in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='linkName'>
-            /// The name of the link.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this ILinksOperations operations, string resourceGroupName, string hubName, string linkName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, hubName, linkName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets all the links in the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            public static IPage<LinkResourceFormatInner> ListByHub(this ILinksOperations operations, string resourceGroupName, string hubName)
-            {
-                return operations.ListByHubAsync(resourceGroupName, hubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,29 +141,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the CreateOrUpdate Link operation.
             /// </param>
-            public static LinkResourceFormatInner BeginCreateOrUpdate(this ILinksOperations operations, string resourceGroupName, string hubName, string linkName, LinkResourceFormatInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, hubName, linkName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a link or updates an existing link in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='linkName'>
-            /// The name of the link.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate Link operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -253,20 +150,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all the links in the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<LinkResourceFormatInner> ListByHubNext(this ILinksOperations operations, string nextPageLink)
-            {
-                return operations.ListByHubNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -32,20 +32,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<WorkflowInner> ListBySubscription(this IWorkflowsOperations operations, ODataQuery<WorkflowFilterInner> odataQuery = default(ODataQuery<WorkflowFilterInner>))
-            {
-                return ((IWorkflowsOperations)operations).ListBySubscriptionAsync(odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of workflows by subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -55,23 +41,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a list of workflows by resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<WorkflowInner> ListByResourceGroup(this IWorkflowsOperations operations, string resourceGroupName, ODataQuery<WorkflowFilterInner> odataQuery = default(ODataQuery<WorkflowFilterInner>))
-            {
-                return ((IWorkflowsOperations)operations).ListByResourceGroupAsync(resourceGroupName, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -109,23 +78,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            public static WorkflowInner Get(this IWorkflowsOperations operations, string resourceGroupName, string workflowName)
-            {
-                return operations.GetAsync(resourceGroupName, workflowName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a workflow.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -135,26 +87,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or updates a workflow.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='workflow'>
-            /// The workflow.
-            /// </param>
-            public static WorkflowInner CreateOrUpdate(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, WorkflowInner workflow)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, workflowName, workflow).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -198,26 +130,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='workflow'>
             /// The workflow.
             /// </param>
-            public static WorkflowInner Update(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, WorkflowInner workflow)
-            {
-                return operations.UpdateAsync(resourceGroupName, workflowName, workflow).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a workflow.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='workflow'>
-            /// The workflow.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -227,23 +139,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes a workflow.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            public static void Delete(this IWorkflowsOperations operations, string resourceGroupName, string workflowName)
-            {
-                operations.DeleteAsync(resourceGroupName, workflowName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -278,23 +173,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            public static void Disable(this IWorkflowsOperations operations, string resourceGroupName, string workflowName)
-            {
-                operations.DisableAsync(resourceGroupName, workflowName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Disables a workflow.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -315,49 +193,12 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            public static void Enable(this IWorkflowsOperations operations, string resourceGroupName, string workflowName)
-            {
-                operations.EnableAsync(resourceGroupName, workflowName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Enables a workflow.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task EnableAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.EnableWithHttpMessagesAsync(resourceGroupName, workflowName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Generates the upgraded definition for a workflow.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='targetSchemaVersion'>
-            /// The target schema version.
-            /// </param>
-            public static object GenerateUpgradedDefinition(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, string targetSchemaVersion = default(string))
-            {
-                return operations.GenerateUpgradedDefinitionAsync(resourceGroupName, workflowName, targetSchemaVersion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -398,23 +239,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            public static object ListSwagger(this IWorkflowsOperations operations, string resourceGroupName, string workflowName)
-            {
-                return operations.ListSwaggerAsync(resourceGroupName, workflowName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets an OpenAPI definition for the workflow.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -424,27 +248,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Regenerates the callback URL access key for request triggers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='keyType'>
-            /// The key type. Possible values include: 'NotSpecified', 'Primary',
-            /// 'Secondary'
-            /// </param>
-            public static void RegenerateAccessKey(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, KeyType? keyType = default(KeyType?))
-            {
-                operations.RegenerateAccessKeyAsync(resourceGroupName, workflowName, keyType).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -489,49 +292,12 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='workflow'>
             /// The workflow definition.
             /// </param>
-            public static void Validate(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, WorkflowInner workflow)
-            {
-                operations.ValidateAsync(resourceGroupName, location, workflowName, workflow).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Validates the workflow definition.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='location'>
-            /// The workflow location.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='workflow'>
-            /// The workflow definition.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ValidateAsync(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, WorkflowInner workflow, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ValidateWithHttpMessagesAsync(resourceGroupName, location, workflowName, workflow, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a list of workflows by subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<WorkflowInner> ListBySubscriptionNext(this IWorkflowsOperations operations, string nextPageLink)
-            {
-                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -552,20 +318,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a list of workflows by resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<WorkflowInner> ListByResourceGroupNext(this IWorkflowsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

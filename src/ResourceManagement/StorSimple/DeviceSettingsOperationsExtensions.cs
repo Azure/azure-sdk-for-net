@@ -37,26 +37,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static AlertSettingsInner GetAlertSettings(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
-            {
-                return operations.GetAlertSettingsAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the alert settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -66,29 +46,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or updates the alert settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='parameters'>
-            /// The alert settings to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static AlertSettingsInner CreateOrUpdateAlertSettings(this IDeviceSettingsOperations operations, string deviceName, AlertSettingsInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.CreateOrUpdateAlertSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -135,26 +92,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static NetworkSettingsInner GetNetworkSettings(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
-            {
-                return operations.GetNetworkSettingsAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the network settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -164,29 +101,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Updates the network settings on the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='parameters'>
-            /// The network settings to be updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static NetworkSettingsInner UpdateNetworkSettings(this IDeviceSettingsOperations operations, string deviceName, NetworkSettingsPatchInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.UpdateNetworkSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -233,26 +147,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static SecuritySettingsInner GetSecuritySettings(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
-            {
-                return operations.GetSecuritySettingsAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the Security properties of the specified device name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -262,29 +156,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Patch Security properties of the specified device name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='parameters'>
-            /// The security settings properties to be patched.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static SecuritySettingsInner UpdateSecuritySettings(this IDeviceSettingsOperations operations, string deviceName, SecuritySettingsPatchInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.UpdateSecuritySettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -331,52 +202,12 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void SyncRemotemanagementCertificate(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
-            {
-                operations.SyncRemotemanagementCertificateAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// sync Remote management Certificate between appliance and Service
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task SyncRemotemanagementCertificateAsync(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SyncRemotemanagementCertificateWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the time settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static TimeSettingsInner GetTimeSettings(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
-            {
-                return operations.GetTimeSettingsAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -403,29 +234,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or updates the time settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='parameters'>
-            /// The time settings to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static TimeSettingsInner CreateOrUpdateTimeSettings(this IDeviceSettingsOperations operations, string deviceName, TimeSettingsInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.CreateOrUpdateTimeSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -475,29 +283,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static AlertSettingsInner BeginCreateOrUpdateAlertSettings(this IDeviceSettingsOperations operations, string deviceName, AlertSettingsInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.BeginCreateOrUpdateAlertSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the alert settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='parameters'>
-            /// The alert settings to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -507,29 +292,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Updates the network settings on the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='parameters'>
-            /// The network settings to be updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static NetworkSettingsInner BeginUpdateNetworkSettings(this IDeviceSettingsOperations operations, string deviceName, NetworkSettingsPatchInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.BeginUpdateNetworkSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -579,29 +341,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static SecuritySettingsInner BeginUpdateSecuritySettings(this IDeviceSettingsOperations operations, string deviceName, SecuritySettingsPatchInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.BeginUpdateSecuritySettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Patch Security properties of the specified device name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='parameters'>
-            /// The security settings properties to be patched.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -628,55 +367,12 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void BeginSyncRemotemanagementCertificate(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName)
-            {
-                operations.BeginSyncRemotemanagementCertificateAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// sync Remote management Certificate between appliance and Service
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginSyncRemotemanagementCertificateAsync(this IDeviceSettingsOperations operations, string deviceName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginSyncRemotemanagementCertificateWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Creates or updates the time settings of the specified device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='parameters'>
-            /// The time settings to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static TimeSettingsInner BeginCreateOrUpdateTimeSettings(this IDeviceSettingsOperations operations, string deviceName, TimeSettingsInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.BeginCreateOrUpdateTimeSettingsAsync(deviceName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>

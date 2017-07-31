@@ -36,23 +36,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<BandwidthSettingInner> ListByManager(this IBandwidthSettingsOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.ListByManagerAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieves all the bandwidth setting in a manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -62,26 +45,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Returns the properties of the specified bandwidth setting name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='bandwidthSettingName'>
-            /// The name of bandwidth setting to be fetched.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static BandwidthSettingInner Get(this IBandwidthSettingsOperations operations, string bandwidthSettingName, string resourceGroupName, string managerName)
-            {
-                return operations.GetAsync(bandwidthSettingName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,29 +91,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static BandwidthSettingInner CreateOrUpdate(this IBandwidthSettingsOperations operations, string bandwidthSettingName, BandwidthSettingInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.CreateOrUpdateAsync(bandwidthSettingName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the bandwidth setting
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='bandwidthSettingName'>
-            /// The bandwidth setting name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The bandwidth setting to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -160,26 +100,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the bandwidth setting
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='bandwidthSettingName'>
-            /// The name of the bandwidth setting.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void Delete(this IBandwidthSettingsOperations operations, string bandwidthSettingName, string resourceGroupName, string managerName)
-            {
-                operations.DeleteAsync(bandwidthSettingName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,29 +143,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static BandwidthSettingInner BeginCreateOrUpdate(this IBandwidthSettingsOperations operations, string bandwidthSettingName, BandwidthSettingInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.BeginCreateOrUpdateAsync(bandwidthSettingName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the bandwidth setting
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='bandwidthSettingName'>
-            /// The bandwidth setting name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The bandwidth setting to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -255,26 +152,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the bandwidth setting
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='bandwidthSettingName'>
-            /// The name of the bandwidth setting.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void BeginDelete(this IBandwidthSettingsOperations operations, string bandwidthSettingName, string resourceGroupName, string managerName)
-            {
-                operations.BeginDeleteAsync(bandwidthSettingName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>

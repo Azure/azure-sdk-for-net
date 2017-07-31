@@ -31,17 +31,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<ManagerInner> List(this IManagersOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieves all the managers in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -62,20 +51,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='resourceGroupName'>
             /// The resource group name
             /// </param>
-            public static IEnumerable<ManagerInner> ListByResourceGroup(this IManagersOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieves all the managers in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -85,23 +60,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Returns the properties of the specified manager name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static ManagerInner Get(this IManagersOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.GetAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -142,26 +100,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static ManagerInner CreateOrUpdate(this IManagersOperations operations, ManagerInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.CreateOrUpdateAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The manager.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -185,49 +123,12 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void Delete(this IManagersOperations operations, string resourceGroupName, string managerName)
-            {
-                operations.DeleteAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IManagersOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Updates the StorSimple Manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            /// <param name='tags'>
-            /// The tags attached to the Manager.
-            /// </param>
-            public static ManagerInner Update(this IManagersOperations operations, string resourceGroupName, string managerName, IDictionary<string, string> tags = default(IDictionary<string, string>))
-            {
-                return operations.UpdateAsync(resourceGroupName, managerName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -271,26 +172,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static PublicKeyInner GetDevicePublicEncryptionKey(this IManagersOperations operations, string deviceName, string resourceGroupName, string managerName)
-            {
-                return operations.GetDevicePublicEncryptionKeyAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the public encryption key of the device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -314,23 +195,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static EncryptionSettingsInner GetEncryptionSettings(this IManagersOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.GetEncryptionSettingsAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the encryption settings of the manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -340,23 +204,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Returns the extended information of the specified manager name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static ManagerExtendedInfoInner GetExtendedInfo(this IManagersOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.GetExtendedInfoAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -397,26 +244,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static ManagerExtendedInfoInner CreateExtendedInfo(this IManagersOperations operations, ManagerExtendedInfoInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.CreateExtendedInfoAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates the extended info of the manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The manager extended information.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -440,52 +267,12 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void DeleteExtendedInfo(this IManagersOperations operations, string resourceGroupName, string managerName)
-            {
-                operations.DeleteExtendedInfoAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the extended info of the manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteExtendedInfoAsync(this IManagersOperations operations, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteExtendedInfoWithHttpMessagesAsync(resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Updates the extended info of the manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The manager extended information.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            /// <param name='ifMatch'>
-            /// Pass the ETag of ExtendedInfo fetched from GET call
-            /// </param>
-            public static ManagerExtendedInfoInner UpdateExtendedInfo(this IManagersOperations operations, ManagerExtendedInfoInner parameters, string resourceGroupName, string managerName, string ifMatch)
-            {
-                return operations.UpdateExtendedInfoAsync(parameters, resourceGroupName, managerName, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -532,26 +319,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IEnumerable<Feature> ListFeatureSupportStatus(this IManagersOperations operations, string resourceGroupName, string managerName, ODataQuery<FeatureFilterInner> odataQuery = default(ODataQuery<FeatureFilterInner>))
-            {
-                return operations.ListFeatureSupportStatusAsync(resourceGroupName, managerName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the features and their support status
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -575,23 +342,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static KeyInner GetActivationKey(this IManagersOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.GetActivationKeyAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the activation key of the manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -601,23 +351,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Returns the symmetric encrypted public encryption key of the manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static SymmetricEncryptedSecretInner GetPublicEncryptionKey(this IManagersOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.GetPublicEncryptionKeyAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -658,26 +391,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<Metrics> ListMetrics(this IManagersOperations operations, ODataQuery<MetricFilterInner> odataQuery, string resourceGroupName, string managerName)
-            {
-                return operations.ListMetricsAsync(odataQuery, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the metrics for the specified manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -701,23 +414,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<MetricDefinition> ListMetricDefinition(this IManagersOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.ListMetricDefinitionAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the metric definitions for the specified manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -727,23 +423,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Re-generates and returns the activation key of the manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static KeyInner RegenerateActivationKey(this IManagersOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.RegenerateActivationKeyAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>

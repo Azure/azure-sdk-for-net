@@ -37,26 +37,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the CreateOrUpdate Hub operation.
             /// </param>
-            public static HubInner CreateOrUpdate(this IHubsOperations operations, string resourceGroupName, string hubName, HubInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, hubName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a hub, or updates an existing hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the Hub.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate Hub operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -66,26 +46,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Updates a Hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the Hub.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update Hub operation.
-            /// </param>
-            public static HubInner Update(this IHubsOperations operations, string resourceGroupName, string hubName, HubInner parameters)
-            {
-                return operations.UpdateAsync(resourceGroupName, hubName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -126,46 +86,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='hubName'>
             /// The name of the hub.
             /// </param>
-            public static void Delete(this IHubsOperations operations, string resourceGroupName, string hubName)
-            {
-                operations.DeleteAsync(resourceGroupName, hubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IHubsOperations operations, string resourceGroupName, string hubName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, hubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets information about the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            public static HubInner Get(this IHubsOperations operations, string resourceGroupName, string hubName)
-            {
-                return operations.GetAsync(resourceGroupName, hubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -200,20 +126,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static IPage<HubInner> ListByResourceGroup(this IHubsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the hubs in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -223,17 +135,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all hubs in the specified subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<HubInner> List(this IHubsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -265,43 +166,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='hubName'>
             /// The name of the hub.
             /// </param>
-            public static void BeginDelete(this IHubsOperations operations, string resourceGroupName, string hubName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, hubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginDeleteAsync(this IHubsOperations operations, string resourceGroupName, string hubName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, hubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets all the hubs in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<HubInner> ListByResourceGroupNext(this IHubsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -322,20 +192,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all hubs in the specified subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<HubInner> ListNext(this IHubsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

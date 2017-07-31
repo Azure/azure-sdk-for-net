@@ -43,30 +43,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Fluent
             /// <param name='type'>
             /// The Type of the resource.
             /// </param>
-            public static CheckSkuAvailabilityResultListInner List(this ICheckSkuAvailabilityOperations operations, IList<string> skus, string kind, string type)
-            {
-                return operations.ListAsync(skus, kind, type).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Check available SKUs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='skus'>
-            /// The SKU of the resource.
-            /// </param>
-            /// <param name='kind'>
-            /// The Kind of the resource. Possible values include: 'Academic',
-            /// 'Bing.Autosuggest', 'Bing.Search', 'Bing.Speech', 'Bing.SpellCheck',
-            /// 'ComputerVision', 'ContentModerator', 'CustomSpeech', 'Emotion', 'Face',
-            /// 'LUIS', 'Recommendations', 'SpeakerRecognition', 'Speech',
-            /// 'SpeechTranslation', 'TextAnalytics', 'TextTranslation', 'WebLM'
-            /// </param>
-            /// <param name='type'>
-            /// The Type of the resource.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>

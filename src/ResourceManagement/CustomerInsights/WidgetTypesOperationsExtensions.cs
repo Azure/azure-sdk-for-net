@@ -34,23 +34,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='hubName'>
             /// The name of the hub.
             /// </param>
-            public static IPage<WidgetTypeResourceFormatInner> ListByHub(this IWidgetTypesOperations operations, string resourceGroupName, string hubName)
-            {
-                return operations.ListByHubAsync(resourceGroupName, hubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all available widget types in the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -77,26 +60,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='widgetTypeName'>
             /// The name of the widget type.
             /// </param>
-            public static WidgetTypeResourceFormatInner Get(this IWidgetTypesOperations operations, string resourceGroupName, string hubName, string widgetTypeName)
-            {
-                return operations.GetAsync(resourceGroupName, hubName, widgetTypeName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a widget type in the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='widgetTypeName'>
-            /// The name of the widget type.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -106,20 +69,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all available widget types in the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<WidgetTypeResourceFormatInner> ListByHubNext(this IWidgetTypesOperations operations, string nextPageLink)
-            {
-                return operations.ListByHubNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

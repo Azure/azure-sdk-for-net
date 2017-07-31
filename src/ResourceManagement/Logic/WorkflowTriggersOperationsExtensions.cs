@@ -38,26 +38,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<WorkflowTriggerInner> List(this IWorkflowTriggersOperations operations, string resourceGroupName, string workflowName, ODataQuery<WorkflowTriggerFilterInner> odataQuery = default(ODataQuery<WorkflowTriggerFilterInner>))
-            {
-                return ((IWorkflowTriggersOperations)operations).ListAsync(resourceGroupName, workflowName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of workflow triggers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -67,26 +47,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a workflow trigger.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='triggerName'>
-            /// The workflow trigger name.
-            /// </param>
-            public static WorkflowTriggerInner Get(this IWorkflowTriggersOperations operations, string resourceGroupName, string workflowName, string triggerName)
-            {
-                return operations.GetAsync(resourceGroupName, workflowName, triggerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,26 +90,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='triggerName'>
             /// The workflow trigger name.
             /// </param>
-            public static object Run(this IWorkflowTriggersOperations operations, string resourceGroupName, string workflowName, string triggerName)
-            {
-                return operations.RunAsync(resourceGroupName, workflowName, triggerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Runs a workflow trigger.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='triggerName'>
-            /// The workflow trigger name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -176,26 +116,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='triggerName'>
             /// The workflow trigger name.
             /// </param>
-            public static WorkflowTriggerCallbackUrlInner ListCallbackUrl(this IWorkflowTriggersOperations operations, string resourceGroupName, string workflowName, string triggerName)
-            {
-                return operations.ListCallbackUrlAsync(resourceGroupName, workflowName, triggerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the callback URL for a workflow trigger.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='triggerName'>
-            /// The workflow trigger name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -205,20 +125,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a list of workflow triggers.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<WorkflowTriggerInner> ListNext(this IWorkflowTriggersOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

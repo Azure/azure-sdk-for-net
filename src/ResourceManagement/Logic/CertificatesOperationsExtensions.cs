@@ -37,26 +37,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='top'>
             /// The number of items to be included in the result.
             /// </param>
-            public static IPage<IntegrationAccountCertificateInner> ListByIntegrationAccounts(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, int? top = default(int?))
-            {
-                return operations.ListByIntegrationAccountsAsync(resourceGroupName, integrationAccountName, top).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of integration account certificates.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to be included in the result.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -66,26 +46,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets an integration account certificate.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='certificateName'>
-            /// The integration account certificate name.
-            /// </param>
-            public static IntegrationAccountCertificateInner Get(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName)
-            {
-                return operations.GetAsync(resourceGroupName, integrationAccountName, certificateName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -132,29 +92,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='certificate'>
             /// The integration account certificate.
             /// </param>
-            public static IntegrationAccountCertificateInner CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName, IntegrationAccountCertificateInner certificate)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, integrationAccountName, certificateName, certificate).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates an integration account certificate.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='certificateName'>
-            /// The integration account certificate name.
-            /// </param>
-            /// <param name='certificate'>
-            /// The integration account certificate.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -181,46 +118,12 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='certificateName'>
             /// The integration account certificate name.
             /// </param>
-            public static void Delete(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName)
-            {
-                operations.DeleteAsync(resourceGroupName, integrationAccountName, certificateName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an integration account certificate.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='certificateName'>
-            /// The integration account certificate name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this ICertificatesOperations operations, string resourceGroupName, string integrationAccountName, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, integrationAccountName, certificateName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a list of integration account certificates.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<IntegrationAccountCertificateInner> ListByIntegrationAccountsNext(this ICertificatesOperations operations, string nextPageLink)
-            {
-                return operations.ListByIntegrationAccountsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

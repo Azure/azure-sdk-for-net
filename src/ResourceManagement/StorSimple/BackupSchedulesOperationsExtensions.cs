@@ -42,29 +42,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<BackupScheduleInner> ListByBackupPolicy(this IBackupSchedulesOperations operations, string deviceName, string backupPolicyName, string resourceGroupName, string managerName)
-            {
-                return operations.ListByBackupPolicyAsync(deviceName, backupPolicyName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the backup schedules in a backup policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='backupPolicyName'>
-            /// The backup policy name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -74,32 +51,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the properties of the specified backup schedule name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='backupPolicyName'>
-            /// The backup policy name.
-            /// </param>
-            /// <param name='backupScheduleName'>
-            /// The name of the backup schedule to be fetched
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static BackupScheduleInner Get(this IBackupSchedulesOperations operations, string deviceName, string backupPolicyName, string backupScheduleName, string resourceGroupName, string managerName)
-            {
-                return operations.GetAsync(deviceName, backupPolicyName, backupScheduleName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,35 +109,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static BackupScheduleInner CreateOrUpdate(this IBackupSchedulesOperations operations, string deviceName, string backupPolicyName, string backupScheduleName, BackupScheduleInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.CreateOrUpdateAsync(deviceName, backupPolicyName, backupScheduleName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the backup schedule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='backupPolicyName'>
-            /// The backup policy name.
-            /// </param>
-            /// <param name='backupScheduleName'>
-            /// The backup schedule name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The backup schedule.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -196,32 +118,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the backup schedule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='backupPolicyName'>
-            /// The backup policy name.
-            /// </param>
-            /// <param name='backupScheduleName'>
-            /// The name the backup schedule.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void Delete(this IBackupSchedulesOperations operations, string deviceName, string backupPolicyName, string backupScheduleName, string resourceGroupName, string managerName)
-            {
-                operations.DeleteAsync(deviceName, backupPolicyName, backupScheduleName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -277,35 +173,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static BackupScheduleInner BeginCreateOrUpdate(this IBackupSchedulesOperations operations, string deviceName, string backupPolicyName, string backupScheduleName, BackupScheduleInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.BeginCreateOrUpdateAsync(deviceName, backupPolicyName, backupScheduleName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the backup schedule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='backupPolicyName'>
-            /// The backup policy name.
-            /// </param>
-            /// <param name='backupScheduleName'>
-            /// The backup schedule name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The backup schedule.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -315,32 +182,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the backup schedule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='backupPolicyName'>
-            /// The backup policy name.
-            /// </param>
-            /// <param name='backupScheduleName'>
-            /// The name the backup schedule.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void BeginDelete(this IBackupSchedulesOperations operations, string deviceName, string backupPolicyName, string backupScheduleName, string resourceGroupName, string managerName)
-            {
-                operations.BeginDeleteAsync(deviceName, backupPolicyName, backupScheduleName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>

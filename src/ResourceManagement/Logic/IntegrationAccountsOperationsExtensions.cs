@@ -31,20 +31,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='top'>
             /// The number of items to be included in the result.
             /// </param>
-            public static IPage<IntegrationAccountInner> ListBySubscription(this IIntegrationAccountsOperations operations, int? top = default(int?))
-            {
-                return operations.ListBySubscriptionAsync(top).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of integration accounts by subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to be included in the result.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -54,23 +40,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a list of integration accounts by resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='top'>
-            /// The number of items to be included in the result.
-            /// </param>
-            public static IPage<IntegrationAccountInner> ListByResourceGroup(this IIntegrationAccountsOperations operations, string resourceGroupName, int? top = default(int?))
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -108,23 +77,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='integrationAccountName'>
             /// The integration account name.
             /// </param>
-            public static IntegrationAccountInner Get(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName)
-            {
-                return operations.GetAsync(resourceGroupName, integrationAccountName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets an integration account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -134,26 +86,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or updates an integration account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='integrationAccount'>
-            /// The integration account.
-            /// </param>
-            public static IntegrationAccountInner CreateOrUpdate(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, IntegrationAccountInner integrationAccount)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, integrationAccountName, integrationAccount).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -197,26 +129,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='integrationAccount'>
             /// The integration account.
             /// </param>
-            public static IntegrationAccountInner Update(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, IntegrationAccountInner integrationAccount)
-            {
-                return operations.UpdateAsync(resourceGroupName, integrationAccountName, integrationAccount).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an integration account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='integrationAccount'>
-            /// The integration account.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -226,23 +138,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes an integration account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            public static void Delete(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName)
-            {
-                operations.DeleteAsync(resourceGroupName, integrationAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -280,26 +175,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='parameters'>
             /// The callback URL parameters.
             /// </param>
-            public static CallbackUrlInner GetCallbackUrl(this IIntegrationAccountsOperations operations, string resourceGroupName, string integrationAccountName, GetCallbackUrlParametersInner parameters)
-            {
-                return operations.GetCallbackUrlAsync(resourceGroupName, integrationAccountName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the integration account callback URL.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The callback URL parameters.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -320,20 +195,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<IntegrationAccountInner> ListBySubscriptionNext(this IIntegrationAccountsOperations operations, string nextPageLink)
-            {
-                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of integration accounts by subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -343,20 +204,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a list of integration accounts by resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<IntegrationAccountInner> ListByResourceGroupNext(this IIntegrationAccountsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

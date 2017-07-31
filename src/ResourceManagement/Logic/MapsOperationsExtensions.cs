@@ -38,26 +38,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<IntegrationAccountMapInner> ListByIntegrationAccounts(this IMapsOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountMapFilterInner> odataQuery = default(ODataQuery<IntegrationAccountMapFilterInner>))
-            {
-                return ((IMapsOperations)operations).ListByIntegrationAccountsAsync(resourceGroupName, integrationAccountName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of integration account maps.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -67,26 +47,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets an integration account map.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='mapName'>
-            /// The integration account map name.
-            /// </param>
-            public static IntegrationAccountMapInner Get(this IMapsOperations operations, string resourceGroupName, string integrationAccountName, string mapName)
-            {
-                return operations.GetAsync(resourceGroupName, integrationAccountName, mapName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -133,29 +93,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='map'>
             /// The integration account map.
             /// </param>
-            public static IntegrationAccountMapInner CreateOrUpdate(this IMapsOperations operations, string resourceGroupName, string integrationAccountName, string mapName, IntegrationAccountMapInner map)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, integrationAccountName, mapName, map).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates an integration account map.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='mapName'>
-            /// The integration account map name.
-            /// </param>
-            /// <param name='map'>
-            /// The integration account map.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -182,46 +119,12 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='mapName'>
             /// The integration account map name.
             /// </param>
-            public static void Delete(this IMapsOperations operations, string resourceGroupName, string integrationAccountName, string mapName)
-            {
-                operations.DeleteAsync(resourceGroupName, integrationAccountName, mapName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an integration account map.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='mapName'>
-            /// The integration account map name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IMapsOperations operations, string resourceGroupName, string integrationAccountName, string mapName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, integrationAccountName, mapName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a list of integration account maps.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<IntegrationAccountMapInner> ListByIntegrationAccountsNext(this IMapsOperations operations, string nextPageLink)
-            {
-                return operations.ListByIntegrationAccountsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

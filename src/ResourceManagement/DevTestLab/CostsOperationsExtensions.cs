@@ -40,29 +40,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='expand'>
             /// Specify the $expand query. Example: 'properties($expand=labCostDetails)'
             /// </param>
-            public static LabCostInner Get(this ICostsOperations operations, string resourceGroupName, string labName, string name, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, labName, name, expand).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get cost.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the cost.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($expand=labCostDetails)'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -72,29 +49,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Create or replace an existing cost.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the cost.
-            /// </param>
-            /// <param name='labCost'>
-            /// A cost item.
-            /// </param>
-            public static LabCostInner CreateOrUpdate(this ICostsOperations operations, string resourceGroupName, string labName, string name, LabCostInner labCost)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labName, name, labCost).GetAwaiter().GetResult();
             }
 
             /// <summary>

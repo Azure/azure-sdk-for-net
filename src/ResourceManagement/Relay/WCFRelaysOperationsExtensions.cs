@@ -36,23 +36,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='namespaceName'>
             /// The Namespace Name
             /// </param>
-            public static IPage<WcfRelayInner> ListByNamespace(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the WCFRelays within the namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -62,29 +45,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or Updates a WCFRelay. This operation is idempotent.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a WCFRelays.
-            /// </param>
-            public static WcfRelayInner CreateOrUpdate(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, WcfRelayInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, relayName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -131,52 +91,12 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='relayName'>
             /// The relay name
             /// </param>
-            public static void Delete(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName, relayName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a WCFRelays .
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Returns the description for the specified WCFRelays.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name
-            /// </param>
-            public static WcfRelayInner Get(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName, relayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -220,26 +140,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='relayName'>
             /// The relay name
             /// </param>
-            public static IPage<AuthorizationRuleInner> ListAuthorizationRules(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName)
-            {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, relayName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Authorization rules for a WCFRelays.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -249,32 +149,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or Updates an authorization rule for a WCFRelays
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
-            /// </param>
-            /// <param name='rights'>
-            /// The rights associated with the rule.
-            /// </param>
-            public static AuthorizationRuleInner CreateOrUpdateAuthorizationRule(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, IList<AccessRights?> rights = default(IList<AccessRights?>))
-            {
-                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName, rights).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -327,58 +201,12 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='authorizationRuleName'>
             /// The authorizationRule name.
             /// </param>
-            public static void DeleteAuthorizationRule(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName)
-            {
-                operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a WCFRelays authorization rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAuthorizationRuleAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Get authorizationRule for a WCFRelays by name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
-            /// </param>
-            public static AuthorizationRuleInner GetAuthorizationRule(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName)
-            {
-                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -408,29 +236,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Primary and Secondary ConnectionStrings to the WCFRelays.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
-            /// </param>
-            public static AccessKeysInner ListKeys(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -483,32 +288,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to regenerate Auth Rule.
             /// </param>
-            public static AccessKeysInner RegenerateKeys(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, RegenerateAccessKeyParametersInner parameters)
-            {
-                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Regenerates the Primary or Secondary ConnectionStrings to the WCFRelays
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace Name
-            /// </param>
-            /// <param name='relayName'>
-            /// The relay name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to regenerate Auth Rule.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -529,20 +308,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<WcfRelayInner> ListByNamespaceNext(this IWCFRelaysOperations operations, string nextPageLink)
-            {
-                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the WCFRelays within the namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -552,20 +317,6 @@ namespace Microsoft.Azure.Management.Relay.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Authorization rules for a WCFRelays.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<AuthorizationRuleInner> ListAuthorizationRulesNext(this IWCFRelaysOperations operations, string nextPageLink)
-            {
-                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

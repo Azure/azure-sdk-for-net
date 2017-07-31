@@ -38,26 +38,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<IntegrationAccountSchemaInner> ListByIntegrationAccounts(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, ODataQuery<IntegrationAccountSchemaFilterInner> odataQuery = default(ODataQuery<IntegrationAccountSchemaFilterInner>))
-            {
-                return ((ISchemasOperations)operations).ListByIntegrationAccountsAsync(resourceGroupName, integrationAccountName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of integration account schemas.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -67,26 +47,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets an integration account schema.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='schemaName'>
-            /// The integration account schema name.
-            /// </param>
-            public static IntegrationAccountSchemaInner Get(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName)
-            {
-                return operations.GetAsync(resourceGroupName, integrationAccountName, schemaName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -133,29 +93,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='schema'>
             /// The integration account schema.
             /// </param>
-            public static IntegrationAccountSchemaInner CreateOrUpdate(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName, IntegrationAccountSchemaInner schema)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, integrationAccountName, schemaName, schema).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates an integration account schema.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='schemaName'>
-            /// The integration account schema name.
-            /// </param>
-            /// <param name='schema'>
-            /// The integration account schema.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -182,46 +119,12 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='schemaName'>
             /// The integration account schema name.
             /// </param>
-            public static void Delete(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName)
-            {
-                operations.DeleteAsync(resourceGroupName, integrationAccountName, schemaName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an integration account schema.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='integrationAccountName'>
-            /// The integration account name.
-            /// </param>
-            /// <param name='schemaName'>
-            /// The integration account schema name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this ISchemasOperations operations, string resourceGroupName, string integrationAccountName, string schemaName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, integrationAccountName, schemaName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a list of integration account schemas.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<IntegrationAccountSchemaInner> ListByIntegrationAccountsNext(this ISchemasOperations operations, string nextPageLink)
-            {
-                return operations.ListByIntegrationAccountsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

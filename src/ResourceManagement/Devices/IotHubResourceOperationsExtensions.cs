@@ -37,26 +37,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='resourceName'>
             /// The name of the IoT hub.
             /// </param>
-            public static IotHubDescriptionInner Get(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName)
-            {
-                return operations.GetAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the non-security related metadata of an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Get the non-security related metadata of an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -66,32 +46,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Create or update the metadata of an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Create or update the metadata of an Iot hub. The usual pattern to modify a
-            /// property is to retrieve the IoT hub metadata and security metadata, and
-            /// then combine them with the modified values in a new body to update the IoT
-            /// hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub to create or update.
-            /// </param>
-            /// <param name='iotHubDescription'>
-            /// The IoT hub metadata and security metadata.
-            /// </param>
-            public static IotHubDescriptionInner CreateOrUpdate(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, IotHubDescriptionInner iotHubDescription)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, iotHubDescription).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -141,26 +95,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='resourceName'>
             /// The name of the IoT hub to delete.
             /// </param>
-            public static object Delete(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName)
-            {
-                return operations.DeleteAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Delete an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub to delete.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -181,20 +115,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<IotHubDescriptionInner> ListBySubscription(this IIotHubResourceOperations operations)
-            {
-                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all the IoT hubs in a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Get all the IoT hubs in a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -204,23 +124,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all the IoT hubs in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get all the IoT hubs in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hubs.
-            /// </param>
-            public static IPage<IotHubDescriptionInner> ListByResourceGroup(this IIotHubResourceOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -261,26 +164,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='resourceName'>
             /// The name of the IoT hub.
             /// </param>
-            public static RegistryStatisticsInner GetStats(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName)
-            {
-                return operations.GetStatsAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the statistics from an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Get the statistics from an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -290,26 +173,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the list of valid SKUs for an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Get the list of valid SKUs for an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
-            public static IPage<IotHubSkuDescription> GetValidSkus(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName)
-            {
-                return operations.GetValidSkusAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -358,31 +221,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='eventHubEndpointName'>
             /// The name of the Event Hub-compatible endpoint.
             /// </param>
-            public static IPage<string> ListEventHubConsumerGroups(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, string eventHubEndpointName)
-            {
-                return operations.ListEventHubConsumerGroupsAsync(resourceGroupName, resourceName, eventHubEndpointName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a list of the consumer groups in the Event Hub-compatible
-            /// device-to-cloud endpoint in an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Get a list of the consumer groups in the Event Hub-compatible
-            /// device-to-cloud endpoint in an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
-            /// <param name='eventHubEndpointName'>
-            /// The name of the Event Hub-compatible endpoint.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -392,34 +230,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint
-            /// for an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint
-            /// for an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
-            /// <param name='eventHubEndpointName'>
-            /// The name of the Event Hub-compatible endpoint in the IoT hub.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the consumer group to retrieve.
-            /// </param>
-            public static EventHubConsumerGroupInfoInner GetEventHubConsumerGroup(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, string eventHubEndpointName, string name)
-            {
-                return operations.GetEventHubConsumerGroupAsync(resourceGroupName, resourceName, eventHubEndpointName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -477,32 +287,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='name'>
             /// The name of the consumer group to add.
             /// </param>
-            public static EventHubConsumerGroupInfoInner CreateEventHubConsumerGroup(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, string eventHubEndpointName, string name)
-            {
-                return operations.CreateEventHubConsumerGroupAsync(resourceGroupName, resourceName, eventHubEndpointName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
-            /// <param name='eventHubEndpointName'>
-            /// The name of the Event Hub-compatible endpoint in the IoT hub.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the consumer group to add.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -512,34 +296,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT
-            /// hub.
-            /// </summary>
-            /// <remarks>
-            /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT
-            /// hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
-            /// <param name='eventHubEndpointName'>
-            /// The name of the Event Hub-compatible endpoint in the IoT hub.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the consumer group to delete.
-            /// </param>
-            public static void DeleteEventHubConsumerGroup(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, string eventHubEndpointName, string name)
-            {
-                operations.DeleteEventHubConsumerGroupAsync(resourceGroupName, resourceName, eventHubEndpointName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -590,28 +346,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='resourceName'>
             /// The name of the IoT hub.
             /// </param>
-            public static IPage<JobResponseInner> ListJobs(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName)
-            {
-                return operations.ListJobsAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a list of all the jobs in an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
-            /// </summary>
-            /// <remarks>
-            /// Get a list of all the jobs in an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -621,31 +355,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the details of a job from an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
-            /// </summary>
-            /// <remarks>
-            /// Get the details of a job from an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
-            /// <param name='jobId'>
-            /// The job identifier.
-            /// </param>
-            public static JobResponseInner GetJob(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, string jobId)
-            {
-                return operations.GetJobAsync(resourceGroupName, resourceName, jobId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -694,26 +403,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='resourceName'>
             /// The name of the IoT hub.
             /// </param>
-            public static IPage<IotHubQuotaMetricInfo> GetQuotaMetrics(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName)
-            {
-                return operations.GetQuotaMetricsAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the quota metrics for an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Get the quota metrics for an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -737,23 +426,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='name'>
             /// The name of the IoT hub to check.
             /// </param>
-            public static IotHubNameAvailabilityInfoInner CheckNameAvailability(this IIotHubResourceOperations operations, string name)
-            {
-                return operations.CheckNameAvailabilityAsync(name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Check if an IoT hub name is available.
-            /// </summary>
-            /// <remarks>
-            /// Check if an IoT hub name is available.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the IoT hub to check.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -763,28 +435,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the security metadata for an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
-            /// </summary>
-            /// <remarks>
-            /// Get the security metadata for an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
-            public static IPage<SharedAccessSignatureAuthorizationRuleInner> ListKeys(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -835,31 +485,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='keyName'>
             /// The name of the shared access policy.
             /// </param>
-            public static SharedAccessSignatureAuthorizationRuleInner GetKeysForKeyName(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, string keyName)
-            {
-                return operations.GetKeysForKeyNameAsync(resourceGroupName, resourceName, keyName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a shared access policy by name from an IoT hub. For more information,
-            /// see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
-            /// </summary>
-            /// <remarks>
-            /// Get a shared access policy by name from an IoT hub. For more information,
-            /// see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
-            /// <param name='keyName'>
-            /// The name of the shared access policy.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -869,33 +494,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Exports all the device identities in the IoT hub identity registry to an
-            /// Azure Storage blob container. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
-            /// </summary>
-            /// <remarks>
-            /// Exports all the device identities in the IoT hub identity registry to an
-            /// Azure Storage blob container. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
-            /// <param name='exportDevicesParameters'>
-            /// The parameters that specify the export devices operation.
-            /// </param>
-            public static JobResponseInner ExportDevices(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, ExportDevicesRequestInner exportDevicesParameters)
-            {
-                return operations.ExportDevicesAsync(resourceGroupName, resourceName, exportDevicesParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -953,33 +551,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='importDevicesParameters'>
             /// The parameters that specify the import devices operation.
             /// </param>
-            public static JobResponseInner ImportDevices(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, ImportDevicesRequestInner importDevicesParameters)
-            {
-                return operations.ImportDevicesAsync(resourceGroupName, resourceName, importDevicesParameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Import, update, or delete device identities in the IoT hub identity
-            /// registry from a blob. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
-            /// </summary>
-            /// <remarks>
-            /// Import, update, or delete device identities in the IoT hub identity
-            /// registry from a blob. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub.
-            /// </param>
-            /// <param name='importDevicesParameters'>
-            /// The parameters that specify the import devices operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -989,32 +560,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Create or update the metadata of an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Create or update the metadata of an Iot hub. The usual pattern to modify a
-            /// property is to retrieve the IoT hub metadata and security metadata, and
-            /// then combine them with the modified values in a new body to update the IoT
-            /// hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub to create or update.
-            /// </param>
-            /// <param name='iotHubDescription'>
-            /// The IoT hub metadata and security metadata.
-            /// </param>
-            public static IotHubDescriptionInner BeginCreateOrUpdate(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName, IotHubDescriptionInner iotHubDescription)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, resourceName, iotHubDescription).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1064,26 +609,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='resourceName'>
             /// The name of the IoT hub to delete.
             /// </param>
-            public static object BeginDelete(this IIotHubResourceOperations operations, string resourceGroupName, string resourceName)
-            {
-                return operations.BeginDeleteAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Delete an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the IoT hub.
-            /// </param>
-            /// <param name='resourceName'>
-            /// The name of the IoT hub to delete.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1093,23 +618,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get all the IoT hubs in a subscription.
-            /// </summary>
-            /// <remarks>
-            /// Get all the IoT hubs in a subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<IotHubDescriptionInner> ListBySubscriptionNext(this IIotHubResourceOperations operations, string nextPageLink)
-            {
-                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1147,23 +655,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<IotHubDescriptionInner> ListByResourceGroupNext(this IIotHubResourceOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all the IoT hubs in a resource group.
-            /// </summary>
-            /// <remarks>
-            /// Get all the IoT hubs in a resource group.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1187,23 +678,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<IotHubSkuDescription> GetValidSkusNext(this IIotHubResourceOperations operations, string nextPageLink)
-            {
-                return operations.GetValidSkusNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the list of valid SKUs for an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Get the list of valid SKUs for an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1213,25 +687,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get a list of the consumer groups in the Event Hub-compatible
-            /// device-to-cloud endpoint in an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Get a list of the consumer groups in the Event Hub-compatible
-            /// device-to-cloud endpoint in an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<string> ListEventHubConsumerGroupsNext(this IIotHubResourceOperations operations, string nextPageLink)
-            {
-                return operations.ListEventHubConsumerGroupsNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1273,25 +728,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<JobResponseInner> ListJobsNext(this IIotHubResourceOperations operations, string nextPageLink)
-            {
-                return operations.ListJobsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a list of all the jobs in an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
-            /// </summary>
-            /// <remarks>
-            /// Get a list of all the jobs in an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1315,23 +751,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<IotHubQuotaMetricInfo> GetQuotaMetricsNext(this IIotHubResourceOperations operations, string nextPageLink)
-            {
-                return operations.GetQuotaMetricsNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the quota metrics for an IoT hub.
-            /// </summary>
-            /// <remarks>
-            /// Get the quota metrics for an IoT hub.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -1341,25 +760,6 @@ namespace Microsoft.Azure.Management.Devices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the security metadata for an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
-            /// </summary>
-            /// <remarks>
-            /// Get the security metadata for an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SharedAccessSignatureAuthorizationRuleInner> ListKeysNext(this IIotHubResourceOperations operations, string nextPageLink)
-            {
-                return operations.ListKeysNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

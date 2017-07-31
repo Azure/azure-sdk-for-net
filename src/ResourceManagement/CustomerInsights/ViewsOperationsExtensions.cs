@@ -37,26 +37,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='userId'>
             /// The user ID. Use * to retreive hub level views.
             /// </param>
-            public static IPage<ViewResourceFormatInner> ListByHub(this IViewsOperations operations, string resourceGroupName, string hubName, string userId)
-            {
-                return operations.ListByHubAsync(resourceGroupName, hubName, userId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all available views for given user in the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='userId'>
-            /// The user ID. Use * to retreive hub level views.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -66,29 +46,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates a view or updates an exisiting view in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='viewName'>
-            /// The name of the view.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate View operation.
-            /// </param>
-            public static ViewResourceFormatInner CreateOrUpdate(this IViewsOperations operations, string resourceGroupName, string hubName, string viewName, ViewResourceFormatInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, hubName, viewName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -138,29 +95,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='userId'>
             /// The user ID. Use * to retreive hub level view.
             /// </param>
-            public static ViewResourceFormatInner Get(this IViewsOperations operations, string resourceGroupName, string hubName, string viewName, string userId)
-            {
-                return operations.GetAsync(resourceGroupName, hubName, viewName, userId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a view in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='viewName'>
-            /// The name of the view.
-            /// </param>
-            /// <param name='userId'>
-            /// The user ID. Use * to retreive hub level view.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -190,49 +124,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='userId'>
             /// The user ID. Use * to retreive hub level view.
             /// </param>
-            public static void Delete(this IViewsOperations operations, string resourceGroupName, string hubName, string viewName, string userId)
-            {
-                operations.DeleteAsync(resourceGroupName, hubName, viewName, userId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a view in the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='viewName'>
-            /// The name of the view.
-            /// </param>
-            /// <param name='userId'>
-            /// The user ID. Use * to retreive hub level view.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IViewsOperations operations, string resourceGroupName, string hubName, string viewName, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, hubName, viewName, userId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets all available views for given user in the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ViewResourceFormatInner> ListByHubNext(this IViewsOperations operations, string nextPageLink)
-            {
-                return operations.ListByHubNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

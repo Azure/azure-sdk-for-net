@@ -37,26 +37,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='name'>
             /// Resource name
             /// </param>
-            public static CheckNameAvailabilityResponseInner CheckAvailability(this IHubsOperations operations, string resourceGroupName, string namespaceName, string name)
-            {
-                return operations.CheckAvailabilityAsync(resourceGroupName, namespaceName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Checks the availability of the given notificationHub in a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='name'>
-            /// Resource name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>

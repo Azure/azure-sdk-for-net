@@ -41,29 +41,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<WorkflowRunActionInner> List(this IWorkflowRunActionsOperations operations, string resourceGroupName, string workflowName, string runName, ODataQuery<WorkflowRunActionFilterInner> odataQuery = default(ODataQuery<WorkflowRunActionFilterInner>))
-            {
-                return ((IWorkflowRunActionsOperations)operations).ListAsync(resourceGroupName, workflowName, runName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of workflow run actions.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='runName'>
-            /// The workflow run name.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -93,29 +70,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
             /// <param name='actionName'>
             /// The workflow action name.
             /// </param>
-            public static WorkflowRunActionInner Get(this IWorkflowRunActionsOperations operations, string resourceGroupName, string workflowName, string runName, string actionName)
-            {
-                return operations.GetAsync(resourceGroupName, workflowName, runName, actionName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a workflow run action.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='workflowName'>
-            /// The workflow name.
-            /// </param>
-            /// <param name='runName'>
-            /// The workflow run name.
-            /// </param>
-            /// <param name='actionName'>
-            /// The workflow action name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -125,20 +79,6 @@ namespace Microsoft.Azure.Management.Logic.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a list of workflow run actions.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<WorkflowRunActionInner> ListNext(this IWorkflowRunActionsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

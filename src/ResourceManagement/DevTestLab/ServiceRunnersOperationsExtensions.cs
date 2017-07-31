@@ -38,26 +38,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<ServiceRunnerInner> List(this IServiceRunnersOperations operations, string resourceGroupName, string labName, ODataQuery<ServiceRunnerInner> odataQuery = default(ODataQuery<ServiceRunnerInner>))
-            {
-                return ((IServiceRunnersOperations)operations).ListAsync(resourceGroupName, labName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List service runners in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -67,26 +47,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get service runner.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the service runner.
-            /// </param>
-            public static ServiceRunnerInner Get(this IServiceRunnersOperations operations, string resourceGroupName, string labName, string name)
-            {
-                return operations.GetAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -133,29 +93,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='serviceRunner'>
             /// A container for a managed identity to execute DevTest lab services.
             /// </param>
-            public static ServiceRunnerInner CreateOrUpdate(this IServiceRunnersOperations operations, string resourceGroupName, string labName, string name, ServiceRunnerInner serviceRunner)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labName, name, serviceRunner).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or replace an existing Service runner.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the service runner.
-            /// </param>
-            /// <param name='serviceRunner'>
-            /// A container for a managed identity to execute DevTest lab services.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -182,46 +119,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the service runner.
             /// </param>
-            public static void Delete(this IServiceRunnersOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete service runner.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the service runner.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IServiceRunnersOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List service runners in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ServiceRunnerInner> ListNext(this IServiceRunnersOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

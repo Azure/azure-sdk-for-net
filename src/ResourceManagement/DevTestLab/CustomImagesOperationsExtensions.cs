@@ -38,26 +38,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<CustomImageInner> List(this ICustomImagesOperations operations, string resourceGroupName, string labName, ODataQuery<CustomImageInner> odataQuery = default(ODataQuery<CustomImageInner>))
-            {
-                return ((ICustomImagesOperations)operations).ListAsync(resourceGroupName, labName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List custom images in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -67,29 +47,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get custom image.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the custom image.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=vm)'
-            /// </param>
-            public static CustomImageInner Get(this ICustomImagesOperations operations, string resourceGroupName, string labName, string name, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, labName, name, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -140,30 +97,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='customImage'>
             /// A custom image.
             /// </param>
-            public static CustomImageInner CreateOrUpdate(this ICustomImagesOperations operations, string resourceGroupName, string labName, string name, CustomImageInner customImage)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labName, name, customImage).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or replace an existing custom image. This operation can take a while
-            /// to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the custom image.
-            /// </param>
-            /// <param name='customImage'>
-            /// A custom image.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -190,56 +123,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the custom image.
             /// </param>
-            public static void Delete(this ICustomImagesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete custom image. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the custom image.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this ICustomImagesOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Create or replace an existing custom image. This operation can take a while
-            /// to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the custom image.
-            /// </param>
-            /// <param name='customImage'>
-            /// A custom image.
-            /// </param>
-            public static CustomImageInner BeginCreateOrUpdate(this ICustomImagesOperations operations, string resourceGroupName, string labName, string name, CustomImageInner customImage)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, labName, name, customImage).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -287,46 +176,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the custom image.
             /// </param>
-            public static void BeginDelete(this ICustomImagesOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete custom image. This operation can take a while to complete.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the custom image.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginDeleteAsync(this ICustomImagesOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List custom images in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<CustomImageInner> ListNext(this ICustomImagesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

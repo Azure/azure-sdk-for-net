@@ -33,22 +33,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='name'>
             /// Resource name
             /// </param>
-            public static CheckNameAvailabilityResponseInner CheckAvailability(this INameOperations operations, string name)
-            {
-                return operations.CheckAvailabilityAsync(name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Checks the availability of the given service namespace across all Azure
-            /// subscriptions. This is useful because the domain name is created based on
-            /// the service namespace name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Resource name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>

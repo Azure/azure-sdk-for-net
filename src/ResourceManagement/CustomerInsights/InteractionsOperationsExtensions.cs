@@ -40,29 +40,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the CreateOrUpdate Interaction operation.
             /// </param>
-            public static InteractionResourceFormatInner CreateOrUpdate(this IInteractionsOperations operations, string resourceGroupName, string hubName, string interactionName, InteractionResourceFormatInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, hubName, interactionName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates an interaction or updates an existing interaction within a hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='interactionName'>
-            /// The name of the interaction.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate Interaction operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -72,29 +49,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets information about the specified interaction.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='interactionName'>
-            /// The name of the interaction.
-            /// </param>
-            /// <param name='localeCode'>
-            /// Locale of interaction to retrieve, default is en-us.
-            /// </param>
-            public static InteractionResourceFormatInner Get(this IInteractionsOperations operations, string resourceGroupName, string hubName, string interactionName, string localeCode = "en-us")
-            {
-                return operations.GetAsync(resourceGroupName, hubName, interactionName, localeCode).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -141,26 +95,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='localeCode'>
             /// Locale of interaction to retrieve, default is en-us.
             /// </param>
-            public static IPage<InteractionResourceFormatInner> ListByHub(this IInteractionsOperations operations, string resourceGroupName, string hubName, string localeCode = "en-us")
-            {
-                return operations.ListByHubAsync(resourceGroupName, hubName, localeCode).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all interactions in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='localeCode'>
-            /// Locale of interaction to retrieve, default is en-us.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -170,26 +104,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Suggests relationships to create relationship links.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='interactionName'>
-            /// The name of the interaction.
-            /// </param>
-            public static SuggestRelationshipLinksResponseInner SuggestRelationshipLinks(this IInteractionsOperations operations, string resourceGroupName, string hubName, string interactionName)
-            {
-                return operations.SuggestRelationshipLinksAsync(resourceGroupName, hubName, interactionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -236,29 +150,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the CreateOrUpdate Interaction operation.
             /// </param>
-            public static InteractionResourceFormatInner BeginCreateOrUpdate(this IInteractionsOperations operations, string resourceGroupName, string hubName, string interactionName, InteractionResourceFormatInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, hubName, interactionName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates an interaction or updates an existing interaction within a hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='interactionName'>
-            /// The name of the interaction.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate Interaction operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -268,20 +159,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all interactions in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<InteractionResourceFormatInner> ListByHubNext(this IInteractionsOperations operations, string nextPageLink)
-            {
-                return operations.ListByHubNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

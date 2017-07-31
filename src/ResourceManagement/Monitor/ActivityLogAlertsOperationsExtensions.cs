@@ -39,26 +39,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='activityLogAlert'>
             /// The activity log alert to create or use for the update.
             /// </param>
-            public static ActivityLogAlertResourceInner CreateOrUpdate(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName, ActivityLogAlertResourceInner activityLogAlert)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, activityLogAlertName, activityLogAlert).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create a new activity log alert or update an existing one.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
-            /// </param>
-            /// <param name='activityLogAlert'>
-            /// The activity log alert to create or use for the update.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -82,23 +62,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='activityLogAlertName'>
             /// The name of the activity log alert.
             /// </param>
-            public static ActivityLogAlertResourceInner Get(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName)
-            {
-                return operations.GetAsync(resourceGroupName, activityLogAlertName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get an activity log alert.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -108,23 +71,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Delete an activity log alert.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
-            /// </param>
-            public static void Delete(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName)
-            {
-                operations.DeleteAsync(resourceGroupName, activityLogAlertName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -163,27 +109,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='activityLogAlertPatch'>
             /// Parameters supplied to the operation.
             /// </param>
-            public static ActivityLogAlertResourceInner Update(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName, ActivityLogAlertPatchBodyInner activityLogAlertPatch)
-            {
-                return operations.UpdateAsync(resourceGroupName, activityLogAlertName, activityLogAlertPatch).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an existing ActivityLogAlertResource's tags. To update other fields
-            /// use the CreateOrUpdate method.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
-            /// </param>
-            /// <param name='activityLogAlertPatch'>
-            /// Parameters supplied to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -201,17 +126,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<ActivityLogAlertResourceInner> ListBySubscriptionId(this IActivityLogAlertsOperations operations)
-            {
-                return operations.ListBySubscriptionIdAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a list of all activity log alerts in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -221,20 +135,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get a list of all activity log alerts in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IEnumerable<ActivityLogAlertResourceInner> ListByResourceGroup(this IActivityLogAlertsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>

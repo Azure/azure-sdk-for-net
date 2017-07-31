@@ -36,23 +36,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<CloudApplianceConfiguration> ListSupportedConfigurations(this ICloudAppliancesOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.ListSupportedConfigurationsAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists supported cloud appliance models and supported configurations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -79,52 +62,12 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void Provision(this ICloudAppliancesOperations operations, CloudApplianceInner parameters, string resourceGroupName, string managerName)
-            {
-                operations.ProvisionAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Provisions cloud appliance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The cloud appliance
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task ProvisionAsync(this ICloudAppliancesOperations operations, CloudApplianceInner parameters, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ProvisionWithHttpMessagesAsync(parameters, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Provisions cloud appliance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The cloud appliance
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void BeginProvision(this ICloudAppliancesOperations operations, CloudApplianceInner parameters, string resourceGroupName, string managerName)
-            {
-                operations.BeginProvisionAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>

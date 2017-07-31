@@ -37,26 +37,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the GetUploadUrlForEntityType operation.
             /// </param>
-            public static ImageDefinitionInner GetUploadUrlForEntityType(this IImagesOperations operations, string resourceGroupName, string hubName, GetImageUploadUrlInputInner parameters)
-            {
-                return operations.GetUploadUrlForEntityTypeAsync(resourceGroupName, hubName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets entity type (profile or interaction) image upload URL.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the GetUploadUrlForEntityType operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -66,26 +46,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets data image upload URL.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the GetUploadUrlForData operation.
-            /// </param>
-            public static ImageDefinitionInner GetUploadUrlForData(this IImagesOperations operations, string resourceGroupName, string hubName, GetImageUploadUrlInputInner parameters)
-            {
-                return operations.GetUploadUrlForDataAsync(resourceGroupName, hubName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>

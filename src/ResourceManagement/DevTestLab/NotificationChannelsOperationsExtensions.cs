@@ -38,26 +38,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<NotificationChannelInner> List(this INotificationChannelsOperations operations, string resourceGroupName, string labName, ODataQuery<NotificationChannelInner> odataQuery = default(ODataQuery<NotificationChannelInner>))
-            {
-                return ((INotificationChannelsOperations)operations).ListAsync(resourceGroupName, labName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List notificationchannels in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -67,29 +47,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get notificationchannel.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the notificationChannel.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=webHookUrl)'
-            /// </param>
-            public static NotificationChannelInner Get(this INotificationChannelsOperations operations, string resourceGroupName, string labName, string name, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, labName, name, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -139,29 +96,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='notificationChannel'>
             /// A notification.
             /// </param>
-            public static NotificationChannelInner CreateOrUpdate(this INotificationChannelsOperations operations, string resourceGroupName, string labName, string name, NotificationChannelInner notificationChannel)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labName, name, notificationChannel).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or replace an existing notificationChannel.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the notificationChannel.
-            /// </param>
-            /// <param name='notificationChannel'>
-            /// A notification.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -188,55 +122,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the notificationChannel.
             /// </param>
-            public static void Delete(this INotificationChannelsOperations operations, string resourceGroupName, string labName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, labName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete notificationchannel.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the notificationChannel.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this INotificationChannelsOperations operations, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, labName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Modify properties of notificationchannels.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the notificationChannel.
-            /// </param>
-            /// <param name='notificationChannel'>
-            /// A notification.
-            /// </param>
-            public static NotificationChannelInner Update(this INotificationChannelsOperations operations, string resourceGroupName, string labName, string name, NotificationChannelFragmentInner notificationChannel)
-            {
-                return operations.UpdateAsync(resourceGroupName, labName, name, notificationChannel).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -286,49 +177,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='notifyParameters'>
             /// Properties for generating a Notification.
             /// </param>
-            public static void Notify(this INotificationChannelsOperations operations, string resourceGroupName, string labName, string name, NotifyParametersInner notifyParameters)
-            {
-                operations.NotifyAsync(resourceGroupName, labName, name, notifyParameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Send notification to provided channel.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the notificationChannel.
-            /// </param>
-            /// <param name='notifyParameters'>
-            /// Properties for generating a Notification.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task NotifyAsync(this INotificationChannelsOperations operations, string resourceGroupName, string labName, string name, NotifyParametersInner notifyParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.NotifyWithHttpMessagesAsync(resourceGroupName, labName, name, notifyParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List notificationchannels in a given lab.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NotificationChannelInner> ListNext(this INotificationChannelsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

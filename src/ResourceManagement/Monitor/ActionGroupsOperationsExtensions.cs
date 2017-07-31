@@ -39,26 +39,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='actionGroup'>
             /// The action group to create or use for the update.
             /// </param>
-            public static ActionGroupResourceInner CreateOrUpdate(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, ActionGroupResourceInner actionGroup)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, actionGroupName, actionGroup).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create a new action group or update an existing one.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='actionGroupName'>
-            /// The name of the action group.
-            /// </param>
-            /// <param name='actionGroup'>
-            /// The action group to create or use for the update.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -68,23 +48,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get an action group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='actionGroupName'>
-            /// The name of the action group.
-            /// </param>
-            public static ActionGroupResourceInner Get(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName)
-            {
-                return operations.GetAsync(resourceGroupName, actionGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -122,40 +85,12 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='actionGroupName'>
             /// The name of the action group.
             /// </param>
-            public static void Delete(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName)
-            {
-                operations.DeleteAsync(resourceGroupName, actionGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete an action group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='actionGroupName'>
-            /// The name of the action group.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, actionGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Get a list of all action groups in a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IEnumerable<ActionGroupResourceInner> ListBySubscriptionId(this IActionGroupsOperations operations)
-            {
-                return operations.ListBySubscriptionIdAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -184,20 +119,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static IEnumerable<ActionGroupResourceInner> ListByResourceGroup(this IActionGroupsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a list of all action groups in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -207,27 +128,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Enable a receiver in an action group. This changes the receiver's status
-            /// from Disabled to Enabled.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='actionGroupName'>
-            /// The name of the action group.
-            /// </param>
-            /// <param name='receiverName'>
-            /// The name of the receiver to resubscribe.
-            /// </param>
-            public static void EnableReceiver(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, string receiverName)
-            {
-                operations.EnableReceiverAsync(resourceGroupName, actionGroupName, receiverName).GetAwaiter().GetResult();
             }
 
             /// <summary>

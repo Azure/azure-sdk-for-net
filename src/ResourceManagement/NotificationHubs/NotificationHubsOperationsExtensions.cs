@@ -37,26 +37,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='parameters'>
             /// The notificationHub name.
             /// </param>
-            public static CheckAvailabilityResultInner CheckAvailability(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CheckAvailabilityParametersInner parameters)
-            {
-                return operations.CheckAvailabilityAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Checks the availability of the given notificationHub in a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The notificationHub name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -66,29 +46,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates/Update a NotificationHub in a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='notificationHubName'>
-            /// The notification hub name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create/update a NotificationHub Resource.
-            /// </param>
-            public static NotificationHubResourceInner CreateOrUpdate(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParametersInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, notificationHubName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -135,52 +92,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='notificationHubName'>
             /// The notification hub name.
             /// </param>
-            public static void Delete(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName, notificationHubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a notification hub associated with a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='notificationHubName'>
-            /// The notification hub name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Lists the notification hubs associated with a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='notificationHubName'>
-            /// The notification hub name.
-            /// </param>
-            public static NotificationHubResourceInner Get(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName, notificationHubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -207,32 +124,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates/Updates an authorization rule for a NotificationHub
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='notificationHubName'>
-            /// The notification hub name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// Authorization Rule Name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The shared access authorization rule.
-            /// </param>
-            public static SharedAccessAuthorizationRuleResourceInner CreateOrUpdateAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParametersInner parameters)
-            {
-                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -285,58 +176,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='authorizationRuleName'>
             /// Authorization Rule Name.
             /// </param>
-            public static void DeleteAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
-            {
-                operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a notificationHub authorization rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='notificationHubName'>
-            /// The notification hub name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// Authorization Rule Name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAuthorizationRuleAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets an authorization rule for a NotificationHub by name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='notificationHubName'>
-            /// The notification hub name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// authorization rule name.
-            /// </param>
-            public static SharedAccessAuthorizationRuleResourceInner GetAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
-            {
-                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -380,23 +225,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='namespaceName'>
             /// The namespace name.
             /// </param>
-            public static IPage<NotificationHubResourceInner> List(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.ListAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the notification hubs associated with a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -423,26 +251,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='notificationHubName'>
             /// The notification hub name.
             /// </param>
-            public static IPage<SharedAccessAuthorizationRuleResourceInner> ListAuthorizationRules(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
-            {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, notificationHubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the authorization rules for a NotificationHub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='notificationHubName'>
-            /// The notification hub name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -452,30 +260,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Primary and Secondary ConnectionStrings to the NotificationHub
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='notificationHubName'>
-            /// The notification hub name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The connection string of the NotificationHub for the specified
-            /// authorizationRule.
-            /// </param>
-            public static ResourceListKeysInner ListKeys(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -532,35 +316,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// Name of the key that has to be regenerated for the Namespace/Notification
             /// Hub Authorization Rule. The value can be Primary Key/Secondary Key.
             /// </param>
-            public static ResourceListKeysInner RegenerateKeys(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, string policyKey = default(string))
-            {
-                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, policyKey).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Regenerates the Primary/Secondary Keys to the NotificationHub Authorization
-            /// Rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='notificationHubName'>
-            /// The notification hub name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The connection string of the NotificationHub for the specified
-            /// authorizationRule.
-            /// </param>
-            /// <param name='policyKey'>
-            /// Name of the key that has to be regenerated for the Namespace/Notification
-            /// Hub Authorization Rule. The value can be Primary Key/Secondary Key.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -570,26 +325,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Lists the PNS Credentials associated with a notification hub .
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='notificationHubName'>
-            /// The notification hub name.
-            /// </param>
-            public static PnsCredentialsResourceInner GetPnsCredentials(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
-            {
-                return operations.GetPnsCredentialsAsync(resourceGroupName, namespaceName, notificationHubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -627,20 +362,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NotificationHubResourceInner> ListNext(this INotificationHubsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the notification hubs associated with a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -650,20 +371,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the authorization rules for a NotificationHub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleResourceInner> ListAuthorizationRulesNext(this INotificationHubsOperations operations, string nextPageLink)
-            {
-                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

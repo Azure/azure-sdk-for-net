@@ -45,34 +45,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to create or update a consumer group resource.
             /// </param>
-            public static ConsumerGroupResourceInner CreateOrUpdate(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupCreateOrUpdateParametersInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates an Event Hubs consumer group as a nested resource within
-            /// a Namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639498.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='consumerGroupName'>
-            /// The consumer group name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update a consumer group resource.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -103,60 +75,12 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
             /// <param name='consumerGroupName'>
             /// The consumer group name
             /// </param>
-            public static void Delete(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a consumer group from the specified Event Hub and resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639491.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='consumerGroupName'>
-            /// The consumer group name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a description for the specified consumer group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639488.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='consumerGroupName'>
-            /// The consumer group name
-            /// </param>
-            public static ConsumerGroupResourceInner Get(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -206,28 +130,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
             /// <param name='eventHubName'>
             /// The Event Hub name
             /// </param>
-            public static IPage<ConsumerGroupResourceInner> ListAll(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
-            {
-                return operations.ListAllAsync(resourceGroupName, namespaceName, eventHubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the consumer groups in a Namespace. An empty feed is returned if
-            /// no consumer group exists in the Namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639503.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -237,22 +139,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets all the consumer groups in a Namespace. An empty feed is returned if
-            /// no consumer group exists in the Namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639503.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ConsumerGroupResourceInner> ListAllNext(this IConsumerGroupsOperations operations, string nextPageLink)
-            {
-                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

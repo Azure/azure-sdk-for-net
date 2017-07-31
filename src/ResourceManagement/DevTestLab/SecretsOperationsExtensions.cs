@@ -41,29 +41,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<SecretInner> List(this ISecretsOperations operations, string resourceGroupName, string labName, string userName, ODataQuery<SecretInner> odataQuery = default(ODataQuery<SecretInner>))
-            {
-                return ((ISecretsOperations)operations).ListAsync(resourceGroupName, labName, userName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List secrets in a given user profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user profile.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -73,32 +50,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get secret.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user profile.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the secret.
-            /// </param>
-            /// <param name='expand'>
-            /// Specify the $expand query. Example: 'properties($select=value)'
-            /// </param>
-            public static SecretInner Get(this ISecretsOperations operations, string resourceGroupName, string labName, string userName, string name, string expand = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, labName, userName, name, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -154,32 +105,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='secret'>
             /// A secret.
             /// </param>
-            public static SecretInner CreateOrUpdate(this ISecretsOperations operations, string resourceGroupName, string labName, string userName, string name, SecretInner secret)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, labName, userName, name, secret).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or replace an existing secret.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user profile.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the secret.
-            /// </param>
-            /// <param name='secret'>
-            /// A secret.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -209,49 +134,12 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='name'>
             /// The name of the secret.
             /// </param>
-            public static void Delete(this ISecretsOperations operations, string resourceGroupName, string labName, string userName, string name)
-            {
-                operations.DeleteAsync(resourceGroupName, labName, userName, name).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete secret.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='userName'>
-            /// The name of the user profile.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the secret.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this ISecretsOperations operations, string resourceGroupName, string labName, string userName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, labName, userName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// List secrets in a given user profile.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SecretInner> ListNext(this ISecretsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

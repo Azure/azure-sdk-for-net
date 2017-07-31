@@ -40,29 +40,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
             /// <param name='createOrUpdatePayload'>
             /// The payload that is used to create or update the web service.
             /// </param>
-            public static WebServiceInner CreateOrUpdate(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, WebServiceInner createOrUpdatePayload)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, webServiceName, createOrUpdatePayload).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Create or update a web service. This call will overwrite an existing web
-            /// service. Note that there is no warning or confirmation. This is a
-            /// nonrecoverable operation. If your intent is to create a new web service,
-            /// call the Get operation first to verify that it does not exist.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
-            /// <param name='createOrUpdatePayload'>
-            /// The payload that is used to create or update the web service.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -72,29 +49,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Web Service Definition as specified by a subscription, resource
-            /// group, and name. Note that the storage credentials and web service keys are
-            /// not returned by this call. To get the web service access keys, call List
-            /// Keys.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
-            /// <param name='region'>
-            /// The region for which encrypted credential parameters are valid.
-            /// </param>
-            public static WebServiceInner Get(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region = default(string))
-            {
-                return operations.GetAsync(resourceGroupName, webServiceName, region).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -143,28 +97,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
             /// <param name='patchPayload'>
             /// The payload to use to patch the web service.
             /// </param>
-            public static WebServiceInner Patch(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, WebServiceInner patchPayload)
-            {
-                return operations.PatchAsync(resourceGroupName, webServiceName, patchPayload).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Modifies an existing web service resource. The PATCH API call is an
-            /// asynchronous operation. To determine whether it has completed successfully,
-            /// you must perform a Get operation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
-            /// <param name='patchPayload'>
-            /// The payload to use to patch the web service.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -188,54 +120,12 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
             /// <param name='webServiceName'>
             /// The name of the web service.
             /// </param>
-            public static void Remove(this IWebServicesOperations operations, string resourceGroupName, string webServiceName)
-            {
-                operations.RemoveAsync(resourceGroupName, webServiceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the specified web service.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task RemoveAsync(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RemoveWithHttpMessagesAsync(resourceGroupName, webServiceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Creates an encrypted credentials parameter blob for the specified region.
-            /// To get the web service from a region other than the region in which it has
-            /// been created, you must first call Create Regional Web Services Properties
-            /// to create a copy of the encrypted credential parameter blob in that region.
-            /// You only need to do this before the first time that you get the web service
-            /// in the new region.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
-            /// <param name='region'>
-            /// The region for which encrypted credential parameters are created.
-            /// </param>
-            public static AsyncOperationStatusInner CreateRegionalProperties(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region)
-            {
-                return operations.CreateRegionalPropertiesAsync(resourceGroupName, webServiceName, region).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -281,23 +171,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
             /// <param name='webServiceName'>
             /// The name of the web service.
             /// </param>
-            public static WebServiceKeysInner ListKeys(this IWebServicesOperations operations, string resourceGroupName, string webServiceName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, webServiceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the access keys for the specified web service.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -307,23 +180,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the web services in the specified resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='skiptoken'>
-            /// Continuation token for pagination.
-            /// </param>
-            public static IPage<WebServiceInner> ListByResourceGroup(this IWebServicesOperations operations, string resourceGroupName, string skiptoken = default(string))
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName, skiptoken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -358,20 +214,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
             /// <param name='skiptoken'>
             /// Continuation token for pagination.
             /// </param>
-            public static IPage<WebServiceInner> ListBySubscriptionId(this IWebServicesOperations operations, string skiptoken = default(string))
-            {
-                return operations.ListBySubscriptionIdAsync(skiptoken).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the web services in the specified subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='skiptoken'>
-            /// Continuation token for pagination.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -381,29 +223,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Create or update a web service. This call will overwrite an existing web
-            /// service. Note that there is no warning or confirmation. This is a
-            /// nonrecoverable operation. If your intent is to create a new web service,
-            /// call the Get operation first to verify that it does not exist.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
-            /// <param name='createOrUpdatePayload'>
-            /// The payload that is used to create or update the web service.
-            /// </param>
-            public static WebServiceInner BeginCreateOrUpdate(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, WebServiceInner createOrUpdatePayload)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, webServiceName, createOrUpdatePayload).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -452,28 +271,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
             /// <param name='patchPayload'>
             /// The payload to use to patch the web service.
             /// </param>
-            public static WebServiceInner BeginPatch(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, WebServiceInner patchPayload)
-            {
-                return operations.BeginPatchAsync(resourceGroupName, webServiceName, patchPayload).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Modifies an existing web service resource. The PATCH API call is an
-            /// asynchronous operation. To determine whether it has completed successfully,
-            /// you must perform a Get operation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
-            /// <param name='patchPayload'>
-            /// The payload to use to patch the web service.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -483,23 +280,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the specified web service.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
-            public static void BeginRemove(this IWebServicesOperations operations, string resourceGroupName, string webServiceName)
-            {
-                operations.BeginRemoveAsync(resourceGroupName, webServiceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -542,31 +322,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
             /// <param name='region'>
             /// The region for which encrypted credential parameters are created.
             /// </param>
-            public static AsyncOperationStatusInner BeginCreateRegionalProperties(this IWebServicesOperations operations, string resourceGroupName, string webServiceName, string region)
-            {
-                return operations.BeginCreateRegionalPropertiesAsync(resourceGroupName, webServiceName, region).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates an encrypted credentials parameter blob for the specified region.
-            /// To get the web service from a region other than the region in which it has
-            /// been created, you must first call Create Regional Web Services Properties
-            /// to create a copy of the encrypted credential parameter blob in that region.
-            /// You only need to do this before the first time that you get the web service
-            /// in the new region.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group in which the web service is located.
-            /// </param>
-            /// <param name='webServiceName'>
-            /// The name of the web service.
-            /// </param>
-            /// <param name='region'>
-            /// The region for which encrypted credential parameters are created.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -587,20 +342,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<WebServiceInner> ListByResourceGroupNext(this IWebServicesOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the web services in the specified resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -610,20 +351,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the web services in the specified subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<WebServiceInner> ListBySubscriptionIdNext(this IWebServicesOperations operations, string nextPageLink)
-            {
-                return operations.ListBySubscriptionIdNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

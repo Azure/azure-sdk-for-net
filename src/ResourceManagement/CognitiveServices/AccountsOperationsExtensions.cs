@@ -32,21 +32,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Fluent
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            public static IPage<CognitiveServicesAccountInner> ListByResourceGroup(this IAccountsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns all the resources of a particular type belonging to a resource
-            /// group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -56,17 +41,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Returns all the resources of a particular type belonging to a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<CognitiveServicesAccountInner> List(this IAccountsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -96,21 +70,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<CognitiveServicesAccountInner> ListByResourceGroupNext(this IAccountsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns all the resources of a particular type belonging to a resource
-            /// group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -120,20 +79,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Returns all the resources of a particular type belonging to a subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<CognitiveServicesAccountInner> ListNext(this IAccountsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -36,23 +36,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<AccessControlRecordInner> ListByManager(this IAccessControlRecordsOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.ListByManagerAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieves all the access control records in a manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -62,26 +45,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Returns the properties of the specified access control record name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accessControlRecordName'>
-            /// Name of access control record to be fetched.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static AccessControlRecordInner Get(this IAccessControlRecordsOperations operations, string accessControlRecordName, string resourceGroupName, string managerName)
-            {
-                return operations.GetAsync(accessControlRecordName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,29 +91,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static AccessControlRecordInner CreateOrUpdate(this IAccessControlRecordsOperations operations, string accessControlRecordName, AccessControlRecordInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.CreateOrUpdateAsync(accessControlRecordName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or Updates an access control record.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accessControlRecordName'>
-            /// The name of the access control record.
-            /// </param>
-            /// <param name='parameters'>
-            /// The access control record to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -160,26 +100,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the access control record.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accessControlRecordName'>
-            /// The name of the access control record to delete.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void Delete(this IAccessControlRecordsOperations operations, string accessControlRecordName, string resourceGroupName, string managerName)
-            {
-                operations.DeleteAsync(accessControlRecordName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,29 +143,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static AccessControlRecordInner BeginCreateOrUpdate(this IAccessControlRecordsOperations operations, string accessControlRecordName, AccessControlRecordInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.BeginCreateOrUpdateAsync(accessControlRecordName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or Updates an access control record.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accessControlRecordName'>
-            /// The name of the access control record.
-            /// </param>
-            /// <param name='parameters'>
-            /// The access control record to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -255,26 +152,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the access control record.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accessControlRecordName'>
-            /// The name of the access control record to delete.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void BeginDelete(this IAccessControlRecordsOperations operations, string accessControlRecordName, string resourceGroupName, string managerName)
-            {
-                operations.BeginDeleteAsync(accessControlRecordName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -40,26 +40,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<Alert> ListByManager(this IAlertsOperations operations, string resourceGroupName, string managerName, ODataQuery<AlertFilterInner> odataQuery = default(ODataQuery<AlertFilterInner>))
-            {
-                return ((IAlertsOperations)operations).ListByManagerAsync(resourceGroupName, managerName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieves all the alerts in a manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -69,26 +49,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Clear the alerts.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The clear alert request.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void Clear(this IAlertsOperations operations, ClearAlertRequestInner parameters, string resourceGroupName, string managerName)
-            {
-                operations.ClearAsync(parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -132,49 +92,12 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='emailList'>
             /// The list of email IDs to send the test alert email
             /// </param>
-            public static void SendTestEmail(this IAlertsOperations operations, string deviceName, string resourceGroupName, string managerName, IList<string> emailList)
-            {
-                operations.SendTestEmailAsync(deviceName, resourceGroupName, managerName, emailList).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Sends a test alert email.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            /// <param name='emailList'>
-            /// The list of email IDs to send the test alert email
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task SendTestEmailAsync(this IAlertsOperations operations, string deviceName, string resourceGroupName, string managerName, IList<string> emailList, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SendTestEmailWithHttpMessagesAsync(deviceName, resourceGroupName, managerName, emailList, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Retrieves all the alerts in a manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Alert> ListByManagerNext(this IAlertsOperations operations, string nextPageLink)
-            {
-                return operations.ListByManagerNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

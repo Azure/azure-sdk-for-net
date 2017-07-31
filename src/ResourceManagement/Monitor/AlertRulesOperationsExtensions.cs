@@ -39,26 +39,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='parameters'>
             /// The parameters of the rule to create or update.
             /// </param>
-            public static AlertRuleResourceInner CreateOrUpdate(this IAlertRulesOperations operations, string resourceGroupName, string ruleName, AlertRuleResourceInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, ruleName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates an alert rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='ruleName'>
-            /// The name of the rule.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters of the rule to create or update.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -82,46 +62,12 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='ruleName'>
             /// The name of the rule.
             /// </param>
-            public static void Delete(this IAlertRulesOperations operations, string resourceGroupName, string ruleName)
-            {
-                operations.DeleteAsync(resourceGroupName, ruleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an alert rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='ruleName'>
-            /// The name of the rule.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IAlertRulesOperations operations, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, ruleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets an alert rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='ruleName'>
-            /// The name of the rule.
-            /// </param>
-            public static AlertRuleResourceInner Get(this IAlertRulesOperations operations, string resourceGroupName, string ruleName)
-            {
-                return operations.GetAsync(resourceGroupName, ruleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -163,27 +109,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
             /// <param name='alertRulesResource'>
             /// Parameters supplied to the operation.
             /// </param>
-            public static AlertRuleResourceInner Update(this IAlertRulesOperations operations, string resourceGroupName, string ruleName, AlertRuleResourcePatchInner alertRulesResource)
-            {
-                return operations.UpdateAsync(resourceGroupName, ruleName, alertRulesResource).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an existing AlertRuleResource. To update other fields use the
-            /// CreateOrUpdate method.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='ruleName'>
-            /// The name of the rule.
-            /// </param>
-            /// <param name='alertRulesResource'>
-            /// Parameters supplied to the operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -193,20 +118,6 @@ namespace Microsoft.Azure.Management.Fluent.ServiceBus
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List the alert rules within a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            public static IEnumerable<AlertRuleResourceInner> ListByResourceGroup(this IAlertRulesOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>

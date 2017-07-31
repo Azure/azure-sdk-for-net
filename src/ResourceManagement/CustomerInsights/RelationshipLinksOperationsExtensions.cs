@@ -41,30 +41,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the CreateOrUpdate relationship link operation.
             /// </param>
-            public static RelationshipLinkResourceFormatInner CreateOrUpdate(this IRelationshipLinksOperations operations, string resourceGroupName, string hubName, string relationshipLinkName, RelationshipLinkResourceFormatInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, hubName, relationshipLinkName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a relationship link or updates an existing relationship link within
-            /// a hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='relationshipLinkName'>
-            /// The name of the relationship link.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate relationship link operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -74,26 +50,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets information about the specified relationship Link.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='relationshipLinkName'>
-            /// The name of the relationship link.
-            /// </param>
-            public static RelationshipLinkResourceFormatInner Get(this IRelationshipLinksOperations operations, string resourceGroupName, string hubName, string relationshipLinkName)
-            {
-                return operations.GetAsync(resourceGroupName, hubName, relationshipLinkName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -137,49 +93,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='relationshipLinkName'>
             /// The name of the relationship.
             /// </param>
-            public static void Delete(this IRelationshipLinksOperations operations, string resourceGroupName, string hubName, string relationshipLinkName)
-            {
-                operations.DeleteAsync(resourceGroupName, hubName, relationshipLinkName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a relationship link within a hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='relationshipLinkName'>
-            /// The name of the relationship.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IRelationshipLinksOperations operations, string resourceGroupName, string hubName, string relationshipLinkName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, hubName, relationshipLinkName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets all relationship links in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            public static IPage<RelationshipLinkResourceFormatInner> ListByHub(this IRelationshipLinksOperations operations, string resourceGroupName, string hubName)
-            {
-                return operations.ListByHubAsync(resourceGroupName, hubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -203,30 +122,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates a relationship link or updates an existing relationship link within
-            /// a hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='relationshipLinkName'>
-            /// The name of the relationship link.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate relationship link operation.
-            /// </param>
-            public static RelationshipLinkResourceFormatInner BeginCreateOrUpdate(this IRelationshipLinksOperations operations, string resourceGroupName, string hubName, string relationshipLinkName, RelationshipLinkResourceFormatInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, hubName, relationshipLinkName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -274,46 +169,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='relationshipLinkName'>
             /// The name of the relationship.
             /// </param>
-            public static void BeginDelete(this IRelationshipLinksOperations operations, string resourceGroupName, string hubName, string relationshipLinkName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, hubName, relationshipLinkName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a relationship link within a hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='relationshipLinkName'>
-            /// The name of the relationship.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginDeleteAsync(this IRelationshipLinksOperations operations, string resourceGroupName, string hubName, string relationshipLinkName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, hubName, relationshipLinkName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets all relationship links in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<RelationshipLinkResourceFormatInner> ListByHubNext(this IRelationshipLinksOperations operations, string nextPageLink)
-            {
-                return operations.ListByHubNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

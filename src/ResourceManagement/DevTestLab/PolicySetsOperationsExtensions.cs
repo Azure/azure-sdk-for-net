@@ -42,29 +42,6 @@ namespace Microsoft.Azure.Management.DevTestLab.Fluent
             /// <param name='policies'>
             /// Policies to evaluate.
             /// </param>
-            public static EvaluatePoliciesResponseInner EvaluatePolicies(this IPolicySetsOperations operations, string resourceGroupName, string labName, string name, IList<EvaluatePoliciesPropertiesInner> policies = default(IList<EvaluatePoliciesPropertiesInner>))
-            {
-                return operations.EvaluatePoliciesAsync(resourceGroupName, labName, name, policies).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Evaluates lab policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='labName'>
-            /// The name of the lab.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the policy set.
-            /// </param>
-            /// <param name='policies'>
-            /// Policies to evaluate.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>

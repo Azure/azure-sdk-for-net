@@ -40,29 +40,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to the create/update KPI operation.
             /// </param>
-            public static KpiResourceFormatInner CreateOrUpdate(this IKpiOperations operations, string resourceGroupName, string hubName, string kpiName, KpiResourceFormatInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, hubName, kpiName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a KPI or updates an existing KPI in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='kpiName'>
-            /// The name of the KPI.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create/update KPI operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -72,26 +49,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets a KPI in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='kpiName'>
-            /// The name of the KPI.
-            /// </param>
-            public static KpiResourceFormatInner Get(this IKpiOperations operations, string resourceGroupName, string hubName, string kpiName)
-            {
-                return operations.GetAsync(resourceGroupName, hubName, kpiName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -135,52 +92,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='kpiName'>
             /// The name of the KPI.
             /// </param>
-            public static void Delete(this IKpiOperations operations, string resourceGroupName, string hubName, string kpiName)
-            {
-                operations.DeleteAsync(resourceGroupName, hubName, kpiName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a KPI in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='kpiName'>
-            /// The name of the KPI.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IKpiOperations operations, string resourceGroupName, string hubName, string kpiName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, hubName, kpiName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Reprocesses the Kpi values of the specified KPI.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='kpiName'>
-            /// The name of the KPI.
-            /// </param>
-            public static void Reprocess(this IKpiOperations operations, string resourceGroupName, string hubName, string kpiName)
-            {
-                operations.ReprocessAsync(resourceGroupName, hubName, kpiName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -218,23 +135,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='hubName'>
             /// The name of the hub.
             /// </param>
-            public static IPage<KpiResourceFormatInner> ListByHub(this IKpiOperations operations, string resourceGroupName, string hubName)
-            {
-                return operations.ListByHubAsync(resourceGroupName, hubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the KPIs in the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -244,29 +144,6 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates a KPI or updates an existing KPI in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='kpiName'>
-            /// The name of the KPI.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the create/update KPI operation.
-            /// </param>
-            public static KpiResourceFormatInner BeginCreateOrUpdate(this IKpiOperations operations, string resourceGroupName, string hubName, string kpiName, KpiResourceFormatInner parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, hubName, kpiName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -313,46 +190,12 @@ namespace Microsoft.Azure.Management.CustomerInsights.Fluent
             /// <param name='kpiName'>
             /// The name of the KPI.
             /// </param>
-            public static void BeginDelete(this IKpiOperations operations, string resourceGroupName, string hubName, string kpiName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, hubName, kpiName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a KPI in the hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='hubName'>
-            /// The name of the hub.
-            /// </param>
-            /// <param name='kpiName'>
-            /// The name of the KPI.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task BeginDeleteAsync(this IKpiOperations operations, string resourceGroupName, string hubName, string kpiName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, hubName, kpiName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets all the KPIs in the specified hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<KpiResourceFormatInner> ListByHubNext(this IKpiOperations operations, string nextPageLink)
-            {
-                return operations.ListByHubNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

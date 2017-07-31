@@ -40,26 +40,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<VolumeContainerInner> ListByDevice(this IVolumeContainersOperations operations, string deviceName, string resourceGroupName, string managerName)
-            {
-                return operations.ListByDeviceAsync(deviceName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the volume containers in a device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -69,29 +49,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the properties of the specified volume container name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='volumeContainerName'>
-            /// The name of the volume container.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static VolumeContainerInner Get(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName)
-            {
-                return operations.GetAsync(deviceName, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -144,32 +101,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static VolumeContainerInner CreateOrUpdate(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, VolumeContainerInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.CreateOrUpdateAsync(deviceName, volumeContainerName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the volume container.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='volumeContainerName'>
-            /// The name of the volume container.
-            /// </param>
-            /// <param name='parameters'>
-            /// The volume container to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -199,61 +130,12 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static void Delete(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName)
-            {
-                operations.DeleteAsync(deviceName, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the volume container.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='volumeContainerName'>
-            /// The name of the volume container.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(deviceName, volumeContainerName, resourceGroupName, managerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the metrics for the specified volume container.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='volumeContainerName'>
-            /// The volume container name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static IEnumerable<Metrics> ListMetrics(this IVolumeContainersOperations operations, ODataQuery<MetricFilterInner> odataQuery, string deviceName, string volumeContainerName, string resourceGroupName, string managerName)
-            {
-                return operations.ListMetricsAsync(odataQuery, deviceName, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -306,29 +188,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<MetricDefinition> ListMetricDefinition(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName)
-            {
-                return operations.ListMetricDefinitionAsync(deviceName, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the metric definitions for the specified volume container.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='volumeContainerName'>
-            /// The volume container name.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -361,32 +220,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static VolumeContainerInner BeginCreateOrUpdate(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, VolumeContainerInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.BeginCreateOrUpdateAsync(deviceName, volumeContainerName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the volume container.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='volumeContainerName'>
-            /// The name of the volume container.
-            /// </param>
-            /// <param name='parameters'>
-            /// The volume container to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -396,29 +229,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the volume container.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name
-            /// </param>
-            /// <param name='volumeContainerName'>
-            /// The name of the volume container.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void BeginDelete(this IVolumeContainersOperations operations, string deviceName, string volumeContainerName, string resourceGroupName, string managerName)
-            {
-                operations.BeginDeleteAsync(deviceName, volumeContainerName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>

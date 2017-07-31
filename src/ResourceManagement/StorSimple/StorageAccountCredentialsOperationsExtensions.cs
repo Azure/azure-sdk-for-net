@@ -36,23 +36,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static IEnumerable<StorageAccountCredentialInner> ListByManager(this IStorageAccountCredentialsOperations operations, string resourceGroupName, string managerName)
-            {
-                return operations.ListByManagerAsync(resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the storage account credentials in a manager.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -62,26 +45,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the properties of the specified storage account credential name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='storageAccountCredentialName'>
-            /// The name of storage account credential to be fetched.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static StorageAccountCredentialInner Get(this IStorageAccountCredentialsOperations operations, string storageAccountCredentialName, string resourceGroupName, string managerName)
-            {
-                return operations.GetAsync(storageAccountCredentialName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -128,29 +91,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static StorageAccountCredentialInner CreateOrUpdate(this IStorageAccountCredentialsOperations operations, string storageAccountCredentialName, StorageAccountCredentialInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.CreateOrUpdateAsync(storageAccountCredentialName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the storage account credential.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='storageAccountCredentialName'>
-            /// The storage account credential name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The storage account credential to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -160,26 +100,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the storage account credential.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='storageAccountCredentialName'>
-            /// The name of the storage account credential.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void Delete(this IStorageAccountCredentialsOperations operations, string storageAccountCredentialName, string resourceGroupName, string managerName)
-            {
-                operations.DeleteAsync(storageAccountCredentialName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,29 +143,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
             /// <param name='managerName'>
             /// The manager name
             /// </param>
-            public static StorageAccountCredentialInner BeginCreateOrUpdate(this IStorageAccountCredentialsOperations operations, string storageAccountCredentialName, StorageAccountCredentialInner parameters, string resourceGroupName, string managerName)
-            {
-                return operations.BeginCreateOrUpdateAsync(storageAccountCredentialName, parameters, resourceGroupName, managerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the storage account credential.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='storageAccountCredentialName'>
-            /// The storage account credential name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The storage account credential to be added or updated.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -255,26 +152,6 @@ namespace Microsoft.Azure.Management.StorSimple.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the storage account credential.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='storageAccountCredentialName'>
-            /// The name of the storage account credential.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name
-            /// </param>
-            /// <param name='managerName'>
-            /// The manager name
-            /// </param>
-            public static void BeginDelete(this IStorageAccountCredentialsOperations operations, string storageAccountCredentialName, string resourceGroupName, string managerName)
-            {
-                operations.BeginDeleteAsync(storageAccountCredentialName, resourceGroupName, managerName).GetAwaiter().GetResult();
             }
 
             /// <summary>

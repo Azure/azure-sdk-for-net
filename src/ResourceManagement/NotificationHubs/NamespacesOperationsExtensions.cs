@@ -33,22 +33,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='parameters'>
             /// The namespace name.
             /// </param>
-            public static CheckAvailabilityResultInner CheckAvailability(this INamespacesOperations operations, CheckAvailabilityParametersInner parameters)
-            {
-                return operations.CheckAvailabilityAsync(parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Checks the availability of the given service namespace across all Azure
-            /// subscriptions. This is useful because the domain name is created based on
-            /// the service namespace name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='parameters'>
-            /// The namespace name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -58,28 +42,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates/Updates a service namespace. Once created, this namespace's
-            /// resource manifest is immutable. This operation is idempotent.
-            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
-            /// </param>
-            public static NamespaceResourceInner CreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParametersInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -125,26 +87,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='parameters'>
             /// Parameters supplied to patch a Namespace Resource.
             /// </param>
-            public static NamespaceResourceInner Patch(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespacePatchParametersInner parameters)
-            {
-                return operations.PatchAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Patches the existing namespace
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to patch a Namespace Resource.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -154,25 +96,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes an existing namespace. This operation also removes all associated
-            /// notificationHubs under the namespace.
-            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj856296.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            public static void Delete(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -209,23 +132,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='namespaceName'>
             /// The namespace name.
             /// </param>
-            public static NamespaceResourceInner Get(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the description for the specified namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -235,29 +141,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates an authorization rule for a namespace
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// Aauthorization Rule Name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The shared access authorization rule.
-            /// </param>
-            public static SharedAccessAuthorizationRuleResourceInner CreateOrUpdateAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParametersInner parameters)
-            {
-                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -304,52 +187,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='authorizationRuleName'>
             /// Authorization Rule Name.
             /// </param>
-            public static void DeleteAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
-            {
-                operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a namespace authorization rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// Authorization Rule Name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAuthorizationRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets an authorization rule for a namespace by name.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// Authorization rule name.
-            /// </param>
-            public static SharedAccessAuthorizationRuleResourceInner GetAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
-            {
-                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -388,21 +231,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// The name of the resource group. If resourceGroupName value is null the
             /// method lists all the namespaces within subscription
             /// </param>
-            public static IPage<NamespaceResourceInner> List(this INamespacesOperations operations, string resourceGroupName)
-            {
-                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the available namespaces within a resourceGroup.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. If resourceGroupName value is null the
-            /// method lists all the namespaces within subscription
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -412,18 +240,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Lists all the available namespaces within the subscription irrespective of
-            /// the resourceGroups.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<NamespaceResourceInner> ListAll(this INamespacesOperations operations)
-            {
-                return operations.ListAllAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -456,23 +272,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
-            public static IPage<SharedAccessAuthorizationRuleResourceInner> ListAuthorizationRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the authorization rules for a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -482,26 +281,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the Primary and Secondary ConnectionStrings to the namespace
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The connection string of the namespace for the specified authorizationRule.
-            /// </param>
-            public static ResourceListKeysInner ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -549,30 +328,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// Name of the key that has to be regenerated for the Namespace/Notification
             /// Hub Authorization Rule. The value can be Primary Key/Secondary Key.
             /// </param>
-            public static ResourceListKeysInner RegenerateKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, string policyKey = default(string))
-            {
-                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, authorizationRuleName, policyKey).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Regenerates the Primary/Secondary Keys to the Namespace Authorization Rule
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The connection string of the namespace for the specified authorizationRule.
-            /// </param>
-            /// <param name='policyKey'>
-            /// Name of the key that has to be regenerated for the Namespace/Notification
-            /// Hub Authorization Rule. The value can be Primary Key/Secondary Key.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -582,25 +337,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes an existing namespace. This operation also removes all associated
-            /// notificationHubs under the namespace.
-            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj856296.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            public static void BeginDelete(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -634,20 +370,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NamespaceResourceInner> ListNext(this INamespacesOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the available namespaces within a resourceGroup.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -669,21 +391,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NamespaceResourceInner> ListAllNext(this INamespacesOperations operations, string nextPageLink)
-            {
-                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all the available namespaces within the subscription irrespective of
-            /// the resourceGroups.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -693,20 +400,6 @@ namespace Microsoft.Azure.Management.NotificationHubs.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the authorization rules for a namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleResourceInner> ListAuthorizationRulesNext(this INamespacesOperations operations, string nextPageLink)
-            {
-                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>

@@ -35,24 +35,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
             /// <param name='namespaceName'>
             /// The Namespace name
             /// </param>
-            public static IPage<EventHubResourceInner> ListAll(this IEventHubsOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.ListAllAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the Event Hubs in a Namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639493.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -62,30 +44,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or updates a new Event Hub as a nested resource within a Namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639497.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create an Event Hub resource.
-            /// </param>
-            public static EventHubResourceInner CreateOrUpdate(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, EventHubCreateOrUpdateParametersInner parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, eventHubName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -134,54 +92,12 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
             /// <param name='eventHubName'>
             /// The Event Hub name
             /// </param>
-            public static void Delete(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
-            {
-                operations.DeleteAsync(resourceGroupName, namespaceName, eventHubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an Event Hub from the specified Namespace and resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639496.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets an Event Hubs description for the specified Event Hub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639501.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            public static EventHubResourceInner Get(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
-            {
-                return operations.GetAsync(resourceGroupName, namespaceName, eventHubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -226,26 +142,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
             /// <param name='eventHubName'>
             /// The Event Hub name
             /// </param>
-            public static IPage<SharedAccessAuthorizationRuleResourceInner> ListAuthorizationRules(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
-            {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, eventHubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the authorization rules for an Event Hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -255,33 +151,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Creates or updates an AuthorizationRule for the specified Event Hub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt706096.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The shared access AuthorizationRule.
-            /// </param>
-            public static SharedAccessAuthorizationRuleResourceInner CreateOrUpdateAuthorizationRule(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParametersInner parameters)
-            {
-                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, eventHubName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -336,30 +205,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
             /// <param name='authorizationRuleName'>
             /// The authorization rule name.
             /// </param>
-            public static SharedAccessAuthorizationRuleResourceInner GetAuthorizationRule(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName)
-            {
-                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, eventHubName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets an AuthorizationRule for an Event Hub by rule name.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt706097.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -390,60 +235,12 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
             /// <param name='authorizationRuleName'>
             /// The authorization rule name.
             /// </param>
-            public static void DeleteAuthorizationRule(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName)
-            {
-                operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, eventHubName, authorizationRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes an Event Hub AuthorizationRule.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt706100.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
             public static async Task DeleteAuthorizationRuleAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the ACS and SAS connection strings for the Event Hub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt706098.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
-            /// </param>
-            public static ResourceListKeysInner ListKeys(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName)
-            {
-                return operations.ListKeysAsync(resourceGroupName, namespaceName, eventHubName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -499,34 +296,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
             /// Key that needs to be regenerated. Possible values include: 'PrimaryKey',
             /// 'SecondaryKey'
             /// </param>
-            public static ResourceListKeysInner RegenerateKeys(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, Policykey? policykey = default(Policykey?))
-            {
-                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, eventHubName, authorizationRuleName, policykey).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Regenerates the ACS and SAS connection strings for the Event Hub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt706099.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The Namespace name
-            /// </param>
-            /// <param name='eventHubName'>
-            /// The Event Hub name
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorization rule name.
-            /// </param>
-            /// <param name='policykey'>
-            /// Key that needs to be regenerated. Possible values include: 'PrimaryKey',
-            /// 'SecondaryKey'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -548,21 +317,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<EventHubResourceInner> ListAllNext(this IEventHubsOperations operations, string nextPageLink)
-            {
-                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the Event Hubs in a Namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639493.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -572,20 +326,6 @@ namespace Microsoft.Azure.Management.EventHub.Fluent
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Gets the authorization rules for an Event Hub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleResourceInner> ListAuthorizationRulesNext(this IEventHubsOperations operations, string nextPageLink)
-            {
-                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
