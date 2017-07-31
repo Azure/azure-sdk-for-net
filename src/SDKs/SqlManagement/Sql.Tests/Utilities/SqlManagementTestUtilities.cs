@@ -81,9 +81,11 @@ namespace Sql.Tests
 
         public static async Task<string> GetAccessToken(string authority, string resource, string scope)
         {
+            TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+
             var context = new AuthenticationContext(authority);
-            string authClientId = TryGetEnvironmentOrAppSetting("AuthClientId");
-            string authSecret = TryGetEnvironmentOrAppSetting("AuthClientSecret");
+            string authClientId = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
+            string authSecret = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey];
             var clientCredential = new ClientCredential(authClientId, authSecret);
             var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
 
@@ -495,17 +497,6 @@ namespace Sql.Tests
                     });
                     SqlManagementTestUtilities.ValidateServer(server, serverNameV12, DefaultLogin, version12, tags, location);
 
-                    // Create database
-                    string databaseName = SqlManagementTestUtilities.GenerateName();
-                    var database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, databaseName, new Database()
-                    {
-                        Location = location
-                    });
-
-                    // Validate TDE is on by default
-                    TransparentDataEncryption tde = sqlClient.Databases.GetTransparentDataEncryptionConfiguration(resourceGroup.Name, server.Name, database.Name);
-                    Assert.Equal(TransparentDataEncryptionStatus.Enabled, tde.Status);
-
                     // Prepare vault permissions for the server
                     var serverPermissions = new Permissions()
                     {
@@ -518,7 +509,7 @@ namespace Sql.Tests
                     {
                         Keys = new List<string>() { KeyPermissions.Create, KeyPermissions.Delete, KeyPermissions.Get, KeyPermissions.List }
                     };
-                    string authObjectId = TryGetEnvironmentOrAppSetting("AuthObjectId");
+                    string authObjectId = TestEnvironmentUtilities.GetUserObjectId();
                     var aclEntryUser = new AccessPolicyEntry(server.Identity.TenantId.Value, authObjectId, appPermissions);
 
                     // Create a vault
@@ -546,7 +537,7 @@ namespace Sql.Tests
                 {
                     if (resourceGroup != null)
                     {
-                        resourceClient.ResourceGroups.Delete(resourceGroup.Name);
+                        resourceClient.ResourceGroups.BeginDelete(resourceGroup.Name);
                     }
                 }
             }
